@@ -1,0 +1,64 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (c) 2015 IRCAM
+
+# Manifeste is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+
+# Manifeste is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with Manifeste.  If not, see <http://www.gnu.org/licenses/>.
+
+# Authors:
+# Guillaume Pellerin <guillaume.pellerin@ircam.fr>
+
+
+media:
+  image: debian:jessie
+  volumes:
+     - ./data/media/:/srv/media
+     - ./data/static/:/srv/static
+     - ./data/backup/:/srv/backup
+  command: "true"
+
+db:
+  image: mysql
+  volumes:
+    # - ./app/deploy/my.cnf:/etc/mysql/my.cnf
+    - ./data/var/lib/mysql/:/var/lib/mysql
+  volumes_from:
+    - media
+  environment:
+    - MYSQL_ROOT_PASSWORD=hyRob0otlaz4
+    - MYSQL_DATABASE=manifeste
+    - MYSQL_USER=manifeste
+    - MYSQL_PASSWORD=Onukifsid7
+
+app:
+  build: .
+  command: /bin/sh deploy/start_app.sh
+  volumes:
+    - ./app/:/srv/app
+  volumes_from:
+    - media
+  expose:
+    - "8000"
+  links:
+    - db
+
+nginx:
+  image: nginx
+  ports:
+    - "8000:80"
+  volumes:
+    - ./app/deploy/nginx-app.conf:/etc/nginx/conf.d/default.conf
+  volumes_from:
+    - media
+  links:
+    - app
