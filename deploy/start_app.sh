@@ -15,13 +15,6 @@ autoreload=3
 # waiting for other services
 sh $app/deploy/wait.sh
 
-if [ ! -f $app/.init ]; then
- python $manage telemeta-create-admin-user
- python $manage telemeta-create-boilerplate
- python $manage update_index --workers $processes
- touch $app/.init
-fi
-
 # django init
 python $manage makemigrations --noinput
 python $manage migrate --noinput
