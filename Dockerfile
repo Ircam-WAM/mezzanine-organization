@@ -4,6 +4,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update &&\
     apt-get -y install locales netcat && \
+    apt-get install -y --force-yes netcat && \
     echo fr_FR.UTF-8 UTF-8 >> /etc/locale.gen &&\
     locale-gen
 
