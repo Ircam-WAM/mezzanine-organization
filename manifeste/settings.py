@@ -57,8 +57,8 @@ PAGE_MENU_TEMPLATES = (
 # ``django.models.db.`` can be omitted for regular Django model fields.
 #
 
-EXTRA_MODEL_FIELDS = (
- )
+# EXTRA_MODEL_FIELDS = (
+#  )
 
 # Setting to turn on featured images for blog posts. Defaults to False.
 #
@@ -215,6 +215,15 @@ INSTALLED_APPS = (
     "mezzanine.accounts",
     # "mezzanine.mobile",
 )
+
+# Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats
+MIGRATION_MODULES = {
+    "blog": "manifeste.migrations.blog",
+    "forms": "manifeste.migrations.forms",
+    "galleries": "manifeste.migrations.galleries",
+    "pages": "manifeste.migrations.pages",
+    "conf": "manifeste.migrations.conf",
+}
 
 # List of processors used by RequestContext to populate the context.
 # Each one should be a callable that takes the request object as its
