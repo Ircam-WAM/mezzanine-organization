@@ -15,8 +15,13 @@ autoreload=3
 # waiting for other services
 sh $app/deploy/wait.sh
 
+if [ ! -f $app/.init ]; then
+ python $manage makemigrations --noinput
+ touch $app/.init
+fi
+
 # django init
-python $manage makemigrations --noinput
+python $manage syncdb --noinput
 python $manage migrate --noinput
 python $manage collectstatic --noinput
 
