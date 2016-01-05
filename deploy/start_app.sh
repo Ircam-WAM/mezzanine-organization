@@ -11,6 +11,8 @@ port=8000
 processes=2
 threads=2
 autoreload=3
+uid='www-data'
+gid='www-data'
 
 # waiting for other services
 sh $app/deploy/wait.sh
@@ -26,4 +28,6 @@ watchmedo shell-command --patterns="*.js;*.css" --recursive \
 
 # app start
 uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \
-    --processes $processes --threads $threads --py-autoreload $autoreload
+    --processes $processes --threads $threads \
+    --uid $uid --gid $gid \
+    --py-autoreload $autoreload

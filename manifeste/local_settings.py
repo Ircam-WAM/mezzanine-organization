@@ -47,3 +47,6 @@ EMAIL_HOST = 'smtp.ircam.fr'
 EMAIL_PORT = '25'
 DEFAULT_FROM_EMAIL = 'manifeste2016@ircam.fr'
 EMAIL_SUBJECT_PREFIX = "IRCAM Manifeste 2016"
+ 
+SITE_TITLE = 'Manifeste 2016'
+SITE_TAGLINE = 'Festival 2 juin | 2 juillet 2016'
