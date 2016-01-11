@@ -28,7 +28,7 @@ media:
   command: "true"
 
 db:
-  image: mysql
+  image: mariadb
   volumes:
     # - ./app/deploy/my.cnf:/etc/mysql/my.cnf
     - ./data/var/lib/mysql/:/var/lib/mysql
