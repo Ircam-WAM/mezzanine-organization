@@ -19,7 +19,8 @@
 # Guillaume Pellerin <guillaume.pellerin@ircam.fr>
 
 
-media:
+data:
+  image: debian:jessie
   image: debian:jessie
   volumes:
      - ./data/media/:/srv/media
@@ -32,8 +33,9 @@ db:
   volumes:
     # - ./app/deploy/my.cnf:/etc/mysql/my.cnf
     - ./data/var/lib/mysql/:/var/lib/mysql
+    - ./data/var/log/mysql/:/var/log/mysql
   volumes_from:
-    - media
+    - data
   environment:
     - MYSQL_ROOT_PASSWORD=hyRob0otlaz4
     - MYSQL_DATABASE=manifeste
@@ -46,7 +48,7 @@ app:
   volumes:
     - ./app/:/srv/app
   volumes_from:
-    - media
+    - data
   expose:
     - "8000"
   links:
@@ -58,7 +60,8 @@ nginx:
     - "8000:80"
   volumes:
     - ./app/deploy/nginx-app.conf:/etc/nginx/conf.d/default.conf
+    - ./data/var/log/nginx/:/var/log/nginx
   volumes_from:
-    - media
+    - data
   links:
     - app
