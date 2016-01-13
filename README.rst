@@ -2,7 +2,7 @@
 Manifeste IRCAM
 ================
 
-This is the new template for the Manifeste festival website at IRCAM. It is based on the Mezzanine CMS which it itself based on Django.
+This is the new template for the Manifeste festival website at IRCAM. It is based on the Mezzanine CMS which is itself based on Django.
 
 Install
 =========
