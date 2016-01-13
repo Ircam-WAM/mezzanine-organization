@@ -2,7 +2,7 @@
 Manifeste IRCAM
 ================
 
-This is the new template for the Manifeste festival website at IRCAM. It is based on the Mezzanine CMS which it itself based on Django.
+This is the new template for the Manifeste festival website at IRCAM. It is based on the Mezzanine CMS which is itself based on Django.
 
 Install
 =========
@@ -20,7 +20,12 @@ Run these commands in a terminal::
     cd Manifeste
     docker-compose up
 
-You should be able to browse the site at http://localhost:8000/
+Then, in another terminal::
+
+    cd Manifeste
+    docker-compose run db /srv/backup/restore_db.sh
+
+You should be able to browse the site at http://localhost:8010/
 
 MacOS or Windows:
 ------------------
@@ -34,8 +39,12 @@ Run these commands in a terminal::
     cd Manifeste
     docker-compose up
 
-The 3rd command should give you the IP of the VM. For example, if IP is 192.168.59.103, you should be able to browse the site at http://192.168.59.103:8000/
+Then, in another terminal::
 
-Note that after the first start, if no database backup has been provided, you should make a restart (CTRL+C then up) so that the DB can be initialized and then the migration happens.
+    eval "$(docker-machine env manifeste)"
+    cd Manifeste
+    docker-compose run db /srv/backup/restore_db.sh
+
+The 3rd command should give you the IP of the VM. For example, if IP is 192.168.59.103, you should be able to browse the site at http://192.168.59.103:8010/
 
 `More info <https://docs.docker.com/>`_ about using docker and related tools.
