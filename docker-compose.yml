@@ -21,7 +21,6 @@
 
 data:
   image: debian:jessie
-  image: debian:jessie
   volumes:
      - ./data/media/:/srv/media
      - ./data/static/:/srv/static
@@ -30,10 +29,6 @@ data:
 
 db:
   image: mariadb
-  volumes:
-    # - ./app/deploy/my.cnf:/etc/mysql/my.cnf
-    - ./data/var/lib/mysql/:/var/lib/mysql
-    - ./data/var/log/mysql/:/var/log/mysql
   volumes_from:
     - data
   environment:

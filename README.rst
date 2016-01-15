@@ -18,6 +18,10 @@ Run these commands in a terminal::
 
     git clone --recursive git://git.forge.ircam.fr/Manifeste.git
     cd Manifeste
+    docker-compose up db
+
+The last command is needed to first initialize the database. Leave the session with CTRL+C and then finally::
+
     docker-compose up
 
 Then, in another terminal::
@@ -32,11 +36,15 @@ MacOS or Windows:
 
 Run these commands in a terminal::
 
-    docker-machine create --driver virtualbox manifeste
+    docker-machine create --driver virtualbox --virtualbox-memory 8096 manifeste
     eval "$(docker-machine env manifeste)"
     docker-machine ip manifeste
     git clone --recursive git://git.forge.ircam.fr/Manifeste.git
     cd Manifeste
+    docker-compose up db
+
+The last command is needed to first initialize the database. Leave the session with CTRL+C and then finally::
+
     docker-compose up
 
 Then, in another terminal::
