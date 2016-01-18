@@ -5,6 +5,7 @@ app='/srv/app'
 manage=$app'/manage.py'
 wsgi=$app'/wsgi.py'
 static='/srv/static/'
+media='/srv/media/'
 
 # uwsgi params
 port=8000
@@ -13,6 +14,11 @@ threads=2
 autoreload=3
 uid='www-data'
 gid='www-data'
+
+# Staging
+pip install mezzanine_instagram
+
+chown $uid:$gid $media
 
 # waiting for other services
 sh $app/deploy/wait.sh
