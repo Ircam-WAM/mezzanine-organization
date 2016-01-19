@@ -8,3 +8,4 @@ Django==1.8.7
 mezzanine==4.0.1
 django-modeltranslation
 django-meta
+mezzanine-bsbanners

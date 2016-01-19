@@ -18,5 +18,5 @@ WORKDIR /srv/app
 ADD requirements.txt /srv/app/
 RUN pip install -r requirements.txt
 
-ADD requirements-dev.txt /srv/app/
+# ADD requirements-dev.txt /srv/app/
 # RUN pip install -r requirements-dev.txt --src /srv/src

@@ -16,7 +16,7 @@ uid='www-data'
 gid='www-data'
 
 # Staging
-pip install mezzanine_instagram
+#pip install mezzanine_instagram
 
 chown $uid:$gid $media
 
