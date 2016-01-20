@@ -20,7 +20,7 @@ UPOPTS="-d --no-recreate --no-build --no-deps"
 
 case "$1" in
     start)
-        log_daemon_msg "Starting $PROJECT_NAME Composition" "$PROJECT_NAME" || true
+        log_daemon_msg "Starting $PROJECT_NAME composition" "$PROJECT_NAME" || true
         if su -c "docker-compose $OPTS up $UPOPTS > /dev/null 2>&1" root ; then
             log_end_msg 0 || true
         else
@@ -29,7 +29,7 @@ case "$1" in
         ;;
 
     stop)
-        log_daemon_msg "Stopping $PROJECT_NAME Composition" "$PROJECT_NAME" || true
+        log_daemon_msg "Stopping $PROJECT_NAME composition" "$PROJECT_NAME" || true
         if su -c "docker-compose $OPTS stop > /dev/null 2>&1" root; then
             log_end_msg 0 || true
         else
@@ -38,7 +38,7 @@ case "$1" in
         ;;
 
     reload|force-reload)
-        log_daemon_msg "Reloading $PROJECT_NAME Composition" "$PROJECT_NAME" || true
+        log_daemon_msg "Reloading $PROJECT_NAME composition" "$PROJECT_NAME" || true
         if docker-compose $OPTS up $UPOPTS > /dev/null 2>&1 ; then
             log_end_msg 0 || true
         else
@@ -47,7 +47,7 @@ case "$1" in
         ;;
 
     restart|try-restart)
-        log_daemon_msg "Restarting $PROJECT_NAME Composition" "$PROJECT_NAME" || true
+        log_daemon_msg "Restarting $PROJECT_NAME composition" "$PROJECT_NAME" || true
         if docker-compose $OPTS stop > /dev/null 2>&1; docker-compose $OPTS up $UPOPTS > /dev/null 2>&1 ; then
             log_end_msg 0 || true
         else
