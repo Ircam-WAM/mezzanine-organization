@@ -18,7 +18,7 @@ gid='www-data'
 # Staging
 #pip install mezzanine_instagram
 
-chown $uid:$gid $media
+chown -R $uid:$gid $media
 
 # waiting for other services
 sh $app/deploy/wait.sh
