@@ -26,7 +26,7 @@ ExecStop=%s -f %s stop
 
 [Install]
 WantedBy=local.target
-""" % (name, program, path, program, path)
+""" % (name, program, conf, program, conf)
 
 # print rules
 
