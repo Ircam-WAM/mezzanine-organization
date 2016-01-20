@@ -22,6 +22,6 @@ f.write(rules)
 f.close()
 
 os.system('chmod 755 ' + service)
-os.system('update-rc.d ' + name + ' defaults 90')
+os.system('update-rc.d ' + name + ' defaults')
 
 print 'done'
