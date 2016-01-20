@@ -21,30 +21,46 @@ UPOPTS="-d --no-recreate --no-build --no-deps"
 case "$1" in
     start)
         log_daemon_msg "Starting $PROJECT_NAME Composition" "$PROJECT_NAME" || true
-        sleep 5; docker-compose $OPTS up $UPOPTS 1>&2
+        if docker-compose $OPTS up $UPOPTS 1>&2 ; then
+            log_end_msg 0 || true
+        else
+            log_end_msg 1 || true
+        fi
         ;;
 
     stop)
         log_daemon_msg "Stopping $PROJECT_NAME Composition" "$PROJECT_NAME" || true
-        docker-compose $OPTS stop
+        if docker-compose $OPTS stop 1>&2 ; then
+            log_end_msg 0 || true
+        else
+            log_end_msg 1 || true
+        fi
         ;;
 
-    reload)
+    reload|force-reload)
         log_daemon_msg "Reloading $PROJECT_NAME Composition" "$PROJECT_NAME" || true
-        docker-compose $OPTS up $UPOPTS
+        if docker-compose $OPTS up $UPOPTS 1>&2 ; then
+            log_end_msg 0 || true
+        else
+            log_end_msg 1 || true
+        fi
         ;;
 
-    restart)
-        docker-compose $OPTS stop
-        docker-compose $OPTS up $UPOPTS
+    restart|try-restart)
+        log_daemon_msg "Restarting $PROJECT_NAME Composition" "$PROJECT_NAME" || true
+        if docker-compose $OPTS stop 1>&2; docker-compose $OPTS up $UPOPTS 1>&2 ; then
+            log_end_msg 0 || true
+        else
+            log_end_msg 1 || true
+        fi
         ;;
 
-    force-reload)
-        log_daemon_msg "Reloading $PROJECT_NAME Composition" "$PROJECT_NAME" || true
-        docker-compose $OPTS up $UPOPTS
+    status)
+        docker-compose $OPTS ps && exit 0 || exit $?
         ;;
+
     *)
-        log_action_msg "Usage: /etc/init.d/$PROJECT_NAME {start|stop|restart|reload|force-reload}" || true
+        log_action_msg "Usage: /etc/init.d/$PROJECT_NAME {start|stop|reload|force-reload|restart|try-restart|status}" || true
         exit 1
         ;;
 esac
