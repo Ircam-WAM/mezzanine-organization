@@ -21,7 +21,7 @@ UPOPTS="-d --no-recreate --no-build --no-deps"
 case "$1" in
     start)
         log_daemon_msg "Starting $PROJECT_NAME Composition" "$PROJECT_NAME" || true
-        docker-compose $OPTS up $UPOPTS
+        sleep 5; docker-compose $OPTS up $UPOPTS 1>&2
         ;;
 
     stop)
@@ -39,8 +39,12 @@ case "$1" in
         docker-compose $OPTS up $UPOPTS
         ;;
 
+    force-reload)
+        log_daemon_msg "Reloading $PROJECT_NAME Composition" "$PROJECT_NAME" || true
+        docker-compose $OPTS up $UPOPTS
+        ;;
     *)
-        log_action_msg "Usage: /etc/init.d/$PROJECT_NAME {start|stop|restart|reload}" || true
+        log_action_msg "Usage: /etc/init.d/$PROJECT_NAME {start|stop|restart|reload|force-reload}" || true
         exit 1
         ;;
 esac
