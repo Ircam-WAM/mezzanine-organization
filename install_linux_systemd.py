@@ -34,6 +34,5 @@ f.close()
 
 os.system('systemctl enable ' + service)
 os.system('systemctl daemon-reload')
-os.system('systemctl start ' + name)
 
 print 'done'
