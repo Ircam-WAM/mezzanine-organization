@@ -74,7 +74,7 @@ esac
 exit 0
 """
 
-systemd_conf = """
+systemd_service = """
 [Unit]
 Description=%s composition
 Requires=docker.service
@@ -88,13 +88,14 @@ ExecStop=%s -f %s stop
 WantedBy=local.target
 """
 
+
 class DockerComposeDaemonInstall(object):
 
     vcs_types = ['git', 'svn', 'hg']
     docker = '/etc/init.d/docker'
     docker_compose = '/usr/local/bin/docker-compose'
 
-    def __init__(self, path=None, init_type='sysv'):
+    def __init__(self, path=None, init_type='sysvinit'):
         self.init_type = init_type
 
         self.local_path = os.path.dirname(os.path.realpath(__file__))
@@ -133,8 +134,9 @@ class DockerComposeDaemonInstall(object):
             os.system('pip install docker-compose')
 
     def install_daemon_sysvinit(self):
-        script = sysvinit_script % (self.name, self.name, self.conf)
         service = '/etc/init.d/' + self.name
+        print 'Writing sysvinit script in ' + service
+        script = sysvinit_script % (self.name, self.name, self.conf)
         f = open(service, 'w')
         f.write(script)
         f.close()
@@ -142,8 +144,9 @@ class DockerComposeDaemonInstall(object):
         os.system('update-rc.d ' + self.name + ' defaults')
 
     def install_daemon_systemd(self):
-        conf = systemd_conf % (self.name, self.docker_compose, self.conf, self.docker_compose, self.conf)
         service = '/lib/systemd/system/' + self.name + '.service'
+        print 'Writing systemd service in ' +  service
+        conf = systemd_service % (self.name, self.docker_compose, self.conf, self.docker_compose, self.conf)
         f = open(service, 'w')
         f.write(rules)
         f.close()
@@ -151,13 +154,11 @@ class DockerComposeDaemonInstall(object):
         os.system('systemctl daemon-reload')
 
     def run(self):
-        print 'Installing ' + self.name + ' compostion as a daemon...'
+        print 'Installing ' + self.name + ' composition as a daemon...'
         self.install_docker()
         if self.init_type == 'sysvinit':
-            print 'Writing sysvinit script...'
             self.install_daemon_sysvinit()
         elif self.init_type == 'systemd':
-            print 'Writing systemd conf...'
             self.install_daemon_systemd()
         print 'Done'
 
