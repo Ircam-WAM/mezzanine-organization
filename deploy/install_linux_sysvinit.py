@@ -2,6 +2,19 @@
 
 import os
 
+path = os.getcwd()
+vcss = ['git', 'svn', 'hg']
+
+def is_repo_root(path):
+    content = os.listdir(path)
+    for vcs in vcss:
+        if '.' + vcs in content:
+            return True
+    return False
+
+while not is_repo_root(path):
+    path = os.sep.join(path.split(os.sep)[:-1])
+
 path = os.sep.join(os.getcwd().split(os.sep)[:-2])
 name = path.split(os.sep)[-1].lower()
 conf = path + os.sep + 'docker-compose.yml'
