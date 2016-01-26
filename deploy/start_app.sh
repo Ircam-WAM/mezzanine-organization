@@ -16,7 +16,7 @@ uid='www-data'
 gid='www-data'
 
 # Staging
-#pip install mezzanine_instagram
+pip install psycopg2
 
 chown -R $uid:$gid $media
 
@@ -24,10 +24,10 @@ chown -R $uid:$gid $media
 sh $app/deploy/wait.sh
 
 # waiting for available database
-python $app/wait.py
+# python $app/wait.py
 
 # django init
-python $manage syncdb --noinput
+# python $manage syncdb --noinput
 python $manage migrate --noinput
 python $manage collectstatic --noinput
 

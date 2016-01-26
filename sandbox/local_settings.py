@@ -6,6 +6,8 @@ DEBUG = True
 SECRET_KEY = "+3b01&_6_m@@yb4f06$s0zno8vkybh81nbuj_q(xzk+xeih1+s"
 NEVERCACHE_KEY = "l11tr%#!uc@+%$51(&+%=&z6h9yrw42(jpcj$3_&6evtu6hl%z"
 
+DATABASE_ROUTERS = ['eve.routers.EveRouter', ]
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -14,7 +16,16 @@ DATABASES = {
         'NAME': os.environ.get('DB_ENV_MYSQL_DATABASE'),
         'HOST': 'db',      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
-    }
+    },
+    'eve': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'eve',
+        'USER': 'postgres',
+        'PASSWORD': 'mysecretpassword',
+        'HOST': 'pgdb',
+        'PORT': '5432',
+    },
+
 }
 
 # EXTENSIONS AND FORMATS
@@ -47,6 +58,8 @@ EMAIL_HOST = 'smtp.ircam.fr'
 EMAIL_PORT = '25'
 DEFAULT_FROM_EMAIL = 'manifeste2016@ircam.fr'
 EMAIL_SUBJECT_PREFIX = "IRCAM Manifeste 2016"
- 
+
 SITE_TITLE = 'Manifeste 2016'
 SITE_TAGLINE = 'Festival 2 juin | 2 juillet 2016'
+
+SILENCED_SYSTEM_CHECKS = ['fields.W342',]
