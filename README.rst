@@ -18,10 +18,6 @@ Run these commands in a terminal::
 
     git clone --recursive git://git.forge.ircam.fr/Manifeste.git
     cd Manifeste
-    docker-compose up db
-
-The last command is needed to initialize the database. Leave the session with CTRL+C and then finally do::
-
     docker-compose up
 
 To restore the backuped database, in another terminal::
@@ -41,10 +37,6 @@ Run these commands in a terminal::
     docker-machine ip manifeste
     git clone --recursive git://git.forge.ircam.fr/Manifeste.git
     cd Manifeste
-    docker-compose up db
-
-The last command is needed to initialize the database. Leave the session with CTRL+C and then finally do::
-
     docker-compose up
 
 Then, in another terminal::
@@ -53,6 +45,6 @@ Then, in another terminal::
     cd Manifeste
     docker-compose run db /srv/backup/restore_db.sh
 
-The 3rd command should give you the IP of the VM. For example, if IP is 192.168.59.103, you should be able to browse the site at http://192.168.59.103:8010/
 
 `More info <https://docs.docker.com/>`_ about using docker and related tools.
+The 3rd command should give you the IP of the VM. For example, if IP is 192.168.59.103, you should be able to browse the site at http://192.168.59.103:8010/
