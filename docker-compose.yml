@@ -31,11 +31,21 @@ db:
   image: mariadb
   volumes_from:
     - data
+  volumes:
+    - ./data/var/lib/mysql/:/var/lib/mysql
   environment:
     - MYSQL_ROOT_PASSWORD=hyRob0otlaz4
     - MYSQL_DATABASE=manifeste
     - MYSQL_USER=manifeste
     - MYSQL_PASSWORD=Onukifsid7
+
+pgdb:
+  image: postgres
+  volumes_from:
+    - data
+  environment:
+    - POSTGRES_PASSWORD=mysecretpassword
+    - POSTGRES_USER=postgres
 
 app:
   build: .
@@ -48,6 +58,7 @@ app:
     - "8000"
   links:
     - db
+    - pgdb
 
 nginx:
   image: nginx

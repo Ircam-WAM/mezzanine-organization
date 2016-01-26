@@ -9,3 +9,4 @@ mezzanine==4.0.1
 django-modeltranslation
 django-meta
 mezzanine-bsbanners
+psycopg2

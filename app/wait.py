@@ -6,9 +6,9 @@ from django.core.management import call_command
 up = False
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sandbox.settings")
 
-while not up:
-    try:
-        call_command('syncdb', interactive=False)
-        up = True
-    except:
-        time.sleep(1)
+# while not up:
+#     try:
+call_command('syncdb', interactive=False)
+    #     up = True
+    # except:
+    #     time.sleep(1)

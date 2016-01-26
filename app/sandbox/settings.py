@@ -201,10 +201,10 @@ INSTALLED_APPS = (
     "django.contrib.redirects",
     "django.contrib.sessions",
     "django.contrib.sites",
-    "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "mezzanine.boot",
     "mezzanine.conf",
+    "django.contrib.sitemaps",
     "mezzanine.core",
     "mezzanine.generic",
     "mezzanine.pages",
@@ -214,15 +214,16 @@ INSTALLED_APPS = (
     "mezzanine.twitter",
     "mezzanine.accounts",
     # "mezzanine.mobile",
+    "eve",
 )
 
 # Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats
 MIGRATION_MODULES = {
-    "blog": "manifeste.migrations.blog",
-    "forms": "manifeste.migrations.forms",
-    "galleries": "manifeste.migrations.galleries",
-    "pages": "manifeste.migrations.pages",
-    "conf": "manifeste.migrations.conf",
+    "blog": "sandbox.migrations.blog",
+    "forms": "sandbox.migrations.forms",
+    "galleries": "sandbox.migrations.galleries",
+    "pages": "sandbox.migrations.pages",
+    "conf": "sandbox.migrations.conf",
 }
 
 # List of processors used by RequestContext to populate the context.
