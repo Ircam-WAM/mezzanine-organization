@@ -12,4 +12,12 @@
  {{ artist.bio|safe }}
 </div>
 
+
+<div class="artist-events">
+    <h2>{% trans 'Events' %}</h2>
+    {% for event in artist.events.all %}
+        {{ event.title }}
+</div>
+{% endfor %}
+
 {% endblock %}
