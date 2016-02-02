@@ -1,0 +1,3 @@
+[submodule "app/apps/presta2eve"]
+	path = app/apps/presta2eve
+	url = git+ssh://git@git.forge.ircam.fr/presta2eve.git

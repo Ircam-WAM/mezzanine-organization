@@ -10,3 +10,4 @@ django-modeltranslation
 django-meta
 mezzanine-bsbanners
 psycopg2
+#django-location-field

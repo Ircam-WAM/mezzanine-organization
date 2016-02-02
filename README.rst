@@ -4,12 +4,14 @@ Manifeste IRCAM
 
 This is the new template for the Manifeste festival website at IRCAM. It is based on the Mezzanine CMS which is itself based on Django.
 
+
 Install
 =========
 
 For easier development and production workflow, it has been dockerized including the MariaDB and the Nginx webserver.
 
 First install `Git <http://git-scm.com/downloads>`_, `Docker engine <https://docs.docker.com/installation/>`_ and `docker-compose <https://docs.docker.com/compose/install/>`_.
+
 
 Linux
 ------
@@ -24,8 +26,10 @@ To restore the backuped database, in another terminal::
 
     cd Manifeste
     docker-compose run db /srv/backup/restore_db.sh
+    docker-compose run pgdb /srv/backup/restore_db_eve.sh
 
 You should be able to browse the site at http://localhost:8010/
+
 
 MacOS or Windows:
 ------------------
@@ -44,6 +48,7 @@ Then, in another terminal::
     eval "$(docker-machine env manifeste)"
     cd Manifeste
     docker-compose run db /srv/backup/restore_db.sh
+    docker-compose run pgdb /srv/backup/restore_db_eve.sh
 
 
 `More info <https://docs.docker.com/>`_ about using docker and related tools.

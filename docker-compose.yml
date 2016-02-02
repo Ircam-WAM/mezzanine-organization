@@ -27,25 +27,40 @@ data:
      - ./data/backup/:/srv/backup
   command: "true"
 
-db:
-  image: mariadb
-  volumes_from:
-    - data
-  volumes:
-    - ./data/var/lib/mysql/:/var/lib/mysql
-  environment:
-    - MYSQL_ROOT_PASSWORD=hyRob0otlaz4
-    - MYSQL_DATABASE=manifeste
-    - MYSQL_USER=manifeste
-    - MYSQL_PASSWORD=Onukifsid7
+# db:
+#   image: mariadb
+#   volumes_from:
+#     - data
+#   volumes:
+#     - ./data/var/lib/mysql/:/var/lib/mysql
+#   environment:
+#     - MYSQL_ROOT_PASSWORD=hyRob0otlaz4
+#     - MYSQL_DATABASE=manifeste
+#     - MYSQL_USER=manifeste
+#     - MYSQL_PASSWORD=Onukifsid7
 
-pgdb:
+db:
   image: postgres
+  volumes:
+    - ./data/var/lib/postgresql/manifeste/data/:/var/lib/postgresql/data
   volumes_from:
     - data
   environment:
     - POSTGRES_PASSWORD=mysecretpassword
     - POSTGRES_USER=postgres
+    - POSTGRES_DB=manifeste
+
+
+pgdb:
+  image: postgres
+  volumes:
+    - ./data/var/lib/postgresql/eve/data/:/var/lib/postgresql/data
+  volumes_from:
+    - data
+  environment:
+    - POSTGRES_PASSWORD=mysecretpassword
+    - POSTGRES_USER=postgres
+    - POSTGRES_DB=eve
 
 app:
   build: .
