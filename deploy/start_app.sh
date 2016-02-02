@@ -25,11 +25,13 @@ sh $app/deploy/wait.sh
 
 # waiting for available database
 # python $app/wait.py
+# python $manage wait-for-db-connection
 
 # django init
 # python $manage syncdb --noinput
 python $manage migrate --noinput
 python $manage collectstatic --noinput
+python $manage create-admin-user
 
 # static files auto update
 watchmedo shell-command --patterns="*.js;*.css" --recursive \

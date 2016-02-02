@@ -214,16 +214,17 @@ INSTALLED_APPS = (
     "mezzanine.twitter",
     "mezzanine.accounts",
     # "mezzanine.mobile",
-    "eve",
+    # "eve",
+    "festival",
 )
 
 # Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats
 MIGRATION_MODULES = {
-    "blog": "sandbox.migrations.blog",
-    "forms": "sandbox.migrations.forms",
-    "galleries": "sandbox.migrations.galleries",
-    "pages": "sandbox.migrations.pages",
-    "conf": "sandbox.migrations.conf",
+    "blog": "migrations.blog",
+    "forms": "migrations.forms",
+    "galleries": "migrations.galleries",
+    "pages": "migrations.pages",
+    "conf": "migrations.conf",
 }
 
 # List of processors used by RequestContext to populate the context.
@@ -246,6 +247,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # these middleware classes will be applied in the order given, and in the
 # response phase the middleware will be applied in reverse order.
 MIDDLEWARE_CLASSES = (
+    # 'sandbox.middleware.StartupMiddleware',
     "mezzanine.core.middleware.UpdateCacheMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     # Uncomment if using internationalisation or localisation

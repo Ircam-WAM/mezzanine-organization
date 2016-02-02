@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load mezzanine_tags keyword_tags %}
+
+{% block main %}
+
+<div class="artist-name">
+ <h1>{{ artist.name }}</h1>
+</div>
+
+<div class="artist-bio">
+ {{ artist.bio|safe }}
+</div>
+
+{% endblock %}

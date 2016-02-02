@@ -25,7 +25,7 @@ if settings.USE_MODELTRANSLATION:
     )
 
 urlpatterns += patterns('',
-    # (r'^newsletter/', include('newsletter.urls')),
+    (r'^festival/', include('festival.urls')),
 
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.
