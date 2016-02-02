@@ -37,6 +37,7 @@ MacOS or Windows:
 Run these commands in a terminal::
 
     docker-machine create --driver virtualbox --virtualbox-memory 8096 manifeste
+    docker-machine manifeste start
     eval "$(docker-machine env manifeste)"
     docker-machine ip manifeste
     git clone --recursive git://git.forge.ircam.fr/Manifeste.git
@@ -47,8 +48,8 @@ Then, in another terminal::
 
     eval "$(docker-machine env manifeste)"
     cd Manifeste
-    docker-compose run db /srv/backup/restore_db.sh
-    docker-compose run pgdb /srv/backup/restore_db_eve.sh
+    docker-compose run db /srv/backup/restore_db.sh #(MAJ base festival)
+    docker-compose run pgdb /srv/backup/restore_db_eve.sh #(MAJ base eve)
 
 
 `More info <https://docs.docker.com/>`_ about using docker and related tools.
