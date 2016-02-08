@@ -194,7 +194,7 @@ TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
 # APPLICATIONS #
 ################
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -216,7 +216,8 @@ INSTALLED_APPS = (
     # "mezzanine.mobile",
     # "eve",
     "festival",
-)
+    "meta",
+]
 
 # Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats
 MIGRATION_MODULES = {
@@ -304,7 +305,7 @@ except ImportError as e:
 
 
 ####################
-# DYNAMIC SETTINGS #
+# DYNAMIC S ETTINGS #
 ####################
 
 # set_dynamic_settings() will rewrite globals based on what has been

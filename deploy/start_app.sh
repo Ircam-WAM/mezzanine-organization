@@ -24,7 +24,7 @@ chown -R $uid:$gid $media
 sh $app/deploy/wait.sh
 
 # waiting for available database
-# python $app/wait.py
+python $app/wait.py
 # python $manage wait-for-db-connection
 
 # django init

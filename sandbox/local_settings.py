@@ -10,22 +10,22 @@ NEVERCACHE_KEY = "l11tr%#!uc@+%$51(&+%=&z6h9yrw42(jpcj$3_&6evtu6hl%z"
 DATABASE_ROUTERS = ['eve.routers.EveRouter',]
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-    #     'USER': os.environ.get('DB_ENV_MYSQL_USER'),      # Not used with sqlite3.
-    #     'PASSWORD': os.environ.get('DB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
-    #     'NAME': os.environ.get('DB_ENV_MYSQL_DATABASE'),
-    #     'HOST': 'db',      # Set to empty string for localhost. Not used with sqlite3.
-    #     'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
-    # },
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'USER': 'postgres',      # Not used with sqlite3.
-        'PASSWORD': 'mysecretpassword',  # Not used with sqlite3.
-        'NAME': 'manifeste',
-        'HOST': 'db',      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',      # Set to empty string for default. Not used with sqlite3.
+     'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+         'USER': os.environ.get('DB_ENV_MYSQL_USER'),      # Not used with sqlite3.
+         'PASSWORD': os.environ.get('DB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
+         'NAME': os.environ.get('DB_ENV_MYSQL_DATABASE'),
+         'HOST': 'db',      # Set to empty string for localhost. Not used with sqlite3.
+         'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
     },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #     'USER': 'postgres',      # Not used with sqlite3.
+    #     'PASSWORD': 'mysecretpassword',  # Not used with sqlite3.
+    #     'NAME': 'manifeste',
+    #     'HOST': 'db',      # Set to empty string for localhost. Not used with sqlite3.
+    #     'PORT': '5432',      # Set to empty string for default. Not used with sqlite3.
+    # },
     'eve': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'eve',
