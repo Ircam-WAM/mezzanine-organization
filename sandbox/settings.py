@@ -124,6 +124,8 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 
 # MAX_UPLOAD_SIZE = 429916160
 
+EVENT_SLUG = 'events'
+
 #############
 # DATABASES #
 #############
@@ -217,6 +219,9 @@ INSTALLED_APPS = [
     # "eve",
     "festival",
     "meta",
+    'mezzanine-agenda',
+    'mezzanine_people',
+
 ]
 
 # Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats
