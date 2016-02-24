@@ -197,6 +197,7 @@ TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
 ################
 
 INSTALLED_APPS = [
+    "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -219,9 +220,7 @@ INSTALLED_APPS = [
     # "eve",
     "festival",
     "meta",
-    'mezzanine-agenda',
-    'mezzanine_people',
-
+    'mezzanine_agenda',
 ]
 
 # Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats
@@ -231,7 +230,12 @@ MIGRATION_MODULES = {
     "galleries": "migrations.galleries",
     "pages": "migrations.pages",
     "conf": "migrations.conf",
+    "mezzanine_agenda": "migrations.mezzanine_agenda",
 }
+
+MODELTRANSLATION_TRANSLATION_FILES = (
+    'translations',
+)
 
 # List of processors used by RequestContext to populate the context.
 # Each one should be a callable that takes the request object as its

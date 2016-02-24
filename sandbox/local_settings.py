@@ -7,7 +7,7 @@ SECRET_KEY = "+3b01&_6_m@@yb4f06$s0zno8vkybh81nbuj_q(xzk+xeih1+s"
 NEVERCACHE_KEY = "l11tr%#!uc@+%$51(&+%=&z6h9yrw42(jpcj$3_&6evtu6hl%z"
 
 # DATABASE_ROUTERS = ['eve.routers.EveRouter', 'festival.routers.FestivalRouter',]
-DATABASE_ROUTERS = ['eve.routers.EveRouter',]
+# DATABASE_ROUTERS = ['eve.routers.EveRouter',]
 
 DATABASES = {
     'default': {
