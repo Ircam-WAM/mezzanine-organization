@@ -91,6 +91,9 @@ class Video(Displayable, RichText):
     def __unicode__(self):
         return
 
+    @property
+    def html(self):
+        pass
 
 class EventCategory(BaseNameModel):
     """Event Category"""
