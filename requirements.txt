@@ -3,7 +3,6 @@ uwsgi
 watchdog
 MySQL-python==1.2.5
 Django==1.8.9
-
 mezzanine==4.0.1
 django-modeltranslation
 django-meta
