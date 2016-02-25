@@ -64,7 +64,9 @@ db:
 
 app:
   build: .
-  command: /bin/sh deploy/start_app.sh
+  command: /bin/sh deploy/start_app.sh --runserver
+  ports:
+    - "9000:9000"
   volumes:
     - ./app/:/srv/app
   volumes_from:

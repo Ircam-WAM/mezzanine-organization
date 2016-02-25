@@ -13,4 +13,3 @@ while not up:
     except:
         print 'waiting...'
         time.sleep(10)
-        call_command('syncdb', interactive=False)
