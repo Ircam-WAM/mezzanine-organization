@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load mezzanine_tags keyword_tags %}
+
+{% block main %}
+
+<div class="video-title">
+ <h1>{{ video.title }}</h1>
+</div>
+
+<div class="video-description">
+ {{ video.description }}
+</div>
+
+<div class="video-html">
+  {{ video.html|safe }}
+</div>
+
+<div class="video-event">
+  <h2>{% trans 'Related event' %}</h2>
+    {{ video.event.title }}
+</div>
+
+{% endblock %}

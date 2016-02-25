@@ -40,7 +40,7 @@ class VideoDetailView(DetailView):
 
     model = Video
     template_name='festival/video_detail.html'
-    context_object_name = 'artist'
+    context_object_name = 'video'
 
     def get_context_data(self, **kwargs):
         context = super(VideoDetailView, self).get_context_data(**kwargs)

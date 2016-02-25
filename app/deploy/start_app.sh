@@ -34,15 +34,15 @@ python $manage migrate --noinput
 python $manage collectstatic --noinput
 python $manage create-admin-user
 
-# static files auto update
-watchmedo shell-command --patterns="*.js;*.css" --recursive \
-    --command='python '$manage' collectstatic --noinput' $src &
-
 # app start
 if [ $1 = "--runserver" ]
 then
     python $manage runserver 0.0.0.0:9000
 else
+    # static files auto update
+    watchmedo shell-command --patterns="*.js;*.css" --recursive \
+        --command='python '$manage' collectstatic --noinput' $src &
+
     uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \
     --processes $processes --threads $threads \
     --uid $uid --gid $gid \
