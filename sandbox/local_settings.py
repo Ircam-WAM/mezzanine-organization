@@ -1,4 +1,5 @@
 import os
+from django.utils.translation import ugettext_lazy as _
 
 DEBUG = True
 
@@ -7,7 +8,7 @@ SECRET_KEY = "+3b01&_6_m@@yb4f06$s0zno8vkybh81nbuj_q(xzk+xeih1+s"
 NEVERCACHE_KEY = "l11tr%#!uc@+%$51(&+%=&z6h9yrw42(jpcj$3_&6evtu6hl%z"
 
 # DATABASE_ROUTERS = ['eve.routers.EveRouter', 'festival.routers.FestivalRouter',]
-DATABASE_ROUTERS = ['eve.routers.EveRouter',]
+# DATABASE_ROUTERS = ['eve.routers.EveRouter',]
 
 DATABASES = {
     'default': {
@@ -72,3 +73,13 @@ SITE_TITLE = 'Manifeste 2016'
 SITE_TAGLINE = 'Festival 2 juin | 2 juillet 2016'
 
 SILENCED_SYSTEM_CHECKS = ['fields.W342',]
+
+EVENT_USE_FEATURED_IMAGE = True
+
+ADMIN_MENU_ORDER = (
+    (_("Content"), ("pages.Page", "blog.BlogPost", "mezzanine_agenda.Event",
+        "festival.Artist", "festival.Video",
+        "generic.ThreadedComment", (_("Media Library"), "fb_browse"),)),
+    (_("Site"), ("sites.Site", "redirects.Redirect", "conf.Setting")),
+    (_("Users"), ("auth.User", "auth.Group",)),
+)

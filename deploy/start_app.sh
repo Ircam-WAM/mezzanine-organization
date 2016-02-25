@@ -6,6 +6,7 @@ manage=$app'/manage.py'
 wsgi=$app'/wsgi.py'
 static='/srv/static/'
 media='/srv/media/'
+src='/srv/src/'
 
 # uwsgi params
 port=8000
@@ -16,7 +17,7 @@ uid='www-data'
 gid='www-data'
 
 # Staging
-pip install psycopg2
+# pip install psycopg2
 
 chown -R $uid:$gid $media
 
@@ -24,7 +25,7 @@ chown -R $uid:$gid $media
 sh $app/deploy/wait.sh
 
 # waiting for available database
-python $app/wait.py
+# python $app/wait.py
 # python $manage wait-for-db-connection
 
 # django init
@@ -35,10 +36,15 @@ python $manage create-admin-user
 
 # static files auto update
 watchmedo shell-command --patterns="*.js;*.css" --recursive \
-    --command='python '$manage' collectstatic --noinput' $static &
+    --command='python '$manage' collectstatic --noinput' $src &
 
 # app start
-uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \
+if [ $1 = "--runserver" ]
+then
+    python $manage runserver 0.0.0.0:9000
+else
+    uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \
     --processes $processes --threads $threads \
     --uid $uid --gid $gid \
     --py-autoreload $autoreload
+fi
