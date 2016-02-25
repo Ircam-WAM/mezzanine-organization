@@ -24,3 +24,24 @@ class ArtistDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ArtistDetailView, self).get_context_data(**kwargs)
         return context
+
+
+class VideoListView(ListView):
+
+    model = Video
+    template_name='festival/video_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(VideoListView, self).get_context_data(**kwargs)
+        return context
+
+
+class VideoDetailView(DetailView):
+
+    model = Video
+    template_name='festival/video_detail.html'
+    context_object_name = 'artist'
+
+    def get_context_data(self, **kwargs):
+        context = super(VideoDetailView, self).get_context_data(**kwargs)
+        return context
