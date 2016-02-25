@@ -1,4 +1,5 @@
 import os
+from django.utils.translation import ugettext_lazy as _
 
 DEBUG = True
 
@@ -72,3 +73,13 @@ SITE_TITLE = 'Manifeste 2016'
 SITE_TAGLINE = 'Festival 2 juin | 2 juillet 2016'
 
 SILENCED_SYSTEM_CHECKS = ['fields.W342',]
+
+EVENT_USE_FEATURED_IMAGE = True
+
+ADMIN_MENU_ORDER = (
+    (_("Content"), ("pages.Page", "blog.BlogPost", "mezzanine_agenda.Event",
+        "festival.Artist", "festival.Video",
+        "generic.ThreadedComment", (_("Media Library"), "fb_browse"),)),
+    (_("Site"), ("sites.Site", "redirects.Redirect", "conf.Setting")),
+    (_("Users"), ("auth.User", "auth.Group",)),
+)
