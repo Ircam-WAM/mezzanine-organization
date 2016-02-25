@@ -39,9 +39,9 @@ watchmedo shell-command --patterns="*.js;*.css" --recursive \
     --command='python '$manage' collectstatic --noinput' $src &
 
 # app start
-if [ $1 == "--runserver" ]
+if [ $1 = "--runserver" ]
 then
-    python $manage runserver_plus 0.0.0.0:8000
+    python $manage runserver 0.0.0.0:9000
 else
     uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \
     --processes $processes --threads $threads \

@@ -9,8 +9,8 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mezzanine_agenda', '0001_initial'),
         ('sites', '0001_initial'),
+        ('mezzanine_agenda', '0002_auto_20160224_1142'),
     ]
 
     operations = [
@@ -19,9 +19,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255, verbose_name='name')),
-                ('photo', models.ImageField(upload_to=b'images/%Y/%m/%d', max_length=1024, verbose_name='photo')),
+                ('photo', mezzanine.core.fields.FileField(max_length=1024, verbose_name='photo', blank=True)),
                 ('photo_credits', models.CharField(max_length=255, null=True, verbose_name='photo credits', blank=True)),
                 ('bio', mezzanine.core.fields.RichTextField(null=True, verbose_name='bio', blank=True)),
+                ('bio_fr', mezzanine.core.fields.RichTextField(null=True, verbose_name='bio', blank=True)),
+                ('bio_en', mezzanine.core.fields.RichTextField(null=True, verbose_name='bio', blank=True)),
             ],
             options={
                 'db_table': 'festival_artists',
@@ -35,6 +37,7 @@ class Migration(migrations.Migration):
                 ('eve_event_id', models.IntegerField(verbose_name='eve id', blank=True)),
                 ('featured', models.BooleanField(verbose_name='featured')),
                 ('featured_image', mezzanine.core.fields.FileField(max_length=1024, verbose_name='featured image', blank=True)),
+                ('featured_image_header', mezzanine.core.fields.FileField(max_length=1024, verbose_name='featured image header', blank=True)),
                 ('artists', models.ManyToManyField(related_name='metaevents', verbose_name='artists', to='festival.Artist', blank=True)),
                 ('event', models.ForeignKey(related_name='meta_events', on_delete=django.db.models.deletion.SET_NULL, verbose_name='meta event', blank=True, to='mezzanine_agenda.Event', null=True)),
             ],
