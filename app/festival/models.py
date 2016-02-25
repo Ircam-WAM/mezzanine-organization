@@ -107,7 +107,3 @@ class PageCategory(BaseNameModel):
 
     class Meta(MetaCore):
         verbose_name = _('page category')
-
-
-
-#class Article ?
