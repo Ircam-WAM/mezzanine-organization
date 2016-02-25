@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
-{% load pages_tags mezzanine_tags i18n staticfiles %}
+{% load pages_tags mezzanine_tags i18n staticfiles keyword_tags %}
 
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -82,11 +82,13 @@
 
 <h1>{% block title %}{% endblock %}</h1>
 
+{% comment - Remove breadcrumbs %}
 <ul class="breadcrumb">
 {% spaceless %}
 {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
 {% endspaceless %}
 </ul>
+{% endcomment %}
 
 </div>
 
