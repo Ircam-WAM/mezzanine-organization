@@ -20,9 +20,6 @@ class FestivalEventInline(admin.StackedInline):
 
 
 class FestivalEventAdmin(EventAdmin):
-    """
-    Admin class for events.
-    """
 
     inlines = [FestivalEventInline, ]
 
@@ -43,18 +40,8 @@ class VideoAdminDisplayable(DisplayableAdmin):
 
 
 class ArtistAdminDisplayable(DisplayableAdmin):
-    """
-    Admin class for artists.
-    """
 
     fieldsets = deepcopy(ArtistAdmin.fieldsets)
-
-
-    def save_form(self, request, form, change):
-        """
-        Super class ordering is important here - user must get saved first.
-        """
-        return DisplayableAdmin.save_form(self, request, form, change)
 
 
 admin.site.unregister(Event)

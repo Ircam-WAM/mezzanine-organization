@@ -1,8 +1,16 @@
 from django.shortcuts import render
 from django.views.generic import *
 from django.views.generic.base import *
+from django.shortcuts import get_object_or_404
 
 from festival.models import *
+
+
+class SlugMixin(object):
+
+    def get_object(self):
+        objects = self.model.objects.all()
+        return get_object_or_404(objects, slug=self.kwargs['slug'])
 
 
 class ArtistListView(ListView):
@@ -15,7 +23,7 @@ class ArtistListView(ListView):
         return context
 
 
-class ArtistDetailView(DetailView):
+class ArtistDetailView(SlugMixin, DetailView):
 
     model = Artist
     template_name='festival/artist_detail.html'
@@ -36,7 +44,7 @@ class VideoListView(ListView):
         return context
 
 
-class VideoDetailView(DetailView):
+class VideoDetailView(SlugMixin, DetailView):
 
     model = Video
     template_name='festival/video_detail.html'
@@ -45,3 +53,4 @@ class VideoDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(VideoDetailView, self).get_context_data(**kwargs)
         return context
+        

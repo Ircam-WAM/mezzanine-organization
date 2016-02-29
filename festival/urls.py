@@ -11,8 +11,8 @@ from festival.views import *
 
 urlpatterns = patterns('',
     url(r'^artists/$', ArtistListView.as_view(), name="festival-artist-list"),
-    url(r'^artists/(?P<pk>.*)/$', ArtistDetailView.as_view(), name="festival-artist-detail"),
-    url(r'^videos/$', ArtistListView.as_view(), name="festival-video-list"),
-    url(r'^videos/(?P<pk>.*)/$', ArtistDetailView.as_view(), name="festival-video-detail"),
+    url(r'^artists/(?P<slug>.*)/$', ArtistDetailView.as_view(), name="festival-artist-detail"),
+    url(r'^videos/$', VideoListView.as_view(), name="festival-video-list"),
+    url(r'^videos/(?P<slug>.*)/$', VideoDetailView.as_view(), name="festival-video-detail"),
 
 )
