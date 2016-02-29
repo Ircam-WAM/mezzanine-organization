@@ -73,7 +73,7 @@ class Artist(Displayable, RichText, AdminThumbMixin):
     bio = RichTextField(_('biography'), blank=True)
     photo = FileField(_('photo'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
     photo_credits = models.CharField(_('photo credits'), max_length=255, blank=True, null=True)
-    photo_alignment = models.CharField(_('photo alignment'), choices=ALIGNMENT_CHOICES, max_length=32, default="left")
+    photo_alignment = models.CharField(_('photo alignment'), choices=ALIGNMENT_CHOICES, max_length=32, default="left", blank=True)
     photo_description = models.TextField(_('photo description'), blank=True)
     featured = models.BooleanField(_('featured'), default=False)
     photo_featured = FileField(_('photo featured'), upload_to='images/photos', max_length=1024, blank=True, format="Image")

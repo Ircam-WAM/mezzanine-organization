@@ -10,9 +10,8 @@
 
 <div class="artist-bio">
  {{ artist.bio|safe }}
+ <img src="{{ MEDIA_URL }}/{{ artist.photo }}" />
 </div>
-
-<img src="{{ MEDIA_URL }}/{{ artist.photo }}" />
 
 <div class="artist-events">
     <h2>{% trans 'Events' %}</h2>
