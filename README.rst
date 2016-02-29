@@ -45,7 +45,7 @@ Run these commands in a terminal::
     docker-machine ip manifeste
     git clone --recursive git://git.forge.ircam.fr/Manifeste.git
     cd Manifeste
-    docker-compose up
+    docker-compose up db
 
 The last command is needed to init the database. Press CTRL-C to exit. Then fire up the whole composition::
 
