@@ -20,15 +20,18 @@ Run these commands in a terminal::
 
     git clone --recursive git://git.forge.ircam.fr/Manifeste.git
     cd Manifeste
-    docker-compose up
+    docker-compose up db
+
+The last command is needed to init the database. Press CTRL-C to exit. Then fire up the whole composition::
+
+     docker-compose up
 
 To restore the backuped database, in another terminal::
 
     cd Manifeste
     docker-compose run db /srv/backup/restore_db.sh
-    docker-compose run pgdb /srv/backup/restore_db_eve.sh
 
-You should be able to browse the site at http://localhost:8010/
+You should be able to browse the site at http://localhost:9000/
 
 
 MacOS or Windows:
@@ -44,13 +47,15 @@ Run these commands in a terminal::
     cd Manifeste
     docker-compose up
 
+The last command is needed to init the database. Press CTRL-C to exit. Then fire up the whole composition::
+
+    docker-compose up
+
 Then, in another terminal::
 
     eval "$(docker-machine env manifeste)"
     cd Manifeste
-    docker-compose run db /srv/backup/restore_db.sh #(MAJ base festival)
-    docker-compose run pgdb /srv/backup/restore_db_eve.sh #(MAJ base eve)
-
+    docker-compose run db /srv/backup/restore_db.sh
 
 `More info <https://docs.docker.com/>`_ about using docker and related tools.
 The 3rd command should give you the IP of the VM. For example, if IP is 192.168.59.103, you should be able to browse the site at http://192.168.59.103:8010/

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse, reverse_lazy
 
 from mezzanine.core.models import RichText, Displayable
 from mezzanine.core.fields import RichTextField, OrderField, FileField
@@ -72,14 +73,19 @@ class Artist(Displayable, RichText, AdminThumbMixin):
     photo_credits = models.CharField(_('photo credits'), max_length=255, blank=True, null=True)
     featured = models.BooleanField(_('featured'), default=False)
 
-    search_fields = ("name", "bio")
-
-    def __unicode__(self):
-        return self.name
+    search_fields = ("title", "bio")
 
     class Meta(MetaCore):
         verbose_name = _('artist')
         db_table = app_label + '_artists'
+
+    def __unicode__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        url_name = "festival_artist_detail"
+        kwargs = {"slug": self.slug}
+        return reverse(url_name, kwargs=kwargs)
 
 
 class Video(Displayable, RichText):
@@ -88,12 +94,23 @@ class Video(Displayable, RichText):
     event = models.ForeignKey(Event, related_name='videos', verbose_name=_('event'), blank=True, null=True, on_delete=models.SET_NULL)
     media_id = models.IntegerField(_('media id'))
 
+    class Meta(MetaCore):
+        verbose_name = _('video')
+        db_table = app_label + '_videos'
+
     def __unicode__(self):
-        return
+        return self.title
 
     @property
     def html(self):
         pass
+
+    @models.permalink
+    def get_absolute_url(self):
+        url_name = "festival_video_detail"
+        kwargs = {"slug": self.slug}
+        return reverse(url_name, kwargs=kwargs)
+
 
 class EventCategory(BaseNameModel):
     """Event Category"""

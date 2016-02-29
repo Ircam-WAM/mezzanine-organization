@@ -7,7 +7,7 @@
 <div class="artist-list">
  <ul>
  {% for artist in object_list %}
-    <li><a href="{% url 'festival-artist-detail' artist.id %}">{{ artist.name }}</a></li>
+    <li><a href="{% url 'festival-artist-detail' artist.slug %}">{{ artist.name }}</a></li>
  {% endfor %}
  </ul>
 </div>
