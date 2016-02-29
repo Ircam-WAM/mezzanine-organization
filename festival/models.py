@@ -82,10 +82,12 @@ class Artist(Displayable, RichText, AdminThumbMixin):
     def __unicode__(self):
         return self.title
 
+    @property
+    def name(self):
+        return self.title
+
     def get_absolute_url(self):
-        url_name = "festival_artist_detail"
-        kwargs = {"slug": self.slug}
-        return reverse(url_name, kwargs=kwargs)
+        return reverse("festival-artist-detail", kwargs={'slug': self.slug})
 
 
 class Video(Displayable, RichText):
@@ -103,13 +105,12 @@ class Video(Displayable, RichText):
 
     @property
     def html(self):
+        #TODO: get html content from medias.ircam.fr with request module
         pass
 
     @models.permalink
     def get_absolute_url(self):
-        url_name = "festival_video_detail"
-        kwargs = {"slug": self.slug}
-        return reverse(url_name, kwargs=kwargs)
+        return reverse("festival-video-detail", kwargs={"slug": self.slug})
 
 
 class EventCategory(BaseNameModel):
