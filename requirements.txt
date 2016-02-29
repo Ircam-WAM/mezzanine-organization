@@ -1,11 +1,10 @@
 setuptools
 uwsgi
 watchdog
-MySQL-python==1.2.5
-Django==1.8.9
-mezzanine==4.0.1
+mysqlclient
+Django==1.9.2
+mezzanine==4.1.0
 django-modeltranslation
 django-meta
 psycopg2
-mezzanine-agenda
 django-bower

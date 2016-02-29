@@ -1,0 +1,4 @@
+-e git+https://github.com/yomguy/mezzanine-agenda.git#egg=mezzanine-agenda-0.2.0
+
+
+

@@ -1,9 +1,9 @@
-FROM python:2.7
+FROM python:3
 
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update && \
-    apt-get -y --force-yes install locales netcat && \
+    apt-get -y --force-yes install locales netcat pandoc && \
     echo fr_FR.UTF-8 UTF-8 >> /etc/locale.gen && \
     locale-gen
 
