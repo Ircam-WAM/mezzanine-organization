@@ -16,7 +16,7 @@ from festival.models import *
 
 class FestivalEventInline(admin.StackedInline):
     model = FestivalEvent
-    extra = 1
+    extra = 0
 
 
 class FestivalEventAdmin(EventAdmin):
