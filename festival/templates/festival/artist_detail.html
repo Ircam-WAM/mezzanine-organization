@@ -12,6 +12,8 @@
  {{ artist.bio|safe }}
 </div>
 
+<img src="{{ MEDIA_URL }}/{{ artist.photo }}" />
+
 <div class="artist-events">
     <h2>{% trans 'Events' %}</h2>
     {% for event in artist.events.all %}
