@@ -33,6 +33,7 @@ db:
     - data
   volumes:
     - ./data/var/lib/mysql/:/var/lib/mysql
+    - ./scripts/:/srv/scripts
   environment:
     - MYSQL_ROOT_PASSWORD=hyRob0otlaz4
     - MYSQL_DATABASE=manifeste
