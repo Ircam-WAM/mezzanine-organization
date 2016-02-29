@@ -21,4 +21,4 @@ class Command(BaseCommand):
             user.is_superuser = True
             user.is_staff = True
             user.save()
-            print 'User "'+ self.username + '" created'
+            print 'User ' + self.username + ' created'
