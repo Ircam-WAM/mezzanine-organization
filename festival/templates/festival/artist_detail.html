@@ -10,7 +10,7 @@
 
 <div class="artist-bio">
  <p>
-  <img style="float: {{ artist.photo_alignment }}; margin: 0px 15px 15px 0px;" src="{{ MEDIA_URL }}/{{ artist.photo }}" width="50%" />
+  <img class="{% if artist.photo_alignment == 'left' %}image-left{% else %}image-right{% endif %}" src="{{ MEDIA_URL }}/{{ artist.photo }}" width="50%" />
   {{ artist.bio|safe }}
   <br style="clear: both;" />
  </p>
