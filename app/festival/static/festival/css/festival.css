@@ -6,9 +6,17 @@
 .image-left {
     float: left;
     margin: 0px 15px 15px 0px;
+    width: 50%;
 }
 
 .image-right {
     float: right;
     margin: 0px 0px 15px 15px;
+    width: 50%;
+}
+
+.image-center {
+    float: center;
+    margin: 0px 0px 15px 0px;
+    width: 100%;
 }
