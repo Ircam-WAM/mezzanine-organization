@@ -65,7 +65,7 @@
 </div>
 </div>
 
-<div class="container">
+<div class="container main">
 
 {% nevercache %}
 {% if messages %}
@@ -95,11 +95,11 @@
 <div class="container">
 <div class="row">
 
-<div class="col-md-9 left main">
+<div class="col-md-9 left">
     {% block main %}{% endblock %}
 </div>
 
-<div class="col-md-3 right main-panel">
+<div class="col-md-3 right">
     {% nevercache %}
     {% include "includes/language_selector.html" %}
     {% include "includes/user_panel.html" %}
