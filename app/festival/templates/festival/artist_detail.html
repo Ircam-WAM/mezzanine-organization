@@ -9,15 +9,18 @@
 </div>
 
 <div class="artist-bio">
- {{ artist.bio|safe }}
- <img src="{{ MEDIA_URL }}/{{ artist.photo }}" />
+ <p>
+  <img style="float: {{ artist.photo_alignment }}; margin: 0px 15px 15px 0px;" src="{{ MEDIA_URL }}/{{ artist.photo }}" width="50%" />
+  {{ artist.bio|safe }}
+  <br style="clear: both;" />
+ </p>
 </div>
 
 <div class="artist-events">
-    <h2>{% trans 'Events' %}</h2>
-    {% for event in artist.events.all %}
-        {{ event.title }}
-    {% endfor %}
+ <h2>{% trans 'Events' %}</h2>
+  {% for event in artist.events.all %}
+   {{ event.title }}
+  {% endfor %}
 </div>
 
 {% endblock %}
