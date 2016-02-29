@@ -54,8 +54,8 @@ class FestivalEvent(models.Model):
     category = models.ForeignKey('EventCategory', related_name='festival_events', verbose_name=_('category'), blank=True, null=True, on_delete=models.SET_NULL)
     artists = models.ManyToManyField('Artist', related_name='metaevents', verbose_name=_('artists'), blank=True)
     featured = models.BooleanField(_('featured'), default=False)
-    featured_image = FileField(_('featured image'), upload_to='images/%Y/%m/%d', max_length=1024, blank=True, format="Image")
-    featured_image_header = FileField(_('featured image header'), upload_to='images/%Y/%m/%d', max_length=1024, blank=True, format="Image")
+    featured_image = FileField(_('featured image'), upload_to='images/events', max_length=1024, blank=True, format="Image")
+    featured_image_header = FileField(_('featured image header'), upload_to='images/events/headers', max_length=1024, blank=True, format="Image")
 
     class Meta(MetaCore):
         verbose_name = _('festival event')
@@ -69,7 +69,7 @@ class Artist(Displayable, RichText, AdminThumbMixin):
     """Artist"""
 
     bio = RichTextField(_('biography'), blank=True)
-    photo = FileField(_('photo'), upload_to='images/%Y/%m/%d', max_length=1024, blank=True, format="Image")
+    photo = FileField(_('photo'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
     photo_credits = models.CharField(_('photo credits'), max_length=255, blank=True, null=True)
     featured = models.BooleanField(_('featured'), default=False)
 
