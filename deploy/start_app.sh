@@ -41,7 +41,7 @@ then
 else
     # static files auto update
     watchmedo shell-command --patterns="*.js;*.css" --recursive \
-        --command='python '$manage' collectstatic --noinput' $src &
+        --command='python '$manage' collectstatic --noinput' $app &
 
     uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \
     --processes $processes --threads $threads \

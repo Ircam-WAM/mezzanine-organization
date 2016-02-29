@@ -4,6 +4,10 @@
 
 {% block main %}
 
+{% block title %}
+ {% trans "Artists" %}
+{% endblock %}
+
 <div class="artist-list">
  <ul>
  {% for artist in object_list %}
