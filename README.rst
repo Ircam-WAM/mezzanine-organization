@@ -40,7 +40,7 @@ MacOS or Windows:
 Run these commands in a terminal::
 
     docker-machine create --driver virtualbox --virtualbox-memory 8096 manifeste
-    docker-machine manifeste start
+    docker-machine start manifeste
     eval "$(docker-machine env manifeste)"
     docker-machine ip manifeste
     git clone --recursive git://git.forge.ircam.fr/Manifeste.git
