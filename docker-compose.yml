@@ -25,7 +25,6 @@ data:
     - ./data/media/:/srv/media
     - ./data/static/:/srv/static
     - ./data/backup/:/srv/backup
-    - ./data/var/lib/mysql/:/var/lib/mysql
     - ./scripts/:/srv/scripts
   command: "true"
 

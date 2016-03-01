@@ -8,54 +8,27 @@ This is the new template for the Manifeste festival website at IRCAM. It is base
 Install
 =========
 
-For easier development and production workflow, it has been dockerized including the MariaDB and the Nginx webserver.
+For easier development and production workflow, it has been dockerized including Django, Mezzanine, MariaDB and Nginx.
 
-First install `Git <http://git-scm.com/downloads>`_, `Docker engine <https://docs.docker.com/installation/>`_ and `docker-compose <https://docs.docker.com/compose/install/>`_.
+On Linux, first install `Git <http://git-scm.com/downloads>`_, `Docker engine <https://docs.docker.com/installation/>`_ and `docker-compose <https://docs.docker.com/compose/install/>`_ and open a terminal.
 
+On MacOSX or Windows install the `Docker Toolbox <https://www.docker.com/products/docker-toolbox>`_ and open a Docker Quickstart Terminal.
 
-Linux
-------
+Then run these commands::
 
-Run these commands in a terminal::
-
-    git clone --recursive git://git.forge.ircam.fr/Manifeste.git
+    git clone git://git.forge.ircam.fr/Manifeste.git
     cd Manifeste
     docker-compose up db
 
-The last command is needed to init the database. Press CTRL-C to exit. Then fire up the whole composition::
+The last command is needed to init the database. Press CTRL-C to exit, then fire up the whole composition::
 
      docker-compose up
 
-To restore the backuped database, in another terminal::
+Restore the backuped database, in another terminal (or a Docker Quickstart Terminal)::
 
     cd Manifeste
     ./scripts/restore.sh
 
-You should be able to browse the site at http://localhost:9000/
+Give you user password if asked.
 
-
-MacOS or Windows:
-------------------
-
-Run these commands in a terminal::
-
-    docker-machine create --driver virtualbox --virtualbox-memory 8096 default
-    docker-machine start default
-    eval "$(docker-machine env default)"
-    docker-machine ip default
-    git clone --recursive git://git.forge.ircam.fr/Manifeste.git
-    cd Manifeste
-    docker-compose up db
-
-The last command is needed to init the database. Press CTRL-C to exit. Then fire up the whole composition::
-
-    docker-compose up
-
-Then, in another terminal::
-
-    eval "$(docker-machine env default)"
-    cd Manifeste
-    ./scripts/restore.sh
-
-`More info <https://docs.docker.com/>`_ about using docker and related tools.
-The 3rd command should give you the IP of the VM. For example, if IP is 192.168.59.103, you should be able to browse the site at http://192.168.59.103:8010/
+You should be able to browse the app at http://localhost:8010/ (replacing 'localhost' by the IP given by the docker terminal on OSX and Windows)
