@@ -39,10 +39,10 @@ MacOS or Windows:
 
 Run these commands in a terminal::
 
-    docker-machine create --driver virtualbox --virtualbox-memory 8096 manifeste
-    docker-machine start manifeste
-    eval "$(docker-machine env manifeste)"
-    docker-machine ip manifeste
+    docker-machine create --driver virtualbox --virtualbox-memory 8096 default
+    docker-machine start default
+    eval "$(docker-machine env default)"
+    docker-machine ip default
     git clone --recursive git://git.forge.ircam.fr/Manifeste.git
     cd Manifeste
     docker-compose up db
@@ -53,7 +53,7 @@ The last command is needed to init the database. Press CTRL-C to exit. Then fire
 
 Then, in another terminal::
 
-    eval "$(docker-machine env manifeste)"
+    eval "$(docker-machine env default)"
     cd Manifeste
     ./scripts/restore.sh
 
