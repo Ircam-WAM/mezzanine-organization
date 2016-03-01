@@ -29,7 +29,7 @@ The last command is needed to init the database. Press CTRL-C to exit. Then fire
 To restore the backuped database, in another terminal::
 
     cd Manifeste
-    docker-compose run db /srv/backup/restore_db.sh
+    ./scripts/restore.sh
 
 You should be able to browse the site at http://localhost:9000/
 
@@ -55,7 +55,7 @@ Then, in another terminal::
 
     eval "$(docker-machine env manifeste)"
     cd Manifeste
-    docker-compose run db /srv/backup/restore_db.sh
+    ./scripts/restore.sh
 
 `More info <https://docs.docker.com/>`_ about using docker and related tools.
 The 3rd command should give you the IP of the VM. For example, if IP is 192.168.59.103, you should be able to browse the site at http://192.168.59.103:8010/
