@@ -22,19 +22,17 @@
 data:
   image: debian:jessie
   volumes:
-     - ./data/media/:/srv/media
-     - ./data/static/:/srv/static
-     - ./data/backup/:/srv/backup
+    - ./data/media/:/srv/media
+    - ./data/static/:/srv/static
+    - ./data/backup/:/srv/backup
+    - ./data/var/lib/mysql/:/var/lib/mysql
+    - ./scripts/:/srv/scripts
   command: "true"
 
 db:
   image: mariadb
   volumes_from:
     - data
-  volumes:
-    - ./data/var/lib/mysql/:/var/lib/mysql
-    - ./scripts/:/srv/scripts
-    - ./app/deploy/my.cnf:/etc/mysql/my.cnf
   environment:
     - MYSQL_ROOT_PASSWORD=hyRob0otlaz4
     - MYSQL_DATABASE=manifeste
