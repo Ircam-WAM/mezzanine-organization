@@ -15,7 +15,7 @@ threads=2
 autoreload=3
 uid='www-data'
 gid='www-data'
-patterns='*.js,*.css,*.jpg,*.jpeg,*.gif,*.png,*.svg,*.ttf,*.eot,*.woff,*.woff2'
+patterns='*.js;*.css;*.jpg;*.jpeg;*.gif;*.png;*.svg;*.ttf;*.eot;*.woff;*.woff2'
 
 # Staging
 # pip install psycopg2
