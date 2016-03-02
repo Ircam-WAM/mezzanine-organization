@@ -1,0 +1,43 @@
+// ****************************************************************
+// _Layout
+// ****************************************************************
+
+.container {
+    @extend .clearfix;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 1rem;
+
+    @media (min-width : $desktop) {
+        max-width: 960px;
+    }
+    @media (min-width : $desktop_large) {
+        max-width: 1420px;
+    }
+    @media (min-width : $desktop_xlarge) {
+        max-width: 1600px;
+    }
+}
+
+.row {
+    @extend .clearfix;
+    display: block;
+}
+
+.main {
+  display: block;
+  margin: 1rem auto;
+  @media (min-width : $desktop ) {
+    float: left;
+    width: 70%;
+  }
+}
+
+.aside {
+  display: block;
+  @media (min-width : $desktop ) {
+    float: left;
+    width: 30%;
+  }
+}
+

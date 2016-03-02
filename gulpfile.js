@@ -16,9 +16,9 @@ var gulp         = require('gulp');
 /**
  * Paths
  */
-var scssSrc = 'app/festival/static/festival/scss/',
-    jsSrc   = 'app/festival/static/festival/js/',
-    cssDist = 'app/festival/static/festival/css/'
+var scssSrc = 'app/festival/static/scss/',
+    jsSrc   = 'app/festival/static/js/',
+    cssDist = 'app/festival/static/css/'
 
 
 
@@ -56,7 +56,11 @@ gulp.task('css', function () {
     ];
 
     return gulp.src( scssSrc + 'index.scss'  )
-        .pipe(sass({ outputStyle : output }).on('error', notify.onError("Error: <%= error.message %>")))
+        .pipe(sass({
+            outputStyle : output,
+            sourceComments: 'normal'
+        })
+        .on('error', notify.onError("Error: <%= error.message %>")))
         .pipe(postcss(processors))
         .pipe(gulp.dest(cssDist));
 

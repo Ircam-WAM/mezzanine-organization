@@ -1,0 +1,243 @@
+// ****************************************************************
+// _Forms
+// ****************************************************************
+
+
+/**
+ * Core
+ */
+fieldset {
+  background-color: $fieldset_background_color;
+  border: 1px solid $base_border_color;
+  margin: 0 0 ($base_font_size / 2);
+  padding: $base_line_height;
+  @if $base_border_radius {
+    border-radius: $base_border_radius;
+  }
+}
+
+legend {
+  text-transform: uppercase;
+  padding: 0 ($base_font_size / 2);
+}
+
+input,
+label,
+select {
+  display: block;
+  font-family: $base_font_family;
+  font-size: $base_font_size;
+}
+
+label {
+  font-weight: $bold;
+
+  &.required::after {
+    content: "*";
+  }
+
+  abbr {
+    display: none;
+  }
+}
+
+input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+input:not([type]),
+select[multiple=multiple],
+textarea {
+  background-color: $input_background_color;
+  border: 1px solid $base_border_color;
+  @if $base_border_radius {
+    border-radius: $base_border_radius;
+  }
+  box-shadow: $form_box_shadow;
+  box-sizing: border-box;
+  font-family: $input_font_family;
+  font-size: $base_font_size;
+  padding: $base_font_size / 2;
+  transition: border .4s ease;
+  width: 100%;
+  -webkit-appearance: none;
+
+  &:hover {
+    border-color: darken($deep_gray, 10);
+  }
+
+  &:focus {
+    border-color: darken($base_border_color, 10);
+    border-left: ($base_font_size / 3) solid $main_color;
+    box-shadow: $form_box_shadow-focus;
+    outline: none;
+  }
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="search"] {
+  appearance : none;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline;
+  margin-right: ($base_line_height / 2) / 2;
+}
+
+input[type="file"] {
+  padding-bottom: ($base_line_height / 2);
+  width: 100%;
+}
+
+select {
+  margin-bottom: $base_line_height;
+  max-width: 100%;
+  width: auto;
+}
+
+
+/**
+ * Input States
+ */
+.input-error {
+  border: 1px solid $error !important;
+  margin-bottom: .3rem;
+}
+
+.input-success {
+  border: 1px solid $success !important;
+  margin-bottom: .3rem;
+}
+
+.input-message-error {
+  color: $error;
+  font-size: 75%;
+}
+.input-message-success {
+  color: $success;
+  font-size: 75%;
+}
+
+
+
+/**
+ * Sticked input/button
+ */
+.sticked-form {
+    margin: 0 auto;
+    width: 100%;
+    @media (min-width : $tablet) {
+      width: 60%;
+      min-width: 430px;
+    }
+    input {
+        font: $light 1rem $header_font_color;
+
+        @media (min-width : $desktop) {
+          float: left;
+        }
+        width: auto;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        margin: 0;
+        padding: 0 1rem;
+    }
+    input[type=email] {
+      @if $base_border_radius {
+        border-radius: $base_border_radius $base_border_radius 0 0;
+      }
+      // padding: 0 .5em;
+      width: 100%;
+      @media (min-width : $desktop) {
+          width: 70%;
+          @if $base_border_radius {
+            border-radius: $base_border_radius 0 0 $base_border_radius;
+          }
+      }
+
+        transition: background .2s;
+        &:focus {
+            outline: 0;
+        }
+    }
+    input[type=submit] {
+      width: 100%;
+      -webkit-appearance: none;
+      @if $base_border_radius {
+        border-radius: 0 0 $base_border_radius $base_border_radius;
+      }
+      @media (min-width : $desktop) {
+          width: 30%;
+          border-radius: 0 $base_border_radius $base_border_radius 0;
+      }
+        // padding: 0 .5em;
+        font-weight: $bold;
+        color: $white;
+        border: 0;
+        outline: 0;
+        margin-top: 0;
+        &:hover {
+            background: lighten($main_color,5%);
+        }
+        &:active {
+            outline: 0;
+            background: darken($main_color,5%);
+        }
+    }
+}
+
+
+
+/**
+ * Reset input buttons styles
+ */
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+button {
+  appearence: none;
+  -webkit-font-smoothing: antialiased;
+  background-color: $base_btn_background_color;
+  border-radius: $base_border_radius;
+  border: none;
+  color: $base_btn_color;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $base_font_family;
+  font-size: $base_font_size;
+  font-weight: $bold;
+  line-height: 1;
+  padding: 0.75em 1em;
+  text-decoration: none;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  transition: all .3s ease;
+  margin-top: 1rem;
+
+  &:hover,
+  &:focus {
+    background-color: $base_btn_hover_background_color;
+    color: $base_btn_hover_color;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

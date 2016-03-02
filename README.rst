@@ -49,14 +49,13 @@ to make sure your old version doesn't collide with gulp-cli.__
 $ npm install --global gulp-cli
 ```
 
-- 1. Install gulp dependancies
-
+- 2. Install gulp dependancies
 
 ```
 $ npm install
 ```
 
-- 2. Run gulp:
+- 3. Run gulp:
 
 ```sh
 $ gulp [task]
