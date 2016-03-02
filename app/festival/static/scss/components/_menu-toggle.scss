@@ -1,0 +1,44 @@
+// ****************************************************************
+// _HeadersStyles
+// ****************************************************************
+
+.menu__toggle {
+  display: block;
+  background: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  padding: 9px 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.menu__toggle:checked span:first-child,
+.menu__toggle.toggled span:first-child {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu__toggle:checked span:nth-child(2),
+.menu__toggle.toggled span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu__toggle:checked span:last-child,
+.menu__toggle.toggled span:last-child {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.menu__toggle span {
+  display: block;
+  background: white;
+  width: 20px;
+  height: 2px;
+  border-radius: 3px;
+  transform-origin: center;
+  transition: 0.3s ease;
+}
+
+.menu__toggle span:nth-child(2) {
+  margin: 4px 0;
+}
