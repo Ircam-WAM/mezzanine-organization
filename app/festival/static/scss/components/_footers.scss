@@ -41,10 +41,15 @@
   font-size: 80%;
 }
 
+.footer-legals {
+  padding: 2rem 1rem;
+}
+
 .footer-legals p,
 .footer-legals a {
-  font-size: 80%;
+  font-size: .75rem;
   text-align: center;
+  font-family: $header_font_family;
   color: $footer_color;
 }
 
@@ -67,3 +72,17 @@
   float: right;
 }
 
+/* _Theme
+---------------------------------- */
+
+.nav-footer {
+  display: block;
+  text-align: center;
+
+  ul {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    padding: .3rem 1rem;
+  }
+}

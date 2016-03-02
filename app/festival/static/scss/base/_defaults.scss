@@ -21,6 +21,7 @@ body {
   font: $base_font_weight $base_font_size $base_font_family;
   line-height: $base_line_height;
   background: $base_background_color;
+  @include retina-background-image("../img/bg", "png", 256px, 256px);
   color: $base_font_color;
 }
 

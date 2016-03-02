@@ -5,17 +5,10 @@
 /**
  * Core styling
  */
-.header {
+.banner {
   @extend .clearfix;
   display: block;
   background-color: $header_background_color;
-  padding: 0 $base_font_size;
-
-  a {
-    display: block;
-    padding: $base_font_size 1rem;
-    font-family: $header_font_family;
-  }
 
   @if $header_uppercase {
       text-transform: uppercase;
@@ -39,38 +32,73 @@
         color: $white;
     }
   }
-
 }
 
+// ****************************************************************
+// _header
+// ****************************************************************
+.header {
+  @extend .clearfix;
 
-/**
- * Positionning : Use these class to position your inner nav element
- */
-.nav-left {
-    float: left;
-    width: auto;
-}
+  padding: $base_font_size;
 
-.nav-right {
-    float: right;
-    width: auto;
-}
+  h1 {
+    margin: 0;
+  }
 
-.nav-center {
+  &__baseline {
     display: block;
-    text-align: center;
+    float: right;
+  }
+
+  &__logo {
+    display: block;
+    float: left;
+    max-width: 10rem;
+
+    img {
+      max-height: 45px;
+      width: auto;
+      @media (min-width : $desktop ) {
+          width: auto;
+          height: auto;
+      }
+    }
+
+    &__text {
+      position: absolute;
+      top: -200%;
+    }
+  }
 }
 
 
-/**
- * Nav logo styles
- */
-.nav-logo {
-    display: inline-block;
-    *display: inline;
-    *zoom: 1;
-    vertical-align: middle;
-    img, svg {
-        display: block;
+// ****************************************************************
+// _Menu
+// ****************************************************************
+
+.navigation {
+  @extend .clearfix;
+}
+
+.menu {
+  text-align: center;
+  &__item {
+    // text-align: center;
+    @media (min-width : $desktop ) {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
     }
+
+    &__link {
+      display: inline-block;
+      padding: $base_font_size 1rem;
+      margin: 0 auto;
+      font-family: $header_font_family;
+      text-transform: uppercase;
+    }
+  }
+
+
 }
