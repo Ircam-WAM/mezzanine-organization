@@ -1,0 +1,40 @@
+.test {
+  background: #000;
+}
+
+.main {
+  margin-top: 4em;
+}
+
+.image-left {
+  float: left;
+  margin: 0px 15px 15px 0px;
+  width: 50%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.image-right {
+  float: right;
+  margin: 0px 0px 15px 15px;
+  width: 50%;
+}
+
+.image-center {
+  float: center;
+  margin: 0px 0px 15px 0px;
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+
+  .image-right {
+    text-align: center;
+  }
+
+  .image-center {
+    text-align: center;
+  }
+}

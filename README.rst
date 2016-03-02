@@ -30,5 +30,40 @@ Restore the backuped database, in another terminal (or a Docker Quickstart Termi
     ./scripts/restore.sh
 
 Give you user password if asked.
-
 You should be able to browse the app at http://localhost:8010/ (replacing 'localhost' by the IP given by the docker terminal on OSX and Windows)
+
+If app is broken after a restore script :
+`docker-compose restart` to restart the machine.
+
+Work with gulp
+==================
+
+Gulp allow to compile scss to css, concatenate js files and has a watcher, who do this tasks on file change.
+Gulp require nodejs installed on your computer to work.
+
+- 1. Install gulp globally:
+__If you have previously installed a version of gulp globally, please run `npm rm --global gulp`
+to make sure your old version doesn't collide with gulp-cli.__
+
+```
+$ npm install --global gulp-cli
+```
+
+- 1. Install gulp dependancies
+
+
+```
+$ npm install
+```
+
+- 2. Run gulp:
+
+```sh
+$ gulp [task]
+```
+
+Paths
+============
+
+- `app/festival/templates` : Personnal templates
+- `app/festival/static/festival` : Static files
