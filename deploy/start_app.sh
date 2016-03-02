@@ -38,7 +38,7 @@ python $manage create-admin-user
 # app start
 if [ $1 = "--runserver" ]
 then
-    python $manage runserver 0.0.0.0:9000
+    python $manage runserver 0.0.0.0:9010
 else
     # static files auto update
     watchmedo shell-command --patterns="$patterns" --recursive \
