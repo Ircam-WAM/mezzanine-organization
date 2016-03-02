@@ -15,6 +15,7 @@ threads=2
 autoreload=3
 uid='www-data'
 gid='www-data'
+patterns='*.js,*.css,*.jpg,*.jpeg,*.gif,*.png,*.svg,*.ttf,*.eot,*.woff,*.woff2'
 
 # Staging
 # pip install psycopg2
@@ -40,7 +41,7 @@ then
     python $manage runserver 0.0.0.0:9000
 else
     # static files auto update
-    watchmedo shell-command --patterns="*.js;*.css" --recursive \
+    watchmedo shell-command --patterns="$patterns" --recursive \
         --command='python '$manage' collectstatic --noinput' $app &
 
     uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \

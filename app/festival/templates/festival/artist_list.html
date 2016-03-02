@@ -11,7 +11,7 @@
 <div class="artist-list">
  <ul>
  {% for artist in object_list %}
-    <li><a href="{% url 'festival-artist-detail' artist.slug %}">{{ artist.name }}</a></li>
+    <li><a href="{% url 'festival-artist-detail' artist.slug %}"><img width="10%" src="{{ MEDIA_URL }}/{% if artist.photo %}{{ artist.photo }}{% elif artist.photo_featured %}{{ artist.photo_featured }}{% endif %}" />{{ artist.name }}</a></li>
  {% endfor %}
  </ul>
 </div>
