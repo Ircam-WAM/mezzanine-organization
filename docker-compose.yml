@@ -38,18 +38,6 @@ db:
     - MYSQL_USER=manifeste
     - MYSQL_PASSWORD=Onukifsid7
 
-# db:
-#   image: postgres
-#   volumes:
-#     - ./data/var/lib/postgresql/manifeste/data/:/var/lib/postgresql/data
-#   volumes_from:
-#     - data
-#   environment:
-#     - POSTGRES_PASSWORD=mysecretpassword
-#     - POSTGRES_USER=postgres
-#     - POSTGRES_DB=manifeste
-
-
 # pgdb:
 #   image: postgres
 #   volumes:
