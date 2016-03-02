@@ -12,6 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
     <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
     {% endifinstalled %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
     {% compress css %}
     <link rel="stylesheet" href="{% static "css/index.css" %}">
@@ -20,51 +21,63 @@
     {% block extra_head %}{% endblock %}
 </head>
 
+{# <body id="{% block body_id %}body{% endblock %}"> #}
 <body id="{% block body_id %}body{% endblock %}">
 
-    <div class="header" role="banner">
+    <div class="banner" role="banner">
         <div class="container">
-            <div class="navbar-header">
+            <div class="header">
+                {% if settings.SITE_TITLE %}
+                <h1>
+                    <a class="header__logo" href="/">
+                        <span class="header__logo__text">{{ settings.SITE_TITLE }}</span>
+                        <img src="{% static "img/logo_manifeste16_black.png" %}" alt="Logo Manifeste 2016 ircam" width="200">
+                    </a>
+                </h1>
+                {% endif %}
+
+                {% if settings.SITE_TAGLINE %}
+                <p class="header__baseline">{{ settings.SITE_TAGLINE }}</p>
+                {% endif %}
 
                 <button class="menu__toggle">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-
-                {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-                {% if settings.SITE_TAGLINE %}<p class="navbar-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
             </div>
+        </div>
 
-            <div class="navbar-collapse collapse">
-                {% page_menu "pages/menus/dropdown.html" %}
-            </div>
+        <div class="navigation" role="navigation">
+            {% page_menu "pages/menus/dropdown.html" %}
         </div>
     </div>
 
     <div class="div-message">
-        {% nevercache %}
-        {% if messages %}
-        <div class="messages">
-        {% for message in messages %}
-        <div class="alert alert-dismissable alert-{{ message.tags }}" data-alert="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ message }}
-        </div>
-        {% endfor %}
-        </div>
-        {% endif %}
-        {% endnevercache %}
+        <div class="container">
+            {% nevercache %}
+            {% if messages %}
+            <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-dismissable alert-{{ message.tags }}" data-alert="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+            </div>
+            {% endfor %}
+            </div>
+            {% endif %}
+            {% endnevercache %}
 
-        <h1>{% block title %}{% endblock %}</h1>
+            <h2>{% block title %}{% endblock %}</h2>
 
-        {% comment - Remove breadcrumbs %}
-        <ul class="breadcrumb">
-        {% spaceless %}
-        {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
-        {% endspaceless %}
-        </ul>
-        {% endcomment %}
+            {% comment - Remove breadcrumbs %}
+            <ul class="breadcrumb">
+            {% spaceless %}
+            {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
+            {% endspaceless %}
+            </ul>
+            {% endcomment %}
+        </div>
     </div>
 
     <div class="site__content">
@@ -94,27 +107,21 @@
         </div>
     </div>
 
-    <footer>
+    <footer class="footer" role="footer">
         <div class="container">
+            <div class="footer-logo">
+                <img src="{% static "img/logo_manifeste16_black.png" %}" alt="Logo Manifeste 2016 ircam" width="80">
+            </div>
         {% page_menu "pages/menus/footer.html" %}
-            <div class="row">
+            <div class="footer-legals">
                 <p class="site-info text-center">
-                    {% trans "Powered by" %}
-                    <a href="http://mezzanine.jupo.org">Mezzanine</a>{% ifinstalled cartridge.shop %},
-                    <a href="http://cartridge.jupo.org">Cartridge</a>{% endifinstalled %}
-                    {% trans "and" %}
-                    <a href="http://www.djangoproject.com">Django</a>
-                    <span class="separator">|</span>
-                    {% trans "Theme by" %} <a target="_blank" href="http://getbootstrap.com">Bootstrap</a>
-                    {% ifinstalled mezzanine.mobile %}
-                    <span class="separator">|</span>
-                    <a href="{% url "set_device" "mobile" %}?next={{ request.path }}">{% trans "View Mobile Site" %}</a>
-                    {% endifinstalled %}
+                    {# {% trans "Powered by" %} #}
+                    Conception & réalisation :
+                    <a href="http://www.philippebarbosa.com" titre="Développeur front-end freelance & photographe professionnel à Paris">Philippe Barbosa</a>
                 </p>
             </div>
         </div>
     </footer>
-
     {% include "includes/footer_scripts.html" %}
 </body>
 </html>

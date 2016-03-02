@@ -30,6 +30,7 @@
   @media (min-width : $desktop ) {
     float: left;
     width: 70%;
+    padding-right: .5rem;
   }
 }
 
@@ -38,6 +39,7 @@
   @media (min-width : $desktop ) {
     float: left;
     width: 30%;
+    padding-left: .5rem;
   }
 }
 

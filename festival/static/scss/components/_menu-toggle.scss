@@ -4,7 +4,8 @@
 
 .menu__toggle {
   display: block;
-  background: #fff;
+  float: right;
+  background: $main_color;
   width: 32px;
   height: 32px;
   border-radius: 3px;
@@ -12,6 +13,9 @@
   padding: 9px 6px;
   cursor: pointer;
   user-select: none;
+  @media (min-width : $desktop ) {
+      display: none;
+  }
 }
 
 .menu__toggle:checked span:first-child,

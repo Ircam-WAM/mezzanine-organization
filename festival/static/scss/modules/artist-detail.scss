@@ -1,0 +1,24 @@
+.artist__detail {
+
+}
+
+.artist__event {
+  display: block;
+  padding: 1rem;
+  width: 100%;
+  background: $white;
+  text-align: left;
+
+  &__title {
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  &__cta {
+    @extend .btn;
+    width: 50%;
+    display: block;
+    margin: 1rem auto;
+    text-align: center;
+  }
+}
