@@ -27,7 +27,7 @@ The last command is needed to init the database. Press CTRL-C to exit, then fire
 Restore the backuped database, in another terminal (or a Docker Quickstart Terminal)::
 
     cd Manifeste
-    ./scripts/restore.sh
+    scripts/restore.sh
 
 Give you user password if asked.
 You should be able to browse the app at http://localhost:8010/ (replacing 'localhost' by the IP given by the docker terminal on OSX and Windows)
