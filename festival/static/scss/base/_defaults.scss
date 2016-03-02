@@ -1,0 +1,33 @@
+// ****************************************************************
+// _Defaults
+// ****************************************************************
+
+* {
+  -webkit-font-smoothing:antialiased;
+  font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+html {
+  font-size:100%;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font: $base_font_weight $base_font_size $base_font_family;
+  line-height: $base_line_height;
+  background: $base_background_color;
+  color: $base_font_color;
+}
+
+.clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

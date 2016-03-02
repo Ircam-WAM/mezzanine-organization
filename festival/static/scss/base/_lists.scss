@@ -1,0 +1,66 @@
+// ****************************************************************
+// _Base list
+// ****************************************************************
+
+
+/**
+ * Reset default styles
+ */
+ul,
+ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  li ul,
+  li ol {
+    padding-left: 2rem;
+  }
+}
+
+
+/**
+ * In case you nedd default style for list
+ */
+ul.default {
+  list-style-type: disc;
+  margin-bottom: $base_font_size;
+  padding-left: $base_font_size;
+}
+
+ol.default {
+  list-style-type: decimal;
+  margin-bottom: $base_font_size;
+  padding-left: $base_font_size;
+}
+
+dl {
+  margin-bottom: $base_font_size;
+
+  dt {
+    font-weight: bold;
+    color: $header_font_color;
+    // margin-top: $base_font_size;
+  }
+
+  dd {
+    margin: 0 0 $base_font_size;
+  }
+}
+
+
+/**
+ * List inline
+ */
+.list-inline {
+    display: block;
+    padding: 0;
+    li {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        text-align: center;
+        vertical-align: middle;
+        padding: 0 ($base_font_size / 2);
+        margin-left: -0.33333em;
+    }
+}

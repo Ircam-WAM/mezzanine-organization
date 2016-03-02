@@ -1,6 +1,12 @@
 {% load mezzanine_tags i18n staticfiles %}
 
 {% editable_loader %}
+{% compress js %}
+<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+<link rel="stylesheet" href="{% static "festival/js/plugins.js" %}">
+<link rel="stylesheet" href="{% static "festival/js/index.js" %}">
+{% block extra_js %}{% endblock %}
+{% endcompress %}
 
 <script>
 {% if settings.GOOGLE_ANALYTICS_ID and not request.user.is_staff %}

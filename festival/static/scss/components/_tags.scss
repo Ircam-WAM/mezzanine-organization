@@ -1,0 +1,40 @@
+// ****************************************************************
+// _Tags
+// ****************************************************************
+
+
+
+/**
+ * Core
+ */
+.tag {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  margin: 0 0.1em;
+  padding: 0.3em 1em;
+  color: $white;
+  background: $main_color;
+  font-size: 90%;
+}
+
+
+
+/**
+ * Colors
+ */
+.tag-success {
+    background: $success;
+}
+
+.tag-error {
+    background: $error;
+}
+
+.tag-warning {
+    background: $warning;
+}
+
+.tag-info {
+    background: $info;
+}

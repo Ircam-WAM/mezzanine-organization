@@ -14,7 +14,7 @@
     {% endifinstalled %}
 
     {% compress css %}
-    <link rel="stylesheet" href="{% static "festival/css/index.css" %}">
+    <link rel="stylesheet" href="{% static "css/index.css" %}">
     {% endcompress %}
 
     {% block extra_head %}{% endblock %}
@@ -22,7 +22,7 @@
 
 <body id="{% block body_id %}body{% endblock %}">
 
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="header" role="banner">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <div class="container main">
+    <div class="div-message">
         {% nevercache %}
         {% if messages %}
         <div class="messages">
@@ -67,14 +67,13 @@
         {% endcomment %}
     </div>
 
-    <div class="container">
-        <div class="row">
-
-            <div class="col-md-9 left">
+    <div class="site__content">
+        <div class="container">
+            <main class="main" role="main">
                 {% block main %}{% endblock %}
-            </div>
+            </main>
 
-            <div class="col-md-3 right">
+            <aside class="aside">
                 {% nevercache %}
                 {% include "includes/language_selector.html" %}
                 {% include "includes/user_panel.html" %}
@@ -88,8 +87,7 @@
                 {% endblock %}
                 </div>
                 </div>
-            </div>
-
+            </aside>
         </div>
     </div>
 
