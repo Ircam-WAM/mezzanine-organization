@@ -5,6 +5,7 @@
 
 
 
+
 /* _Colors
 ---------------------------------- */
 $main_color            : $red;
@@ -36,10 +37,11 @@ $bold               : 700;
 $ultrabold          : 900;
 
 
-$your_web_font_name : "font_name"; // Provide your custom font here
+$interstate : "Interstate";
+$triplex : "Triplex";
 
-$sans_serif         : $helvetica;
-$serif              : $sans_serif;
+$sans_serif         : $interstate;
+$serif              : $triplex;
 $monospace          : $consolas;
 
 $header_font_family : $sans_serif;

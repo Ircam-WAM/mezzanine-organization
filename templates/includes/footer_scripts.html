@@ -2,9 +2,9 @@
 
 {% editable_loader %}
 {% compress js %}
-<script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
-<link rel="stylesheet" href="{% static "festival/js/plugins.js" %}">
-<link rel="stylesheet" href="{% static "festival/js/index.js" %}">
+    <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
+    <script src="{% static "js/plugins.js" %}"></script>
+    <script src="{% static "js/index.js" %}"></script>
 {% block extra_js %}{% endblock %}
 {% endcompress %}
 
