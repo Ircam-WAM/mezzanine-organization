@@ -51,7 +51,7 @@ class FestivalEvent(models.Model):
 
     event = models.ForeignKey(Event, related_name='festival_events', verbose_name=_('festival event'), blank=True, null=True, on_delete=models.SET_NULL)
     #eve_event = SpanningForeignKey(eve.models.EventVersion, related_name='festival_events', verbose_name=_('E-venement event'), blank=True, null=True, default=None)
-    eve_event_id = models.IntegerField(_('eve id'), blank=True)
+    eve_event_id = models.IntegerField(_('eve id'), blank=True, null=True)
     category = models.ForeignKey('EventCategory', related_name='festival_events', verbose_name=_('category'), blank=True, null=True, on_delete=models.SET_NULL)
     artists = models.ManyToManyField('Artist', related_name='metaevents', verbose_name=_('artists'), blank=True)
     featured = models.BooleanField(_('featured'), default=False)
@@ -100,7 +100,7 @@ class Video(Displayable, RichText):
     """Video"""
 
     event = models.ForeignKey(Event, related_name='videos', verbose_name=_('event'), blank=True, null=True, on_delete=models.SET_NULL)
-    media_id = models.IntegerField(_('media id'))
+    media_id = models.CharField(_('media id'), max_length=128)
 
     class Meta(MetaCore):
         verbose_name = _('video')
@@ -114,7 +114,6 @@ class Video(Displayable, RichText):
         #TODO: get html content from medias.ircam.fr with request module
         pass
 
-    @models.permalink
     def get_absolute_url(self):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
 
