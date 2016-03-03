@@ -114,7 +114,6 @@ class Video(Displayable, RichText):
         #TODO: get html content from medias.ircam.fr with request module
         pass
 
-    @models.permalink
     def get_absolute_url(self):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
 
