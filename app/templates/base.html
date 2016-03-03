@@ -25,15 +25,18 @@
 <body id="{% block body_id %}body{% endblock %}">
 
     <div class="banner" role="banner">
-        <div class="container">
-            <div class="header">
+        <div class="header">
+            <div class="container">
                 {% if settings.SITE_TITLE %}
                 <h1>
                     <a class="header__logo" href="/">
                         <span class="header__logo__text">{{ settings.SITE_TITLE }}</span>
-                        <img src="{% static "img/logo_manifeste16_black.png" %}" alt="Logo Manifeste 2016 ircam" width="200">
+                        <img class="header__logo__img" src="{% static "img/logo_manifeste16_black.png" %}" alt="Logo Manifeste 2016 ircam" width="200">
                     </a>
                 </h1>
+                    <div class="header__logo--right">
+                        <img class="header__logo__img" src="{% static "img/logo_ircam_black.png" %}" alt="Logo Manifeste 2016 ircam" width="200">
+                    </div>
                 {% endif %}
 
                 {% if settings.SITE_TAGLINE %}

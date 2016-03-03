@@ -6,7 +6,7 @@
   display: block;
   padding: 1rem;
   width: 100%;
-  background: $white;
+  background: $gray_light;
   text-align: left;
 
   &__title {
@@ -16,7 +16,7 @@
 
   &__cta {
     @extend .btn;
-    width: 50%;
+    width: 20%;
     display: block;
     margin: 1rem auto;
     text-align: center;

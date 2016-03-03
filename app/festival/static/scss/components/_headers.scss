@@ -39,6 +39,7 @@
 // ****************************************************************
 .header {
   @extend .clearfix;
+  background: $base_background_color url('../img/bg_manzoni--center.jpg') no-repeat top;
 
   padding: $base_font_size;
 
@@ -48,7 +49,15 @@
 
   &__baseline {
     display: block;
-    float: right;
+    width: 100%;
+    text-align: center;
+    line-height: 85px;
+    color: black;
+    font-weight: $bold;
+    font-size: 1rem;
+    @media (min-width : $desktop ) {
+        font-size: 2rem;
+    }
   }
 
   &__logo {
@@ -56,12 +65,15 @@
     float: left;
     max-width: 10rem;
 
-    img {
+    &--right {
+      float: right;
+    }
+
+    &__img {
       max-height: 45px;
       width: auto;
       @media (min-width : $desktop ) {
-          width: auto;
-          height: auto;
+          max-height: 85px;
       }
     }
 

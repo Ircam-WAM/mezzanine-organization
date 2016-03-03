@@ -9,11 +9,10 @@
 /* _Colors
 ---------------------------------- */
 
-$manifeste16__color    : #dacdb0;
-$manifeste16__main    : #32506d;
+$manifeste16           : #8e702e;
 
-$main_color            : $manifeste16__main;
-$base_background_color : $manifeste16__color;
+$main_color            : $manifeste16;
+$base_background_color : $white;
 
 $header_font_color     : $black_faded;
 $base_font_color       : $gray_darker;
@@ -76,8 +75,8 @@ $header_uppercase        : false;
 
 /* _Footer
 ---------------------------------- */
-$footer_background_color : $white;
-$footer_color            : $main_color;
+$footer_background_color : $manifeste16;
+$footer_color            : $white;
 $footer_item_color       : $gray;
 
 
