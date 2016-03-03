@@ -5,7 +5,7 @@
 .menu__toggle {
   display: block;
   float: right;
-  background: $main_color;
+  background: $white;
   width: 32px;
   height: 32px;
   border-radius: 3px;
@@ -13,8 +13,13 @@
   padding: 9px 6px;
   cursor: pointer;
   user-select: none;
+  border: 1px solid #000;
+  margin: 0;
   @media (min-width : $desktop ) {
       display: none;
+  }
+  &:hover {
+    background: #fff;
   }
 }
 
@@ -35,7 +40,7 @@
 
 .menu__toggle span {
   display: block;
-  background: white;
+  background: $main_color;
   width: 20px;
   height: 2px;
   border-radius: 3px;
