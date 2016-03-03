@@ -39,15 +39,16 @@
                     </div>
                 {% endif %}
 
-                {% if settings.SITE_TAGLINE %}
-                <p class="header__baseline">{{ settings.SITE_TAGLINE }}</p>
-                {% endif %}
-
                 <button class="menu__toggle">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
+
+                {% if settings.SITE_TAGLINE %}
+                <p class="header__baseline">{{ settings.SITE_TAGLINE }}</p>
+                {% endif %}
+
             </div>
         </div>
 
