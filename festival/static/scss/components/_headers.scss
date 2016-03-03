@@ -40,8 +40,7 @@
 .header {
   @extend .clearfix;
   background: $base_background_color url('../img/bg_manzoni--center.jpg') no-repeat top;
-
-  padding: $base_font_size;
+  padding: $base_font_size 0;
 
   h1 {
     margin: 0;
@@ -51,11 +50,11 @@
     display: block;
     width: 100%;
     text-align: center;
-    line-height: 85px;
     color: black;
     font-weight: $bold;
     font-size: 1rem;
     @media (min-width : $desktop ) {
+        line-height: 85px;
         font-size: 2rem;
     }
   }
@@ -64,9 +63,14 @@
     display: block;
     float: left;
     max-width: 10rem;
+    line-height: 1;
 
     &--right {
-      float: right;
+      display: none;
+      @media (min-width : $desktop ) {
+        display: block;
+        float: right;
+      }
     }
 
     &__img {
@@ -91,6 +95,12 @@
 
 .navigation {
   @extend .clearfix;
+  // overflow: hidden;
+  // height: 0;
+  display: none;
+  @media (min-width : $desktop ) {
+      height: auto;
+  }
 }
 
 .menu {
@@ -105,7 +115,7 @@
 
     &__link {
       display: inline-block;
-      padding: $base_font_size 1rem;
+      padding: $base_font_size/2 1rem;
       margin: 0 auto;
       font-family: $header_font_family;
       text-transform: uppercase;
