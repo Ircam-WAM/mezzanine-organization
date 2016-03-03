@@ -2,19 +2,18 @@
 {% load i18n %}
 {% load mezzanine_tags keyword_tags %}
 
-{% block main %}
-
 {% block title %}
  {% trans "Artists" %}
 {% endblock %}
 
+{% block main %}
 <div class="artist__list">
     <div class="artist__sizer"></div>
      {% for artist in object_list %}
         <div class="artist__item">
             <div class="artist__item__inner">
                 <a href="{% url 'festival-artist-detail' artist.slug %}" class="artist__item__inner">
-                    <img src="{{ MEDIA_URL }}/{% if artist.photo %}{{ artist.photo }}{% elif artist.photo_featured %}{{ artist.photo_featured }}{% endif %}" alt="Portrait {{ artist.name }}">
+                    <img src="{% if artist.photo %}{{ MEDIA_URL }}/{{ artist.photo }}{% elif artist.photo_featured %}{{ MEDIA_URL }}/{{ artist.photo_featured }}{% else %}{% endif %}" alt="Portrait {{ artist.name }}">
                     <h3 class="artist__item__name">
                         {{ artist.name }}
                     </h3>
@@ -23,5 +22,4 @@
         </div>
      {% endfor %}
 </div>
-
 {% endblock %}
