@@ -8,6 +8,9 @@
     <script src="{% static "js/index.js" %}"></script>
 {% block extra_js %}{% endblock %}
 {% editable_loader %}
+
+{# hide submit button if browser has javascript support and can react to onchange event #}
+<script>$(document).ready(function(){$('#language_selector_form').change(function(){this.submit();});$('#language_selector_form input').hide();});</script>
 {% endcompress %}
 
 <script>
