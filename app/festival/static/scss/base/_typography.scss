@@ -198,3 +198,11 @@ pre > code {
 pre > p {
   padding: .3rem;
 }
+
+/* _Typographic patterns
+---------------------------------- */
+
+.page__title {
+  font: $bold 3rem $base_font_family;
+  text-transform: uppercase;
+}

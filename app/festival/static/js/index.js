@@ -21,9 +21,14 @@ $(function() {
     var toggleButton = $('.menu__toggle'),
         navigation = $('.navigation');
 
-        toggleButton.on('click', function(event) {
-            event.preventDefault();
-            $(this).toggleClass('toggled');
-            navigation.slideToggle();
-        });
+    toggleButton.on('click', function(event) {
+        event.preventDefault();
+        $(this).toggleClass('toggled');
+        navigation.slideToggle();
+    });
+
+    // hide submit button if browser has javascript support and can react to onchange event
+    $('#language_selector_form').change(function() { this.submit(); });
+    $('#language_selector_form input').hide();
+
 });

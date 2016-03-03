@@ -15,9 +15,9 @@
   }
 
 
-  @if $header_box_shadow {
-    box-shadow : $header_box_shadow;
-  }
+  // @if $header_box_shadow {
+  //   box-shadow : $header_box_shadow;
+  // }
 
   &.is-fixed {
     position: fixed;
@@ -115,7 +115,8 @@
       display: inline-block;
       padding: $base_font_size/2 1rem;
       margin: 0 auto;
-      font-family: $header_font_family;
+      color: $manifeste16_darker;
+      font: $regular 1.2rem $base_font_family;
       text-transform: uppercase;
     }
   }

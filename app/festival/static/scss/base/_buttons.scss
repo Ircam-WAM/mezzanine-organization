@@ -11,9 +11,9 @@
     vertical-align:middle;
     white-space:nowrap;
     font-family:inherit;
-    font-size:100%;
+    font-size:.75rem;
     cursor:pointer;
-    border:1px solid $base_btn_color;
+    border:1px solid darken($base_btn_background_color, 5);
     margin:.5rem;
     padding-top:0;
     padding-bottom:0;
