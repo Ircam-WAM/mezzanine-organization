@@ -21,3 +21,5 @@
 
 app:
   command: /bin/sh deploy/start_app.sh --runserver
+  ports:
+    - "9010:8000"

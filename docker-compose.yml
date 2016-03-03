@@ -52,8 +52,6 @@ db:
 app:
   build: .
   command: /bin/sh deploy/start_app.sh
-  ports:
-    - "9010:9010"
   volumes:
     - ./app/:/srv/app
   volumes_from:
