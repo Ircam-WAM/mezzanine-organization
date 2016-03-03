@@ -13,7 +13,7 @@
         <div class="artist__item">
             <div class="artist__item__inner">
                 <a href="{% url 'festival-artist-detail' artist.slug %}" class="artist__item__inner">
-                    <img src="{{ MEDIA_URL }}/{% if artist.photo %}{{ artist.photo }}{% elif artist.photo_featured %}{{ artist.photo_featured }}{% endif %}" alt="Portrait {{ artist.name }}">
+                    <img src="{% if artist.photo %}{{ MEDIA_URL }}/{{ artist.photo }}{% elif artist.photo_featured %}{{ MEDIA_URL }}/{{ artist.photo_featured }}{% else %}{% endif %}" alt="Portrait {{ artist.name }}">
                     <h3 class="artist__item__name">
                         {{ artist.name }}
                     </h3>
