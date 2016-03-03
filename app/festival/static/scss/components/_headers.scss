@@ -95,11 +95,9 @@
 
 .navigation {
   @extend .clearfix;
-  // overflow: hidden;
-  // height: 0;
   display: none;
   @media (min-width : $desktop ) {
-      height: auto;
+      display: block;
   }
 }
 
