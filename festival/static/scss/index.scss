@@ -49,6 +49,7 @@
  */
 @import 'components/headers',
         'components/footers',
+        'components/sidebar',
         'components/menu-toggle',
         'components/breadcrumbs',
         'components/pagination',
@@ -67,4 +68,6 @@
  * _Modules
  */
 @import 'modules/artist-card',
-        'modules/artist-detail';
+        'modules/artist-detail',
+        'modules/event-card',
+        'modules/user';
