@@ -16,7 +16,7 @@ On MacOSX or Windows install the `Docker Toolbox <https://www.docker.com/product
 
 Then run these commands::
 
-    git clone git://git.forge.ircam.fr/Manifeste.git
+    git clone git://git@git.forge.ircam.fr/Manifeste.git
     cd Manifeste
     docker-compose up db
 
@@ -64,5 +64,6 @@ $ gulp [task]
 Paths
 ============
 
-- `app/festival/templates` : Personnal templates
-- `app/festival/static/festival` : Static files
+- `app/templates` : Main templates
+- `app/festival/templates` : Personal templates
+- `app/festival/static` : Static files
