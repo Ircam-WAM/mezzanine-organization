@@ -508,7 +508,7 @@ html {
 
 /* line 20, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_defaults.scss */
 body {
-  font: 400 1rem "Triplex", Georgia, Times, "Times New Roman", serif;
+  font: 400 1rem "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.6;
   background: #fff;
   color: #555;
@@ -558,7 +558,7 @@ body {
 
 /* line 16, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
   color: #333;
@@ -598,7 +598,7 @@ h6 {
 /* line 48, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
 p {
   margin: 0 0 0.8rem;
-  font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
+  font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* line 53, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
@@ -886,7 +886,7 @@ input,
 label,
 select {
   display: block;
-  font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
+  font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1rem;
 }
 
@@ -928,7 +928,7 @@ textarea {
   border-radius: 0px;
   box-shadow: 0;
   box-sizing: border-box;
-  font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
   font-size: 1rem;
   padding: 0.5rem;
   transition: border .4s ease;
@@ -1111,7 +1111,7 @@ button {
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
+  font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1rem;
   font-weight: 700;
   line-height: 1;
@@ -1171,7 +1171,7 @@ button:disabled {
   padding-left: 1rem;
   background: #8e702e;
   color: #fff;
-  font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
   border-radius: 0px;
   text-transform: uppercase;
 }
@@ -1440,17 +1440,17 @@ th {
   display: none;
 }
 
-/* line 106, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_headers.scss */
+/* line 104, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_headers.scss */
 .menu {
   text-align: center;
 }
 
-/* line 116, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_headers.scss */
+/* line 114, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_headers.scss */
 .menu__item__link {
   display: inline-block;
   padding: 0.5rem 1rem;
   margin: 0 auto;
-  font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
   text-transform: uppercase;
 }
 
@@ -1509,7 +1509,7 @@ th {
 .footer-legals a {
   font-size: .75rem;
   text-align: center;
-  font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
   color: #fff;
 }
 
@@ -2162,8 +2162,8 @@ th {
     max-height: 85px;
   }/* line 96, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_headers.scss */
   .navigation {
-    height: auto;
-  }/* line 108, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_headers.scss */
+    display: block;
+  }/* line 106, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_headers.scss */
   .menu__item {
     display: inline-block;
     display: inline;
