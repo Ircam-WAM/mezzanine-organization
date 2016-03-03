@@ -16,9 +16,39 @@
 
   &__cta {
     @extend .btn;
-    width: 20%;
     display: block;
+    width: 40%;
+    @media (min-width : $tablet ) {
+      width: 30%;
+    }
+    @media (min-width : $desktop ) {
+        width: 20%;
+    }
     margin: 1rem auto;
     text-align: center;
+  }
+}
+
+.artist__portrait {
+  display: block;
+  margin: 1rem auto;
+  &--left {
+    @extend  .artist__portrait;
+    @media (min-width : $tablet ) {
+        max-width: 40%;
+        margin-top: 0;
+        margin-right: 1rem;
+        float: left;
+    }
+  }
+
+  &--right {
+    @extend  .artist__portrait;
+    @media (min-width : $tablet ) {
+        max-width: 40%;
+        margin-top: 0;
+        margin-left: 1rem;
+        float: right;
+    }
   }
 }

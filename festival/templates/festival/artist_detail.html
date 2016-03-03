@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% block main %}
-<div class="artist-bio">
+<div class="artist__detail">
  <p>
   {% if artist.photo %}
-   <img class="{% if artist.photo_alignment == 'left' %}image-left{% elif artist.photo_alignment == 'right' %}image-right{% else %}image-center{% endif %}" src="{{ MEDIA_URL }}/{{ artist.photo }}" />
+   <img class="artist__portrait{% if artist.photo_alignment == 'left' %}--left{% elif artist.photo_alignment == 'right' %}--right{% else %}--center{% endif %}" src="{{ MEDIA_URL }}/{{ artist.photo }}" />
   {% endif %}
   {{ artist.bio|safe }}
   <br style="clear: both;" />
