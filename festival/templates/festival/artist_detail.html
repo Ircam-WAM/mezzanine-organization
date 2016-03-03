@@ -2,12 +2,11 @@
 {% load i18n %}
 {% load mezzanine_tags keyword_tags %}
 
+{% block title %}
+{{ artist.name }}
+{% endblock %}
+
 {% block main %}
-
-<div class="artist-name">
- <h2>{{ artist.name }}</h2>
-</div>
-
 <div class="artist-bio">
  <p>
   {% if artist.photo %}
@@ -27,5 +26,4 @@
     {% endfor %}
     <a href="#" class="artist__event__cta">Réserver</a>
 </div>
-
 {% endblock %}

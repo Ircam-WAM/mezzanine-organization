@@ -2,12 +2,11 @@
 {% load i18n %}
 {% load mezzanine_tags keyword_tags %}
 
+{% block title %}
+{{ video.title }}
+{% endblock %}
+
 {% block main %}
-
-<div class="video-title">
- <h1>{{ video.title }}</h1>
-</div>
-
 <div class="video-description">
  {{ video.description }}
 </div>
@@ -20,5 +19,4 @@
   <h2>{% trans 'Related event' %}</h2>
     {{ video.event.title }}
 </div>
-
 {% endblock %}

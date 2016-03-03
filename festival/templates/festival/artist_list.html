@@ -2,12 +2,11 @@
 {% load i18n %}
 {% load mezzanine_tags keyword_tags %}
 
-{% block main %}
-
 {% block title %}
  {% trans "Artists" %}
 {% endblock %}
 
+{% block main %}
 <div class="artist__list">
     <div class="artist__sizer"></div>
      {% for artist in object_list %}
@@ -23,5 +22,4 @@
         </div>
      {% endfor %}
 </div>
-
 {% endblock %}
