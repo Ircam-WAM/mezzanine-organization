@@ -45,7 +45,7 @@ Backup / Restore
 To backup the database, in another terminal (or a Docker Quickstart Terminal)::
 
     cd Manifeste
-    scripts/restore.sh
+    scripts/backup.sh
 
 giving your user password if asked...
 
