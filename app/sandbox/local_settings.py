@@ -82,4 +82,5 @@ ADMIN_MENU_ORDER = (
         "generic.ThreadedComment", (_("Media Library"), "fb_browse"),)),
     (_("Site"), ("sites.Site", "redirects.Redirect", "conf.Setting")),
     (_("Users"), ("auth.User", "auth.Group",)),
+    (_("Festival"), ("mezzanine_agenda.EventLocation", "festival.EventCategory", "PageCategory")),
 )
