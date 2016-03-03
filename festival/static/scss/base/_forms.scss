@@ -59,7 +59,7 @@ input:not([type]),
 select[multiple=multiple],
 textarea {
   background-color: $input_background_color;
-  border: 1px solid $base_border_color;
+  border: 1px solid lighten($main_color, 15);
   @if $base_border_radius {
     border-radius: $base_border_radius;
   }
@@ -72,9 +72,9 @@ textarea {
   width: 100%;
   -webkit-appearance: none;
 
-  &:hover {
-    border-color: darken($deep_gray, 10);
-  }
+  // &:hover {
+  //   border-color: darken($deep_gray, 10);
+  // }
 
   &:focus {
     border-color: darken($base_border_color, 10);
@@ -138,68 +138,94 @@ select {
  * Sticked input/button
  */
 .sticked-form {
-    margin: 0 auto;
+    margin: 0 auto 1rem;
     width: 100%;
+    @extend .clearfix;
+
     @media (min-width : $tablet) {
-      width: 60%;
-      min-width: 430px;
+      width: 100%;
     }
+
     input {
-        font: $light 1rem $header_font_color;
+        font: $light 1rem $header_font_family;
+        border-color: darken($base_btn_background_color, 5);
+        float: left;
+        width: 70%;
 
         @media (min-width : $desktop) {
-          float: left;
+          width: 60%;
         }
-        width: auto;
         height: 2.5rem;
         line-height: 2.5rem;
         margin: 0;
         padding: 0 1rem;
+        border-right: none;
     }
-    input[type=email] {
-      @if $base_border_radius {
-        border-radius: $base_border_radius $base_border_radius 0 0;
-      }
-      // padding: 0 .5em;
-      width: 100%;
-      @media (min-width : $desktop) {
-          width: 70%;
-          @if $base_border_radius {
-            border-radius: $base_border_radius 0 0 $base_border_radius;
-          }
-      }
 
-        transition: background .2s;
-        &:focus {
-            outline: 0;
-        }
-    }
     input[type=submit] {
       width: 100%;
       -webkit-appearance: none;
-      @if $base_border_radius {
-        border-radius: 0 0 $base_border_radius $base_border_radius;
-      }
+
       @media (min-width : $desktop) {
-          width: 30%;
+          width: 20%;
           border-radius: 0 $base_border_radius $base_border_radius 0;
       }
-        // padding: 0 .5em;
-        font-weight: $bold;
-        color: $white;
-        border: 0;
-        outline: 0;
-        margin-top: 0;
-        &:hover {
-            background: lighten($main_color,5%);
-        }
-        &:active {
-            outline: 0;
-            background: darken($main_color,5%);
-        }
+
+      font-weight: $bold;
+      color: $white;
+      border: 0;
+      outline: 0;
+      margin-top: 0;
+      &:hover {
+          background: lighten($main_color,5%);
+      }
+      &:active {
+          outline: 0;
+          background: darken($main_color,5%);
+      }
     }
 }
 
+/*
+ * Custom select
+ */
+
+ .select {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    width: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+
+    &.search__form__select {
+      display: block;
+      float: left;
+      padding: 0 .5rem;
+      height: 2.5rem;
+      line-height: 2.5rem;
+      width: 30%;
+      @media (min-width : $desktop ) {
+        width: 20%;
+      }
+    }
+}
+
+.select select {
+    // padding: 5px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    appearance: none;
+    text-align: center;
+}
+
+.select select:focus {
+    outline: none;
+}
 
 
 /**
