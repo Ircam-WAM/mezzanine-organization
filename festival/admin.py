@@ -16,7 +16,7 @@ from festival.models import *
 
 class FestivalEventInline(admin.StackedInline):
     model = FestivalEvent
-    extra = 0
+    extra = 3
 
 
 class FestivalEventAdmin(EventAdmin):
@@ -46,6 +46,8 @@ class ArtistAdminDisplayable(DisplayableAdmin):
 
 admin.site.unregister(Event)
 admin.site.register(Event, FestivalEventAdmin)
+admin.site.register(EventCategory)
+admin.site.register(PageCategory)
 
 admin.site.register(Artist, ArtistAdminDisplayable)
 admin.site.register(Video, VideoAdminDisplayable)
