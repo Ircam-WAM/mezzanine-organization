@@ -1,0 +1,56 @@
+.artist__list {
+    display: block;
+    padding: 1.5rem 0 3rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+}
+
+.artist__sizer,
+.artist__item {
+  width: 50%;
+  @media (min-width : $desktop ) {
+      width: 33.33333%;
+  }
+}
+
+.artist__item {
+  float: left;
+  padding: 0.5rem;
+
+  @media (min-width : $desktop ) {
+     padding: 1rem;
+  }
+
+  &__inner {
+      position: relative;
+      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
+
+      @media (min-width : $desktop ) {
+          transition: .3s;
+          &:hover {
+              box-shadow: 0px 1px 25px 0px transparentize($main_color, .3);
+              transform: scale(1.02);
+          }
+      }
+  }
+
+  img {
+    display: block;
+  }
+
+  &__name {
+      display: block;
+      width: 100%;
+      padding: 0.5rem;
+      text-align: center;
+      background: $main_color;
+      color: white;
+      font-weight: $regular;
+      margin: 0;
+      font-size: 0.7rem;
+      @media (min-width : $desktop ) {
+          padding: 0.8rem;
+          font-size: 1rem;
+      }
+  }
+}

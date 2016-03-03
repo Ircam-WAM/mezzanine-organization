@@ -2,12 +2,11 @@
 {% load i18n %}
 {% load mezzanine_tags keyword_tags %}
 
+{% block title %}
+{{ artist.name }}
+{% endblock %}
+
 {% block main %}
-
-<div class="artist-name">
- <h1>{{ artist.name }}</h1>
-</div>
-
 <div class="artist-bio">
  <p>
   {% if artist.photo %}
@@ -18,11 +17,13 @@
  </p>
 </div>
 
-<div class="artist-events">
- <h2>{% trans 'Events' %}</h2>
-  {% for event in artist.events.all %}
-   {{ event.title }}
-  {% endfor %}
-</div>
+<div class="artist__event">
+ {# <h3>{% trans 'Events' %}</h3> #}
+   <h3 class="artist__event__title">Entendre {{ artist.name }} :</h3>
 
+    {% for event in artist.events.all %}
+        {{ event.title }}
+    {% endfor %}
+    <a href="#" class="artist__event__cta">Réserver</a>
+</div>
 {% endblock %}

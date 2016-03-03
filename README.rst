@@ -6,7 +6,7 @@ This is the new template for the Manifeste festival website at IRCAM. It is base
 
 
 Install
-=========
+=======
 
 For easier development and production workflow, it has been dockerized including Django, Mezzanine, MariaDB and Nginx.
 
@@ -16,24 +16,48 @@ On MacOSX or Windows install the `Docker Toolbox <https://www.docker.com/product
 
 Then run these commands::
 
-    git clone git://git.forge.ircam.fr/Manifeste.git
+    git clone git://git@git.forge.ircam.fr/Manifeste.git
     cd Manifeste
     docker-compose up db
 
-The last command is needed to init the database. Press CTRL-C to exit, then fire up the whole composition::
+Press CTRL-C to exit (the last command is needed to init the database).
+
+
+Start
+=====
+
+For a production environment setup::
 
      docker-compose up
 
-Restore the backuped database, in another terminal (or a Docker Quickstart Terminal)::
+Then browse the app at http://localhost:8010/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
+
+For a development environment setup::
+
+    docker-compose -f docker-compose.yml -f conf/dev.yml up
+
+Then browse the app at http://localhost:9010/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
+
+
+Backup / Restore
+================
+
+To backup the database, in another terminal (or a Docker Quickstart Terminal)::
+
+    cd Manifeste
+    scripts/backup.sh
+
+giving your user password if asked...
+
+To restore the backuped database, in another terminal (or a Docker Quickstart Terminal)::
 
     cd Manifeste
     scripts/restore.sh
 
-Give you user password if asked.
-You should be able to browse the app at http://localhost:8010/ (replacing 'localhost' by the IP given by the docker terminal on OSX and Windows)
+If the app is broken after a restore script, restart the machine with::
 
-If app is broken after a restore script :
-`docker-compose restart` to restart the machine.
+    docker-compose restart
+
 
 Work with gulp
 ==================
@@ -64,5 +88,6 @@ $ gulp [task]
 Paths
 ============
 
-- `app/festival/templates` : Personnal templates
-- `app/festival/static/festival` : Static files
+- `app/templates` : Main templates
+- `app/festival/templates` : Personal templates
+- `app/festival/static` : Static files

@@ -64,6 +64,7 @@
 
 
 /**
- * _PAGE
+ * _Modules
  */
-@import 'pages/home';
+@import 'modules/artist-card',
+        'modules/artist-detail';

@@ -8,7 +8,10 @@
 
 /* _Colors
 ---------------------------------- */
-$main_color            : $red;
+
+$manifeste16           : #8e702e;
+
+$main_color            : $manifeste16;
 $base_background_color : $white;
 
 $header_font_color     : $black_faded;
@@ -40,20 +43,22 @@ $ultrabold          : 900;
 $interstate : "Interstate";
 $triplex : "Triplex";
 
-$sans_serif         : $interstate;
-$serif              : $triplex;
+$icon-font: "Font-Awesome";
+
+$sans_serif         : $interstate, $helvetica;
+$serif              : $triplex, $georgia;
 $monospace          : $consolas;
 
-$header_font_family : $sans_serif;
-$base_font_family   : $serif;
+$header_font_family : $serif;
+$base_font_family   : $sans_serif;
 $base_font_weight   : $regular;
 
 // Sizes
-$base_font_size     : .875rem;
+$base_font_size     : 1rem;
 $base_line_height   : 1.6;
 
 // Layout
-$base_border_radius : 3px; // Set to "false" to cancel any radius on your project
+$base_border_radius : 0px;
 $base_border_color  : $deep_gray;
 
 
@@ -70,7 +75,7 @@ $header_uppercase        : false;
 
 /* _Footer
 ---------------------------------- */
-$footer_background_color : $black;
+$footer_background_color : $manifeste16;
 $footer_color            : $white;
 $footer_item_color       : $gray;
 

@@ -1,6 +1,7 @@
-// =============================================================================
-// String Replace
-// =============================================================================
+// // ****************************************************************
+// _Fontface mixin : Simply creates an arrow on a box
+// e.g. : @include font-face("Samplina Neue", fonts/SamplinaNeue, bold, italic);
+// *******************************************************************
 
 @function str-replace($string, $search, $replace: "") {
   $index: str-index($string, $search);
@@ -11,10 +12,6 @@
 
   @return $string;
 }
-
-// =============================================================================
-// Font Face
-// =============================================================================
 
 @mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
   $src: null;
@@ -40,6 +37,21 @@
     font-style: $style;
     font-weight: $weight;
     src: $src;
+  }
+}
+
+// // ****************************************************************
+// _Retina mixin : Retina background image with classic fallback
+// e.g. : @include retina-background-image("images/logo.png", "png", 120px, 80px);
+// *******************************************************************
+@mixin retina-background-image($file, $type, $width, $height) {
+  background-image: url($file + '.' + $type);
+  @media only screen and (-webkit-max-device-pixel-ratio: 1.5),
+         only screen and (-o-max-device-pixel-ratio: 3/2),
+         only screen and (max--moz-device-pixel-ratio: 1.5),
+         only screen and (max-device-pixel-ratio: 1.5) {
+    background-image: url($file + '@2x.' + $type);
+    background-size : $width $height;
   }
 }
 
