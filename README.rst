@@ -30,13 +30,13 @@ For a production environment setup::
 
      docker-compose up
 
-Then browse the app at http://localhost:8010/ (replacing 'localhost' by the IP given by the docker terminal on OSX and Windows)
+Then browse the app at http://localhost:8010/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
 
 For a development environment setup::
 
     docker-compose -f docker-compose.yml -f conf/dev.yml up
 
-Then browse the app at http://localhost:9010/ (replacing 'localhost' by the IP given by the docker terminal on OSX and Windows)
+Then browse the app at http://localhost:9010/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
 
 
 Backup / Restore
@@ -54,7 +54,7 @@ To restore the backuped database, in another terminal (or a Docker Quickstart Te
     cd Manifeste
     scripts/restore.sh
 
-If app is broken after a restore script, restart the machine with::
+If the app is broken after a restore script, restart the machine with::
 
     docker-compose restart
 
