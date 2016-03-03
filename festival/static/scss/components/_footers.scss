@@ -51,7 +51,8 @@
   font-size: .75rem;
   text-align: center;
   font-family: $header_font_family;
-  color: $footer_color;
+  color: darken($footer_background_color, 30);
+  text-transform: uppercase;
 }
 
 .footer-nav {
@@ -76,7 +77,7 @@
 /* _Theme
 ---------------------------------- */
 
-.nav-footer {
+.nav__footer {
   display: block;
   text-align: center;
 
@@ -85,5 +86,30 @@
     *display: inline;
     *zoom: 1;
     padding: .3rem 1rem;
+  }
+
+  &__item {
+    width: 50%;
+    @media (min-width : $tablet ) {
+      width: 33%;
+    }
+    @media (min-width : $tablet ) {
+      padding: 1rem;
+      width: 25%;
+    }
+    @media (min-width : $desktop ) {
+        width: auto;
+    }
+
+    &__link {
+      padding: .75rem;
+      display: block;
+      @media (min-width : $tablet ) {
+        padding: 1rem;
+      }
+      @media (min-width : $desktop ) {
+        padding: .5rem;
+      }
+    }
   }
 }
