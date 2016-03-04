@@ -18,7 +18,8 @@
   </form>
   {% for language in languages %}
   <a href="#" onclick="$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
-  {{ language.name_local }}
+  <button class="lang {% if language.code == LANGUAGE_CODE %}active{% endif %}">{{ language.code|title }}</button>
+  </a>
   {% endfor %}
 </div>
 {% endif %}
