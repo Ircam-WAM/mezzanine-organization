@@ -1711,31 +1711,31 @@ th {
 }
 
 /* line 21, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
-.menu__toggle:hover {
+.menu__toggle:hover, .menu__toggle:focus {
   background: #fff;
 }
 
-/* line 26, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
+/* line 27, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle:checked span:first-child,
 .menu__toggle.toggled span:first-child {
   -webkit-transform: translateY(6px) rotate(45deg);
           transform: translateY(6px) rotate(45deg);
 }
 
-/* line 31, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
+/* line 32, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle:checked span:nth-child(2),
 .menu__toggle.toggled span:nth-child(2) {
   opacity: 0;
 }
 
-/* line 36, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
+/* line 37, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle:checked span:last-child,
 .menu__toggle.toggled span:last-child {
   -webkit-transform: translateY(-6px) rotate(-45deg);
           transform: translateY(-6px) rotate(-45deg);
 }
 
-/* line 41, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
+/* line 42, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle span {
   display: block;
   background: #e8ca88;
@@ -1747,7 +1747,7 @@ th {
   transition: 0.3s ease;
 }
 
-/* line 51, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
+/* line 52, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle span:nth-child(2) {
   margin: 4px 0;
 }
