@@ -60,10 +60,7 @@ select[multiple=multiple],
 textarea {
   background-color: $input_background_color;
   border: 1px solid lighten($main_color, 15);
-  @if $base_border_radius {
-    border-radius: $base_border_radius;
-  }
-  box-shadow: $form_box_shadow;
+  // box-shadow: $form_box_shadow;
   box-sizing: border-box;
   font-family: $input_font_family;
   font-size: $base_font_size;
@@ -77,7 +74,7 @@ textarea {
   // }
 
   &:focus {
-    border-color: darken($base_border_color, 10);
+    // border-color: darken($base_border_color, 10);
     // border-left: ($base_font_size / 3) solid $main_color;
     box-shadow: $form_box_shadow-focus;
     outline: none;
@@ -176,9 +173,9 @@ select {
       border: 0;
       outline: 0;
       margin-top: 0;
-      &:hover {
-          background: lighten($main_color,5%);
-      }
+      // &:hover {
+      //     background: lighten($main_color,5%);
+      // }
       &:active {
           outline: 0;
           background: darken($main_color,5%);
@@ -193,11 +190,22 @@ select {
  .select {
     padding: 0;
     margin: 0;
-    border: 1px solid #ccc;
+    border: 1px solid darken($base_btn_background_color, 5);
     width: 100%;
     overflow: hidden;
     background-color: #fff;
-    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+    position: relative;
+    &:after {
+      position: absolute;
+      top: 50%;
+      right: .3rem;
+      content: "";
+      width: 0;
+      height: 0;
+      border-left: 0.5rem solid transparent;
+      border-right: 0.5rem solid transparent;
+      border-top: 0.5rem solid $main_color;
+    }
 
     &.search__form__select {
       display: block;
