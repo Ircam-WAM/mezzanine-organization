@@ -18,7 +18,8 @@
   @media (min-width : $desktop ) {
       display: none;
   }
-  &:hover {
+  &:hover,
+  &:focus {
     background: #fff;
   }
 }
