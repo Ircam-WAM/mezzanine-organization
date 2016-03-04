@@ -2737,6 +2737,46 @@ th {
   margin: 1rem auto;
 }
 
+/* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+.video__card {
+  display: block;
+  float: left;
+  width: 18%;
+  position: relative;
+  margin: 1%;
+}
+
+/* line 9, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+.video__card__thumbnail img {
+  display: block;
+}
+
+/* line 13, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+.video__card__info {
+  display: block;
+  text-align: center;
+  background: white;
+  padding: 1rem;
+}
+
+/* line 20, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+.video__card__name {
+  margin: 0;
+  text-transform: uppercase;
+  text-align: left;
+  font-size: 0.6rem;
+}
+
+/* line 27, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+.video__card__link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+}
+
 /* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/event-card.scss */
 .event__card {
   padding: 1rem;
