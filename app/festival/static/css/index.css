@@ -2152,6 +2152,470 @@ th {
 }
 
 /**
+ * _Project vendors
+ */
+/* lightslider - v1.1.5 - 2015-10-31
+* https://github.com/sachinchoolur/lightslider
+* Copyright (c) 2015 Sachin N; Licensed MIT */
+/*! lightslider - v1.1.3 - 2015-04-14
+* https://github.com/sachinchoolur/lightslider
+* Copyright (c) 2015 Sachin N; Licensed MIT */
+/** /!!! core css Should not edit !!!/**/
+/* line 9, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter {
+  overflow: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 18, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lightSlider:before, .lightSlider:after {
+  content: " ";
+  display: table;
+}
+
+/* line 22, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lightSlider {
+  overflow: hidden;
+  margin: 0;
+}
+
+/* line 26, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideWrapper {
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* line 31, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideWrapper > .lightSlider:after {
+  clear: both;
+}
+
+/* line 34, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideWrapper .lSSlide {
+  -webkit-transform: translate(0px, 0px);
+  transform: translate(0px, 0px);
+  -webkit-transition: all 1s;
+  transition-property: height,-webkit-transform;
+  transition-property: transform,height;
+  transition-property: transform,height,-webkit-transform;
+  transition-duration: inherit !important;
+  transition-timing-function: inherit !important;
+}
+
+/* line 47, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideWrapper .lSFade {
+  position: relative;
+}
+
+/* line 50, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideWrapper .lSFade > * {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  margin-right: 0;
+  width: 100%;
+}
+
+/* line 58, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideWrapper.usingCss .lSFade > * {
+  opacity: 0;
+  transition-delay: 0s;
+  transition-duration: inherit !important;
+  transition-property: opacity;
+  transition-timing-function: inherit !important;
+}
+
+/* line 69, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideWrapper .lSFade > *.active {
+  z-index: 10;
+}
+
+/* line 72, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideWrapper.usingCss .lSFade > *.active {
+  opacity: 1;
+}
+
+/** /!!! End of core css Should not edit !!!/**/
+/* Pager */
+/* line 78, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lSPager.lSpg {
+  margin: 10px 0 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* line 83, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lSPager.lSpg > li {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 5px;
+}
+
+/* line 88, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lSPager.lSpg > li a {
+  background-color: #222222;
+  border-radius: 30px;
+  display: inline-block;
+  height: 8px;
+  overflow: hidden;
+  text-indent: -999em;
+  width: 8px;
+  position: relative;
+  z-index: 99;
+  transition: all 0.5s linear 0s;
+}
+
+/* line 101, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lSPager.lSpg > li:hover a, .lSSlideOuter .lSPager.lSpg > li.active a {
+  background-color: #e8ca88;
+}
+
+/* line 104, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .media {
+  opacity: 0.8;
+}
+
+/* line 107, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .media.active {
+  opacity: 1;
+}
+
+/* End of pager */
+/** Gallery */
+/* line 113, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lSPager.lSGallery {
+  list-style: none outside none;
+  padding-left: 0;
+  margin: 0;
+  overflow: hidden;
+  transform: translate3d(0px, 0px, 0px);
+  -moz-transform: translate3d(0px, 0px, 0px);
+  -ms-transform: translate3d(0px, 0px, 0px);
+  -webkit-transform: translate3d(0px, 0px, 0px);
+  -o-transform: translate3d(0px, 0px, 0px);
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 132, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lSPager.lSGallery li {
+  overflow: hidden;
+  transition: border-radius 0.12s linear 0s 0.35s linear 0s;
+}
+
+/* line 137, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lSPager.lSGallery li.active, .lSSlideOuter .lSPager.lSGallery li:hover {
+  border-radius: 5px;
+}
+
+/* line 140, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lSPager.lSGallery img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+/* line 145, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lSPager.lSGallery:before, .lSSlideOuter .lSPager.lSGallery:after {
+  content: " ";
+  display: table;
+}
+
+/* line 149, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lSPager.lSGallery:after {
+  clear: both;
+}
+
+/* End of Gallery*/
+/* slider actions */
+/* line 155, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSAction > a {
+  width: 32px;
+  display: block;
+  top: 50%;
+  height: 32px;
+  background-image: url("../img/controls.png");
+  cursor: pointer;
+  position: absolute;
+  z-index: 99;
+  margin-top: -16px;
+  opacity: 0.5;
+  transition: opacity 0.35s linear 0s;
+}
+
+/* line 169, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSAction > a:hover {
+  opacity: 1;
+}
+
+/* line 172, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSAction > .lSPrev {
+  background-position: 0 0;
+  left: 10px;
+}
+
+/* line 176, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSAction > .lSNext {
+  background-position: -32px 0;
+  right: 10px;
+}
+
+/* line 180, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSAction > a.disabled {
+  pointer-events: none;
+}
+
+/* line 183, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.cS-hidden {
+  height: 1px;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  overflow: hidden;
+}
+
+/* vertical */
+/* line 192, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.vertical {
+  position: relative;
+}
+
+/* line 195, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.vertical.noPager {
+  padding-right: 0px !important;
+}
+
+/* line 198, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.vertical .lSGallery {
+  position: absolute !important;
+  right: 0;
+  top: 0;
+}
+
+/* line 203, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.vertical .lightSlider > * {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* vertical controlls */
+/* line 209, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.vertical .lSAction > a {
+  left: 50%;
+  margin-left: -14px;
+  margin-top: 0;
+}
+
+/* line 214, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.vertical .lSAction > .lSNext {
+  background-position: 31px -31px;
+  bottom: 10px;
+  top: auto;
+}
+
+/* line 219, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.vertical .lSAction > .lSPrev {
+  background-position: 0 -31px;
+  bottom: auto;
+  top: 10px;
+}
+
+/* vertical */
+/* Rtl */
+/* line 228, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.lSrtl {
+  direction: rtl;
+}
+
+/* line 231, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lightSlider, .lSSlideOuter .lSPager {
+  padding-left: 0;
+  list-style: none outside none;
+}
+
+/* line 235, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.lSrtl .lightSlider, .lSSlideOuter.lSrtl .lSPager {
+  padding-right: 0;
+}
+
+/* line 238, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .lightSlider > *, .lSSlideOuter .lSGallery li {
+  float: left;
+}
+
+/* line 241, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.lSrtl .lightSlider > *, .lSSlideOuter.lSrtl .lSGallery li {
+  float: right !important;
+}
+
+/* Rtl */
+@-webkit-keyframes rightEnd {
+  0% {
+    left: 0;
+  }
+  50% {
+    left: -15px;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes rightEnd {
+  0% {
+    left: 0;
+  }
+  50% {
+    left: -15px;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@-webkit-keyframes topEnd {
+  0% {
+    top: 0;
+  }
+  50% {
+    top: -15px;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+@keyframes topEnd {
+  0% {
+    top: 0;
+  }
+  50% {
+    top: -15px;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+@-webkit-keyframes leftEnd {
+  0% {
+    left: 0;
+  }
+  50% {
+    left: 15px;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes leftEnd {
+  0% {
+    left: 0;
+  }
+  50% {
+    left: 15px;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@-webkit-keyframes bottomEnd {
+  0% {
+    bottom: 0;
+  }
+  50% {
+    bottom: -15px;
+  }
+  100% {
+    bottom: 0;
+  }
+}
+
+@keyframes bottomEnd {
+  0% {
+    bottom: 0;
+  }
+  50% {
+    bottom: -15px;
+  }
+  100% {
+    bottom: 0;
+  }
+}
+
+/* line 350, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .rightEnd {
+  -webkit-animation: rightEnd 0.3s;
+  animation: rightEnd 0.3s;
+  position: relative;
+}
+
+/* line 355, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter .leftEnd {
+  -webkit-animation: leftEnd 0.3s;
+  animation: leftEnd 0.3s;
+  position: relative;
+}
+
+/* line 360, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.vertical .rightEnd {
+  -webkit-animation: topEnd 0.3s;
+  animation: topEnd 0.3s;
+  position: relative;
+}
+
+/* line 365, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.vertical .leftEnd {
+  -webkit-animation: bottomEnd 0.3s;
+  animation: bottomEnd 0.3s;
+  position: relative;
+}
+
+/* line 370, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.lSrtl .rightEnd {
+  -webkit-animation: leftEnd 0.3s;
+  animation: leftEnd 0.3s;
+  position: relative;
+}
+
+/* line 375, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lSSlideOuter.lSrtl .leftEnd {
+  -webkit-animation: rightEnd 0.3s;
+  animation: rightEnd 0.3s;
+  position: relative;
+}
+
+/*/  GRab cursor */
+/* line 381, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lightSlider.lsGrab > * {
+  cursor: -webkit-grab;
+  cursor: -o-grab;
+  cursor: -ms-grab;
+  cursor: grab;
+}
+
+/* line 388, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
+.lightSlider.lsGrabbing > * {
+  cursor: move;
+  cursor: -webkit-grabbing;
+  cursor: -o-grabbing;
+  cursor: -ms-grabbing;
+  cursor: grabbing;
+}
+
+/**
  * _Modules
  */
 /* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-card.scss */
@@ -2260,6 +2724,15 @@ th {
   margin-right: .6rem;
   font-size: 2rem;
   color: #d7a433;
+}
+
+/* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
+.hero__slider__item {
+  display: block;
+  width: 100%;
+  height: 500px;
+  background: #e8ca88 no-repeat center;
+  background-size: cover;
 }
 
 /* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/user.scss */
