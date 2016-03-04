@@ -78,7 +78,7 @@ textarea {
 
   &:focus {
     border-color: darken($base_border_color, 10);
-    border-left: ($base_font_size / 3) solid $main_color;
+    // border-left: ($base_font_size / 3) solid $main_color;
     box-shadow: $form_box_shadow-focus;
     outline: none;
   }

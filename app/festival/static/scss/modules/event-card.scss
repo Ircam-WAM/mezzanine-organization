@@ -5,6 +5,13 @@
 
 .event__name {
  margin: 0 0 1rem;
+ font-size: 1.2rem;
+}
+
+.event__description {
+  padding-bottom: 1em;
+  border-bottom: 1px solid $gray;
+  margin-bottom: 1em;
 }
 
 .event__meta {
@@ -12,11 +19,12 @@
   *display: inline;
   *zoom: 1;
   text-align: right;
+  font-family: $header_font_family;
 
-  padding: .3rem;
+  // padding: .3rem;
   // background: $main_color;
-  border: 1px solid $gray_light;
-  color: black;
+  // border: 1px solid $gray_light;
+  // color: black;
   &:before {
     content: '\f041';
     font-family: $icon-font;
@@ -26,8 +34,14 @@
     vertical-align: middle;
     margin-right: .6rem;
     font-size: 2rem;
-    color: darken($main_color, 20);
+    color: transparentize($main_color, .5);
   }
+}
+
+.event__detail,
+.event__detail a {
+  text-align: right;
+  color: $base_font_color;
 }
 
 // f041
