@@ -19,7 +19,7 @@
 
 <div class="video-event">
   <h2>{% trans 'Related event' %}</h2>
-    <a href="{% url 'festival-event-detail' video.event.slug %}"{{ video.event.title }}</a>
+    <a href="{% url 'event_detail' video.event.slug %}"{{ video.event.title }}</a>
 </div>
 
 {% endblock %}
