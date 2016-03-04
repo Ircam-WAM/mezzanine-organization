@@ -1,10 +1,10 @@
 {% load i18n pages_tags %}
-
+{% get_language_info_list for LANGUAGES as languages %}
 {% spaceless %}
 {% if page_branch_in_menu %}
 
 {% if branch_level == 0 %}
-<ul class="menu">
+<ul class="menu toto">
     {% for page in page_branch %}
     {% if not has_home and page.is_primary and forloop.first %}
     <li class="menu__item {% if on_home %}active{% endif %}">
@@ -29,6 +29,15 @@
     </li>
     {% endif %}
     {% endfor %}
+    {% if settings.USE_MODELTRANSLATION and languages|length > 1 %}
+    <li class="menu__item  menu__item--lang">
+      {% for language in languages %}
+        <button class="lang {% if language.code == LANGUAGE_CODE %}is-active{% endif %}" onclick="$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
+          {{ language.code|title }}
+        </button>
+      {% endfor %}
+    </li>
+    {% endif %}
 </ul>
 
 {% else %}

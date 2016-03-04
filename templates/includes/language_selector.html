@@ -17,9 +17,7 @@
     <input type="submit" class="btn btn-default" value="{% trans "Change" %}" />
   </form>
   {% for language in languages %}
-  <a href="#" onclick="$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
-  <button class="lang {% if language.code == LANGUAGE_CODE %}active{% endif %}">{{ language.code|title }}</button>
-  </a>
+    <button class="lang {% if language.code == LANGUAGE_CODE %}active{% endif %}" onclick="$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">{{ language.code|title }}</button>
   {% endfor %}
 </div>
 {% endif %}

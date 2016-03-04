@@ -1170,6 +1170,23 @@ button:disabled {
   opacity: 0.5;
 }
 
+/* line 272, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_forms.scss */
+button.lang {
+  display: inline-block;
+  padding: 0.5rem 0.3rem;
+  margin: 0 auto;
+  color: #bdc3c7;
+  font: 400 0.9rem "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  background: none;
+}
+
+/* line 280, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_forms.scss */
+button.lang.is-active {
+  background: none;
+  color: #e8ca88;
+}
+
 /**
  * Core styles
  */
