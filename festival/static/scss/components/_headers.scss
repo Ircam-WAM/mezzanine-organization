@@ -115,8 +115,8 @@
       display: inline-block;
       padding: $base_font_size/2 1rem;
       margin: 0 auto;
-      color: $manifeste16_darker;
-      font: $regular 1.2rem $base_font_family;
+      color: $black;
+      font: $regular .9rem $header_font_family;
       text-transform: uppercase;
     }
   }

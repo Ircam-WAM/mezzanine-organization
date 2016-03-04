@@ -14,7 +14,7 @@
     font-size:.75rem;
     cursor:pointer;
     border:1px solid darken($base_btn_background_color, 5);
-    margin:.5rem;
+    margin:.5rem 0;
     padding-top:0;
     padding-bottom:0;
     line-height:3;
@@ -44,6 +44,10 @@
     &:focus{
         outline:none;
     }
+}
+
+.btn + .btn {
+  margin-left: .5rem;
 }
 
 
@@ -124,4 +128,23 @@
 .btn-disabled:focus{
     opacity: 0.4;
     cursor:text;
+}
+
+// Social buttons
+.btn-twitter {
+  background: $color-twitter;
+  color: white;
+  border-color: darken($color-twitter , 10);
+  &:hover {
+    background-color: darken($color-twitter , 10);
+  }
+}
+
+.btn-facebook {
+  background: $color-facebook;
+  color: white;
+  border-color: darken($color-facebook , 10);
+  &:hover {
+    background-color: darken($color-facebook , 10);
+  }
 }

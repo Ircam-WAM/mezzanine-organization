@@ -3,10 +3,10 @@
 {% block upcoming_events %}
 {% upcoming_events 5 as upcoming_events %}
 {% if upcoming_events %}
-<h3>{% trans "Upcoming Events" %}</h3>
+<h2 class="sidebar__title">{% trans "Upcoming Events" %}</h2>
 <ul class="list-unstyled upcoming-events">
 {% for upcoming_event in upcoming_events %}
-<li><a href="{{ upcoming_event.get_absolute_url }}"
+    <li><a href="{{ upcoming_event.get_absolute_url }}"
     >{{ upcoming_event.title }}</a></li>
 {% endfor %}
 </ul>
@@ -16,7 +16,7 @@
 {% block recent_events %}
 {% recent_events 5 as recent_events %}
 {% if recent_events %}
-<h3>{% trans "Recent Events" %}</h3>
+<h2 class="sidebar__title">{% trans "Recent Events" %}</h2>
 <ul class="list-unstyled recent-events">
 {% for recent_event in recent_events %}
 <li><a href="{{ recent_event.get_absolute_url }}"
@@ -29,7 +29,7 @@
 {% block event_months %}
 {% event_months as months %}
 {% if months %}
-<h3>{% trans "Archive" %}</h3>
+<h2 class="sidebar__title">{% trans "Archive" %}</h2>
 {% for month in months %}
     {% ifchanged month.date.year %}
         {% if not forloop.first %}</ul>{% endif %}
@@ -45,7 +45,7 @@
 {% block event_locations %}
 {% event_locations as locations %}
 {% if locations %}
-<h3>{% trans "Locations" %}</h3>
+<h2 class="sidebar__title">{% trans "Locations" %}</h2>
 <ul class="list-unstyled">
 {% for location in locations %}
 <li><a href="{% url "event_list_location" location.slug %}"
@@ -58,7 +58,7 @@
 {% block event_keywords %}
 {% keywords_for mezzanine_agenda.event as tags %}
 {% if tags %}
-<h3>{% trans "Tags" %}</h3>
+<h2 class="sidebar__title">{% trans "Tags" %}</h2>
 <ul class="list-inline tag-cloud">
 {% for tag in tags %}
 <li>
@@ -74,7 +74,7 @@
 {% block event_authors %}
 {% event_authors as authors %}
 {% if authors %}
-<h3>{% trans "Authors" %}</h3>
+<h2 class="sidebar__title">{% trans "Authors" %}</h2>
 <ul class="list-unstyled">
 {% for author in authors %}
     <li><a href="{% url "event_list_author" author.username %}"
@@ -86,7 +86,7 @@
 {% endblock %}
 
 {% block event_feeds %}
-<h3>{% trans "Feeds" %}</h3>
+<h2 class="sidebar__title">{% trans "Feeds" %}</h2>
 {% if tag %}
     <a href="{% url "event_feed_tag" tag.slug "rss" %}">{% trans "RSS" %}</a> /
     <a href="{% url "event_feed_tag" tag.slug "atom" %}">{% trans "Atom" %}</a>
