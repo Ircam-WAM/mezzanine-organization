@@ -10,7 +10,7 @@
 <div class="artist__detail">
  <p>
   {% if artist.photo %}
-   <img class="artist__portrait{% if artist.photo_alignment == 'left' %}--left{% elif artist.photo_alignment == 'right' %}--right{% else %}--center{% endif %}" src="{{ MEDIA_URL }}/{% if artist.photo_featured }{{ artist.photo_featured }}{% else %}{{ artist.photo }}{% endif %}" />
+   <img class="artist__portrait{% if artist.photo_alignment == 'left' %}--left{% elif artist.photo_alignment == 'right' %}--right{% else %}--center{% endif %}" src="{{ MEDIA_URL }}/{% if artist.photo_featured %}{{ artist.photo_featured }}{% else %}{{ artist.photo }}{% endif %}" />
   {% endif %}
   {{ artist.bio|safe }}
   <br style="clear: both;" />
