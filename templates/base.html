@@ -35,7 +35,7 @@
                     </a>
                 </h1>
                     <div class="header__logo--right">
-                        <a href="http://ircam.fr" title="Url site ircam">
+                        <a href="http://www.ircam.fr" title="Url site ircam">
                             <img class="header__logo__img" src="{% static "img/logo_ircam_black.png" %}" alt="Logo Manifeste 2016 ircam" width="200">
                         </a>
                     </div>
@@ -58,6 +58,23 @@
             {% page_menu "pages/menus/dropdown.html" %}
         </div>
     </div>
+
+    {% if on_home %}
+    <div class="hero__slider">
+        <ul id="lightSlider">
+          <li class="hero__slider__item" style="background-image: url(https://source.unsplash.com/IaA_5KNVAR4/1920x500);">
+              <div class="container">
+                  <button>Content here !</button>
+              </div>
+          </li>
+          <li class="hero__slider__item" style="background-image: url(https://source.unsplash.com/OUgLA2unwtg/1920x500);">
+                <div class="container">
+                    <button>Another content here !</button>
+                </div>
+          </li>
+        </ul>
+    </div>
+    {% endif %}
 
     <div class="div-message">
         <div class="container">

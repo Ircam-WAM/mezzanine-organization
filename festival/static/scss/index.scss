@@ -61,7 +61,10 @@
         'components/embed-responsive';
 
 
-
+/**
+ * _Project vendors
+ */
+@import 'vendors/lightslider';
 
 
 /**
@@ -70,4 +73,5 @@
 @import 'modules/artist-card',
         'modules/artist-detail',
         'modules/event-card',
+        'modules/hero-slider',
         'modules/user';
