@@ -5,7 +5,7 @@
 {% if page_branch_in_menu %}
 
 {% if branch_level == 0 %}
-<ul class="menu toto">
+<ul class="menu">
     {% for page in page_branch %}
     {% if not has_home and page.is_primary and forloop.first %}
     <li class="menu__item {% if on_home %}active{% endif %}">

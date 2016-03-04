@@ -96,7 +96,9 @@
 
     {% block event_list_event_content %}
         {% editable event.content %}
-            {{ event.description_from_content|safe }}
+            <div class="event__description">
+                {{ event.description_from_content|safe }}
+            </div>
         {% endeditable %}
     {% endblock %}
 
@@ -116,7 +118,7 @@
     {% endblock %}
 
 {% block event_list_event_links %}
-<div class="event-list-detail">
+<div class="event__detail">
     {% keywords_for event as tags %}
     {% if tags %}
     <ul class="list-inline tags">
