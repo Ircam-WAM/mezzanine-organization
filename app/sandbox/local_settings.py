@@ -84,3 +84,5 @@ ADMIN_MENU_ORDER = (
     (_("Users"), ("auth.User", "auth.Group",)),
     (_("Festival"), ("mezzanine_agenda.EventLocation", "festival.EventCategory", "PageCategory")),
 )
+
+SEARCH_MODEL_CHOICES = ('pages.Page', 'blog.BlogPost', 'mezzanine_agenda.Event', "festival.Artist", "festival.Video",)
