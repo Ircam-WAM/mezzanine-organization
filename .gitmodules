@@ -1,0 +1,3 @@
+[submodule "lib/mezzanine-agenda"]
+	path = lib/mezzanine-agenda
+	url = git@github.com:yomguy/mezzanine-agenda.git
