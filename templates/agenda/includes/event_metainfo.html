@@ -3,7 +3,7 @@
 <p class="event__meta">
     {{ event.start }}
     {% if event.end %}
-    {% trans "-" %} {{ event.end }}
+    {% trans "-" %} {% if event.end|date == event.start|date %}{{ event.end|time:"TIME_FORMAT" }}{% else %}{{ event.end }}{% endif %}
     {% endif %}
     {% if event.location %}
     {% trans "at" %}
