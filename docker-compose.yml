@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2015 IRCAM
+# Copyright (c) 2015 Guillaume Pellerin <guillaume.pellerin@ircam.fr>
 
 # Manifeste is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,8 +49,7 @@ app:
     - "8000"
   links:
     - db
-    # - pgdb
-
+    
 nginx:
   image: nginx
   ports:
