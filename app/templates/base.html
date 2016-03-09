@@ -93,7 +93,7 @@
 
             <h2 class="page__title">{% block title %}{% endblock %}</h2>
 
-            {% comment - Remove breadcrumbs %}
+            {% comment %}
             <ul class="breadcrumb">
             {% spaceless %}
             {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
@@ -135,7 +135,7 @@
             <div class="footer-logo">
                 <img src="{% static "img/logo_manifeste16_black.png" %}" alt="Logo Manifeste 2016 ircam" width="80">
             </div>
-        {% page_menu "pages/menus/footer.html" %}
+            {% page_menu "pages/menus/footer.html" %}
             <div class="footer-legals">
                 <p>
                     {# {% trans "Powered by" %} #}
