@@ -16,7 +16,7 @@ On MacOSX or Windows install the `Docker Toolbox <https://www.docker.com/product
 
 Then run these commands::
 
-    git --recursive clone git://git@git.forge.ircam.fr/Manifeste.git
+    git clone git://git@git.forge.ircam.fr/Manifeste.git
     cd Manifeste
     docker-compose up db
 
