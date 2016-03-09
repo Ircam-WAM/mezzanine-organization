@@ -14,16 +14,6 @@ from mezzanine.core.admin import DisplayableAdmin, OwnableAdmin
 from festival.models import *
 
 
-class FestivalEventInline(admin.StackedInline):
-    model = FestivalEvent
-    extra = 3
-
-
-class FestivalEventAdmin(EventAdmin):
-
-    inlines = [FestivalEventInline, ]
-
-
 class ArtistAdmin(admin.ModelAdmin):
 
     model = Artist
@@ -44,10 +34,6 @@ class ArtistAdminDisplayable(DisplayableAdmin):
     fieldsets = deepcopy(ArtistAdmin.fieldsets)
 
 
-admin.site.unregister(Event)
-admin.site.register(Event, FestivalEventAdmin)
-admin.site.register(EventCategory)
 admin.site.register(PageCategory)
-
 admin.site.register(Artist, ArtistAdminDisplayable)
 admin.site.register(Video, VideoAdminDisplayable)
