@@ -103,18 +103,12 @@
     {% endblock %}
 
     {% block event_list_event_metainfo %}
-        {% editable event.start event.end event.location %}
-            <p class="event__meta">
-                {{ event.start }}
-                {% if event.end %}
-                {% trans "-" %} {{ event.end }}
-                {% endif %}
-                {% if event.location %}
-                {% trans "at" %}
-                <a href="{% url "event_list_location" event.location.slug %}">{{ event.location }}</a>
-                {% endif %}
-            </p>
-        {% endeditable %}
+         {% include "agenda/includes/event_metainfo.html" %}
+        {% for child in event.children.all %}
+         {% with child as event %}
+          {% include "agenda/includes/event_metainfo.html" %}
+         {% endwith %}
+        {% endfor %}
     {% endblock %}
 
 {% block event_list_event_links %}
@@ -131,7 +125,6 @@
     </ul>
     {% endif %}
     <p>
-    <a href="{{ event.get_absolute_url }}">{% trans "read more" %}</a>
     {% if event.allow_comments %}
     /
     {% if settings.COMMENTS_DISQUS_SHORTNAME %}
