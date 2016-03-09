@@ -147,6 +147,17 @@
 </ul>
 {% endblock %}
 
+{% block event_related %}
+<h2>{% trans "Artists" %}</h2>
+{% for artist in event.artists.all %}
+<a href="{% url 'festival-artist-detail' artist.slug %}">{{ artist.name }}</a>
+{% endfor %}
+<h2>{% trans "Videos" %}</h2>
+{% for video in event.videos.all %}
+<a href="{% url 'festival-video-detail' video.slug %}">{{ video.title }}</a>
+{% endfor %}
+{% endblock %}
+
 {% block event_detail_comments %}
 {% if event.allow_comments %}{% comments_for event %}{% endif %}
 {% endblock %}
