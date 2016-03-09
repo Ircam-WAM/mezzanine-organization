@@ -21,5 +21,8 @@
 
 app:
   command: /bin/sh deploy/start_app.sh --runserver
+  volumes:
+    - ./app/:/srv/app
+    - ./app/apps/mezzanine-agenda/:/srv/src/mezzanine-agenda  
   ports:
     - "9010:8000"

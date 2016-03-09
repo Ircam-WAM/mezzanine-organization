@@ -10,11 +10,6 @@ class EventTranslationOptions(TranslationOptions):
     fields = ('title', 'content')
 
 
-@register(FestivalEvent)
-class MetaEventTranslationOptions(TranslationOptions):
-    pass
-
-
 @register(Artist)
 class ArtistTranslationOptions(TranslationOptions):
 

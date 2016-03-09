@@ -38,17 +38,6 @@ db:
     - MYSQL_USER=manifeste
     - MYSQL_PASSWORD=Onukifsid7
 
-# pgdb:
-#   image: postgres
-#   volumes:
-#     - ./data/var/lib/postgresql/eve/data/:/var/lib/postgresql/data
-#   volumes_from:
-#     - data
-#   environment:
-#     - POSTGRES_PASSWORD=mysecretpassword
-#     - POSTGRES_USER=postgres
-#     - POSTGRES_DB=eve
-
 app:
   build: .
   command: /bin/sh deploy/start_app.sh

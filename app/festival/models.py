@@ -46,27 +46,6 @@ class BaseTitleModel(models.Model):
         return self.title
 
 
-class FestivalEvent(models.Model):
-    """Extensible event metadata"""
-
-    event = models.ForeignKey(Event, related_name='festival_events', verbose_name=_('festival event'), blank=True, null=True, on_delete=models.SET_NULL)
-    #eve_event = SpanningForeignKey(eve.models.EventVersion, related_name='festival_events', verbose_name=_('E-venement event'), blank=True, null=True, default=None)
-    eve_event_id = models.IntegerField(_('eve id'), blank=True, null=True)
-    category = models.ForeignKey('EventCategory', related_name='festival_events', verbose_name=_('category'), blank=True, null=True, on_delete=models.SET_NULL)
-    artists = models.ManyToManyField('Artist', related_name='metaevents', verbose_name=_('artists'), blank=True)
-    featured = models.BooleanField(_('featured'), default=False)
-    featured_image = FileField(_('featured image'), upload_to='images/events', max_length=1024, blank=True, format="Image")
-    featured_image_header = FileField(_('featured image header'), upload_to='images/events/headers', max_length=1024, blank=True, format="Image")
-    featured_image_description = models.TextField(_('featured image description'), blank=True)
-
-    class Meta(MetaCore):
-        verbose_name = _('festival event')
-        db_table = app_label + '_events'
-
-    def __unicode__(self):
-        return self.event.title
-
-
 class Artist(Displayable, RichText, AdminThumbMixin):
     """Artist"""
 
@@ -78,6 +57,7 @@ class Artist(Displayable, RichText, AdminThumbMixin):
     featured = models.BooleanField(_('featured'), default=False)
     photo_featured = FileField(_('photo featured'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
     photo_featured_credits = models.CharField(_('photo featured credits'), max_length=255, blank=True, null=True)
+    events = models.ManyToManyField(Event, related_name='artists', verbose_name=_('events'), blank=True)
 
     search_fields = ("title", "bio")
 
@@ -116,13 +96,6 @@ class Video(Displayable, RichText):
 
     def get_absolute_url(self):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
-
-
-class EventCategory(BaseNameModel):
-    """Event Category"""
-
-    class Meta(MetaCore):
-        verbose_name = _('event category')
 
 
 class PageCategory(BaseNameModel):
