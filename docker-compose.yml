@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2015 IRCAM
+# Copyright (c) 2015 Guillaume Pellerin <guillaume.pellerin@ircam.fr>
 
 # Manifeste is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,17 +38,6 @@ db:
     - MYSQL_USER=manifeste
     - MYSQL_PASSWORD=Onukifsid7
 
-# pgdb:
-#   image: postgres
-#   volumes:
-#     - ./data/var/lib/postgresql/eve/data/:/var/lib/postgresql/data
-#   volumes_from:
-#     - data
-#   environment:
-#     - POSTGRES_PASSWORD=mysecretpassword
-#     - POSTGRES_USER=postgres
-#     - POSTGRES_DB=eve
-
 app:
   build: .
   command: /bin/sh deploy/start_app.sh
@@ -60,8 +49,7 @@ app:
     - "8000"
   links:
     - db
-    # - pgdb
-
+    
 nginx:
   image: nginx
   ports:

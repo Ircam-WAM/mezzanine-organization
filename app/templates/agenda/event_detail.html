@@ -88,7 +88,9 @@
             Get Directions
         </a>
     </p>
-    {% google_static_map event 900 300 15 %}
+    <a href="{{ event|google_nav_url }}" target="_blank" class="">
+     {% google_static_map event 900 300 15 %}
+    </a/>
 </div>
 {% endeditable %}
 {% endblock %}
@@ -108,6 +110,7 @@
 {% endif %}
 {% endblock %}
 
+{% comment %}
 {% block event_detail_rating %}
 <div class="panel panel-default rating">
     <div class="panel-body">
@@ -115,6 +118,7 @@
     </div>
 </div>
 {% endblock %}
+{% endcomment %}
 
 {% block event_detail_sharebuttons %}
 {% set_short_url_for event %}
@@ -141,6 +145,17 @@
 {% endif %}
 {% endwith %}
 </ul>
+{% endblock %}
+
+{% block event_related %}
+<h2>{% trans "Artists" %}</h2>
+{% for artist in event.artists.all %}
+<a href="{% url 'festival-artist-detail' artist.slug %}">{{ artist.name }}</a>
+{% endfor %}
+<h2>{% trans "Videos" %}</h2>
+{% for video in event.videos.all %}
+<a href="{% url 'festival-video-detail' video.slug %}">{{ video.title }}</a>
+{% endfor %}
 {% endblock %}
 
 {% block event_detail_comments %}

@@ -9,10 +9,9 @@ from mezzanine.conf import settings
 
 from festival.views import *
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^artists/$', ArtistListView.as_view(), name="festival-artist-list"),
     url(r'^artists/(?P<slug>.*)/$', ArtistDetailView.as_view(), name="festival-artist-detail"),
     url(r'^videos/$', VideoListView.as_view(), name="festival-video-list"),
     url(r'^videos/(?P<slug>.*)/$', VideoDetailView.as_view(), name="festival-video-detail"),
-
-)
+]

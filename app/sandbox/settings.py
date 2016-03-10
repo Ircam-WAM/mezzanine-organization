@@ -44,7 +44,7 @@ from django.utils.translation import ugettext_lazy as _
 PAGE_MENU_TEMPLATES = (
     (1, _("Top navigation bar"), "pages/menus/dropdown.html"),
     # (2, _("Left-hand tree"), "pages/menus/tree.html"),
-    # (3, _("Footer"), "pages/menus/footer.html"),
+    (2, _("Footer"), "pages/menus/footer.html"),
 )
 
 # A sequence of fields that will be injected into Mezzanine's (or any
@@ -94,7 +94,7 @@ USE_TZ = True
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = "en"
+LANGUAGE_CODE = "fr"
 
 # Supported languages
 LANGUAGES = (
@@ -115,6 +115,7 @@ SITE_ID = 1
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
+USE_L10N = True
 
 AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
 
@@ -185,12 +186,6 @@ MEDIA_ROOT = '/srv/media/'
 # Package/module name to import the root urlpatterns from for the project.
 ROOT_URLCONF = "%s.urls" % PROJECT_APP
 
-# Put strings here, like "/home/html/django_templates"
-# or "C:/www/django/templates".
-# Always use forward slashes, even on Windows.
-# Don't forget to use absolute paths, not relative paths.
-TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
-
 
 ################
 # APPLICATIONS #
@@ -237,21 +232,21 @@ MODELTRANSLATION_TRANSLATION_FILES = (
     'translations',
 )
 
-# List of processors used by RequestContext to populate the context.
-# Each one should be a callable that takes the request object as its
-# only parameter and returns a dictionary to add to the context.
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.contrib.messages.context_processors.messages",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.static",
-    "django.core.context_processors.media",
-    "django.core.context_processors.request",
-    "django.core.context_processors.tz",
-    "mezzanine.conf.context_processors.settings",
-    "mezzanine.pages.context_processors.page",
-)
+
+TEMPLATES = [{'APP_DIRS': True,
+               'BACKEND': 'django.template.backends.django.DjangoTemplates',
+               'DIRS': ('/srv/app/templates',),
+               'OPTIONS': {'builtins': ['mezzanine.template.loader_tags'],
+                           'context_processors': ('django.contrib.auth.context_processors.auth',
+                                                  'django.contrib.messages.context_processors.messages',
+                                                  'django.core.context_processors.debug',
+                                                  'django.core.context_processors.i18n',
+                                                  'django.core.context_processors.static',
+                                                  'django.core.context_processors.media',
+                                                  'django.core.context_processors.request',
+                                                  'django.core.context_processors.tz',
+                                                  'mezzanine.conf.context_processors.settings',
+                                                  'mezzanine.pages.context_processors.page')}}]
 
 # List of middleware classes to use. Order is important; in the request phase,
 # these middleware classes will be applied in the order given, and in the

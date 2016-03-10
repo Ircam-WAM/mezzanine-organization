@@ -82,7 +82,15 @@ ADMIN_MENU_ORDER = (
         "generic.ThreadedComment", (_("Media Library"), "fb_browse"),)),
     (_("Site"), ("sites.Site", "redirects.Redirect", "conf.Setting")),
     (_("Users"), ("auth.User", "auth.Group",)),
-    (_("Festival"), ("mezzanine_agenda.EventLocation", "festival.EventCategory", "PageCategory")),
+    (_("Festival"), ("mezzanine_agenda.EventLocation",
+        "mezzanine_agenda.EventCategory", "festival.PageCategory")),
 )
 
 SEARCH_MODEL_CHOICES = ()
+
+RATINGS_ACCOUNT_REQUIRED = True
+
+import warnings
+warnings.filterwarnings(
+        'ignore', r"DateTimeField .* received a naive datetime",
+        RuntimeWarning, r'django\.db\.models\.fields')
