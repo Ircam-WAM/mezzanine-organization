@@ -89,3 +89,8 @@ ADMIN_MENU_ORDER = (
 SEARCH_MODEL_CHOICES = ()
 
 RATINGS_ACCOUNT_REQUIRED = True
+
+import warnings
+warnings.filterwarnings(
+        'ignore', r"DateTimeField .* received a naive datetime",
+        RuntimeWarning, r'django\.db\.models\.fields')
