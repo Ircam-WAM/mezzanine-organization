@@ -8,3 +8,4 @@ django-modeltranslation
 django-meta
 psycopg2
 django-bower
+pyquery
