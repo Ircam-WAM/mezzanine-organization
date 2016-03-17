@@ -27,18 +27,20 @@
 .main {
   display: block;
   margin: 0 auto 3rem;
+  // padding-top: 3rem;
   @media (min-width : $desktop ) {
     float: left;
     width: 70%;
-    padding-right: .5rem;
+    padding-right: 1rem;
   }
 }
 
 .aside {
   display: block;
-  background: #fff;
+  background: $main_color;
   padding: 1rem .5rem;
-  margin-bottom: 3rem;
+  margin: 0 0 3rem;
+  color: white;
   @media (min-width : $desktop ) {
     float: left;
     width: 30%;
