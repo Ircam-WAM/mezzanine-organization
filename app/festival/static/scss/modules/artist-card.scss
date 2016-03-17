@@ -44,13 +44,21 @@
       padding: 0.5rem;
       text-align: center;
       background: white;
-      color: $manifeste16_darker;
-      font-weight: $regular;
       margin: 0;
-      font-size: 0.7rem;
       @media (min-width : $desktop ) {
           padding: 0.8rem;
           font-size: 0.8rem;
+      }
+
+      span {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        font: $bold .8rem $base_font_family;
+        padding: .2rem 0;
+        color: $black;
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000;
       }
   }
 }

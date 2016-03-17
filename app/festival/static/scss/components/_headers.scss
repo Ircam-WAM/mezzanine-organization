@@ -51,11 +51,11 @@
     width: 100%;
     text-align: center;
     color: black;
-    font-weight: $bold;
+    font-weight: $regular;
     font-size: 1rem;
     @media (min-width : $desktop ) {
         line-height: 85px;
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
   }
 
@@ -118,7 +118,7 @@
       padding: $base_font_size/2 1rem;
       margin: 0 auto;
       color: $black;
-      font: $regular .9rem $header_font_family;
+      font: $regular 1.1rem $header_font_family;
       text-transform: uppercase;
     }
   }

@@ -76,7 +76,7 @@
     </div>
     {% endif %}
 
-    <div class="div-message">
+    <div class="site__content__header">
         <div class="container">
             {% nevercache %}
             {% if messages %}
@@ -91,8 +91,6 @@
             {% endif %}
             {% endnevercache %}
 
-            <h2 class="page__title">{% block title %}{% endblock %}</h2>
-
             {% comment %}
             <ul class="breadcrumb">
             {% spaceless %}
@@ -105,6 +103,9 @@
 
     <div class="site__content">
         <div class="container">
+            <div class="site__content__header">
+                <h2 class="page__title">{% block title %}{% endblock %}</h2>
+            </div>
             <main class="main" role="main">
                 {% block main %}{% endblock %}
             </main>
@@ -140,7 +141,7 @@
                 <p>
                     {# {% trans "Powered by" %} #}
                     Conception & réalisation :
-                    <a href="http://www.philippebarbosa.com" titre="Développeur front-end freelance & photographe professionnel à Paris">Philippe Barbosa</a>
+                    <a href="http://www.philippebarbosa.com" target="_blank" titre="Développeur front-end freelance & photographe professionnel à Paris">Philippe Barbosa</a>
                 </p>
             </div>
         </div>
