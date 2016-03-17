@@ -4,14 +4,12 @@
 
 .sidebar__title {
   text-transform: uppercase;
-  display: block;
-  font-size: 1rem;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  font: $bold 1rem $base_font_family;
   margin: 1.3rem 0 0.5rem;
-  &:after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 1px;
-    background: $main_color;
-  }
+  padding: .2rem 0;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
 }

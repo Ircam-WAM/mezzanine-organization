@@ -150,7 +150,7 @@ select {
         width: 70%;
 
         @media (min-width : $desktop) {
-          width: 60%;
+          width: 80%;
         }
         height: 2.5rem;
         line-height: 2.5rem;
@@ -281,12 +281,21 @@ button.lang {
     display: inline-block;
     padding: $base_font_size/2 0.3rem;
     margin: 0 auto;
-    color: $gray;
-    font: $regular .9rem $header_font_family;
+    color: $gray_darker;
+    font: $regular 1rem $header_font_family;
     text-transform: uppercase;
     background: none;
     &.is-active {
       background: none;
       color: $main_color;
     }
+}
+
+// Edit profile
+.help-block {
+  font-size: .7rem;
+}
+
+.form-group {
+  margin: 0 0 1rem;
 }

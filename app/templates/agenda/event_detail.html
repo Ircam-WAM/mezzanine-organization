@@ -13,7 +13,7 @@
 {% endmetablock %}{% endblock %}
 
 {% block title %}
-{% editable event.title %}{{ event.title }}{% endeditable %}
+    {% editable event.title %}{{ event.title }}{% endeditable %}
 {% endblock %}
 
 {% block breadcrumb_menu %}
@@ -26,13 +26,14 @@
 {% block event_detail_postedby %}
 {% editable event.start event.end event.location %}
 <p class="event__meta">
-    {{ event.start }}
-    {% if event.end %}
-    {% trans "-" %} {{ event.end }}
-    {% endif %}
-    {% if event.location %}
-    {% trans "at" %}
-    <a href="{% url "event_list_location" event.location.slug %}">{{ event.location }}</a>
+    <span>
+        {{ event.start }}
+        {% if event.end %}
+        {% trans "-" %} {% if event.end|date == event.start|date %}{{ event.end|time:"TIME_FORMAT" }}{% else %}{{ event.end }}{% endif %}
+        {% endif %}
+        {% if event.location %}
+        <a href="{% url "event_list_location" event.location.slug %}" class="event__meta__location">{{ event.location }}</a>
+    </span>
     {% endif %}
 </p>
 {% endeditable %}
@@ -64,7 +65,9 @@
 
 {% block event_detail_featured_image %}
 {% if settings.EVENT_USE_FEATURED_IMAGE and event.featured_image %}
-<p><img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail event.featured_image 600 0 %}"></p>
+<p>
+    <img src="{{ MEDIA_URL }}{% thumbnail event.featured_image 600 0 %}">
+</p>
 {% endif %}
 {% endblock %}
 
@@ -81,7 +84,7 @@
 {% if event.location %}
 {% block event_detail_location %}
 {% editable event.location %}
-<div class="event__card">
+<div class="event__card--alt">
     <p>
         {{ event.location.address|linebreaksbr }}<br />
         <a href="{{ event|google_nav_url }}" target="_blank" class="">

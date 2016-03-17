@@ -9,11 +9,14 @@
 /* _Colors
 ---------------------------------- */
 
-$manifeste16           : #e8ca88;
-$manifeste16_darker    : darken($manifeste16, 20);
+$manifeste16           : #d9cdc9;
+$manifeste16_darker    : #937971;
+
+$manifeste16_alt       : #00818d;
 
 $main_color            : $manifeste16;
-$base_background_color : #f1f1f1;
+$base_background_color : #f7f7f7;
+$main_color_alt        : $manifeste16_alt;
 
 $header_font_color     : $black_faded;
 $base_font_color       : $gray_darker;
@@ -50,13 +53,13 @@ $sans_serif         : $interstate, $helvetica;
 $serif              : $triplex, $georgia;
 $monospace          : $consolas;
 
-$header_font_family : $sans_serif;
-$base_font_family   : $serif;
+$header_font_family : $serif;
+$base_font_family   : $sans_serif;
 $base_font_weight   : $regular;
 
 // Sizes
-$base_font_size     : 1rem;
-$base_line_height   : 1.6;
+$base_font_size     : .9rem;
+$base_line_height   : 1.4;
 
 // Layout
 $base_border_radius : 0px;
@@ -99,7 +102,7 @@ $form_box_shadow-focus     : 0;
 /* _Buttons
 ---------------------------------- */
 $base_btn_color                  : $black;
-$base_btn_background_color       : $main_color;
+$base_btn_background_color       : $base_link_color;
 
 $base_btn_hover_color            : $white;
 $base_btn_hover_background_color : darken($base_btn_background_color, 5);
