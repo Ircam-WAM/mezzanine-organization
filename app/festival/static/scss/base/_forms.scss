@@ -148,6 +148,7 @@ select {
         border-color: darken($base_btn_background_color, 5);
         float: left;
         width: 70%;
+        color: $gray_darker;
 
         @media (min-width : $desktop) {
           width: 80%;
@@ -162,6 +163,7 @@ select {
     input[type=submit] {
       width: 100%;
       -webkit-appearance: none;
+      background: darken($base_btn_background_color, 5);
 
       @media (min-width : $desktop) {
           width: 20%;
