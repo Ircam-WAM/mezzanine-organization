@@ -50,3 +50,10 @@
 .site__content__header {
   padding-top: 1rem;
 }
+
+.site__content__header__inner {
+  padding-right: 1rem;
+  @media (min-width : $desktop ) {
+      max-width: 70%;
+  }
+}

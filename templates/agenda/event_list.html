@@ -41,10 +41,6 @@
 {% endif %}
 {% endblock %}
 
-{% block event_calendar %}
-<a href='{% icalendar_url %}' target="_blank" class="">{% trans "Subscribe to all events in" %} Google Calendar/Outlook/iCal</a>
-{% endblock %}
-
 {% block main %}
 {% if tag or location or year or month or author %}
     {% block event_list_filterinfo %}
@@ -139,6 +135,8 @@
 {% endblock %}
 </div>
 {% endfor %}
+
+<a href='{% icalendar_url %}' target="_blank" class="small  push-ical">{% trans "Subscribe to all events in" %} Google Calendar/Outlook/iCal</a>
 
 {% pagination_for events %}
 
