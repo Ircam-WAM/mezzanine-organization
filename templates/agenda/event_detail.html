@@ -54,15 +54,6 @@
 </p>
 {% endblock %}
 
-{% block event_detail_calendar %}
-<p><a href='{{ event|google_calendar_url }}' target="_blank" class="">
-    Add to Google Calendar
-</a>
-<a href='{% icalendar_url %}' class="">
-    Add to Outlook/iCal
-</a></p>
-{% endblock %}
-
 {% block event_detail_featured_image %}
 {% if settings.EVENT_USE_FEATURED_IMAGE and event.featured_image %}
 <p>
@@ -81,10 +72,18 @@
 {% endeditable %}
 {% endblock %}
 
+{% block event_detail_sharebuttons %}
+{% set_short_url_for event %}
+<div class="share__button">
+    <a class="btn btn-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t={{ event.title|urlencode }}">{% trans "Share on Facebook" %}</a>
+    <a class="btn btn-twitter" target="_blank" href="http://twitter.com/home?status={{ event.short_url|urlencode }}%20{{ event.title|urlencode }}">{% trans "Share on Twitter" %}</a>
+</div>
+{% endblock %}
+
 {% if event.location %}
 {% block event_detail_location %}
 {% editable event.location %}
-<div class="event__card--alt">
+<div class="event__card">
     <p>
         {{ event.location.address|linebreaksbr }}<br />
         <a href="{{ event|google_nav_url }}" target="_blank" class="">
@@ -123,30 +122,34 @@
 {% endblock %}
 {% endcomment %}
 
-{% block event_detail_sharebuttons %}
-{% set_short_url_for event %}
-<div class="share__button">
-    <a class="btn btn-twitter" target="_blank" href="http://twitter.com/home?status={{ event.short_url|urlencode }}%20{{ event.title|urlencode }}">{% trans "Share on Twitter" %}</a>
-    <a class="btn btn-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t={{ event.title|urlencode }}">{% trans "Share on Facebook" %}</a>
-</div>
+{% block event_detail_calendar %}
+<p>
+    <a href='{{ event|google_calendar_url }}' target="_blank" class="btn btn-small">
+        Add to Google Calendar
+    </a>
+    <a href='{% icalendar_url %}' class="btn btn-small">
+        Add to Outlook/iCal
+    </a>
+</p>
 {% endblock %}
 
 {% block event_previous_next %}
-<ul class="pager">
-{% with event.get_previous_by_publish_date as previous %}
-{% if previous %}
-<li class="previous">
-    <a href="{{ previous.get_absolute_url }}">&larr; {{ previous }}</a>
-</li>
-{% endif %}
-{% endwith %}
-{% with event.get_next_by_publish_date as next %}
-{% if next %}
-<li class="next">
-    <a href="{{ next.get_absolute_url }}">{{ next }} &rarr;</a>
-</li>
-{% endif %}
-{% endwith %}
+<ul class="split-container pager">
+    {% with event.get_previous_by_publish_date as previous %}
+        {% if previous %}
+            <li class="split-left">
+                <a href="{{ previous.get_absolute_url }}" class="pager__item--before">&larr; {{ previous }}</a>
+            </li>
+        {% endif %}
+    {% endwith %}
+
+    {% with event.get_next_by_publish_date as next %}
+        {% if next %}
+            <li class="split-right">
+                <a href="{{ next.get_absolute_url }}" class="pager__item--after">{{ next }} &rarr;</a>
+            </li>
+        {% endif %}
+    {% endwith %}
 </ul>
 {% endblock %}
 
