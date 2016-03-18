@@ -278,21 +278,6 @@ button {
   }
 }
 
-// button as link for lang selector
-button.lang {
-    display: inline-block;
-    padding: $base_font_size/2 0.3rem;
-    margin: 0 auto;
-    color: $gray_darker;
-    font: $regular 1rem $header_font_family;
-    text-transform: uppercase;
-    background: none;
-    &.is-active {
-      background: none;
-      color: $main_color;
-    }
-}
-
 // Edit profile
 .help-block {
   font-size: .7rem;

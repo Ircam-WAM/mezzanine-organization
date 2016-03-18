@@ -207,8 +207,9 @@ pre > p {
   text-transform: uppercase;
   color: $base_link_color;
   margin: 0;
-  padding-right: 1rem;
-  @media (min-width : $desktop ) {
-      max-width: 70%;
-  }
+}
+
+.push-ical {
+  float: right;
+  margin: 1rem 0;
 }

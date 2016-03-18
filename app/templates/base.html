@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
 {% load pages_tags mezzanine_tags i18n staticfiles keyword_tags event_tags %}
+{% get_language_info_list for LANGUAGES as languages %}
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,7 +58,34 @@
         <div class="navigation" role="navigation">
             {% page_menu "pages/menus/dropdown.html" %}
         </div>
+
+        <div class="nav__complementary">
+            <div class="container">
+                <ul class="nav__complementary__list">
+                    <li class="nav__complementary__item--facebook">
+                        <a href="https://www.facebook.com/iIRCAM" class="btn-icon--facebook" target="_blank">
+                            FB
+                        </a>
+                    </li>
+                    <li class="nav__complementary__item--twitter">
+                        <a href="https://twitter.com/ircam" class="btn-icon--twitter" target="_blank">
+                            TW
+                        </a>
+                    </li>
+                    {% if settings.USE_MODELTRANSLATION and languages|length > 1 %}
+                        {% for language in languages %}
+                            <li class="nav__complementary__item__lang {% if language.code == LANGUAGE_CODE %}is-active{% endif %}">
+                                <a href="#" onclick="$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
+                                  {{ language.code|title }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
     </div>
+
 
     {% if on_home %}
     <div class="hero__slider">
@@ -104,8 +132,9 @@
     <div class="site__content">
         <div class="container">
             <div class="site__content__header">
-                <h2 class="page__title">{% block title %}{% endblock %}</h2>
-                {% block event_calendar %}{% endblock %}
+                <div class="site__content__header__inner">
+                    <h2 class="page__title">{% block title %}{% endblock %}</h2>
+                </div>
             </div>
             <main class="main" role="main">
                 {% block main %}{% endblock %}

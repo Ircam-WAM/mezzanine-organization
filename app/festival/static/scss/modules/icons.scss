@@ -1,0 +1,15 @@
+// ****************************************************************
+// _Icons
+// ****************************************************************
+
+.btn-icon {
+    padding: $base_font_size/2 0.3rem;
+    margin: 0 auto;
+
+    &--facebook {
+        @extend .btn-icon;
+    }
+    &--facebook {
+        @extend .btn-icon;
+    }
+}

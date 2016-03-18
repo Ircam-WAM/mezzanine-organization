@@ -30,17 +30,7 @@
     </li>
     {% endif %}
     {% endfor %}
-    {% if settings.USE_MODELTRANSLATION and languages|length > 1 %}
-    <li class="menu__item  menu__item--lang">
-      {% for language in languages %}
-        <button class="lang {% if language.code == LANGUAGE_CODE %}is-active{% endif %}" onclick="$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
-          {{ language.code|title }}
-        </button>
-      {% endfor %}
-    </li>
-    {% endif %}
 </ul>
-
 {% else %}
 <ul class="dropdown-menu">
     {% for page in page_branch %}

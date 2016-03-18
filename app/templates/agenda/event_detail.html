@@ -16,10 +16,6 @@
     {% editable event.title %}{{ event.title }}{% endeditable %}
 {% endblock %}
 
-{% block event_calendar %}
-<a href='{% icalendar_url %}' target="_blank" class="">{% trans "Subscribe to all events in" %} Google Calendar/Outlook/iCal</a>
-{% endblock %}
-
 {% block breadcrumb_menu %}
 {{ block.super }}
 <li class="active">{{ event.title }}</li>
@@ -171,5 +167,5 @@
 {% block event_detail_comments %}
 {% if event.allow_comments %}{% comments_for event %}{% endif %}
 {% endblock %}
-
+<a href='{% icalendar_url %}' target="_blank" class="small push-ical">{% trans "Subscribe to all events in" %} Google Calendar/Outlook/iCal</a>
 {% endblock %}

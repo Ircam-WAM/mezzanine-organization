@@ -9,6 +9,7 @@
   @extend .clearfix;
   display: block;
   background-color: $header_background_color;
+  position: relative;
   // margin-bottom: 3rem;
 
   &.is-fixed {
@@ -167,4 +168,61 @@
   visibility: visible;
   margin: 0;
   // transition:opacity 0.3s ease-out, visibility 0.1s 0.1s linear;
+}
+
+// ****************************************************************
+// _NavComplementary
+// ****************************************************************
+
+
+.nav__complementary {
+  display: block;
+  list-style: none;
+  text-align: right;
+  position: absolute;
+  z-index: $zi_2;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+
+.nav__complementary__item {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    padding: 0.5rem .2rem;
+    width: 2rem;
+    background: #fff;
+    margin: 0 .1rem;
+    text-align: center;
+    border-radius: 0 0 3px 3px;
+
+    a {
+      color: white;
+    }
+
+    &--facebook {
+      @extend .nav__complementary__item;
+      background: $color-facebook;
+    }
+
+    &--twitter {
+      @extend .nav__complementary__item;
+      background: $color-twitter;
+      margin-right: 1rem;
+    }
+
+    &__lang {
+      @extend .nav__complementary__item;
+      opacity: .6;
+      a {
+        color: $gray;
+      }
+
+      &.is-active {
+        // background: none;
+        // color: $main_color;
+        opacity: 1;
+      }
+    }
 }
