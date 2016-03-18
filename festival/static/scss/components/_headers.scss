@@ -9,15 +9,7 @@
   @extend .clearfix;
   display: block;
   background-color: $header_background_color;
-
-  @if $header_uppercase {
-      text-transform: uppercase;
-  }
-
-
-  // @if $header_box_shadow {
-  //   box-shadow : $header_box_shadow;
-  // }
+  // margin-bottom: 3rem;
 
   &.is-fixed {
     position: fixed;
