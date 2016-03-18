@@ -46,11 +46,11 @@ $(function() {
         cssEasing: 'ease', //'cubic-bezier(0.25, 0, 0.25, 1)',//
         easing: 'linear', //'for jquery animation',////
 
-        speed: 400, //ms'
-        auto: false,
-        loop: false,
+        speed: 800, //ms'
+        auto: true,
+        loop: true,
         slideEndAnimation: true,
-        pause: 2000,
+        pause: 6000,
 
         keyPress: true,
         controls: true,
