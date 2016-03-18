@@ -1,0 +1,14 @@
+// ****************************************************************
+// _Pager
+// ****************************************************************
+
+.pager {
+  display: block;
+  margin: 3rem auto
+}
+
+.pager__item--before,
+.pager__item--after {
+  display: block;
+  text-transform: uppercase;
+}
