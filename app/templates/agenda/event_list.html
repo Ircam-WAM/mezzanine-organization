@@ -84,6 +84,15 @@
         {% endeditable %}
     {% endblock %}
 
+    {% block event_list_event_metainfo %}
+         {% include "agenda/includes/event_metainfo.html" %}
+        {% for child in event.children.all %}
+         {% with child as event %}
+          {% include "agenda/includes/event_metainfo.html" %}
+         {% endwith %}
+        {% endfor %}
+    {% endblock %}
+
     {% if settings.EVENT_USE_FEATURED_IMAGE and event.featured_image %}
         {% block event_list_event_featured_image %}
             <a href="{{ event.get_absolute_url }}">
@@ -98,15 +107,6 @@
                 {{ event.description_from_content|safe }}
             </div>
         {% endeditable %}
-    {% endblock %}
-
-    {% block event_list_event_metainfo %}
-         {% include "agenda/includes/event_metainfo.html" %}
-        {% for child in event.children.all %}
-         {% with child as event %}
-          {% include "agenda/includes/event_metainfo.html" %}
-         {% endwith %}
-        {% endfor %}
     {% endblock %}
 
 {% block event_list_event_links %}

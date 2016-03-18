@@ -7,16 +7,18 @@
   display: inline-block;
   *display: inline;
   *zoom: 1;
+  color: white;
   font: $bold 1rem $base_font_family;
   margin: 1.3rem 0 0.5rem;
   padding: .2rem 0;
-  border-top: 1px solid #000;
-  border-bottom: 1px solid #000;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
 }
 
 .sidebar__entry {
     font-size: 1rem;
     margin: 0;
-    line-height: 1.4;
-    // color: $gray_dar;
+    line-height: 1.6;
+    color: $gray_darker;
+    font: $regular .85rem $base_font_family;
 }
