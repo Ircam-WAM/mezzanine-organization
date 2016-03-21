@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.conf import settings
 
 from mezzanine.core.models import RichText, Displayable
 from mezzanine.core.fields import RichTextField, OrderField, FileField
@@ -8,13 +9,17 @@ from mezzanine.utils.models import AdminThumbMixin, upload_to
 
 from mezzanine_agenda.models import Event
 
+import requests
+from pyquery import PyQuery as pq
+
 # import eve.models
 
 from .related import SpanningForeignKey
 
 app_label = 'festival'
-
 ALIGNMENT_CHOICES = (('left', _('left')), ('right', _('right')))
+MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
+
 
 class MetaCore:
 
@@ -44,6 +49,13 @@ class BaseTitleModel(models.Model):
 
     def __unicode__(self):
         return self.title
+
+
+class PageCategory(BaseNameModel):
+    """Page Category"""
+
+    class Meta(MetaCore):
+        verbose_name = _('page category')
 
 
 class Artist(Displayable, RichText, AdminThumbMixin):
@@ -76,18 +88,66 @@ class Artist(Displayable, RichText, AdminThumbMixin):
         return reverse("festival-artist-detail", kwargs={'slug': self.slug})
 
 
-class Video(Displayable, RichText):
+class Media(Displayable, RichText):
+    """Media"""
+
+    media_id = models.CharField(_('media id'), max_length=128)
+    open_source_url = models.URLField(_('open source URL'), max_length=1024, blank=True)
+    closed_source_url = models.URLField(_('closed source URL'), max_length=1024, blank=True)
+
+    class Meta(MetaCore):
+        abstract = True
+
+    def __unicode__(self):
+        return self.title
+
+    @property
+    def uri(self):
+        return MEDIA_BASE_URL + self.media_id
+
+    def get_html(self):
+        r = requests.get(self.uri)
+        return r.content
+
+    def clean(self):
+        super(Media, self).clean()
+        self.q = pq(self.get_html())
+        self.title = self.q.attr('data-title')
+        sources = self.q('source')
+        for source in sources:
+            if self.open_source_mime_type in source.attrib['type']:
+                self.open_source_url = source.attrib['src']
+            elif self.closed_source_mime_type in source.attrib['type']:
+                self.closed_source_url = source.attrib['src']
+
+
+class Audio(Media):
+    """Audio"""
+
+    open_source_mime_type = 'audio/ogg'
+    closed_source_mime_type = 'audio/mp4'
+
+    event = models.ForeignKey(Event, related_name='audios', verbose_name=_('event'), blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta(MetaCore):
+        verbose_name = _('audio')
+        db_table = app_label + '_audios'
+
+    def get_absolute_url(self):
+        return reverse("festival-video-detail", kwargs={"slug": self.slug})
+
+
+class Video(Media):
     """Video"""
 
+    open_source_mime_type = 'video/webm'
+    closed_source_mime_type = 'video/mp4'
+
     event = models.ForeignKey(Event, related_name='videos', verbose_name=_('event'), blank=True, null=True, on_delete=models.SET_NULL)
-    media_id = models.CharField(_('media id'), max_length=128)
 
     class Meta(MetaCore):
         verbose_name = _('video')
         db_table = app_label + '_videos'
-
-    def __unicode__(self):
-        return self.title
 
     @property
     def html(self):
@@ -96,10 +156,3 @@ class Video(Displayable, RichText):
 
     def get_absolute_url(self):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
-
-
-class PageCategory(BaseNameModel):
-    """Page Category"""
-
-    class Meta(MetaCore):
-        verbose_name = _('page category')
