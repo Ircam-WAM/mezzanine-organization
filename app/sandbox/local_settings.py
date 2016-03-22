@@ -78,7 +78,7 @@ EVENT_USE_FEATURED_IMAGE = True
 
 ADMIN_MENU_ORDER = (
     (_("Content"), ("pages.Page", "blog.BlogPost", "mezzanine_agenda.Event",
-        "festival.Artist", "festival.Video",
+        "festival.Artist", "festival.Video", "festival.Audio",
         "generic.ThreadedComment", (_("Media Library"), "fb_browse"),)),
     (_("Site"), ("sites.Site", "redirects.Redirect", "conf.Setting")),
     (_("Users"), ("auth.User", "auth.Group",)),

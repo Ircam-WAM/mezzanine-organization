@@ -29,6 +29,16 @@ class VideoAdminDisplayable(DisplayableAdmin):
     fieldsets = deepcopy(VideoAdmin.fieldsets)
 
 
+class AudioAdmin(admin.ModelAdmin):
+
+    model = Audio
+
+
+class AudioAdminDisplayable(DisplayableAdmin):
+
+    fieldsets = deepcopy(AudioAdmin.fieldsets)
+
+
 class ArtistAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ArtistAdmin.fieldsets)
@@ -37,3 +47,4 @@ class ArtistAdminDisplayable(DisplayableAdmin):
 admin.site.register(PageCategory)
 admin.site.register(Artist, ArtistAdminDisplayable)
 admin.site.register(Video, VideoAdminDisplayable)
+admin.site.register(Audio, AudioAdminDisplayable)

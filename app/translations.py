@@ -20,3 +20,9 @@ class ArtistTranslationOptions(TranslationOptions):
 class VideoTranslationOptions(TranslationOptions):
 
     fields = ('title', 'description', 'content')
+
+
+@register(Audio)
+class AudioTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description', 'content')
