@@ -85,6 +85,7 @@
 {% endif %}
 {% endblock %}
 
+{% comment %}
 {% block event_authors %}
 {% event_authors as authors %}
 {% if authors %}
@@ -121,3 +122,4 @@
     <a href="{% url "event_feed" "atom" %}" class="sidebar__entry">{% trans "Atom" %}</a>
 {% endif %}
 {% endblock %}
+{% endcomment %}
