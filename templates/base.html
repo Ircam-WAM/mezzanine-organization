@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
-{% load pages_tags mezzanine_tags i18n staticfiles keyword_tags event_tags %}
+{% load i18n pages_tags mezzanine_tags staticfiles keyword_tags event_tags festival_tags %}
 {% get_language_info_list for LANGUAGES as languages %}
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -86,20 +86,17 @@
         </div>
     </div>
 
-
     {% if on_home %}
     <div class="hero__slider">
         <ul id="lightSlider">
-          <li class="hero__slider__item" style="background-image: url(https://source.unsplash.com/IaA_5KNVAR4/1920x500);">
-              <div class="container">
-                  <button>Content here !</button>
-              </div>
-          </li>
-          <li class="hero__slider__item" style="background-image: url(https://source.unsplash.com/OUgLA2unwtg/1920x500);">
-                <div class="container">
-                    <button>Another content here !</button>
-                </div>
-          </li>
+            {% festival_event_featured as events %}
+            {% for event in events %}
+              <li class="hero__slider__item" style="background-image: url({{ event.featured_image_header.url }});">
+                  <div class="container">
+                      <button>Content here !</button>
+                  </div>
+              </li>
+            {% endfor %}
         </ul>
     </div>
     {% endif %}

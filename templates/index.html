@@ -2,16 +2,14 @@
 {% load i18n festival_tags %}
 
 {% block meta_title %}{% trans "Home" %}{% endblock %}
-{% block title %}{% trans "Home" %}{% endblock %}
 
 {% block breadcrumb_menu %}
 <li class="active">{% trans "Home" %}</li>
 {% endblock %}
 
-{% block main %}
-<h2>{% trans "Edito" %}</h2>
-{% edito %}
+{% block title %}{% trans "Edito" %}{% endblock %}
 
-<hr>
-{% include "includes/html_styleguide.html" %}
+{% block main %}
+{% festival_edito as edito %}
+{{ edito.content|safe }}
 {% endblock %}

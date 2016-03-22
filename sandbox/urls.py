@@ -40,6 +40,7 @@ urlpatterns += [
     # one homepage pattern, so if you use a different one, comment this
     # one out.
 
+    url("^styles/$", direct_to_template, {"template": "styles.html"}, name="styles"),
     url("^$", direct_to_template, {"template": "index.html"}, name="home"),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE

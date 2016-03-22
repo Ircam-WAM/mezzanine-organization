@@ -1,13 +1,26 @@
 # -*- coding: utf-8 -*-
 from mezzanine.pages.models import Page
-from django import template
+from mezzanine.template import Library
+from mezzanine_agenda.models import Event
+from festival.models import Artist
 
-register = template.Library()
+register = Library()
 
-@register.simple_tag
-def edito():
-    qs = Page.objects.filter(title="Edito")
+@register.as_tag
+def festival_edito(*args):
+    qs = Page.objects.filter(slug="edito")
     if qs:
-        return qs[0].content
+        return qs[0].get_content_model()
     else:
-        return ''
+        return None
+
+@register.as_tag
+def festival_event_featured(*args):
+    models = [Event,]
+    featured = []
+    for model in models:
+        objs = model.objects.filter(featured=True)
+        for obj in objs:
+            if hasattr(obj, 'featured_image_header'):
+                featured.append(obj)
+    return featured
