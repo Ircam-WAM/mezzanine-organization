@@ -161,9 +161,11 @@ select {
     }
 
     input[type=submit] {
-      width: 100%;
+      width: 30%;
       -webkit-appearance: none;
       background: darken($base_btn_background_color, 5);
+      float: left;
+
 
       @media (min-width : $desktop) {
           width: 20%;

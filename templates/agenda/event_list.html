@@ -89,8 +89,8 @@
 
     {% if event.featured_image %}
         {% block event_list_event_featured_image %}
-            <a href="{{ event.get_absolute_url }}">
-                <img class="img-thumbnail pull-left" src="{{ MEDIA_URL }}{% thumbnail event.featured_image 90 90 %}">
+            <a href="{{ event.get_absolute_url }}" class="event__thumbnail">
+                <img src="{{ MEDIA_URL }}{% thumbnail event.featured_image 90 90 %}">
             </a>
         {% endblock %}
     {% endif %}
@@ -99,6 +99,7 @@
         {% editable event.content %}
             <div class="event__description">
                 {{ event.description|safe }}
+                <a href="{{ event.get_absolute_url }}" class="event__meta__cta">{% trans "read more" %}</a>
             </div>
         {% endeditable %}
     {% endblock %}

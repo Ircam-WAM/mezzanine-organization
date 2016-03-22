@@ -25,17 +25,23 @@
 
 {% block event_detail_postedby %}
 {% editable event.start event.end event.location %}
-<p class="event__meta">
-    <span>
-        {{ event.start }}
-        {% if event.end %}
-        {% trans "-" %} {% if event.end|date == event.start|date %}{{ event.end|time:"TIME_FORMAT" }}{% else %}{{ event.end }}{% endif %}
-        {% endif %}
-        {% if event.location %}
-        <a href="{% url "event_list_location" event.location.slug %}" class="event__meta__location">{{ event.location }}</a>
-    </span>
+<div class="event__meta">
+        <div class="event__meta__inner split-container">
+            <div class="split-left">
+                {{ event.start }}
+                {% if event.end %}
+                <br>
+                {% if event.end|date == event.start|date %}{{ event.end|time:"TIME_FORMAT" }}{% else %}{{ event.end }}{% endif %}
+                {% endif %}
+                {% if event.location %}
+                <a href="{% url "event_list_location" event.location.slug %}" class="event__meta__location">{{ event.location }}</a>
+            </div>
+            <div class="split-right">
+                <a href="{{ event.get_absolute_url }}" class="event__meta__cta">Réserver</a>
+            </div>
+        </div>
     {% endif %}
-</p>
+</div>
 {% endeditable %}
 {% endblock %}
 {% block event_detail_commentlink %}
