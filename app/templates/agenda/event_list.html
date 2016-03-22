@@ -87,7 +87,7 @@
         {% endfor %}
     {% endblock %}
 
-    {% if settings.EVENT_USE_FEATURED_IMAGE and event.featured_image %}
+    {% if event.featured_image %}
         {% block event_list_event_featured_image %}
             <a href="{{ event.get_absolute_url }}">
                 <img class="img-thumbnail pull-left" src="{{ MEDIA_URL }}{% thumbnail event.featured_image 90 90 %}">
