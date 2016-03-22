@@ -16,7 +16,9 @@
     {{ video.content|safe }}
 </div>
 
-<iframe width="480" height="360" src="http://medias.ircam.fr/embed/media/{{ video.media_id }}" frameborder="0" allowfullscreen=""></iframe>
+<div class="embed-responsive">
+    <iframe src="http://medias.ircam.fr/embed/media/{{ video.media_id }}" frameborder="0" allowfullscreen=""></iframe>
+</div>
 
 <div class="video-event">
     <h2>{% trans 'Related event' %}</h2>

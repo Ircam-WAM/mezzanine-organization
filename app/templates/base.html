@@ -147,14 +147,15 @@
                 {% include "includes/user_panel.html" %}
                 {% endnevercache %}
                 <div class="panel panel-default">
-                <div class="panel-body">
-                {% block right_panel %}
-                {% ifinstalled mezzanine.twitter %}
-                {% include "twitter/tweets.html" %}
-                {% endifinstalled %}
-                {% endblock %}
+                    <div class="panel-body">
+                    {% block right_panel %}
+                    {% ifinstalled mezzanine.twitter %}
+                    {% include "twitter/tweets.html" %}
+                    {% endifinstalled %}
+                    {% endblock %}
+                    </div>
                 </div>
-                </div>
+                {% include "includes/calendar.html" %}
             </aside>
         </div>
     </div>
