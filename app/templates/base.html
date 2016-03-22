@@ -93,7 +93,8 @@
             {% for event in events %}
               <li class="hero__slider__item" style="background-image: url({{ event.featured_image_header.url }});">
                   <div class="container">
-                      <button></button>
+                      <p>{{ event.title }}</p>
+                      {% include "agenda/includes/event_metainfo_slider.html" %}
                   </div>
               </li>
             {% endfor %}
