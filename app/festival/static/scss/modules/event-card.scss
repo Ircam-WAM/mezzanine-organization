@@ -1,6 +1,7 @@
 .event__card {
   padding: 1rem;
   background: $white;
+  @extend .row;
   &--alt {
     @extend .event__card;
     background: $main_color_alt;
@@ -14,10 +15,20 @@
  text-transform: uppercase;
 }
 
+.event__thumbnail {
+  display: block;
+  float: left;
+  margin-right: .5rem;
+  margin-bottom: .1rem;
+}
+
 .event__description {
   padding-bottom: 1em;
   // border-bottom: 1px solid $gray;
   margin-bottom: 1em;
+  img {
+    display: block;
+  }
 }
 
 .event__meta {
@@ -28,8 +39,9 @@
   font-weight: $bold;
   text-transform: uppercase;
   color: $black;
+  margin-bottom: 1rem;
 
-  span {
+  &__inner {
     display: block;
     // float: left;
     padding: 0.3rem 0;
@@ -56,7 +68,7 @@
 
 .event__meta__location {
   display: block;
-  float: right;
+  // float: right;
   // padding: 0.3rem 0;
   text-decoration: none;
   // border-bottom: 1px solid #000;
@@ -67,7 +79,9 @@
 .event__meta__cta {
   text-transform: uppercase;
   display: block;
-  float: right;
+  // float: right;
+  padding: .5rem;
+  background: $white;
 }
 
 .event__detail,
