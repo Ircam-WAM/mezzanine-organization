@@ -96,3 +96,5 @@ warnings.filterwarnings(
         RuntimeWarning, r'django\.db\.models\.fields')
 
 EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
+
+TINYMCE_SETUP_JS = ''
