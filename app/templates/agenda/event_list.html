@@ -98,7 +98,7 @@
     {% block event_list_event_content %}
         {% editable event.content %}
             <div class="event__description">
-                {{ event.description_from_content|safe }}
+                {{ event.description|safe }}
             </div>
         {% endeditable %}
     {% endblock %}
