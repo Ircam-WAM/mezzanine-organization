@@ -22,7 +22,7 @@
     padding-left: 1rem;
     background: $base_btn_background_color;
     color: $base_btn_color;
-    font-family: $header_font_family;
+    font-family: $base_font_family;
 
     @if $base_border_radius {
       border-radius:$base_border_radius;
@@ -118,7 +118,7 @@
 .btn-inverse,
 .btn-inverse:hover {
     background: $base_background_color;
-    color: $main_color;
+    color: $black;
     border: 1px solid $base_background_color;
 }
 

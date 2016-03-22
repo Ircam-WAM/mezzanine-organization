@@ -98,7 +98,7 @@
     {% block event_list_event_content %}
         {% editable event.content %}
             <div class="event__description">
-                {{ event.description|safe }}
+                {{ event.description_from_content|safe }}
                 <a href="{{ event.get_absolute_url }}" class="event__meta__cta">{% trans "read more" %}</a>
             </div>
         {% endeditable %}

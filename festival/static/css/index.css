@@ -1229,7 +1229,7 @@ button:disabled {
   padding-left: 1rem;
   background: #d7a433;
   color: #000;
-  font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
+  font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
   border-radius: 0px;
   text-transform: uppercase;
 }
@@ -1334,7 +1334,7 @@ button:disabled {
 .btn-inverse,
 .btn-inverse:hover {
   background: #f7f7f7;
-  color: #e8ca88;
+  color: #000;
   border: 1px solid #f7f7f7;
 }
 
@@ -1756,7 +1756,7 @@ th {
 }
 
 /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
-.sidebar__title {
+.sidebar__title, .sidebar__title--inverse {
   text-transform: uppercase;
   display: inline-block;
   *display: inline;
@@ -1769,7 +1769,12 @@ th {
   border-bottom: 1px solid #fff;
 }
 
-/* line 18, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+/* line 16, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+.sidebar__title--inverse {
+  color: #000;
+}
+
+/* line 22, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
 .sidebar__entry {
   font-size: 1rem;
   margin: 0;
@@ -3126,12 +3131,12 @@ th {
   }/* line 27, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_layout.scss */
   .main {
     float: left;
-    width: 70%;
+    width: 75%;
     padding-right: 1rem;
   }/* line 38, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_layout.scss */
   .aside {
     float: left;
-    width: 30%;
+    width: 25%;
   }/* line 54, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_layout.scss */
   .site__content__header__inner {
     max-width: 70%;
