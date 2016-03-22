@@ -156,3 +156,10 @@ class Video(Media):
 
     def get_absolute_url(self):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
+
+
+class Playlist(BaseTitleModel):
+    """(Playlist description)"""
+
+    audios = models.ManyToManyField(Audio, verbose_name=_('audios'), related_name='playlists', blank=True)
+    event = models.ForeignKey(Event, related_name='playlists', verbose_name=_('event'), blank=True, null=True, on_delete=models.SET_NULL)
