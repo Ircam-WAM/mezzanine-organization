@@ -6,7 +6,7 @@
 /**
  * Core
  */
-.message {
+.notification {
   display: inline-block;
   *display: inline;
   *zoom: 1;
@@ -27,7 +27,7 @@
   color: $base_link_color;
 }
 
-.message__remove {
+.notification__remove {
   animation-name: slideOutRight;
   animation-duration: 0.8s;
   animation-fill-mode: both;
@@ -82,39 +82,4 @@
 
 .slideOutRight {
   animation-name: slideOutRight;
-}
-
-/**
- * Colors
- */
-.message-success {
-    background: lighten($success, 40);
-    border: 1px solid $success;
-    color: darken($success, 20);
-}
-
-.message-error {
-    background: lighten($error, 40);
-    border: 1px solid $error;
-    color: darken($error, 20);
-}
-
-.message-warning {
-    background: lighten($warning, 40);
-    border: 1px solid $warning;
-    color: darken($warning, 20);
-}
-
-.message-info {
-    background: lighten($info, 40);
-    border: 1px solid $info;
-    color: darken($info, 20);
-}
-
-
-/**
- * Fit message width to parent
- */
-.message-block {
-  width: 100%;
 }
