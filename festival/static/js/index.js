@@ -88,4 +88,24 @@ $(function() {
         onBeforePrevSlide: function (el) {}
     });
 
+    /**
+     * Instafeed
+     * @author Philippe Barbosa
+     */
+
+    var t = new Instafeed({
+        get: "user",
+        userId: 2985811,
+        accessToken: "2985811.467ede5.2d850141659d4a5fab04f28187e580cd",
+        resolution: "standard_resolution",
+        sortBy: "most-recent",
+        limit: 12,
+        template: '<div class="box-item-33"> <a href="{{link}}" target="_blank"> <img src="{{image}}" alt="{{caption}}"></a></div>',
+        error: function() {
+            $(".instagram-panel").remove()
+        }
+    });
+
+    $("#instafeed").length && t.run();
+
 });

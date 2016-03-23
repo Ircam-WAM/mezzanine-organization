@@ -35,7 +35,11 @@
     [class*="box-item"] {
         display: block;
         float: left;
-        padding: 1rem;
+        // padding: 1rem;
+    }
+
+    img {
+        display: block;
     }
 }
 
@@ -52,9 +56,9 @@
     }
 }
 .box-item-25 {
-    width: 100%;
+    width: 33%;
     @media (min-width : $tablet) {
-        width : 25%;
+        width: 25%;
     }
 }
 .box-item-20 {
