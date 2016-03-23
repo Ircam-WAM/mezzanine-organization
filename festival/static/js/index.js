@@ -118,4 +118,18 @@ $(function() {
         accessToken: 'Disable implicit OAuth'
     });
     feed.run();
+
+    /**
+     * Close message
+     */
+
+     var zeMessage = $('#js-messageContainer');
+
+     $('.js-messageClose').on('click', function(event) {
+        zeMessage.addClass('message__remove');
+
+        setTimeout(function () {
+            zeMessage.remove();
+        }, 4000);
+     });
 });
