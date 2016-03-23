@@ -90,12 +90,24 @@ class Artist(Displayable, RichText, AdminThumbMixin):
     def get_absolute_url(self):
         return reverse("festival-artist-detail", kwargs={'slug': self.slug})
 
+    def set_names(self):
+        names = self.title.split(' ')
+        if len(names) == 1:
+            self.first_name = ''
+            self.last_name = names[0]
+        elif len(names) == 2:
+            self.first_name = names[0]
+            self.last_name = names[1]
+        else:
+            self.first_name = names[0]
+            self.last_name = ' '.join(names[1:])
+
     def clean(self):
         super(Artist, self).clean()
-        self.first_name, self.last_name = self.title.split(' ')
+        self.set_names()
 
     def save(self, *args, **kwargs):
-        self.first_name, self.last_name = self.title.split(' ')
+        self.set_names()
         super(Artist, self).save(*args, **kwargs)
 
 
