@@ -7,8 +7,11 @@
  * Core
  */
 .footer {
-  padding: $base_font_size 1rem;
   background-color: $footer_background_color;
+  padding: $base_font_size 0;
+  @media (min-width : $desktop ) {
+    padding: $base_font_size 1rem;
+  }
 }
 
 
@@ -85,7 +88,9 @@
     display: inline-block;
     *display: inline;
     *zoom: 1;
-    padding: 0rem 1rem;
+    @media (min-width : $desktop ) {
+      padding: 0rem 1rem;
+    }
   }
 
   &__item {
@@ -102,7 +107,7 @@
     }
 
     &__link {
-      padding: .75rem;
+      padding: 1rem 0rem;
       display: block;
       @media (min-width : $tablet ) {
         padding: 1rem;
@@ -124,6 +129,9 @@
   text-align: center;
   margin: 2rem auto;
   img {
-    max-width: 60px;
+    max-width: 40px;
+    @media (min-width : $desktop ) {
+      max-width: 60px;
+    }
   }
 }
