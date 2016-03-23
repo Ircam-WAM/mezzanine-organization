@@ -2,9 +2,13 @@
 
   display: block;
   float: left;
-  width: 31%;
   position: relative;
   margin: 1%;
+  width: 48%;
+  @media (min-width : $desktop ) {
+    width: 31%;
+
+  }
 
   &__thumbnail img {
     display: block;

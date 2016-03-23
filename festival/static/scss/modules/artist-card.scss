@@ -64,18 +64,20 @@
       margin: 0;
       @media (min-width : $desktop ) {
           padding: 0.8rem;
-          font-size: 0.8rem;
       }
 
       span {
         display: inline-block;
         *display: inline;
         *zoom: 1;
-        font: $bold .8rem $base_font_family;
         padding: .2rem 0;
         color: $black;
         border-top: 1px solid #000;
         border-bottom: 1px solid #000;
+        font: $bold .7rem $base_font_family;
+        @media (min-width : $desktop ) {
+          font: $bold .8rem $base_font_family;
+        }
       }
   }
 }

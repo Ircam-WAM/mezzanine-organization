@@ -203,11 +203,11 @@ pre > p {
 ---------------------------------- */
 
 .page__title {
-  font: $bold 3.2rem $header_font_family;
+  font: $bold 1.4rem $header_font_family;
   text-transform: uppercase;
   text-shadow: 1px 1px 0 white;
   color: $base_link_color;
-  margin: 0 0 1rem;
+  margin: 2rem 0 1rem;
   position: relative;
   &:before {
     content: "";
@@ -217,6 +217,11 @@ pre > p {
     width: 100%;
     height: 100%;
     background: $base_link_color;
+  }
+
+  @media (min-width : $desktop ) {
+      font-size: 3.2rem;
+      margin: 0rem 0 1rem;
   }
 }
 
