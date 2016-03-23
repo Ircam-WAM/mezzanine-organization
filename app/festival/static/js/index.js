@@ -93,19 +93,29 @@ $(function() {
      * @author Philippe Barbosa
      */
 
-    var t = new Instafeed({
-        get: "user",
-        userId: 2985811,
-        accessToken: "2985811.467ede5.2d850141659d4a5fab04f28187e580cd",
-        resolution: "standard_resolution",
-        sortBy: "most-recent",
-        limit: 12,
-        template: '<div class="box-item-33"> <a href="{{link}}" target="_blank"> <img src="{{image}}" alt="{{caption}}"></a></div>',
-        error: function() {
-            $(".instagram-panel").remove()
-        }
+    // var t = new Instafeed({
+    //     get: "tagged",
+    //     tagName: "manifeste15"
+    //     userId: 2124483621,
+    //     // accessToken: "2985811.467ede5.2d850141659d4a5fab04f28187e580cd",
+    //     resolution: "standard_resolution",
+    //     sortBy: "most-recent",
+    //     limit: 8,
+    //     template: '<div class="box-item-25"> <a href="{{link}}" target="_blank"> <img src="{{image}}" alt="{{caption}}"></a></div>',
+    //     error: function() {
+    //         $(".instagram").remove()
+    //     }
+    // });
+
+    // $("#instafeed").length && t.run();
+
+    // $("#instafeed").length && t.run();
+
+    var feed = new Instafeed({
+        get: 'tagged',
+        tagName: 'awesome',
+        clientId: 2124483621,
+        accessToken: 'Disable implicit OAuth'
     });
-
-    $("#instafeed").length && t.run();
-
+    feed.run();
 });

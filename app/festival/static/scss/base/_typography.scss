@@ -207,6 +207,16 @@ pre > p {
   text-transform: uppercase;
   color: $base_link_color;
   margin: 0 0 1rem;
+  position: relative;
+  &:before {
+    content: "";
+    position: absolute;
+    right: 101%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: $base_link_color;
+  }
 }
 
 .push-ical {

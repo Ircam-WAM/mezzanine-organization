@@ -26,22 +26,20 @@
 {% block event_detail_postedby %}
 {% editable event.start event.end event.location %}
 <div class="event__meta">
-        <div class="event__meta__inner split-container">
-            <div class="split-left">
-                {{ event.start }}
-                {% if event.end %}
-                <br>
-                {% if event.end|date == event.start|date %}{{ event.end|time:"TIME_FORMAT" }}{% else %}{{ event.end }}{% endif %}
-                {% endif %}
-                {% if event.location %}
-                <a href="{% url "event_list_location" event.location.slug %}" class="event__meta__location">{{ event.location }}</a>
-            </div>
-            <div class="split-right">
-                <a href="{{ event.get_absolute_url }}" class="event__meta__cta">Réserver</a>
-            </div>
-        </div>
+    <div class="event__meta__inner">
+        {{ event.start }}
+        {% if event.end %}
+        <br>
+        {% if event.end|date == event.start|date %}{{ event.end|time:"TIME_FORMAT" }}{% else %}{{ event.end }}{% endif %}
+        {% endif %}
+        {% if event.location %}
+        <a href="{% url "event_list_location" event.location.slug %}" class="event__meta__location">{{ event.location }}</a>
+    </div>
     {% endif %}
 </div>
+<a href="{{ event.get_absolute_url }}" class="btn event__meta__btn">
+    <i class="icon icon__bookmark"></i> Réserver
+</a>
 {% endeditable %}
 {% endblock %}
 {% block event_detail_commentlink %}
@@ -89,7 +87,7 @@
 {% if event.location %}
 {% block event_detail_location %}
 {% editable event.location %}
-<div class="event__card">
+<div class="event__card--full">
     <p>
         {{ event.location.address|linebreaksbr }}<br />
         <a href="{{ event|google_nav_url }}" target="_blank" class="">
