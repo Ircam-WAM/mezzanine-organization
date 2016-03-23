@@ -50,7 +50,7 @@ $(function() {
         auto: true,
         loop: true,
         slideEndAnimation: true,
-        pause: 6000,
+        pause: 8000,
 
         keyPress: true,
         controls: true,
