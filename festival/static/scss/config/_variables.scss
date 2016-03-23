@@ -9,8 +9,9 @@
 /* _Colors
 ---------------------------------- */
 
-$manifeste16           : #e8ca88;
-$manifeste16_darker    : darken($manifeste16, 20);
+// $manifeste16           : #e8ca88;
+$manifeste16           : #d2ba88;
+$manifeste16_darker    : darken($manifeste16, 10);
 
 $manifeste16_alt       : #00818d;
 
@@ -59,7 +60,7 @@ $base_font_weight   : $regular;
 
 // Sizes
 $base_font_size     : .9rem;
-$base_line_height   : 1.4;
+$base_line_height   : 1.6;
 
 // Layout
 $base_border_radius : 0px;

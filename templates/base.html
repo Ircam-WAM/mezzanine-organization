@@ -143,13 +143,11 @@
                     {% search_form "all" %}
                 </div>
 
-                <h2 class="sidebar__title">Télécharger :</h2>
-
                 <div>
-                    <a href="#" class="btn btn-full btn-inverse">Le programme</a>
+                    <a href="#" class="btn btn-full btn-inverse">Télécharger le programme</a>
                 </div>
                 <div>
-                    <a href="#" class="btn btn-full btn-inverse">La brochure</a>
+                    <a href="#" class="btn btn-full btn-inverse">Inscription newsletter</a>
                 </div>
 
                 {% nevercache %}
@@ -176,6 +174,30 @@
                 <img src="{% static "img/logo_manifeste16_black.png" %}" alt="Logo Manifeste 2016 ircam" width="80">
             </div>
             {% page_menu "pages/menus/footer.html" %}
+
+            <ul class="footer-partners list-inline">
+                <li>
+                    <a href="http://www.culturecommunication.gouv.fr/" target="_blank">
+                        <img src="{% static "img/logo_mmc.png" %}" alt="Logo Ministere Culture et Communication">
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnrs.fr/" target="_blank">
+                        <img src="{% static "img/logo_cnrs.png" %}" alt="Logo CNRS">
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.upmc.fr/" target="_blank">
+                        <img src="{% static "img/logo_upmc.png" %}" alt="Logo UPMC">
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.inria.fr/" target="_blank">
+                        <img src="{% static "img/logo_inra.png" %}" alt="Logo Inria">
+                    </a>
+                </li>
+            </ul>
+
             <div class="footer-legals">
                 <p>
                     {# {% trans "Powered by" %} #}

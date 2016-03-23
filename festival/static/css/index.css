@@ -509,7 +509,7 @@ html {
 /* line 20, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_defaults.scss */
 body {
   font: 400 0.9rem "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  line-height: 1.4;
+  line-height: 1.6;
   background: #f7f7f7;
   color: #555;
 }
@@ -559,7 +559,7 @@ body {
 /* line 16, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
 h1, h2, h3, h4, h5, h6 {
   font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
-  line-height: 1.4;
+  line-height: 1.6;
   text-rendering: optimizeLegibility;
   color: #333;
   margin-bottom: 0;
@@ -597,30 +597,30 @@ h6 {
 
 /* line 48, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
 p {
-  margin: 0 0 0.7rem;
+  margin: 0 0 0.8rem;
   font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* line 53, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
 a {
-  color: #d7a433;
+  color: #c4a563;
   transition: all .3s ease;
   text-decoration: none;
 }
 
 /* line 64, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
 a:active, a:focus {
-  color: #89671b;
+  color: #8c7035;
   outline: none;
 }
 
 /* line 70, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
 hr {
-  border-bottom: 1px solid #e8ca88;
+  border-bottom: 1px solid #d2ba88;
   border-left: none;
   border-right: none;
   border-top: none;
-  margin: 1.4 0;
+  margin: 1.6 0;
 }
 
 /* line 78, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
@@ -634,7 +634,7 @@ img {
 blockquote {
   display: block;
   padding: 0.45rem 0 0.45rem 0.6rem;
-  border-left: 0.45rem solid #e8ca88;
+  border-left: 0.45rem solid #d2ba88;
   border-color: rgba(0, 0, 0, 0.1);
   font-size: 0.9rem;
   margin-left: 0;
@@ -670,12 +670,12 @@ del {
 
 /* line 116, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
 ins {
-  border-bottom: 1px dotted #e8ca88;
+  border-bottom: 1px dotted #d2ba88;
 }
 
 /* line 120, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
 mark {
-  background: #e8ca88;
+  background: #d2ba88;
   padding: 0 .2rem;
 }
 
@@ -714,7 +714,7 @@ sub {
 small,
 .small {
   font-size: 80%;
-  line-height: 1.26;
+  line-height: 1.44;
 }
 
 /* line 158, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
@@ -741,7 +741,7 @@ hr {
 /* line 176, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
 pre {
   background: #ecf0f1;
-  border-left: 0.3rem solid #e8ca88;
+  border-left: 0.3rem solid #d2ba88;
   font-family: Consolas, monaco, monospace;
 }
 
@@ -774,8 +774,8 @@ pre > p {
 .page__title {
   font: 700 3rem "Triplex", Georgia, Times, "Times New Roman", serif;
   text-transform: uppercase;
-  color: #d7a433;
-  margin: 0;
+  color: #c4a563;
+  margin: 0 0 1rem;
 }
 
 /* line 212, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
@@ -805,7 +805,7 @@ pre > p {
 /* line 38, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_layout.scss */
 .aside {
   display: block;
-  background: #f0ddb3;
+  background: #e0cfad;
   padding: 1rem .5rem;
   margin: 0 0 3rem;
   color: white;
@@ -901,7 +901,7 @@ fieldset {
   background-color: #f7f7f7;
   border: 1px solid #95a5a6;
   margin: 0 0 0.45rem;
-  padding: 1.4;
+  padding: 1.6;
   border-radius: 0px;
 }
 
@@ -954,7 +954,7 @@ input:not([type]),
 select[multiple=multiple],
 textarea {
   background-color: #fff;
-  border: 1px solid #f4e7c8;
+  border: 1px solid #e7dac0;
   box-sizing: border-box;
   font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
   font-size: 0.9rem;
@@ -1002,18 +1002,18 @@ input[type="search"] {
 input[type="checkbox"],
 input[type="radio"] {
   display: inline;
-  margin-right: 0.35;
+  margin-right: 0.4;
 }
 
 /* line 98, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_forms.scss */
 input[type="file"] {
-  padding-bottom: 0.7;
+  padding-bottom: 0.8;
   width: 100%;
 }
 
 /* line 103, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_forms.scss */
 select {
-  margin-bottom: 1.4;
+  margin-bottom: 1.6;
   max-width: 100%;
   width: auto;
 }
@@ -1057,7 +1057,7 @@ select {
 /* line 146, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_forms.scss */
 .sticked-form input {
   font: 300 1rem "Triplex", Georgia, Times, "Times New Roman", serif;
-  border-color: #ca9727;
+  border-color: #bd9a50;
   float: left;
   width: 70%;
   color: #555;
@@ -1072,7 +1072,7 @@ select {
 .sticked-form input[type=submit] {
   width: 30%;
   -webkit-appearance: none;
-  background: #ca9727;
+  background: #bd9a50;
   float: left;
   font-weight: 700;
   color: #fff;
@@ -1084,7 +1084,7 @@ select {
 /* line 183, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_forms.scss */
 .sticked-form input[type=submit]:active {
   outline: 0;
-  background: #e4c073;
+  background: #cbaf75;
 }
 
 /*
@@ -1094,7 +1094,7 @@ select {
 .select {
   padding: 0;
   margin: 0;
-  border: 1px solid #ca9727;
+  border: 1px solid #bd9a50;
   width: 100%;
   overflow: hidden;
   background-color: #fff;
@@ -1111,7 +1111,7 @@ select {
   height: 0;
   border-left: 0.5rem solid transparent;
   border-right: 0.5rem solid transparent;
-  border-top: 0.5rem solid #e8ca88;
+  border-top: 0.5rem solid #d2ba88;
 }
 
 /* line 214, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_forms.scss */
@@ -1153,7 +1153,7 @@ input[type="submit"],
 button {
   appearence: none;
   -webkit-font-smoothing: antialiased;
-  background-color: #d7a433;
+  background-color: #c4a563;
   border-radius: 0px;
   border: none;
   color: #000;
@@ -1185,7 +1185,7 @@ input[type="submit"]:hover,
 input[type="submit"]:focus,
 button:hover,
 button:focus {
-  background-color: #ca9727;
+  background-color: #bd9a50;
   color: #fff;
 }
 
@@ -1220,14 +1220,14 @@ button:disabled {
   font-family: inherit;
   font-size: .75rem;
   cursor: pointer;
-  border: 1px solid #ca9727;
+  border: 1px solid #bd9a50;
   margin: .5rem 0;
   padding-top: 0;
   padding-bottom: 0;
   line-height: 3;
   padding-right: 1rem;
   padding-left: 1rem;
-  background: #d7a433;
+  background: #c4a563;
   color: #000;
   font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
   border-radius: 0px;
@@ -1237,7 +1237,7 @@ button:disabled {
 /* line 37, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_buttons.scss */
 .btn:hover, .artist__event__cta:hover {
   text-decoration: none;
-  background-color: #ca9727;
+  background-color: #bd9a50;
   color: #fff;
 }
 
@@ -1477,7 +1477,7 @@ th {
 
 /* line 22, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_headers.scss */
 .banner .is-active {
-  background-color: #e8ca88;
+  background-color: #d2ba88;
 }
 
 /* line 24, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_headers.scss */
@@ -1652,7 +1652,7 @@ th {
 /* line 9, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_footers.scss */
 .footer {
   padding: 0.9rem 1rem;
-  background-color: #e8ca88;
+  background-color: #d2ba88;
 }
 
 /**
@@ -1755,6 +1755,18 @@ th {
   display: block;
 }
 
+/* line 117, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_footers.scss */
+.footer-partners {
+  display: block;
+  text-align: center;
+  margin: 2rem auto;
+}
+
+/* line 121, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_footers.scss */
+.footer-partners img {
+  max-width: 60px;
+}
+
 /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
 .sidebar__title, .sidebar__title--inverse {
   text-transform: uppercase;
@@ -1830,7 +1842,7 @@ th {
 /* line 42, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle span {
   display: block;
-  background: #e8ca88;
+  background: #d2ba88;
   width: 20px;
   height: 2px;
   border-radius: 3px;
@@ -1872,7 +1884,7 @@ th {
 
 /* line 28, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_breadcrumbs.scss */
 .breadcrumb li.is-active:before {
-  color: #e8ca88;
+  color: #d2ba88;
 }
 
 /* line 4, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_pagination.scss */
@@ -1981,7 +1993,7 @@ th {
   margin: 0 0.1em;
   padding: 0.3em 1em;
   color: #fff;
-  background: #e8ca88;
+  background: #d2ba88;
   font-size: 90%;
   margin: .5rem auto;
   border-radius: 0px;
@@ -2033,7 +2045,7 @@ th {
 .hero {
   display: block;
   padding: 3rem 1rem;
-  background: #e8ca88 no-repeat top center;
+  background: #d2ba88 no-repeat top center;
   background-size: cover;
   width: 100%;
   position: relative;
@@ -2129,7 +2141,7 @@ th {
   margin: 0 0.1em;
   padding: 0.3em 1em;
   color: #fff;
-  background: #e8ca88;
+  background: #d2ba88;
   font-size: 90%;
 }
 
@@ -2411,7 +2423,7 @@ th {
 
 /* line 101, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
 .lSSlideOuter .lSPager.lSpg > li:hover a, .lSSlideOuter .lSPager.lSpg > li.active a {
-  background-color: #e8ca88;
+  background-color: #d2ba88;
 }
 
 /* line 104, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/vendors/_lightslider.scss */
@@ -2783,11 +2795,31 @@ th {
 }
 
 /* line 37, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-card.scss */
+.artist__item .artist__img {
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 41, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-card.scss */
+.artist__item .artist__img__copyright {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  padding: .2rem;
+  text-align: right;
+  font: 400 0.6rem "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;
+}
+
+/* line 54, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-card.scss */
 .artist__item img {
   display: block;
 }
 
-/* line 41, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-card.scss */
+/* line 58, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-card.scss */
 .artist__item__name {
   display: block;
   width: 100%;
@@ -2797,7 +2829,7 @@ th {
   margin: 0;
 }
 
-/* line 53, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-card.scss */
+/* line 70, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-card.scss */
 .artist__item__name span {
   display: inline-block;
   *display: inline;
@@ -2833,7 +2865,10 @@ th {
 }
 
 /* line 32, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-detail.scss */
-.artist__portrait, .artist__portrait--left, .artist__portrait--right {
+.artist__portrait, .artist__portrait--left,
+.img__align--left, .artist__portrait--right,
+.img__align--right,
+.img__align {
   display: block;
   margin: 1rem auto;
 }
@@ -2983,7 +3018,7 @@ th {
   display: block;
   width: 100%;
   height: 500px;
-  background: #e8ca88 no-repeat center;
+  background: #d2ba88 no-repeat center;
   background-size: cover;
 }
 
@@ -3017,8 +3052,8 @@ th {
   float: left;
   width: 14.2%;
   box-sizing: border-box;
-  border-right: 1px solid #f0ddb3;
-  border-bottom: 1px solid #f0ddb3;
+  border-right: 1px solid #e0cfad;
+  border-bottom: 1px solid #e0cfad;
   cursor: default;
 }
 
@@ -3028,12 +3063,12 @@ th {
   height: 0;
   padding-bottom: 100%;
   overflow: hidden;
-  background: #e8ca88;
+  background: #d2ba88;
 }
 
 /* line 40, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/calendar.scss */
 .calendar__day-active .calendar__day-inner {
-  background: #e0b75d;
+  background: #c4a563;
 }
 
 /* line 42, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/calendar.scss */
@@ -3077,8 +3112,9 @@ th {
 .user__panel {
   margin: 1rem auto;
   padding: .5rem 1rem;
-  background: #f9f0dd;
-  color: #555;
+  background: #f7f7f7;
+  color: #000;
+  text-transform: uppercase;
 }
 @media (min-width: 769px) {/* line 137, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_forms.scss */
   .sticked-form {
@@ -3108,14 +3144,16 @@ th {
   }/* line 17, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-detail.scss */
   .artist__event__cta {
     width: 30%;
-  }/* line 35, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-detail.scss */
-  .artist__portrait--left {
+  }/* line 36, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-detail.scss */
+  .artist__portrait--left,
+  .img__align--left {
     max-width: 40%;
     margin-top: 0;
     margin-right: 1rem;
     float: left;
-  }/* line 45, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-detail.scss */
-  .artist__portrait--right {
+  }/* line 46, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-detail.scss */
+  .artist__portrait--right,
+  .img__align--right {
     max-width: 40%;
     margin-top: 0;
     margin-left: 1rem;
@@ -3124,7 +3162,7 @@ th {
 }
 @media (min-width: 961px) {/* line 59, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
   a:hover {
-    color: #89671b;
+    color: #8c7035;
   }/* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_layout.scss */
   .container {
     max-width: 960px;
@@ -3211,7 +3249,7 @@ th {
     box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.8);
     -webkit-transform: scale(1.01);
     transform: scale(1.01);
-  }/* line 41, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-card.scss */
+  }/* line 58, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-card.scss */
   .artist__item__name {
     padding: 0.8rem;
     font-size: 0.8rem;
