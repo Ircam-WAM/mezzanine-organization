@@ -61,6 +61,8 @@ class PageCategory(BaseNameModel):
 class Artist(Displayable, RichText, AdminThumbMixin):
     """Artist"""
 
+    first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
+    last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
     photo = FileField(_('photo'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
     photo_credits = models.CharField(_('photo credits'), max_length=255, blank=True, null=True)
@@ -86,6 +88,10 @@ class Artist(Displayable, RichText, AdminThumbMixin):
 
     def get_absolute_url(self):
         return reverse("festival-artist-detail", kwargs={'slug': self.slug})
+
+    def clean(self):
+        super(Artist, self).clean()
+        self.first_name, self.last_name = self.title.split(' ') 
 
 
 class Media(Displayable, RichText):
