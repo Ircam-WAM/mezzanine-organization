@@ -34,6 +34,23 @@
       }
   }
 
+  .artist__img {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    &__copyright {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      padding: .2rem;
+      text-align: right;
+      font: $regular .6rem $base_font_family;
+      color: white;
+    }
+  }
+
   img {
     display: block;
   }
