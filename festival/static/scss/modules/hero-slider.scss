@@ -8,4 +8,35 @@
     height: 500px;
     background: $main_color no-repeat center;
     background-size: cover;
+    position: relative;
+    &:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        height: 60%;
+        background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(0,0,0,1) 100%);
+    }
+}
+
+.hero__slider__infos {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    z-index: 10;
+}
+
+.hero__slider__name {
+    @extend .event__name;
+    font-size: 3rem;
+    line-height: 1;
+    a {
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4);
+    }
+    &:hover {
+        color: white;
+    }
 }

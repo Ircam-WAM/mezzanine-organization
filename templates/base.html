@@ -92,9 +92,13 @@
             {% festival_event_featured as events %}
             {% for event in events %}
               <li class="hero__slider__item" style="background-image: url({{ event.featured_image_header.url }});">
-                  <div class="container">
-                      <p>{{ event.title }}</p>
+                  <div class="hero__slider__infos">
+                    <div class="container">
+                      <h3 class="hero__slider__name">
+                          <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
+                      </h3>
                       {% include "agenda/includes/event_metainfo_slider.html" %}
+                    </div>
                   </div>
               </li>
             {% endfor %}
