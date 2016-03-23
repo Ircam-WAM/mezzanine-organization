@@ -17,7 +17,9 @@
             {% if forloop.first and not page.parent.in_menu and not page.is_primary %}
             {% endif %}
             <li class="nav__footer__item {% if page.is_current_or_ascendant %}is-active{% endif %}" id="footer-menu-{{ page.html_id }}">
-                <a class="nav__footer__item__link" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+                <h2>
+                    <a class="nav__footer__item__link" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+                </h2>
             </li>
         {% endif %}
         {% if page.in_menu and page.has_children_in_menu %}{% page_menu page %}{% endif %}

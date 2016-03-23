@@ -203,8 +203,9 @@ pre > p {
 ---------------------------------- */
 
 .page__title {
-  font: $bold 3rem $header_font_family;
+  font: $bold 3.2rem $header_font_family;
   text-transform: uppercase;
+  text-shadow: 1px 1px 0 white;
   color: $base_link_color;
   margin: 0 0 1rem;
   position: relative;
