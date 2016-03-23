@@ -11,20 +11,51 @@
     <p>
     {% if artist.photo %}
         <img class="artist__portrait{% if artist.photo_alignment == 'left' %}--left{% elif artist.photo_alignment == 'right' %}--right{% else %}--center{% endif %}" src="{{ MEDIA_URL }}/{% if artist.photo_featured %}{{ artist.photo_featured }}{% else %}{{ artist.photo }}{% endif %}" />
-        
+
     {% endif %}
     {{ artist.bio|safe }}
     <br style="clear: both;" />
     </p>
 </div>
 
-<div class="artist__event">
- {# <h3>{% trans 'Events' %}</h3> #}
-   <h3 class="artist__event__title">Entendre {{ artist.name }} :</h3>
 
-    {% for event in artist.events.all %}
-        {{ event.title }}
-    {% endfor %}
-    <a href="#" class="artist__event__cta">Réserver</a>
+<h3 class="page__related__title--inverse">Événement lié à {{ artist.name }} :</h3> <br>
+
+<div class="event__card">
+    <a href="/events/simplexity-la-beaut%C3%A9-du-geste/" class="event__thumbnail">
+        <img src="/media/uploads/images/events/.thumbnails/simplexity_featured.jpg/simplexity_featured-500x500.jpg">
+    </a>
+    <h3 class="event__name">
+        <a href="/events/simplexity-la-beaut%C3%A9-du-geste/">SIMPLEXITY - La beauté du geste</a>
+    </h3>
+    <div class="event__meta">
+        <div class="event__meta__inner">
+            2 juin 2016 20:30
+            <br> 3 juin 2016 22:00
+            <a href="/events/location/centre-pompidou-grande-salle/" class="event__meta__location">Centre Pompidou, Grande salle</a>
+        </div>
+    </div>
+    <a href="/events/simplexity-la-beaut%C3%A9-du-geste/" class="btn btn-full">
+        <i class="icon icon__bookmark"></i> Réserver
+    </a>
+</div>
+
+<div class="event__card">
+    <a href="/events/simplexity-la-beaut%C3%A9-du-geste/" class="event__thumbnail">
+        <img src="/media/uploads/images/events/.thumbnails/simplexity_featured.jpg/simplexity_featured-500x500.jpg">
+    </a>
+    <h3 class="event__name">
+        <a href="/events/simplexity-la-beaut%C3%A9-du-geste/">SIMPLEXITY - La beauté du geste</a>
+    </h3>
+    <div class="event__meta">
+        <div class="event__meta__inner">
+            2 juin 2016 20:30
+            <br> 3 juin 2016 22:00
+            <a href="/events/location/centre-pompidou-grande-salle/" class="event__meta__location">Centre Pompidou, Grande salle</a>
+        </div>
+    </div>
+    <a href="/events/simplexity-la-beaut%C3%A9-du-geste/" class="btn btn-full">
+        <i class="icon icon__bookmark"></i> Réserver
+    </a>
 </div>
 {% endblock %}

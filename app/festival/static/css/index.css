@@ -516,7 +516,8 @@ body {
 }
 
 /* line 30, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_defaults.scss */
-.clearfix:after, .container:after, .row:after, .row-box:after, .event__card:after, .event__card--alt:after, .event__card--full:after, .calendar__month:after, .sticked-form:after, .banner:after, .header:after, .navigation:after, .footer-nav:after, .media:after, .split-container:after {
+.clearfix:after, .container:after, .row:after, .sidebar__title--inverse:after,
+.page__related__title--inverse:after, .row-box:after, .event__card:after, .event__card--alt:after, .event__card--full:after, .calendar__month:after, .sticked-form:after, .banner:after, .header:after, .navigation:after, .footer-nav:after, .media:after, .split-container:after {
   content: "";
   display: table;
   clear: both;
@@ -805,7 +806,8 @@ pre > p {
 }
 
 /* line 22, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_layout.scss */
-.row, .row-box, .event__card, .event__card--alt, .event__card--full, .calendar__month {
+.row, .sidebar__title--inverse,
+.page__related__title--inverse, .row-box, .event__card, .event__card--alt, .event__card--full, .calendar__month {
   display: block;
 }
 
@@ -1788,7 +1790,9 @@ th {
 }
 
 /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
-.sidebar__title, .sidebar__title--inverse {
+.sidebar__title, .sidebar__title--inverse,
+.page__related__title--inverse,
+.page__related__title {
   text-transform: uppercase;
   display: inline-block;
   *display: inline;
@@ -1801,12 +1805,16 @@ th {
   border-bottom: 1px solid #fff;
 }
 
-/* line 16, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
-.sidebar__title--inverse {
+/* line 17, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+.sidebar__title--inverse,
+.page__related__title--inverse {
   color: #000;
+  border-top-color: #000;
+  border-bottom-color: #000;
+  margin-bottom: 2rem;
 }
 
-/* line 22, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+/* line 28, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
 .sidebar__entry {
   font-size: 1rem;
   margin: 0;
