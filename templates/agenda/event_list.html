@@ -72,6 +72,13 @@
     {% block event_list_event_title %}
         {% editable event.title %}
         <div class="event__card">
+            {% if event.featured_image %}
+                {% block event_list_event_featured_image %}
+                    <a href="{{ event.get_absolute_url }}" class="event__thumbnail">
+                        <img src="{{ MEDIA_URL }}{% thumbnail event.featured_image 500 500 %}">
+                    </a>
+                {% endblock %}
+            {% endif %}
             <h3 class="event__name">
                 <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
             </h3>
@@ -87,22 +94,20 @@
         {% endfor %}
     {% endblock %}
 
-    {% if event.featured_image %}
-        {% block event_list_event_featured_image %}
-            <a href="{{ event.get_absolute_url }}" class="event__thumbnail">
-                <img src="{{ MEDIA_URL }}{% thumbnail event.featured_image 90 90 %}">
-            </a>
-        {% endblock %}
-    {% endif %}
-
     {% block event_list_event_content %}
         {% editable event.content %}
+            <!--
             <div class="event__description">
                 {{ event.description_from_content|safe }}
                 <a href="{{ event.get_absolute_url }}" class="event__meta__cta">{% trans "read more" %}</a>
             </div>
+            -->
         {% endeditable %}
     {% endblock %}
+
+    <a href="{{ event.get_absolute_url }}" class="btn btn-full">
+        <i class="icon icon__bookmark"></i> Réserver
+    </a>
 
 {% block event_list_event_links %}
 <div class="event__detail">
