@@ -111,8 +111,8 @@
             {% nevercache %}
             {% if messages %}
                 {% for message in messages %}
-                <div class="message" id="js-messageContainer">
-                    <button type="button" class="btn btn-small js-messageClose">X</button>
+                <div class="notification" id="js-notificationContainer">
+                    <button type="button" class="btn btn-small js-notificationClose">X</button>
                     {{ message }}
                 </div>
                 {% endfor %}

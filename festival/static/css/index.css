@@ -2013,7 +2013,7 @@ th {
  * Core
  */
 /* line 9, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_messages.scss */
-.message {
+.notification {
   display: inline-block;
   *display: inline;
   *zoom: 1;
@@ -2038,7 +2038,7 @@ th {
 }
 
 /* line 30, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_messages.scss */
-.message__remove {
+.notification__remove {
   -webkit-animation-name: slideOutRight;
           animation-name: slideOutRight;
   -webkit-animation-duration: 0.8s;
@@ -2149,45 +2149,6 @@ th {
 .slideOutRight {
   -webkit-animation-name: slideOutRight;
           animation-name: slideOutRight;
-}
-
-/**
- * Colors
- */
-/* line 90, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_messages.scss */
-.message-success {
-  background: #d1f5e0;
-  border: 1px solid #2ecc71;
-  color: #1b7943;
-}
-
-/* line 96, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_messages.scss */
-.message-error {
-  background: #fdf3f2;
-  border: 1px solid #e74c3c;
-  color: #a82315;
-}
-
-/* line 102, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_messages.scss */
-.message-warning {
-  background: #fdedd4;
-  border: 1px solid #f39c12;
-  color: #976008;
-}
-
-/* line 108, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_messages.scss */
-.message-info {
-  background: #e1f0fa;
-  border: 1px solid #3498db;
-  color: #196090;
-}
-
-/**
- * Fit message width to parent
- */
-/* line 118, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_messages.scss */
-.message-block {
-  width: 100%;
 }
 
 /**

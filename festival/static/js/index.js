@@ -123,13 +123,13 @@ $(function() {
      * Close message
      */
 
-     var zeMessage = $('#js-messageContainer');
+     var notification = $('#js-notificationContainer');
 
-     $('.js-messageClose').on('click', function(event) {
-        zeMessage.addClass('message__remove');
+     $('.js-notificationClose').on('click', function(event) {
+        notification.addClass('notification__remove');
 
         setTimeout(function () {
-            zeMessage.remove();
+            notification.remove();
         }, 4000);
      });
 });
