@@ -78,6 +78,7 @@ class Artist(Displayable, RichText, AdminThumbMixin):
     class Meta(MetaCore):
         verbose_name = _('artist')
         db_table = app_label + '_artists'
+        ordering = ['last_name',]
 
     def __unicode__(self):
         return self.title
@@ -91,7 +92,11 @@ class Artist(Displayable, RichText, AdminThumbMixin):
 
     def clean(self):
         super(Artist, self).clean()
-        self.first_name, self.last_name = self.title.split(' ') 
+        self.first_name, self.last_name = self.title.split(' ')
+
+    def save(self, *args, **kwargs):
+        self.first_name, self.last_name = self.title.split(' ')
+        super(Artist, self).save(*args, **kwargs)
 
 
 class Media(Displayable, RichText):
