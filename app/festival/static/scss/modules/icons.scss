@@ -24,6 +24,15 @@
     }
 }
 
+.btn .icon {
+    &:before {
+        font-size: 1.3rem;
+        margin-right: .5rem;
+        color: white;
+        vertical-align: middle;
+    }
+}
+
 // .icon__glass:before { content: $fa-var-glass; }
 // .icon__music:before { content: $fa-var-music; }
 // .icon__search:before { content: $fa-var-search; }
@@ -167,7 +176,7 @@
 // .icon__thumbs-o-down:before { content: $fa-var-thumbs-o-down; }
 // .icon__star-half:before { content: $fa-var-star-half; }
 // .icon__heart-o:before { content: $fa-var-heart-o; }
-// .icon__sign-out:before { content: $fa-var-sign-out; }
+.icon__sign-out:before { content: $fa-var-sign-out; }
 // .icon__linkedin-square:before { content: $fa-var-linkedin-square; }
 // .icon__thumb-tack:before { content: $fa-var-thumb-tack; }
 // .icon__external-link:before { content: $fa-var-external-link; }
