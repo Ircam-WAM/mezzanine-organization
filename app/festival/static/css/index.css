@@ -1803,7 +1803,6 @@ th {
   background: #fff;
   width: 32px;
   height: 32px;
-  border-radius: 3px;
   box-sizing: border-box;
   padding: 9px 6px;
   cursor: pointer;
@@ -1811,36 +1810,36 @@ th {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  border: 1px solid #000;
   margin: 0;
+  box-shadow: 0 0 5px 0px black;
 }
 
-/* line 21, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
+/* line 22, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle:hover, .menu__toggle:focus {
   background: #fff;
 }
 
-/* line 27, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
+/* line 28, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle:checked span:first-child,
 .menu__toggle.toggled span:first-child {
   -webkit-transform: translateY(6px) rotate(45deg);
           transform: translateY(6px) rotate(45deg);
 }
 
-/* line 32, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
+/* line 33, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle:checked span:nth-child(2),
 .menu__toggle.toggled span:nth-child(2) {
   opacity: 0;
 }
 
-/* line 37, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
+/* line 38, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle:checked span:last-child,
 .menu__toggle.toggled span:last-child {
   -webkit-transform: translateY(-6px) rotate(-45deg);
           transform: translateY(-6px) rotate(-45deg);
 }
 
-/* line 42, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
+/* line 43, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle span {
   display: block;
   background: #d2ba88;
@@ -1852,7 +1851,7 @@ th {
   transition: 0.3s ease;
 }
 
-/* line 52, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
+/* line 53, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle span:nth-child(2) {
   margin: 4px 0;
 }

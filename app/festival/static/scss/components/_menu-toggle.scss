@@ -8,13 +8,14 @@
   background: $white;
   width: 32px;
   height: 32px;
-  border-radius: 3px;
+  // border-radius: 3px;
   box-sizing: border-box;
   padding: 9px 6px;
   cursor: pointer;
   user-select: none;
-  border: 1px solid #000;
+  // border: 1px solid #000;
   margin: 0;
+  box-shadow: 0 0 5px 0px black;
   @media (min-width : $desktop ) {
       display: none;
   }
