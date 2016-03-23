@@ -15,6 +15,7 @@ develop-eggs
 *.directory
 var
 data/static
+.thumbnails
 
 # Installer logs
 pip-log.txt
