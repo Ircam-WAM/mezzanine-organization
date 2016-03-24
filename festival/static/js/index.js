@@ -89,37 +89,6 @@ $(function() {
     });
 
     /**
-     * Instafeed
-     * @author Philippe Barbosa
-     */
-
-    // var t = new Instafeed({
-    //     get: "tagged",
-    //     tagName: "manifeste15"
-    //     userId: 2124483621,
-    //     // accessToken: "2985811.467ede5.2d850141659d4a5fab04f28187e580cd",
-    //     resolution: "standard_resolution",
-    //     sortBy: "most-recent",
-    //     limit: 8,
-    //     template: '<div class="box-item-25"> <a href="{{link}}" target="_blank"> <img src="{{image}}" alt="{{caption}}"></a></div>',
-    //     error: function() {
-    //         $(".instagram").remove()
-    //     }
-    // });
-
-    // $("#instafeed").length && t.run();
-
-    // $("#instafeed").length && t.run();
-
-    var feed = new Instafeed({
-        get: 'tagged',
-        tagName: 'awesome',
-        clientId: 2124483621,
-        accessToken: 'Disable implicit OAuth'
-    });
-    feed.run();
-
-    /**
      * Close message
      */
 
@@ -132,4 +101,29 @@ $(function() {
             notification.remove();
         }, 4000);
      });
+
+    /**
+     * Instafeed
+     * @author Philippe Barbosa
+     */
+
+    // Ircam user ID : 1343260619
+    // Client ID eeed5acba6ce490798253ce5c09a1852
+    // Client secret ef3f37ce39c54db1b5145de40fb56c68
+
+    var t = new Instafeed({
+        get: "user",
+        userId: 1343260619,
+        accessToken: "2985811.467ede5.2d850141659d4a5fab04f28187e580cd",
+        resolution: "standard_resolution",
+        sortBy: "most-recent",
+        limit: 8,
+        template: '<div class="box-item-25"> <a href="{{link}}" target="_blank"> <img src="{{image}}" alt="{{caption}}"></a></div>',
+        error: function() {
+            $(".instagram").remove()
+        }
+    });
+
+    $("#instafeed").length && t.run();
+
 });
