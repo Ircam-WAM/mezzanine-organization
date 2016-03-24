@@ -1,8 +1,9 @@
 .artist__list {
     display: block;
-    padding: 1.5rem 0 3rem;
+    // padding: 1.5rem 0 3rem;
     margin-left: -1rem;
     margin-right: -1rem;
+    margin-top: 0;
 }
 
 .artist__sizer,
@@ -18,7 +19,7 @@
   padding: 0.5rem;
 
   @media (min-width : $desktop ) {
-     padding: 1rem;
+     padding: 0 0.5rem 1rem;
   }
 
   &__inner {
