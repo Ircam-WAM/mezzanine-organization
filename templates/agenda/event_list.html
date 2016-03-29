@@ -17,7 +17,7 @@
 
 {% block title %}
 {% if page %}
-{% editable page.title %}{{ page.title }}{% endeditable %}
+{{ page.title }}
 {% else %}
 {% trans "Program" %}
 {% endif %}
@@ -61,16 +61,13 @@
 {% else %}
     {% if page %}
     {% block event_list_pagecontent %}
-    {% editable page.richtextpage.content %}
     {{ page.richtextpage.content|richtext_filters|safe }}
-    {% endeditable %}
     {% endblock %}
     {% endif %}
 {% endif %}
 
 {% for event in events.object_list %}
     {% block event_list_event_title %}
-        {% editable event.title %}
         <div class="event__card">
             {% if event.featured_image %}
                 {% block event_list_event_featured_image %}
@@ -82,7 +79,6 @@
             <h3 class="event__name">
                 <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
             </h3>
-        {% endeditable %}
     {% endblock %}
 
     {% block event_list_event_metainfo %}
@@ -95,14 +91,12 @@
     {% endblock %}
 
     {% block event_list_event_content %}
-        {% editable event.content %}
-            <!--
+            {% comment %}
             <div class="event__description">
                 {{ event.description_from_content|safe }}
                 <a href="{{ event.get_absolute_url }}" class="event__meta__cta">{% trans "read more" %}</a>
             </div>
-            -->
-        {% endeditable %}
+            {% endcomment %}
     {% endblock %}
 
     <a href="{{ event.get_absolute_url }}" class="btn btn-full">
