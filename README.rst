@@ -42,7 +42,7 @@ Then browse the app at http://localhost:9010/ (replacing 'localhost' by the IP g
 Backup / Restore
 ================
 
-To backup the database, in another terminal (or a Docker Quickstart Terminal)::
+To backup the database, in **another** terminal (or a Docker Quickstart Terminal)::
 
     cd Manifeste
     scripts/backup.sh
@@ -54,7 +54,7 @@ To restore the backuped database, in another terminal (or a Docker Quickstart Te
     cd Manifeste
     scripts/restore.sh
 
-If the app is broken after a restore script, restart the machine with::
+If the app is broken after a restore script, restart the composition with::
 
     docker-compose restart
 

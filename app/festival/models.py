@@ -135,7 +135,6 @@ class Media(Displayable, RichText):
     def clean(self):
         super(Media, self).clean()
         self.q = pq(self.get_html())
-        self.title = self.q.attr('data-title')
         sources = self.q('source')
         for source in sources:
             if self.open_source_mime_type in source.attrib['type']:
