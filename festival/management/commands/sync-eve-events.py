@@ -23,8 +23,8 @@ class Command(BaseCommand):
     default_user = User.objects.get(username='admin')
 
     def cleanup(self):
-        for event in ma_models.Event.objects.all():
-            event.delete()
+        # for event in ma_models.Event.objects.all():
+        #     event.delete()
         for location in ma_models.EventLocation.objects.all():
             location.delete()
 
@@ -50,8 +50,12 @@ class Command(BaseCommand):
                 event.end = manifestation.happens_at + timedelta(seconds=manifestation.duration)
                 event.title = event_trans.name
                 event.user = self.default_user
-                
-                location, c = ma_models.EventLocation.objects.get_or_create(title=manifestation.location.name)
+
+                locations = ma_models.EventLocation.objects.filter(title=manifestation.location.name)
+                if locations:
+                    location = locations[0]
+                else:
+                    location = ma_models.EventLocation(title=manifestation.location.name)
                 address = '\n'.join([manifestation.location.address, manifestation.location.postalcode + ' ' + manifestation.location.city])
                 location.address = address
                 location.clean()
