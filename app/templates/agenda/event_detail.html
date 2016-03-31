@@ -1,5 +1,5 @@
 {% extends "agenda/event_list.html" %}
-{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n future disqus_tags event_tags %}
+{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n future disqus_tags event_tags festival_tags %}
 
 {% block meta_title %}{{ event.meta_title }}{% endblock %}
 
@@ -29,8 +29,7 @@
     <div class="event__meta__inner">
         {{ event.start }}
         {% if event.end %}
-        <br>
-        {% if event.end|date == event.start|date %}{{ event.end|time:"TIME_FORMAT" }}{% else %}{{ event.end }}{% endif %}
+        {% if event.end|date == event.start|date and event.end.hour|subtract:event.start.hour > 3 %}{{ event.end|time:"TIME_FORMAT" }}{% endif %}
         {% endif %}
         {% if event.location %}
         <a href="{% url "event_list_location" event.location.slug %}" class="event__meta__location">{{ event.location }}</a>
