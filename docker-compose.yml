@@ -38,6 +38,15 @@ db:
     - MYSQL_USER=manifeste
     - MYSQL_PASSWORD=Onukifsid7
 
+pgdb:
+  image: postgres
+  volumes_from:
+    - data
+  environment:
+    - POSTGRES_PASSWORD=HmazS2frT
+    - POSTGRES_USER=eve
+    - POSTGRES_DB=eve
+
 app:
   build: .
   command: /bin/sh deploy/start_app.sh
@@ -49,7 +58,8 @@ app:
     - "8000"
   links:
     - db
-    
+    - pgdb
+
 nginx:
   image: nginx
   ports:
