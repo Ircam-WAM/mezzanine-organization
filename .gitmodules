@@ -1,0 +1,3 @@
+[submodule "lib/django-eve"]
+	path = lib/django-eve
+	url = git+ssh://git@git.forge.ircam.fr/django-eve.git
