@@ -19,6 +19,7 @@ patterns='*.js;*.css;*.jpg;*.jpeg;*.gif;*.png;*.svg;*.ttf;*.eot;*.woff;*.woff2'
 
 # Staging
 # pip install psycopg2
+# pip install -U https://forge.ircam.fr/p/django-eve/source/download/dev/
 
 chown -R $uid:$gid $media
 

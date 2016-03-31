@@ -19,22 +19,22 @@ DATABASES = {
          'HOST': 'db',      # Set to empty string for localhost. Not used with sqlite3.
          'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
     },
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-    #     'USER': 'postgres',      # Not used with sqlite3.
-    #     'PASSWORD': 'mysecretpassword',  # Not used with sqlite3.
-    #     'NAME': 'manifeste',
-    #     'HOST': 'db',      # Set to empty string for localhost. Not used with sqlite3.
-    #     'PORT': '5432',      # Set to empty string for default. Not used with sqlite3.
-    # },
     'eve': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'eve',
-        'USER': 'postgres',
-        'PASSWORD': 'mysecretpassword',
+        'USER': 'eve',
+        'PASSWORD': 'HmazS2frT',
         'HOST': 'pgdb',
         'PORT': '5432',
     },
+    # 'eve': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'eve',
+    #     'USER': 'django',
+    #     'PASSWORD': 'q2nqzt0WGnwWé,256',
+    #     'HOST': 'eve.ircam.fr',
+    #     'PORT': '5432',
+    # },
 
 }
 
@@ -96,3 +96,5 @@ warnings.filterwarnings(
         RuntimeWarning, r'django\.db\.models\.fields')
 
 EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
+
+DATABASE_ROUTERS = ['eve.routers.EveRouter',]

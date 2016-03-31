@@ -24,3 +24,7 @@ def festival_event_featured(*args):
             if hasattr(obj, 'featured_image_header'):
                 featured.append(obj)
     return featured
+
+@register.filter
+def subtract(value, arg):
+    return value - arg
