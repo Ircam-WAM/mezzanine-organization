@@ -38,6 +38,9 @@ DATABASES = {
 
 }
 
+DATABASE_ROUTERS = ['eve.routers.EveRouter',]
+
+
 # EXTENSIONS AND FORMATS
 # Allowed Extensions for File Upload. Lower case is important.
 FILEBROWSER_EXTENSIONS = {
@@ -74,8 +77,6 @@ SITE_TAGLINE = 'Festival 2 juin | 2 juillet 2016'
 
 SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 
-EVENT_USE_FEATURED_IMAGE = True
-
 ADMIN_MENU_ORDER = (
     (_("Content"), ("pages.Page", "blog.BlogPost", "mezzanine_agenda.Event",
         "festival.Artist", "festival.Video", "festival.Audio", "festival.Playlist",
@@ -96,5 +97,6 @@ warnings.filterwarnings(
         RuntimeWarning, r'django\.db\.models\.fields')
 
 EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
-
-DATABASE_ROUTERS = ['eve.routers.EveRouter',]
+EVENT_PER_PAGE = 8
+EVENT_USE_FEATURED_IMAGE = True
+EVENT_SHOP_URL = 'http://eve.ircam.fr/pub.php/manifestation/'
