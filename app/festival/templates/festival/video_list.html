@@ -2,8 +2,11 @@
 {% load i18n %}
 {% load mezzanine_tags keyword_tags %}
 
-{% block main %}
+{% block title %}
+ {% trans "Videos" %}
+{% endblock %}
 
+{% block main %}
 <div class="video__list">
     {% for video in object_list %}
     <div class="video__card">
@@ -17,5 +20,4 @@
     </div>
     {% endfor %}
 </div>
-
 {% endblock %}
