@@ -19,6 +19,7 @@
   border-radius: 3px;
   box-shadow: 0 0 20px $gray_darker;
   position: fixed;
+  z-index: $zi-master;
   top: 1rem;
   right: 1rem;
   animation-name: fadeIn;

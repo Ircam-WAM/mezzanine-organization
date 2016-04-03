@@ -66,9 +66,11 @@
     {% endif %}
 {% endif %}
 
+<div class="msry__container">
+    <div class="msry__sizer">
 {% for event in events.object_list %}
     {% block event_list_event_title %}
-        <div class="event__card">
+        <div class="event__card msry__item">
             {% if event.featured_image %}
                 {% block event_list_event_featured_image %}
                     <a href="{{ event.get_absolute_url }}" class="event__thumbnail">
@@ -135,6 +137,8 @@
 {% endblock %}
 </div>
 {% endfor %}
+    </div>
+</div>
 
 <a href='{% icalendar_url %}' target="_blank" class="small  push-ical">{% trans "Subscribe to all events in" %} Google Calendar/Outlook/iCal</a>
 
