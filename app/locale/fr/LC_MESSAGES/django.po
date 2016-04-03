@@ -1,0 +1,643 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-04 01:43+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: festival/models.py:20
+msgid "left"
+msgstr ""
+
+#: festival/models.py:20
+msgid "right"
+msgstr ""
+
+#: festival/models.py:32
+msgid "name"
+msgstr ""
+
+#: festival/models.py:33 festival/models.py:45
+msgid "description"
+msgstr ""
+
+#: festival/models.py:44
+msgid "title"
+msgstr ""
+
+#: festival/models.py:58
+msgid "page category"
+msgstr ""
+
+#: festival/models.py:64
+msgid "first name"
+msgstr ""
+
+#: festival/models.py:65
+msgid "last name"
+msgstr ""
+
+#: festival/models.py:66
+msgid "biography"
+msgstr ""
+
+#: festival/models.py:67
+msgid "photo"
+msgstr ""
+
+#: festival/models.py:68
+msgid "photo credits"
+msgstr ""
+
+#: festival/models.py:69
+msgid "photo alignment"
+msgstr ""
+
+#: festival/models.py:70
+msgid "photo description"
+msgstr ""
+
+#: festival/models.py:71
+msgid "featured"
+msgstr ""
+
+#: festival/models.py:72
+msgid "photo featured"
+msgstr ""
+
+#: festival/models.py:73
+msgid "photo featured credits"
+msgstr ""
+
+#: festival/models.py:74
+msgid "events"
+msgstr ""
+
+#: festival/models.py:79
+msgid "artist"
+msgstr ""
+
+#: festival/models.py:117
+msgid "media id"
+msgstr ""
+
+#: festival/models.py:118
+msgid "open source URL"
+msgstr ""
+
+#: festival/models.py:119
+msgid "closed source URL"
+msgstr ""
+
+#: festival/models.py:152 festival/models.py:168 festival/models.py:187
+msgid "event"
+msgstr ""
+
+#: festival/models.py:155
+msgid "audio"
+msgstr ""
+
+#: festival/models.py:171
+msgid "video"
+msgstr ""
+
+#: festival/models.py:186
+msgid "audios"
+msgstr ""
+
+#: festival/templates/festival/artist_list.html:6
+#: templates/agenda/event_detail.html:160
+msgid "Artists"
+msgstr "Artistes"
+
+#: festival/templates/festival/video_detail.html:24
+msgid "Related event"
+msgstr "Événements liés"
+
+#: sandbox/local_settings.py:81
+msgid "Content"
+msgstr ""
+
+#: sandbox/local_settings.py:83
+msgid "Media Library"
+msgstr ""
+
+#: sandbox/local_settings.py:84
+msgid "Site"
+msgstr ""
+
+#: sandbox/local_settings.py:85
+msgid "Users"
+msgstr ""
+
+#: sandbox/local_settings.py:86
+msgid "Festival"
+msgstr ""
+
+#: sandbox/settings.py:45
+msgid "Top navigation bar"
+msgstr ""
+
+#: sandbox/settings.py:47
+msgid "Footer"
+msgstr ""
+
+#: sandbox/settings.py:101
+msgid "French"
+msgstr ""
+
+#: sandbox/settings.py:102
+msgid "English"
+msgstr ""
+
+#: templates/accounts/account_login.html:7
+msgid ""
+"You're already logged in. If you'd like to log in as a different user, "
+"you'll need to log out first."
+msgstr ""
+
+#: templates/accounts/account_login.html:11
+#, python-format
+msgid ""
+"If you don't have an account you can <a href=\"%(signup_url)s?next=%(next)s"
+"\">sign up</a> for one now."
+msgstr ""
+
+#: templates/accounts/account_login.html:14
+#, python-format
+msgid ""
+"<p>You can also <a href=\"%(password_reset_url)s?next=%(profile_update_url)s"
+"\">reset your password</a> if you've forgotten it.</p>"
+msgstr ""
+
+#: templates/accounts/account_password_reset.html:6
+msgid ""
+"Enter your username or email address and you'll receive an email with a link "
+"you need to click, in order to log in and change your password."
+msgstr ""
+
+#: templates/accounts/account_profile.html:18
+#: templates/accounts/includes/user_panel.html:12
+msgid "Update profile"
+msgstr ""
+
+#: templates/accounts/account_signup.html:7
+msgid ""
+"You're already logged in. If you'd like to create a new account, you'll need "
+"to log out first."
+msgstr ""
+
+#: templates/accounts/account_signup.html:11
+msgid ""
+"After signing up, your account will be reviewed for approval. You'll receive "
+"an email when your account is activated."
+msgstr ""
+
+#: templates/accounts/account_signup.html:13
+msgid ""
+"After signing up, you'll receive an email with a link you need to click, in "
+"order to activate your account."
+msgstr ""
+
+#: templates/accounts/includes/user_panel.html:5
+msgid "Logged in as: "
+msgstr ""
+
+#: templates/accounts/includes/user_panel.html:20
+#: templates/accounts/includes/user_panel_nav.html:11
+#: templates/includes/editable_toolbar.html:9
+msgid "Log out"
+msgstr ""
+
+#: templates/accounts/includes/user_panel.html:27
+#: templates/accounts/includes/user_panel_nav.html:14
+msgid "Log in"
+msgstr ""
+
+#: templates/accounts/includes/user_panel.html:30
+msgid "or"
+msgstr ""
+
+#: templates/accounts/includes/user_panel.html:33
+#: templates/accounts/includes/user_panel_nav.html:16
+msgid "Sign up"
+msgstr ""
+
+#: templates/agenda/event_detail.html:50 templates/agenda/event_list.html:128
+#: templates/blog/blog_post_detail.html:43
+#: templates/blog/blog_post_list.html:136
+#: templates/generic/includes/comments.html:3
+msgid "Comments"
+msgstr ""
+
+#: templates/agenda/event_detail.html:53 templates/agenda/event_list.html:132
+#: templates/blog/blog_post_detail.html:46
+#: templates/blog/blog_post_list.html:140
+#, python-format
+msgid "%(comments_count)s comment"
+msgid_plural "%(comments_count)s comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/agenda/event_detail.html:81
+#: templates/blog/blog_post_detail.html:94
+msgid "Share on Facebook"
+msgstr "Partagez sur Facebook"
+
+#: templates/agenda/event_detail.html:82
+#: templates/blog/blog_post_detail.html:93
+msgid "Partagez sur Twitter"
+msgstr ""
+
+#: templates/agenda/event_detail.html:109 templates/agenda/event_list.html:114
+#: templates/agenda/includes/filter_panel.html:74
+#: templates/blog/blog_post_detail.html:74
+#: templates/blog/blog_post_list.html:121
+#: templates/blog/includes/filter_panel.html:56
+msgid "Tags"
+msgstr ""
+
+#: templates/agenda/event_detail.html:164
+msgid "Videos"
+msgstr ""
+
+#: templates/agenda/event_detail.html:173 templates/agenda/event_list.html:144
+msgid "Subscribe to all events in"
+msgstr "Abonnez-vous à tous les événements dans"
+
+#: templates/agenda/event_list.html:4
+msgid "Events"
+msgstr "Événements"
+
+#: templates/agenda/event_list.html:22
+msgid "Program"
+msgstr "Programme"
+
+#: templates/agenda/event_list.html:31 templates/blog/blog_post_list.html:31
+msgid "Tag:"
+msgstr ""
+
+#: templates/agenda/event_list.html:33
+msgid "Location:"
+msgstr "Lieu:"
+
+#: templates/agenda/event_list.html:37 templates/blog/blog_post_list.html:37
+msgid "Author:"
+msgstr "Auteur:"
+
+#: templates/agenda/event_list.html:49
+msgid "Viewing events tagged"
+msgstr ""
+
+#: templates/agenda/event_list.html:51
+msgid "Viewing events for the location"
+msgstr ""
+
+#: templates/agenda/event_list.html:53
+msgid "Viewing events from"
+msgstr ""
+
+#: templates/agenda/event_list.html:56
+msgid "Viewing events by"
+msgstr ""
+
+#: templates/agenda/includes/filter_panel.html:6
+msgid "Upcoming Events"
+msgstr "Événements à venir"
+
+#: templates/agenda/includes/filter_panel.html:22
+msgid "Recent Events"
+msgstr "Événements récents"
+
+#: templates/agenda/includes/filter_panel.html:38
+#: templates/blog/includes/filter_panel.html:27
+msgid "Archive"
+msgstr ""
+
+#: templates/agenda/includes/filter_panel.html:58
+msgid "Locations"
+msgstr "Lieux"
+
+#: templates/blog/blog_post_detail.html:29
+#: templates/blog/blog_post_list.html:85
+msgid "Posted by"
+msgstr ""
+
+#: templates/blog/blog_post_detail.html:33
+#: templates/blog/blog_post_list.html:97
+#: templates/generic/includes/comment.html:22
+#: templates/generic/includes/comment.html:59 templates/twitter/tweets.html:19
+#, python-format
+msgid "%(sometime)s ago"
+msgstr ""
+
+#: templates/blog/blog_post_detail.html:119
+msgid "Related posts"
+msgstr ""
+
+#: templates/blog/blog_post_list.html:4 templates/blog/blog_post_list.html:22
+msgid "Blog"
+msgstr ""
+
+#: templates/blog/blog_post_list.html:33
+msgid "Category:"
+msgstr "Catégorie:"
+
+#: templates/blog/blog_post_list.html:50
+msgid "Viewing posts tagged"
+msgstr ""
+
+#: templates/blog/blog_post_list.html:52
+msgid "Viewing posts for the category"
+msgstr ""
+
+#: templates/blog/blog_post_list.html:54
+msgid "Viewing posts from"
+msgstr ""
+
+#: templates/blog/blog_post_list.html:57
+msgid "Viewing posts by"
+msgstr ""
+
+#: templates/blog/blog_post_list.html:91
+msgid "in"
+msgstr ""
+
+#: templates/blog/blog_post_list.html:130 templates/search_results.html:47
+msgid "read more"
+msgstr ""
+
+#: templates/blog/includes/filter_panel.html:6
+msgid "Recent Posts"
+msgstr ""
+
+#: templates/blog/includes/filter_panel.html:43
+msgid "Categories"
+msgstr ""
+
+#: templates/blog/includes/filter_panel.html:72
+msgid "Authors"
+msgstr ""
+
+#: templates/blog/includes/filter_panel.html:84
+msgid "Feeds"
+msgstr ""
+
+#: templates/blog/includes/filter_panel.html:86
+#: templates/blog/includes/filter_panel.html:90
+#: templates/blog/includes/filter_panel.html:94
+#: templates/blog/includes/filter_panel.html:98
+msgid "RSS"
+msgstr ""
+
+#: templates/blog/includes/filter_panel.html:87
+#: templates/blog/includes/filter_panel.html:91
+#: templates/blog/includes/filter_panel.html:95
+#: templates/blog/includes/filter_panel.html:99
+msgid "Atom"
+msgstr ""
+
+#: templates/email/account_approve.html:3
+#: templates/email/account_approve.txt:3
+msgid "Hey there, a new account has been created and requires activation."
+msgstr ""
+
+#: templates/email/account_approve.html:5
+#: templates/email/account_approve.txt:5
+msgid "Name"
+msgstr ""
+
+#: templates/email/account_approve.html:6
+#: templates/email/account_approve.txt:6
+msgid "Email"
+msgstr ""
+
+#: templates/email/account_approve.html:11
+#: templates/email/account_approve.txt:9 templates/email/signup_verify.html:4
+#: templates/email/signup_verify.txt:4
+msgid "Please use the link below to activate it."
+msgstr ""
+
+#: templates/email/account_approve_subject.txt:2
+msgid "An account requires activation"
+msgstr ""
+
+#: templates/email/account_approved.html:3
+#: templates/email/account_approved.txt:3
+msgid "Hey there, your account has been activated."
+msgstr ""
+
+#: templates/email/account_approved.html:4
+#: templates/email/account_approved.txt:4
+msgid "Please use the link below to log in."
+msgstr ""
+
+#: templates/email/account_approved_subject.txt:2
+msgid "Your account has been activated"
+msgstr ""
+
+#: templates/email/comment_notification.html:6
+msgid "A new comment has been posted on"
+msgstr ""
+
+#: templates/email/comment_notification.html:10
+#, python-format
+msgid ""
+"\n"
+"    At %(submit_date)s %(user_name)s wrote:\n"
+"    "
+msgstr ""
+
+#: templates/email/comment_notification.txt:7
+#, python-format
+msgid ""
+"\n"
+"At %(submit_date)s %(user_name)s wrote:\n"
+msgstr ""
+
+#: templates/email/password_reset_verify.html:3
+#: templates/email/password_reset_verify.txt:3
+msgid "Hey there, the password reset form was used for your account."
+msgstr ""
+
+#: templates/email/password_reset_verify.html:4
+#: templates/email/password_reset_verify.txt:4
+msgid "Please use the link below to log in and update your password."
+msgstr ""
+
+#: templates/email/password_reset_verify.html:6
+#: templates/email/password_reset_verify.txt:6
+msgid ""
+"If you didn't request for your password to be reset, please ignore this "
+"email."
+msgstr ""
+
+#: templates/email/password_reset_verify_subject.txt:2
+msgid "Reset your password"
+msgstr ""
+
+#: templates/email/signup_verify.html:3 templates/email/signup_verify.txt:3
+msgid "Hey there, thanks for creating your account."
+msgstr ""
+
+#: templates/email/signup_verify_subject.txt:2
+msgid "Activate your account"
+msgstr ""
+
+#: templates/errors/404.html:6 templates/errors/404.html.py:10
+#: templates/errors/404.html:15
+msgid "Page not found"
+msgstr ""
+
+#: templates/errors/404.html:16
+msgid "The page you requested does not exist."
+msgstr ""
+
+#: templates/errors/500.html:6 templates/errors/500.html.py:10
+#: templates/errors/500.html:15
+msgid "Error"
+msgstr ""
+
+#: templates/errors/500.html:16
+msgid "Sorry, an error occurred."
+msgstr ""
+
+#: templates/generic/includes/comment.html:30
+msgid "Link"
+msgstr ""
+
+#: templates/generic/includes/comment.html:33
+#: templates/generic/includes/comment.html:49
+msgid "Reply"
+msgstr ""
+
+#: templates/generic/includes/comment.html:55
+msgid "Comment deleted"
+msgstr ""
+
+#: templates/generic/includes/comment.html:57
+msgid "Comment awaiting approval"
+msgstr ""
+
+#: templates/generic/includes/comment.html:71
+msgid "There are currently no comments"
+msgstr ""
+
+#: templates/generic/includes/comments.html:17
+msgid "New Comment"
+msgstr ""
+
+#: templates/generic/includes/comments.html:25
+msgid "Comment"
+msgstr ""
+
+#: templates/generic/includes/rating.html:5
+msgid "Current rating"
+msgstr ""
+
+#: templates/generic/includes/rating.html:7
+msgid "Currently unrated"
+msgstr ""
+
+#: templates/generic/includes/rating.html:17
+msgid "Rate"
+msgstr ""
+
+#: templates/includes/editable_form.html:16
+msgid "Save"
+msgstr ""
+
+#: templates/includes/editable_form.html:17
+msgid "Cancel"
+msgstr ""
+
+#: templates/includes/editable_form.html:25
+msgid "Edit"
+msgstr ""
+
+#: templates/includes/editable_toolbar.html:8
+msgid "Admin"
+msgstr ""
+
+#: templates/includes/form_errors.html:8
+msgid "Please correct the errors below."
+msgstr ""
+
+#: templates/includes/language_selector.html:17
+msgid "Change"
+msgstr ""
+
+#: templates/includes/search_form.html:4
+msgid "Search"
+msgstr ""
+
+#: templates/includes/search_form.html:11
+msgid "Everything"
+msgstr ""
+
+#: templates/includes/search_form.html:22
+msgid "Go"
+msgstr ""
+
+#: templates/index.html:4 templates/index.html.py:7
+#: templates/pages/menus/breadcrumb.html:4
+#: templates/pages/menus/breadcrumb.html:10
+#: templates/pages/menus/dropdown.html:11
+#: templates/pages/menus/footer_tree.html:11
+#: templates/pages/menus/mobile.html:10 templates/pages/menus/primary.html:8
+#: templates/pages/menus/tree.html:9 templates/search_results.html:13
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/index.html:10
+msgid "Edito"
+msgstr "Édito"
+
+#: templates/pages/form.html:24
+msgid "Submit"
+msgstr "Soumettre"
+
+#: templates/pages/menus/admin.html:31
+msgid "Add"
+msgstr ""
+
+#: templates/search_results.html:5 templates/search_results.html.py:6
+#: templates/search_results.html:15
+msgid "Search Results"
+msgstr ""
+
+#: templates/search_results.html:22
+#, python-format
+msgid ""
+"\n"
+"No results were found in %(search_type)s matching your query: %(query)s\n"
+msgstr ""
+
+#: templates/search_results.html:26
+#, python-format
+msgid ""
+"\n"
+"Showing %(start)s to %(end)s of %(total)s results in %(search_type)s "
+"matching your query: %(query)s\n"
+msgstr ""
+
+#: templates/styles.html:4 templates/styles.html.py:6
+msgid "Styles"
+msgstr ""
+
+#: templates/twitter/tweets.html:7
+msgid "Recent Tweets"
+msgstr "Tweets récents"
