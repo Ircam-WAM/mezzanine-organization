@@ -3226,6 +3226,36 @@ th {
   content: "";
 }
 
+/* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/bk-news.scss */
+.bk__news {
+  display: block;
+  margin: 3rem auto;
+}
+
+/* line 15, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/bk-news.scss */
+.bk__news__inner {
+  padding: 2rem 1rem;
+  background: #fff;
+  border: 1px solid #d2ba88;
+  border-left: 1rem solid #d2ba88;
+}
+
+/* line 26, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/bk-news.scss */
+.bk__news__title {
+  text-transform: uppercase;
+  font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
+  text-align: right;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #d2ba88;
+  line-height: 1.1;
+}
+
+/* line 37, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/bk-news.scss */
+.bk__news__content strong {
+  text-transform: uppercase;
+}
+
 /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
 .hero__slider__item {
   display: block;
@@ -3587,6 +3617,11 @@ th {
   .event__card--full{
     width: 100%;
     display: block;
+  }
+  /* line 15, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/bk-news.scss */
+  .bk__news__inner{
+    width: 60%;
+    margin: 0 auto;
   }
 }
 @media (min-width: 1200px){
