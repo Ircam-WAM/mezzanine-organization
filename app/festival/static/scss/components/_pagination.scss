@@ -28,6 +28,10 @@
     display:inline-block;
    *display:inline;
     zoom:1;
+    &.active a {
+        font-weight: $bold;
+        color: $black;
+    }
 }
 
 
