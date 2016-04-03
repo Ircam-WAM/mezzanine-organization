@@ -4,12 +4,12 @@ $(function() {
      * Masonry
      * @author Philippe Barbosa
      */
-    var $grid = $('.artist__list');
+    var $grid = $('.msry__container');
     $grid.imagesLoaded( function(){
         $grid.masonry({
-          itemSelector: '.artist__item',
+          itemSelector: '.msry__item',
           percentPosition: true,
-          columnWidth: '.artist__sizer'
+          columnWidth: '.msry__sizer'
         });
     });
 
