@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-04 01:43+0200\n"
+"POT-Creation-Date: 2016-04-04 01:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,6 +126,11 @@ msgstr "Artistes"
 #: festival/templates/festival/video_detail.html:24
 msgid "Related event"
 msgstr "Événements liés"
+
+#: festival/templates/festival/video_list.html:6
+#: templates/agenda/event_detail.html:164
+msgid "Videos"
+msgstr "Vidéos"
 
 #: sandbox/local_settings.py:81
 msgid "Content"
@@ -259,8 +264,10 @@ msgstr "Partagez sur Facebook"
 
 #: templates/agenda/event_detail.html:82
 #: templates/blog/blog_post_detail.html:93
-msgid "Partagez sur Twitter"
-msgstr ""
+#, fuzzy
+#| msgid "Share on Facebook"
+msgid "Share on Twitter"
+msgstr "Partagez sur Facebook"
 
 #: templates/agenda/event_detail.html:109 templates/agenda/event_list.html:114
 #: templates/agenda/includes/filter_panel.html:74
@@ -268,10 +275,6 @@ msgstr ""
 #: templates/blog/blog_post_list.html:121
 #: templates/blog/includes/filter_panel.html:56
 msgid "Tags"
-msgstr ""
-
-#: templates/agenda/event_detail.html:164
-msgid "Videos"
 msgstr ""
 
 #: templates/agenda/event_detail.html:173 templates/agenda/event_list.html:144
