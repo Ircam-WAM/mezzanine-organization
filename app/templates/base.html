@@ -106,30 +106,47 @@
     </div>
     {% endif %}
 
-    <div class="site__content__header">
-        <div class="container">
-            {% nevercache %}
-            {% if messages %}
-                {% for message in messages %}
-                <div class="notification" id="js-notificationContainer">
-                    <button type="button" class="btn btn-small js-notificationClose">X</button>
-                    {{ message }}
-                </div>
-                {% endfor %}
-            {% endif %}
-            {% endnevercache %}
-
-            {% comment %}
-            <ul class="breadcrumb">
-            {% spaceless %}
-            {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
-            {% endspaceless %}
-            </ul>
-            {% endcomment %}
+    {% nevercache %}
+    {% if messages %}
+        {% for message in messages %}
+        <div class="notification" id="js-notificationContainer">
+            <button type="button" class="btn btn-small js-notificationClose">X</button>
+            {{ message }}
         </div>
-    </div>
+        {% endfor %}
+    {% endif %}
+    {% endnevercache %}
+
+    {% comment %}
+    <ul class="breadcrumb">
+    {% spaceless %}
+    {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
+    {% endspaceless %}
+    </ul>
+    {% endcomment %}
 
     <div class="site__content">
+        {% if on_home %}
+            <div class="container">
+                <div class="bk__news">
+                    <div class="media bk__news__inner">
+                        <div class="media-img">
+                            <span class="bk__news__title">
+                                Dernière <br> minute !
+                            </span>
+                        </div>
+                        <div class="media-content bk__news__content">
+                            <p>
+                                <strong>Partagez, twittez, commentez, publiez vos photos…</strong> <br>
+                                et réservez dès maintenant vos places ou abonnements pour bénéficier de tarifs privilégiés.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
         <div class="container">
             <div class="site__content__header">
                 <div class="site__content__header__inner">
