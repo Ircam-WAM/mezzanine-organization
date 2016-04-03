@@ -7,7 +7,7 @@ from festival.models import *
 @register(Event)
 class EventTranslationOptions(TranslationOptions):
 
-    fields = ('title', 'content')
+    fields = ('title', 'description', 'content')
 
 
 @register(Artist)
