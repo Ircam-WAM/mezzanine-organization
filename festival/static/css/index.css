@@ -2038,6 +2038,7 @@ th {
   border-radius: 3px;
   box-shadow: 0 0 20px #555;
   position: fixed;
+  z-index: 9999;
   top: 1rem;
   right: 1rem;
   -webkit-animation-name: fadeIn;
@@ -2049,7 +2050,7 @@ th {
   color: #c4a563;
 }
 
-/* line 30, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_messages.scss */
+/* line 31, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_messages.scss */
 .notification__remove {
   -webkit-animation-name: slideOutRight;
           animation-name: slideOutRight;
@@ -2157,7 +2158,7 @@ th {
   }
 }
 
-/* line 83, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_messages.scss */
+/* line 84, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_messages.scss */
 .slideOutRight {
   -webkit-animation-name: slideOutRight;
           animation-name: slideOutRight;
