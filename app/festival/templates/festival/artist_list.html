@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% block main %}
-<div class="artist__list">
-    <div class="artist__sizer"></div>
+<div class="artist__list msry__container">
+    <div class="msry__sizer"></div>
      {% for artist in object_list %}
-        <div class="artist__item">
+        <div class="artist__item msry__item">
             <div class="artist__item__inner">
                 <a href="{% url 'festival-artist-detail' artist.slug %}" class="artist__item__inner">
                     <figure class="artist__img">
