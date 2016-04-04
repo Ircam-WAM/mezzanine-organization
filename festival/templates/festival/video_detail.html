@@ -17,7 +17,10 @@
 </div>
 
 <div class="embed-responsive">
-    <iframe src="http://medias.ircam.fr/embed/media/{{ video.media_id }}" frameborder="0" allowfullscreen="" width="100%"></iframe>
+	<video width="100%" controls data-title="{{ video.title }}" preload="none">
+	  <source src="{{ video.open_source_url }}" type="{{ video.open_source_mime_type }}" />
+      <source src="{{ video.closed_source_url }}" type="{{ video.closed_source_mime_type }}" />
+	  </video>
 </div>
 
 {% with video as object %}
