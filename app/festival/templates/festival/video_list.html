@@ -9,15 +9,7 @@
 {% block main %}
 <div class="video__list">
     {% for video in object_list %}
-    <div class="video__card">
-        <div class="video__card__thumbnail">
-            <img src="http://source.unsplash.com/9Vx-QeC0-9Q/400x400" alt="">
-        </div>
-        <div class="video__card__info">
-            <h3 class="video__card__name">{{ video.title }}</h3>
-        </div>
-        <a href="{% url 'festival-video-detail' video.slug %}" class="video__card__link">Lire la video</a>
-    </div>
+     {% include 'festival/inc/video_card.html'}
     {% endfor %}
 </div>
 {% endblock %}

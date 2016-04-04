@@ -169,7 +169,7 @@
 
 <h2>{% trans "Videos" %}</h2>
 {% for video in event.videos.all %}
-<a href="{% url 'festival-video-detail' video.slug %}">{{ video.title }}</a>
+    {% include 'festival/inc/video_card.html' %}
 {% endfor %}
 
 {% endblock %}

@@ -22,7 +22,9 @@
 
 <div class="video-event">
     <h2>{% trans 'Related event' %}</h2>
-    <a href="{{ video.event.get_absolute_url }}">{{ video.event.title }}</a>
+    {% with video.event as event %}
+    {% include 'agenda/includes/event_card.html' %}
+    {% endwith %}
 </div>
 
 {% endblock %}

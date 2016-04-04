@@ -1,0 +1,71 @@
+{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags %}
+
+{% block event_list_event_title %}
+    <div class="event__card msry__item">
+        {% if event.featured_image %}
+            {% block event_list_event_featured_image %}
+                <a href="{{ event.get_absolute_url }}" class="event__thumbnail">
+                    <img src="{{ MEDIA_URL }}{% thumbnail event.featured_image 500 500 %}">
+                </a>
+            {% endblock %}
+        {% endif %}
+        <h3 class="event__name">
+            <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
+        </h3>
+{% endblock %}
+
+{% block event_list_event_metainfo %}
+     {% include "agenda/includes/event_metainfo.html" %}
+    {% for child in event.children.all %}
+     {% with child as event %}
+      {% include "agenda/includes/event_metainfo.html" %}
+     {% endwith %}
+    {% endfor %}
+{% endblock %}
+
+{% block event_list_event_content %}
+        {% comment %}
+        <div class="event__description">
+            {{ event.description_from_content|safe }}
+            <a href="{{ event.get_absolute_url }}" class="event__meta__cta">{% trans "read more" %}</a>
+        </div>
+        {% endcomment %}
+{% endblock %}
+
+{% block booking %}
+<a href="{{ event.get_absolute_url }}" class="btn btn-full">
+    <i class="icon icon__bookmark"></i> {% trans "Booking" %}
+</a>
+{% endblock %}
+
+{% block event_list_event_links %}
+<div class="event__detail">
+{% keywords_for event as tags %}
+{% if tags %}
+<ul class="list-inline tags">
+{% trans "Tags" %}:
+{% spaceless %}
+{% for tag in tags %}
+<li><a href="{% url "event_list_tag" tag.slug %}" class="tag">{{ tag }}</a></li>
+{% endfor %}
+{% endspaceless %}
+</ul>
+{% endif %}
+<p>
+{% if event.allow_comments %}
+/
+{% if settings.COMMENTS_DISQUS_SHORTNAME %}
+<a href="{{ event.get_absolute_url }}#disqus_thread"
+    data-disqus-identifier="{% disqus_id_for event %}">
+    {% trans "Comments" %}
+</a>
+{% else %}
+<a href="{{ event.get_absolute_url }}#comments">
+    {% blocktrans count comments_count=event.comments_count %}{{ comments_count }} comment{% plural %}{{ comments_count }} comments{% endblocktrans %}
+</a>
+{% endif %}
+{% endif %}
+</p>
+</div>
+{% endblock %}
+</div>
