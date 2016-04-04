@@ -3,9 +3,6 @@
         <a href="{% url 'festival-artist-detail' artist.slug %}" class="artist__item__inner">
             <figure class="artist__img">
                 <img src="{% if artist.photo_featured %}{{ MEDIA_URL }}/{{ artist.photo_featured }}{% elif artist.photo %}{{ MEDIA_URL }}/{{ artist.photo }}{% else %}{% endif %}" alt="Portrait {{ artist.name }}">
-                <figcaption class="artist__img__copyright">
-                   {{ artist.photo_credits }}
-                </figcaption>
             </figure>
             <h3 class="artist__item__name">
                 <span>
