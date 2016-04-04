@@ -1,7 +1,7 @@
 <div class="artist__item msry__item">
     <div class="artist__item__inner">
         <a href="{% url 'festival-artist-detail' artist.slug %}" class="artist__item__inner">
-            <figure class="artist__img">
+            <figure class="artist__item__img">
                 <img src="{% if artist.photo_featured %}{{ MEDIA_URL }}/{{ artist.photo_featured }}{% elif artist.photo %}{{ MEDIA_URL }}/{{ artist.photo }}{% else %}{% endif %}" alt="Portrait {{ artist.name }}">
             </figure>
             <h3 class="artist__item__name">
