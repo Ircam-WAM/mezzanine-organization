@@ -99,4 +99,4 @@ warnings.filterwarnings(
 EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
 EVENT_PER_PAGE = 8
 EVENT_USE_FEATURED_IMAGE = True
-EVENT_SHOP_URL = 'http://eve.ircam.fr/pub.php/manifestation/'
+EVENT_SHOP_URL = 'http://eve.ircam.fr/manifeste.php/manifestation/'
