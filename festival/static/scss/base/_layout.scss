@@ -47,11 +47,17 @@
     width: 25%;
     margin: 0 0 3rem;
     border-bottom: none;
+    &.aside-home {
+      margin-top: -2rem;
+    }
   }
 }
 
 .site__content__header {
-  padding-top: 3rem;
+  padding-top: 3em;
+  @media (min-width : $desktop ) {
+      padding-top: 5rem;
+  }
 }
 
 .site__content__header__inner {
