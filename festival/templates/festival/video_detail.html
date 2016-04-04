@@ -17,12 +17,12 @@
 </div>
 
 <div class="embed-responsive">
-    <iframe src="http://medias.ircam.fr/embed/media/{{ video.media_id }}" frameborder="0" allowfullscreen=""></iframe>
+    <iframe src="http://medias.ircam.fr/embed/media/{{ video.media_id }}" frameborder="0" allowfullscreen="" width="100%"></iframe>
 </div>
 
 <div class="video-event">
     <h2>{% trans 'Related event' %}</h2>
-    <a href="{% url 'event_detail' video.event.slug %}"{{ video.event.title }}</a>
+    <a href="{{ video.event.get_absolute_url }}">{{ video.event.title }}</a>
 </div>
 
 {% endblock %}
