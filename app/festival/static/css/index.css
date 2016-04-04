@@ -3242,7 +3242,7 @@ th {
 /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/bk-news.scss */
 .bk__news {
   display: block;
-  margin: 3rem auto;
+  margin: 2rem auto 0;
 }
 
 /* line 15, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/bk-news.scss */
