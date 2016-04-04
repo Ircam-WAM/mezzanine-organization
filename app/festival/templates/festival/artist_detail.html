@@ -18,44 +18,9 @@
     </p>
 </div>
 
+<h2 class="page__related__title--inverse">{% trans "Related events" %}</h2> <br>
+{% for event in artist.events.all %}
+ {% include 'agenda/includes/event_card.html' %}
+{% endfor %}
 
-<h2 class="page__related__title--inverse">Événement lié à {{ artist.name }} :</h2> <br>
-
-<div class="event__card">
-    <a href="/events/simplexity-la-beaut%C3%A9-du-geste/" class="event__thumbnail">
-        <img src="/media/uploads/images/events/.thumbnails/simplexity_featured.jpg/simplexity_featured-500x500.jpg">
-    </a>
-    <h3 class="event__name">
-        <a href="/events/simplexity-la-beaut%C3%A9-du-geste/">SIMPLEXITY - La beauté du geste</a>
-    </h3>
-    <div class="event__meta">
-        <div class="event__meta__inner">
-            2 juin 2016 20:30
-            <br> 3 juin 2016 22:00
-            <a href="/events/location/centre-pompidou-grande-salle/" class="event__meta__location">Centre Pompidou, Grande salle</a>
-        </div>
-    </div>
-    <a href="/events/simplexity-la-beaut%C3%A9-du-geste/" class="btn btn-full">
-        <i class="icon icon__bookmark"></i> Réserver
-    </a>
-</div>
-
-<div class="event__card">
-    <a href="/events/simplexity-la-beaut%C3%A9-du-geste/" class="event__thumbnail">
-        <img src="/media/uploads/images/events/.thumbnails/simplexity_featured.jpg/simplexity_featured-500x500.jpg">
-    </a>
-    <h3 class="event__name">
-        <a href="/events/simplexity-la-beaut%C3%A9-du-geste/">SIMPLEXITY - La beauté du geste</a>
-    </h3>
-    <div class="event__meta">
-        <div class="event__meta__inner">
-            2 juin 2016 20:30
-            <br> 3 juin 2016 22:00
-            <a href="/events/location/centre-pompidou-grande-salle/" class="event__meta__location">Centre Pompidou, Grande salle</a>
-        </div>
-    </div>
-    <a href="/events/simplexity-la-beaut%C3%A9-du-geste/" class="btn btn-full">
-        <i class="icon icon__bookmark"></i> Réserver
-    </a>
-</div>
 {% endblock %}
