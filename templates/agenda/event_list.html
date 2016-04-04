@@ -101,9 +101,11 @@
             {% endcomment %}
     {% endblock %}
 
+    {% block booking %}
     <a href="{{ event.get_absolute_url }}" class="btn btn-full">
-        <i class="icon icon__bookmark"></i> Réserver
+        <i class="icon icon__bookmark"></i> {% trans "Booking" %}
     </a>
+    {% endblock %}
 
 {% block event_list_event_links %}
 <div class="event__detail">

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-04 02:37+0200\n"
+"POT-Creation-Date: 2016-04-04 02:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -241,18 +241,18 @@ msgstr ""
 msgid "Sign up"
 msgstr ""
 
-#: templates/agenda/event_detail.html:44
-msgid "Book"
+#: templates/agenda/event_detail.html:44 templates/agenda/event_list.html:107
+msgid "Booking"
 msgstr "Réserver"
 
-#: templates/agenda/event_detail.html:54 templates/agenda/event_list.html:128
+#: templates/agenda/event_detail.html:54 templates/agenda/event_list.html:130
 #: templates/blog/blog_post_detail.html:43
 #: templates/blog/blog_post_list.html:136
 #: templates/generic/includes/comments.html:3
 msgid "Comments"
 msgstr ""
 
-#: templates/agenda/event_detail.html:57 templates/agenda/event_list.html:132
+#: templates/agenda/event_detail.html:57 templates/agenda/event_list.html:134
 #: templates/blog/blog_post_detail.html:46
 #: templates/blog/blog_post_list.html:140
 #, python-format
@@ -273,7 +273,7 @@ msgstr "Partagez sur Facebook"
 msgid "Share on Twitter"
 msgstr "Partagez sur Facebook"
 
-#: templates/agenda/event_detail.html:113 templates/agenda/event_list.html:114
+#: templates/agenda/event_detail.html:113 templates/agenda/event_list.html:116
 #: templates/agenda/includes/filter_panel.html:74
 #: templates/blog/blog_post_detail.html:74
 #: templates/blog/blog_post_list.html:121
@@ -281,7 +281,7 @@ msgstr "Partagez sur Facebook"
 msgid "Tags"
 msgstr ""
 
-#: templates/agenda/event_detail.html:181 templates/agenda/event_list.html:144
+#: templates/agenda/event_detail.html:181 templates/agenda/event_list.html:146
 msgid "Subscribe to all events in"
 msgstr "Abonnez-vous à tous les événements dans"
 
