@@ -20,6 +20,10 @@
     <iframe src="http://medias.ircam.fr/embed/media/{{ video.media_id }}" frameborder="0" allowfullscreen="" width="100%"></iframe>
 </div>
 
+{% with video as object %}
+  {% include "includes/share_buttons.html" %}
+{% endwith %}
+
 <div class="video-event">
     <h2>{% trans 'Related event' %}</h2>
     {% with video.event as event %}
