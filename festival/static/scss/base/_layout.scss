@@ -38,13 +38,15 @@
 .aside {
   display: block;
   background: lighten($main_color, 10);
-  margin: 0 -1rem 3rem;
+  margin: 0 -1rem 0;
   color: white;
   padding: 1rem .5rem;
+  border-bottom: 1px solid #fff;
   @media (min-width : $desktop ) {
     float: left;
     width: 25%;
     margin: 0 0 3rem;
+    border-bottom: none;
   }
 }
 
