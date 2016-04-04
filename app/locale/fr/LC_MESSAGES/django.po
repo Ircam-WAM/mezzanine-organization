@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-04 01:54+0200\n"
+"POT-Creation-Date: 2016-04-04 02:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,7 +119,7 @@ msgid "audios"
 msgstr ""
 
 #: festival/templates/festival/artist_list.html:6
-#: templates/agenda/event_detail.html:160
+#: templates/agenda/event_detail.html:165
 msgid "Artists"
 msgstr "Artistes"
 
@@ -128,7 +128,7 @@ msgid "Related event"
 msgstr "Événements liés"
 
 #: festival/templates/festival/video_list.html:6
-#: templates/agenda/event_detail.html:164
+#: templates/agenda/event_detail.html:170
 msgid "Videos"
 msgstr "Vidéos"
 
@@ -241,14 +241,18 @@ msgstr ""
 msgid "Sign up"
 msgstr ""
 
-#: templates/agenda/event_detail.html:50 templates/agenda/event_list.html:128
+#: templates/agenda/event_detail.html:44
+msgid "Book"
+msgstr "Réserver"
+
+#: templates/agenda/event_detail.html:54 templates/agenda/event_list.html:128
 #: templates/blog/blog_post_detail.html:43
 #: templates/blog/blog_post_list.html:136
 #: templates/generic/includes/comments.html:3
 msgid "Comments"
 msgstr ""
 
-#: templates/agenda/event_detail.html:53 templates/agenda/event_list.html:132
+#: templates/agenda/event_detail.html:57 templates/agenda/event_list.html:132
 #: templates/blog/blog_post_detail.html:46
 #: templates/blog/blog_post_list.html:140
 #, python-format
@@ -257,19 +261,19 @@ msgid_plural "%(comments_count)s comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/agenda/event_detail.html:81
+#: templates/agenda/event_detail.html:85
 #: templates/blog/blog_post_detail.html:94
 msgid "Share on Facebook"
 msgstr "Partagez sur Facebook"
 
-#: templates/agenda/event_detail.html:82
+#: templates/agenda/event_detail.html:86
 #: templates/blog/blog_post_detail.html:93
 #, fuzzy
 #| msgid "Share on Facebook"
 msgid "Share on Twitter"
 msgstr "Partagez sur Facebook"
 
-#: templates/agenda/event_detail.html:109 templates/agenda/event_list.html:114
+#: templates/agenda/event_detail.html:113 templates/agenda/event_list.html:114
 #: templates/agenda/includes/filter_panel.html:74
 #: templates/blog/blog_post_detail.html:74
 #: templates/blog/blog_post_list.html:121
@@ -277,7 +281,7 @@ msgstr "Partagez sur Facebook"
 msgid "Tags"
 msgstr ""
 
-#: templates/agenda/event_detail.html:173 templates/agenda/event_list.html:144
+#: templates/agenda/event_detail.html:181 templates/agenda/event_list.html:144
 msgid "Subscribe to all events in"
 msgstr "Abonnez-vous à tous les événements dans"
 
