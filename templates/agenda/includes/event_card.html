@@ -15,12 +15,14 @@
 {% endblock %}
 
 {% block event_list_event_metainfo %}
+  {% with False as unit_booking %}
      {% include "agenda/includes/event_metainfo.html" %}
     {% for child in event.children.all %}
      {% with child as event %}
       {% include "agenda/includes/event_metainfo.html" %}
      {% endwith %}
     {% endfor %}
+  {% endwith %}
 {% endblock %}
 
 {% block event_list_event_content %}

@@ -7,7 +7,13 @@
         {% if event.end|date == event.start|date and event.end.hour|subtract:event.start.hour > 3 %}{{ event.end|time:"TIME_FORMAT" }}{% endif %}
         {% endif %}
         {% if event.location %}
-        <a href="{% url "event_list_location" event.location.slug %}" class="event__meta__location">{{ event.location }}</a>
+        {# <a href="{% url "event_list_location" event.location.slug %}" class="event__meta__location">{{ event.location }}</a>#}
+        <span class="event__meta__location">{{ event.location }}</span>
+        {% if unit_booking %}
+        <a href="{% url 'event_booking' event.slug %}" class="btn event__meta__btn">
+            <i class="icon icon__bookmark"></i> {% trans "Booking" %}
+        </a>
+        {% endif %}
         {% endif %}
     </div>
 </div>
