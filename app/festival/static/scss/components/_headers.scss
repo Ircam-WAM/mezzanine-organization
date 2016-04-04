@@ -184,7 +184,7 @@
 .nav__complementary {
   display: block;
   list-style: none;
-  text-align: right;
+  text-align: left;
   position: absolute;
   z-index: $zi_2;
   top: 100%;
@@ -202,6 +202,7 @@
     margin: 0 .1rem;
     text-align: center;
     border-radius: 0 0 3px 3px;
+    box-shadow: 0 2px 4px -2px black;
 
     a {
       color: white;
