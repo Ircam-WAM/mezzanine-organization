@@ -162,29 +162,24 @@
                     {% search_form "all" %}
                 </div>
 
-                <div>
-                    <a href="/media/uploads/doc/MANIFESTE-2016-AGENDA.pdf" class="btn btn-full btn-inverse">Télécharger le programme</a>
-                </div>
-                <div>
-                    <a href="/newsletter/" class="btn btn-full btn-inverse">Inscription newsletter</a>
+                {% include "includes/calendar.html" %}
+                {% include "includes/twitter.html" %}
+                {% include "includes/instafeed.html" %}
+
+                <div class="cta__panel">
+                    <div>
+                        <a href="/media/uploads/doc/MANIFESTE-2016-AGENDA.pdf" class="btn btn-full btn-inverse">Télécharger le programme</a>
+                    </div>
+                    <div>
+                        <a href="/newsletter/" class="btn btn-full btn-inverse">Inscription newsletter</a>
+                    </div>
                 </div>
 
                 {% nevercache %}
                 {% include "includes/language_selector.html" %}
-                {% include "includes/user_panel.html" %}
+                {# {% include "includes/user_panel.html" %} #}
                 {% endnevercache %}
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                    {% block right_panel %}
-                    {% ifinstalled mezzanine.twitter %}
-                    {% include "twitter/tweets.html" %}
-                    {% endifinstalled %}
-                    {% endblock %}
-                    </div>
-                </div>
-                {% include "includes/calendar.html" %}
-                {% include "includes/instafeed.html" %}
-                {% include "includes/twitter.html" %}
+
             </aside>
         </div>
     </div>

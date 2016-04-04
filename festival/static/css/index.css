@@ -1835,6 +1835,11 @@ th {
   font: 400 0.85rem "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/* line 36, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+.cta__panel {
+  margin-top: 2rem;
+}
+
 /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
 .menu__toggle {
   display: block;
