@@ -71,7 +71,9 @@
 
 {% block event_detail_sharebuttons %}
 {% set_short_url_for event %}
+  {% with event as object %}
     {% include "includes/share_buttons.html" %}
+  {% endwith %}
 {% endblock %}
 
 {% if event.location %}

@@ -1,8 +1,8 @@
 {% load i18n %}
 
 <div class="share__button">
-    <a class="btn btn-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t={{ event.title|urlencode }}">{% trans "Share on Facebook" %}</a>
-    <a class="btn btn-twitter" target="_blank" href="http://twitter.com/home?status={{ event.short_url|urlencode }}%20{{ event.title|urlencode }}">{% trans "Share on Twitter" %}</a>
-    <a class="btn btn-email" target="_blank" href="mailto:?subject=SUBJECT TEXT HERE&amp;body=TEXT HERE URL">{% trans "Share by email" %}</a>
+    <a class="btn btn-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t={{ object.title|urlencode }}">{% trans "Share on Facebook" %}</a>
+    <a class="btn btn-twitter" target="_blank" href="http://twitter.com/home?status={{ object.title|urlencode }}%20{{ request.build_absolute_uri }}">{% trans "Share on Twitter" %}</a>
+    <a class="btn btn-email" target="_blank" href="mailto:?subject=object.title&amp;body={{ request.build_absolute_uri }}">{% trans "Share by email" %}</a>
     <a class="btn btn-print" href="javascript:window.print()">{% trans "Print this page" %}</a>
 </div>
