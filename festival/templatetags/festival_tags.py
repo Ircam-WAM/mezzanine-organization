@@ -3,6 +3,7 @@ from mezzanine.pages.models import Page
 from mezzanine.template import Library
 from mezzanine_agenda.models import Event
 from festival.models import Artist
+from mezzanine.conf import settings
 
 register = Library()
 
@@ -28,7 +29,3 @@ def festival_event_featured(*args):
 @register.filter
 def subtract(value, arg):
     return value - arg
-
-@register.as_tag
-def festival_shop_url(*args):
-    return settings.EVENT_SHOP_URL

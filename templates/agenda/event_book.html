@@ -1,0 +1,17 @@
+{% extends "agenda/event_detail.html" %}
+{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n future disqus_tags event_tags festival_tags %}
+
+{% block book %}
+{% endblock %}
+
+{% block event_detail_content %}
+<iframe width="100%" height="1100px" scrolling="auto" src="{{ shop_url }}{{ event.external_id }}" frameborder="0" allowfullscreen=""></iframe>
+{% endblock %}
+
+{% block event_detail_sharebuttons %}
+{% endblock %}
+
+{% if event.location %}
+{% block event_detail_location %}
+{% endblock %}
+{% endif %}

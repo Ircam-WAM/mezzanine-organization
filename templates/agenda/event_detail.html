@@ -36,11 +36,15 @@
     </div>
     {% endif %}
 </div>
-<a href="{{ event.get_absolute_url }}" class="btn event__meta__btn">
-    <i class="icon icon__bookmark"></i> Réserver
-</a>
 {% endeditable %}
 {% endblock %}
+
+{% block book %}
+<a href="{% url 'event_book' event.slug %}" class="btn event__meta__btn">
+    <i class="icon icon__bookmark"></i> {% trans "Book" %}
+</a>
+{% endblock %}
+
 {% block event_detail_commentlink %}
 <p>
     {% if event.allow_comments %}
@@ -157,18 +161,23 @@
 {% endblock %}
 
 {% block event_related %}
+
 <h2>{% trans "Artists" %}</h2>
 {% for artist in event.artists.all %}
-<a href="{% url 'festival-artist-detail' artist.slug %}">{{ artist.name }}</a>
+    {% include "festival/inc/artist_card.html" %}
 {% endfor %}
+
 <h2>{% trans "Videos" %}</h2>
 {% for video in event.videos.all %}
 <a href="{% url 'festival-video-detail' video.slug %}">{{ video.title }}</a>
 {% endfor %}
+
 {% endblock %}
 
 {% block event_detail_comments %}
 {% if event.allow_comments %}{% comments_for event %}{% endif %}
 {% endblock %}
+
 <a href='{% icalendar_url %}' target="_blank" class="small push-ical">{% trans "Subscribe to all events in" %} Google Calendar/Outlook/iCal</a>
+
 {% endblock %}
