@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags %}
+
+{% block meta_title %}{% if page %}{{ page.richtextpage.meta_title }}{% else %}{% trans "Locations" %}{% endif %}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ page.description }}
+{% endmetablock %}{% endblock %}
+
+{% block title %}
+{% if page %}
+{{ page.title }}
+{% else %}
+{% trans "Locations" %}
+{% endif %}
+{% endblock %}
+
+{% block breadcrumb_menu %}
+{% endblock %}
+
+{% block main %}
+
+<ul>
+{% for location in object_list %}
+ <li><h3>{{ location.title }}</h3>
+     {% block event_detail_location %}
+     {% editable event.location %}
+     <div class="event__card--full">
+         <p>
+             {{ location.address|linebreaksbr }}<br />
+             <a href="{{ location|google_nav_url }}" target="_blank" class="">
+                 Get Directions
+             </a>
+         </p>
+         <a href="{{ location|google_nav_url }}" target="_blank" class="">
+          {% google_static_map location 900 300 15 %}
+         </a/>
+     </div>
+     {% endeditable %}
+     {% endblock %}
+ </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+
+{% block right_panel %}
+{% include "agenda/includes/filter_panel.html" %}
+{% endblock %}
