@@ -35,22 +35,9 @@
           }
       }
   }
-
-  .artist__img {
-    position: relative;
-    padding: 0;
+  &__img {
     margin: 0;
-    &__copyright {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      display: block;
-      width: 100%;
-      padding: .2rem;
-      text-align: right;
-      font: $regular .6rem $base_font_family;
-      color: white;
-    }
+    padding: 0;
   }
 
   img {
@@ -66,6 +53,7 @@
       margin: 0;
       @media (min-width : $desktop ) {
           padding: 0.8rem;
+          line-height: 1;
       }
 
       span {
@@ -83,3 +71,26 @@
       }
   }
 }
+
+  .artist__figure {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    img {
+      display: block;
+      position: relative;
+    }
+    // @extend .clearfix;
+    &__copyright {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      padding: .2rem;
+      text-align: right;
+      font: $regular .6rem $base_font_family;
+      color: white;
+      text-shadow: 1px 1px 1px $black;
+    }
+  }
