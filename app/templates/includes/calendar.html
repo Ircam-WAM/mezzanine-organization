@@ -1,15 +1,9 @@
 {% load i18n event_tags %}
-{% event_months as events %}
-
-
+{% all_events as events %}
 <h2 class="sidebar__title">{% trans "Festival calendar" %}</h2>
 
 <ul class="calendar">
     <li class="calendar__month">
-
-        {% for event in envents %}
-         {{ event.title }}
-        {% endfor %}
         {# <div class="calendar__month__title">Juin / Juillet</div> #}
         <div class="calendar__day calendar__day-name">
             <div class="calendar__day-inner"><span>L</span></div>
@@ -41,103 +35,22 @@
         <div class="calendar__day calendar__day-off">
             <div class="calendar__day-inner"></div>
         </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>2</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>3</span></div>
-        </div>
-        <div class="calendar__day calendar__day-weekend">
-            <div class="calendar__day-inner"><span>4</span></div>
-        </div>
-        <div class="calendar__day calendar__day-weekend">
-            <div class="calendar__day-inner"><span>5</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>6</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>7</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>8</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>9</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>10</span></div>
-        </div>
-        <div class="calendar__day calendar__day-weekend">
-            <div class="calendar__day-inner"><span>11</span></div>
-        </div>
-        <div class="calendar__day calendar__day-weekend">
-            <div class="calendar__day-inner"><span>12</span></div>
-        </div>
-        <div class="calendar__day calendar__day-active">
-            <div class="calendar__day-inner">
-                <span> <a href="#">13</a> </span>
-            </div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>14</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>15</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>16</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>17</span></div>
-        </div>
-        <div class="calendar__day calendar__day-active">
-            <div class="calendar__day-inner">
-                <span> <a href="#">18</a> </span>
-            </div>
-        </div>
-        <div class="calendar__day calendar__day-weekend">
-            <div class="calendar__day-inner"><span>19</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>20</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>21</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>22</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>23</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>24</span></div>
-        </div>
-        <div class="calendar__day calendar__day-weekend">
-            <div class="calendar__day-inner"><span>25</span></div>
-        </div>
-        <div class="calendar__day calendar__day-weekend">
-            <div class="calendar__day-inner"><span>26</span></div>
-        </div>
-        <div class="calendar__day" calendar__day-weekend="">
-            <div class="calendar__day-inner"><span>27</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>28</span></div>
-        </div>
-        <div class="calendar__day calendar__day-semiholiday" data-toggle="tooltip" title="" data-original-title="São Pedro (feriado municipal em concelhos como Sintra, Évora e Póvoa de Varzim)">
-            <div class="calendar__day-inner"><span>29</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>30</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>01</span></div>
-        </div>
-        <div class="calendar__day">
-            <div class="calendar__day-inner"><span>02</span></div>
-        </div>
+
+        {% all_days as days %}
+         {% for day in days %}
+          {% if day|events_in_day %}
+              <div class="calendar__day calendar__day-active">
+                  <div class="calendar__day-inner">
+                      <span> <a href="{% url 'event_list_day' day.year day.month day.day %}">{{ day.day }}</a> </span>
+                  </div>
+              </div>
+          {% else %}
+              <div class="calendar__day">
+                  <div class="calendar__day-inner"><span>{{ day.day }}</span></div>
+              </div>
+          {% endif %}
+        {% endfor %}
+
         <div class="calendar__day calendar__day-off">
             <div class="calendar__day-inner"></div>
         </div>
