@@ -12,7 +12,7 @@ ENV LANGUAGE fr_FR:fr
 ENV LC_ALL fr_FR.UTF-8
 
 RUN mkdir /srv/app
-RUN mkdir /srv/src
+RUN mkdir /srv/lib
 WORKDIR /srv/app
 
 ADD requirements.txt /srv/app/

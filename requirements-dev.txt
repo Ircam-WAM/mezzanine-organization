@@ -1,4 +1,3 @@
 -e git+https://github.com/yomguy/mezzanine-agenda.git#egg=mezzanine-agenda-0.2.2
 -e git+https://github.com/stephenmcd/mezzanine.git#egg=mezzanine-4.1-dev
 https://forge.ircam.fr/p/django-eve/source/download/dev/
-
