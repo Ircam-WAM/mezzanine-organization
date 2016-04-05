@@ -2001,34 +2001,33 @@ th {
 
 /* line 16, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
 .media-img {
-  float: left;
   margin-right: 0.9rem;
 }
 
-/* line 21, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
+/* line 23, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
 .media-img-inverse {
   float: right;
   margin-left: 0.9rem;
 }
 
-/* line 26, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
+/* line 28, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
 .media-img img,
 .media-img-inverse img {
   display: block;
 }
 
-/* line 31, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
+/* line 33, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
 .media-content {
   overflow: hidden;
 }
 
-/* line 35, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
+/* line 37, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
 .media-content,
 .media-content > :last-child {
   margin-bottom: 0;
 }
 
-/* line 40, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
+/* line 42, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
 .media-content > p {
   margin-top: 0;
 }
@@ -3605,6 +3604,10 @@ th {
   /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
   .menu__toggle{
     display: none;
+  }
+  /* line 16, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_media-object.scss */
+  .media-img{
+    float: left;
   }
   /* line 9, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/artist-card.scss */
   .artist__sizer,

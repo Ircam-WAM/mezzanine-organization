@@ -14,7 +14,9 @@
 }
 
 .media-img{
-    float:left;
+    @media (min-width : $desktop ) {
+        float:left;
+    }
     margin-right:$base_font_size;
 }
 
