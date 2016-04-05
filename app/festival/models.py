@@ -117,6 +117,7 @@ class Media(Displayable, RichText):
     media_id = models.CharField(_('media id'), max_length=128)
     open_source_url = models.URLField(_('open source URL'), max_length=1024, blank=True)
     closed_source_url = models.URLField(_('closed source URL'), max_length=1024, blank=True)
+    featured = models.BooleanField(_('featured'), default=False)
 
     class Meta(MetaCore):
         abstract = True
