@@ -126,38 +126,37 @@
     {% endcomment %}
 
     <div class="site__content">
-        {% if on_home %}
-            <div class="container">
-                <div class="bk__news">
-                    <div class="media bk__news__inner">
-                        <div class="media-img">
-                            <span class="bk__news__title">
-                                Dernière <br> minute !
-                            </span>
-                        </div>
-                        <div class="media-content bk__news__content">
-                            <p>
-                                <strong>Partagez, twittez, commentez, publiez vos photos…</strong> <br>
-                                et réservez dès maintenant vos places ou abonnements pour bénéficier de tarifs privilégiés.
-                            </p>
-                        </div>
+        <div class="container">
+            <main class="main" role="main">
+                {% if on_home %}
+                    <div class="container">
+                        <div class="bk__news">
+                            <div class="media bk__news__inner">
+                                <div class="media-img">
+                                    <span class="bk__news__title">
+                                        Dernière <br> minute !
+                                    </span>
+                                </div>
+                                <div class="media-content bk__news__content">
+                                    <p>
+                                        <strong>Partagez, twittez, commentez, publiez vos photos…</strong> <br>
+                                        et réservez dès maintenant vos places ou abonnements pour bénéficier de tarifs privilégiés.
+                                    </p>
+                                </div>
 
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="site__content__header">
+                    <div class="site__content__header__inner">
+                        <h2 class="page__title">{% block title %}{% endblock %}</h2>
                     </div>
                 </div>
-            </div>
-        {% endif %}
-
-        <div class="container">
-            <div class="site__content__header">
-                <div class="site__content__header__inner">
-                    <h2 class="page__title">{% block title %}{% endblock %}</h2>
-                </div>
-            </div>
-            <main class="main" role="main">
                 {% block main %}{% endblock %}
             </main>
 
-            <aside class="aside">
+            <aside class="aside {% if on_home %}aside-home{% endif %}">
                 <div class="search__form">
                     {% search_form "all" %}
                 </div>

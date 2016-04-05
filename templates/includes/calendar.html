@@ -1,9 +1,15 @@
-{% load i18n %}
+{% load i18n event_tags %}
+{% event_months as events %}
 
-<h2 class="sidebar__title">Calendrier du festival</h2>
+
+<h2 class="sidebar__title">{% trans "Festival calendar" %}</h2>
 
 <ul class="calendar">
     <li class="calendar__month">
+
+        {% for event in envents %}
+         {{ event.title }}
+        {% endfor %}
         {# <div class="calendar__month__title">Juin / Juillet</div> #}
         <div class="calendar__day calendar__day-name">
             <div class="calendar__day-inner"><span>L</span></div>
