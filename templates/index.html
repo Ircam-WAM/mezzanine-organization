@@ -7,9 +7,12 @@
 <li class="active">{% trans "Home" %}</li>
 {% endblock %}
 
-{% block title %}{% trans "Edito" %}{% endblock %}
-
 {% block main %}
-{% festival_edito as edito %}
-{{ edito.content|safe }}
+
+{% featured_artist as artist %}
+{% include "festival/inc/artist_card.html" %}
+
+{% featured_video as video %}
+{% include 'festival/inc/video_card.html' %}
+
 {% endblock %}

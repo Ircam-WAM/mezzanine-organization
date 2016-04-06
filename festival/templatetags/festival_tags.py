@@ -2,7 +2,7 @@
 from mezzanine.pages.models import Page
 from mezzanine.template import Library
 from mezzanine_agenda.models import Event
-from festival.models import Artist
+from festival.models import *
 from mezzanine.conf import settings
 
 register = Library()
@@ -29,3 +29,11 @@ def festival_event_featured(*args):
 @register.filter
 def subtract(value, arg):
     return value - arg
+
+@register.as_tag
+def featured_artist(*args):
+    return Artist.objects.filter(featured=True).order_by('?').first()
+
+@register.as_tag
+def featured_video(*args):
+    return Video.objects.filter(featured=True).order_by('?').first()
