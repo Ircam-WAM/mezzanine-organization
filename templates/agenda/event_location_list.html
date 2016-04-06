@@ -28,27 +28,27 @@
 
 {% block main %}
 
-<ul>
 {% for location in object_list %}
- <li><h3>{{ location.title }}</h3>
+    {{ location.title }} <br>
+{% endfor %}
+
+
+{% for location in object_list %}
+    <h3>{{ location.title }}</h3>
      {% block event_detail_location %}
      {% editable event.location %}
-     <div class="event__card--full">
-         <p>
-             {{ location.address|linebreaksbr }}<br />
-             <a href="{{ location|google_nav_url }}" target="_blank" class="">
-                 Get Directions
-             </a>
-         </p>
+     <p>
+         {{ location.address|linebreaksbr }}<br />
          <a href="{{ location|google_nav_url }}" target="_blank" class="">
-          {% google_static_map location 900 300 15 %}
-         </a/>
-     </div>
+             Get Directions
+         </a>
+     </p>
+     <a href="{{ location|google_nav_url }}" target="_blank" class="">
+      {% google_static_map location 900 300 15 %}
+     </a/>
      {% endeditable %}
      {% endblock %}
- </li>
 {% endfor %}
-</ul>
 
 {% endblock %}
 
