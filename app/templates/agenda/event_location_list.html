@@ -28,27 +28,34 @@
 
 {% block main %}
 
-{% for location in object_list %}
-    {{ location.title }} <br>
-{% endfor %}
+<div id="tabs" class="c-tabs">
+  <div class="c-tabs-nav">
+    {% for location in object_list %}
+        <a href="#" class="c-tabs-nav__link">{{ location.title }}</a>
+    {% endfor %}
+  </div>
+  {% for location in object_list %}
+      <div class="c-tab">
+          <div class="c-tab__content">
+              <h3 style="margin-top: 0;">{{ location.title }}</h3>
+                  {% block event_detail_location %}
+                  {% editable event.location %}
+                  <p>
+                      {{ location.address }}<br />
+                      <a href="{{ location|google_nav_url }}" target="_blank" class="">
+                          Get Directions
+                      </a>
+                  </p>
+                  <a href="{{ location|google_nav_url }}" target="_blank" class="">
+                  {% google_static_map location 900 300 15 %}
+                  </a/>
+                  {% endeditable %}
+                  {% endblock %}
+          </div>
+      </div>
+  {% endfor %}
 
 
-{% for location in object_list %}
-    <h3>{{ location.title }}</h3>
-     {% block event_detail_location %}
-     {% editable event.location %}
-     <p>
-         {{ location.address|linebreaksbr }}<br />
-         <a href="{{ location|google_nav_url }}" target="_blank" class="">
-             Get Directions
-         </a>
-     </p>
-     <a href="{{ location|google_nav_url }}" target="_blank" class="">
-      {% google_static_map location 900 300 15 %}
-     </a/>
-     {% endeditable %}
-     {% endblock %}
-{% endfor %}
 
 {% endblock %}
 

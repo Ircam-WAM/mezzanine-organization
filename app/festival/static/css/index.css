@@ -3473,6 +3473,92 @@ th {
   color: #555;
 }
 
+/**
+ * Tabs navigation
+ */
+/* line 4, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tabs-nav {
+  display: block;
+  float: left;
+  text-align: left;
+  width: 30%;
+}
+
+/* line 11, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tabs-nav__link {
+  color: #d2ba88;
+  display: block;
+  transition: color 0.3s;
+}
+
+/* line 22, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tabs-nav__link:last-child {
+  margin-right: 0;
+}
+
+/* line 30, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tabs-nav__link.is-active {
+  color: #b18d43;
+}
+
+/* line 35, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tabs-nav__link i,
+.c-tabs-nav__link span {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+/* line 42, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tabs-nav__link i {
+  font-size: 18px;
+}
+
+/* line 46, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tabs-nav__link span {
+  display: none;
+  font-size: 18px;
+}
+
+/**
+ * Tab
+ */
+/* line 64, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tab {
+  display: none;
+  float: left;
+  width: 70%;
+}
+
+/* line 71, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tab.is-active {
+  display: block;
+}
+
+/* line 75, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tab__content {
+  padding-left: .5rem;
+}
+
+/**
+ * Tabs no-js fallback
+ */
+/* line 82, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tabs.no-js .c-tabs-nav {
+  display: none;
+}
+
+/* line 86, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tabs.no-js .c-tab {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+/* line 91, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+.c-tabs.no-js .c-tab:last-child {
+  margin-bottom: 0;
+}
+
 /* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/user.scss */
 .user__panel {
   margin: 1rem auto;
@@ -3480,6 +3566,17 @@ th {
   background: #f7f7f7;
   color: #000;
   text-transform: uppercase;
+}
+@media all and (min-width: 720px){
+  /* line 52, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+  .c-tabs-nav__link i{
+    margin-bottom: 12px;
+    font-size: 22px;
+  }
+  /* line 56, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
+  .c-tabs-nav__link span{
+    display: block;
+  }
 }
 @media (min-width: 769px){
   /* line 137, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_forms.scss */
