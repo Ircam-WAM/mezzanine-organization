@@ -78,6 +78,7 @@
 {% endblock %}
 
 {% if event.location %}
+<h3 class="section__title--inverse">Le lieu :</h3>
 {% block event_detail_location %}
 {% editable event.location %}
 <div class="event__card--full">
@@ -152,15 +153,19 @@
 
 {% block event_related %}
 
-<h2>{% trans "Artists" %}</h2>
-{% for artist in event.artists.all %}
-    {% include "festival/inc/artist_card.html" %}
-{% endfor %}
+<h3 class="section__title--inverse">{% trans "Artists" %}</h3>
+<div class="row">
+    {% for artist in event.artists.all %}
+        {% include "festival/inc/artist_card.html" %}
+    {% endfor %}
+</div>
 
-<h2>{% trans "Videos" %}</h2>
-{% for video in event.videos.all %}
-    {% include 'festival/inc/video_card.html' %}
-{% endfor %}
+<h3 class="section__title--inverse">{% trans "Videos" %}</h3>
+<div class="row">
+    {% for video in event.videos.all %}
+        {% include 'festival/inc/video_card.html' %}
+    {% endfor %}
+</div>
 
 {% endblock %}
 
