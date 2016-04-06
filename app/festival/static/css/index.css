@@ -3198,6 +3198,11 @@ th {
   content: "";
 }
 
+/* line 84, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/icons.scss */
+.icon__print:before {
+  content: "";
+}
+
 /* line 103, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/icons.scss */
 .icon__pencil:before {
   content: "";
@@ -3217,6 +3222,11 @@ th {
 .icon__facebook-f:before,
 .icon__facebook:before {
   content: "";
+}
+
+/* line 258, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/icons.scss */
+.icon__envelope:before {
+  content: "";
 }
 
 /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/bk-news.scss */
@@ -3304,8 +3314,8 @@ th {
   text-align: left;
   margin: 2rem auto;
   padding: .3rem 0;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
+  border-top: 1px solid #9f7f3c;
+  border-bottom: 1px solid #9f7f3c;
   list-style: none;
 }
 
@@ -3315,26 +3325,33 @@ th {
   margin-right: 1rem;
 }
 
-/* line 17, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/share-links.scss */
+/* line 15, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/share-links.scss */
+.share__link__item .icon {
+  color: #9f7f3c;
+  font-size: 1.1rem;
+  margin-right: .4rem;
+}
+
+/* line 22, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/share-links.scss */
 .btn-twitter {
   background: #55acee;
   color: white;
   border-color: #2795e9;
 }
 
-/* line 22, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/share-links.scss */
+/* line 27, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/share-links.scss */
 .btn-twitter:hover {
   background-color: #2795e9;
 }
 
-/* line 27, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/share-links.scss */
+/* line 32, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/share-links.scss */
 .btn-facebook {
   background: #3b5998;
   color: white;
   border-color: #2d4373;
 }
 
-/* line 32, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/share-links.scss */
+/* line 37, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/share-links.scss */
 .btn-facebook:hover {
   background-color: #2d4373;
 }
