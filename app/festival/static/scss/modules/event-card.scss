@@ -62,7 +62,7 @@
   font-weight: $bold;
   text-transform: uppercase;
   color: $black;
-  margin-bottom: 1rem;
+  // margin-bottom: 1rem;
   font-size: 0.7rem;
 
   &__inner {
@@ -71,6 +71,14 @@
     padding: 0.1rem 0;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
+  }
+}
+
+.event__meta + .event__meta {
+  padding-top: 0;
+  margin-top: -.3rem;
+  .event__meta__inner {
+      border-top: none;
   }
 }
 
@@ -110,7 +118,7 @@
 }
 
 .event__meta__btn {
-  width: 50%;
+  // width: 50%;
   display: block;
   text-align: center;
   margin: 1rem auto;

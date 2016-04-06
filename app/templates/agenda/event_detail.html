@@ -76,22 +76,32 @@
     {% include "includes/share_buttons.html" %}
   {% endwith %}
 {% endblock %}
+{% block event_detail_calendar %}
+<div class="push__calendar">
+    <a href='{{ event|google_calendar_url }}' target="_blank" class="push__calendar__item">
+        <i class="icon icon__calendar"></i>
+        Add to Google Calendar
+    </a>
+    <a href='{% icalendar_url %}' class="push__calendar__item">
+        <i class="icon icon__windows"></i>
+        Add to Outlook/iCal
+    </a>
+</div>
+{% endblock %}
 
 {% if event.location %}
 <h3 class="section__title--inverse">Le lieu :</h3>
 {% block event_detail_location %}
 {% editable event.location %}
-<div class="event__card--full">
-    <p>
-        {{ event.location.address|linebreaksbr }}<br />
-        <a href="{{ event|google_nav_url }}" target="_blank" class="">
-            Get Directions
-        </a>
-    </p>
-    <a href="{{ event|google_nav_url }}" target="_blank" class="">
-     {% google_static_map event 900 300 15 %}
-    </a/>
-</div>
+<p>
+    <p>{{ event.location }} {{ event.location.address|linebreaksbr }}</p>
+    <a href="{{ event|google_nav_url }}" target="_blank">
+        Get Directions
+    </a>
+</p>
+<a href="{{ event|google_nav_url }}" target="_blank" class="">
+ {% google_static_map event 900 300 15 %}
+</a/>
 {% endeditable %}
 {% endblock %}
 {% endif %}
@@ -119,17 +129,6 @@
 </div>
 {% endblock %}
 {% endcomment %}
-
-{% block event_detail_calendar %}
-<p>
-    <a href='{{ event|google_calendar_url }}' target="_blank" class="btn btn-small">
-        Add to Google Calendar
-    </a>
-    <a href='{% icalendar_url %}' class="btn btn-small">
-        Add to Outlook/iCal
-    </a>
-</p>
-{% endblock %}
 
 {% block event_previous_next %}
 <ul class="split-container pager">
