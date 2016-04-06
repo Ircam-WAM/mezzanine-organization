@@ -72,6 +72,16 @@
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
   }
+
+  &__btn {
+    padding: 0.1rem 0.7rem;
+    background: $main_color;
+    color: $white;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    border-radius: 2px;
+  }
 }
 
 .event__meta + .event__meta {
@@ -115,13 +125,6 @@
   // float: right;
   padding: .5rem;
   background: $white;
-}
-
-.event__meta__btn {
-  // width: 50%;
-  display: block;
-  text-align: center;
-  margin: 1rem auto;
 }
 
 .event__detail,

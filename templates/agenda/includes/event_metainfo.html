@@ -5,10 +5,9 @@
         {% if event.end %}
         {% if event.end|date == event.start|date and event.end.hour|subtract:event.start.hour > 3 %}{{ event.end|time:"TIME_FORMAT" }}{% endif %}
         {% if unit_booking %}
-        /
-        <a href="{% url 'event_booking' event.slug %}">
-            {% trans "Booking" %}
-        </a>
+            <a href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
+                {% trans "Booking" %}
+            </a>
         {% endif %}
         {% endif %}
         {% if event.location %}
