@@ -134,30 +134,3 @@
     opacity: 0.4;
     cursor:text;
 }
-
-// Social buttons
-.share__button {
-  display: block;
-  text-align: center;
-  margin: 2rem auto;
-}
-
-.btn-twitter {
-  background: $color-twitter;
-  color: white;
-  border-color: darken($color-twitter , 10);
-  margin: 0 1rem;
-  &:hover {
-    background-color: darken($color-twitter , 10);
-  }
-}
-
-.btn-facebook {
-  background: $color-facebook;
-  color: white;
-  border-color: darken($color-facebook , 10);
-  margin: 0 1rem;
-  &:hover {
-    background-color: darken($color-facebook , 10);
-  }
-}
