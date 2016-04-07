@@ -89,7 +89,7 @@
     {% if on_home %}
     <div class="hero__slider">
         <ul id="lightSlider">
-            {% festival_event_featured as events %}
+            {% featured_events as events %}
             {% for event in events %}
               <li class="hero__slider__item" style="background-image: url({{ event.featured_image_header.url }});">
                   <div class="hero__slider__infos">

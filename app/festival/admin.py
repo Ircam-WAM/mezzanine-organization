@@ -47,9 +47,16 @@ class ArtistAdminDisplayable(DisplayableAdmin):
 class PlaylistAdmin(admin.ModelAdmin):
 
     model = Playlist
+    list_display = ('__unicode__',)
     filter_horizontal = ['audios']
 
-admin.site.register(PageCategory)
+class PageCategoryAdmin(admin.ModelAdmin):
+
+    model = PageCategory
+    list_display = ('__unicode__',)
+
+
+admin.site.register(PageCategory, PageCategoryAdmin)
 admin.site.register(Artist, ArtistAdminDisplayable)
 admin.site.register(Video, VideoAdminDisplayable)
 admin.site.register(Audio, AudioAdminDisplayable)
