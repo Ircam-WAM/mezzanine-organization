@@ -31,11 +31,11 @@
 <div id="tabs" class="c-tabs">
   <div class="c-tabs-nav">
     {% for location in object_list %}
-        <a href="#" class="c-tabs-nav__link">{{ location.title }}</a>
+        <a href="#" class="c-tabs-nav__link {% if forloop.first %}is-active{% endif %}">{{ location.title }}</a>
     {% endfor %}
   </div>
   {% for location in object_list %}
-      <div class="c-tab">
+      <div class="c-tab {% if forloop.first %}is-active{% endif %}">
           <div class="c-tab__content">
               <h3 style="margin-top: 0;">{{ location.title }}</h3>
                   {% block event_detail_location %}
