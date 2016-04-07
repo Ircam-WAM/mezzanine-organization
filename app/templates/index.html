@@ -9,29 +9,40 @@
 
 {% block main %}
 
+
 {% featured_edito as edito %}
 {{ edito.content|safe|slice:":512" }}...
 <br>
 <a href="{% url 'page' edito.slug %}">{% trans "Read more" %}</a>
 <br>
 
-{% featured_posts as post %}
-<h3>{% trans "Article" %}</h3>
-{% include 'blog/includes/post_card.html' %}
-<a href="{% url 'blog_post_list' %}">{% trans "All" %} {% trans "articles" %}</a>
+<div class="last__media">
+    <h2 class="page__related__title--inverse">{% trans "Last medias" %}</h2> <br>
 
-{% featured_artist as artist %}
-<h3>{% trans "Artist" %}</h3>
-{% include "festival/inc/artist_card.html" %}
-<a href="{% url 'festival-artist-list' %}">{% trans "All" %} {% trans "artists" %}</a>
+    <div class="last__media__entry">
+        {% featured_posts as post %}
+        <h3>{% trans "Article" %}</h3>
+        {% include 'blog/includes/post_card.html' %}
+        <a href="{% url 'blog_post_list' %}" class="btn btn-full">{% trans "All" %} {% trans "articles" %}</a>
+    </div>
 
-{% featured_video as video %}
-<h3>{% trans "Video" %}</h3>
-{% include 'festival/inc/video_card.html' %}
-<a href="{% url 'festival-video-list' %}">{% trans "All" %} {% trans "videos" %}</a>
+    <div class="last__media__entry">
+        {% featured_artist as artist %}
+        <h3>{% trans "Artist" %}</h3>
+        {% include "festival/inc/artist_card.html" %}
+        <a href="{% url 'festival-artist-list' %}" class="btn btn-full">{% trans "All" %} {% trans "artists" %}</a>
+    </div>
+
+    <div class="last__media__entry">
+        {% featured_video as video %}
+        <h3>{% trans "Video" %}</h3>
+        {% include 'festival/inc/video_card.html' %}
+        <a href="{% url 'festival-video-list' %}" class="btn btn-full">{% trans "All" %} {% trans "videos" %}</a>
+    </div>
+</div>
 
 {% featured_playlist as playlist %}
-<h3>{% trans "Playlist" %}</h3>
+<h2 class="page__related__title--inverse">{% trans "Playlist" %}</h2>
 {% include 'festival/inc/audio_playlist.html' %}
 
 {% endblock %}
