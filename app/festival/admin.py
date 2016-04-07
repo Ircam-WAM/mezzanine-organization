@@ -44,8 +44,13 @@ class ArtistAdminDisplayable(DisplayableAdmin):
     fieldsets = deepcopy(ArtistAdmin.fieldsets)
 
 
+class PlaylistAdmin(admin.ModelAdmin):
+
+    model = Playlist
+    filter_horizontal = ['audios']
+
 admin.site.register(PageCategory)
 admin.site.register(Artist, ArtistAdminDisplayable)
 admin.site.register(Video, VideoAdminDisplayable)
 admin.site.register(Audio, AudioAdminDisplayable)
-admin.site.register(Playlist)
+admin.site.register(Playlist, PlaylistAdmin)
