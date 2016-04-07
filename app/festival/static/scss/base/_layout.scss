@@ -66,3 +66,25 @@
       max-width: 70%;
   }
 }
+
+.last__media {
+  @extend .clearfix;
+  &__entry {
+    display: block;
+    @media (min-width : $tablet ) {
+        float: left;
+        width: 33.33333%;
+        padding: 1rem .25rem;
+    }
+  }
+
+  .artist__item,
+  .video__card {
+    float: none;
+    width: 100%;
+    padding: 0;
+    // margin-bottom: 1rem;
+    // margin-left: -.5rem;
+    // margin-right: -.5rem;
+  }
+}

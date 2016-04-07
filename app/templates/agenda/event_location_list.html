@@ -37,14 +37,12 @@
   {% for location in object_list %}
       <div class="c-tab {% if forloop.first %}is-active{% endif %}">
           <div class="c-tab__content">
-              <h3 style="margin-top: 0;">{{ location.title }}</h3>
+              <h3 class="location__title">{{ location.title }}</h3>
                   {% block event_detail_location %}
                   {% editable event.location %}
                   <p>
                       {{ location.address }}<br />
-                      <a href="{{ location|google_nav_url }}" target="_blank" class="">
-                          Get Directions
-                      </a>
+                      <a href="{{ location|google_nav_url }}" target="_blank" class=""> Get Directions </a>
                   </p>
                   <a href="{{ location|google_nav_url }}" target="_blank" class="">
                   {% google_static_map location 900 300 15 %}

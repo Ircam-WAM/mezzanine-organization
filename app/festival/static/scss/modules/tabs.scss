@@ -1,22 +1,32 @@
 /**
  * Tabs navigation
  */
+
+.c-tabs {
+  @extend .clearfix;
+}
 .c-tabs-nav {
   display: block;
   float: left;
   text-align: left;
-  width: 30%;
+  width: 40%;
+  @media (min-width : $desktop ) {
+    width: 30%;
+  }
 }
 
 .c-tabs-nav__link {
-  // margin-right: 4px;
-  // padding: 12px;
   color: $main_color;
   display: block;
-  // background-color: #b3b3b3;
-  // text-align: center;
-  -webkit-transition: color 0.3s;
-          transition: color 0.3s;
+  transition: color 0.3s;
+  font-size: .6em;
+  padding: 0.25rem;
+  @media (min-width : $desktop ) {
+    padding: 0;
+    font-size: .75rem;
+    line-height: $base_line_height;
+
+  }
 }
 
 .c-tabs-nav__link:last-child {
@@ -65,7 +75,10 @@
   display: none;
   // background-color: #e7e7e7;
   float: left;
-  width: 70%;
+  width: 60%;
+  @media (min-width : $desktop ) {
+    width: 70%;
+  }
 }
 
 .c-tab.is-active {
