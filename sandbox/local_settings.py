@@ -27,14 +27,14 @@ DATABASES = {
         'HOST': 'pgdb',
         'PORT': '5432',
     },
-    # 'eve': {
+    #'eve': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     'NAME': 'eve',
     #     'USER': 'django',
     #     'PASSWORD': 'q2nqzt0WGnwWé,256',
     #     'HOST': 'eve.ircam.fr',
     #     'PORT': '5432',
-    # },
+    #},
 
 }
 
