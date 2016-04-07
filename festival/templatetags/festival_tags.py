@@ -37,3 +37,7 @@ def featured_artist(*args):
 @register.as_tag
 def featured_video(*args):
     return Video.objects.filter(featured=True).order_by('?').first()
+
+@register.as_tag
+def featured_playlist(*args):
+    return Playlist.objects.filter(event=None)[0]

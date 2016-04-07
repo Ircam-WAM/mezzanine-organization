@@ -1,74 +1,23 @@
-<html>
-  <head>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-  </head>
-<body>
+{% load staticfiles %}
+{% for audio in playlist.audios.all %}
 
-
+{% if forloop.first %}
 <audio id="audio" preload="auto" tabindex="0" controls="" >
-  <source id="primarysrc" src="http://www.archive.org/download/bolero_69/Bolero.mp3">
-  <source id="secondarysrc" src="http://www.archive.org/download/bolero_69/Bolero.ogg">
-  Your Fallback goes here
+    <source id="primarysrc" src="{{ audio.closed_source_url }}">
+    <source id="secondarysrc" src="{{ audio.open_source_url }}">
+    {{ audio.title }}
 </audio>
-
-
 <ul id="playlist">
-        <li class="active">
-            <a href="http://www.archive.org/download/bolero_69/Bolero.mp3" data-altsrc="http://www.archive.org/download/bolero_69/Bolero.ogg">
-                Ravel Bolero
-            </a>
-        </li>
-        <li>
-            <a href="http://www.archive.org/download/MoonlightSonata_755/Beethoven-MoonlightSonata.mp3" data-altsrc="http://www.archive.org/download/MoonlightSonata_755/Beethoven-MoonlightSonata.ogg">
-                Moonlight Sonata - Beethoven
-            </a>
-        </li>
-        <li>
-            <a href="http://www.archive.org/download/CanonInD_261/CanoninD.mp3" data-altsrc="http://www.archive.org/download/CanonInD_261/CanoninD.ogg">
-                Canon in D Pachabel
-            </a>
-        </li>
-    </ul>
-<script>
-var audio;
-var playlist;
-var tracks;
-var current;
+{% endif %}
+    <li class="active">
+        <a href="{{ audio.closed_source_url }}" data-altsrc="{{ audio.open_source_url }}">
+            {{ audio.title }}
+        </a>
+    </li>
+{% endfor %}
+{% if forloop.first %}
+</ul>
+{% endif %}
 
-init();
-function init(){
-    current = 0;
-    audio = $('#audio');
-    playlist = $('#playlist');
-    tracks = playlist.find('li a');
-    len = tracks.length - 1;
-    audio[0].volume = .60;
-//    audio[0].play();
-    playlist.find('a').click(function(e){
-        e.preventDefault();
-        link = $(this);
-        current = link.parent().index();
-        run(link, audio[0]);
-    });
-    audio[0].addEventListener('ended',function(e){
-        current++;
-        if(current == len){
-            current = 0;
-            link = playlist.find('a')[0];
-        }else{
-            link = playlist.find('a')[current];
-        }
-        run($(link),audio[0]);
-    });
-}
-function run(link, player){
-    $(player).find('#primarysrc').attr('src', link.attr('href'));
-    $(player).find('#secondarysrc').attr('src', link.attr('data-altsrc'));
-    par = link.parent();
-    par.addClass('active').siblings().removeClass('active');
-    player.load();
-    player.play();
-}
-</script>
-</body>
-</html>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="{% static "js/player.js" %}"></script>
