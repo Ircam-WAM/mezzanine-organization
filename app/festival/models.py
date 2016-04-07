@@ -6,6 +6,8 @@ from django.conf import settings
 from mezzanine.core.models import RichText, Displayable
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
+from mezzanine.blog.models import BlogPost
+from mezzanine.pages.models import Page
 
 from mezzanine_agenda.models import Event
 
@@ -56,6 +58,7 @@ class PageCategory(BaseNameModel):
 
     class Meta(MetaCore):
         verbose_name = _('page category')
+        db_table = app_label + '_page_category'
 
     def __unicode__(self):
         return self.name
@@ -71,7 +74,6 @@ class Artist(Displayable, RichText, AdminThumbMixin):
     photo_credits = models.CharField(_('photo credits'), max_length=255, blank=True, null=True)
     photo_alignment = models.CharField(_('photo alignment'), choices=ALIGNMENT_CHOICES, max_length=32, default="left", blank=True)
     photo_description = models.TextField(_('photo description'), blank=True)
-    featured = models.BooleanField(_('featured'), default=False)
     photo_featured = FileField(_('photo featured'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
     photo_featured_credits = models.CharField(_('photo featured credits'), max_length=255, blank=True, null=True)
     events = models.ManyToManyField(Event, related_name='artists', verbose_name=_('events'), blank=True)
@@ -120,7 +122,6 @@ class Media(Displayable, RichText):
     media_id = models.CharField(_('media id'), max_length=128)
     open_source_url = models.URLField(_('open source URL'), max_length=1024, blank=True)
     closed_source_url = models.URLField(_('closed source URL'), max_length=1024, blank=True)
-    featured = models.BooleanField(_('featured'), default=False)
     poster_url = models.URLField(_('poster'), max_length=1024, blank=True)
 
     class Meta(MetaCore):
@@ -193,5 +194,19 @@ class Playlist(BaseTitleModel):
     audios = models.ManyToManyField(Audio, verbose_name=_('audios'), related_name='playlists', blank=True)
     event = models.ForeignKey(Event, related_name='playlists', verbose_name=_('event'), blank=True, null=True, on_delete=models.SET_NULL)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
+
+
+class Featured(BaseNameModel):
+    """(Featured description)"""
+
+    artists = models.ManyToManyField(Artist, verbose_name=_('artists'), related_name='featured', blank=True)
+    events = models.ManyToManyField(Event, verbose_name=_('events'), related_name='featured', blank=True)
+    videos = models.ManyToManyField(Video, verbose_name=_('videos'), related_name='featured', blank=True)
+    blogposts = models.ManyToManyField(BlogPost, verbose_name=_('blog post'), related_name='featured', blank=True)
+    pages = models.ManyToManyField(Page, verbose_name=_('page'), related_name='featured', blank=True)
+    playlists = models.ManyToManyField(Playlist, verbose_name=_('playlists'), related_name='featured', blank=True)
+
+    def __unicode__(self):
+        return self.name

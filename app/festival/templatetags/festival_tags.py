@@ -33,21 +33,5 @@ def featured_events(*args):
     return featured
 
 @register.as_tag
-def featured_artist(*args):
-    return Artist.objects.filter(featured=True).order_by('?').first()
-
-@register.as_tag
-def featured_video(*args):
-    return Video.objects.filter(featured=True).order_by('?').first()
-
-@register.as_tag
-def featured_playlist(*args):
-    return Playlist.objects.filter(event=None).order_by('?').first()
-
-@register.as_tag
-def featured_pages(*args):
-    return Page.objects.filter(featured=True)
-
-@register.as_tag
-def featured_posts(*args):
-    return BlogPost.objects.all()[0]
+def featured(*args):
+    return Featured.objects.all().order_by('?').first()
