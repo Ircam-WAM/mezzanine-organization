@@ -50,4 +50,4 @@ def featured_pages(*args):
 
 @register.as_tag
 def featured_posts(*args):
-    return BlogPost.objects.filter(featured=True)
+    return BlogPost.objects.all()[0]
