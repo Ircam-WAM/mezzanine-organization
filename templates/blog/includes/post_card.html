@@ -1,12 +1,12 @@
 <div class="artist__item msry__item">
     <div class="artist__item__inner">
-        <a href="{% url 'festival-artist-detail' artist.slug %}" class="artist__item__inner">
+        <a href="{% url 'blog_post_detail' post.slug %}" class="artist__item__inner">
             <figure class="artist__item__img">
-                <img src="{% if artist.photo_featured %}{{ MEDIA_URL }}/{{ artist.photo_featured }}{% elif artist.photo %}{{ MEDIA_URL }}/{{ artist.photo }}{% else %}{% endif %}" alt="Portrait {{ artist.name }}">
+                <img src="{{ MEDIA_URL }}/{{ post.photo_featured }}" alt="Article: {{ post.title }}">
             </figure>
             <h3 class="artist__item__name">
                 <span>
-                    {{ artist.name }}
+                    {{ post.title }}
                 </span>
             </h3>
         </a>

@@ -9,16 +9,29 @@
 
 {% block main %}
 
+{% featured_edito as edito %}
+{{ edito.content|safe|slice:":512" }}...
+<br>
+<a href="{% url 'page' edito.slug %}">{% trans "Read more" %}</a>
+<br>
+
+{% featured_posts as post %}
+<h3>{% trans "Article" %}</h3>
+{% include 'blog/includes/post_card.html' %}
+<a href="{% url 'blog_post_list' %}">{% trans "All" %} {% trans "articles" %}</a>
+
 {% featured_artist as artist %}
+<h3>{% trans "Artist" %}</h3>
 {% include "festival/inc/artist_card.html" %}
+<a href="{% url 'festival-artist-list' %}">{% trans "All" %} {% trans "artists" %}</a>
 
 {% featured_video as video %}
+<h3>{% trans "Video" %}</h3>
 {% include 'festival/inc/video_card.html' %}
-
-{% featured_edito as page %}
-{% include 'festival/audio_playlist.html' %}
+<a href="{% url 'festival-video-list' %}">{% trans "All" %} {% trans "videos" %}</a>
 
 {% featured_playlist as playlist %}
-{% include 'festival/audio_playlist.html' %}
+<h3>{% trans "Playlist" %}</h3>
+{% include 'festival/inc/audio_playlist.html' %}
 
 {% endblock %}
