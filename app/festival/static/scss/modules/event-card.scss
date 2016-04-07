@@ -74,13 +74,15 @@
   }
 
   &__btn {
-    padding: 0.1rem 0.7rem;
+    padding: 0.1rem 2rem;
     background: $main_color;
     color: $white;
     display: inline-block;
     *display: inline;
     *zoom: 1;
     border-radius: 2px;
+    float: right;
+    margin-top: .3rem;
   }
 }
 
