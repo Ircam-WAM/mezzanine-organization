@@ -9,7 +9,9 @@
 {% block main %}
 <div class="video__list">
     {% for video in object_list %}
-     {% include 'festival/inc/video_card.html' %}
+     {% if video.status == 2 %}
+      {% include 'festival/inc/video_card.html' %}
+     {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

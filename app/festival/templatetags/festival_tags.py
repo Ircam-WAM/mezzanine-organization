@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from mezzanine.pages.models import Page
+from mezzanine.blog.models import BlogPost
 from mezzanine.template import Library
 from mezzanine_agenda.models import Event
 from festival.models import *
@@ -7,8 +8,13 @@ from mezzanine.conf import settings
 
 register = Library()
 
+
+@register.filter
+def subtract(value, arg):
+    return value - arg
+
 @register.as_tag
-def festival_edito(*args):
+def featured_edito(*args):
     qs = Page.objects.filter(slug="edito")
     if qs:
         return qs[0].get_content_model()
@@ -16,7 +22,7 @@ def festival_edito(*args):
         return None
 
 @register.as_tag
-def festival_event_featured(*args):
+def featured_events(*args):
     models = [Event,]
     featured = []
     for model in models:
@@ -25,10 +31,6 @@ def festival_event_featured(*args):
             if hasattr(obj, 'featured_image_header'):
                 featured.append(obj)
     return featured
-
-@register.filter
-def subtract(value, arg):
-    return value - arg
 
 @register.as_tag
 def featured_artist(*args):
@@ -40,4 +42,12 @@ def featured_video(*args):
 
 @register.as_tag
 def featured_playlist(*args):
-    return Playlist.objects.filter(event=None)[0]
+    return Playlist.objects.filter(event=None).order_by('?').first()
+
+@register.as_tag
+def featured_pages(*args):
+    return Page.objects.filter(featured=True)
+
+@register.as_tag
+def featured_posts(*args):
+    return BlogPost.objects.filter(featured=True)
