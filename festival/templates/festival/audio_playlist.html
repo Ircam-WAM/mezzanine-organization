@@ -1,6 +1,6 @@
 {% load staticfiles %}
-{% for audio in playlist.audios.all %}
 
+{% for audio in playlist.audios.all %}
 {% if forloop.first %}
 <audio id="audio" preload="auto" tabindex="0" controls="" >
     <source id="primarysrc" src="{{ audio.closed_source_url }}">
