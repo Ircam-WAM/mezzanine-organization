@@ -118,6 +118,7 @@ class Media(Displayable, RichText):
     open_source_url = models.URLField(_('open source URL'), max_length=1024, blank=True)
     closed_source_url = models.URLField(_('closed source URL'), max_length=1024, blank=True)
     featured = models.BooleanField(_('featured'), default=False)
+    poster_url = models.URLField(_('poster'), max_length=1024, blank=True)
 
     class Meta(MetaCore):
         abstract = True
@@ -142,6 +143,8 @@ class Media(Displayable, RichText):
                 self.open_source_url = source.attrib['src']
             elif self.closed_source_mime_type in source.attrib['type']:
                 self.closed_source_url = source.attrib['src']
+        video = self.q('video')
+        self.poster_url = video[0].attrib['poster']
 
 
 class Audio(Media):
