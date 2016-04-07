@@ -518,7 +518,7 @@ body {
 /* line 30, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_defaults.scss */
 .clearfix:after, .container:after, .row:after, .sidebar__title--inverse:after,
 .section__title--inverse:after,
-.page__related__title--inverse:after, .row-box:after, .event__card:after, .event__card--alt:after, .event__card--full:after, .calendar__month:after, .sticked-form:after, .banner:after, .header:after, .navigation:after, .footer-nav:after, .media:after, .split-container:after, .video__list:after {
+.page__related__title--inverse:after, .row-box:after, .event__card:after, .event__card--alt:after, .event__card--full:after, .calendar__month:after, .sticked-form:after, .banner:after, .header:after, .navigation:after, .footer-nav:after, .cta__panel:after, .media:after, .split-container:after, .video__list:after {
   content: "";
   display: table;
   clear: both;
@@ -3113,9 +3113,9 @@ th {
   *display: inline;
   *zoom: 1;
   border-radius: 2px;
-  float: right;
   margin-top: .3rem;
   line-height: 2;
+  float: right;
 }
 
 /* line 90, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/event-card.scss */
@@ -3294,13 +3294,13 @@ th {
 .hero__slider__item {
   display: block;
   width: 100%;
-  height: 500px;
   background: #d2ba88 no-repeat center;
   background-size: cover;
   position: relative;
+  height: 65vh;
 }
 
-/* line 12, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
+/* line 15, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
 .hero__slider__item:before {
   content: "";
   position: absolute;
@@ -3311,7 +3311,7 @@ th {
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, black 100%);
 }
 
-/* line 23, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
+/* line 26, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
 .hero__slider__infos {
   position: absolute;
   width: 100%;
@@ -3321,20 +3321,20 @@ th {
   z-index: 10;
 }
 
-/* line 32, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
+/* line 35, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
 .hero__slider__name {
   font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
   font-weight: 700;
-  font-size: 3rem;
   line-height: 1;
+  font-size: 1.6rem;
 }
 
-/* line 38, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
+/* line 41, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
 .hero__slider__name a {
   text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4);
 }
 
-/* line 41, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
+/* line 44, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
 .hero__slider__name:hover {
   color: white;
 }
@@ -3599,6 +3599,13 @@ th {
   .nav__footer__item__link{
     padding: 1rem;
   }
+  /* line 41, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+  .cta__panel div{
+    display: block;
+    float: left;
+    width: 50%;
+    padding: 0 .3rem;
+  }
   /* line 46, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_utilities-layout.scss */
   .box-item-50{
     width: 50%;
@@ -3634,6 +3641,10 @@ th {
     margin-top: 0;
     margin-left: 1rem;
     float: right;
+  }
+  /* line 35, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
+  .hero__slider__name{
+    font-size: 3rem;
   }
 }
 @media (min-width: 961px){
@@ -3757,6 +3768,11 @@ th {
   .footer-partners img{
     max-width: 60px;
   }
+  /* line 49, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+  .cta__panel div{
+    float: none;
+    width: 100%;
+  }
   /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_menu-toggle.scss */
   .menu__toggle{
     display: none;
@@ -3823,6 +3839,10 @@ th {
   .bk__news__inner{
     width: 80%;
     margin: 0 auto;
+  }
+  /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
+  .hero__slider__item{
+    height: 500px;
   }
 }
 @media (min-width: 1200px){
