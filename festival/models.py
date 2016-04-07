@@ -57,6 +57,9 @@ class PageCategory(BaseNameModel):
     class Meta(MetaCore):
         verbose_name = _('page category')
 
+    def __unicode__(self):
+        return self.name
+
 
 class Artist(Displayable, RichText, AdminThumbMixin):
     """Artist"""
@@ -189,3 +192,6 @@ class Playlist(BaseTitleModel):
 
     audios = models.ManyToManyField(Audio, verbose_name=_('audios'), related_name='playlists', blank=True)
     event = models.ForeignKey(Event, related_name='playlists', verbose_name=_('event'), blank=True, null=True, on_delete=models.SET_NULL)
+
+    def __unicode__(self):
+        return self.title
