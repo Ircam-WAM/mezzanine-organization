@@ -1,0 +1,40 @@
+// Social buttons
+.share__links {
+  display: block;
+  text-align: left;
+  margin: 2rem auto;
+  padding: .3rem 0;
+  // border-top: 1px solid darken($main_color, 25);
+  // border-bottom: 1px solid darken($main_color, 25);
+  list-style: none;
+}
+
+.share__link__item {
+  text-transform: uppercase;
+  margin-right: 1rem;
+  .icon {
+    color: darken($main_color, 25);
+    font-size: 1.1rem;
+    margin-right: .4rem;
+  }
+}
+
+.btn-twitter {
+  background: $color-twitter;
+  color: white;
+  border-color: darken($color-twitter , 10);
+  // margin: 0 1rem;
+  &:hover {
+    background-color: darken($color-twitter , 10);
+  }
+}
+
+.btn-facebook {
+  background: $color-facebook;
+  color: white;
+  border-color: darken($color-facebook , 10);
+  // margin: 0 1rem;
+  &:hover {
+    background-color: darken($color-facebook , 10);
+  }
+}
