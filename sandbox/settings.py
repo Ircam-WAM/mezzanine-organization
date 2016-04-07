@@ -60,6 +60,9 @@ PAGE_MENU_TEMPLATES = (
 # EXTRA_MODEL_FIELDS = (
 #  )
 
+EXTRA_MODEL_FIELDS = (
+    )
+
 # Setting to turn on featured images for blog posts. Defaults to False.
 #
 BLOG_USE_FEATURED_IMAGE = True
