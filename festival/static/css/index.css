@@ -3054,10 +3054,10 @@ th {
   margin: 0;
   text-transform: uppercase;
   text-align: left;
-  font-size: 0.6rem;
+  font: 700 0.8em "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* line 31, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+/* line 32, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
 .video__card__link {
   position: absolute;
   top: 0;
