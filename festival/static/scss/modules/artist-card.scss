@@ -18,6 +18,7 @@
 .artist__item {
   float: left;
   padding: 0.5rem;
+  padding-left: 0;
 
   @media (min-width : $desktop ) {
      padding: 0 0.5rem 1rem;

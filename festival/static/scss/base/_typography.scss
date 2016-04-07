@@ -233,3 +233,10 @@ pre > p {
 .bodytext a {
   font-weight: $bold;
 }
+
+.location__title {
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+  font: $bold 1em/1.2 $base_font_family;
+}
