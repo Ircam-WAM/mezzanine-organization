@@ -17,7 +17,7 @@
 </div>
 
 <div class="embed-responsive">
-	<video width="100%" controls data-title="{{ video.title }}" preload="none">
+	<video width="100%" poster="{{ video.poster_url }}" controls data-title="{{ video.title }}" preload="none">
 	  <source src="{{ video.open_source_url }}" type="{{ video.open_source_mime_type }}" />
       <source src="{{ video.closed_source_url }}" type="{{ video.closed_source_mime_type }}" />
 	  </video>
