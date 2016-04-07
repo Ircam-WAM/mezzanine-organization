@@ -11,7 +11,7 @@
     <p>
     {% if artist.photo %}
     <figure class="artist__figure img__align{% if artist.photo_alignment == 'left' %}--left{% elif artist.photo_alignment == 'right' %}--right{% else %}--center{% endif %}">
-        <img src="{{ MEDIA_URL }}/{% if artist.photo_featured %}{{ artist.photo_featured }}{% else %}{{ artist.photo }}{% endif %}" />
+        <img src="{% if artist.photo_featured %}{{ artist.photo_featured.url }}{% else %}{{ artist.photo.url }}{% endif %}" />
         <figcaption class="artist__figure__copyright">
            {{ artist.photo_credits }}
         </figcaption>
