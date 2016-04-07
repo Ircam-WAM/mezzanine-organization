@@ -25,7 +25,8 @@
     margin: 0;
     text-transform: uppercase;
     text-align: left;
-    font-size: 0.6rem;
+    // font-size: 0.6rem;
+    font: $bold 0.8em $base_font_family;
   }
 
   &__link {
