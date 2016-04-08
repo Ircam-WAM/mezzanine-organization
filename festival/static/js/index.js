@@ -138,9 +138,11 @@ $(function() {
 
      myTabs.init();
 
+     alert('go !');
+
      /**
-      * Audio player
-      */
+  * Audio player
+  */
 
     function init_player(){
         var audio;
@@ -182,5 +184,6 @@ $(function() {
     }
 
     init_player();
+
 
 });
