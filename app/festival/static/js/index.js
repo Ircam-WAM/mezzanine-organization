@@ -5,11 +5,11 @@ $(function() {
      * @author Philippe Barbosa
      */
     var $grid = $('.msry__container');
-    $grid.imagesLoaded( function(){
+    $grid.imagesLoaded(function() {
         $grid.masonry({
-          itemSelector: '.msry__item',
-          percentPosition: true,
-          columnWidth: '.msry__sizer'
+            itemSelector: '.msry__item',
+            percentPosition: true,
+            columnWidth: '.msry__sizer'
         });
     });
 
@@ -57,50 +57,50 @@ $(function() {
         prevHtml: '',
         nextHtml: '',
 
-        rtl:false,
-        adaptiveHeight:false,
+        rtl: false,
+        adaptiveHeight: false,
 
-        vertical:false,
-        verticalHeight:500,
-        vThumbWidth:100,
+        vertical: false,
+        verticalHeight: 500,
+        vThumbWidth: 100,
 
-        thumbItem:10,
+        thumbItem: 10,
         pager: true,
         gallery: false,
         galleryMargin: 5,
         thumbMargin: 5,
         currentPagerPosition: 'middle',
 
-        enableTouch:true,
-        enableDrag:false,
-        freeMove:false,
+        enableTouch: true,
+        enableDrag: false,
+        freeMove: false,
         swipeThreshold: 40,
 
-        responsive : [],
+        responsive: [],
 
-        onBeforeStart: function (el) {},
-        onSliderLoad: function (el) {},
-        onBeforeSlide: function (el) {},
-        onAfterSlide: function (el) {
+        onBeforeStart: function(el) {},
+        onSliderLoad: function(el) {},
+        onBeforeSlide: function(el) {},
+        onAfterSlide: function(el) {
             // el.find('.container').fadeIn();
         },
-        onBeforeNextSlide: function (el) {},
-        onBeforePrevSlide: function (el) {}
+        onBeforeNextSlide: function(el) {},
+        onBeforePrevSlide: function(el) {}
     });
 
     /**
      * Close message
      */
 
-     var notification = $('#js-notificationContainer');
+    var notification = $('#js-notificationContainer');
 
-     $('.js-notificationClose').on('click', function(event) {
+    $('.js-notificationClose').on('click', function(event) {
         notification.addClass('notification__remove');
 
-        setTimeout(function () {
+        setTimeout(function() {
             notification.remove();
         }, 4000);
-     });
+    });
 
     /**
      * Instafeed
@@ -130,21 +130,21 @@ $(function() {
      * Tabs
      */
 
-     var myTabs = tabs({
+    var myTabs = tabs({
         el: '#tabs',
         tabNavigationLinks: '.c-tabs-nav__link',
         tabContentContainers: '.c-tab'
-     });
+    });
 
-     myTabs.init();
+    myTabs.init();
 
-     alert('go !');
+    alert('go !');
 
-     /**
-  * Audio player
-  */
+    /**
+     * Audio player
+     */
 
-    function init_player(){
+    function init_player() {
         var audio;
         var playlist;
         var tracks;
@@ -156,25 +156,26 @@ $(function() {
         tracks = playlist.find('li a');
         len = tracks.length - 1;
         audio[0].volume = .90;
-    //    audio[0].play();
-        playlist.find('a').click(function(e){
+        //    audio[0].play();
+        playlist.find('a').click(function(e) {
             e.preventDefault();
             link = $(this);
             current = link.parent().index();
             run_player(link, audio[0]);
         });
-        audio[0].addEventListener('ended',function(e){
+        audio[0].addEventListener('ended', function(e) {
             current++;
-            if(current == len){
+            if (current == len) {
                 current = 0;
                 link = playlist.find('a')[0];
-            }else{
+            } else {
                 link = playlist.find('a')[current];
             }
-            run_player($(link),audio[0]);
+            run_player($(link), audio[0]);
         });
     }
-    function run_player(link, player){
+
+    function run_player(link, player) {
         $(player).find('#primarysrc').attr('src', link.attr('href'));
         $(player).find('#secondarysrc').attr('src', link.attr('data-altsrc'));
         par = link.parent();
