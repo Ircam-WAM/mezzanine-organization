@@ -238,10 +238,20 @@ pre > p {
   text-transform: uppercase;
   margin: 0;
   padding: 0;
-  font: $bold 1em/1.2 $base_font_family;
+  font: $bold 1.1em/1.2 $base_font_family;
+  color: $main_color_darker;
+  @media (min-width : $desktop ) {
+    font: $bold 1.3em/1.2 $base_font_family;
+  }
 }
 
 .section__title {
-  font-size: 2rem;
-  font-family: $header_font_family;
+  line-height: $base_line_height;
+  font-family: $base_font_family;
+  text-transform: uppercase;
+  color: $main_color_darker;
+  font-size: 1.4rem;
+  @media (min-width : $desktop ) {
+    font-size: 1.8rem;
+  }
 }
