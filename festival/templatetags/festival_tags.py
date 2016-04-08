@@ -23,14 +23,7 @@ def featured_edito(*args):
 
 @register.as_tag
 def featured_events(*args):
-    models = [Event,]
-    featured = []
-    for model in models:
-        objs = model.objects.filter(featured=True)
-        for obj in objs:
-            if hasattr(obj, 'featured_image_header'):
-                featured.append(obj)
-    return featured
+    return Featured.objects.all()[0].events.order_by('start')
 
 @register.as_tag
 def featured(*args):
