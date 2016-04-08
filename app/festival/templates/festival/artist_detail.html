@@ -23,6 +23,7 @@
 </div>
 
 <hr style="margin-top: 3rem;">
+{% if artist.events.all %}
 <h2 class="section__title">{% trans "Also discover" %}</h2> <br>
 
 {% for event in artist.events.all %}
@@ -36,6 +37,6 @@
     {% endfor %}
     {% endfor %}
 </div>
-
+{% endif %}
 
 {% endblock %}
