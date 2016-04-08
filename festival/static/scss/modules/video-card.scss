@@ -36,7 +36,8 @@
     text-transform: uppercase;
     text-align: left;
     // font-size: 0.6rem;
-    font: $bold 0.8em $base_font_family;
+    font: $bold .9em $base_font_family;
+    // &:before
   }
 
   &__link {

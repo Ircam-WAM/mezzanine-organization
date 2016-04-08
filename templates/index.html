@@ -19,11 +19,11 @@
 {% featured as featured %}
 
 <div class="last__media">
-    <h2 class="section__title">{% trans "Featured" %}</h2> <br>
+    <h2 class="section__title">{% trans "Featured" %}</h2>
 
     {% for post in featured.blogposts.all %}
     <div class="last__media__entry">
-         <h3>{% trans "Article" %}</h3>
+         <span>{% trans "Article" %}</span>
          {% include 'blog/includes/post_card.html' %}
          <a href="{% url 'blog_post_list' %}" class="btn btn-full">{% trans "All" %} {% trans "articles" %}</a>
     </div>
@@ -31,7 +31,7 @@
 
     {% for artist in featured.artists.all %}
     <div class="last__media__entry">
-         <h3>{% trans "Artist" %}</h3>
+         <span>{% trans "Artist" %}</span>
          {% include "festival/inc/artist_card.html" %}
          <a href="{% url 'festival-artist-list' %}" class="btn btn-full">{% trans "All" %} {% trans "artists" %}</a>
     </div>
@@ -39,7 +39,7 @@
 
     {% for video in featured.videos.all %}
     <div class="last__media__entry">
-        <h3>{% trans "Video" %}</h3>
+        <span>{% trans "Video" %}</span>
         {% include 'festival/inc/video_card.html' %}
         <a href="{% url 'festival-video-list' %}" class="btn btn-full">{% trans "All" %} {% trans "videos" %}</a>
     </div>

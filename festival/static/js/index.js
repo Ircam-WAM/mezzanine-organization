@@ -130,6 +130,7 @@ $(function() {
      * Tabs
      */
 
+
     var myTabs = tabs({
         el: '#tabs',
         tabNavigationLinks: '.c-tabs-nav__link',
@@ -137,8 +138,6 @@ $(function() {
     });
 
     myTabs.init();
-
-    alert('go !');
 
     /**
      * Audio player
