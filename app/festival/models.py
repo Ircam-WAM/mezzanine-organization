@@ -204,8 +204,8 @@ class Featured(BaseNameModel):
     artists = models.ManyToManyField(Artist, verbose_name=_('artists'), related_name='featured', blank=True)
     events = models.ManyToManyField(Event, verbose_name=_('events'), related_name='featured', blank=True)
     videos = models.ManyToManyField(Video, verbose_name=_('videos'), related_name='featured', blank=True)
-    blogposts = models.ManyToManyField(BlogPost, verbose_name=_('blog post'), related_name='featured', blank=True)
-    pages = models.ManyToManyField(Page, verbose_name=_('page'), related_name='featured', blank=True)
+    blogposts = models.ManyToManyField(BlogPost, verbose_name=_('blog posts'), related_name='featured', blank=True)
+    pages = models.ManyToManyField(Page, verbose_name=_('pages'), related_name='featured', blank=True)
     playlists = models.ManyToManyField(Playlist, verbose_name=_('playlists'), related_name='featured', blank=True)
 
     def __unicode__(self):
