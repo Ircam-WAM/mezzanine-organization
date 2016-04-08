@@ -517,7 +517,6 @@ body {
 
 /* line 30, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_defaults.scss */
 .clearfix:after, .container:after, .row:after, .sidebar__title--inverse:after,
-.section__title--inverse:after,
 .page__related__title--inverse:after, .row-box:after, .event__card:after, .event__card--alt:after, .event__card--full:after, .calendar__month:after, .last__media:after, .sticked-form:after, .banner:after, .header:after, .navigation:after, .footer-nav:after, .cta__panel:after, .media:after, .split-container:after, .video__list:after, .c-tabs:after {
   content: "";
   display: table;
@@ -810,13 +809,17 @@ pre > p {
   text-transform: uppercase;
   margin: 0;
   padding: 0;
-  font: 700 1em/1.2 "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 700 1.1em/1.2 "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #c4a563;
 }
 
-/* line 244, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
+/* line 248, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
 .section__title {
-  font-size: 2rem;
-  font-family: "Triplex", Georgia, Times, "Times New Roman", serif;
+  line-height: 1.6;
+  font-family: "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  color: #c4a563;
+  font-size: 1.4rem;
 }
 
 /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_layout.scss */
@@ -828,7 +831,6 @@ pre > p {
 
 /* line 22, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_layout.scss */
 .row, .sidebar__title--inverse,
-.section__title--inverse,
 .page__related__title--inverse, .row-box, .event__card, .event__card--alt, .event__card--full, .calendar__month {
   display: block;
 }
@@ -1800,9 +1802,7 @@ th {
 
 /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
 .sidebar__title, .sidebar__title--inverse,
-.section__title--inverse,
 .page__related__title--inverse,
-.section__title,
 .page__related__title {
   text-transform: uppercase;
   display: inline-block;
@@ -1816,9 +1816,8 @@ th {
   border-bottom: 1px solid #fff;
 }
 
-/* line 18, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+/* line 17, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
 .sidebar__title--inverse,
-.section__title--inverse,
 .page__related__title--inverse {
   color: #000;
   border-top-color: #000;
@@ -1826,7 +1825,7 @@ th {
   margin-bottom: 2rem;
 }
 
-/* line 29, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+/* line 28, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
 .sidebar__entry {
   font-size: 1rem;
   margin: 0;
@@ -1835,7 +1834,7 @@ th {
   font: 400 0.85rem "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* line 37, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+/* line 36, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
 .cta__panel {
   margin-top: 2rem;
 }
@@ -3633,7 +3632,7 @@ th {
   .nav__footer__item__link{
     padding: 1rem;
   }
-  /* line 41, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+  /* line 40, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
   .cta__panel div{
     display: block;
     float: left;
@@ -3690,6 +3689,14 @@ th {
   .page__title{
     font-size: 3.2rem;
     margin: 0rem 0 1rem;
+  }
+  /* line 237, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
+  .location__title{
+    font: 700 1.3em/1.2 "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  /* line 248, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
+  .section__title{
+    font-size: 1.8rem;
   }
   /* line 5, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_layout.scss */
   .container{
@@ -3802,7 +3809,7 @@ th {
   .footer-partners img{
     max-width: 60px;
   }
-  /* line 49, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
+  /* line 48, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/components/_sidebar.scss */
   .cta__panel div{
     float: none;
     width: 100%;
