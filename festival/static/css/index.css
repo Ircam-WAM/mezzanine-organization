@@ -883,9 +883,10 @@ ol {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  padding-left: 1rem;
 }
 
-/* line 14, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
+/* line 15, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
 ul li ul,
 ul li ol,
 ol li ul,
@@ -896,32 +897,32 @@ ol li ol {
 /**
  * In case you nedd default style for list
  */
-/* line 24, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
+/* line 25, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
 ul.default {
   list-style-type: disc;
   margin-bottom: 0.9rem;
   padding-left: 0.9rem;
 }
 
-/* line 30, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
+/* line 31, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
 ol.default {
   list-style-type: decimal;
   margin-bottom: 0.9rem;
   padding-left: 0.9rem;
 }
 
-/* line 36, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
+/* line 37, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
 dl {
   margin-bottom: 0.9rem;
 }
 
-/* line 39, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
+/* line 40, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
 dl dt {
   font-weight: bold;
   color: #333;
 }
 
-/* line 45, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
+/* line 46, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
 dl dd {
   margin: 0 0 0.9rem;
 }
@@ -929,13 +930,13 @@ dl dd {
 /**
  * List inline
  */
-/* line 54, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
+/* line 55, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
 .list-inline, .breadcrumb {
   display: block;
   padding: 0;
 }
 
-/* line 57, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
+/* line 58, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_lists.scss */
 .list-inline li, .breadcrumb li {
   display: inline-block;
   *display: inline;
@@ -3037,14 +3038,15 @@ th {
   position: relative;
   margin: 1%;
   width: 48%;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
 }
 
-/* line 13, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+/* line 23, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
 .video__card__thumbnail img {
   display: block;
 }
 
-/* line 17, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+/* line 27, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
 .video__card__info {
   display: block;
   text-align: center;
@@ -3052,7 +3054,7 @@ th {
   padding: 1rem;
 }
 
-/* line 24, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+/* line 34, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
 .video__card__name {
   margin: 0;
   text-transform: uppercase;
@@ -3060,7 +3062,7 @@ th {
   font: 700 0.8em "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* line 32, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+/* line 42, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
 .video__card__link {
   position: absolute;
   top: 0;
@@ -3692,7 +3694,7 @@ th {
   }
   /* line 237, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
   .location__title{
-    font: 700 1.3em/1.2 "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 700 1.7em/1.2 "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
   /* line 248, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_typography.scss */
   .section__title{
@@ -3858,6 +3860,16 @@ th {
   /* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
   .video__card{
     width: 31%;
+  }
+  /* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+  .video__card{
+    transition: .3s;
+  }
+  /* line 17, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/video-card.scss */
+  .video__card:hover{
+    box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.8);
+    -webkit-transform: scale(1.01);
+    transform: scale(1.01);
   }
   /* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/event-card.scss */
   .event__card, .event__card--alt, .event__card--full{
