@@ -28,4 +28,13 @@
  {% include 'agenda/includes/event_card.html' %}
 {% endfor %}
 
+<div class="row">
+    {% for event in artist.events.all %}
+    {% for video in event.videos.all %}
+        {% include 'festival/inc/video_card.html' %}
+    {% endfor %}
+    {% endfor %}
+</div>
+
+
 {% endblock %}
