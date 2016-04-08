@@ -23,9 +23,19 @@
 </div>
 
 <hr style="margin-top: 3rem;">
-<h2 class="section__title">{% trans "Related events" %}</h2> <br>
+<h2 class="section__title">{% trans "Also discover" %}</h2> <br>
+
 {% for event in artist.events.all %}
  {% include 'agenda/includes/event_card.html' %}
 {% endfor %}
+
+<div class="row">
+    {% for event in artist.events.all %}
+    {% for video in event.videos.all %}
+        {% include 'festival/inc/video_card.html' %}
+    {% endfor %}
+    {% endfor %}
+</div>
+
 
 {% endblock %}
