@@ -3705,6 +3705,7 @@ th {
   .aside{
     float: left;
     width: 25%;
+    margin: 0;
     border-bottom: none;
   }
   /* line 50, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/base/_layout.scss */
