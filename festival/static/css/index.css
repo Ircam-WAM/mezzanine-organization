@@ -3605,12 +3605,18 @@ th {
 }
 
 /* line 25, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+.audio__playlist {
+  max-height: 300px;
+  overflow: scroll;
+}
+
+/* line 30, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
 .audio__player {
   border-bottom: 1px solid #fff;
   background: #fff;
 }
 
-/* line 30, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+/* line 35, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
 .audio__playlist__item {
   font-size: .75rem;
   color: #555;
@@ -3618,7 +3624,7 @@ th {
   transition: .3s;
 }
 
-/* line 35, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+/* line 40, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
 .audio__playlist__item:before {
   content: normal;
   font-family: "Font-Awesome";
@@ -3627,19 +3633,19 @@ th {
   transition: .3s;
 }
 
-/* line 43, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+/* line 49, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
 .active .audio__playlist__item {
   color: #000;
 }
 
-/* line 45, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+/* line 51, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
 .active .audio__playlist__item:before {
   font-size: 0.5rem;
   margin-right: .3rem;
   color: #000;
 }
 
-/* line 52, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+/* line 58, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
 .audio__title {
   display: block;
   color: #000;

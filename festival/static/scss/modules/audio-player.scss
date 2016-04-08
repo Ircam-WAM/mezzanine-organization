@@ -22,6 +22,11 @@
   }
 }
 
+.audio__playlist {
+  max-height: 300px;
+  overflow: scroll;
+}
+
 .audio__player {
   border-bottom: 1px solid $white;
   background: $white;
@@ -40,6 +45,7 @@
     transition: .3s;
   }
 }
+
 .active .audio__playlist__item {
   color: $black;
   &:before {
