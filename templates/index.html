@@ -11,15 +11,15 @@
 
 
 {% featured_edito as edito %}
-{{ edito.content|safe|slice:":512" }}...
+{{ edito.content|safe|slice:":446" }}...
 <br>
-<a href="{% url 'page' edito.slug %}">{% trans "Read more" %}</a>
+<a href="{% url 'page' edito.slug %}" class="event__meta__btn">{% trans "Read more" %}</a>
 <br>
 
 {% featured as featured %}
 
 <div class="last__media">
-    <h2 class="section__title">{% trans "Last medias" %}</h2> <br>
+    <h2 class="section__title">{% trans "Featured" %}</h2> <br>
 
     {% for post in featured.blogposts.all %}
     <div class="last__media__entry">
