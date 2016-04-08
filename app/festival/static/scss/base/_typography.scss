@@ -234,17 +234,6 @@ pre > p {
   font-weight: $bold;
 }
 
-.location__title {
-  text-transform: uppercase;
-  margin: 0;
-  padding: 0;
-  font: $bold 1.1em/1.2 $base_font_family;
-  color: $main_color_darker;
-  @media (min-width : $desktop ) {
-    font: $bold 1.7em/1.2 $base_font_family;
-  }
-}
-
 .section__title {
   line-height: $base_line_height;
   font-family: $base_font_family;

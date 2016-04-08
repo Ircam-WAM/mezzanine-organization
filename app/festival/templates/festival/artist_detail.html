@@ -22,7 +22,8 @@
     </p>
 </div>
 
-<h2 class="section__title">{% trans "Also to discover" %}</h2> <br>
+<hr style="margin-top: 3rem;">
+<h2 class="section__title">{% trans "Also discover" %}</h2> <br>
 {% for event in artist.events.all %}
  {% include 'agenda/includes/event_card.html' %}
 {% endfor %}

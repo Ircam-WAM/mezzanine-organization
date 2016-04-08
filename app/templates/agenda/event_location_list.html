@@ -44,8 +44,8 @@
                       {{ location.address }}<br />
                       <a href="{{ location|google_nav_url }}" target="_blank" class="">{% trans "Click to get the interactive map" %}</a>
                   </p>
-                  <a href="{{ location|google_nav_url }}" target="_blank" class="">
-                  {% google_static_map location 900 300 15 %}
+                  <a href="{{ location|google_nav_url }}" target="_blank" class="location__map">
+                    {% google_static_map location 900 300 15 %}
                   </a/>
                   {% endeditable %}
                   {% endblock %}
