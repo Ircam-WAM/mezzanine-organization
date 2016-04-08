@@ -90,7 +90,7 @@
 {% endblock %}
 
 {% if event.location %}
-<h3 class="section__title--inverse">Le lieu :</h3>
+<h3 class="section__title">Le lieu :</h3>
 {% block event_detail_location %}
 {% editable event.location %}
 <p>
@@ -152,14 +152,14 @@
 
 {% block event_related %}
 
-<h3 class="section__title--inverse">{% trans "Artists" %}</h3>
+<h3 class="section__title">{% trans "Artists" %}</h3>
 <div class="row">
     {% for artist in event.artists.all %}
         {% include "festival/inc/artist_card.html" %}
     {% endfor %}
 </div>
 
-<h3 class="section__title--inverse">{% trans "Videos" %}</h3>
+<h3 class="section__title">{% trans "Videos" %}</h3>
 <div class="row">
     {% for video in event.videos.all %}
         {% include 'festival/inc/video_card.html' %}

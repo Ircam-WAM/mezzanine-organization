@@ -22,7 +22,7 @@
     </p>
 </div>
 
-<h2 class="page__related__title--inverse">{% trans "Related events" %}</h2> <br>
+<h2 class="section__title">{% trans "Related events" %}</h2> <br>
 {% for event in artist.events.all %}
  {% include 'agenda/includes/event_card.html' %}
 {% endfor %}
