@@ -152,6 +152,9 @@
 
 {% block event_related %}
 
+<hr style="margin-top: 3rem;">
+<h2 class="section__title">{% trans "Also discover" %}</h2> <br>
+
 <h3 class="section__title">{% trans "Artists" %}</h3>
 <div class="row">
     {% for artist in event.artists.all %}
