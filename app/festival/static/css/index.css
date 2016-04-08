@@ -3247,6 +3247,11 @@ th {
   content: "";
 }
 
+/* line 115, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/icons.scss */
+.icon__play:before {
+  content: "";
+}
+
 /* line 154, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/icons.scss */
 .icon__calendar:before {
   content: "";
@@ -3582,92 +3587,63 @@ th {
   margin-bottom: 0;
 }
 
-/**
- * Tabs navigation
- */
-/* line 8, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tabs-nav {
+/* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+.audio__player,
+.audio__playlist {
+  padding: 1rem;
+  background: #e0cfad;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
+}
+
+/* line 16, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+.audio__player audio,
+.audio__playlist audio {
+  width: 100%;
+  background: white;
+  margin: 0 auto;
   display: block;
-  float: left;
-  text-align: left;
-  width: 40%;
 }
 
-/* line 18, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tabs-nav__link {
-  color: #d2ba88;
-  display: block;
-  transition: color 0.3s;
-  font-size: .6em;
-  padding: 0.25rem;
+/* line 25, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+.audio__player {
+  border-bottom: 1px solid #fff;
+  background: #fff;
 }
 
-/* line 32, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tabs-nav__link:last-child {
-  margin-right: 0;
-}
-
-/* line 40, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tabs-nav__link.is-active {
-  color: #b18d43;
-}
-
-/* line 45, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tabs-nav__link i,
-.c-tabs-nav__link span {
-  margin: 0;
-  padding: 0;
+/* line 30, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+.audio__playlist__item {
+  font-size: .75rem;
+  color: #555;
   line-height: 1;
+  transition: .3s;
 }
 
-/* line 52, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tabs-nav__link i {
-  font-size: 18px;
+/* line 35, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+.audio__playlist__item:before {
+  content: normal;
+  font-family: "Font-Awesome";
+  content: "";
+  font-size: 0;
+  transition: .3s;
 }
 
-/* line 56, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tabs-nav__link span {
-  display: none;
-  font-size: 18px;
+/* line 43, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+.active .audio__playlist__item {
+  color: #000;
 }
 
-/**
- * Tab
- */
-/* line 74, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tab {
-  display: none;
-  float: left;
-  width: 60%;
+/* line 45, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+.active .audio__playlist__item:before {
+  font-size: 0.5rem;
+  margin-right: .3rem;
+  color: #000;
 }
 
-/* line 84, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tab.is-active {
+/* line 52, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+.audio__title {
   display: block;
-}
-
-/* line 88, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tab__content {
-  padding-left: .5rem;
-}
-
-/**
- * Tabs no-js fallback
- */
-/* line 95, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tabs.no-js .c-tabs-nav {
-  display: none;
-}
-
-/* line 99, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tabs.no-js .c-tab {
-  display: block;
-  margin-bottom: 1.5rem;
-}
-
-/* line 104, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-.c-tabs.no-js .c-tab:last-child {
-  margin-bottom: 0;
+  color: #000;
+  font-size: .75rem;
 }
 
 /* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/location.scss */
@@ -3684,15 +3660,6 @@ th {
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
 }
 @media all and (min-width: 720px){
-  /* line 62, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-  .c-tabs-nav__link i{
-    margin-bottom: 12px;
-    font-size: 22px;
-  }
-  /* line 66, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-  .c-tabs-nav__link span{
-    display: block;
-  }
   /* line 62, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
   .c-tabs-nav__link i{
     margin-bottom: 12px;
@@ -3773,6 +3740,12 @@ th {
   /* line 35, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/hero-slider.scss */
   .hero__slider__name{
     font-size: 3rem;
+  }
+  /* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+  .audio__player,
+  .audio__playlist{
+    width: 50%;
+    margin: 0 auto;
   }
 }
 @media (min-width: 961px){
@@ -4000,19 +3973,11 @@ th {
   .c-tab{
     width: 70%;
   }
-  /* line 8, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-  .c-tabs-nav{
-    width: 30%;
-  }
-  /* line 18, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-  .c-tabs-nav__link{
-    padding: 0;
-    font-size: .75rem;
-    line-height: 1.6;
-  }
-  /* line 74, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/tabs.scss */
-  .c-tab{
-    width: 70%;
+  /* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/audio-player.scss */
+  .audio__player,
+  .audio__playlist{
+    width: 33%;
+    margin: 0;
   }
   /* line 1, /Users/philippebarbosa/Sites/ircam-manifeste/app/festival/static/scss/modules/location.scss */
   .location__title{

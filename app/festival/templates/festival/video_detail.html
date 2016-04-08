@@ -28,7 +28,7 @@
 {% endwith %}
 
 <div class="video-event">
-    <h2>{% trans 'Related event' %}</h2>
+    <h2 class="section__title">{% trans 'Related event' %}</h2>
     {% with video.event as event %}
     {% include 'agenda/includes/event_card.html' %}
     {% endwith %}
