@@ -19,7 +19,7 @@
 {% featured as featured %}
 
 <div class="last__media">
-    <h2 class="page__related__title--inverse">{% trans "Last medias" %}</h2> <br>
+    <h2 class="section__title">{% trans "Last medias" %}</h2> <br>
 
     {% for post in featured.blogposts.all %}
     <div class="last__media__entry">
@@ -47,7 +47,7 @@
 </div>
 
 {% for playlist in featured.playlists.all %}
-<h2 class="page__related__title--inverse">{% trans "Playlist" %}</h2>
+<h2 class="section__title">{% trans "Playlist" %}</h2>
 {% include 'festival/inc/audio_playlist.html' %}
 {% endfor %}
 
