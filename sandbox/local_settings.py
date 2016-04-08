@@ -80,6 +80,7 @@ SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 ADMIN_MENU_ORDER = (
     (_("Content"), ("pages.Page", "blog.BlogPost", "mezzanine_agenda.Event",
         "festival.Artist", "festival.Video", "festival.Audio", "festival.Playlist",
+        "festival.Featured",
         "generic.ThreadedComment", (_("Media Library"), "fb_browse"),)),
     (_("Site"), ("sites.Site", "redirects.Redirect", "conf.Setting")),
     (_("Users"), ("auth.User", "auth.Group",)),
