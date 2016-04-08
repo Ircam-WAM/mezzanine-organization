@@ -146,9 +146,11 @@
                         </div>
                     </div>
                 {% endif %}
+                {% block content_header %}
                 <div class="site__content__header">
                     <h2 class="page__title">{% block title %}{% endblock %}</h2>
                 </div>
+                {% endblock %}
                 {% block main %}{% endblock %}
             </main>
 
