@@ -25,11 +25,13 @@ class Command(BaseCommand):
     def cleanup(self):
         # for event in ma_models.Event.objects.all():
         #     event.delete()
-        for location in ma_models.EventLocation.objects.all():
-            location.delete()
+        # for location in ma_models.EventLocation.objects.all():
+        #     location.delete()
+        for event_price in ma_models.EventPrice.objects.all():
+            event_price.delete()
 
     def handle(self, *args, **kwargs):
-        self.cleanup()
+        # self.cleanup()
         meta_event_name = kwargs.get('meta_event')
         meta_trans_all = eve_models.MetaEventTranslation.objects.all()
         for meta_trans in meta_trans_all:
@@ -58,12 +60,20 @@ class Command(BaseCommand):
                     location = ma_models.EventLocation(title=manifestation.location.name)
                 address = '\n'.join([manifestation.location.address, manifestation.location.postalcode + ' ' + manifestation.location.city])
                 location.address = address
+                location.external_id = manifestation.id
                 location.clean()
                 location.save()
                 event.location = location
 
                 category, c = ma_models.EventCategory.objects.get_or_create(name=eve_event.event_category.name)
                 event.category = category
+                event.save()
+
+                eve_prices = eve_models.PriceManifestation.objects.filter(manifestation=manifestation)
+                for price in eve_prices:
+                    event_price, c = ma_models.EventPrice.objects.get_or_create(value=float(price.value))
+                    if event:
+                        event.prices.add(event_price)
 
                 if not first:
                     event.parent = parent

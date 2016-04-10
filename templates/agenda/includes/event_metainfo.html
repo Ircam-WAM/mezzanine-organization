@@ -5,10 +5,13 @@
         {% if event.end %}
         {% if event.end|date == event.start|date and event.end.hour|subtract:event.start.hour > 3 %}{{ event.end|time:"TIME_FORMAT" }}{% endif %}
         {% if unit_booking %}
-            | {% for price in event.prices.all %}{{ price|floatformat }} €{% if not forloop.last %} - {% endif %}{% endfor %} 
+            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            {% for price in event.prices.all %}{{ price.value|floatformat:"-2" }} €{% if not forloop.last %} / {% endif %}{% endfor %}
+            {% if event.prices.all.0|floatformat != '0' %}
             <a href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
                 {% trans "Booking" %}
             </a>
+            {% endif %}
         {% endif %}
         {% endif %}
         {% if event.location %}
