@@ -3607,16 +3607,21 @@ th {
 /* line 25, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
 .audio__playlist {
   max-height: 250px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 /* line 30, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
+.audio__playlist::-webkit-scrollbar {
+  display: none;
+}
+
+/* line 34, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
 .audio__player {
   border-bottom: 1px solid #fff;
   background: #fff;
 }
 
-/* line 35, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
+/* line 39, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
 .audio__playlist__item {
   font-size: .75rem;
   color: #555;
@@ -3624,7 +3629,7 @@ th {
   transition: .3s;
 }
 
-/* line 40, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
+/* line 44, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
 .audio__playlist__item:before {
   content: normal;
   font-family: "Font-Awesome";
@@ -3633,19 +3638,19 @@ th {
   transition: .3s;
 }
 
-/* line 49, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
+/* line 53, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
 .active .audio__playlist__item {
   color: #000;
 }
 
-/* line 51, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
+/* line 55, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
 .active .audio__playlist__item:before {
   font-size: 0.5rem;
   margin-right: .3rem;
   color: #000;
 }
 
-/* line 58, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
+/* line 62, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/audio-player.scss */
 .audio__title {
   display: block;
   color: #000;
