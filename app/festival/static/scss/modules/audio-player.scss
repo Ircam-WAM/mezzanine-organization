@@ -2,11 +2,11 @@
 .audio__playlist {
 
   @media (min-width : $tablet ) {
-    width: 50%;
+    // width: 50%;
     margin: 0 auto;
   }
   @media (min-width : $desktop ) {
-    width: 33%;
+    // width: 33%;
     margin: 0;
   }
 
@@ -23,7 +23,7 @@
 }
 
 .audio__playlist {
-  max-height: 300px;
+  max-height: 250px;
   overflow: scroll;
 }
 
