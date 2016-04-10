@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-04 13:29+0200\n"
+"POT-Creation-Date: 2016-04-11 00:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,121 +18,148 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: festival/models.py:20
+#: festival/models.py:22
 msgid "left"
-msgstr ""
+msgstr "gauche"
 
-#: festival/models.py:20
+#: festival/models.py:22
 msgid "right"
-msgstr ""
+msgstr "droite"
 
-#: festival/models.py:32
+#: festival/models.py:34
 msgid "name"
-msgstr ""
+msgstr "nome"
 
-#: festival/models.py:33 festival/models.py:45
+#: festival/models.py:35 festival/models.py:47
 msgid "description"
 msgstr ""
 
-#: festival/models.py:44
+#: festival/models.py:46
 msgid "title"
-msgstr ""
+msgstr "titre"
 
-#: festival/models.py:58
+#: festival/models.py:60
 msgid "page category"
-msgstr ""
+msgstr "catégorie de page"
 
-#: festival/models.py:64
+#: festival/models.py:70
 msgid "first name"
 msgstr ""
 
-#: festival/models.py:65
+#: festival/models.py:71
 msgid "last name"
 msgstr ""
 
-#: festival/models.py:66
+#: festival/models.py:72
 msgid "biography"
-msgstr ""
+msgstr "biographie"
 
-#: festival/models.py:67
+#: festival/models.py:73
 msgid "photo"
 msgstr ""
 
-#: festival/models.py:68
+#: festival/models.py:74
 msgid "photo credits"
-msgstr ""
+msgstr "crédits photo"
 
-#: festival/models.py:69
+#: festival/models.py:75
 msgid "photo alignment"
-msgstr ""
+msgstr "alignement photo"
 
-#: festival/models.py:70
+#: festival/models.py:76
 msgid "photo description"
 msgstr ""
 
-#: festival/models.py:71
-msgid "featured"
-msgstr ""
-
-#: festival/models.py:72
+#: festival/models.py:77
 msgid "photo featured"
 msgstr ""
 
-#: festival/models.py:73
+#: festival/models.py:78
 msgid "photo featured credits"
 msgstr ""
 
-#: festival/models.py:74
+#: festival/models.py:79 festival/models.py:205
 msgid "events"
 msgstr ""
 
-#: festival/models.py:79
+#: festival/models.py:84
 msgid "artist"
 msgstr ""
 
-#: festival/models.py:117
+#: festival/models.py:122
 msgid "media id"
 msgstr ""
 
-#: festival/models.py:118
+#: festival/models.py:123
 msgid "open source URL"
 msgstr ""
 
-#: festival/models.py:119
+#: festival/models.py:124
 msgid "closed source URL"
 msgstr ""
 
-#: festival/models.py:152 festival/models.py:168 festival/models.py:187
+#: festival/models.py:125
+msgid "poster"
+msgstr ""
+
+#: festival/models.py:160 festival/models.py:176 festival/models.py:195
 msgid "event"
 msgstr ""
 
-#: festival/models.py:155
+#: festival/models.py:163
 msgid "audio"
 msgstr ""
 
-#: festival/models.py:171
+#: festival/models.py:179
 msgid "video"
 msgstr ""
 
-#: festival/models.py:186
+#: festival/models.py:194
 msgid "audios"
 msgstr ""
 
-#: festival/templates/festival/artist_detail.html:21
-msgid "Related events"
-msgstr "Événements liés"
+#: festival/models.py:204 templates/index.html:39
+#| msgid "Artists"
+msgid "artists"
+msgstr "artistes"
+
+#: festival/models.py:206 templates/index.html:47
+#| msgid "Videos"
+msgid "videos"
+msgstr "vidéos"
+
+#: festival/models.py:207
+msgid "blog posts"
+msgstr "articles"
+
+#: festival/models.py:208
+msgid "pages"
+msgstr "pages"
+
+#: festival/models.py:209
+msgid "playlists"
+msgstr ""
+
+#: festival/templates/festival/artist_detail.html:27
+#: templates/agenda/event_detail.html:157
+msgid "Also discover"
+msgstr "À découvrir aussi"
 
 #: festival/templates/festival/artist_list.html:6
-#: templates/agenda/event_detail.html:155
+#: templates/agenda/event_detail.html:160
 msgid "Artists"
 msgstr "Artistes"
 
-#: festival/templates/festival/video_detail.html:24
+#: festival/templates/festival/inc/video_card.html:10
+msgid "Play the video"
+msgstr "Jouer la vidéo"
+
+#: festival/templates/festival/video_detail.html:27
 msgid "Related event"
-msgstr "Événement lié"
+msgstr "Événement associé"
 
 #: festival/templates/festival/video_list.html:6
-#: templates/agenda/event_detail.html:160
+#: templates/agenda/event_detail.html:169
 msgid "Videos"
 msgstr "Vidéos"
 
@@ -140,19 +167,19 @@ msgstr "Vidéos"
 msgid "Content"
 msgstr ""
 
-#: sandbox/local_settings.py:83
+#: sandbox/local_settings.py:84
 msgid "Media Library"
 msgstr ""
 
-#: sandbox/local_settings.py:84
+#: sandbox/local_settings.py:85
 msgid "Site"
 msgstr ""
 
-#: sandbox/local_settings.py:85
+#: sandbox/local_settings.py:86
 msgid "Users"
 msgstr ""
 
-#: sandbox/local_settings.py:86
+#: sandbox/local_settings.py:87
 msgid "Festival"
 msgstr ""
 
@@ -164,11 +191,11 @@ msgstr ""
 msgid "Footer"
 msgstr ""
 
-#: sandbox/settings.py:101
+#: sandbox/settings.py:104
 msgid "French"
 msgstr ""
 
-#: sandbox/settings.py:102
+#: sandbox/settings.py:105
 msgid "English"
 msgstr ""
 
@@ -245,51 +272,43 @@ msgstr ""
 msgid "Sign up"
 msgstr ""
 
-#: templates/agenda/event_detail.html:34
-#: templates/agenda/includes/event_card.html:38
-msgid "Booking"
-msgstr "Réserver"
-
-#: templates/agenda/event_detail.html:44
-#: templates/agenda/includes/event_card.html:61
+#: templates/agenda/event_detail.html:45
+#: templates/agenda/includes/event_card.html:66
 #: templates/blog/blog_post_detail.html:43
-#: templates/blog/blog_post_list.html:136
+#: templates/blog/blog_post_list.html:139
 #: templates/generic/includes/comments.html:3
 msgid "Comments"
 msgstr ""
 
-#: templates/agenda/event_detail.html:47
-#: templates/agenda/includes/event_card.html:65
+#: templates/agenda/event_detail.html:48
+#: templates/agenda/includes/event_card.html:70
 #: templates/blog/blog_post_detail.html:46
-#: templates/blog/blog_post_list.html:140
+#: templates/blog/blog_post_list.html:143
 #, python-format
 msgid "%(comments_count)s comment"
 msgid_plural "%(comments_count)s comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/agenda/event_detail.html:75
-#: templates/blog/blog_post_detail.html:94
-msgid "Share on Facebook"
-msgstr "Partagez sur Facebook"
-
-#: templates/agenda/event_detail.html:76
-#: templates/blog/blog_post_detail.html:93
-#, fuzzy
-#| msgid "Share on Facebook"
-msgid "Share on Twitter"
-msgstr "Partagez sur Facebook"
-
-#: templates/agenda/event_detail.html:103
-#: templates/agenda/includes/event_card.html:47
+#: templates/agenda/event_detail.html:115
+#: templates/agenda/includes/event_card.html:52
 #: templates/agenda/includes/filter_panel.html:74
 #: templates/blog/blog_post_detail.html:74
-#: templates/blog/blog_post_list.html:121
+#: templates/blog/blog_post_list.html:124
 #: templates/blog/includes/filter_panel.html:56
 msgid "Tags"
 msgstr ""
 
-#: templates/agenda/event_detail.html:171 templates/agenda/event_list.html:77
+#: templates/agenda/event_detail.html:139
+msgid "Previous event"
+msgstr "Évenement précédent"
+
+#: templates/agenda/event_detail.html:147
+#| msgid "Related event"
+msgid "Next event"
+msgstr "Évenement suivant"
+
+#: templates/agenda/event_detail.html:183 templates/agenda/event_list.html:77
 msgid "Subscribe to all events in"
 msgstr "Abonnez-vous à tous les événements dans"
 
@@ -329,6 +348,21 @@ msgstr ""
 msgid "Viewing events by"
 msgstr ""
 
+#: templates/agenda/event_location_list.html:4
+#: templates/agenda/event_location_list.html:22
+#: templates/agenda/includes/filter_panel.html:58
+msgid "Locations"
+msgstr "Lieux"
+
+#: templates/agenda/includes/event_location.html:13
+msgid "Click to get the interactive map"
+msgstr "Cliquer pour voir la carte interactive"
+
+#: templates/agenda/includes/event_metainfo.html:12
+#: templates/agenda/includes/event_metainfo_slider.html:16
+msgid "Booking"
+msgstr "Réserver"
+
 #: templates/agenda/includes/filter_panel.html:6
 msgid "Upcoming Events"
 msgstr "Événements à venir"
@@ -342,30 +376,37 @@ msgstr "Événements récents"
 msgid "Archive"
 msgstr ""
 
-#: templates/agenda/includes/filter_panel.html:58
-msgid "Locations"
-msgstr "Lieux"
-
 #: templates/blog/blog_post_detail.html:29
-#: templates/blog/blog_post_list.html:85
 msgid "Posted by"
 msgstr ""
 
 #: templates/blog/blog_post_detail.html:33
-#: templates/blog/blog_post_list.html:97
+#: templates/blog/blog_post_list.html:100
 #: templates/generic/includes/comment.html:22
 #: templates/generic/includes/comment.html:59 templates/twitter/tweets.html:19
 #, python-format
 msgid "%(sometime)s ago"
 msgstr ""
 
+#: templates/blog/blog_post_detail.html:93
+#: templates/includes/share_buttons.html:8
+#| msgid "Share on Facebook"
+msgid "Share on Twitter"
+msgstr "Partagez sur Twitter"
+
+#: templates/blog/blog_post_detail.html:94
+#: templates/includes/share_buttons.html:5
+msgid "Share on Facebook"
+msgstr "Partagez sur Facebook"
+
 #: templates/blog/blog_post_detail.html:119
 msgid "Related posts"
-msgstr ""
+msgstr "Articles associés"
 
 #: templates/blog/blog_post_list.html:4 templates/blog/blog_post_list.html:22
-msgid "Blog"
-msgstr ""
+#| msgid "Artists"
+msgid "Articles"
+msgstr "Articles"
 
 #: templates/blog/blog_post_list.html:33
 msgid "Category:"
@@ -387,13 +428,13 @@ msgstr ""
 msgid "Viewing posts by"
 msgstr ""
 
-#: templates/blog/blog_post_list.html:91
+#: templates/blog/blog_post_list.html:94
 msgid "in"
 msgstr ""
 
-#: templates/blog/blog_post_list.html:130 templates/search_results.html:47
+#: templates/blog/blog_post_list.html:133 templates/search_results.html:47
 msgid "read more"
-msgstr ""
+msgstr "lire plus"
 
 #: templates/blog/includes/filter_panel.html:6
 msgid "Recent Posts"
@@ -571,6 +612,10 @@ msgstr ""
 msgid "Rate"
 msgstr ""
 
+#: templates/includes/calendar.html:3
+msgid "Festival calendar"
+msgstr "Calendrier du festival"
+
 #: templates/includes/editable_form.html:16
 msgid "Save"
 msgstr ""
@@ -597,7 +642,7 @@ msgstr ""
 
 #: templates/includes/search_form.html:4
 msgid "Search"
-msgstr ""
+msgstr "Rechercher"
 
 #: templates/includes/search_form.html:11
 msgid "Everything"
@@ -606,6 +651,14 @@ msgstr ""
 #: templates/includes/search_form.html:22
 msgid "Go"
 msgstr ""
+
+#: templates/includes/share_buttons.html:11
+msgid "Share by email"
+msgstr "Partager par email"
+
+#: templates/includes/share_buttons.html:14
+msgid "Print this page"
+msgstr "Imprimer cette page"
 
 #: templates/index.html:4 templates/index.html.py:7
 #: templates/pages/menus/breadcrumb.html:4
@@ -617,9 +670,43 @@ msgstr ""
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/index.html:10
+#: templates/index.html:14
 msgid "Edito"
 msgstr "Édito"
+
+#: templates/index.html:19
+msgid "Read more"
+msgstr "Lire plus"
+
+#: templates/index.html:25
+msgid "Featured"
+msgstr "À la une"
+
+#: templates/index.html:29
+msgid "Article"
+msgstr "Article"
+
+#: templates/index.html:31 templates/index.html.py:39 templates/index.html:47
+msgid "All"
+msgstr "Tout"
+
+#: templates/index.html:31
+msgid "articles"
+msgstr ""
+
+#: templates/index.html:37
+#| msgid "Artists"
+msgid "Artist"
+msgstr "Artiste"
+
+#: templates/index.html:45
+#| msgid "Videos"
+msgid "Video"
+msgstr "Vidéo"
+
+#: templates/index.html:53
+msgid "Playlist"
+msgstr "Playlist"
 
 #: templates/pages/form.html:24
 msgid "Submit"
@@ -656,3 +743,6 @@ msgstr ""
 #: templates/twitter/tweets.html:7
 msgid "Recent Tweets"
 msgstr "Tweets récents"
+
+#~ msgid "Related events"
+#~ msgstr "Événements associés"
