@@ -12,7 +12,8 @@
         {% endif %}
         {% if event.location %}
         {# <a href="{% url "event_list_location" event.location.slug %}" class="event__meta__location">{{ event.location }}</a>#}
-        <span class="event__meta__location">{{ event.location }}</span>
+        <br />
+        <a href="{% url 'location-detail' event.location.slug %}">{{ event.location }}</a>
         {% endif %}
     </div>
 </div>

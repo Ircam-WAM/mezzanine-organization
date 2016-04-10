@@ -89,10 +89,11 @@
 </div>
 {% endblock %}
 
+{% comment %}
 {% if event.location %}
 <h3 class="section__title">Le lieu :</h3>
 {% block event_detail_location %}
-{% editable event.location %}
+<a href="{% url 'location-detail' event.location.slug %}">{{ event.location }}</a>
 <p>
     <p>{{ event.location }} {{ event.location.address|linebreaksbr }}</p>
     <a href="{{ event|google_nav_url }}" target="_blank">
@@ -102,9 +103,9 @@
 <a href="{{ event|google_nav_url }}" target="_blank" class="">
  {% google_static_map event 900 300 15 %}
 </a/>
-{% endeditable %}
 {% endblock %}
 {% endif %}
+{% endcomment %}
 
 {% block event_detail_keywords %}
 {% keywords_for event as tags %}

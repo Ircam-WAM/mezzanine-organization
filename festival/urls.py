@@ -14,5 +14,4 @@ urlpatterns = [
     url(r'^artists/(?P<slug>.*)/$', ArtistDetailView.as_view(), name="festival-artist-detail"),
     url(r'^videos/$', VideoListView.as_view(), name="festival-video-list"),
     url(r'^videos/(?P<slug>.*)/$', VideoDetailView.as_view(), name="festival-video-detail"),
-    url(r'^locations/$', LocationListView.as_view(), name="festival-location-list"),
 ]

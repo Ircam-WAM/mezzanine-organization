@@ -1,6 +1,6 @@
 from modeltranslation.translator import register, TranslationOptions
 
-from mezzanine_agenda.models import Event
+from mezzanine_agenda.models import Event, EventLocation
 from festival.models import *
 
 
@@ -9,6 +9,10 @@ class EventTranslationOptions(TranslationOptions):
 
     fields = ('title', 'description', 'content')
 
+@register(EventLocation)
+class EventLocationTranslationOptions(TranslationOptions):
+
+    fields = ('description',)
 
 @register(Artist)
 class ArtistTranslationOptions(TranslationOptions):
