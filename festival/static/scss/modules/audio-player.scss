@@ -24,7 +24,11 @@
 
 .audio__playlist {
   max-height: 250px;
-  overflow: scroll;
+  overflow-y: scroll;
+}
+
+.audio__playlist::-webkit-scrollbar {
+    display: none;
 }
 
 .audio__player {
