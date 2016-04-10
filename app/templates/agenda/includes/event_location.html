@@ -1,0 +1,16 @@
+{% load i18n future mezzanine_tags event_tags %}
+
+<div class="c-tab__content">
+    <h3 class="location__title">{% if location.featured_name %}{{ location.featured_name }}{% else %}{{ location.title }}{% endif %}</h3>
+        {% block event_detail_location %}
+        <p>
+            {{ location.address }}<br />
+            <a href="{{ location.link }}" target="_blank">{{ location.link }}</a><br />
+        </p>
+        <a href="{{ location|google_nav_url }}" target="_blank" class="location__map">
+          {% google_static_map location 900 300 15 %}
+      </a/><br />
+        <a href="{{ location|google_nav_url }}" target="_blank" class="">{% trans "Click to get the interactive map" %}</a>
+        <p>{{ location.description|safe }}</p>
+        {% endblock %}
+</div>

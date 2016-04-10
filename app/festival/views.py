@@ -54,13 +54,3 @@ class VideoDetailView(SlugMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(VideoDetailView, self).get_context_data(**kwargs)
         return context
-
-
-class LocationListView(ListView):
-
-    model = EventLocation
-    template_name='agenda/event_location_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(LocationListView, self).get_context_data(**kwargs)
-        return context
