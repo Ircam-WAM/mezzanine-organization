@@ -101,5 +101,6 @@ EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
 EVENT_SHOP_URL = 'http://eve.ircam.fr/manifeste.php/manifestation/'
+EVENT_PASS_URL = 'http://eve.ircam.fr/manifeste.php/pass/'
 
 TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
