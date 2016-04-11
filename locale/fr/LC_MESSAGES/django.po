@@ -688,11 +688,11 @@ msgstr "Article"
 
 #: templates/index.html:31 templates/index.html.py:39 templates/index.html:47
 msgid "All"
-msgstr "Tout"
+msgstr "Tous les"
 
 #: templates/index.html:31
 msgid "articles"
-msgstr ""
+msgstr "articles"
 
 #: templates/index.html:37
 #| msgid "Artists"
