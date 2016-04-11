@@ -80,11 +80,11 @@
 <div class="push__calendar">
     <a href='{{ event|google_calendar_url }}' target="_blank" class="push__calendar__item">
         <i class="icon icon__calendar"></i>
-        Add to Google Calendar
+        {% trans "Add to" %} Google Calendar
     </a>
     <a href='{% icalendar_url %}' class="push__calendar__item">
         <i class="icon icon__windows"></i>
-        Add to Outlook/iCal
+        {% trans "Add to" %} Outlook/iCal
     </a>
 </div>
 {% endblock %}

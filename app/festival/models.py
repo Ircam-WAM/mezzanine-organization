@@ -115,6 +115,13 @@ class Artist(Displayable, RichText, AdminThumbMixin):
         self.set_names()
         super(Artist, self).save(*args, **kwargs)
 
+    @property
+    def featured_image(self):
+        if self.photo_featured:
+            return self.photo_featured
+        else:
+            return self.photo
+
 
 class Media(Displayable, RichText):
     """Media"""
