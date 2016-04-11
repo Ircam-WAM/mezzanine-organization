@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="video__card  msry__item">
+<div class="video__card  {% if not on_home %}msry__item {% endif %}">
     <div class="video__card__thumbnail">
         <img src="{{ video.poster_url }}" alt="">
     </div>
