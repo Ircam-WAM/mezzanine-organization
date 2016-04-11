@@ -1,13 +1,13 @@
 // Heading fonts
-@include font-face($interstate, "../fonts/interstate/interstate-regular-webfont", $regular, normal, eot woff woff2);
-@include font-face($interstate, "../fonts/interstate/interstate-bold-webfont", $bold, normal, woff woff2);
+@include font-face($interstate, "../fonts/interstate/interstate-regular-webfont", $regular, normal, woff woff2 eot);
+@include font-face($interstate, "../fonts/interstate/interstate-bold-webfont", $bold, normal, woff woff2 eot);
 
 // Slab fonts
-@include font-face($triplex, "../fonts/triplex/triplexserif-light-webfont", $regular, normal, eot svg ttf);
-@include font-face($triplex, "../fonts/triplex/triplexserif-bold-webfont", $bold, normal, eot svg ttf);
+@include font-face($triplex, "../fonts/triplex/triplexserif-light-webfont", $regular, normal, svg ttf eot);
+@include font-face($triplex, "../fonts/triplex/triplexserif-bold-webfont", $bold, normal, svg ttf eot);
 
 // Icon-font
-@include font-face($icon-font, "../fonts/font-awesome/fontawesome-webfont", normal, normal, eot woff woff2);
+@include font-face($icon-font, "../fonts/font-awesome/fontawesome-webfont", normal, normal, woff woff2 eot);
 
 // ****************************************************************
 // _BaseTypographicStyles
