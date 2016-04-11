@@ -60,7 +60,7 @@ gulp.task('css', function () {
     return gulp.src( scssSrc + 'index.scss'  )
         .pipe(sass({
             outputStyle : output,
-            sourceComments: 'normal'
+            // sourceComments: 'normal'
         })
         .on('error', notify.onError("Error: <%= error.message %>")))
         .pipe(postcss(processors))
