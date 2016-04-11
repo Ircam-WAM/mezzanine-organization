@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 00:18+0200\n"
+"POT-Creation-Date: 2016-04-11 10:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,12 +119,10 @@ msgid "audios"
 msgstr ""
 
 #: festival/models.py:204 templates/index.html:39
-#| msgid "Artists"
 msgid "artists"
 msgstr "artistes"
 
 #: festival/models.py:206 templates/index.html:47
-#| msgid "Videos"
 msgid "videos"
 msgstr "vidéos"
 
@@ -304,7 +302,6 @@ msgid "Previous event"
 msgstr "Évenement précédent"
 
 #: templates/agenda/event_detail.html:147
-#| msgid "Related event"
 msgid "Next event"
 msgstr "Évenement suivant"
 
@@ -390,7 +387,6 @@ msgstr ""
 
 #: templates/blog/blog_post_detail.html:93
 #: templates/includes/share_buttons.html:8
-#| msgid "Share on Facebook"
 msgid "Share on Twitter"
 msgstr "Partagez sur Twitter"
 
@@ -404,7 +400,6 @@ msgid "Related posts"
 msgstr "Articles associés"
 
 #: templates/blog/blog_post_list.html:4 templates/blog/blog_post_list.html:22
-#| msgid "Artists"
 msgid "Articles"
 msgstr "Articles"
 
@@ -682,11 +677,7 @@ msgstr "Lire la suite"
 msgid "Featured"
 msgstr "À la une"
 
-#: templates/index.html:29
-msgid "Article"
-msgstr "Article"
-
-#: templates/index.html:31 templates/index.html.py:39 templates/index.html:47
+#: templates/index.html:31 templates/index.html.py:39
 msgid "All"
 msgstr "Tous les"
 
@@ -694,19 +685,11 @@ msgstr "Tous les"
 msgid "articles"
 msgstr "articles"
 
-#: templates/index.html:37
-#| msgid "Artists"
-msgid "Artist"
-msgstr "Artiste"
-
-#: templates/index.html:45
-#| msgid "Videos"
-msgid "Video"
-msgstr "Vidéo"
-
-#: templates/index.html:53
-msgid "Playlist"
-msgstr "Playlist"
+#: templates/index.html:47
+#| msgid "All"
+msgctxt "fem"
+msgid "All"
+msgstr "Toutes les"
 
 #: templates/pages/form.html:24
 msgid "Submit"
@@ -743,6 +726,20 @@ msgstr ""
 #: templates/twitter/tweets.html:7
 msgid "Recent Tweets"
 msgstr "Tweets récents"
+
+#~ msgid "Article"
+#~ msgstr "Article"
+
+#~| msgid "Artists"
+#~ msgid "Artist"
+#~ msgstr "Artiste"
+
+#~| msgid "Videos"
+#~ msgid "Video"
+#~ msgstr "Vidéo"
+
+#~ msgid "Playlist"
+#~ msgstr "Playlist"
 
 #~ msgid "Related events"
 #~ msgstr "Événements associés"

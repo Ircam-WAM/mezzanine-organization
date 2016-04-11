@@ -44,7 +44,7 @@
     <div class="last__media__entry">
         {# <span>{% trans "Video" %}</span>#}
         {% include 'festival/inc/video_card.html' %}
-        <a href="{% url 'festival-video-list' %}" class="btn btn-full">{% trans "All" %} {% trans "videos" %}</a>
+        <a href="{% url 'festival-video-list' %}" class="btn btn-full">{% trans "All" context "fem" %} {% trans "videos" %}</a>
     </div>
     {% endfor %}
 
