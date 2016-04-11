@@ -108,6 +108,6 @@ gulp.task('default', ['css', 'jsLibs'], function () {
 });
 
 // Build tasks
-gulp.task( "build", [ 'envProduction', 'css', 'jsScriptsBuild'], function () {
+gulp.task( "build", [ 'envProduction', 'css'], function () {
     console.log("Build complete !");
 });
