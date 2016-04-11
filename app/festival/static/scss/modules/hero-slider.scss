@@ -1,4 +1,14 @@
 .hero__slider {
+    #lightSlider {
+    overflow: hidden;
+    max-height: 0;
+    transition: .5s ease-in-out;
+    }
+
+    &.is-ready #lightSlider {
+        overflow: visible;
+        max-height: 900px;
+    }
 
 }
 

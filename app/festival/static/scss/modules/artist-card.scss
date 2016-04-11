@@ -3,6 +3,19 @@
     margin-top: 0;
 }
 
+// .msry__container {
+
+//   .artist__item {
+//     opacity: 0;
+//     transition: .3s;
+//   }
+
+//   &.is-ready .artist__item {
+//     opacity: 1;
+//   }
+
+// }
+
 .artist__sizer,
 .msry__sizer,
 .artist__item {
@@ -36,6 +49,7 @@
   &__img {
     margin: 0;
     padding: 0;
+    // min-height: 100px;
   }
 
   img {

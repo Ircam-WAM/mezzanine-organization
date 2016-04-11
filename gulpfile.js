@@ -60,7 +60,7 @@ gulp.task('css', function () {
     return gulp.src( scssSrc + 'index.scss'  )
         .pipe(sass({
             outputStyle : output,
-            // sourceComments: 'normal'
+            sourceComments: 'normal'
         })
         .on('error', notify.onError("Error: <%= error.message %>")))
         .pipe(postcss(processors))
@@ -103,7 +103,7 @@ gulp.task('jsLibs', function() {
 
 // default task (development)
 gulp.task('default', ['css', 'jsLibs'], function () {
-    gulp.watch( scssSrc + '/**/*.scss', ['css']);
+    gulp.watch( scssSrc + '**/*.scss', ['css']);
     gulp.watch( jsSrc + 'plugins/*.js', ['jsLibs']);
 });
 

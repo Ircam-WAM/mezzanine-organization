@@ -5,7 +5,7 @@
         {% if event.featured_image %}
             {% block event_list_event_featured_image %}
                 <a href="{{ event.get_absolute_url }}" class="event__thumbnail">
-                    <img src="{{ MEDIA_URL }}{% thumbnail event.featured_image 500 500 %}">
+                    <img src="{{ MEDIA_URL }}{% thumbnail event.featured_image 500 500 %}" width="500" height="500">
                 </a>
             {% endblock %}
         {% endif %}
