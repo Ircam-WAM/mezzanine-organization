@@ -1,4 +1,4 @@
-<div class="artist__item msry__item">
+<div class="artist__item {% if not on_home %}msry__item {% endif %}">
     <div class="artist__item__inner">
         <a href="{% url 'blog_post_detail' post.slug %}" class="artist__item__inner">
             <figure class="artist__item__img">
