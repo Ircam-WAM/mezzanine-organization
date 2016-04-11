@@ -11,6 +11,7 @@ $(function() {
             percentPosition: true,
             columnWidth: '.msry__sizer'
         });
+        $grid.addClass('is-ready');
     });
 
     /**
@@ -79,7 +80,10 @@ $(function() {
         responsive: [],
 
         onBeforeStart: function(el) {},
-        onSliderLoad: function(el) {},
+        onSliderLoad: function(el) {
+            $(".hero__slider").addClass('is-ready');
+            console.log('is-ready');
+        },
         onBeforeSlide: function(el) {},
         onAfterSlide: function(el) {
             // el.find('.container').fadeIn();
@@ -107,15 +111,10 @@ $(function() {
      * @author Philippe Barbosa
      */
 
-    // Ircam user ID : 1343260619
-    // Client ID eeed5acba6ce490798253ce5c09a1852
-    // Client secret ef3f37ce39c54db1b5145de40fb56c68
-
     var t = new Instafeed({
         get: "user",
         userId: 1343260619,
         accessToken: "2985811.467ede5.2d850141659d4a5fab04f28187e580cd",
-        resolution: "standard_resolution",
         sortBy: "most-recent",
         limit: 8,
         template: '<div class="box-item-25"> <a href="{{link}}" target="_blank"> <img src="{{image}}" alt="{{caption}}"></a></div>',
