@@ -60,7 +60,7 @@ gulp.task('css', function () {
     return gulp.src( scssSrc + 'index.scss'  )
         .pipe(sass({
             outputStyle : output,
-            sourceComments: 'normal'
+            // sourceComments: 'normal'
         })
         .on('error', notify.onError("Error: <%= error.message %>")))
         .pipe(postcss(processors))
@@ -108,6 +108,6 @@ gulp.task('default', ['css', 'jsLibs'], function () {
 });
 
 // Build tasks
-gulp.task( "build", [ 'envProduction', 'css', 'jsScriptsBuild'], function () {
+gulp.task( "build", [ 'envProduction', 'css'], function () {
     console.log("Build complete !");
 });
