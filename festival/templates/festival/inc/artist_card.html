@@ -1,8 +1,10 @@
+{% load i18n pages_tags mezzanine_tags %}
+
 <div class="artist__item msry__item">
     <div class="artist__item__inner">
         <a href="{% url 'festival-artist-detail' artist.slug %}" class="artist__item__inner">
             <figure class="artist__item__img">
-                <img src="{% if artist.photo_featured %}{{ artist.photo_featured.url }}{% elif artist.photo %}/{{ artist.photo.url }}{% else %}{% endif %}" alt="Portrait {{ artist.name }}">
+                <img src="{{ MEDIA_URL }}{% thumbnail artist.featured_image 500 0 %}" alt="Portrait {{ artist.name }}">
             </figure>
             <h3 class="artist__item__name">
                 <span>
