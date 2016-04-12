@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 23:54+0200\n"
+"POT-Creation-Date: 2016-04-12 12:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -341,11 +341,11 @@ msgstr ""
 msgid "Viewing events for the location"
 msgstr "Les événements du lieu"
 
-#: templates/agenda/event_list.html:53
+#: templates/agenda/event_list.html:54 templates/agenda/event_list.html:56
 msgid "Viewing events from"
 msgstr "Les événements du"
 
-#: templates/agenda/event_list.html:56
+#: templates/agenda/event_list.html:59
 msgid "Viewing events by"
 msgstr "Les événements par"
 
@@ -673,13 +673,9 @@ msgstr "Imprimer cette page"
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/index.html:14
-msgid "Edito"
-msgstr "Édito"
-
 #: templates/index.html:19
-msgid "Read more"
-msgstr "Lire la suite"
+msgid "Read the edito"
+msgstr "Lire l'édito"
 
 #: templates/index.html:25
 msgid "Featured"
@@ -733,6 +729,12 @@ msgstr ""
 #: templates/twitter/tweets.html:7
 msgid "Recent Tweets"
 msgstr "Tweets récents"
+
+#~ msgid "Edito"
+#~ msgstr "Édito"
+
+#~ msgid "Read more"
+#~ msgstr "Lire la suite"
 
 #~ msgid "Article"
 #~ msgstr "Article"

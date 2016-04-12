@@ -11,12 +11,12 @@
 
 {% block main %}
 
-<h2 class="section__title">{% trans "Edito" %}</h2>
+{# <h2 class="section__title">{% trans "Edito" %}</h2>#}
 
 {% featured_edito as edito %}
 {{ edito.content|safe|slice:":446" }}...
 <br>
-<a href="{% url 'page' edito.slug %}" class="event__meta__btn">{% trans "Read more" %}</a>
+<a href="{% url 'page' edito.slug %}" class="event__meta__btn">{% trans "Read the edito" %}</a>
 <br>
 
 {% featured as featured %}
