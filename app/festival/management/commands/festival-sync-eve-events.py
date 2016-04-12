@@ -73,7 +73,8 @@ class Command(BaseCommand):
                 for price in eve_prices:
                     event_price, c = ma_models.EventPrice.objects.get_or_create(value=float(price.value))
                     if event:
-                        event.prices.add(event_price)
+                        if not event_price in event.prices:
+                            event.prices.add(event_price)
 
                 if not first:
                     event.parent = parent
