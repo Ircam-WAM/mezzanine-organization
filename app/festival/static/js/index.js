@@ -112,7 +112,8 @@ $(function() {
      */
 
     var t = new Instafeed({
-        get: "user",
+        get: 'tagged',
+        tagName: 'manifeste16',
         userId: 1343260619,
         accessToken: "2985811.467ede5.2d850141659d4a5fab04f28187e580cd",
         sortBy: "most-recent",
