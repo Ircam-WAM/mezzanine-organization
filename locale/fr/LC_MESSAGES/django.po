@@ -339,15 +339,15 @@ msgstr ""
 
 #: templates/agenda/event_list.html:51
 msgid "Viewing events for the location"
-msgstr ""
+msgstr "Les événements du lieu"
 
 #: templates/agenda/event_list.html:53
 msgid "Viewing events from"
-msgstr ""
+msgstr "Les événements du"
 
 #: templates/agenda/event_list.html:56
 msgid "Viewing events by"
-msgstr ""
+msgstr "Les événements par"
 
 #: templates/agenda/event_location_list.html:4
 #: templates/agenda/event_location_list.html:22
@@ -421,11 +421,11 @@ msgstr ""
 
 #: templates/blog/blog_post_list.html:52
 msgid "Viewing posts for the category"
-msgstr ""
+msgstr "Les articles de la catégorie"
 
 #: templates/blog/blog_post_list.html:54
 msgid "Viewing posts from"
-msgstr ""
+msgstr "Les articles postés depuis"
 
 #: templates/blog/blog_post_list.html:57
 msgid "Viewing posts by"

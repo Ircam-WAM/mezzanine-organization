@@ -47,15 +47,18 @@
     <p>
     {% if tag %}
         {% trans "Viewing events tagged" %} {{ tag }}
-    {% else %}{% if location %}
+    {% elif location %}
         {% trans "Viewing events for the location" %} {{ location }}
-    {% else %}{% if year or month %}
-        {% trans "Viewing events from" %} {% if month %}{{ month }}, {% endif %}
-        {{ year }}
-    {% else %}{% if author %}
+    {% elif year or month %}
+      {% if not day %}
+         {% trans "Viewing events from" %} {% if month %}{{ month }}, {% endif %}{{ year }}
+      {% else %}
+         {% trans "Viewing events from" %} {{ day_date }}
+      {% endif %}
+    {% elif author %}
         {% trans "Viewing events by" %}
         {{ author.get_full_name|default:author.username }}
-    {% endif %}{% endif %}{% endif %}{% endif %}
+    {% endif %}
     {% endblock %}
     </p>
 {% else %}
