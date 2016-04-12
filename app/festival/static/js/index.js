@@ -82,7 +82,6 @@ $(function() {
         onBeforeStart: function(el) {},
         onSliderLoad: function(el) {
             $(".hero__slider").addClass('is-ready');
-            console.log('is-ready');
         },
         onBeforeSlide: function(el) {},
         onAfterSlide: function(el) {
