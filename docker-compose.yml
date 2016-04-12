@@ -52,6 +52,7 @@ app:
   command: /bin/sh deploy/start_app.sh
   volumes:
     - ./app/:/srv/app
+    - ./lib/mezzanine-agenda/:/srv/lib/mezzanine-agenda
   volumes_from:
     - data
   expose:
