@@ -25,7 +25,8 @@
 .share__link__item {
   text-transform: uppercase;
   margin-right: 1rem;
-  display: block;
+  // display: block;
+  font-size: 0.75rem;
   .icon {
     color: darken($main_color, 25);
     font-size: 1.1rem;
