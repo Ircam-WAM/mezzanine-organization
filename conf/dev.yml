@@ -25,3 +25,5 @@ app:
     - ./app/:/srv/app
   ports:
     - "9010:8000"
+  environment:
+    - DEBUG='True'
