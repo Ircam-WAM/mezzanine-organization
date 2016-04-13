@@ -132,12 +132,11 @@
 {% endcomment %}
 
 {% block event_previous_next %}
-<hr/>
 <ul class="split-container pager">
     {% with event.get_previous_by_publish_date as previous %}
         {% if previous %}
             <li class="split-left">
-                <a href="{{ previous.get_absolute_url }}" class="pager__item--before">&larr; {% trans "Previous event" %}</a>
+                <a href="{{ previous.get_absolute_url }}" class="pager__item--before event__meta__btn">&larr; {% trans "Previous event" %}</a>
             </li>
         {% endif %}
     {% endwith %}
@@ -145,7 +144,7 @@
     {% with event.get_next_by_publish_date as next %}
         {% if next %}
             <li class="split-right">
-                <a href="{{ next.get_absolute_url }}" class="pager__item--after">{% trans "Next event" %} &rarr;</a>
+                <a href="{{ next.get_absolute_url }}" class="pager__item--after event__meta__btn">{% trans "Next event" %} &rarr;</a>
             </li>
         {% endif %}
     {% endwith %}
@@ -154,7 +153,6 @@
 
 {% block event_related %}
 
-<hr style="margin-top: 1rem;">
 <h2 class="section__title">{% trans "Also discover" %}</h2>
 
 <div class="msry__container">
