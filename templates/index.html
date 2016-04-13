@@ -31,7 +31,7 @@
         <div class="last__media__entry  msry__item">
              {# <span>{% trans "Article" %}</span>#}
              {% include 'blog/includes/post_card.html' %}
-             <a href="{% url 'blog_post_list' %}" class="btn btn-full">{% trans "All" %} {% trans "articles" %}</a>
+             <a href="{% url 'blog_post_list' %}" class="btn btn-full">{% trans "More" context "apos" %} {% trans "articles" %}</a>
         </div>
         {% endfor %}
 
@@ -39,7 +39,7 @@
         <div class="last__media__entry  msry__item">
              {# <span>{% trans "Artist" %}</span>#}
              {% include "festival/inc/artist_card.html" %}
-             <a href="{% url 'festival-artist-list' %}" class="btn btn-full">{% trans "All" %} {% trans "artists" %}</a>
+             <a href="{% url 'festival-artist-list' %}" class="btn btn-full">{% trans "More" context "apos" %} {% trans "artists" %}</a>
         </div>
         {% endfor %}
 
@@ -47,7 +47,7 @@
         <div class="last__media__entry  msry__item">
             {# <span>{% trans "Video" %}</span>#}
             {% include 'festival/inc/video_card.html' %}
-            <a href="{% url 'festival-video-list' %}" class="btn btn-full">{% trans "All" context "fem" %} {% trans "videos" %}</a>
+            <a href="{% url 'festival-video-list' %}" class="btn btn-full">{% trans "More" %} {% trans "videos" %}</a>
         </div>
         {% endfor %}
 

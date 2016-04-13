@@ -25,13 +25,12 @@
 <hr style="margin-top: 3rem;">
 {% if artist.events.all %}
 <h2 class="section__title">{% trans "Also discover" %}</h2> <br>
-
+<div class="msry__container">
+ <div class="msry__sizer"></div>
 {% for event in artist.events.all %}
  {% include 'agenda/includes/event_card.html' %}
 {% endfor %}
-
-<div class="row">
-    {% for event in artist.events.all %}
+{% for event in artist.events.all %}
     {% for video in event.videos.all %}
         {% include 'festival/inc/video_card.html' %}
     {% endfor %}
