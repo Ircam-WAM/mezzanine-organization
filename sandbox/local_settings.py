@@ -1,7 +1,7 @@
 import os
 from django.utils.translation import ugettext_lazy as _
 
-DEBUG = True
+DEBUG = False
 
 # Make these unique, and don't share it with anybody.
 SECRET_KEY = "+3b01&_6_m@@yb4f06$s0zno8vkybh81nbuj_q(xzk+xeih1+s"
