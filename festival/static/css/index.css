@@ -2957,20 +2957,32 @@ th {
   font: 700 0.7rem "Interstate", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* line 88, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/artist-card.scss */
+/* line 86, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/artist-card.scss */
+.artist__item__date {
+  display: block;
+  width: 100%;
+  padding: 0rem;
+  text-align: center;
+  background: white;
+  margin: 0;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+/* line 99, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/artist-card.scss */
 .artist__figure {
   position: relative;
   padding: 0;
   margin: 0;
 }
 
-/* line 92, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/artist-card.scss */
+/* line 103, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/artist-card.scss */
 .artist__figure img {
   display: block;
   position: relative;
 }
 
-/* line 97, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/artist-card.scss */
+/* line 108, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/artist-card.scss */
 .artist__figure__copyright {
   position: absolute;
   bottom: 0;
