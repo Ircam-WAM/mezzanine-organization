@@ -132,6 +132,7 @@
 {% endcomment %}
 
 {% block event_previous_next %}
+<hr/>
 <ul class="split-container pager">
     {% with event.get_previous_by_publish_date as previous %}
         {% if previous %}
@@ -153,7 +154,7 @@
 
 {% block event_related %}
 
-<hr style="margin-top: 3rem;">
+<hr style="margin-top: 1rem;">
 <h2 class="section__title">{% trans "Also discover" %}</h2>
 
 <div class="msry__container">
