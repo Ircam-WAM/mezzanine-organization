@@ -85,7 +85,8 @@ ADMIN_MENU_ORDER = (
     (_("Site"), ("sites.Site", "redirects.Redirect", "conf.Setting")),
     (_("Users"), ("auth.User", "auth.Group",)),
     (_("Festival"), ("mezzanine_agenda.EventLocation",
-        "mezzanine_agenda.EventCategory", "festival.PageCategory")),
+        "mezzanine_agenda.EventCategory", "festival.PageCategory",
+        "festival.EventPrice")),
 )
 
 SEARCH_MODEL_CHOICES = ()
@@ -104,3 +105,5 @@ EVENT_SHOP_URL = 'http://eve.ircam.fr/manifeste.php/manifestation/'
 EVENT_PASS_URL = 'http://eve.ircam.fr/manifeste.php/pass/'
 
 TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
+
+SLUGIFY = 'django.template.defaultfilters.slugify'
