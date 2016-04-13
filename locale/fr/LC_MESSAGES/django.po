@@ -80,11 +80,11 @@ msgstr ""
 
 #: festival/models.py:79 festival/models.py:212
 msgid "events"
-msgstr ""
+msgstr "événements"
 
 #: festival/models.py:84
 msgid "artist"
-msgstr ""
+msgstr "artiste"
 
 #: festival/models.py:129
 msgid "media id"
@@ -104,7 +104,7 @@ msgstr ""
 
 #: festival/models.py:167 festival/models.py:183 festival/models.py:202
 msgid "event"
-msgstr ""
+msgstr "événement"
 
 #: festival/models.py:170
 msgid "audio"
