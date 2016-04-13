@@ -156,24 +156,19 @@
 <hr style="margin-top: 3rem;">
 <h2 class="section__title">{% trans "Also discover" %}</h2>
 
+<div class="msry__container">
+ <div class="msry__sizer"></div>
 {% if event.artists.all %}
-<h3 class="section__title">{% trans "Artists" %}</h3>
-<div class="row">
     {% for artist in event.artists.all %}
         {% include "festival/inc/artist_card.html" %}
     {% endfor %}
-</div>
 {% endif %}
-
 {% if event.videos.all %}
-<h3 class="section__title">{% trans "Videos" %}</h3>
-<div class="row">
     {% for video in event.videos.all %}
         {% include 'festival/inc/video_card.html' %}
     {% endfor %}
-</div>
 {% endif %}
-
+</div>
 {% endblock %}
 
 {% block event_detail_comments %}
