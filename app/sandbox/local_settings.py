@@ -85,8 +85,8 @@ ADMIN_MENU_ORDER = (
     (_("Site"), ("sites.Site", "redirects.Redirect", "conf.Setting")),
     (_("Users"), ("auth.User", "auth.Group",)),
     (_("Festival"), ("mezzanine_agenda.EventLocation",
-        "mezzanine_agenda.EventCategory", "festival.PageCategory",
-        "festival.EventPrice")),
+        "mezzanine_agenda.EventCategory", "mezzanine_agenda.EventPrice",
+        "festival.PageCategory",)),
 )
 
 SEARCH_MODEL_CHOICES = ()
