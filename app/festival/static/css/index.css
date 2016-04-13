@@ -3189,16 +3189,20 @@ th {
 .pager {
   display: block;
   margin: 0.5rem auto;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  padding-left: 0;
 }
 
-/* line 10, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/pager.scss */
+/* line 13, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/pager.scss */
 .pager__item--before,
 .pager__item--after {
   display: block;
   text-transform: uppercase;
+  font-size: 0.75rem;
 }
 
-/* line 16, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/pager.scss */
+/* line 20, /home/yomguy/dev/IRCAM/Manifeste/app/festival/static/scss/modules/pager.scss */
 .formContent {
   background: #000;
 }
