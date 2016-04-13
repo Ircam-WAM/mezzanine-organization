@@ -83,6 +83,17 @@
         }
       }
   }
+  &__date {
+      display: block;
+      width: 100%;
+      padding: 0rem;
+      text-align: center;
+    //   text-transform: uppercase;
+      background: white;
+      margin: 0;
+      font-size: 0.85rem;
+      color: #888;
+  }
 }
 
   .artist__figure {

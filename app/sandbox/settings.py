@@ -237,7 +237,6 @@ MODELTRANSLATION_TRANSLATION_FILES = (
     'translations',
 )
 
-
 TEMPLATES = [{'APP_DIRS': True,
                'BACKEND': 'django.template.backends.django.DjangoTemplates',
                'DIRS': ('/srv/app/templates',),

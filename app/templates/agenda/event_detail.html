@@ -76,6 +76,7 @@
     {% include "includes/share_buttons.html" %}
   {% endwith %}
 {% endblock %}
+
 {% block event_detail_calendar %}
 <div class="push__calendar">
     <a href='{{ event|google_calendar_url }}' target="_blank" class="push__calendar__item">
@@ -133,18 +134,18 @@
 
 {% block event_previous_next %}
 <ul class="split-container pager">
-    {% with event.get_previous_by_publish_date as previous %}
+    {% with event.get_previous_by_start_date as previous %}
         {% if previous %}
             <li class="split-left">
-                <a href="{{ previous.get_absolute_url }}" class="pager__item--before">&larr; {% trans "Previous event" %}</a>
+                <a href="{{ previous.get_absolute_url }}" class="pager__item--before event__meta__btn">&larr; {% trans "Previous event" %}</a>
             </li>
         {% endif %}
     {% endwith %}
 
-    {% with event.get_next_by_publish_date as next %}
+    {% with event.get_next_by_start_date as next %}
         {% if next %}
             <li class="split-right">
-                <a href="{{ next.get_absolute_url }}" class="pager__item--after">{% trans "Next event" %} &rarr;</a>
+                <a href="{{ next.get_absolute_url }}" class="pager__item--after event__meta__btn">{% trans "Next event" %} &rarr;</a>
             </li>
         {% endif %}
     {% endwith %}
@@ -153,27 +154,21 @@
 
 {% block event_related %}
 
-<hr style="margin-top: 3rem;">
 <h2 class="section__title">{% trans "Also discover" %}</h2>
 
+<div class="msry__container">
+ <div class="msry__sizer"></div>
 {% if event.artists.all %}
-<h3 class="section__title">{% trans "Artists" %}</h3>
-<div class="row">
     {% for artist in event.artists.all %}
         {% include "festival/inc/artist_card.html" %}
     {% endfor %}
-</div>
 {% endif %}
-
 {% if event.videos.all %}
-<h3 class="section__title">{% trans "Videos" %}</h3>
-<div class="row">
     {% for video in event.videos.all %}
         {% include 'festival/inc/video_card.html' %}
     {% endfor %}
-</div>
 {% endif %}
-
+</div>
 {% endblock %}
 
 {% block event_detail_comments %}

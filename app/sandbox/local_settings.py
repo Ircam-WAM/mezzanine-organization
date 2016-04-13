@@ -1,7 +1,7 @@
 import os
 from django.utils.translation import ugettext_lazy as _
 
-DEBUG = True
+DEBUG = True if os.environ.get('DEBUG', 'True') else False
 
 # Make these unique, and don't share it with anybody.
 SECRET_KEY = "+3b01&_6_m@@yb4f06$s0zno8vkybh81nbuj_q(xzk+xeih1+s"
@@ -85,7 +85,8 @@ ADMIN_MENU_ORDER = (
     (_("Site"), ("sites.Site", "redirects.Redirect", "conf.Setting")),
     (_("Users"), ("auth.User", "auth.Group",)),
     (_("Festival"), ("mezzanine_agenda.EventLocation",
-        "mezzanine_agenda.EventCategory", "festival.PageCategory")),
+        "mezzanine_agenda.EventCategory", "mezzanine_agenda.EventPrice",
+        "festival.PageCategory",)),
 )
 
 SEARCH_MODEL_CHOICES = ()
@@ -104,3 +105,5 @@ EVENT_SHOP_URL = 'http://eve.ircam.fr/manifeste.php/manifestation/'
 EVENT_PASS_URL = 'http://eve.ircam.fr/manifeste.php/pass/'
 
 TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
+
+SLUGIFY = 'django.template.defaultfilters.slugify'
