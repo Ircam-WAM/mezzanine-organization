@@ -32,6 +32,7 @@
     {% for location in object_list %}
         <a href="#" class="c-tabs-nav__link {% if forloop.first %}is-active{% endif %}">
             {% if location.featured_name %}{{ location.featured_name }}{% else %}{{ location.title }}{% endif %}</a>
+        <hr/>
     {% endfor %}
   </div>
   {% for location in object_list %}
