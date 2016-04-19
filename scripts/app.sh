@@ -24,7 +24,7 @@ patterns='*.js;*.css;*.jpg;*.jpeg;*.gif;*.png;*.svg;*.ttf;*.eot;*.woff;*.woff2'
 chown -R $uid:$gid $media
 
 # waiting for other services
-sh $app/deploy/wait.sh
+sh $app/scripts/wait.sh
 
 # waiting for available database
 # python $app/wait.py
