@@ -45,14 +45,14 @@ Backup / Restore
 To backup the database, in **another** terminal (or a Docker Quickstart Terminal)::
 
     cd Manifeste
-    scripts/backup.sh
+    scripts/push.sh
 
 giving your user password if asked...
 
 To restore the backuped database, in another terminal (or a Docker Quickstart Terminal)::
 
     cd Manifeste
-    scripts/restore.sh
+    scripts/pull.sh
 
 If the app is broken after a restore script, restart the composition with::
 
