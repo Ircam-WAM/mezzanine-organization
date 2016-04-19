@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-13 09:41+0200\n"
+"POT-Creation-Date: 2016-04-19 18:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -156,39 +156,39 @@ msgstr "Jouer la vidéo"
 msgid "Videos"
 msgstr "Vidéos"
 
-#: sandbox/local_settings.py:81
+#: local_settings.py:81
 msgid "Content"
 msgstr ""
 
-#: sandbox/local_settings.py:84
+#: local_settings.py:84
 msgid "Media Library"
 msgstr ""
 
-#: sandbox/local_settings.py:85
+#: local_settings.py:85
 msgid "Site"
 msgstr ""
 
-#: sandbox/local_settings.py:86
+#: local_settings.py:86
 msgid "Users"
 msgstr ""
 
-#: sandbox/local_settings.py:87
+#: local_settings.py:87
 msgid "Festival"
 msgstr ""
 
-#: sandbox/settings.py:45
+#: settings.py:45
 msgid "Top navigation bar"
 msgstr ""
 
-#: sandbox/settings.py:47
+#: settings.py:47
 msgid "Footer"
 msgstr ""
 
-#: sandbox/settings.py:104
+#: settings.py:104
 msgid "French"
 msgstr ""
 
-#: sandbox/settings.py:105
+#: settings.py:105
 msgid "English"
 msgstr ""
 
@@ -267,40 +267,37 @@ msgstr ""
 
 #: templates/agenda/event_detail.html:45
 #: templates/agenda/includes/event_card.html:66
-#: templates/blog/blog_post_detail.html:43
-#: templates/blog/blog_post_list.html:139
+#: templates/blog/blog_post_detail.html:39
 #: templates/generic/includes/comments.html:3
 msgid "Comments"
 msgstr ""
 
 #: templates/agenda/event_detail.html:48
 #: templates/agenda/includes/event_card.html:70
-#: templates/blog/blog_post_detail.html:46
-#: templates/blog/blog_post_list.html:143
+#: templates/blog/blog_post_detail.html:42
 #, python-format
 msgid "%(comments_count)s comment"
 msgid_plural "%(comments_count)s comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/agenda/event_detail.html:83 templates/agenda/event_detail.html:87
+#: templates/agenda/event_detail.html:84 templates/agenda/event_detail.html:88
 msgid "Add to"
 msgstr ""
 
-#: templates/agenda/event_detail.html:115
+#: templates/agenda/event_detail.html:116
 #: templates/agenda/includes/event_card.html:52
 #: templates/agenda/includes/filter_panel.html:74
-#: templates/blog/blog_post_detail.html:74
-#: templates/blog/blog_post_list.html:124
+#: templates/blog/blog_post_detail.html:70
 #: templates/blog/includes/filter_panel.html:56
 msgid "Tags"
 msgstr ""
 
-#: templates/agenda/event_detail.html:139
+#: templates/agenda/event_detail.html:140
 msgid "Previous event"
 msgstr "Évenement précédent"
 
-#: templates/agenda/event_detail.html:147
+#: templates/agenda/event_detail.html:148
 msgid "Next event"
 msgstr "Évenement suivant"
 
@@ -374,28 +371,11 @@ msgid "Archive"
 msgstr ""
 
 #: templates/blog/blog_post_detail.html:29
-msgid "Posted by"
-msgstr ""
+#: templates/blog/includes/post_card.html:16
+msgid "published on"
+msgstr "publié le"
 
-#: templates/blog/blog_post_detail.html:33
-#: templates/blog/blog_post_list.html:100
-#: templates/generic/includes/comment.html:22
-#: templates/generic/includes/comment.html:59 templates/twitter/tweets.html:19
-#, python-format
-msgid "%(sometime)s ago"
-msgstr ""
-
-#: templates/blog/blog_post_detail.html:93
-#: templates/includes/share_buttons.html:8
-msgid "Share on Twitter"
-msgstr "Partagez sur Twitter"
-
-#: templates/blog/blog_post_detail.html:94
-#: templates/includes/share_buttons.html:5
-msgid "Share on Facebook"
-msgstr "Partagez sur Facebook"
-
-#: templates/blog/blog_post_detail.html:119
+#: templates/blog/blog_post_detail.html:117
 msgid "Related posts"
 msgstr "Articles associés"
 
@@ -423,20 +403,13 @@ msgstr "Les articles postés depuis"
 msgid "Viewing posts by"
 msgstr ""
 
-#: templates/blog/blog_post_list.html:94
-msgid "in"
+#: templates/blog/blog_post_list.html:72
+#: templates/blog/includes/filter_panel.html:43
+msgid "Categories"
 msgstr ""
-
-#: templates/blog/blog_post_list.html:133 templates/search_results.html:47
-msgid "read more"
-msgstr "lire la suite"
 
 #: templates/blog/includes/filter_panel.html:6
 msgid "Recent Posts"
-msgstr ""
-
-#: templates/blog/includes/filter_panel.html:43
-msgid "Categories"
 msgstr ""
 
 #: templates/blog/includes/filter_panel.html:72
@@ -566,6 +539,12 @@ msgstr ""
 msgid "Sorry, an error occurred."
 msgstr ""
 
+#: templates/generic/includes/comment.html:22
+#: templates/generic/includes/comment.html:59 templates/twitter/tweets.html:19
+#, python-format
+msgid "%(sometime)s ago"
+msgstr ""
+
 #: templates/generic/includes/comment.html:30
 msgid "Link"
 msgstr ""
@@ -647,6 +626,14 @@ msgstr ""
 msgid "Go"
 msgstr ""
 
+#: templates/includes/share_buttons.html:5
+msgid "Share on Facebook"
+msgstr "Partagez sur Facebook"
+
+#: templates/includes/share_buttons.html:8
+msgid "Share on Twitter"
+msgstr "Partagez sur Twitter"
+
 #: templates/includes/share_buttons.html:11
 msgid "Share by email"
 msgstr "Partager par email"
@@ -713,6 +700,10 @@ msgid ""
 "Showing %(start)s to %(end)s of %(total)s results in %(search_type)s "
 "matching your query: %(query)s\n"
 msgstr ""
+
+#: templates/search_results.html:47
+msgid "read more"
+msgstr "lire la suite"
 
 #: templates/styles.html:4 templates/styles.html.py:6
 msgid "Styles"
