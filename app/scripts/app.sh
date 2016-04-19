@@ -26,12 +26,8 @@ chown -R $uid:$gid $media
 # waiting for other services
 sh $app/scripts/wait.sh
 
-# waiting for available database
-# python $app/wait.py
-# python $manage wait-for-db-connection
-
-# django init
-# python $manage syncdb --noinput
+# django setup
+python $manage wait-for-db
 python $manage migrate --noinput
 python $manage collectstatic --noinput
 python $manage create-admin-user
