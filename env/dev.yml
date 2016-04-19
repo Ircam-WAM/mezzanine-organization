@@ -20,7 +20,7 @@
 
 
 app:
-  command: /bin/sh deploy/start_app.sh --runserver
+  command: /bin/sh scripts/app.sh --runserver
   volumes:
     - ./app/:/srv/app
   ports:
