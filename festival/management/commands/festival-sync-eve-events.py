@@ -64,9 +64,7 @@ class Command(BaseCommand):
                 location.clean()
                 location.save()
                 event.location = location
-
-                category, c = ma_models.EventCategory.objects.get_or_create(name=eve_event.event_category.name)
-                event.category = category
+                event.tags = eve_event.event_category.name
                 event.save()
 
                 eve_prices = eve_models.PriceManifestation.objects.filter(manifestation=manifestation)
