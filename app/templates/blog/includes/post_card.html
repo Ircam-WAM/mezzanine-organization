@@ -3,15 +3,17 @@
 <div class="artist__item {% if not on_home %}msry__item {% endif %}">
     <div class="artist__item__inner">
         <a href="{% url 'blog_post_detail' post.slug %}" class="artist__item__inner">
+            {% if post.featured_image %}
             <figure class="artist__item__img">
                 <img src="{{ MEDIA_URL }}{% thumbnail post.featured_image 500 0 %}" alt="Article: {{ post.title }}">
             </figure>
+            {% endif %}
             <h3 class="artist__item__name">
                 <span>
                     {{ post.title }}
                 </span>
             </h3>
-            <span class="artist__item__date">{{ post.publish_date|date:"DATE_FORMAT" }}</span>
+            <span class="artist__item__date">{% trans "published on" %} {{ post.publish_date|date:"DATE_FORMAT" }}</span>
         </a>
     </div>
 </div>
