@@ -14,9 +14,6 @@ from mezzanine_agenda.models import Event
 import requests
 from pyquery import PyQuery as pq
 
-# import eve.models
-
-from .related import SpanningForeignKey
 
 app_label = 'festival'
 ALIGNMENT_CHOICES = (('left', _('left')), ('right', _('right')))
