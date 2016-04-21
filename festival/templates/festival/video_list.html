@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load mezzanine_tags keyword_tags %}
+{% load mezzanine_tags keyword_tags festival_tags %}
 
 {% block title %}
  {% trans "Videos" %}
 {% endblock %}
 
 {% block main %}
+
+{% if categories %}
+<p>{% trans "Categories" %} :
+{% for category in categories %}
+<a href="{% url "festival-video-list-category" category.slug %}">{{ category }}</a> ({{ category.count }}){% if not forloop.last and categories|length > 1 %} | {% endif %}
+{% endfor %}
+</p>
+{% elif category %}
+<p>{% trans "Videos for the category" %} : {{ category }}</p>
+{% endif %}
+
 <div class="video__list  msry__container">
     <div class="msry__sizer"></div>
     {% for video in object_list %}

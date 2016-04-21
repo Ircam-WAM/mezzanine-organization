@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.conf import settings
 
-from mezzanine.core.models import RichText, Displayable
+from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 from mezzanine.blog.models import BlogPost
@@ -51,17 +51,6 @@ class BaseTitleModel(models.Model):
 
     def __unicode__(self):
         return self.title
-
-
-class PageCategory(BaseNameModel):
-    """Page Category"""
-
-    class Meta(MetaCore):
-        verbose_name = _('page category')
-        db_table = app_label + '_page_category'
-
-    def __unicode__(self):
-        return self.name
 
 
 class Artist(Displayable, RichText, AdminThumbMixin):
@@ -220,12 +209,12 @@ class Featured(BaseNameModel):
         return self.name
 
 
-class VideoCategory(BaseNameModel):
+class VideoCategory(Slugged):
     """Video Category"""
 
     class Meta(MetaCore):
         verbose_name = _('video category')
         db_table = app_label + '_video_category'
 
-    def __str__(self):
-        return self.name
+    def count(self):
+        return self.videos.all().count()

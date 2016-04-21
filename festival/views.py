@@ -42,6 +42,7 @@ class VideoListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(VideoListView, self).get_context_data(**kwargs)
+        context['categories'] = VideoCategory.objects.all()
         return context
 
 
@@ -53,4 +54,16 @@ class VideoDetailView(SlugMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(VideoDetailView, self).get_context_data(**kwargs)
+        return context
+
+
+class VideoListCategoryView(VideoListView):
+
+    def get_queryset(self):
+        self.category = VideoCategory.objects.get(slug=self.kwargs['slug'])
+        return self.model.objects.filter(category=self.category)
+
+    def get_context_data(self, **kwargs):
+        context = super(VideoListView, self).get_context_data(**kwargs)
+        context['category'] = self.category
         return context
