@@ -161,6 +161,10 @@
                 {% include "includes/calendar.html" %}
                 {% include "includes/twitter.html" %}
                 {% include "includes/instafeed.html" %}
+                <h2 class="sidebar__title">{% trans "Playlist" %}</h2>
+                {% for playlist in featured.playlists.all %}
+                {% include 'festival/inc/audio_playlist.html' %}
+                {% endfor %}
 
                 <div class="cta__panel">
                     <div>
