@@ -144,7 +144,7 @@ class Media(Displayable, RichText):
             elif self.closed_source_mime_type in source.attrib['type']:
                 self.closed_source_url = source.attrib['src']
         video = self.q('video')
-        if 'poster' in video[0].attrib.key():
+        if 'poster' in video[0].attrib.keys():
             self.poster_url = video[0].attrib['poster']
 
 
