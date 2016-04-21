@@ -154,6 +154,7 @@
 
 {% block event_related %}
 
+{% if event.artists.all or event.videos.all %}
 <h2 class="section__title">{% trans "Also discover" %}</h2>
 
 <div class="msry__container">
@@ -169,6 +170,7 @@
     {% endfor %}
 {% endif %}
 </div>
+{% endif %}
 {% endblock %}
 
 {% block event_detail_comments %}
