@@ -46,7 +46,7 @@
     {% block event_list_filterinfo %}
     <p>
     {% if tag %}
-        {% trans "Viewing events tagged" %} {{ tag }}
+        {% trans "Viewing events tagged" %} <a href="{% url "event_list_tag" tag.slug %}">{{ tag }}</a>
     {% elif location %}
         {% trans "Viewing events for the location" %} {{ location }}
     {% elif year or month %}
@@ -66,6 +66,25 @@
     {% block event_list_pagecontent %}
     {{ page.richtextpage.content|richtext_filters|safe }}
     {% endblock %}
+    {% else %}
+
+    {% block event_keywords %}
+    {% keywords_for mezzanine_agenda.event as tags %}
+    {% if tags %}
+
+    <ul class="list-inline tag-cloud">
+    {% for tag in tags %}
+    <li>
+        <a href="{% url "event_list_tag" tag.slug %}"
+            class="tag-weight-{{ tag.weight }}">{{ tag }}s</a>
+        ({{ tag.item_count }})
+    </li>
+    {% endfor %}
+    </ul>
+    <br/>
+    {% endif %}
+    {% endblock %}
+
     {% endif %}
 {% endif %}
 

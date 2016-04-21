@@ -341,20 +341,20 @@ msgstr "Auteur:"
 
 #: templates/agenda/event_list.html:49
 msgid "Viewing events tagged"
-msgstr ""
+msgstr "Événements pour le mot clé"
 
 #: templates/agenda/event_list.html:51
 #: templates/agenda/includes/event_location.html:14
 msgid "Viewing events for the location"
-msgstr "Les événements du lieu"
+msgstr "Événements du lieu"
 
 #: templates/agenda/event_list.html:54 templates/agenda/event_list.html:56
 msgid "Viewing events from"
-msgstr "Les événements du"
+msgstr "Événements du"
 
 #: templates/agenda/event_list.html:59
 msgid "Viewing events by"
-msgstr "Les événements par"
+msgstr "Événements par"
 
 #: templates/agenda/event_location_list.html:4
 #: templates/agenda/event_location_list.html:22

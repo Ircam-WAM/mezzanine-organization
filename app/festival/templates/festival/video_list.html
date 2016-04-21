@@ -9,11 +9,14 @@
 {% block main %}
 
 {% if categories %}
-<p>{% trans "Categories" %} :
+<ul class="list-inline tag-cloud">
 {% for category in categories %}
-<a href="{% url "festival-video-list-category" category.slug %}">{{ category }}</a> ({{ category.count }}){% if not forloop.last and categories|length > 1 %} | {% endif %}
+ <li>
+  <a href="{% url "festival-video-list-category" category.slug %}">{{ category }}</a> ({{ category.count }})
+ </li>
 {% endfor %}
-</p>
+</ul>
+<br/>
 {% elif category %}
 <p>{% trans "Videos for the category" %} : {{ category }}</p>
 {% endif %}
