@@ -181,6 +181,7 @@ class Video(Media):
     closed_source_mime_type = 'video/mp4'
 
     event = models.ForeignKey(Event, related_name='videos', verbose_name=_('event'), blank=True, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('VideoCategory', related_name='videos', verbose_name=_('category'), blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta(MetaCore):
         verbose_name = _('video')
@@ -216,4 +217,15 @@ class Featured(BaseNameModel):
     playlists = models.ManyToManyField(Playlist, verbose_name=_('playlists'), related_name='featured', blank=True)
 
     def __unicode__(self):
+        return self.name
+
+
+class VideoCategory(BaseNameModel):
+    """Video Category"""
+
+    class Meta(MetaCore):
+        verbose_name = _('video category')
+        db_table = app_label + '_video_category'
+
+    def __str__(self):
         return self.name
