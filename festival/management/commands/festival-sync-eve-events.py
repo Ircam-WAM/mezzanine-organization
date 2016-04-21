@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
 import mezzanine_agenda.models as ma_models
+from mezzanine.generic.models import AssignedKeyword, Keyword
+
 import eve.models as eve_models
 
 
@@ -64,14 +66,15 @@ class Command(BaseCommand):
                 location.clean()
                 location.save()
                 event.location = location
-                event.tags = eve_event.event_category.name
                 event.save()
+                keyword, _ = Keyword.objects.get_or_create(title=eve_event.event_category.name)
+                event.keywords.add(AssignedKeyword(keyword=keyword), bulk=False)
 
                 eve_prices = eve_models.PriceManifestation.objects.filter(manifestation=manifestation)
                 for price in eve_prices:
                     event_price, c = ma_models.EventPrice.objects.get_or_create(value=float(price.value))
                     if event:
-                        if not event_price in event.prices:
+                        if not event_price in event.prices.all():
                             event.prices.add(event_price)
 
                 if not first:
