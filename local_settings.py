@@ -109,3 +109,4 @@ TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
 SLUGIFY = 'django.template.defaultfilters.slugify'
 
 HOME_FEATURED_ID = 1
+BREAKING_NEWS_FEATURED_ID = 4
