@@ -153,10 +153,8 @@
 {% endblock %}
 
 {% block event_related %}
-
 {% if event.artists.all or event.videos.all %}
 <h2 class="section__title">{% trans "Also discover" %}</h2>
-
 <div class="msry__container">
  <div class="msry__sizer"></div>
 {% if event.artists.all %}

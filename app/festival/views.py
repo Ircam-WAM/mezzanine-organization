@@ -64,6 +64,6 @@ class VideoListCategoryView(VideoListView):
         return self.model.objects.filter(category=self.category)
 
     def get_context_data(self, **kwargs):
-        context = super(VideoListView, self).get_context_data(**kwargs)
+        context = super(VideoListCategoryView, self).get_context_data(**kwargs)
         context['category'] = self.category
         return context

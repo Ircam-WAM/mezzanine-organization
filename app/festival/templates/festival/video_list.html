@@ -10,15 +10,13 @@
 
 {% if categories %}
 <ul class="list-inline tag-cloud">
-{% for category in categories %}
+{% for cat in categories %}
  <li>
-  <a href="{% url "festival-video-list-category" category.slug %}">{{ category }}</a> ({{ category.count }})
+  <a href="{% url "festival-video-list-category" cat.slug %}" {% if category == cat %}class="is-active"{% endif %}>{{ cat }}</a> ({{ cat.count }})
  </li>
 {% endfor %}
 </ul>
 <br/>
-{% elif category %}
-<p>{% trans "Videos for the category" %} : {{ category }}</p>
 {% endif %}
 
 <div class="video__list  msry__container">
