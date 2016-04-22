@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-22 12:05+0200\n"
+"POT-Creation-Date: 2016-04-22 12:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -378,12 +378,12 @@ msgid "Archive"
 msgstr ""
 
 #: templates/base.html:136
-msgid "Dernière"
-msgstr "Breaking"
+msgid "Breaking"
+msgstr "Dernière"
 
 #: templates/base.html:136
-msgid "minute"
-msgstr "news"
+msgid "news"
+msgstr "minute"
 
 #: templates/base.html:165
 msgid "Playlist"
