@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-21 11:39+0200\n"
+"POT-Creation-Date: 2016-04-22 10:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,136 +18,135 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: festival/models.py:22
+#: festival/models.py:19
 msgid "left"
 msgstr "gauche"
 
-#: festival/models.py:22
+#: festival/models.py:19
 msgid "right"
 msgstr "droite"
 
-#: festival/models.py:34
+#: festival/models.py:31
 msgid "name"
 msgstr "nome"
 
-#: festival/models.py:35 festival/models.py:47
+#: festival/models.py:32 festival/models.py:44
 msgid "description"
 msgstr ""
 
-#: festival/models.py:46
+#: festival/models.py:43
 msgid "title"
 msgstr "titre"
 
-#: festival/models.py:59
+#: festival/models.py:56
 msgid "first name"
 msgstr ""
 
-#: festival/models.py:60
+#: festival/models.py:57
 msgid "last name"
 msgstr ""
 
-#: festival/models.py:61
+#: festival/models.py:58
 msgid "biography"
 msgstr "biographie"
 
-#: festival/models.py:62
+#: festival/models.py:59
 msgid "photo"
 msgstr ""
 
-#: festival/models.py:63
+#: festival/models.py:60
 msgid "photo credits"
 msgstr "crédits photo"
 
-#: festival/models.py:64
+#: festival/models.py:61
 msgid "photo alignment"
 msgstr "alignement photo"
 
-#: festival/models.py:65
+#: festival/models.py:62
 msgid "photo description"
 msgstr ""
 
-#: festival/models.py:66
+#: festival/models.py:63
 msgid "photo featured"
 msgstr ""
 
-#: festival/models.py:67
+#: festival/models.py:64
 msgid "photo featured credits"
 msgstr ""
 
-#: festival/models.py:68 festival/models.py:202
+#: festival/models.py:65 festival/models.py:201
 msgid "events"
 msgstr "événements"
 
-#: festival/models.py:73
+#: festival/models.py:70
 msgid "artist"
 msgstr "artiste"
 
-#: festival/models.py:118
+#: festival/models.py:115
 msgid "media id"
 msgstr ""
 
-#: festival/models.py:119
+#: festival/models.py:116
 msgid "open source URL"
 msgstr ""
 
-#: festival/models.py:120
+#: festival/models.py:117
 msgid "closed source URL"
 msgstr ""
 
-#: festival/models.py:121
+#: festival/models.py:118
 msgid "poster"
 msgstr ""
 
-#: festival/models.py:156 festival/models.py:172 festival/models.py:192
+#: festival/models.py:155 festival/models.py:171 festival/models.py:191
 msgid "event"
 msgstr "événement"
 
-#: festival/models.py:159
+#: festival/models.py:158
 msgid "audio"
 msgstr ""
 
-#: festival/models.py:173
+#: festival/models.py:172
 #, fuzzy
 #| msgid "Category:"
 msgid "category"
 msgstr "Catégorie:"
 
-#: festival/models.py:176
+#: festival/models.py:175
 msgid "video"
 msgstr ""
 
-#: festival/models.py:191
+#: festival/models.py:190
 msgid "audios"
 msgstr ""
 
-#: festival/models.py:201 templates/index.html:42
+#: festival/models.py:200 templates/index.html:42
 msgid "artists"
 msgstr "artistes"
 
-#: festival/models.py:203 templates/index.html:50
+#: festival/models.py:202 templates/index.html:50
 msgid "videos"
 msgstr "vidéos"
 
-#: festival/models.py:204
+#: festival/models.py:203
 msgid "blog posts"
 msgstr "articles"
 
-#: festival/models.py:205
+#: festival/models.py:204
 msgid "pages"
 msgstr "pages"
 
-#: festival/models.py:206
+#: festival/models.py:205
 msgid "playlists"
 msgstr ""
 
-#: festival/models.py:216
-#| msgid "page category"
+#: festival/models.py:215
 msgid "video category"
 msgstr "catégorie de vidéo"
 
 #: festival/templates/festival/artist_detail.html:27
 #: festival/templates/festival/video_detail.html:27
-#: templates/agenda/event_detail.html:157
+#: templates/agenda/event_detail.html:158
 msgid "Also discover"
 msgstr "À découvrir aussi"
 
@@ -163,14 +162,7 @@ msgstr "Jouer la vidéo"
 msgid "Videos"
 msgstr "Vidéos"
 
-#: festival/templates/festival/video_list.html:12
-#: templates/blog/blog_post_list.html:72
-#: templates/blog/includes/filter_panel.html:43
-msgid "Categories"
-msgstr "Catégories"
-
-#: festival/templates/festival/video_list.html:18
-#| msgid "Viewing posts for the category"
+#: festival/templates/festival/video_list.html:21
 msgid "Videos for the category"
 msgstr "Les vidéos de la catégorie"
 
@@ -284,14 +276,12 @@ msgid "Sign up"
 msgstr ""
 
 #: templates/agenda/event_detail.html:45
-#: templates/agenda/includes/event_card.html:66
 #: templates/blog/blog_post_detail.html:39
 #: templates/generic/includes/comments.html:3
 msgid "Comments"
 msgstr ""
 
 #: templates/agenda/event_detail.html:48
-#: templates/agenda/includes/event_card.html:70
 #: templates/blog/blog_post_detail.html:42
 #, python-format
 msgid "%(comments_count)s comment"
@@ -304,9 +294,8 @@ msgid "Add to"
 msgstr ""
 
 #: templates/agenda/event_detail.html:116
-#: templates/agenda/includes/event_card.html:52
 #: templates/agenda/includes/filter_panel.html:74
-#: templates/blog/blog_post_detail.html:70
+#: templates/blog/blog_post_detail.html:72
 #: templates/blog/includes/filter_panel.html:56
 msgid "Tags"
 msgstr ""
@@ -388,12 +377,15 @@ msgstr "Événements récents"
 msgid "Archive"
 msgstr ""
 
+#: templates/base.html:167
+msgid "Playlist"
+msgstr "Playlist"
+
 #: templates/blog/blog_post_detail.html:29
-#: templates/blog/includes/post_card.html:16
 msgid "published on"
 msgstr "publié le"
 
-#: templates/blog/blog_post_detail.html:117
+#: templates/blog/blog_post_detail.html:119
 msgid "Related posts"
 msgstr "Articles associés"
 
@@ -424,6 +416,10 @@ msgstr ""
 #: templates/blog/includes/filter_panel.html:6
 msgid "Recent Posts"
 msgstr ""
+
+#: templates/blog/includes/filter_panel.html:43
+msgid "Categories"
+msgstr "Catégories"
 
 #: templates/blog/includes/filter_panel.html:72
 msgid "Authors"
@@ -694,6 +690,10 @@ msgstr "Soumettre"
 msgid "Add"
 msgstr ""
 
+#: templates/pages/richtextpage.html:14
+msgid "Related events"
+msgstr "Événements associés"
+
 #: templates/search_results.html:5 templates/search_results.html.py:6
 #: templates/search_results.html:15
 msgid "Search Results"
@@ -755,9 +755,3 @@ msgstr "Tweets récents"
 #~| msgid "Videos"
 #~ msgid "Video"
 #~ msgstr "Vidéo"
-
-#~ msgid "Playlist"
-#~ msgstr "Playlist"
-
-#~ msgid "Related events"
-#~ msgstr "Événements associés"
