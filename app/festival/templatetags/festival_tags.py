@@ -28,3 +28,8 @@ def featured_events(*args):
 @register.as_tag
 def featured(*args):
     return Featured.objects.get(id=settings.HOME_FEATURED_ID)
+
+
+@register.as_tag
+def featured_breaking_news_content(*args):
+    return Featured.objects.get(id=settings.BREAKING_NEWS_FEATURED_ID).pages.all()[0].richtextpage.content

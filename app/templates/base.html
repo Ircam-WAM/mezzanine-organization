@@ -132,14 +132,12 @@
                         <div class="media bk__news__inner">
                             <div class="media-img">
                                 <span class="bk__news__title">
-                                    Dernière <br> minute !
+                                    {% trans "Dernière" %} <br> {% trans "minute" %} !
                                 </span>
                             </div>
                             <div class="media-content bk__news__content">
-                                <p>
-                                    <strong>Partagez, twittez, commentez, publiez vos photos…</strong> <br>
-                                    et réservez dès maintenant vos places ou abonnements pour bénéficier de tarifs privilégiés.
-                                </p>
+                                    {% featured_breaking_news_content as content %}
+                                    {{ content|safe }}
                             </div>
 
                         </div>
