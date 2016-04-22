@@ -27,4 +27,4 @@ def featured_events(*args):
 
 @register.as_tag
 def featured(*args):
-    return Featured.objects.all().order_by('?').first()
+    return Featured.objects.get(id=settings.HOME_FEATURED_ID)

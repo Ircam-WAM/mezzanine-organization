@@ -23,20 +23,19 @@
       }
   }
 
-&--full {
-  @extend .event__card;
+    &--full {
+      @extend .event__card;
 
-  @media (min-width : $desktop ) {
-    width: 100%;
-    display: block;
-  }
-}
+      @media (min-width : $desktop ) {
+        width: 100%;
+        display: block;
+      }
+    }
 
-
-&__description {
-  display: block;
-  font-size: 0.75rem;
-}
+    &__description {
+      display: block;
+      font-size: 0.75rem;
+    }
 
 }
 
