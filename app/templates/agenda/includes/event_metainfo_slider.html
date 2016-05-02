@@ -11,11 +11,13 @@
                 <a href="{% url "event_list_location" event.location.slug %}" class="event__meta__location">{{ event.location }}</a>
                 {% endif %}
             </div>
+            {% if not event.parent %}
             <div class="split-right">
                 <a href="{{ event.get_absolute_url }}" class="btn">
                     <i class="icon icon__bookmark"></i> {% trans "Booking" %}
                 </a>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>
