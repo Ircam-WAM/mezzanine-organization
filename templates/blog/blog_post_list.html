@@ -43,23 +43,6 @@
 
 {% block main %}
 
-{% if tag or category or year or month or author %}
-    {% block blog_post_list_filterinfo %}
-    <p>
-    {% if tag %}
-        {% trans "Viewing posts tagged" %} {{ tag }}
-    {% else %}{% if category %}
-        {% trans "Viewing posts for the category" %} <a href="{% url "blog_post_list_category" category.slug %}">{{ category }}</a>
-    {% else %}{% if year or month %}
-        {% trans "Viewing posts from" %} {% if month %}{{ month }}, {% endif %}
-        {{ year }}
-    {% else %}{% if author %}
-        {% trans "Viewing posts by" %}
-        {{ author.get_full_name|default:author.username }}
-    {% endif %}{% endif %}{% endif %}{% endif %}
-    {% endblock %}
-    </p>
-{% else %}
     {% if page %}
     {% if page.get_content_model.content %}
         {% editable page.get_content_model.content %}
@@ -70,16 +53,15 @@
         {% blog_categories as categories %}
         {% if categories %}
         <ul class="list-inline tag-cloud">
-        {% for category in categories %}
+        {% for cat in categories %}
          <li>
-          <a href="{% url "blog_post_list_category" category.slug %}">{{ category }}</a> ({{ category.post_count }})
+          <a href="{% url "blog_post_list_category" cat.slug %}" {% if category == cat %}class="is-active"{% endif %}>{{ cat }}</a> ({{ cat.post_count }})
          </li>
         {% endfor %}
         </ul>
         <br/>
         {% endif %}
     {% endif %}
-{% endif %}
 
 <div class="msry__container">
   <div class="msry__sizer"></div>
