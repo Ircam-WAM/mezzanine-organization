@@ -70,12 +70,13 @@
 {% endeditable %}
 {% endblock %}
 
+{% if event.brochure %}
 <br/>
-
-<a href='{{ event.brochure.url }}' class="push__calendar__item">
+<a href='{{ event.brochure.url }}' target="_blank" class="push__calendar__item">
     <i class="icon icon__file"></i>
     {% trans "Download" %} {% trans "the room program" %}
 </a>
+{% endif %}
 
 {% block event_detail_sharebuttons %}
 {% set_short_url_for event %}
