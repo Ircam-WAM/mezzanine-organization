@@ -130,8 +130,6 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 
 # MAX_UPLOAD_SIZE = 429916160
 
-EVENT_SLUG = 'events'
-
 #############
 # DATABASES #
 #############
@@ -189,7 +187,7 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = '/srv/media/'
 
 # Package/module name to import the root urlpatterns from for the project.
-ROOT_URLCONF = "%s.urls" % PROJECT_APP
+ROOT_URLCONF = "urls"
 
 
 ################
@@ -306,7 +304,7 @@ OPTIONAL_APPS = (
 # ignored in your version control system allowing for settings to be
 # defined per machine.
 try:
-    from .local_settings import *
+    from local_settings import *
 except ImportError as e:
     if "local_settings" not in str(e):
         raise e

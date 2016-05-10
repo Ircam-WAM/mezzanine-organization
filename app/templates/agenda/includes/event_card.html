@@ -12,7 +12,7 @@
         <h3 class="event__name">
             <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
         </h3>
-        {{ event.description|slice:":128" }}
+        <span class="event__card__description">{{ event.description|slice:":128" }}</span>
 {% endblock %}
 
 {% block event_list_event_metainfo %}
@@ -43,6 +43,7 @@
 </a>
 {% endblock %}
 
+{% comment %}
 {% block event_list_event_links %}
 <div class="event__detail">
 {% keywords_for event as tags %}
@@ -73,4 +74,6 @@
 </p>
 </div>
 {% endblock %}
+{% endcomment %}
+
 </div>

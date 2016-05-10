@@ -1,18 +1,10 @@
-"""
-WSGI config for diggersdigest project.
-
-It exposes the WSGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import os
+import sys
 from django.core.wsgi import get_wsgi_application
-from mezzanine.utils.conf import real_project_name
 
-settings_module = "%s.settings" % real_project_name("sandbox")
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
-
+sys.path.append(os.path.dirname('.'))
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'settings')
 application = get_wsgi_application()

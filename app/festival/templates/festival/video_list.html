@@ -1,12 +1,24 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load mezzanine_tags keyword_tags %}
+{% load mezzanine_tags keyword_tags festival_tags %}
 
 {% block title %}
  {% trans "Videos" %}
 {% endblock %}
 
 {% block main %}
+
+{% if categories %}
+<ul class="list-inline tag-cloud">
+{% for cat in categories %}
+ <li>
+  <a href="{% url "festival-video-list-category" cat.slug %}" {% if category == cat %}class="is-active"{% endif %}>{{ cat }}</a> ({{ cat.count }})
+ </li>
+{% endfor %}
+</ul>
+<br/>
+{% endif %}
+
 <div class="video__list  msry__container">
     <div class="msry__sizer"></div>
     {% for video in object_list %}

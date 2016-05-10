@@ -1,6 +1,6 @@
 {% extends "pages/page.html" %}
 
-{% load mezzanine_tags %}
+{% load i18n mezzanine_tags %}
 
 {% block main %}{{ block.super }}
 
@@ -8,4 +8,31 @@
 {{ page.richtextpage.content|richtext_filters|safe }}
 {% endeditable %}
 
+{% block related_objects %}
+
+{% if page.featured.all %}
+<hr style="margin-top: 3rem;">
+
+{% if page.featured.all.0.events.all %}
+<h2 class="section__title">{% trans "Related events" %}</h2> <br>
+<div class="msry__container">
+ <div class="msry__sizer"></div>
+  {% for event in page.featured.all.0.events.all %}
+   {% include 'agenda/includes/event_card.html' %}
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if page.featured.all.0.blogposts.all %}
+<h2 class="section__title">{% trans "Related posts" %}</h2> <br>
+<div class="msry__container">
+ <div class="msry__sizer"></div>
+  {% for post in page.featured.all.0.blogposts.all %}
+   {% include 'blog/includes/post_card.html' %}
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endif %}
+{% endblock %}
 {% endblock %}

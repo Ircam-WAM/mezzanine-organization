@@ -26,11 +26,7 @@
 {% block blog_post_detail_postedby %}
 {% editable blog_post.publish_date %}
 <h6 class="post-meta">
-    {% trans "Posted by" %}:
-    {% with blog_post.user as author %}
-    <a href="{% url "blog_post_list_author" author %}">{{ author.get_full_name|default:author.username }}</a>
-    {% endwith %}
-    {% blocktrans with sometime=blog_post.publish_date|timesince %}{{ sometime }} ago{% endblocktrans %}
+    {% trans "published on" %} {{ blog_post.publish_date|date:"DATE_FORMAT" }}
 </h6>
 {% endeditable %}
 {% endblock %}
@@ -50,11 +46,13 @@
 </p>
 {% endblock %}
 
+{% comment %}
 {% block blog_post_detail_featured_image %}
 {% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
 <p><img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 600 0 %}"></p>
 {% endif %}
 {% endblock %}
+{% endcomment %}
 
 {% if settings.COMMENTS_DISQUS_SHORTNAME %}
 {% include "generic/includes/disqus_counts.html" %}
@@ -115,15 +113,30 @@
 </ul>
 {% endblock %}
 
+
 {% block blog_post_detail_related_posts %}
-{% if related_posts %}
+{% if related_posts or blog_post.events.all %}
 <div id="related-posts">
-<h3>{% trans 'Related posts' %}</h3>
-<ul class="list-unstyled">
-{% for post in related_posts %}
-     <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-{% endfor %}
-</ul>
+<h3>{% trans "Also discover" %}</h3>
+ <div class="msry__container">
+    <div class="msry__sizer"></div>
+    {% for post in related_posts %}
+        {% include 'blog/includes/post_card.html' %}
+    {% endfor %}
+    {% for event in blog_post.events.all %}
+        {% for artist in event.artists.all %}
+            {% include "festival/inc/artist_card.html" %}
+        {% endfor %}
+        {% for video in event.videos.all %}
+            {% include 'festival/inc/video_card.html' %}
+        {% endfor %}
+        {% for post in event.blog_posts.all %}
+          {% if post != blog_post %}
+            {% include 'blog/includes/post_card.html' %}
+          {% endif %}
+        {% endfor %}
+    {% endfor %}
+ </div>
 </div>
 {% endif %}
 {% endblock %}

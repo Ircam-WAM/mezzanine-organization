@@ -9,7 +9,7 @@
             {% if event.prices.all.0|floatformat != '0' %}
             {% for price in event.prices.all %}{{ price.value|floatformat:"-2" }} €{% if not forloop.last %} / {% endif %}{% endfor %}
             <a href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
-                {% trans "Booking" %}
+                {% trans "Reserve" %}
             </a>
             {% else %}
             {% trans "Free entry. Limited seats available" %}
