@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-10 16:44+0200\n"
+"POT-Creation-Date: 2016-05-10 16:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,10 +107,9 @@ msgid "audio"
 msgstr ""
 
 #: festival/models.py:172
-#, fuzzy
 #| msgid "Category:"
 msgid "category"
-msgstr "Catégorie:"
+msgstr "Catégorie"
 
 #: festival/models.py:175
 msgid "video"
@@ -146,7 +145,7 @@ msgstr "catégorie de vidéo"
 
 #: festival/templates/festival/artist_detail.html:27
 #: festival/templates/festival/video_detail.html:28
-#: templates/agenda/event_detail.html:162
+#: templates/agenda/event_detail.html:163
 msgid "Also discover"
 msgstr "À découvrir aussi"
 
@@ -293,15 +292,15 @@ msgstr "Télécharger"
 msgid "the room program"
 msgstr "le programme de salle"
 
-#: templates/agenda/event_detail.html:91 templates/agenda/event_detail.html:95
+#: templates/agenda/event_detail.html:92 templates/agenda/event_detail.html:96
 msgid "Add to"
 msgstr "Ajouter à"
 
-#: templates/agenda/event_detail.html:145
+#: templates/agenda/event_detail.html:146
 msgid "Previous event"
 msgstr "Évenement précédent"
 
-#: templates/agenda/event_detail.html:153
+#: templates/agenda/event_detail.html:154
 msgid "Next event"
 msgstr "Évenement suivant"
 
@@ -345,7 +344,7 @@ msgstr "Événements du lieu"
 
 #: templates/agenda/includes/event_metainfo.html:12
 #: templates/agenda/includes/event_metainfo_slider.html:24
-msgid "Booking"
+msgid "Reserve"
 msgstr "Réserver"
 
 #: templates/agenda/includes/event_metainfo.html:15
@@ -388,10 +387,8 @@ msgid "Download the brochure"
 msgstr "Télécharger la brochure"
 
 #: templates/base.html:175
-#, fuzzy
-#| msgid "Subscribe to all events in"
 msgid "Subscribe to newsletter"
-msgstr "Abonnez-vous à tous les événements dans"
+msgstr "Inscription à la newsletter"
 
 #: templates/blog/blog_post_detail.html:29
 msgid "published on"
