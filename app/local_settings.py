@@ -112,4 +112,4 @@ SLUGIFY = 'django.template.defaultfilters.slugify'
 HOME_FEATURED_ID = 1
 BREAKING_NEWS_FEATURED_ID = 4
 
-BLOG_POST_PER_PAGE = 30
+BLOG_POST_PER_PAGE = 200
