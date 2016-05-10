@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-22 12:07+0200\n"
+"POT-Creation-Date: 2016-05-10 16:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -145,8 +145,8 @@ msgid "video category"
 msgstr "catégorie de vidéo"
 
 #: festival/templates/festival/artist_detail.html:27
-#: festival/templates/festival/video_detail.html:27
-#: templates/agenda/event_detail.html:158
+#: festival/templates/festival/video_detail.html:28
+#: templates/agenda/event_detail.html:162
 msgid "Also discover"
 msgstr "À découvrir aussi"
 
@@ -161,10 +161,6 @@ msgstr "Jouer la vidéo"
 #: festival/templates/festival/video_list.html:6
 msgid "Videos"
 msgstr "Vidéos"
-
-#: festival/templates/festival/video_list.html:21
-msgid "Videos for the category"
-msgstr "Les vidéos de la catégorie"
 
 #: local_settings.py:81
 msgid "Content"
@@ -289,22 +285,23 @@ msgid_plural "%(comments_count)s comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/agenda/event_detail.html:84 templates/agenda/event_detail.html:88
+#: templates/agenda/event_detail.html:77
+msgid "Download"
+msgstr "Télécharger"
+
+#: templates/agenda/event_detail.html:77
+msgid "the room program"
+msgstr "le programme de salle"
+
+#: templates/agenda/event_detail.html:91 templates/agenda/event_detail.html:95
 msgid "Add to"
-msgstr ""
+msgstr "Ajouter à"
 
-#: templates/agenda/event_detail.html:116
-#: templates/agenda/includes/filter_panel.html:74
-#: templates/blog/blog_post_detail.html:72
-#: templates/blog/includes/filter_panel.html:56
-msgid "Tags"
-msgstr ""
-
-#: templates/agenda/event_detail.html:140
+#: templates/agenda/event_detail.html:145
 msgid "Previous event"
 msgstr "Évenement précédent"
 
-#: templates/agenda/event_detail.html:148
+#: templates/agenda/event_detail.html:153
 msgid "Next event"
 msgstr "Évenement suivant"
 
@@ -318,7 +315,7 @@ msgstr "Programme"
 
 #: templates/agenda/event_list.html:31 templates/blog/blog_post_list.html:31
 msgid "Tag:"
-msgstr ""
+msgstr "Mot clé:"
 
 #: templates/agenda/event_list.html:33
 msgid "Location:"
@@ -328,22 +325,9 @@ msgstr "Lieu:"
 msgid "Author:"
 msgstr "Auteur:"
 
-#: templates/agenda/event_list.html:49
-msgid "Viewing events tagged"
-msgstr "Événements pour le mot clé"
-
-#: templates/agenda/event_list.html:51
-#: templates/agenda/includes/event_location.html:14
-msgid "Viewing events for the location"
-msgstr "Événements du lieu"
-
-#: templates/agenda/event_list.html:54 templates/agenda/event_list.html:56
-msgid "Viewing events from"
-msgstr "Événements du"
-
-#: templates/agenda/event_list.html:59
-msgid "Viewing events by"
-msgstr "Événements par"
+#: templates/agenda/event_list.html:93
+msgid "All"
+msgstr "Tous les"
 
 #: templates/agenda/event_location_list.html:4
 #: templates/agenda/event_location_list.html:22
@@ -355,8 +339,12 @@ msgstr "Lieux"
 msgid "Click to get the interactive map"
 msgstr "Cliquer pour voir la carte interactive"
 
+#: templates/agenda/includes/event_location.html:14
+msgid "Viewing events for the location"
+msgstr "Événements du lieu"
+
 #: templates/agenda/includes/event_metainfo.html:12
-#: templates/agenda/includes/event_metainfo_slider.html:16
+#: templates/agenda/includes/event_metainfo_slider.html:24
 msgid "Booking"
 msgstr "Réserver"
 
@@ -377,6 +365,12 @@ msgstr "Événements récents"
 msgid "Archive"
 msgstr ""
 
+#: templates/agenda/includes/filter_panel.html:74
+#: templates/blog/blog_post_detail.html:72
+#: templates/blog/includes/filter_panel.html:56
+msgid "Tags"
+msgstr ""
+
 #: templates/base.html:136
 msgid "Breaking"
 msgstr "Dernière"
@@ -388,6 +382,16 @@ msgstr "minute"
 #: templates/base.html:165
 msgid "Playlist"
 msgstr "Playlist"
+
+#: templates/base.html:172
+msgid "Download the brochure"
+msgstr "Télécharger la brochure"
+
+#: templates/base.html:175
+#, fuzzy
+#| msgid "Subscribe to all events in"
+msgid "Subscribe to newsletter"
+msgstr "Abonnez-vous à tous les événements dans"
 
 #: templates/blog/blog_post_detail.html:29
 msgid "published on"
@@ -405,22 +409,6 @@ msgstr "Articles"
 #: templates/blog/blog_post_list.html:33
 msgid "Category:"
 msgstr "Catégorie:"
-
-#: templates/blog/blog_post_list.html:50
-msgid "Viewing posts tagged"
-msgstr ""
-
-#: templates/blog/blog_post_list.html:52
-msgid "Viewing posts for the category"
-msgstr "Les articles de la catégorie"
-
-#: templates/blog/blog_post_list.html:54
-msgid "Viewing posts from"
-msgstr "Les articles postés depuis"
-
-#: templates/blog/blog_post_list.html:57
-msgid "Viewing posts by"
-msgstr ""
 
 #: templates/blog/includes/filter_panel.html:6
 msgid "Recent Posts"
@@ -735,14 +723,26 @@ msgstr ""
 msgid "Recent Tweets"
 msgstr "Tweets récents"
 
+#~ msgid "Videos for the category"
+#~ msgstr "Les vidéos de la catégorie"
+
+#~ msgid "Viewing events tagged"
+#~ msgstr "Événements pour le mot clé"
+
+#~ msgid "Viewing events from"
+#~ msgstr "Événements du"
+
+#~ msgid "Viewing events by"
+#~ msgstr "Événements par"
+
+#~ msgid "Viewing posts for the category"
+#~ msgstr "Les articles de la catégorie"
+
+#~ msgid "Viewing posts from"
+#~ msgstr "Les articles postés depuis"
+
 #~ msgid "Related event"
 #~ msgstr "Événement associé"
-
-#~ msgid "Subscribe to all events in"
-#~ msgstr "Abonnez-vous à tous les événements dans"
-
-#~ msgid "All"
-#~ msgstr "Tous les"
 
 #~ msgctxt "fem"
 #~ msgid "All"
