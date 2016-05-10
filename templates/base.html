@@ -127,7 +127,8 @@
     <div class="site__content">
         <div class="container">
             <main class="main" role="main">
-                {% if on_home %}
+                {% featured_breaking_news_content as bk_content %}
+                {% if on_home and bk_content %}
                     <div class="bk__news">
                         <div class="media bk__news__inner">
                             <div class="media-img">
@@ -136,8 +137,7 @@
                                 </span>
                             </div>
                             <div class="media-content bk__news__content">
-                                    {% featured_breaking_news_content as content %}
-                                    {{ content|safe }}
+                                    {{ bk_content|safe }}
                             </div>
 
                         </div>
