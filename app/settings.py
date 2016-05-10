@@ -130,8 +130,6 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 
 # MAX_UPLOAD_SIZE = 429916160
 
-EVENT_SLUG = 'events'
-
 #############
 # DATABASES #
 #############

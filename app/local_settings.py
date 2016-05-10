@@ -98,6 +98,7 @@ warnings.filterwarnings(
         'ignore', r"DateTimeField .* received a naive datetime",
         RuntimeWarning, r'django\.db\.models\.fields')
 
+EVENT_SLUG = 'events'
 EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
@@ -110,3 +111,5 @@ SLUGIFY = 'django.template.defaultfilters.slugify'
 
 HOME_FEATURED_ID = 1
 BREAKING_NEWS_FEATURED_ID = 4
+
+BLOG_POST_PER_PAGE = 30
