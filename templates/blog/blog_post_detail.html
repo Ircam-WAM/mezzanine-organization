@@ -131,7 +131,9 @@
             {% include 'festival/inc/video_card.html' %}
         {% endfor %}
         {% for post in event.blog_posts.all %}
+          {% if post != blog_post %}
             {% include 'blog/includes/post_card.html' %}
+          {% endif %}
         {% endfor %}
     {% endfor %}
  </div>
