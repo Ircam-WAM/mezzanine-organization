@@ -19,42 +19,30 @@
 <a href="{% url 'page' edito.slug %}" class="event__meta__btn">{% trans "Read the edito" %}</a>
 <br>
 
-{% featured as featured %}
+{% featured as featured_list %}
 
 <div class="last__media">
     <h2 class="section__title">{% trans "Featured" %}</h2>
-
     <div class="msry__container">
         <div class="msry__sizer"></div>
-
-        {% for post in featured.blogposts.all %}
+        {% for item in featured_list %}
         <div class="last__media__entry  msry__item">
-             {# <span>{% trans "Article" %}</span>#}
-             {% include 'blog/includes/post_card.html' %}
-             <a href="{% url 'blog_post_list' %}" class="btn btn-full">{% trans "More" context "apos" %} {% trans "articles" %}</a>
-        </div>
-        {% endfor %}
-
-        {% for artist in featured.artists.all %}
-        <div class="last__media__entry  msry__item">
-             {# <span>{% trans "Artist" %}</span>#}
-             {% include "festival/inc/artist_card.html" %}
-             <a href="{% url 'festival-artist-list' %}" class="btn btn-full">{% trans "More" context "apos" %} {% trans "artists" %}</a>
-        </div>
-        {% endfor %}
-
-        {% for video in featured.videos.all %}
-        <div class="last__media__entry  msry__item">
-            {# <span>{% trans "Video" %}</span>#}
-            {% include 'festival/inc/video_card.html' %}
-            <a href="{% url 'festival-video-list' %}" class="btn btn-full">{% trans "More" %} {% trans "videos" %}</a>
-        </div>
-        {% endfor %}
-
-        {% for playlist in featured.playlists.all %}
-        <div class="last__media__entry  msry__item">
-            {# <span>{% trans "Playlist" %}</span>#}
-            {% include 'festival/inc/audio_playlist.html' %}
+            {% if item|get_class == 'BlogPost' %}
+                {% with item as post %}
+                    {% include 'blog/includes/post_card.html' %}
+                    <a href="{% url 'blog_post_list' %}" class="btn btn-full">{% trans "More" context "apos" %} {% trans "articles" %}</a>
+                {% endwith %}
+            {% elif item|get_class == 'Artist' %}
+                {% with item as artist %}
+                    {% include "festival/inc/artist_card.html" %}
+                    <a href="{% url 'festival-artist-list' %}" class="btn btn-full">{% trans "More" context "apos" %} {% trans "artists" %}</a>
+                {% endwith %}
+            {% elif item|get_class == 'Video' %}
+                {% with item as video %}
+                    {% include 'festival/inc/video_card.html' %}
+                    <a href="{% url 'festival-video-list' %}" class="btn btn-full">{% trans "More" %} {% trans "videos" %}</a>
+                {% endwith %}
+            {% endif %}
         </div>
         {% endfor %}
     </div>

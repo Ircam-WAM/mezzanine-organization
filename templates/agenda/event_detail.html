@@ -70,6 +70,14 @@
 {% endeditable %}
 {% endblock %}
 
+{% if event.brochure %}
+<br/>
+<a href='{{ event.brochure.url }}' target="_blank" class="push__calendar__item">
+    <i class="icon icon__file"></i>
+    {% trans "Download" %} {% trans "the room program" %}
+</a>
+{% endif %}
+
 {% block event_detail_sharebuttons %}
 {% set_short_url_for event %}
   {% with event as object %}
@@ -106,7 +114,6 @@
 </a/>
 {% endblock %}
 {% endif %}
-{% endcomment %}
 
 {% block event_detail_keywords %}
 {% keywords_for event as tags %}
@@ -122,7 +129,6 @@
 {% endif %}
 {% endblock %}
 
-{% comment %}
 {% block event_detail_rating %}
 <div class="panel panel-default rating">
     <div class="panel-body">
@@ -153,9 +159,8 @@
 {% endblock %}
 
 {% block event_related %}
-
+{% if event.artists.all or event.videos.all or event.blog_posts.all %}
 <h2 class="section__title">{% trans "Also discover" %}</h2>
-
 <div class="msry__container">
  <div class="msry__sizer"></div>
 {% if event.artists.all %}
@@ -168,7 +173,13 @@
         {% include 'festival/inc/video_card.html' %}
     {% endfor %}
 {% endif %}
+{% if event.blog_posts.all %}
+    {% for post in event.blog_posts.all %}
+        {% include 'blog/includes/post_card.html' %}
+    {% endfor %}
+{% endif %}
 </div>
+{% endif %}
 {% endblock %}
 
 {% block event_detail_comments %}

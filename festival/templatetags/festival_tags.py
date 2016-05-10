@@ -5,6 +5,7 @@ from mezzanine.template import Library
 from mezzanine_agenda.models import Event
 from festival.models import *
 from mezzanine.conf import settings
+from random import shuffle
 
 register = Library()
 
@@ -27,4 +28,24 @@ def featured_events(*args):
 
 @register.as_tag
 def featured(*args):
-    return Featured.objects.all().order_by('?').first()
+    featured = Featured.objects.get(id=settings.HOME_FEATURED_ID)
+    featured_list = []
+    for post in featured.blogposts.all():
+        featured_list.append(post)
+    for video in featured.videos.all():
+        featured_list.append(video)
+    for artist in featured.artists.all():
+        featured_list.append(artist)
+    shuffle(featured_list)
+    return featured_list
+
+@register.filter
+def get_class(obj):
+    return obj.__class__.__name__
+
+@register.as_tag
+def featured_breaking_news_content(*args):
+    news = Featured.objects.get(id=settings.BREAKING_NEWS_FEATURED_ID).pages.all()
+    if news:
+        return news[0].richtextpage.content
+    return ''

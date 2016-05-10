@@ -42,11 +42,13 @@
 {% endblock %}
 
 {% block main %}
+
+{% comment %}
 {% if tag or location or year or month or author %}
     {% block event_list_filterinfo %}
     <p>
     {% if tag %}
-        {% trans "Viewing events tagged" %} {{ tag }}
+        {% trans "Viewing events tagged" %} <a href="{% url "event_list_tag" tag.slug %}">{{ tag }}</a>
     {% elif location %}
         {% trans "Viewing events for the location" %} {{ location }}
     {% elif year or month %}
@@ -62,12 +64,48 @@
     {% endblock %}
     </p>
 {% else %}
-    {% if page %}
+{% endcomment %}
+
+{% if page %}
     {% block event_list_pagecontent %}
     {{ page.richtextpage.content|richtext_filters|safe }}
     {% endblock %}
+    {% else %}
+
+    <ul class="list-inline tag-cloud">
+        {% all_weeks as weeks %}
+        {% for w in weeks %}
+        <li>
+            <a href="{% url "event_list_week" year w %}" {% if week|add:0 == w %}class="is-active"{% endif %}>{% for d in w|week_range:year %}{{ d|date:"d M" }}{% if forloop.first %} - {% endif %}{% endfor %}</a>
+        </li>
+        {% if not forloop.last %} | {% endif %}
+        {% endfor %}
+    </ul>
+
+    <hr/>
+
+    {% block event_keywords %}
+    {% keywords_for mezzanine_agenda.event as tags %}
+    {% all_events as all_events %}
+    {% if tags %}
+    <ul class="list-inline tag-cloud">
+        <li>
+            <a href="/events/" {% if not tag %}class="is-active"{% endif %}>{% trans "All" %} ({{ all_events.count }})</a>
+        </li>
+        {% for t in tags %}
+        {% if forloop.first %} | {% endif %}
+        <li>
+            <a href="{% url "event_list_tag" t.slug %}" {% if tag == t %}class="is-active"{% endif %}
+                class="tag-weight-{{ tag.weight }}">{{ t }}s ({{ t.item_count }})</a>
+        </li>
+        {% if not forloop.last %} | {% endif %}
+        {% endfor %}
+    </ul>
+    <br/>
     {% endif %}
+    {% endblock %}
 {% endif %}
+{# {% endif %}#}
 
 <div class="msry__container">
     <div class="msry__sizer">
