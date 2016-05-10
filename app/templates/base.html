@@ -124,6 +124,8 @@
     </ul>
     {% endcomment %}
 
+    {% featured as featured_list %}
+
     <div class="site__content">
         <div class="container">
             <main class="main" role="main">
@@ -160,10 +162,13 @@
                 {% include "includes/twitter.html" %}
                 {% include "includes/instafeed.html" %}
 
-                {% featured as featured %}
                 <h2 class="sidebar__title">{% trans "Playlist" %}</h2>
-                {% for playlist in featured.playlists.all %}
-                {% include 'festival/inc/audio_playlist.html' %}
+                {% for item in featured_list %}
+                 {% if item|get_class == 'Playlist' %}
+                  {% with item as playlist %}
+                    {% include 'festival/inc/audio_playlist.html' %}
+                  {% endwith %}
+                 {% endif %}
                 {% endfor %}
 
                 <div class="cta__panel">

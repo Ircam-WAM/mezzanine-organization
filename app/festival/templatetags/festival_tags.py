@@ -36,6 +36,8 @@ def featured(*args):
         featured_list.append(video)
     for artist in featured.artists.all():
         featured_list.append(artist)
+    for playlist in featured.playlists.all():
+        featured_list.append(playlist)
     shuffle(featured_list)
     return featured_list
 
