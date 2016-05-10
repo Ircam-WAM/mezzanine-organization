@@ -29,8 +29,18 @@
   <div class="msry__container">
    <div class="msry__sizer"></div>
     {% with video.event as event %}
-    {% include 'agenda/includes/event_card.html' %}
+        {% include 'agenda/includes/event_card.html' %}
+    {% for artist in event.artists.all %}
+        {% include "festival/inc/artist_card.html" %}
+    {% endfor %}
+    {% for video in event.videos.all %}
+        {% include 'festival/inc/video_card.html' %}
+    {% endfor %}
+    {% for post in event.blog_posts.all %}
+        {% include 'blog/includes/post_card.html' %}
+    {% endfor %}
     {% endwith %}
+
 </div>
 </div>
 {% endif %}

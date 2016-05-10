@@ -159,7 +159,7 @@
 {% endblock %}
 
 {% block event_related %}
-{% if event.artists.all or event.videos.all %}
+{% if event.artists.all or event.videos.all or event.blog_posts.all %}
 <h2 class="section__title">{% trans "Also discover" %}</h2>
 <div class="msry__container">
  <div class="msry__sizer"></div>
@@ -171,6 +171,11 @@
 {% if event.videos.all %}
     {% for video in event.videos.all %}
         {% include 'festival/inc/video_card.html' %}
+    {% endfor %}
+{% endif %}
+{% if event.blog_posts.all %}
+    {% for post in event.blog_posts.all %}
+        {% include 'blog/includes/post_card.html' %}
     {% endfor %}
 {% endif %}
 </div>
