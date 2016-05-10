@@ -97,11 +97,6 @@
                           <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
                       </p>
                       {% include "agenda/includes/event_metainfo_slider.html" %}
-                      {% for child in event.children.all %}
-                       {% with child as event %}
-                        {% include "agenda/includes/event_metainfo_slider.html" %}
-                       {% endwith %}
-                      {% endfor %}
                     </div>
                   </div>
               </li>
