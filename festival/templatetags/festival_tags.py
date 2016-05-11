@@ -41,13 +41,23 @@ def featured(*args):
     shuffle(featured_list)
     return featured_list
 
-@register.filter
-def get_class(obj):
-    return obj.__class__.__name__
-
 @register.as_tag
 def featured_breaking_news_content(*args):
     news = Featured.objects.get(id=settings.BREAKING_NEWS_FEATURED_ID).pages.all()
     if news:
         return news[0].richtextpage.content
     return ''
+
+@register.filter
+def get_class(obj):
+    return obj.__class__.__name__
+
+@register.filter
+def unique_posts(events):
+    post_list = []
+    for event in events:
+        for post in event.blog_posts.all():
+            print(post)
+            if not post in post_list:
+                post_list.append(post)
+    return post_list

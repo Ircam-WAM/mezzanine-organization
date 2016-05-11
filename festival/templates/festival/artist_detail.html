@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load mezzanine_tags keyword_tags %}
+{% load mezzanine_tags keyword_tags festival_tags %}
 
 {% block title %}
 {{ artist.name }}
@@ -32,10 +32,12 @@
     {% for video in event.videos.all %}
         {% include 'festival/inc/video_card.html' %}
     {% endfor %}
-    {% for post in event.blog_posts.all %}
+ {% endfor %}
+ {% with artist.events.all|unique_posts as posts %}
+    {% for post in posts %}
         {% include 'blog/includes/post_card.html' %}
     {% endfor %}
- {% endfor %}
+ {% endwith %}
 </div>
 {% endif %}
 {% endblock %}
