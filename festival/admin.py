@@ -22,23 +22,23 @@ class ArtistAdmin(admin.ModelAdmin):
 class VideoAdmin(admin.ModelAdmin):
 
     model = Video
-    filter_horizontal = ['artists']
 
 
 class VideoAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(VideoAdmin.fieldsets)
+    filter_horizontal = ['artists']
 
 
 class AudioAdmin(admin.ModelAdmin):
 
     model = Audio
-    filter_horizontal = ['artists']
-    
+
 
 class AudioAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(AudioAdmin.fieldsets)
+    filter_horizontal = ['artists']
 
 
 class ArtistAdminDisplayable(DisplayableAdmin):
