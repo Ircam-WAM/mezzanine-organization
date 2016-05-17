@@ -22,6 +22,7 @@ class ArtistAdmin(admin.ModelAdmin):
 class VideoAdmin(admin.ModelAdmin):
 
     model = Video
+    filter_horizontal = ['artists']
 
 
 class VideoAdminDisplayable(DisplayableAdmin):
@@ -32,7 +33,8 @@ class VideoAdminDisplayable(DisplayableAdmin):
 class AudioAdmin(admin.ModelAdmin):
 
     model = Audio
-
+    filter_horizontal = ['artists']
+    
 
 class AudioAdminDisplayable(DisplayableAdmin):
 
