@@ -61,3 +61,7 @@ def unique_posts(events):
             if not post in post_list:
                 post_list.append(post)
     return post_list
+
+@register.filter
+def no_parents(events):
+    return events.filter(parent=None)

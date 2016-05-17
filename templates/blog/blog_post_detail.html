@@ -1,5 +1,5 @@
 {% extends "blog/blog_post_list.html" %}
-{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n disqus_tags %}
+{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n disqus_tags festival_tags %}
 
 {% block meta_title %}{{ blog_post.meta_title }}{% endblock %}
 
@@ -123,7 +123,7 @@
     {% for post in related_posts %}
         {% include 'blog/includes/post_card.html' %}
     {% endfor %}
-    {% for event in blog_post.events.all %}
+    {% for event in blog_post.events.all|no_parents %}
         {% for artist in event.artists.all %}
             {% include "festival/inc/artist_card.html" %}
         {% endfor %}
