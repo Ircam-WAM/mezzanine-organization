@@ -33,7 +33,6 @@
  {% for video in artist.videos.all %}
     {% include 'festival/inc/video_card.html' %}
  {% endfor %}
- {% endfor %}
  {% with artist.events.all|unique_posts as posts %}
     {% for post in posts %}
         {% include 'blog/includes/post_card.html' %}
