@@ -153,6 +153,7 @@ class Audio(Media):
     closed_source_mime_type = 'audio/mp4'
 
     event = models.ForeignKey(Event, related_name='audios', verbose_name=_('event'), blank=True, null=True, on_delete=models.SET_NULL)
+    artists = models.ManyToManyField(Artist, verbose_name=_('artists'), related_name='audios', blank=True)
 
     class Meta(MetaCore):
         verbose_name = _('audio')
@@ -170,6 +171,7 @@ class Video(Media):
 
     event = models.ForeignKey(Event, related_name='videos', verbose_name=_('event'), blank=True, null=True, on_delete=models.SET_NULL)
     category = models.ForeignKey('VideoCategory', related_name='videos', verbose_name=_('category'), blank=True, null=True, on_delete=models.SET_NULL)
+    artists = models.ManyToManyField(Artist, verbose_name=_('artists'), related_name='videos', blank=True)
 
     class Meta(MetaCore):
         verbose_name = _('video')
