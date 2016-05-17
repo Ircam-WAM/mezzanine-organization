@@ -30,7 +30,7 @@
    <div class="msry__sizer"></div>
     {% with video.event as event %}
         {% include 'agenda/includes/event_card.html' %}
-    {% for artist in event.artists.all %}
+    {% for artist in video.artists.all %}
         {% include "festival/inc/artist_card.html" %}
     {% endfor %}
     {% for v in event.videos.all %}
