@@ -33,8 +33,12 @@
     {% for artist in event.artists.all %}
         {% include "festival/inc/artist_card.html" %}
     {% endfor %}
-    {% for video in event.videos.all %}
+    {% for v in event.videos.all %}
+      {% if v != video %}
+       {% with v as video %}
         {% include 'festival/inc/video_card.html' %}
+       {% endwith %}
+      {% endif %}
     {% endfor %}
     {% for post in event.blog_posts.all %}
         {% include 'blog/includes/post_card.html' %}
