@@ -17,7 +17,7 @@ On MacOSX or Windows install the `Docker Toolbox <https://www.docker.com/product
 Then run these commands::
 
     git clone --recursive git+ssh://git@git.forge.ircam.fr/ircam-www.git
-    cd Manifeste
+    cd ircam-www
     docker-compose up db
 
 Press CTRL-C to exit (the last command is needed to init the database).
@@ -30,13 +30,13 @@ For a production environment setup::
 
      docker-compose up
 
-Then browse the app at http://localhost:8010/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
+Then browse the app at http://localhost/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
 
 For a development environment setup::
 
     docker-compose -f docker-compose.yml -f env/dev.yml up
 
-Then browse the app at http://localhost:9010/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
+Then browse the app at http://localhost:9020/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
 
 
 Backup / Restore
@@ -44,14 +44,14 @@ Backup / Restore
 
 To backup the database, in **another** terminal (or a Docker Quickstart Terminal)::
 
-    cd Manifeste
+    cd ircam-www
     scripts/push.sh
 
 giving your user password if asked...
 
 To restore the backuped database, in another terminal (or a Docker Quickstart Terminal)::
 
-    cd Manifeste
+    cd ircam-www
     scripts/pull.sh
 
 If the app is broken after a restore script, restart the composition with::

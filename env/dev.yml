@@ -24,6 +24,6 @@ app:
   volumes:
     - ./app/:/srv/app
   ports:
-    - "9010:8000"
+    - "9020:8000"
   environment:
     - DEBUG='True'
