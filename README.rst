@@ -34,7 +34,7 @@ Then browse the app at http://localhost:8010/ (replacing 'localhost' by the IP g
 
 For a development environment setup::
 
-    docker-compose -f docker-compose.yml -f conf/dev.yml up
+    docker-compose -f docker-compose.yml -f env/dev.yml up
 
 Then browse the app at http://localhost:9010/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
 
