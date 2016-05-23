@@ -218,4 +218,4 @@ class VideoCategory(Slugged):
         db_table = app_label + '_video_category'
 
     def count(self):
-        return self.videos.all().count()
+        return self.videos.published().count()+1
