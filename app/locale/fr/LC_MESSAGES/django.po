@@ -349,7 +349,7 @@ msgstr "Réserver"
 
 #: templates/agenda/includes/event_metainfo.html:15
 msgid "Free entry. Limited seats available"
-msgstr "Entrée libre dans la limite des places disponibles"
+msgstr "Entrée libre, sans réservation, dans la limite des places disponibles"
 
 #: templates/agenda/includes/filter_panel.html:6
 msgid "Upcoming Events"
