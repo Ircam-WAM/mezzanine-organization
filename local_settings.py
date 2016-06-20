@@ -4,8 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 DEBUG = True if os.environ.get('DEBUG', 'True') else False
 
 # Make these unique, and don't share it with anybody.
-SECRET_KEY = "+3b01&_6_m@@yb4f06$s0zno8vkybh81nbuj_q(xzk+xeih1+s"
-NEVERCACHE_KEY = "l11tr%#!uc@+%$51(&+%=&z6h9yrw42(jpcj$3_&6evtu6hl%z"
+SECRET_KEY = "j1qa@u$5ktqr^0_kwh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
+NEVERCACHE_KEY = "m)u^%r@uh#r3wu0&$=#$1ogx)uy4hv93^2lt%c3@xi=^gifoj8paozijdihazefd"
 
 # DATABASE_ROUTERS = ['eve.routers.EveRouter', 'festival.routers.FestivalRouter',]
 # DATABASE_ROUTERS = ['eve.routers.EveRouter',]
