@@ -34,18 +34,9 @@ db:
     - data
   environment:
     - MYSQL_ROOT_PASSWORD=hyRob0otlaz4
-    - MYSQL_DATABASE=manifeste
-    - MYSQL_USER=manifeste
+    - MYSQL_DATABASE=ircam
+    - MYSQL_USER=ircam
     - MYSQL_PASSWORD=Onukifsid7
-
-pgdb:
-  image: postgres
-  volumes_from:
-    - data
-  environment:
-    - POSTGRES_PASSWORD=HmazS2frT
-    - POSTGRES_USER=eve
-    - POSTGRES_DB=eve
 
 app:
   build: .

@@ -86,23 +86,7 @@
     </div>
 
     {% if on_home %}
-    <div class="hero__slider">
-        <ul id="lightSlider">
-            {% featured_events as events %}
-            {% for event in events %}
-              <li class="hero__slider__item" style="background-image: url({{ MEDIA_URL }}{% thumbnail event.featured_image_header 1920 0 %});">
-                  <div class="hero__slider__infos">
-                    <div class="container">
-                      <p class="hero__slider__name">
-                          <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
-                      </p>
-                      {% include "agenda/includes/event_metainfo_slider.html" %}
-                    </div>
-                  </div>
-              </li>
-            {% endfor %}
-        </ul>
-    </div>
+     {% include "includes/slider.html" %}
     {% endif %}
 
     {% nevercache %}
@@ -245,4 +229,3 @@
 
 </script>
 </html>
-    
