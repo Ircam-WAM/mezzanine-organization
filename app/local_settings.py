@@ -89,6 +89,8 @@ ADMIN_MENU_ORDER = (
         "festival.PageCategory",)),
 )
 
+GRAPPELLI_ADMIN_TITLE = 'IRCAM Admin'
+
 SEARCH_MODEL_CHOICES = ()
 
 RATINGS_ACCOUNT_REQUIRED = True

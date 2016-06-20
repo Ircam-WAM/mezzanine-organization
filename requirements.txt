@@ -2,7 +2,7 @@ setuptools
 uwsgi
 watchdog
 mysqlclient
-Django==1.9.2
+Django==1.9.7
 mezzanine==4.1.0
 django-modeltranslation
 django-meta
