@@ -59,6 +59,12 @@
         </div>
 
         <div class="nav__complementary">
+
+            {% nevercache %}
+            {% include "includes/language_selector.html" %}
+            {# {% include "includes/user_panel.html" %} #}
+            {% endnevercache %}
+
             <div class="container">
                 <ul class="nav__complementary__list">
                     <li class="nav__complementary__item--facebook">
@@ -112,6 +118,7 @@
 
     <div class="site__content">
         <div class="container">
+
             <main class="main" role="main">
                 {% featured_breaking_news_content as bk_content %}
                 {% if on_home and bk_content %}
@@ -125,7 +132,6 @@
                             <div class="media-content bk__news__content">
                                     {{ bk_content|safe }}
                             </div>
-
                         </div>
                     </div>
                 {% endif %}
@@ -136,40 +142,6 @@
                 {% endblock %}
                 {% block main %}{% endblock %}
             </main>
-
-            <aside class="aside {% if on_home %}aside-home{% endif %}">
-                <div class="search__form">
-                    {% search_form "all" %}
-                </div>
-
-                {% include "includes/calendar.html" %}
-                {% include "includes/twitter.html" %}
-                {% include "includes/instafeed.html" %}
-
-                <h2 class="sidebar__title">{% trans "Playlist" %}</h2>
-                {% for item in featured_list %}
-                 {% if item|get_class == 'Playlist' %}
-                  {% with item as playlist %}
-                    {% include 'festival/inc/audio_playlist.html' %}
-                  {% endwith %}
-                 {% endif %}
-                {% endfor %}
-
-                <div class="cta__panel">
-                    <div>
-                        <a href="/media/uploads/doc/MANIFESTE-2016-AGENDA.pdf" class="btn btn-full btn-inverse">{% trans "Download the brochure" %}</a>
-                    </div>
-                    <div>
-                        <a href="/newsletter/" class="btn btn-full btn-inverse">{% trans "Subscribe to newsletter" %}</a>
-                    </div>
-                </div>
-
-                {% nevercache %}
-                {% include "includes/language_selector.html" %}
-                {# {% include "includes/user_panel.html" %} #}
-                {% endnevercache %}
-
-            </aside>
         </div>
     </div>
 

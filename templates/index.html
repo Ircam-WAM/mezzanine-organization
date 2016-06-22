@@ -11,14 +11,6 @@
 
 {% block main %}
 
-{# <h2 class="section__title">{% trans "Edito" %}</h2>#}
-
-{% featured_edito as edito %}
-{{ edito.content|safe|slice:":591" }}
-<br>
-<a href="{% url 'page' edito.slug %}" class="event__meta__btn">{% trans "Read the edito" %}</a>
-<br>
-
 <div class="last__media">
     <h2 class="section__title">{% trans "Featured" %}</h2>
     <div class="msry__container">
@@ -45,6 +37,5 @@
         {% endfor %}
     </div>
 </div>
-
 
 {% endblock %}
