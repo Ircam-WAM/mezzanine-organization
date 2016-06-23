@@ -49,6 +49,10 @@ class BaseNameModel(models.model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def slug(self):
+        return slugify(self.__unicode__())
+
 
 class Organization(BaseNameModel):
     """(Organization description)"""
@@ -85,10 +89,6 @@ class Department(BaseNameModel):
     def __unicode__(self):
         return self.name
 
-    @property
-    def slug(self):
-        return slugify(self.__unicode__())
-
     class Meta:
         verbose_name = _('department')
 
@@ -107,6 +107,7 @@ class Person(Displayable, RichText, AdminThumbMixin):
 
     user = models.ForeignKey('User', verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
     title = models.CharField(_('Title'), max_length=16, choices=TITLE_CHOICES, blank=True)
+    organization = models.ForeignKey('Organization', verbose_name=_('organization'), blank=True, null=True, on_delete=models.SET_NULL)
     bio = RichTextField(_('biography'), blank=True)
     photo = FileField(_('photo'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
     photo_credits = models.CharField(_('photo credits'), max_length=255, blank=True, null=True)
@@ -131,3 +132,23 @@ class Activity(models.Model):
 
     def __unicode__(self):
         return ' - '.join((self.person, self.role, self.date_begin, self.date_end))
+
+
+class Category(BaseNameModel):
+    """(Category description)"""
+
+    class Meta:
+        verbose_name = _('category')
+
+    def __unicode__(self):
+        return self.name
+
+
+class Topic(BaseNameModel):
+    """(Topic description)"""
+
+    class Meta:
+        verbose_name = _('topic')
+
+    def __unicode__(self):
+        return self.name
