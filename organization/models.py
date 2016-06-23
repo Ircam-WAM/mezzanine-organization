@@ -107,6 +107,8 @@ class Person(Displayable, RichText, AdminThumbMixin):
 
     user = models.ForeignKey('User', verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
     title = models.CharField(_('Title'), max_length=16, choices=TITLE_CHOICES, blank=True)
+    first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True, help="If no User linked")
+    last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), blank=True, null=True, on_delete=models.SET_NULL)
     bio = RichTextField(_('biography'), blank=True)
     photo = FileField(_('photo'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
@@ -115,9 +117,46 @@ class Person(Displayable, RichText, AdminThumbMixin):
     photo_description = models.TextField(_('photo description'), blank=True)
     photo_featured = FileField(_('photo featured'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
     photo_featured_credits = models.CharField(_('photo featured credits'), max_length=255, blank=True, null=True)
+    link = models.URLField(_('Link'), blank=True, null=True)
 
     def __unicode__(self):
         return ' '.join((self.user.first_name, self.user.last_name))
+
+
+class Link(models.Model):
+    """A person can have many links."""
+
+    person = models.ForeignKey(Person, verbose_name=_('Person'))
+    link_type = models.ForeignKey(LinkType, verbose_name=_('Link type'))
+    url = models.URLField(verbose_name=_('URL'))
+
+    def __str__(self):
+        return self.url
+
+
+class LinkType(TranslatableModel):
+    """
+    A link type could be ``Facebook`` or ``Twitter`` or ``Website``.
+    This is masterdata that should be created by the admins when the site is
+    deployed for the first time.
+    :ordering: Enter numbers here if you want links to be displayed in a
+      special order.
+    """
+
+    name=models.CharField(max_length=256, verbose_name=_('Name'))
+    slug = models.SlugField(max_length=256, verbose_name=_('Slug'), help_text=_(
+            'Use this field to define a simple identifier that can be used'
+            ' to style the different link types (i.e. assign social media'
+            ' icons to them)'),
+        blank=True,
+    )
+    ordering = models.PositiveIntegerField(verbose_name=_('Ordering'), null=True, blank=True)
+
+    class Meta:
+        ordering = ['ordering', ]
+
+    def __str__(self):
+        return self.name
 
 
 class Activity(models.Model):
