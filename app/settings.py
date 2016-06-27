@@ -219,7 +219,7 @@ INSTALLED_APPS = [
     "meta",
     "mezzanine_agenda",
     "festival",
-    "institute",
+    "organization",
 ]
 
 # Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats
