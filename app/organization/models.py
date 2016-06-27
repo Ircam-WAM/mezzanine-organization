@@ -171,23 +171,3 @@ class Activity(models.Model):
 
     def __unicode__(self):
         return ' - '.join((self.person, self.role, self.date_begin, self.date_end))
-
-
-class Category(BaseNameModel):
-    """(Category description)"""
-
-    class Meta:
-        verbose_name = _('category')
-
-    def __unicode__(self):
-        return self.name
-
-
-class Topic(BaseNameModel):
-    """(Topic description)"""
-
-    class Meta:
-        verbose_name = _('topic')
-
-    def __unicode__(self):
-        return self.name
