@@ -23,6 +23,7 @@ app:
   command: /bin/sh scripts/app.sh --runserver
   volumes:
     - ./app/:/srv/app
+    - /var/lib/mysql
   ports:
     - "9020:8000"
   environment:
