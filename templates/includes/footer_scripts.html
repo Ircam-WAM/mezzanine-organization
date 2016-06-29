@@ -2,9 +2,7 @@
 
 {% compress js %}
     <script src="{{ STATIC_URL }}jquery/dist/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="{% static "js/vendor/jquery.1.12.1.min.js" %}"><\/script>')</script>
-    <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
-    <script src="{% static "js/plugins.js" %}"></script>
+    <script src="{% static "js/plugins.js" %}"></script>#}
     <script src="{% static "js/index.js" %}"></script>
 {% block extra_js %}{% endblock %}
 {% editable_loader %}
