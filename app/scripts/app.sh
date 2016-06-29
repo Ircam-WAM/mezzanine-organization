@@ -29,6 +29,7 @@ sh $app/scripts/wait.sh
 # django setup
 python $manage wait-for-db
 python $manage migrate --noinput
+python $manage bower_install -- --allow-root
 python $manage collectstatic --noinput
 python $manage create-admin-user
 
