@@ -220,6 +220,7 @@ INSTALLED_APPS = [
     "mezzanine.accounts",
     # "mezzanine.mobile",
     # "eve",
+    'djangobower',
     "meta",
     "mezzanine_agenda",
     "festival",
@@ -295,6 +296,14 @@ MIDDLEWARE_CLASSES = (
 # at the moment we are using custom forks of them.
 PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
 PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
+
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'djangobower.finders.BowerFinder',
+)
 
 #########################
 # OPTIONAL APPLICATIONS #

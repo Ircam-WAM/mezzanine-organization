@@ -38,7 +38,7 @@ DATABASES = {
 
 }
 
-DATABASE_ROUTERS = ['eve.routers.EveRouter',]
+# DATABASE_ROUTERS = ['eve.routers.EveRouter',]
 
 
 # EXTENSIONS AND FORMATS
