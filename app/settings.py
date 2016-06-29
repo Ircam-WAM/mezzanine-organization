@@ -226,6 +226,14 @@ INSTALLED_APPS = [
     "organization",
 ]
 
+
+BOWER_COMPONENTS_ROOT = '/srv/bower/'
+BOWER_PATH = '/usr/local/bin/bower'
+BOWER_INSTALLED_APPS = (
+    'jquery#2.2.4',
+    'font-awesome#4.4.0',
+)
+
 # Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats
 MIGRATION_MODULES = {
     "blog": "migrations.blog",
