@@ -70,7 +70,7 @@ Gulp require nodejs installed on your computer to work.
   If you have previously installed a version of gulp globally, please run `npm rm --global gulp`
   to make sure your old version doesn't collide with gulp-cli::
 
-    npm install --global gulp-cli
+        npm install --global gulp-cli
 
 2. Install gulp dependancies::
 
