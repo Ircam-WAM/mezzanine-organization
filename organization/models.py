@@ -58,9 +58,11 @@ class BaseNameModel(models.Model):
 class Organization(BaseNameModel):
     """(Organization description)"""
 
-    address = models.TextField(_('description'), blank=True)
-    domain = models.CharField(_('domain'), max_length=255, blank=True)
     organization_type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
+    address = models.TextField(_('description'), blank=True)
+    postalcode = models.CharField(_('domain'), max_length=16, blank=True)
+    country = models.CharField(_('domain'), max_length=255, blank=True)
+    url = models.URLField(_('URL'), max_length=512, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -86,6 +88,7 @@ class Department(BaseNameModel):
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'))
     domain = models.CharField(_('domain'), max_length=255, blank=True)
+    weaving_class = models.CharField(_('weaving class'), max_length=64, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -107,7 +110,7 @@ class Person(Displayable, RichText, AdminThumbMixin):
     """(Person description)"""
 
     user = models.ForeignKey(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
-    person_title = models.CharField(_('Title'), max_length=16, choices=TITLE_CHOICES, blank=True)
+    person_title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -143,7 +146,7 @@ class LinkType(models.Model):
       special order.
     """
 
-    name=models.CharField(max_length=256, verbose_name=_('Name'))
+    name = models.CharField(max_length=256, verbose_name=_('Name'))
     slug = models.SlugField(max_length=256, verbose_name=_('Slug'), help_text=_(
             'Use this field to define a simple identifier that can be used'
             ' to style the different link types (i.e. assign social media'
