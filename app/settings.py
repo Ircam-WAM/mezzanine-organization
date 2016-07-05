@@ -42,9 +42,9 @@ from django.utils.translation import ugettext_lazy as _
 # that doesn't appear in this setting, all pages will appear in it.
 
 PAGE_MENU_TEMPLATES = (
-    (1, _("Top header"), "pages/menus/header.html"),
-    (2, _("Top navigation bar"), "pages/menus/dropdown.html"),
-    (3, _("Footer"), "pages/menus/footer.html"),
+    (1, _("Action"), "pages/menus/action.html"),
+    (2, _("Departement"), "pages/menus/header.html"),
+    (3, _("Footer"), "pages/menus/footer.html")
 )
 
 # A sequence of fields that will be injected into Mezzanine's (or any
@@ -213,6 +213,7 @@ INSTALLED_APPS = [
     "mezzanine.core",
     "mezzanine.generic",
     "mezzanine.pages",
+    "custom",
     "mezzanine.blog",
     "mezzanine.forms",
     "mezzanine.galleries",
@@ -224,7 +225,7 @@ INSTALLED_APPS = [
     "meta",
     "mezzanine_agenda",
     "festival",
-    "organization",
+    "organization"
 ]
 
 
@@ -246,6 +247,7 @@ MIGRATION_MODULES = {
 }
 
 MODELTRANSLATION_TRANSLATION_FILES = (
+    'custom.translations',
     'translations',
 )
 
