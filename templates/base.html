@@ -47,6 +47,8 @@
                     <span></span>
                 </button>
 
+                {% page_menu "pages/menus/action.html" %}
+
                 {% if settings.SITE_TAGLINE %}
                 <p class="header__baseline">{{ settings.SITE_TAGLINE }}</p>
                 {% endif %}
@@ -55,7 +57,7 @@
         </div>
 
         <div class="navigation" role="navigation">
-            {% page_menu "pages/menus/dropdown.html" %}
+            {% page_menu "pages/menus/header.html" %}
         </div>
 
         <div class="nav__complementary">
@@ -80,7 +82,7 @@
                     {% if settings.USE_MODELTRANSLATION and languages|length > 1 %}
                         {% for language in languages %}
                             <li class="nav__complementary__item__lang {% if language.code == LANGUAGE_CODE %}is-active{% endif %}">
-                                <a href="#" onclick="$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
+                                <a href="#" onclic"$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
                                   {{ language.code|title }}
                                 </a>
                             </li>
@@ -147,44 +149,10 @@
 
     <footer class="footer" role="footer">
         <div class="container">
-            <div class="footer-logo">
-                <img src="{% static "img/logo_manifeste16_black.png" %}" alt="Logo Manifeste 2016 ircam" width="80">
-            </div>
+
             {% page_menu "pages/menus/footer.html" %}
 
-            <ul class="footer-partners list-inline">
-                <li>
-                    <a href="http://www.culturecommunication.gouv.fr/" target="_blank">
-                        <img src="{% static "img/logo_mmc.png" %}" alt="Logo Ministere Culture et Communication">
-                    </a>
-                </li>
-                <li>
-                    <a href="http://www.cnrs.fr/" target="_blank">
-                        <img src="{% static "img/logo_cnrs.png" %}" alt="Logo CNRS">
-                    </a>
-                </li>
-                <li>
-                    <a href="http://www.upmc.fr/" target="_blank">
-                        <img src="{% static "img/logo_upmc.png" %}" alt="Logo UPMC">
-                    </a>
-                </li>
-                <li>
-                    <a href="http://www.inria.fr/" target="_blank">
-                        <img src="{% static "img/logo_inra.png" %}" alt="Logo Inria">
-                    </a>
-                </li>
-            </ul>
 
-            <div class="footer-legals">
-                <p>
-                    {# {% trans "Powered by" %} #}
-                    Conception & réalisation : <br><br>
-                    <a href="http://www.philippebarbosa.com" target="_blank" titre="Développeur front-end freelance & photographe professionnel à Paris">
-                        Philippe Barbosa</a>,
-                        <a href="http://www.ircam.com" target="_blank" titre="IRCAM">Mary Delacour & Guillaume Pellerin</a>
-
-                </p>
-            </div>
         </div>
     </footer>
     {% include "includes/footer_scripts.html" %}
