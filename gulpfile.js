@@ -16,12 +16,10 @@ var gulp         = require('gulp');
 /**
  * Paths
  */
-var scssSrc = 'app/festival/static/scss/',
-    jsSrc   = 'app/festival/static/js/',
-    cssDist = 'app/festival/static/css/',
+var scssSrc = 'app/static/scss/',
+    jsSrc   = 'app/static/js/',
+    cssDist = 'app/static/css/',
     cssDjango = 'data/static/css/';
-
-
 
 
 /**

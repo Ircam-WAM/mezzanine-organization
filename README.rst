@@ -10,9 +10,9 @@ Install
 
 For easier development and production workflow, it has been dockerized including Django, Mezzanine, MariaDB and Nginx.
 
-On Linux, first install `Git <http://git-scm.com/downloads>`_, `Docker engine <https://docs.docker.com/installation/>`_ and `docker-compose <https://docs.docker.com/compose/install/>`_ and open a terminal.
+On Linux, first install Git_, Docker-engine_ and docker-compose_ and open a terminal.
 
-On MacOSX or Windows install the `Docker Toolbox <https://www.docker.com/products/docker-toolbox>`_ and open a Docker Quickstart Terminal.
+On MacOSX or Windows install the Docker-Toolbox_ and open a Docker Quickstart Terminal.
 
 Then run these commands::
 
@@ -65,29 +65,30 @@ Work with gulp
 Gulp allow to compile scss to css, concatenate js files and has a watcher, who do this tasks on file change.
 Gulp require nodejs installed on your computer to work.
 
-- 1. Install gulp globally:
-__If you have previously installed a version of gulp globally, please run `npm rm --global gulp`
-to make sure your old version doesn't collide with gulp-cli.__
+1. Install gulp globally:
 
-```
-$ npm install --global gulp-cli
-```
+  If you have previously installed a version of gulp globally, please run `npm rm --global gulp`
+  to make sure your old version doesn't collide with gulp-cli::
 
-- 2. Install gulp dependancies
+        npm install --global gulp-cli
 
-```
-$ npm install
-```
+2. Install gulp dependancies::
 
-- 3. Run gulp:
+    npm install
 
-```sh
-$ gulp [task]
-```
+3. Run gulp::
+
+    gulp [task]
+
 
 Paths
-============
+======
 
 - `app/templates` : Main templates
 - `app/festival/templates` : Personal templates
 - `app/festival/static` : Static files
+
+.. _Git: http://git-scm.com/downloads
+.. _Docker-engine: https://docs.docker.com/installation/
+.. _docker-compose: https://docs.docker.com/compose/install/
+.. _Docker-Toolbox: https://www.docker.com/products/docker-toolbox
