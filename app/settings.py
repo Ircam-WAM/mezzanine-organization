@@ -213,6 +213,7 @@ INSTALLED_APPS = [
     "mezzanine.core",
     "mezzanine.generic",
     "mezzanine.pages",
+    "custom",
     "mezzanine.blog",
     "mezzanine.forms",
     "mezzanine.galleries",
@@ -246,6 +247,7 @@ MIGRATION_MODULES = {
 }
 
 MODELTRANSLATION_TRANSLATION_FILES = (
+    'custom.translations',
     'translations',
 )
 
