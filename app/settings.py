@@ -213,7 +213,6 @@ INSTALLED_APPS = [
     "mezzanine.core",
     "mezzanine.generic",
     "mezzanine.pages",
-    "custom",
     "mezzanine.blog",
     "mezzanine.forms",
     "mezzanine.galleries",
@@ -224,8 +223,13 @@ INSTALLED_APPS = [
     'djangobower',
     "meta",
     "mezzanine_agenda",
-    "festival",
-    "organization"
+    "organization.core",
+    "organization.structure",
+    # "organization.festival",
+    "organization.magazine",
+    "organization.media",
+    "organization.festival",
+    "organization.project",
 ]
 
 
@@ -247,8 +251,8 @@ MIGRATION_MODULES = {
 }
 
 MODELTRANSLATION_TRANSLATION_FILES = (
-    'custom.translations',
-    'translations',
+    'organization.core.translation',
+    'organization.festival.translation',
 )
 
 TEMPLATES = [{'APP_DIRS': True,
