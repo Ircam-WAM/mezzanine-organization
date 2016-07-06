@@ -2,10 +2,12 @@ setuptools
 uwsgi
 watchdog
 mysqlclient
+psycopg2
+pyquery
 Django==1.9.7
 mezzanine==4.1.0
 django-modeltranslation
 django-meta
-psycopg2
 django-bower
-pyquery
+django-debug-toolbar
+django-extensions
