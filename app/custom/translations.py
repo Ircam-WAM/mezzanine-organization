@@ -1,10 +1,10 @@
 from modeltranslation.translator import translator, register, TranslationOptions
 from mezzanine.pages.models import Page, RichText
 from mezzanine.pages.translation import TranslatedRichText
-from .models import BasicPage
+from custom.models import BasicPage
 
 
 @register(BasicPage)
-class EventTranslationOptions(TranslationOptions):
+class BasicPageTranslationOptions(TranslationOptions):
 
     fields = ('sub_title',)
