@@ -19,6 +19,8 @@ from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 
+from django_countries.fields import CountryField
+
 
 # Hack to have these strings translated
 mr = _('Mr')
@@ -38,7 +40,7 @@ TITLE_CHOICES = [
 ALIGNMENT_CHOICES = (('left', _('left')), ('right', _('right')))
 
 
-class BaseNameModel(models.Model):
+class NameMixin(models.Model):
     """Base object with name and description"""
 
     name = models.CharField(_('name'), max_length=512)
@@ -55,13 +57,24 @@ class BaseNameModel(models.Model):
         return slugify(self.__unicode__())
 
 
-class Organization(BaseNameModel):
+class AddressMixin(models.Model):
+    """(Address description)"""
+
+    address = models.TextField(_('description'), blank=True)
+    postal_code = models.CharField(_('postal code'), max_length=16, blank=True)
+    country = CountryField(_('country'))
+
+    def __unicode__(self):
+        return u"Address"
+
+        class Meta:
+            abstract = True
+
+
+class Organization(NameMixin, AddressMixin):
     """(Organization description)"""
 
-    organization_type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
-    address = models.TextField(_('description'), blank=True)
-    postalcode = models.CharField(_('domain'), max_length=16, blank=True)
-    country = models.CharField(_('domain'), max_length=255, blank=True)
+    type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
     url = models.URLField(_('URL'), max_length=512, blank=True)
 
     def __unicode__(self):
@@ -71,23 +84,18 @@ class Organization(BaseNameModel):
         verbose_name = _('organization')
 
 
-class OrganizationType(models.Model):
+class OrganizationType(NameMixin):
     """(OrganizationType description)"""
-
-    type = models.CharField(_('type'), max_length=255)
-
-    def __unicode__(self):
-        return self.type
 
     class Meta:
         verbose_name = _('organization type')
 
 
-class Department(BaseNameModel):
+class Department(NameMixin):
     """(Department description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'))
-    domain = models.CharField(_('domain'), max_length=255, blank=True)
+    url = models.URLField(_('URL'), max_length=512, blank=True)
     weaving_class = models.CharField(_('weaving class'), max_length=64, blank=True)
 
     def __unicode__(self):
@@ -97,7 +105,7 @@ class Department(BaseNameModel):
         verbose_name = _('department')
 
 
-class Team(BaseNameModel):
+class Team(NameMixin):
     """(Team description)"""
 
     department = models.ForeignKey('Department', verbose_name=_('department'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -110,10 +118,13 @@ class Person(Displayable, RichText, AdminThumbMixin):
     """(Person description)"""
 
     user = models.ForeignKey(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
-    person_title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
+    title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
+    gender = models.CharField(_('gender'), max_length=16, choices=GENDER_CHOICES, blank=True)
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
+    birthday = models.DateField(_('birthday'), blank=True)
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), blank=True, null=True, on_delete=models.SET_NULL)
+
     bio = RichTextField(_('biography'), blank=True)
     photo = FileField(_('photo'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
     photo_credits = models.CharField(_('photo credits'), max_length=255, blank=True, null=True)
@@ -124,6 +135,15 @@ class Person(Displayable, RichText, AdminThumbMixin):
 
     def __unicode__(self):
         return ' '.join((self.user.first_name, self.user.last_name))
+
+
+class Nationality(models.Model):
+    """(Nationality description)"""
+
+    name = models.CharField(_('name'))
+
+    def __unicode__(self):
+        return self.name
 
 
 class Link(models.Model):
@@ -174,3 +194,11 @@ class Activity(models.Model):
 
     def __unicode__(self):
         return ' - '.join((self.person, self.role, self.date_begin, self.date_end))
+
+
+class Modelname(models.Model):
+    """( description)"""
+
+
+    def __unicode__(self):
+        return u""
