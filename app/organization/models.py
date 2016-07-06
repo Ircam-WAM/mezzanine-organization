@@ -21,6 +21,7 @@ from mezzanine.utils.models import AdminThumbMixin, upload_to
 
 from django_countries.fields import CountryField
 
+from media.models import Photos
 
 # Hack to have these strings translated
 mr = _('Mr')
@@ -40,8 +41,8 @@ TITLE_CHOICES = [
 ALIGNMENT_CHOICES = (('left', _('left')), ('right', _('right')))
 
 
-class NameMixin(models.Model):
-    """Base object with name and description"""
+class Named(models.Model):
+    """Named object with description"""
 
     name = models.CharField(_('name'), max_length=512)
     description = models.TextField(_('description'), blank=True)
@@ -71,7 +72,7 @@ class AddressMixin(models.Model):
             abstract = True
 
 
-class Organization(NameMixin, AddressMixin):
+class Organization(Named, AddressMixin):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -84,14 +85,14 @@ class Organization(NameMixin, AddressMixin):
         verbose_name = _('organization')
 
 
-class OrganizationType(NameMixin):
+class OrganizationType(Named):
     """(OrganizationType description)"""
 
     class Meta:
         verbose_name = _('organization type')
 
 
-class Department(NameMixin):
+class Department(Named):
     """(Department description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'))
@@ -105,7 +106,7 @@ class Department(NameMixin):
         verbose_name = _('department')
 
 
-class Team(NameMixin):
+class Team(Named):
     """(Team description)"""
 
     department = models.ForeignKey('Department', verbose_name=_('department'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -114,7 +115,7 @@ class Team(NameMixin):
         return u"Team"
 
 
-class Person(Displayable, RichText, AdminThumbMixin):
+class Person(Displayable, RichText, AdminThumbMixin, Photos):
     """(Person description)"""
 
     user = models.ForeignKey(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -124,14 +125,6 @@ class Person(Displayable, RichText, AdminThumbMixin):
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     birthday = models.DateField(_('birthday'), blank=True)
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), blank=True, null=True, on_delete=models.SET_NULL)
-
-    bio = RichTextField(_('biography'), blank=True)
-    photo = FileField(_('photo'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
-    photo_credits = models.CharField(_('photo credits'), max_length=255, blank=True, null=True)
-    photo_alignment = models.CharField(_('photo alignment'), choices=ALIGNMENT_CHOICES, max_length=32, default="left", blank=True)
-    photo_description = models.TextField(_('photo description'), blank=True)
-    photo_featured = FileField(_('photo featured'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
-    photo_featured_credits = models.CharField(_('photo featured credits'), max_length=255, blank=True, null=True)
 
     def __unicode__(self):
         return ' '.join((self.user.first_name, self.user.last_name))
