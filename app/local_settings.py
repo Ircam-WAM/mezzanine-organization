@@ -11,15 +11,15 @@ NEVERCACHE_KEY = "m)u^%r@uh#r3wu0&$=#$1ogx)uy4hv93^2lt%c3@xi=^gifoj8paozijdihaze
 # DATABASE_ROUTERS = ['eve.routers.EveRouter',]
 
 DATABASES = {
-    'default': {
-     'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-         'USER': os.environ.get('DB_ENV_MYSQL_USER'),      # Not used with sqlite3.
-         'PASSWORD': os.environ.get('DB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
-         'NAME': os.environ.get('DB_ENV_MYSQL_DATABASE'),
-         'HOST': 'db',      # Set to empty string for localhost. Not used with sqlite3.
-         'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
-    },
     'eve': {
+    # 'default': {
+    #  'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #      'USER': os.environ.get('DB_ENV_MYSQL_USER'),      # Not used with sqlite3.
+    #      'PASSWORD': os.environ.get('DB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
+    #      'NAME': os.environ.get('DB_ENV_MYSQL_DATABASE'),
+    #      'HOST': 'db',      # Set to empty string for localhost. Not used with sqlite3.
+    #      'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
+    # },
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'eve',
         'USER': 'eve',
@@ -27,14 +27,15 @@ DATABASES = {
         'HOST': 'pgdb',
         'PORT': '5432',
     },
-    #'eve': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'eve',
-    #     'USER': 'django',
-    #     'PASSWORD': 'q2nqzt0WGnwWé,256',
-    #     'HOST': 'eve.ircam.fr',
-    #     'PORT': '5432',
-    #},
+
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': os.environ.get('DB_ENV_POSTGRES_PASSWORD'),
+        'HOST': 'db',
+        'PORT': '5432',
+    },
 
 }
 
@@ -69,11 +70,11 @@ FILEBROWSER_SELECT_FORMATS = {
 
 EMAIL_HOST = 'smtp.ircam.fr'
 EMAIL_PORT = '25'
-DEFAULT_FROM_EMAIL = 'manifeste2016@ircam.fr'
-EMAIL_SUBJECT_PREFIX = "IRCAM Manifeste 2016"
+DEFAULT_FROM_EMAIL = 'www@ircam.fr'
+EMAIL_SUBJECT_PREFIX = "[IRCAM WWW]"
 
-SITE_TITLE = 'Manifeste 2016'
-SITE_TAGLINE = 'Festival 2 juin | 2 juillet 2016'
+SITE_TITLE = 'IRCAM'
+SITE_TAGLINE = 'Institut de Recherche et de Coordination Acoustique et Musique'
 
 SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 
@@ -116,6 +117,10 @@ BREAKING_NEWS_FEATURED_ID = 4
 
 BLOG_POST_PER_PAGE = 200
 
+# The numeric mode to set newly-uploaded files to. The value should be
+# a mode you'd pass directly to os.chmod.
+FILE_UPLOAD_PERMISSIONS = 0o664
+FILE_UPLOAD_TEMP_DIR = '/srv/media/uploads/tmp/'
 FILEBROWSER_MAX_UPLOAD_SIZE = 512000000
 
 if DEBUG:
