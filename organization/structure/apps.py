@@ -6,3 +6,4 @@ from django.apps import AppConfig
 class StructureConfig(AppConfig):
 
     name = 'organization.structure'
+    label  = 'organization structure'

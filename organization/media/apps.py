@@ -6,3 +6,4 @@ from django.apps import AppConfig
 class MediaConfig(AppConfig):
 
     name = 'organization.media'
+    label = 'organization media'
