@@ -145,3 +145,9 @@ DEBUG_TOOLBAR_PANELS = [
 
 # slug
 BLOG_SLUG = 'article'
+
+
+AJAX_LOOKUP_CHANNELS = {
+  'article': {'model': 'organization.magazine.article', 'search_field': 'title'},
+  'basepage': {'model': 'organization.core.basepage', 'search_field': 'title'},
+}
