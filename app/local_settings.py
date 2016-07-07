@@ -11,23 +11,6 @@ NEVERCACHE_KEY = "m)u^%r@uh#r3wu0&$=#$1ogx)uy4hv93^2lt%c3@xi=^gifoj8paozijdihaze
 # DATABASE_ROUTERS = ['eve.routers.EveRouter',]
 
 DATABASES = {
-    'eve': {
-    # 'default': {
-    #  'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-    #      'USER': os.environ.get('DB_ENV_MYSQL_USER'),      # Not used with sqlite3.
-    #      'PASSWORD': os.environ.get('DB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
-    #      'NAME': os.environ.get('DB_ENV_MYSQL_DATABASE'),
-    #      'HOST': 'db',      # Set to empty string for localhost. Not used with sqlite3.
-    #      'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
-    # },
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'eve',
-        'USER': 'eve',
-        'PASSWORD': 'HmazS2frT',
-        'HOST': 'pgdb',
-        'PORT': '5432',
-    },
-
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
@@ -36,7 +19,14 @@ DATABASES = {
         'HOST': 'db',
         'PORT': '5432',
     },
-
+    'eve': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'eve',
+        'USER': 'eve',
+        'PASSWORD': 'HmazS2frT',
+        'HOST': 'pgdb',
+        'PORT': '5432',
+    },
 }
 
 # DATABASE_ROUTERS = ['eve.routers.EveRouter',]
