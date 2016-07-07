@@ -124,11 +124,6 @@ USE_L10N = True
 
 AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
 
-# The numeric mode to set newly-uploaded files to. The value should be
-# a mode you'd pass directly to os.chmod.
-FILE_UPLOAD_PERMISSIONS = 0o644
-
-# MAX_UPLOAD_SIZE = 429916160
 
 #############
 # DATABASES #
@@ -213,7 +208,6 @@ INSTALLED_APPS = [
     "mezzanine.core",
     "mezzanine.generic",
     "mezzanine.pages",
-    "custom",
     "mezzanine.blog",
     "mezzanine.forms",
     "mezzanine.galleries",
@@ -224,8 +218,13 @@ INSTALLED_APPS = [
     'djangobower',
     "meta",
     "mezzanine_agenda",
-    "festival",
-    "organization"
+    "organization.core",
+    "organization.team",
+    "organization.festival",
+    "organization.magazine",
+    "organization.media",
+    "organization.project",
+    "organization.featured",
 ]
 
 
@@ -247,8 +246,9 @@ MIGRATION_MODULES = {
 }
 
 MODELTRANSLATION_TRANSLATION_FILES = (
-    'custom.translations',
-    'translations',
+    'organization.core.translation',
+    'organization.festival.translation',
+    'organization.magazine.translation'
 )
 
 TEMPLATES = [{'APP_DIRS': True,
@@ -291,7 +291,7 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the following if using any of the SSL settings:
     # "mezzanine.core.middleware.SSLRedirectMiddleware",
     "mezzanine.pages.middleware.PageMiddleware",
-    "mezzanine.core.middleware.FetchFromCacheMiddleware",
+    # "mezzanine.core.middleware.FetchFromCacheMiddleware",
 )
 
 # Store these package names here as they may change in the future since
