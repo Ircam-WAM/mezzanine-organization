@@ -78,10 +78,12 @@ SITE_TAGLINE = 'Festival 2 juin | 2 juillet 2016'
 SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 
 ADMIN_MENU_ORDER = (
-    (_("Content"), ("pages.Page", "blog.BlogPost", "mezzanine_agenda.Event",
+    (_("Content"), ("pages.Page", "mezzanine_agenda.Event",
         "festival.Artist", "festival.Video", "festival.Audio", "festival.Playlist",
         "festival.Featured",
         "generic.ThreadedComment", (_("Media Library"), "fb_browse"),)),
+
+    (_("Magazine"), ("magazine.Article",)),
     (_("Site"), ("sites.Site", "redirects.Redirect", "conf.Setting")),
     (_("Users"), ("auth.User", "auth.Group",)),
     (_("Festival"), ("mezzanine_agenda.EventLocation",
@@ -137,3 +139,6 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.logging.LoggingPanel',
     'debug_toolbar.panels.redirects.RedirectsPanel',
 ]
+
+# slug
+BLOG_SLUG = 'article'

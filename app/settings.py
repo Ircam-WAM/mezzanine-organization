@@ -221,6 +221,7 @@ INSTALLED_APPS = [
     "mezzanine.accounts",
     # "mezzanine.mobile",
     # "eve",
+    "magazine",
     'djangobower',
     "meta",
     "mezzanine_agenda",
@@ -248,6 +249,7 @@ MIGRATION_MODULES = {
 
 MODELTRANSLATION_TRANSLATION_FILES = (
     'custom.translations',
+    'magazine.translations',
     'translations',
 )
 
