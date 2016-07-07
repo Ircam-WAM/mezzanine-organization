@@ -4,7 +4,7 @@ from modeltranslation.translator import TranslationOptions
 from mezzanine.core.translation import (TranslatedSlugged,
                                         TranslatedDisplayable,
                                         TranslatedRichText)
-from magazine.models import Article
+from organization.magazine.models import Article
 
 @register(Article)
 #class ArticleTranslationOptions(TranslatedDisplayable, TranslatedRichText):
