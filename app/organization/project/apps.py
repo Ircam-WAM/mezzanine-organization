@@ -6,3 +6,4 @@ from django.apps import AppConfig
 class ProjectConfig(AppConfig):
 
     name = 'organization.project'
+    label = 'organization project'

@@ -15,14 +15,9 @@ import requests
 from pyquery import PyQuery as pq
 
 
-app_label = 'festival'
 ALIGNMENT_CHOICES = (('left', _('left')), ('right', _('right')))
 MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
 
-
-class MetaCore:
-
-    app_label = 'festival'
 
 
 class BaseNameModel(models.Model):
@@ -31,7 +26,7 @@ class BaseNameModel(models.Model):
     name = models.CharField(_('name'), max_length=512)
     description = models.TextField(_('description'), blank=True)
 
-    class Meta(MetaCore):
+    class Meta:
         abstract = True
 
     def __unicode__(self):
@@ -43,7 +38,7 @@ class BaseTitleModel(models.Model):
     title = models.CharField(_('title'), max_length=512)
     description = models.TextField(_('description'), blank=True)
 
-    class Meta(MetaCore):
+    class Meta:
         abstract = True
 
     def __unicode__(self):
@@ -66,9 +61,8 @@ class Artist(Displayable, RichText, AdminThumbMixin):
 
     search_fields = ("title", "bio")
 
-    class Meta(MetaCore):
+    class Meta:
         verbose_name = _('artist')
-        db_table = app_label + '_artists'
         ordering = ['last_name',]
 
     def __unicode__(self):
@@ -117,7 +111,7 @@ class Media(Displayable, RichText):
     closed_source_url = models.URLField(_('closed source URL'), max_length=1024, blank=True)
     poster_url = models.URLField(_('poster'), max_length=1024, blank=True)
 
-    class Meta(MetaCore):
+    class Meta:
         abstract = True
 
     def __unicode__(self):
@@ -155,9 +149,8 @@ class Audio(Media):
     event = models.ForeignKey(Event, related_name='audios', verbose_name=_('event'), blank=True, null=True, on_delete=models.SET_NULL)
     artists = models.ManyToManyField(Artist, verbose_name=_('artists'), related_name='audios', blank=True)
 
-    class Meta(MetaCore):
+    class Meta:
         verbose_name = _('audio')
-        db_table = app_label + '_audios'
 
     def get_absolute_url(self):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
@@ -173,9 +166,8 @@ class Video(Media):
     category = models.ForeignKey('VideoCategory', related_name='videos', verbose_name=_('category'), blank=True, null=True, on_delete=models.SET_NULL)
     artists = models.ManyToManyField(Artist, verbose_name=_('artists'), related_name='videos', blank=True)
 
-    class Meta(MetaCore):
+    class Meta:
         verbose_name = _('video')
-        db_table = app_label + '_videos'
 
     @property
     def html(self):
@@ -213,9 +205,8 @@ class Featured(BaseNameModel):
 class VideoCategory(Slugged):
     """Video Category"""
 
-    class Meta(MetaCore):
+    class Meta:
         verbose_name = _('video category')
-        db_table = app_label + '_video_category'
-
+        
     def count(self):
         return self.videos.published().count()+1
