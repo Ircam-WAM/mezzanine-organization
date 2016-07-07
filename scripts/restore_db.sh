@@ -1,4 +1,7 @@
 #!/bin/bash
 
-gunzip < /srv/backup/ircam-www.sql.gz | mysql -hdb -uroot -phyRob0otlaz4 ircam-www
+export PGPASSWORD=$POSTGRES_PASSWORD
+
+pg_restore --clean -Fc -hdb -Upostgres -d postgres /srv/backup/ircam-www.dump
+
 echo "Restore done!"

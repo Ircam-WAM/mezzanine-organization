@@ -1,4 +1,7 @@
 #!/bin/bash
 
-mysqldump -hdb -uroot -phyRob0otlaz4 ircam-www | gzip > /srv/backup/ircam-www.sql.gz
+export PGPASSWORD=$POSTGRES_PASSWORD
+
+pg_dump -Fc -hdb -Upostgres -dpostgres > /srv/backup/ircam-www.dump
+
 echo "Backup done!"
