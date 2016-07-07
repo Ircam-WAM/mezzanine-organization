@@ -27,7 +27,7 @@ if settings.USE_MODELTRANSLATION:
 
 
 urlpatterns += [
-    url(r'^festival/', include('festival.urls')),
+    url(r'^festival/', include('organization.festival.urls')),
     url("^%s/" % settings.EVENT_SLUG, include("mezzanine_agenda.urls")),
 
     # We don't want to presume how your homepage works, so here are a

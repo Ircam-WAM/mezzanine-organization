@@ -79,15 +79,20 @@ SITE_TAGLINE = 'Institut de Recherche et de Coordination Acoustique et Musique'
 SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 
 ADMIN_MENU_ORDER = (
-    (_("Content"), ("pages.Page", "blog.BlogPost", "mezzanine_agenda.Event",
-        "festival.Artist", "festival.Video", "festival.Audio", "festival.Playlist",
-        "festival.Featured",
-        "generic.ThreadedComment", (_("Media Library"), "fb_browse"),)),
-    (_("Site"), ("sites.Site", "redirects.Redirect", "conf.Setting")),
-    (_("Users"), ("auth.User", "auth.Group",)),
-    (_("Festival"), ("mezzanine_agenda.EventLocation",
-        "mezzanine_agenda.EventCategory", "mezzanine_agenda.EventPrice",
-        "festival.PageCategory",)),
+    (_('Content'), ('pages.Page', 'blog.BlogPost', 'mezzanine_agenda.Event',
+        'generic.ThreadedComment', (_('Media Library'), 'fb_browse'),)),
+    (_("Magazine"), ("magazine.Article",)),
+    (_('Structure'), ('organization.structure.Organization', 'organization.structure.Team',
+        'organization.structure.Department', 'organization.structure.Person',
+        'organization.structure.Activity')),
+    (_('Projects'), ('organization.project.Project')),
+    (_('Festival'), ('organization.festival.Artist', 'organization.festival.Video',
+    'organization.festival.Audio', 'organization.festival.Playlist',
+    'organization.festival.Featured', 'mezzanine_agenda.EventLocation',
+        'mezzanine_agenda.EventCategory', 'mezzanine_agenda.EventPrice',
+        'festival.PageCategory',)),
+    (_('Users'), ('auth.User', 'auth.Group',)),
+    (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
 )
 
 GRAPPELLI_ADMIN_TITLE = 'IRCAM Admin'
@@ -142,3 +147,6 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.logging.LoggingPanel',
     'debug_toolbar.panels.redirects.RedirectsPanel',
 ]
+
+# slug
+BLOG_SLUG = 'article'
