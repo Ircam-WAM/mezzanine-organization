@@ -3,16 +3,26 @@ from copy import deepcopy
 from mezzanine.pages.models import Page
 from mezzanine.pages.admin import PageAdmin
 from mezzanine.pages.models import RichTextPage
+<<<<<<< HEAD:app/organization/core/admin.py
 from organization.core.models import BasicPage
+=======
+from mezzanine.core.admin import DisplayableAdmin
+from custom.models import BasicPage
+>>>>>>> article:app/custom/admin.py
 
 
-# page_fieldsets = deepcopy(PageAdmin.fieldsets)
-# page_fieldsets[0][1]["fields"] += ("sub_title",)
-# print(page_fieldsets[0][1]["fields"])
-# PageAdmin.fieldsets = page_fieldsets
+# class SubTitleAdmin(DisplayableAdmin):
+# 	    """
+# 	    Admin class for blog posts.
+# 	        return False
+
+#admin.site.register(SubTitle, DisplayableAdmin)
+
+
+# class SubTitleAdmin(admin.ModelAdmin):
 #
-# admin.site.unregister(RichTextPage)
-# admin.site.register(RichTextPage, PageAdmin)
+#     model = SubTitle
+
 
 
 admin.site.register(BasicPage, PageAdmin)
