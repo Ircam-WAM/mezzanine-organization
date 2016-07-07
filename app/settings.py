@@ -219,7 +219,7 @@ INSTALLED_APPS = [
     "meta",
     "mezzanine_agenda",
     "organization.core",
-    "organization.structure",
+    "organization.team",
     "organization.festival",
     "organization.magazine",
     "organization.media",
