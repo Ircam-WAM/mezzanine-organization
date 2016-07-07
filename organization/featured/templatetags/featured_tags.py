@@ -7,7 +7,7 @@ from mezzanine.conf import settings
 from random import shuffle
 
 from organization.festival.models import *
-from organization.magazine.models import *
+from organization.featured.models import *
 
 register = Library()
 
