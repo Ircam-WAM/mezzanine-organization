@@ -220,7 +220,6 @@ INSTALLED_APPS = [
     "mezzanine.accounts",
     # "mezzanine.mobile",
     # "eve",
-    "magazine",
     'djangobower',
     "meta",
     "mezzanine_agenda",

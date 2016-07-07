@@ -6,11 +6,10 @@ from mezzanine.blog.models import BlogPost
 from organization.core.models import Named
 
 class Article(BlogPost):
-from organization.core.models import Named
 
     sub_title = models.CharField(_('sub title'), blank=True, max_length=1000)
 
-     class Meta:
+    class Meta:
         verbose_name = _('article')
 
 class Category(Named):

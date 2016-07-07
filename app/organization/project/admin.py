@@ -1,6 +1,6 @@
 from django.contrib import admin
 from mezzanine.blog.admin import BlogPostAdmin
-from magazine.models import Article
+from organization.magazine.models import Article
 #from custom.admin import SubTitleAdmin
 from copy import deepcopy
 
