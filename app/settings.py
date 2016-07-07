@@ -218,7 +218,6 @@ INSTALLED_APPS = [
     'djangobower',
     "meta",
     "mezzanine_agenda",
-    "ajax_select",
     "organization.core",
     "organization.structure",
     "organization.festival",
