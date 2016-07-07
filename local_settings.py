@@ -80,6 +80,7 @@ SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 ADMIN_MENU_ORDER = (
     (_('Content'), ('pages.Page', 'blog.BlogPost', 'mezzanine_agenda.Event',
         'generic.ThreadedComment', (_('Media Library'), 'fb_browse'),)),
+    (_("Magazine"), ("magazine.Article",)),
     (_('Structure'), ('organization.structure.Organization', 'organization.structure.Team',
         'organization.structure.Department', 'organization.structure.Person',
         'organization.structure.Activity')),
@@ -141,3 +142,6 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.logging.LoggingPanel',
     'debug_toolbar.panels.redirects.RedirectsPanel',
 ]
+
+# slug
+BLOG_SLUG = 'article'
