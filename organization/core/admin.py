@@ -6,18 +6,4 @@ from mezzanine.pages.models import RichTextPage
 from organization.core.models import BasicPage
 
 
-# class SubTitleAdmin(DisplayableAdmin):
-# 	    """
-# 	    Admin class for blog posts.
-# 	        return False
-
-#admin.site.register(SubTitle, DisplayableAdmin)
-
-
-# class SubTitleAdmin(admin.ModelAdmin):
-#
-#     model = SubTitle
-
-
-
 admin.site.register(BasicPage, PageAdmin)
