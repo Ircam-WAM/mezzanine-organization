@@ -29,17 +29,14 @@ data:
   command: "true"
 
 db:
-  image: mariadb
+  image: postgres
   volumes_from:
     - data
   volumes:
     - ./scripts/:/srv/scripts
-    - ./data/mysql/:/var/lib/mysql
+    - ./data/postgresql/data/:/var/lib/postgresql/data
   environment:
-    - MYSQL_ROOT_PASSWORD=hyRob0otlaz4
-    - MYSQL_DATABASE=ircam-www
-    - MYSQL_USER=ircam
-    - MYSQL_PASSWORD=Onukifsid7
+    - POSTGRES_PASSWORD=hyRob0otlaz4
 
 app:
   build: .

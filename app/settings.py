@@ -124,11 +124,6 @@ USE_L10N = True
 
 AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
 
-# The numeric mode to set newly-uploaded files to. The value should be
-# a mode you'd pass directly to os.chmod.
-FILE_UPLOAD_PERMISSIONS = 0o644
-
-# MAX_UPLOAD_SIZE = 429916160
 
 #############
 # DATABASES #
@@ -229,6 +224,7 @@ INSTALLED_APPS = [
     "organization.magazine",
     "organization.media",
     "organization.project",
+    "organization.featured",
 ]
 
 

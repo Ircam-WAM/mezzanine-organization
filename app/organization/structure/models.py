@@ -21,7 +21,7 @@ from mezzanine.utils.models import AdminThumbMixin, upload_to
 
 from django_countries.fields import CountryField
 
-from organization.media.models import Photos
+from organization.media.models import Photo
 from organization.core.models import Named
 
 # Hack to have these strings translated
@@ -100,7 +100,7 @@ class Team(Named):
         return u"Team"
 
 
-class Person(Displayable, RichText, AdminThumbMixin, Photos):
+class Person(Displayable, RichText, AdminThumbMixin, Photo):
     """(Person description)"""
 
     user = models.ForeignKey(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -110,9 +110,37 @@ class Person(Displayable, RichText, AdminThumbMixin, Photos):
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     birthday = models.DateField(_('birthday'), blank=True)
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), blank=True, null=True, on_delete=models.SET_NULL)
+    bio = RichTextField(_('biography'), blank=True)
+
+    class Meta:
+        verbose_name = _('person')
+        ordering = ['last_name',]
 
     def __unicode__(self):
         return ' '.join((self.user.first_name, self.user.last_name))
+
+    # def get_absolute_url(self):
+    #     return reverse("festival-artist-detail", kwargs={'slug': self.slug})
+
+    def set_names(self):
+        names = self.title.split(' ')
+        if len(names) == 1:
+            self.first_name = ''
+            self.last_name = names[0]
+        elif len(names) == 2:
+            self.first_name = names[0]
+            self.last_name = names[1]
+        else:
+            self.first_name = names[0]
+            self.last_name = ' '.join(names[1:])
+
+    def clean(self):
+        super(Person, self).clean()
+        self.set_names()
+
+    def save(self, *args, **kwargs):
+        self.set_names()
+        super(Person, self).save(*args, **kwargs)
 
 
 class Nationality(models.Model):
@@ -172,11 +200,3 @@ class Activity(models.Model):
 
     def __unicode__(self):
         return ' - '.join((self.person, self.role, self.date_begin, self.date_end))
-
-
-class Modelname(models.Model):
-    """( description)"""
-
-
-    def __unicode__(self):
-        return u""
