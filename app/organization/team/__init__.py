@@ -7,4 +7,4 @@ from __future__ import unicode_literals
 from mezzanine import __version__  # noqa
 
 
-default_app_config = 'organization.structure.apps.StructureConfig'
+default_app_config = 'organization.team.apps.teamConfig'

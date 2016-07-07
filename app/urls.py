@@ -27,9 +27,11 @@ if settings.USE_MODELTRANSLATION:
 
 
 urlpatterns += [
-    url(r'^festival/', include('organization.festival.urls')),
-    url(r'^magazine/', include('organization.magazine.urls')),
+    # App urls
+
+    url("^", include('organization.urls')),
     url("^%s/" % settings.EVENT_SLUG, include("mezzanine_agenda.urls")),
+    url("^styles/$", direct_to_template, {"template": "styles.html"}, name="styles"),
 
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.
@@ -41,8 +43,7 @@ urlpatterns += [
     # one homepage pattern, so if you use a different one, comment this
     # one out.
 
-    url("^styles/$", direct_to_template, {"template": "styles.html"}, name="styles"),
-    url("^$", direct_to_template, {"template": "index.html"}, name="home"),
+    # url("^$", direct_to_template, {"template": "index.html"}, name="home"),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------

@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from mezzanine.core.models import RichText, Displayable, Slugged
 
-from organization.structure.models import Person, Organization
+from organization.team.models import Person, Organization
 
 
 class Project(Displayable, RichText):
