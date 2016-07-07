@@ -229,6 +229,7 @@ INSTALLED_APPS = [
     "organization.magazine",
     "organization.media",
     "organization.project",
+    "organization.featured",
 ]
 
 
