@@ -5,15 +5,15 @@ from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from django.conf import settings
 
+
 ALIGNMENT_CHOICES = (('left', _('left')), ('right', _('right')))
 MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
 
-class SubTitle(models.Model):
-
-    sub_title = models.TextField(_('sub title'), blank=True)
-
-    class Meta:
-        abstract = True
+# class SubTitle(models.Model):
+#
+#     sub_title = models.TextField(_('sub title'), blank=True, max_length=1000)
+#     class Meta:
+#         abstract = True
 
 
 class BasicPage(Page, RichText):
