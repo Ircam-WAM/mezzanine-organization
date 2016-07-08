@@ -16,8 +16,16 @@ class Article(BlogPost):
 
     sub_title = models.CharField(_('sub title'), blank=True, max_length=1000)
 
+    def get_absolute_url(self):
+        return reverse("magazine-article-detail", kwargs={"slug": self.slug})
+
     class Meta:
         verbose_name = _('article')
+
+    class Meta:
+        verbose_name = _("article")
+        verbose_name_plural = _("article")
+        ordering = ("-publish_date",)    
 
 
 class Category(Named):
