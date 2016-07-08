@@ -30,7 +30,7 @@ For a production environment setup::
 
      docker-compose up
 
-Then browse the app at http://localhost/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
+Then browse the app at http://localhost:8020/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
 
 For a development environment setup::
 
