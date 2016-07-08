@@ -1,45 +1,44 @@
-{% extends "blog/blog_post_list.html" %}
+{% extends "magazine/article/article_list.html" %}
 {% load mezzanine_tags comment_tags keyword_tags rating_tags i18n disqus_tags featured_tags %}
 
-{% block meta_title %}{{ blog_post.meta_title }}{% endblock %}
+{% block meta_title %}{{ article.meta_title }}{% endblock %}
 
 {% block meta_keywords %}{% metablock %}
-{% keywords_for blog_post as tags %}
+{% keywords_for article as tags %}
 {% for tag in tags %}{% if not forloop.first %}, {% endif %}{{ tag }}{% endfor %}
 {% endmetablock %}{% endblock %}
 
 {% block meta_description %}{% metablock %}
-{{ blog_post.description }}
+{{ article.description }}
 {% endmetablock %}{% endblock %}
 
 {% block title %}
-{% editable blog_post.title %}{{ blog_post.title }}{% endeditable %}
+{% editable article.title %}{{ article.title }}{% endeditable %}
 {% endblock %}
 
 {% block breadcrumb_menu %}
 {{ block.super }}
-<li class="active">{{ blog_post.title }}</li>
+<li class="active">{{ article.title }}</li>
 {% endblock %}
 
 {% block main %}
-coucou
 {% block blog_post_detail_postedby %}
-{% editable blog_post.publish_date %}
+{% editable article.publish_date %}
 <h6 class="post-meta">
-    {% trans "published on" %} {{ blog_post.publish_date|date:"DATE_FORMAT" }}
+    {% trans "published on" %} {{ article.publish_date|date:"DATE_FORMAT" }}
 </h6>
 {% endeditable %}
 {% endblock %}
 {% block blog_post_detail_commentlink %}
 <p>
-    {% if blog_post.allow_comments %}
+    {% if article.allow_comments %}
         {% if settings.COMMENTS_DISQUS_SHORTNAME %}
-            (<a href="{{ blog_post.get_absolute_url }}#disqus_thread"
-                data-disqus-identifier="{% disqus_id_for blog_post %}">{% spaceless %}
+            (<a href="{{ article.get_absolute_url }}#disqus_thread"
+                data-disqus-identifier="{% disqus_id_for article %}">{% spaceless %}
                 {% trans "Comments" %}
             {% endspaceless %}</a>)
         {% else %}(<a href="#comments">{% spaceless %}
-            {% blocktrans count comments_count=blog_post.comments_count %}{{ comments_count }} comment{% plural %}{{ comments_count }} comments{% endblocktrans %}
+            {% blocktrans count comments_count=article.comments_count %}{{ comments_count }} comment{% plural %}{{ comments_count }} comments{% endblocktrans %}
             {% endspaceless %}</a>)
         {% endif %}
     {% endif %}
@@ -48,8 +47,8 @@ coucou
 
 {% comment %}
 {% block blog_post_detail_featured_image %}
-{% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
-<p><img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 600 0 %}"></p>
+{% if settings.BLOG_USE_FEATURED_IMAGE and article.featured_image %}
+<p><img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail article.featured_image 600 0 %}"></p>
 {% endif %}
 {% endblock %}
 {% endcomment %}
@@ -59,13 +58,13 @@ coucou
 {% endif %}
 
 {% block blog_post_detail_content %}
-{% editable blog_post.content %}
-{{ blog_post.content|richtext_filters|safe }}
+{% editable article.content %}
+{{ article.content|richtext_filters|safe }}
 {% endeditable %}
 {% endblock %}
 
 {% block blog_post_detail_keywords %}
-{% keywords_for blog_post as tags %}
+{% keywords_for article as tags %}
 {% if tags %}
 {% spaceless %}
 <ul class="list-inline tags">
@@ -82,28 +81,28 @@ coucou
 {% block blog_post_detail_rating %}
 <div class="panel panel-default rating">
     <div class="panel-body">
-    {% rating_for blog_post %}
+    {% rating_for article %}
     </div>
 </div>
 {% endblock %}
 {% endcomment %}
 
 {% block event_detail_sharebuttons %}
-  {% with blog_post as object %}
+  {% with article as object %}
     {% include "includes/share_buttons.html" %}
   {% endwith %}
 {% endblock %}
 
 {% block blog_post_previous_next %}
 <ul class="pager">
-{% with blog_post.get_previous_by_publish_date as previous %}
+{% with article.get_previous_by_publish_date as previous %}
 {% if previous %}
 <li class="previous">
     <a href="{{ previous.get_absolute_url }}">&larr; {{ previous }}</a>
 </li>
 {% endif %}
 {% endwith %}
-{% with blog_post.get_next_by_publish_date as next %}
+{% with article.get_next_by_publish_date as next %}
 {% if next %}
 <li class="next">
     <a href="{{ next.get_absolute_url }}">{{ next }} &rarr;</a>
@@ -115,7 +114,7 @@ coucou
 
 
 {% block blog_post_detail_related_posts %}
-{% if related_posts or blog_post.events.all %}
+{% if related_posts or article.events.all %}
 <div id="related-posts">
 <h3>{% trans "Also discover" %}</h3>
  <div class="msry__container">
@@ -123,7 +122,7 @@ coucou
     {% for post in related_posts %}
         {% include 'blog/includes/post_card.html' %}
     {% endfor %}
-    {% for event in blog_post.events.all|no_parents %}
+    {% for event in article.events.all|no_parents %}
         {% for artist in event.artists.all %}
             {% include "festival/inc/artist_card.html" %}
         {% endfor %}
@@ -131,7 +130,7 @@ coucou
             {% include 'festival/inc/video_card.html' %}
         {% endfor %}
         {% for post in event.blog_posts.all %}
-          {% if post != blog_post %}
+          {% if post != article %}
             {% include 'blog/includes/post_card.html' %}
           {% endif %}
         {% endfor %}
@@ -142,7 +141,7 @@ coucou
 {% endblock %}
 
 {% block blog_post_detail_comments %}
-{% if blog_post.allow_comments %}{% comments_for blog_post %}{% endif %}
+{% if article.allow_comments %}{% comments_for article %}{% endif %}
 {% endblock %}
 
 {% endblock %}
