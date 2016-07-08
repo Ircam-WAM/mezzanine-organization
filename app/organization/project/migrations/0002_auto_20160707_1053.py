@@ -13,19 +13,19 @@ class Migration(migrations.Migration):
     dependencies = [
         ('sites', '0002_alter_domain_unique'),
         ('organization project', '0001_initial'),
-        ('organization structure', '0001_initial'),
+        ('organization team', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='project',
             name='partners',
-            field=models.ManyToManyField(to='organization structure.Organization', verbose_name='organizations'),
+            field=models.ManyToManyField(to='organization team.Organization', verbose_name='organizations'),
         ),
         migrations.AddField(
             model_name='project',
             name='persons',
-            field=models.ManyToManyField(to='organization structure.Person', verbose_name='persons'),
+            field=models.ManyToManyField(to='organization team.Person', verbose_name='persons'),
         ),
         migrations.AddField(
             model_name='project',

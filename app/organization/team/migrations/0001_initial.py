@@ -140,7 +140,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=512, verbose_name='name')),
                 ('description', models.TextField(blank=True, verbose_name='description')),
-                ('department', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization structure.Department', verbose_name='department')),
+                ('department', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization team.Department', verbose_name='department')),
             ],
             options={
                 'abstract': False,
@@ -149,45 +149,45 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Organization',
             fields=[
-                ('address_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization structure.Address')),
+                ('address_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization team.Address')),
                 ('name', models.CharField(max_length=512, verbose_name='name')),
                 ('description', models.TextField(blank=True, verbose_name='description')),
                 ('url', models.URLField(blank=True, max_length=512, verbose_name='URL')),
-                ('type', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization structure.OrganizationType', verbose_name='organization type')),
+                ('type', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization team.OrganizationType', verbose_name='organization type')),
             ],
             options={
                 'verbose_name': 'organization',
             },
-            bases=('organization structure.address', models.Model),
+            bases=('organization team.address', models.Model),
         ),
         migrations.AddField(
             model_name='link',
             name='link_type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization structure.LinkType', verbose_name='Link type'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization team.LinkType', verbose_name='Link type'),
         ),
         migrations.AddField(
             model_name='link',
             name='person',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization structure.Person', verbose_name='Person'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization team.Person', verbose_name='Person'),
         ),
         migrations.AddField(
             model_name='activity',
             name='person',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization structure.Person', verbose_name='person'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization team.Person', verbose_name='person'),
         ),
         migrations.AddField(
             model_name='activity',
             name='teams',
-            field=models.ManyToManyField(to='organization structure.Team', verbose_name='teams'),
+            field=models.ManyToManyField(to='organization team.Team', verbose_name='teams'),
         ),
         migrations.AddField(
             model_name='person',
             name='organization',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization structure.Organization', verbose_name='organization'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization team.Organization', verbose_name='organization'),
         ),
         migrations.AddField(
             model_name='department',
             name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization structure.Organization', verbose_name='organization'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization team.Organization', verbose_name='organization'),
         ),
     ]
