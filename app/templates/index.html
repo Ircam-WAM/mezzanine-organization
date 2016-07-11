@@ -17,15 +17,13 @@
         <div class="msry__sizer"></div>
         {% for item in featured_list %}
         <div class="last__media__entry  msry__item">
-            {% if item|get_class == 'BlogPost' %}
-                {% with item as post %}
-                    {% include 'blog/includes/post_card.html' %}
-                    <a href="{% url 'blog_post_list' %}" class="btn btn-full">{% trans "More" context "apos" %} {% trans "articles" %}</a>
+            {% if item|get_class == 'Brief' %}
+                {% with item as brief %}
+                    {% include 'magazine/brief/brief_detail.html' %}
                 {% endwith %}
-            {% elif item|get_class == 'Artist' %}
-                {% with item as artist %}
-                    {% include "festival/inc/artist_card.html" %}
-                    <a href="{% url 'festival-artist-list' %}" class="btn btn-full">{% trans "More" context "apos" %} {% trans "artists" %}</a>
+            {% elif item|get_class == 'Article' %}
+                {% with item as article %}
+                    {% include "magazine/article/includes/post_card.html" %}
                 {% endwith %}
             {% elif item|get_class == 'Video' %}
                 {% with item as video %}
