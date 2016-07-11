@@ -20,7 +20,7 @@ class Featured(Named):
     events = models.ManyToManyField(Event, verbose_name=_('events'), related_name='featured', blank=True)
     videos = models.ManyToManyField(Video, verbose_name=_('videos'), related_name='featured', blank=True)
     playlists = models.ManyToManyField(Playlist, verbose_name=_('playlists'), related_name='featured', blank=True)
-    playlists = models.ManyToManyField(Playlist, verbose_name=_('playlists'), related_name='featured', blank=True)
+    briefs = models.ManyToManyField(Brief, verbose_name=_('briefs'), related_name='featured', blank=True)
 
 
     def __unicode__(self):

@@ -21,7 +21,10 @@ class Article(BlogPost):
 class Brief(Displayable, RichText):
 
     text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name='text button')
-    local_content = models.CharField(blank=True, max_length=1000, null=False, verbose_name='local content')
+    local_content = models.URLField(blank=False, max_length=1000, null=False, verbose_name='local content')
+
+    def get_absolute_url(self):
+        return self.local_content
 
     class Meta:
         verbose_name = _('brief')

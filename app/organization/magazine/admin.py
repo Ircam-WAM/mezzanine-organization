@@ -4,7 +4,6 @@ from copy import deepcopy
 from mezzanine.core.admin import DisplayableAdmin
 from organization.magazine.models import Brief
 
-
 class BriefAdmin(admin.ModelAdmin):
 
     model = Brief

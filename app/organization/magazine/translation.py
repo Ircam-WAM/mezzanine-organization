@@ -14,6 +14,6 @@ class ArticleTranslationOptions(TranslationOptions):
 
 
 @register(Brief)
-class AudioTranslationOptions(TranslationOptions):
+class BriefTranslationOptions(TranslationOptions):
 
     fields = ('text_button', 'local_content')
