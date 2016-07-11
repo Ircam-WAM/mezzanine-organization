@@ -13,10 +13,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 import os
 import argparse
 import platform
-import getpass
 
 sysvinit_script = """#!/bin/sh
-
 ### BEGIN INIT INFO
 # Provides:	    %s
 # Required-Start:	docker
@@ -105,16 +103,19 @@ class DockerCompositionInstaller(object):
 
     docker = '/etc/init.d/docker'
     docker_compose = '/usr/local/bin/docker-compose'
-    cron_rule = "0 6 * * * %s %s"
+    cron_rule = "* * * * * %s %s"
 
-    def __init__(self, config='docker-compose.yml', init_type='sysvinit', cron=False):
+    def __init__(self, config='docker-compose.yml', init_type='sysvinit', cron=False, user=None):
         self.init_type = init_type
         self.path = os.path.dirname(os.path.realpath(__file__))
         self.config = config
         self.config = os.path.abspath(self.get_root() + os.sep + self.config)
         self.name = self.config.split(os.sep)[-2].lower()
         self.cron = cron
-        self.user = getpass.getuser()
+        if user:
+            self.user = user
+        else:
+            self.user = "root"
 
     def get_root(self):
         path = self.path
@@ -154,7 +155,9 @@ class DockerCompositionInstaller(object):
         os.system('systemctl daemon-reload')
 
     def install_cron(self):
-        command = self.docker_compose + ' -f ' + self.config + ' app run /srv/zepofjezpf'
+        #command = self.docker_compose + ' -f ' + self.config + ' app run /srv/zepofjezpf'
+        #command = "cd /srv/ircam-www && git pull origin dev &&  " + self.docker_compose + " -f " + self.config + " run app /srv/app/manage.py migrate --noinput && ./scripts/push.sh >> /var/log/cri/cron/`date +\%Y\%m\%d\%H\%M\%S`-cron.log 2>&1"
+        command = "cd /home/emilie/Devel/ircam-www && git pull origin dev && ./scripts/push.sh >> /var/log/cri/cron/`date +\%Y\%m\%d\%H\%M\%S`-cron.log 2>&1 \n"
         rule = self.cron_rule % (self.user, command)
         f = open('/etc/cron.d/' + self.name, 'w')
         f.write(rule)
@@ -201,6 +204,7 @@ def main():
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('--uninstall', help='uninstall the daemon', action='store_true')
     parser.add_argument('--cron', help='install cron backup rule', action='store_true')
+    parser.add_argument('--user', help='specify user', type=str)
     parser.add_argument('--systemd', help='use systemd', action='store_true')
     parser.add_argument('composition_file', nargs='?', help='the path of the YAML composition file to use (optional)')
 
@@ -213,7 +217,7 @@ def main():
     if args['composition_file']:
         config = args['composition_file']
 
-    installer = DockerCompositionInstaller(config, init_type, args['cron'])
+    installer = DockerCompositionInstaller(config, init_type, args['cron'], args['user'])
     if args['uninstall']:
         installer.uninstall()
     else:
