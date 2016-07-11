@@ -1,0 +1,110 @@
+body {
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+    color: $main-text-color;
+    @include typeface(serif);
+}
+
+::selection {
+    background: $main-text-color;
+    color: $body-bg-color;
+}
+
+::-moz-selection {
+    background: $main-text-color;
+    color: $body-bg-color;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+h1 {
+    @include typeset(heading-1);
+    @include typeface(sans-serif);
+    @include margin-bottom(1);
+	@include margin-top(1);
+}
+
+h2 {
+    @include typeset(heading-2);
+    @include typeface(sans-serif);
+    @include margin-bottom(2);
+    @include margin-top(1);
+
+	& + .chapo {
+		@include margin-top(0);
+		@include margin-bottom(1);
+	}
+}
+
+p {
+    @include margin-top(0);
+    @include margin-bottom(1);
+	@include line-height(1.25);
+    @include typeface(serif);
+    @include typey-debug-grid;
+
+	a:not(.button) {
+
+		position: relative;
+		z-index: 1;
+
+		&:after {
+			@include transition(all 0.15s ease-in-out);
+			content: "";
+			display: block;
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			height: 1px;
+			background: $color-gray;
+			z-index: -1;
+		}
+
+		&:hover {
+			&:after {
+				bottom: 0;
+				background: $color-main;
+				height: 100%;
+			}
+		}
+	}
+}
+
+hr {
+	border: 0;
+	border-top: 1px solid black;
+	height: 11px;
+	background-color: $color-main;
+	@include margin(5 0 2 0);
+}
+
+figure {
+	margin: 0;
+	figcaption {
+		text-align: center;
+		width: 300px;
+		margin: 0 auto;
+		display: block;
+		@include margin-top(.25);
+		@include font-size(xs);
+	    @include line-height(0.75);
+	    @include typeface(serif);
+		font-weight: weight(light);
+	}
+	img {
+		display: block;
+	}
+}
+
+.chapo {
+	@include font-size(l);
+    @include line-height(1.25);
+	@include typeface(serif);
+	@include margin-top(5);
+    @include margin-bottom(3);
+	font-weight: weight(heavy);
+}

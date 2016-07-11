@@ -1,0 +1,15 @@
+$module: ".well";
+
+#{$module} {
+
+    width: 100%;
+    background: $color-main;
+
+    @include padding(2 0);
+    @include margin(0 0 1 0);
+    @include font-size(xl);
+    @include line-height(1.7);
+    @include typeface(sans-serif);
+    font-weight: weight(light);
+
+}
