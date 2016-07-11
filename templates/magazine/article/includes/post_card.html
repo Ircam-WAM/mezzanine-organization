@@ -3,17 +3,20 @@
 <div class="article__item {% if not on_home %}msry__item {% endif %}">
     <div class="article__item__inner">
         <a {% if article.content|removetags:"p"|slice:"4" == 'http' %}href="{{ article.content|removetags:'p' }}" target="_blank"{% else %}href="{% url 'magazine-article-detail' article.slug %}"{% endif %} class="article__item__inner">
-            {% if article.featured_image %}
-            <figure class="article__item__img">
-                <img src="{{ MEDIA_URL }}{% thumbnail article.featured_image 500 0 %}" alt="Article: {{ article.title }}">
-            </figure>
-            {% endif %}
             <h3 class="article__item__name">
                 <span>
                     {{ article.title }}
                 </span>
             </h3>
-            {# <span class="article__item__date">{% trans "published on" %} {{ article.publish_date|date:"DATE_FORMAT" }}</span>#}
+            <p>
+                {{ article.description }}
+            </p>
+
+            {% if article.featured_image %}
+            <figure class="article__item__img">
+                <img src="{{ MEDIA_URL }}{% thumbnail article.featured_image 500 0 %}" alt="Article: {{ article.title }}">
+            </figure>
+            {% endif %}
         </a>
     </div>
 </div>

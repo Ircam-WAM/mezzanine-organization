@@ -12,9 +12,6 @@ from organization.magazine.views import *
 _slash = "/" if settings.APPEND_SLASH else ""
 
 urlpatterns = [
-    # url(r'^article/$', ArticleListView.as_view(), name="magazine-article-list"),
-    # url(r'^article/detail/(?P<slug>.*)/$', ArticleDetailView.as_view(), name="magazine-article-detail"),
-
     url("^article/$", ArticleListView.as_view(), name="magazine-article-list"),
     url("^article/detail/(?P<slug>.*)%s$" % _slash, ArticleDetailView.as_view(), name="magazine-article-detail"),
 ]
