@@ -1,0 +1,58 @@
+.m1 {
+    @include margin(1);
+}
+.mt1 {
+    @include margin-top(1);
+}
+.mb1 {
+    @include margin-bottom(1);
+}
+.mr1 {
+    @include margin-right(1);
+}
+.ml1 {
+    @include margin-left(1);
+}
+.p1 {
+    @include padding(1);
+}
+.pt1 {
+    @include padding-top(1);
+}
+.pb1 {
+    @include padding-bottom(1);
+}
+.pr1 {
+    @include padding-right(1);
+}
+.pl1 {
+    @include padding-left(1);
+}
+.bg {
+    background-color: $color-main;
+}
+.hide-xxs {
+    @include mq($until: xs) {
+        display: none;
+    }
+}
+.hide-xs {
+    @include mq($until: sm) {
+        display: none;
+    }
+}
+.hide-sm {
+    @include mq($until: md) {
+        display: none;
+    }
+}
+.hide-md {
+    @include mq($until: lg) {
+        display: none;
+    }
+}
+.hide-lg {
+    @include mq($from: lg) {
+        display: none;
+    }
+}

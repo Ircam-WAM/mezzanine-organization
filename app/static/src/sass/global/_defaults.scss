@@ -1,0 +1,26 @@
+html {
+	@include define-type-sizing;
+}
+
+html, body {
+	@include box-sizing(border-box);
+	margin: 0;
+	padding: 0;
+}
+
+*,
+*:before,
+*:after {
+	@include box-sizing(inherit);
+}
+
+a {
+    outline: none;
+	color: $links-color;
+	text-decoration: inherit;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
