@@ -1,0 +1,35 @@
+$module: ".dashed";
+
+#{$module} {
+
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+
+    @include padding-right(2);
+
+    &:before {
+        content: '.';
+    }
+
+    &:after {
+        position: absolute;
+        height: 40%;
+        width: 100%;
+        display: block;
+        top: 30%;
+        left: 0;
+        content: "";
+        background: $color-main;
+        z-index: -1;
+    }
+
+    &--gray {
+
+        &:after {
+            background: $color-gray;
+        }
+
+    }
+
+}

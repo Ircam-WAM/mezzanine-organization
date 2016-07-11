@@ -1,0 +1,44 @@
+$module: ".pattern";
+
+#{$module} {
+
+    position: relative;
+
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-repeat: repeat;
+        background-position: top left;
+        opacity: 0.2;
+    }
+
+    &--creation {
+        &:after {
+            background-image: url(../img/patterns/creation.png);
+        }
+    }
+
+    &--innovation {
+        &:after {
+            background-image: url(../img/patterns/innovation.png);
+        }
+    }
+
+    &--recherche {
+        &:after {
+            background-image: url(../img/patterns/recherche.png);
+        }
+    }
+
+    &--transmission {
+        &:after {
+            background-image: url(../img/patterns/transmission.png);
+        }
+    }
+
+}
