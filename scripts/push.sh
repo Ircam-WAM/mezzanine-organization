@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 docker-compose run db /srv/scripts/backup_db.sh
 git add data/media

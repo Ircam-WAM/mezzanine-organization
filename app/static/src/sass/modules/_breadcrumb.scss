@@ -1,0 +1,47 @@
+$module: ".breadcrumb";
+
+#{$module} {
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    @include clearfix;
+    @include font-size(xs);
+    @include line-height(1);
+    @include typeface(serif);
+    font-weight: weight(light);
+
+    &__item {
+
+        float: left;
+        @include margin-right(.25);
+
+        &:after {
+            content: '|';
+            display: block;
+            float: right;
+            @include margin-left(.25);
+        }
+
+        &:last-child {
+
+            font-weight: weight(bold);
+            &:after {
+                display: none;
+            }
+        }
+
+    }
+
+    &__link {
+
+        text-decoration: none;
+
+        &:hover {
+            border-bottom: 1px solid black;
+        }
+
+    }
+
+}

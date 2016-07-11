@@ -7,7 +7,7 @@ class FeaturedAdmin(admin.ModelAdmin):
 
     model = Featured
     list_display = ('__unicode__',)
-    filter_horizontal = ['events', 'videos', 'articles', 'pages', 'playlists']
+    filter_horizontal = ['events', 'videos', 'articles', 'pages', 'playlists', 'briefs']
 
 
 admin.site.register(Featured, FeaturedAdmin)

@@ -1,0 +1,20 @@
+$module: ".flash";
+
+#{$module} {
+
+    background: $color-main;
+    @include clearfix;
+
+    &__title {
+
+        float: left;
+
+    }
+
+    &__text {
+
+        float: left;
+
+    }
+
+}

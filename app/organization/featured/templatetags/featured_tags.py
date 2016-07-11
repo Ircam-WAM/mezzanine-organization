@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from mezzanine.pages.models import Page
-from mezzanine.blog.models import BlogPost
+#from mezzanine.blog.models import BlogPost
 from mezzanine.template import Library
 from mezzanine_agenda.models import Event
 from mezzanine.conf import settings
@@ -37,12 +37,16 @@ def featured(*args):
     featured = Featured.objects.filter(id=settings.HOME_FEATURED_ID)
     if featured:
         featured = featured[0]
-        for post in featured.blogposts.all():
-            featured_list.append(post)
+        for page in featured.pages.all():
+            featured_list.append(page)
+        for article in featured.articles.all():
+            featured_list.append(article)
+        for brief in featured.briefs.all():
+            featured_list.append(brief)
         for video in featured.videos.all():
             featured_list.append(video)
-        for artist in featured.artists.all():
-            featured_list.append(artist)
+        # for artist in featured.artists.all():
+        #     featured_list.append(artist)
         for playlist in featured.playlists.all():
             featured_list.append(playlist)
         shuffle(featured_list)
