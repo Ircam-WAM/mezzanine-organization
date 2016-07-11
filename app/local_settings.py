@@ -103,7 +103,7 @@ EVENT_USE_FEATURED_IMAGE = True
 EVENT_SHOP_URL = 'http://eve.ircam.fr/manifeste.php/manifestation/'
 EVENT_PASS_URL = 'http://eve.ircam.fr/manifeste.php/pass/'
 
-TINYMCE_SETUP_JS = "/srv/app/static/js/tinymce_setup.js"
+TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
 
 SLUGIFY = 'django.template.defaultfilters.slugify'
 
