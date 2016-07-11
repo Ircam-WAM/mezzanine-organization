@@ -1,7 +1,19 @@
 #!/usr/bin/python
+"""
+The MIT License (MIT)
+Copyright (c) 2016 Guillaume Pellerin @yomguy
 
-import os, sys
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+"""
+
+import os
 import argparse
+import platform
+import getpass
 
 sysvinit_script = """#!/bin/sh
 
@@ -78,6 +90,7 @@ systemd_service = """
 Description=%s composition
 Requires=docker.service
 After=docker.service
+ConditionPathExists=%s
 
 [Service]
 ExecStart=%s -f %s up -d
@@ -88,40 +101,27 @@ WantedBy=local.target
 """
 
 
-class DockerComposeDaemonInstall(object):
+class DockerCompositionInstaller(object):
 
-    vcs_types = ['git', 'svn', 'hg']
     docker = '/etc/init.d/docker'
     docker_compose = '/usr/local/bin/docker-compose'
+    cron_rule = "0 6 * * * %s %s"
 
-    def __init__(self, path=None, init_type='sysvinit'):
+    def __init__(self, config='docker-compose.yml', init_type='sysvinit', cron=False):
         self.init_type = init_type
+        self.path = os.path.dirname(os.path.realpath(__file__))
+        self.config = config
+        self.config = os.path.abspath(self.get_root() + os.sep + self.config)
+        self.name = self.config.split(os.sep)[-2].lower()
+        self.cron = cron
+        self.user = getpass.getuser()
 
-        self.local_path = os.path.dirname(os.path.realpath(__file__))
-        if not path or not os.path.isdir(path):
-            self.root = self.get_root(self.local_path)
-        else:
-            self.root = os.path.abspath(path)
-
-        if self.root[-1] == os.sep:
-            self.name = self.root.split(os.sep)[-2].lower()
-        else:
-            self.name = self.root.split(os.sep)[-1].lower()
-
-        self.conf = self.root + os.sep + 'docker-compose.yml'
-
-    def is_root(self, path):
-        content = os.listdir(path)
-        for vcs_type in self.vcs_types:
-            if '.' + vcs_type in content:
-                return True
-        return False
-
-    def get_root(self, path):
-        while not self.is_root(path):
+    def get_root(self):
+        path = self.path
+        while not self.config in os.listdir(path):
             path = os.sep.join(path.split(os.sep)[:-1])
-        if not path:
-            raise ValueError('This is not a versioned repository, please give the root directory of the app as the first argument.')
+            if not path:
+                raise ValueError('The YAML docker composition was not found, please type "install.py -h" for more infos.')
         return path
 
     def install_docker(self):
@@ -133,36 +133,94 @@ class DockerComposeDaemonInstall(object):
             os.system('pip install docker-compose')
 
     def install_daemon_sysvinit(self):
-        service = '/etc/init.d/' + self.name
-        print 'Writing sysvinit script in ' + service
-        script = sysvinit_script % (self.name, self.name, self.conf)
-        f = open(service, 'w')
-        f.write(script)
+        script = '/etc/init.d/' + self.name
+        print 'Writing sysvinit script in ' + script
+        data = sysvinit_script % (self.name, self.name, self.config)
+        f = open(script, 'w')
+        f.write(data)
         f.close()
-        os.system('chmod 755 ' + service)
+        os.system('chmod 755 ' + script)
         os.system('update-rc.d ' + self.name + ' defaults')
 
     def install_daemon_systemd(self):
         service = '/lib/systemd/system/' + self.name + '.service'
         print 'Writing systemd service in ' +  service
-        conf = systemd_service % (self.name, self.docker_compose, self.conf, self.docker_compose, self.conf)
+        data = systemd_service % (self.name, self.config, self.docker_compose,
+            self.config, self.docker_compose, self.config)
         f = open(service, 'w')
-        f.write(rules)
+        f.write(data)
         f.close()
         os.system('systemctl enable ' + service)
         os.system('systemctl daemon-reload')
 
-    def run(self):
+    def install_cron(self):
+        command = self.docker_compose + ' -f ' + self.config + ' app run /srv/zepofjezpf'
+        rule = self.cron_rule % (self.user, command)
+        f = open('/etc/cron.d/' + self.name, 'w')
+        f.write(rule)
+        f.close()
+
+    def uninstall_daemon_sysvinit(self):
+        script = '/etc/init.d/' + self.name
+        os.system('update-rc.d -f ' + self.name + ' remove')
+        os.system('rm ' + script)
+
+    def uninstall_daemon_systemd(self):
+        service = '/lib/systemd/system/' + self.name + '.service'
+        os.system('systemctl disable ' + service)
+        os.system('systemctl daemon-reload')
+        os.system('rm ' + service)
+
+    def uninstall_cron(self):
+        os.system('rm /etc/cron.d/' + self.name)
+
+    def uninstall(self):
+        print 'Uninstalling ' + self.name + ' composition as a daemon...'
+        if self.init_type == 'sysvinit':
+            self.uninstall_daemon_sysvinit()
+        elif self.init_type == 'systemd':
+            self.uninstall_daemon_systemd()
+        if self.cron:
+            self.uninstall_cron()
+        print 'Done'
+
+    def install(self):
         print 'Installing ' + self.name + ' composition as a daemon...'
         self.install_docker()
         if self.init_type == 'sysvinit':
             self.install_daemon_sysvinit()
         elif self.init_type == 'systemd':
             self.install_daemon_systemd()
+        if self.cron:
+            self.install_cron()
         print 'Done'
 
 
+def main():
+    description ="""Install this docker composition program as a daemon with boot init (sysvinit by default)."""
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument('--uninstall', help='uninstall the daemon', action='store_true')
+    parser.add_argument('--cron', help='install cron backup rule', action='store_true')
+    parser.add_argument('--systemd', help='use systemd', action='store_true')
+    parser.add_argument('composition_file', nargs='?', help='the path of the YAML composition file to use (optional)')
+
+    config = 'docker-compose.yml'
+    init_type = 'sysvinit'
+    args = vars(parser.parse_args())
+
+    if args['systemd']:
+        init_type = 'systemd'
+    if args['composition_file']:
+        config = args['composition_file']
+
+    installer = DockerCompositionInstaller(config, init_type, args['cron'])
+    if args['uninstall']:
+        installer.uninstall()
+    else:
+        installer.install()
+
 if __name__ == '__main__':
-    path = sys.argv[-1]
-    install = DockerComposeDaemonInstall(path)
-    install.run()
+    if not 'Linux' in platform.system():
+        print 'Sorry, this script in only compatible with Linux for the moment...\n'
+    else:
+        main()
