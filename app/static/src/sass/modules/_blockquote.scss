@@ -1,0 +1,37 @@
+$module: ".blockquote";
+
+#{$module} {
+
+    margin: 0;
+    padding: 0;
+
+    @include font-size(l);
+    @include line-height(1.5);
+    @include typeface(serif);
+    @include margin-top(3);
+    @include margin-bottom(3);
+    @include margin-left(1);
+    @include padding-left(1);
+    font-weight: weight(heavy);
+    position: relative;
+
+    &:before {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 100%;
+        position: absolute;
+        background: black;
+        top: 0;
+        left: 0;
+    }
+
+    &--small {
+        @include margin-left(.5);
+        @include padding-left(.5);
+        font-weight: weight(regular);
+        @include font-size(m);
+        @include line-height(1.25);
+    }
+
+}

@@ -1,0 +1,13 @@
+$module: ".dotted";
+
+#{$module} {
+
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+
+    &:before {
+        content: '.';
+    }
+
+}
