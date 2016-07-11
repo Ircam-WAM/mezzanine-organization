@@ -97,7 +97,7 @@
                     {% if settings.USE_MODELTRANSLATION and languages|length > 1 %}
                         {% for language in languages %}
                             <li class="nav__complementary__item__lang {% if language.code == LANGUAGE_CODE %}is-active{% endif %}">
-                                <a href="#" onclic"$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
+                                <a href="#" onclick="$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
                                   {{ language.code|title }}
                                 </a>
                             </li>
