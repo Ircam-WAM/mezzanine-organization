@@ -2,6 +2,12 @@ $module: ".header";
 
 #{$module} {
 
+    &__pre {
 
+        background: $color-black;
+        height: $header-pre-height;
+        color: white;
+
+    }
 
 }
