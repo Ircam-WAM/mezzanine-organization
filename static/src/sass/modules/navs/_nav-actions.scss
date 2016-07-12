@@ -1,0 +1,46 @@
+$module: ".nav-actions";
+
+#{$module} {
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+
+    &__item {
+
+        display: inline-block;
+        color: white;
+        text-transform: lowercase;
+
+        @include margin(0 .5);
+
+        &:nth-child(1), &:nth-child(2) {
+
+            color: $color-main;
+
+        }
+
+        &:nth-child(2):after {
+
+            content: '|';
+            display: inline-block;
+            @include margin(0 0 0 1);
+            color: white;
+
+        }
+
+    }
+
+    &__item-link {
+
+        color: inherit;
+        text-decoration: none;
+
+        @include font-size(m);
+        @include line-height($header-pre-height);
+        @include typeface(sans-serif);
+
+    }
+
+}

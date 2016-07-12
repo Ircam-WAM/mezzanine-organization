@@ -37,35 +37,40 @@
     {% block extra_head %}{% endblock %}
 </head>
 
-{# <body id="{% block body_id %}body{% endblock %}"> #}
 <body id="{% block body_id %}body{% endblock %}">
     <div class="banner" role="banner">
         <div class="header">
             <div class="container">
+                <div class="row header__pre">
+                    <div class="col-md-10 col-md-push-1 tac">
+                        {% page_menu "pages/menus/action.html" %}
+                    </div>
+                    <div class="col-md-1 col-md-push-1 tar">
+                        {% if settings.USE_MODELTRANSLATION and languages|length > 1 %}
+                            {% nevercache %}
+                            {% include "includes/language_selector.html" %}
+                            {% endnevercache %}
+                            <ul class="lang-switcher">
+                                {% for language in languages %}
+                                    <li class="nav__complementary__item__lang {% if language.code == LANGUAGE_CODE %}active{% endif %}">
+                                        <a href="#" onclick="$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
+                                          {{ language.code|title }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+
                 {% if settings.SITE_TITLE %}
                 <h1>
-                    <a class="header__logo" href="/">
-                        <span class="header__logo__text">{{ settings.SITE_TITLE }}</span>
-                        <img class="header__logo__img" src="{% static "img/logo_manifeste16_black.png" %}" alt="Logo Manifeste 2016 ircam" width="200">
-                    </a>
-                </h1>
-                    <div class="header__logo--right">
+                    <div class="header__logo">
                         <a href="http://www.ircam.fr" title="Url site ircam">
                             <img class="header__logo__img" src="{% static "img/logo_ircam_black.png" %}" alt="Logo Manifeste 2016 ircam" width="200">
                         </a>
                     </div>
-                {% endif %}
-
-                <button class="menu__toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-
-                {% page_menu "pages/menus/action.html" %}
-
-                {% if settings.SITE_TAGLINE %}
-                <p class="header__baseline">{{ settings.SITE_TAGLINE }}</p>
+                </h1>
                 {% endif %}
 
             </div>
@@ -75,37 +80,6 @@
             {% page_menu "pages/menus/header.html" %}
         </div>
 
-        <div class="nav__complementary">
-
-            {% nevercache %}
-            {% include "includes/language_selector.html" %}
-            {# {% include "includes/user_panel.html" %} #}
-            {% endnevercache %}
-
-            <div class="container">
-                <ul class="nav__complementary__list">
-                    <li class="nav__complementary__item--facebook">
-                        <a href="https://www.facebook.com/iIRCAM" class="btn-icon--facebook" target="_blank">
-                            <i class="icon icon__facebook-f"></i>
-                        </a>
-                    </li>
-                    <li class="nav__complementary__item--twitter">
-                        <a href="https://twitter.com/ircam" class="btn-icon--twitter" target="_blank">
-                            <i class="icon icon__twitter"></i>
-                        </a>
-                    </li>
-                    {% if settings.USE_MODELTRANSLATION and languages|length > 1 %}
-                        {% for language in languages %}
-                            <li class="nav__complementary__item__lang {% if language.code == LANGUAGE_CODE %}is-active{% endif %}">
-                                <a href="#" onclic"$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
-                                  {{ language.code|title }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
     </div>
 
     {% if on_home %}

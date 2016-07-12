@@ -264,6 +264,18 @@ figure img {
   background-color: #F8E71C;
 }
 
+.tac {
+  text-align: center;
+}
+
+.tar {
+  text-align: right;
+}
+
+.tal {
+  text-align: left;
+}
+
 @media (max-width: 46.99em) {
   .hide-xxs {
     display: none;
@@ -306,13 +318,13 @@ figure img {
 .container, .container-fluid, .container-full, .container-fixed {
   margin-right: auto;
   margin-left: auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 @media screen and (max-width: 1072px) {
   .container, .container-fluid, .container-full, .container-fixed {
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 
@@ -321,8 +333,8 @@ figure img {
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 15px;
+  padding-right: 15px;
   min-height: 1px;
   float: left;
 }
@@ -344,7 +356,7 @@ figure img {
   padding-right: 0;
 }
 .container-fixed {
-  width: 1008px;
+  width: 1020px;
 }
 @media screen and (min-width: 1072px) {
   .container {
@@ -364,8 +376,8 @@ figure img {
   margin: 0;
   padding: 0;
   border: 0;
-  margin-left: -12px;
-  margin-right: -12px;
+  margin-left: -15px;
+  margin-right: -15px;
   /* Nested grid */
 }
 .row:after {
@@ -1425,6 +1437,45 @@ figure img {
     margin-left: 100%;
   }
 }
+.header__pre {
+  background: #1D1D1B;
+  height: 34px;
+  color: white;
+}
+
+.nav-actions {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.nav-actions__item {
+  display: inline-block;
+  color: white;
+  text-transform: lowercase;
+  margin: 0px 12px;
+  margin: 0 0.75rem;
+}
+.nav-actions__item:nth-child(1), .nav-actions__item:nth-child(2) {
+  color: #F8E71C;
+}
+.nav-actions__item:nth-child(2):after {
+  content: '|';
+  display: inline-block;
+  margin: 0px 0px 0px 24px;
+  margin: 0 0 0 1.5rem;
+  color: white;
+}
+.nav-actions__item-link {
+  color: inherit;
+  text-decoration: none;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 34px;
+  line-height: 2.125rem;
+  font-family: "Oswald", sans-serif;
+}
+
 .breadcrumb {
   list-style-type: none;
   margin: 0;
