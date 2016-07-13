@@ -100,7 +100,7 @@ class Team(Named):
         return u"Team"
 
 
-class Person(Displayable, RichText, AdminThumbMixin, Photo):
+class Person(Displayable, AdminThumbMixin, Photo):
     """(Person description)"""
 
     user = models.ForeignKey(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -188,7 +188,7 @@ class LinkType(models.Model):
         return self.name
 
 
-class Activity(models.Model):
+class Activity(RichText):
     """(Activity description)"""
 
     person = models.ForeignKey('Person', verbose_name=_('person'))
@@ -196,7 +196,7 @@ class Activity(models.Model):
     date_begin = models.DateField(_('begin date'), null=True, blank=True)
     date_end = models.DateField(_('end date'), null=True, blank=True)
     role = models.CharField(_('role'), blank=True, max_length=512)
-    work = models.TextField(_('work'), blank=True)
+    description = models.TextField(_('work'), blank=True)
 
     def __unicode__(self):
         return ' - '.join((self.person, self.role, self.date_begin, self.date_end))

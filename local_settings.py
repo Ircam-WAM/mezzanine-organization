@@ -69,18 +69,12 @@ SITE_TAGLINE = 'Institut de Recherche et de Coordination Acoustique et Musique'
 SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 
 ADMIN_MENU_ORDER = (
-    (_('Content'), ('pages.Page', 'blog.BlogPost', 'mezzanine_agenda.Event',
-        'generic.ThreadedComment', (_('Media Library'), 'fb_browse'),)),
-    (_("Magazine"), ("magazine.Article",)),
-    (_('team'), ('organization.team.Organization', 'organization.team.Team',
-        'organization.team.Department', 'organization.team.Person',
-        'organization.team.Activity')),
-    (_('Projects'), ('organization.project.Project')),
-    (_('Festival'), ('organization.festival.Artist', 'organization.festival.Video',
-    'organization.festival.Audio', 'organization.festival.Playlist',
-    'organization.festival.Featured', 'mezzanine_agenda.EventLocation',
-        'mezzanine_agenda.EventCategory', 'mezzanine_agenda.EventPrice',
-        'festival.PageCategory',)),
+    (_('Content'), ('pages.Page', 'blog.BlogPost', (_('Media Library'), 'fb_browse'), 'featured.Featured', "generic.ThreadedComment",)),
+    (_('Events'), ('mezzanine_agenda.Event', 'mezzanine_agenda.EventLocation', 'mezzanine_agenda.EventCategory', 'mezzanine_agenda.EventPrice',)),
+    (_('Magazine'), ('magazine.Article', 'magazine.Brief',)),
+    (_('Organization'), ('team.Organization', 'team.Team', 'team.Department', 'team.Person', 'team.Activity',)),
+    (_('Projects'), ('project.Project',)),
+    (_('Festival'), ('festival.Artist',)),
     (_('Users'), ('auth.User', 'auth.Group',)),
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
 )
@@ -103,7 +97,10 @@ EVENT_USE_FEATURED_IMAGE = True
 EVENT_SHOP_URL = 'http://eve.ircam.fr/manifeste.php/manifestation/'
 EVENT_PASS_URL = 'http://eve.ircam.fr/manifeste.php/pass/'
 
-TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
+if DEBUG:
+    TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
+else:
+    TINYMCE_SETUP_JS = "/srv/app/static/js/tinymce_setup.js"
 
 SLUGIFY = 'django.template.defaultfilters.slugify'
 
