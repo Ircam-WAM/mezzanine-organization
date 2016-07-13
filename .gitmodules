@@ -4,9 +4,6 @@
 [submodule "lib/mezzanine-agenda"]
 	path = lib/mezzanine-agenda
 	url = git+ssh://git@git.forge.ircam.fr/mezzanine-agenda.git
-[submodule "ircam-www-data"]
-	path = ircam-www-data
-	url = git+ssh://git@git.forge.ircam.fr/ircam-www-data.git
 [submodule "data"]
 	path = data
 	url = git+ssh://git@git.forge.ircam.fr/ircam-www-data.git
