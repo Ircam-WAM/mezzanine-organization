@@ -6,4 +6,4 @@ from django.core.checks import register
 class CoreConfig(AppConfig):
 
     name = 'organization.core'
-    label = 'organization core'
+    label = 'organization-core'

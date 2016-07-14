@@ -242,7 +242,6 @@ MIGRATION_MODULES = {
     "galleries": "migrations.galleries",
     "pages": "migrations.pages",
     "conf": "migrations.conf",
-    "mezzanine_agenda": "migrations.mezzanine_agenda",
 }
 
 MODELTRANSLATION_TRANSLATION_FILES = (

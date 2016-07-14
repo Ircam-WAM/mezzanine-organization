@@ -18,6 +18,7 @@ class Article(BlogPost):
     class Meta:
         verbose_name = _('article')
 
+
 class Brief(Displayable, RichText):
 
     text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name='text button')
