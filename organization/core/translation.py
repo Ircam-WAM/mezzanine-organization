@@ -12,4 +12,4 @@ from organization.core.models import BasicPage
 @register(BasicPage)
 class BasicPageTranslationOptions(TranslationOptions):
 
-    fields = ('sub_title',)
+    fields = ('sub_title', 'content')
