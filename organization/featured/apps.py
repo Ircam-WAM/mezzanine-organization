@@ -4,4 +4,6 @@ from django.apps import AppConfig
 
 
 class FeaturedConfig(AppConfig):
-    name = 'featured'
+
+    name = 'organization.featured'
+    label = 'organization-featured'
