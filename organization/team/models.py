@@ -46,7 +46,7 @@ ALIGNMENT_CHOICES = (('left', _('left')), ('right', _('right')))
 class Address(models.Model):
     """(Address description)"""
 
-    address = models.TextField(_('description'), blank=True)
+    address = models.TextField(_('address'), blank=True)
     postal_code = models.CharField(_('postal code'), max_length=16, blank=True)
     country = CountryField(_('country'))
 
@@ -82,7 +82,7 @@ class Department(Named):
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'))
     url = models.URLField(_('URL'), max_length=512, blank=True)
-    weaving_class = models.CharField(_('weaving class'), max_length=64, blank=True)
+    weaving_css_class = models.CharField(_('weaving CSS class'), max_length=64, blank=True)
 
     def __unicode__(self):
         return self.name
