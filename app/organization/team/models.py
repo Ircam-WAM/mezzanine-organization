@@ -115,8 +115,7 @@ class Person(AdminThumbMixin, Photo):
     gender = models.CharField(_('gender'), max_length=16, choices=GENDER_CHOICES, blank=True)
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
-    birthday = models.DateField(_('birthday'), blank=True)
-    nationality = NationalityField(_('nationality'), blank=True)
+    birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), blank=True, null=True, on_delete=models.SET_NULL)
 
@@ -124,8 +123,8 @@ class Person(AdminThumbMixin, Photo):
         verbose_name = _('person')
         ordering = ['last_name',]
 
-    def __unicode__(self):
-        return ' '.join((self.user.first_name, self.user.last_name))
+    def __str__(self):
+        return ' '.join((self.first_name, self.last_name))
 
     # def get_absolute_url(self):
     #     return reverse("festival-artist-detail", kwargs={'slug': self.slug})

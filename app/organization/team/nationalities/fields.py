@@ -1,6 +1,5 @@
 from django.db.models.fields import CharField
 
-
 class Nationality(object):
     """
     Class represents a nationality.
@@ -20,16 +19,16 @@ class Nationality(object):
         self.code = code
 
     def __unicode__(self):
-        return self.code or ''
+        return str(self.code or '')
 
     def __eq__(self, other):
-        return self.code == other
+        return self.code == str(other)
 
     def __ne__(self, other):
         return not self.__eq__(other)
 
     def __cmp__(self, other):
-        return cmp(self.code, other)
+        return cmp(self.code, str(other))
 
     def __hash__(self):
         return hash(self.code)
@@ -67,7 +66,7 @@ class NationalityDescriptor(object):
         return Nationality(code=instance.__dict__[self.field.name])
 
     def __set__(self, instance, value):
-        instance.__dict__[self.field.name] = value
+        instance.__dict__[self.field.name] = str(value)
 
 
 class NationalityField(CharField):
@@ -106,7 +105,7 @@ class NationalityField(CharField):
         # Convert the Nationality to unicode for database insertion.
         if value is None:
             return None
-        return value
+        return str(value)
 
 
 # If south is installed, ensure that NationalityField will be introspected just
