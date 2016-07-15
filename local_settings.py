@@ -101,7 +101,7 @@ EVENT_PASS_URL = 'http://eve.ircam.fr/manifeste.php/pass/'
 if DEBUG:
     TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
 else:
-    TINYMCE_SETUP_JS = "/srv/app/static/js/tinymce_setup.js"
+    TINYMCE_SETUP_JS = "/srv/app/organization/core/static/js/tinymce_setup.js"
 
 SLUGIFY = 'django.template.defaultfilters.slugify'
 
