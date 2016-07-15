@@ -46,7 +46,7 @@ ALIGNMENT_CHOICES = (('left', _('left')), ('right', _('right')))
 class Address(models.Model):
     """(Address description)"""
 
-    address = models.TextField(_('description'), blank=True)
+    address = models.TextField(_('address'), blank=True)
     postal_code = models.CharField(_('postal code'), max_length=16, blank=True)
     country = CountryField(_('country'))
 
@@ -82,7 +82,7 @@ class Department(Named):
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'))
     url = models.URLField(_('URL'), max_length=512, blank=True)
-    weaving_class = models.CharField(_('weaving class'), max_length=64, blank=True)
+    weaving_css_class = models.CharField(_('weaving CSS class'), max_length=64, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -100,17 +100,17 @@ class Team(Named):
         return u"Team"
 
 
-class Person(Displayable, AdminThumbMixin, Photo):
+class Person(AdminThumbMixin, Photo):
     """(Person description)"""
 
     user = models.ForeignKey(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
-    person_title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
+    title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
     gender = models.CharField(_('gender'), max_length=16, choices=GENDER_CHOICES, blank=True)
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     birthday = models.DateField(_('birthday'), blank=True)
-    organization = models.ForeignKey('Organization', verbose_name=_('organization'), blank=True, null=True, on_delete=models.SET_NULL)
     bio = RichTextField(_('biography'), blank=True)
+    organization = models.ForeignKey('Organization', verbose_name=_('organization'), blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('person')
