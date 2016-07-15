@@ -20,16 +20,16 @@ class Nationality(object):
         self.code = code
 
     def __unicode__(self):
-        return unicode(self.code or '')
+        return self.code or ''
 
     def __eq__(self, other):
-        return self.code == unicode(other)
+        return self.code == other
 
     def __ne__(self, other):
         return not self.__eq__(other)
 
     def __cmp__(self, other):
-        return cmp(self.code, unicode(other))
+        return cmp(self.code, other)
 
     def __hash__(self):
         return hash(self.code)
@@ -67,7 +67,7 @@ class NationalityDescriptor(object):
         return Nationality(code=instance.__dict__[self.field.name])
 
     def __set__(self, instance, value):
-        instance.__dict__[self.field.name] = unicode(value)
+        instance.__dict__[self.field.name] = value
 
 
 class NationalityField(CharField):
@@ -106,7 +106,7 @@ class NationalityField(CharField):
         # Convert the Nationality to unicode for database insertion.
         if value is None:
             return None
-        return unicode(value)
+        return value
 
 
 # If south is installed, ensure that NationalityField will be introspected just
