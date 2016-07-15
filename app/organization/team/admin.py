@@ -34,20 +34,6 @@ class PersonAdminBase(admin.ModelAdmin):
 
     model = Person
 
-#
-# class PersonAdmin(BaseTranslationModelAdmin):
-#
-#     model = Person
-#     inlines = [ActivityInline,]
-#
-#     def get_fieldsets(self, request, obj = None):
-#         res = super(PersonAdmin, self).get_fieldsets(request, obj)
-#         # I only need to move one field; change the following
-#         # line to account for more.
-#         fields = (res[0][1]['fields'])
-#
-#         res[0][1]['fields'].append(res[0][1]['fields'].pop(0))
-#         return res
 
 class PersonAdmin(BaseTranslationModelAdmin):
 

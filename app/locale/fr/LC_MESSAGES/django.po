@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-15 14:31+0200\n"
+"POT-Creation-Date: 2016-07-15 14:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -60,8 +60,8 @@ msgstr ""
 msgid "Site"
 msgstr ""
 
-#: organization/core/models.py:13 organization/team/models.py:149
-#: organization/team/models.py:175
+#: organization/core/models.py:13 organization/team/models.py:152
+#: organization/team/models.py:184
 msgid "name"
 msgstr "nom"
 
@@ -69,7 +69,7 @@ msgstr "nom"
 msgid "description"
 msgstr ""
 
-#: organization/core/models.py:30 organization/team/models.py:107
+#: organization/core/models.py:30 organization/team/models.py:110
 msgid "title"
 msgstr "titre"
 
@@ -101,15 +101,15 @@ msgstr ""
 msgid "briefs"
 msgstr "brèves"
 
-#: organization/festival/models.py:22 organization/team/models.py:109
+#: organization/festival/models.py:22 organization/team/models.py:112
 msgid "first name"
 msgstr ""
 
-#: organization/festival/models.py:23 organization/team/models.py:110
+#: organization/festival/models.py:23 organization/team/models.py:113
 msgid "last name"
 msgstr ""
 
-#: organization/festival/models.py:24 organization/team/models.py:112
+#: organization/festival/models.py:24 organization/team/models.py:115
 msgid "biography"
 msgstr "biographie"
 
@@ -118,8 +118,6 @@ msgid "artist"
 msgstr "artiste"
 
 #: organization/magazine/models.py:19
-#, fuzzy
-#| msgid "articles"
 msgid "article"
 msgstr "articles"
 
@@ -264,12 +262,12 @@ msgid "organization type"
 msgstr "type d'organisation"
 
 #: organization/team/models.py:64 organization/team/models.py:84
-#: organization/team/models.py:160
+#: organization/team/models.py:166
 msgid "URL"
 msgstr ""
 
 #: organization/team/models.py:70 organization/team/models.py:83
-#: organization/team/models.py:113
+#: organization/team/models.py:116
 msgid "organization"
 msgstr "organisation"
 
@@ -281,70 +279,88 @@ msgstr "classe de trame CSS"
 msgid "department"
 msgstr "département"
 
-#: organization/team/models.py:106
+#: organization/team/models.py:100
+#, fuzzy
+#| msgid "teams"
+msgid "team"
+msgstr "équipes"
+
+#: organization/team/models.py:109
 msgid "user"
 msgstr ""
 
-#: organization/team/models.py:108
+#: organization/team/models.py:111
 msgid "gender"
 msgstr "genre"
 
-#: organization/team/models.py:111
+#: organization/team/models.py:114
 msgid "birthday"
 msgstr "déte de naissance"
 
-#: organization/team/models.py:116 organization/team/models.py:158
-#: organization/team/models.py:194
+#: organization/team/models.py:119 organization/team/models.py:164
+#: organization/team/models.py:203
 msgid "person"
 msgstr "personne"
 
-#: organization/team/models.py:159
+#: organization/team/models.py:155
+msgid "nationality"
+msgstr ""
+
+#: organization/team/models.py:165
 msgid "link type"
 msgstr "type de lien"
 
-#: organization/team/models.py:176
+#: organization/team/models.py:169
+#, fuzzy
+#| msgid "link type"
+msgid "link"
+msgstr "type de lien"
+
+#: organization/team/models.py:185
 msgid "slug"
 msgstr ""
 
-#: organization/team/models.py:177
+#: organization/team/models.py:186
 msgid ""
 "Use this field to define a simple identifier that can be used to style the "
 "different link types (i.e. assign social media icons to them)"
 msgstr ""
 
-#: organization/team/models.py:182
+#: organization/team/models.py:191
 msgid "ordering"
 msgstr ""
 
-#: organization/team/models.py:195
+#: organization/team/models.py:204
 msgid "teams"
 msgstr "équipes"
 
-#: organization/team/models.py:196
+#: organization/team/models.py:205
 msgid "begin date"
 msgstr "date de début"
 
-#: organization/team/models.py:197
+#: organization/team/models.py:206
 msgid "end date"
 msgstr "date de fin"
 
-#: organization/team/models.py:198
+#: organization/team/models.py:207
 msgid "role"
 msgstr "rôle"
 
-#: organization/team/models.py:199
+#: organization/team/models.py:208
 msgid "work"
 msgstr "travail"
 
+#: organization/team/models.py:211
+msgid "activity"
+msgstr "activité"
+
 #: settings.py:45
-#, fuzzy
-#| msgid "Location:"
 msgid "Action"
-msgstr "Lieu:"
+msgstr "Action"
 
 #: settings.py:46
 msgid "Departement"
-msgstr ""
+msgstr "Département"
 
 #: settings.py:47
 msgid "Footer"
