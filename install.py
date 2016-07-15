@@ -158,7 +158,7 @@ class DockerCompositionInstaller(object):
         # version with migration
         # command = "cd /srv/ircam-www && git pull origin dev &&  " + self.docker_compose + " -f " + self.config + " run app /srv/app/manage.py migrate --noinput && ./scripts/push.sh >> /var/log/cri/cron/`date +\%Y\%m\%d\%H\%M\%S`-cron.log 2>&1 \n"
         # without migration
-        command = "cd /srv/ircam-www && git pull origin dev && ./scripts/push.sh >> /var/log/cri/cron/`date +\%Y\%m\%d-\%H-\%M-\%S`-cron.log 2>&1 \n"
+        command = "cd /srv/ircam-www && ./scripts/push.sh >> /var/log/cri/cron/`date +\%Y\%m\%d-\%H-\%M-\%S`-cron.log 2>&1 \n"
         rule = self.cron_rule % (self.user, command)
         f = open('/etc/cron.d/' + self.name, 'w')
         f.write(rule)
