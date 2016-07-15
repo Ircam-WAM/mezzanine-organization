@@ -312,12 +312,14 @@ STATICFILES_FINDERS = (
 
 # These will be added to ``INSTALLED_APPS``, only if available.
 OPTIONAL_APPS = (
-    "debug_toolbar",
     "django_extensions",
     "compressor",
     PACKAGE_NAME_FILEBROWSER,
     PACKAGE_NAME_GRAPPELLI,
 )
+
+if DEBUG:
+    OPTIONAL_APPS += "debug_toolbar"
 
 ##################
 # LOCAL SETTINGS #
