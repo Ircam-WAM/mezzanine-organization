@@ -19,10 +19,12 @@ from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 
-from django_countries.fields import CountryField
-
 from organization.media.models import Photo
 from organization.core.models import Named
+
+from django_countries.fields import CountryField
+from .nationalities.fields import NationalityField
+
 
 # Hack to have these strings translated
 mr = _('Mr')
@@ -57,7 +59,7 @@ class Address(models.Model):
             abstract = True
 
 
-class Organization(Named, Address):
+class Organization(Named, Address, Photo):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -95,6 +97,8 @@ class Team(Named):
     """(Team description)"""
 
     department = models.ForeignKey('Department', verbose_name=_('department'), blank=True, null=True, on_delete=models.SET_NULL)
+    partner_organizations = models.ManyToManyField(Organization, verbose_name=_('partner organizations'), blank=True)
+    partner_teams = models.ManyToManyField('Team', verbose_name=_('partner teams'), blank=True)
 
     class Meta:
         verbose_name = _('team')
@@ -112,6 +116,7 @@ class Person(AdminThumbMixin, Photo):
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     birthday = models.DateField(_('birthday'), blank=True)
+    nationality = NationalityField(_('nationality'), blank=True)
     bio = RichTextField(_('biography'), blank=True)
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), blank=True, null=True, on_delete=models.SET_NULL)
 
@@ -144,18 +149,6 @@ class Person(AdminThumbMixin, Photo):
     def save(self, *args, **kwargs):
         self.set_names()
         super(Person, self).save(*args, **kwargs)
-
-
-class Nationality(models.Model):
-    """(Nationality description)"""
-
-    name = models.CharField(_('name'), max_length=128)
-
-    class Meta:
-        verbose_name = _('nationality')
-
-    def __unicode__(self):
-        return self.name
 
 
 class Link(models.Model):
