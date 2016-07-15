@@ -96,8 +96,11 @@ class Team(Named):
 
     department = models.ForeignKey('Department', verbose_name=_('department'), blank=True, null=True, on_delete=models.SET_NULL)
 
+    class Meta:
+        verbose_name = _('team')
+
     def __unicode__(self):
-        return u"Team"
+        return self.name
 
 
 class Person(AdminThumbMixin, Photo):
@@ -148,6 +151,9 @@ class Nationality(models.Model):
 
     name = models.CharField(_('name'), max_length=128)
 
+    class Meta:
+        verbose_name = _('nationality')
+
     def __unicode__(self):
         return self.name
 
@@ -158,6 +164,9 @@ class Link(models.Model):
     person = models.ForeignKey('Person', verbose_name=_('person'))
     link_type = models.ForeignKey('LinkType', verbose_name=_('link type'))
     url = models.URLField(verbose_name=_('URL'))
+
+    class Meta:
+        verbose_name = _('link')
 
     def __str__(self):
         return self.url
@@ -196,7 +205,10 @@ class Activity(RichText):
     date_begin = models.DateField(_('begin date'), null=True, blank=True)
     date_end = models.DateField(_('end date'), null=True, blank=True)
     role = models.CharField(_('role'), blank=True, max_length=512)
-    description = models.TextField(_('work'), blank=True)
+    description = models.TextField(_('description'), blank=True)
+
+    class Meta:
+        verbose_name = _('activity')
 
     def __unicode__(self):
         return ' - '.join((self.person, self.role, self.date_begin, self.date_end))
