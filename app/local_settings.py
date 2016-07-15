@@ -69,12 +69,13 @@ SITE_TAGLINE = 'Institut de Recherche et de Coordination Acoustique et Musique'
 SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 
 ADMIN_MENU_ORDER = (
-    (_('Content'), ('pages.Page', 'blog.BlogPost', (_('Media Library'), 'fb_browse'), 'featured.Featured', "generic.ThreadedComment",)),
+    (_('Pages'), ('pages.Page', 'organization-featured.Featured',)),
+    (_('Media'), ('organization-media.Video', 'organization-media.VideoCategory', 'organization-media.Audio', 'organization-media.Playlist',  'organization-media.Photo', (_('Media Library'), 'fb_browse'),)),
     (_('Events'), ('mezzanine_agenda.Event', 'mezzanine_agenda.EventLocation', 'mezzanine_agenda.EventCategory', 'mezzanine_agenda.EventPrice',)),
-    (_('Magazine'), ('magazine.Article', 'magazine.Brief',)),
-    (_('Organization'), ('team.Organization', 'team.Team', 'team.Department', 'team.Person', 'team.Activity',)),
-    (_('Projects'), ('project.Project',)),
-    (_('Festival'), ('festival.Artist',)),
+    (_('Magazine'), ('organization-magazine.Article', 'organization-magazine.Brief',)),
+    (_('Organization'), ('organization-team.Organization', 'organization-team.OrganizationType', 'organization-team.Team', 'organization-team.Department', 'organization-team.Person', 'organization-team.Activity',)),
+    (_('Projects'), ('organization-project.Project',)),
+    (_('Festival'), ('organization-festival.Artist',)),
     (_('Users'), ('auth.User', 'auth.Group',)),
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
 )

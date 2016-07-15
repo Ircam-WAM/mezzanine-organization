@@ -6,4 +6,4 @@ from django.apps import AppConfig
 class teamConfig(AppConfig):
 
     name = 'organization.team'
-    label  = 'organization team'
+    label  = 'organization-team'
