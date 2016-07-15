@@ -155,8 +155,8 @@ class Nationality(models.Model):
 class Link(models.Model):
     """A person can have many links."""
 
-    person = models.ForeignKey('Person', verbose_name=_('Person'))
-    link_type = models.ForeignKey('LinkType', verbose_name=_('Link type'))
+    person = models.ForeignKey('Person', verbose_name=_('person'))
+    link_type = models.ForeignKey('LinkType', verbose_name=_('link type'))
     url = models.URLField(verbose_name=_('URL'))
 
     def __str__(self):
@@ -172,14 +172,14 @@ class LinkType(models.Model):
       special order.
     """
 
-    name = models.CharField(max_length=256, verbose_name=_('Name'))
-    slug = models.SlugField(max_length=256, verbose_name=_('Slug'), help_text=_(
+    name = models.CharField(max_length=256, verbose_name=_('name'))
+    slug = models.SlugField(max_length=256, verbose_name=_('slug'), help_text=_(
             'Use this field to define a simple identifier that can be used'
             ' to style the different link types (i.e. assign social media'
             ' icons to them)'),
         blank=True,
     )
-    ordering = models.PositiveIntegerField(verbose_name=_('Ordering'), null=True, blank=True)
+    ordering = models.PositiveIntegerField(verbose_name=_('ordering'), null=True, blank=True)
 
     class Meta:
         ordering = ['ordering', ]

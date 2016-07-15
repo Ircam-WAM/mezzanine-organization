@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-10 16:50+0200\n"
+"POT-Creation-Date: 2016-07-15 14:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,171 +18,332 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: festival/models.py:19
-msgid "left"
-msgstr "gauche"
+#: local_settings.py:72
+#, fuzzy
+#| msgid "pages"
+msgid "Pages"
+msgstr "Pages"
 
-#: festival/models.py:19
-msgid "right"
-msgstr "droite"
-
-#: festival/models.py:31
-msgid "name"
-msgstr "nome"
-
-#: festival/models.py:32 festival/models.py:44
-msgid "description"
+#: local_settings.py:73
+msgid "Media"
 msgstr ""
 
-#: festival/models.py:43
-msgid "title"
-msgstr "titre"
-
-#: festival/models.py:56
-msgid "first name"
-msgstr ""
-
-#: festival/models.py:57
-msgid "last name"
-msgstr ""
-
-#: festival/models.py:58
-msgid "biography"
-msgstr "biographie"
-
-#: festival/models.py:59
-msgid "photo"
-msgstr ""
-
-#: festival/models.py:60
-msgid "photo credits"
-msgstr "crédits photo"
-
-#: festival/models.py:61
-msgid "photo alignment"
-msgstr "alignement photo"
-
-#: festival/models.py:62
-msgid "photo description"
-msgstr ""
-
-#: festival/models.py:63
-msgid "photo featured"
-msgstr ""
-
-#: festival/models.py:64
-msgid "photo featured credits"
-msgstr ""
-
-#: festival/models.py:65 festival/models.py:201
-msgid "events"
-msgstr "événements"
-
-#: festival/models.py:70
-msgid "artist"
-msgstr "artiste"
-
-#: festival/models.py:115
-msgid "media id"
-msgstr ""
-
-#: festival/models.py:116
-msgid "open source URL"
-msgstr ""
-
-#: festival/models.py:117
-msgid "closed source URL"
-msgstr ""
-
-#: festival/models.py:118
-msgid "poster"
-msgstr ""
-
-#: festival/models.py:155 festival/models.py:171 festival/models.py:191
-msgid "event"
-msgstr "événement"
-
-#: festival/models.py:158
-msgid "audio"
-msgstr ""
-
-#: festival/models.py:172
-#| msgid "Category:"
-msgid "category"
-msgstr "Catégorie"
-
-#: festival/models.py:175
-msgid "video"
-msgstr ""
-
-#: festival/models.py:190
-msgid "audios"
-msgstr ""
-
-#: festival/models.py:200 templates/index.html:42
-msgid "artists"
-msgstr "artistes"
-
-#: festival/models.py:202 templates/index.html:50
-msgid "videos"
-msgstr "vidéos"
-
-#: festival/models.py:203
-msgid "blog posts"
-msgstr "articles"
-
-#: festival/models.py:204
-msgid "pages"
-msgstr "pages"
-
-#: festival/models.py:205
-msgid "playlists"
-msgstr ""
-
-#: festival/models.py:215
-msgid "video category"
-msgstr "catégorie de vidéo"
-
-#: festival/templates/festival/artist_detail.html:27
-#: festival/templates/festival/video_detail.html:28
-#: templates/agenda/event_detail.html:163
-msgid "Also discover"
-msgstr "À découvrir aussi"
-
-#: festival/templates/festival/artist_list.html:6
-msgid "Artists"
-msgstr "Artistes"
-
-#: festival/templates/festival/inc/video_card.html:10
-msgid "Play the video"
-msgstr "Jouer la vidéo"
-
-#: festival/templates/festival/video_list.html:6
-msgid "Videos"
-msgstr "Vidéos"
-
-#: local_settings.py:81
-msgid "Content"
-msgstr ""
-
-#: local_settings.py:84
+#: local_settings.py:73
 msgid "Media Library"
 msgstr ""
 
-#: local_settings.py:85
-msgid "Site"
+#: local_settings.py:74 templates/agenda/event_list.html:4
+msgid "Events"
+msgstr "Événements"
+
+#: local_settings.py:75
+msgid "Magazine"
 msgstr ""
 
-#: local_settings.py:86
-msgid "Users"
-msgstr ""
+#: local_settings.py:76
+msgid "Organization"
+msgstr "Organisation"
 
-#: local_settings.py:87
+#: local_settings.py:77
+msgid "Projects"
+msgstr "Projets"
+
+#: local_settings.py:78
 msgid "Festival"
 msgstr ""
 
+#: local_settings.py:79
+msgid "Users"
+msgstr ""
+
+#: local_settings.py:80
+msgid "Site"
+msgstr ""
+
+#: organization/core/models.py:13 organization/team/models.py:149
+#: organization/team/models.py:175
+msgid "name"
+msgstr "nom"
+
+#: organization/core/models.py:14 organization/core/models.py:31
+msgid "description"
+msgstr ""
+
+#: organization/core/models.py:30 organization/team/models.py:107
+msgid "title"
+msgstr "titre"
+
+#: organization/core/models.py:42 organization/magazine/models.py:13
+msgid "sub title"
+msgstr "sous-titre"
+
+#: organization/featured/models.py:18
+msgid "pages"
+msgstr "pages"
+
+#: organization/featured/models.py:19
+msgid "articles"
+msgstr "articles"
+
+#: organization/featured/models.py:20
+msgid "events"
+msgstr "événements"
+
+#: organization/featured/models.py:21 templates/index.html:31
+msgid "videos"
+msgstr "vidéos"
+
+#: organization/featured/models.py:22
+msgid "playlists"
+msgstr ""
+
+#: organization/featured/models.py:23
+msgid "briefs"
+msgstr "brèves"
+
+#: organization/festival/models.py:22 organization/team/models.py:109
+msgid "first name"
+msgstr ""
+
+#: organization/festival/models.py:23 organization/team/models.py:110
+msgid "last name"
+msgstr ""
+
+#: organization/festival/models.py:24 organization/team/models.py:112
+msgid "biography"
+msgstr "biographie"
+
+#: organization/festival/models.py:28
+msgid "artist"
+msgstr "artiste"
+
+#: organization/magazine/models.py:19
+#, fuzzy
+#| msgid "articles"
+msgid "article"
+msgstr "articles"
+
+#: organization/magazine/models.py:31
+msgid "brief"
+msgstr "brève"
+
+#: organization/magazine/models.py:38 organization/media/models.py:98
+msgid "category"
+msgstr "catégorie"
+
+#: organization/magazine/models.py:48
+msgid "topic"
+msgstr "rubrique"
+
+#: organization/media/models.py:14 organization/team/models.py:42
+msgid "left"
+msgstr "gauche"
+
+#: organization/media/models.py:14
+msgid "center"
+msgstr "centre"
+
+#: organization/media/models.py:14 organization/team/models.py:42
+msgid "right"
+msgstr "droite"
+
+#: organization/media/models.py:21
+msgid "photo"
+msgstr ""
+
+#: organization/media/models.py:22
+msgid "photo credits"
+msgstr "crédits photo"
+
+#: organization/media/models.py:23
+msgid "photo alignment"
+msgstr "alignement photo"
+
+#: organization/media/models.py:24
+msgid "photo description"
+msgstr ""
+
+#: organization/media/models.py:26
+msgid "card photo"
+msgstr ""
+
+#: organization/media/models.py:27
+msgid "photo card credits"
+msgstr "crédits photo"
+
+#: organization/media/models.py:29
+msgid "slider photo"
+msgstr ""
+
+#: organization/media/models.py:30
+msgid "photo slider credits"
+msgstr "crédits photo slider"
+
+#: organization/media/models.py:46
+msgid "media id"
+msgstr ""
+
+#: organization/media/models.py:47
+msgid "open source URL"
+msgstr ""
+
+#: organization/media/models.py:48
+msgid "closed source URL"
+msgstr ""
+
+#: organization/media/models.py:49
+msgid "poster"
+msgstr ""
+
+#: organization/media/models.py:87
+msgid "audio"
+msgstr ""
+
+#: organization/media/models.py:101
+msgid "video"
+msgstr ""
+
+#: organization/media/models.py:116
+msgid "video category"
+msgstr "catégorie de vidéo"
+
+#: organization/media/models.py:125
+msgid "audios"
+msgstr ""
+
+#: organization/project/models.py:14
+msgid "persons"
+msgstr "personnes"
+
+#: organization/project/models.py:15
+msgid "organizations"
+msgstr "organisations"
+
+#: organization/team/models.py:28
+msgid "Mr"
+msgstr "Mr"
+
+#: organization/team/models.py:29
+msgid "Ms"
+msgstr "Mme"
+
+#: organization/team/models.py:32
+msgid "male"
+msgstr "homme"
+
+#: organization/team/models.py:33
+msgid "female"
+msgstr "femme"
+
+#: organization/team/models.py:37
+msgid "Dr"
+msgstr ""
+
+#: organization/team/models.py:38
+msgid "Prof"
+msgstr ""
+
+#: organization/team/models.py:39
+msgid "Prof Dr"
+msgstr ""
+
+#: organization/team/models.py:49
+msgid "address"
+msgstr "adresse"
+
+#: organization/team/models.py:50
+msgid "postal code"
+msgstr "code postal"
+
+#: organization/team/models.py:51
+msgid "country"
+msgstr "pays"
+
+#: organization/team/models.py:63 organization/team/models.py:77
+msgid "organization type"
+msgstr "type d'organisation"
+
+#: organization/team/models.py:64 organization/team/models.py:84
+#: organization/team/models.py:160
+msgid "URL"
+msgstr ""
+
+#: organization/team/models.py:70 organization/team/models.py:83
+#: organization/team/models.py:113
+msgid "organization"
+msgstr "organisation"
+
+#: organization/team/models.py:85
+msgid "weaving CSS class"
+msgstr "classe de trame CSS"
+
+#: organization/team/models.py:91 organization/team/models.py:97
+msgid "department"
+msgstr "département"
+
+#: organization/team/models.py:106
+msgid "user"
+msgstr ""
+
+#: organization/team/models.py:108
+msgid "gender"
+msgstr "genre"
+
+#: organization/team/models.py:111
+msgid "birthday"
+msgstr "déte de naissance"
+
+#: organization/team/models.py:116 organization/team/models.py:158
+#: organization/team/models.py:194
+msgid "person"
+msgstr "personne"
+
+#: organization/team/models.py:159
+msgid "link type"
+msgstr "type de lien"
+
+#: organization/team/models.py:176
+msgid "slug"
+msgstr ""
+
+#: organization/team/models.py:177
+msgid ""
+"Use this field to define a simple identifier that can be used to style the "
+"different link types (i.e. assign social media icons to them)"
+msgstr ""
+
+#: organization/team/models.py:182
+msgid "ordering"
+msgstr ""
+
+#: organization/team/models.py:195
+msgid "teams"
+msgstr "équipes"
+
+#: organization/team/models.py:196
+msgid "begin date"
+msgstr "date de début"
+
+#: organization/team/models.py:197
+msgid "end date"
+msgstr "date de fin"
+
+#: organization/team/models.py:198
+msgid "role"
+msgstr "rôle"
+
+#: organization/team/models.py:199
+msgid "work"
+msgstr "travail"
+
 #: settings.py:45
-msgid "Top navigation bar"
+#, fuzzy
+#| msgid "Location:"
+msgid "Action"
+msgstr "Lieu:"
+
+#: settings.py:46
+msgid "Departement"
 msgstr ""
 
 #: settings.py:47
@@ -273,11 +434,13 @@ msgstr ""
 #: templates/agenda/event_detail.html:45
 #: templates/blog/blog_post_detail.html:39
 #: templates/generic/includes/comments.html:3
+#: templates/magazine/article/article_detail.html:38
 msgid "Comments"
 msgstr ""
 
 #: templates/agenda/event_detail.html:48
 #: templates/blog/blog_post_detail.html:42
+#: templates/magazine/article/article_detail.html:41
 #, python-format
 msgid "%(comments_count)s comment"
 msgid_plural "%(comments_count)s comments"
@@ -304,15 +467,20 @@ msgstr "Évenement précédent"
 msgid "Next event"
 msgstr "Évenement suivant"
 
-#: templates/agenda/event_list.html:4
-msgid "Events"
-msgstr "Événements"
+#: templates/agenda/event_detail.html:163
+#: templates/blog/blog_post_detail.html:120
+#: templates/festival/artist_detail.html:27
+#: templates/festival/video_detail.html:28
+#: templates/magazine/article/article_detail.html:119
+msgid "Also discover"
+msgstr "À découvrir aussi"
 
 #: templates/agenda/event_list.html:22
 msgid "Program"
 msgstr "Programme"
 
 #: templates/agenda/event_list.html:31 templates/blog/blog_post_list.html:31
+#: templates/magazine/article/article_list.html:31
 msgid "Tag:"
 msgstr "Mot clé:"
 
@@ -321,6 +489,7 @@ msgid "Location:"
 msgstr "Lieu:"
 
 #: templates/agenda/event_list.html:37 templates/blog/blog_post_list.html:37
+#: templates/magazine/article/article_list.html:37
 msgid "Author:"
 msgstr "Auteur:"
 
@@ -367,43 +536,31 @@ msgstr ""
 #: templates/agenda/includes/filter_panel.html:74
 #: templates/blog/blog_post_detail.html:72
 #: templates/blog/includes/filter_panel.html:56
+#: templates/magazine/article/article_detail.html:71
 msgid "Tags"
 msgstr ""
 
-#: templates/base.html:136
+#: templates/base.html:147
 msgid "Breaking"
 msgstr "Dernière"
 
-#: templates/base.html:136
+#: templates/base.html:147
 msgid "news"
 msgstr "minute"
 
-#: templates/base.html:165
-msgid "Playlist"
-msgstr "Playlist"
-
-#: templates/base.html:172
-msgid "Download the brochure"
-msgstr "Télécharger la brochure"
-
-#: templates/base.html:175
-msgid "Subscribe to newsletter"
-msgstr "Inscription à la newsletter"
-
 #: templates/blog/blog_post_detail.html:29
+#: templates/magazine/article/article_detail.html:28
 msgid "published on"
 msgstr "publié le"
 
-#: templates/blog/blog_post_detail.html:119
-#: templates/pages/richtextpage.html:27
-msgid "Related posts"
-msgstr "Articles associés"
-
 #: templates/blog/blog_post_list.html:4 templates/blog/blog_post_list.html:22
+#: templates/magazine/article/article_list.html:4
+#: templates/magazine/article/article_list.html:22
 msgid "Articles"
 msgstr "Articles"
 
 #: templates/blog/blog_post_list.html:33
+#: templates/magazine/article/article_list.html:33
 msgid "Category:"
 msgstr "Catégorie:"
 
@@ -524,7 +681,7 @@ msgstr ""
 msgid "Activate your account"
 msgstr ""
 
-#: templates/errors/404.html:6 templates/errors/404.html.py:10
+#: templates/errors/404.html:6 templates/errors/404.html:10
 #: templates/errors/404.html:15
 msgid "Page not found"
 msgstr ""
@@ -533,7 +690,7 @@ msgstr ""
 msgid "The page you requested does not exist."
 msgstr ""
 
-#: templates/errors/500.html:6 templates/errors/500.html.py:10
+#: templates/errors/500.html:6 templates/errors/500.html:10
 #: templates/errors/500.html:15
 msgid "Error"
 msgstr ""
@@ -541,6 +698,18 @@ msgstr ""
 #: templates/errors/500.html:16
 msgid "Sorry, an error occurred."
 msgstr ""
+
+#: templates/festival/artist_list.html:6
+msgid "Artists"
+msgstr "Artistes"
+
+#: templates/festival/inc/video_card.html:10
+msgid "Play the video"
+msgstr "Jouer la vidéo"
+
+#: templates/festival/video_list.html:6
+msgid "Videos"
+msgstr "Vidéos"
 
 #: templates/generic/includes/comment.html:22
 #: templates/generic/includes/comment.html:59 templates/twitter/tweets.html:19
@@ -645,34 +814,22 @@ msgstr "Partager par email"
 msgid "Print this page"
 msgstr "Imprimer cette page"
 
-#: templates/index.html:4 templates/index.html.py:7
+#: templates/index.html:4 templates/index.html:7
 #: templates/pages/menus/breadcrumb.html:4
 #: templates/pages/menus/breadcrumb.html:10
 #: templates/pages/menus/dropdown.html:11
 #: templates/pages/menus/footer_tree.html:11
-#: templates/pages/menus/mobile.html:10 templates/pages/menus/primary.html:8
-#: templates/pages/menus/tree.html:9 templates/search_results.html:13
+#: templates/pages/menus/header.html:11 templates/pages/menus/mobile.html:10
+#: templates/pages/menus/primary.html:8 templates/pages/menus/tree.html:9
+#: templates/search_results.html:13
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/index.html:19
-msgid "Read the edito"
-msgstr "Lire l'édito"
-
-#: templates/index.html:25
+#: templates/index.html:15
 msgid "Featured"
 msgstr "À la une"
 
-#: templates/index.html:34 templates/index.html.py:42
-msgctxt "apos"
-msgid "More"
-msgstr "Plus d'"
-
-#: templates/index.html:34
-msgid "articles"
-msgstr "articles"
-
-#: templates/index.html:50
+#: templates/index.html:31
 msgid "More"
 msgstr "Plus de"
 
@@ -688,7 +845,11 @@ msgstr ""
 msgid "Related events"
 msgstr "Événements associés"
 
-#: templates/search_results.html:5 templates/search_results.html.py:6
+#: templates/pages/richtextpage.html:27
+msgid "Related posts"
+msgstr "Articles associés"
+
+#: templates/search_results.html:5 templates/search_results.html:6
 #: templates/search_results.html:15
 msgid "Search Results"
 msgstr ""
@@ -712,13 +873,41 @@ msgstr ""
 msgid "read more"
 msgstr "lire la suite"
 
-#: templates/styles.html:4 templates/styles.html.py:6
+#: templates/styles.html:4 templates/styles.html:6
 msgid "Styles"
 msgstr ""
 
 #: templates/twitter/tweets.html:7
 msgid "Recent Tweets"
 msgstr "Tweets récents"
+
+#~ msgid "Person"
+#~ msgstr "Personne"
+
+#~ msgid "event"
+#~ msgstr "événement"
+
+#~ msgid "artists"
+#~ msgstr "artistes"
+
+#~ msgid "blog posts"
+#~ msgstr "articles"
+
+#~ msgid "Playlist"
+#~ msgstr "Playlist"
+
+#~ msgid "Download the brochure"
+#~ msgstr "Télécharger la brochure"
+
+#~ msgid "Subscribe to newsletter"
+#~ msgstr "Inscription à la newsletter"
+
+#~ msgid "Read the edito"
+#~ msgstr "Lire l'édito"
+
+#~ msgctxt "apos"
+#~ msgid "More"
+#~ msgstr "Plus d'"
 
 #~ msgid "Videos for the category"
 #~ msgstr "Les vidéos de la catégorie"
