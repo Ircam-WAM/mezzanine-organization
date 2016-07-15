@@ -44,6 +44,9 @@ build
 bower_components
 node_modules
 .sass-cache
+app/static/js
+app/static/css
+app/static/img
 
 ### SublimeText ###
 ###################
