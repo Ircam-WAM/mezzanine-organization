@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from organization.magazine.models import Article, Brief
 from organization.core.views import SlugMixin
 
-# Create your views here.
+
 class ArticleDetailView(SlugMixin, DetailView):
 
     model = Article
@@ -18,6 +18,7 @@ class ArticleDetailView(SlugMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
         return context
+
 
 class ArticleListView(SlugMixin, ListView):
 
@@ -30,7 +31,6 @@ class ArticleListView(SlugMixin, ListView):
         return context
 
 
-# Create your views here.
 class BriefDetailView(SlugMixin, DetailView):
 
     model = Brief
