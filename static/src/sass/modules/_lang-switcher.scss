@@ -3,5 +3,66 @@ $module: ".lang-switcher";
 #{$module} {
 
     list-style-type: none;
+    padding: 0;
+    margin: 0;
+    @include padding-right(.5);
+
+    position: absolute;
+    top: 0;
+    right: .25rem;
+
+    &__item {
+
+        @include font-size(s);
+        @include line-height($header-pre-height);
+        @include typeface(sans-serif);
+
+        @include padding(0 .5);
+
+        text-transform: uppercase;
+        display: none;
+
+        >a {
+            color: white;
+        }
+
+        &.active {
+            display: block;
+        }
+
+    }
+
+    &.open {
+
+        #{$module}__item {
+
+            display: block;
+            background: $color-black;
+
+        }
+
+        &:after {
+
+            @include transform(rotate(180deg));
+
+        }
+
+    }
+
+    &:after {
+        display: block;
+        content: '\f107';
+        color: white;
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        font-family: FontAwesome;
+        font-size: 0.8em;
+
+        @include line-height($header-pre-height);
+        @include margin-right(.5);
+        @include transition(all 0.2s ease-in-out);
+    }
 
 }

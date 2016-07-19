@@ -1,35 +1,36 @@
-{% load i18n pages_tags %}
+{% load i18n pages_tags staticfiles %}
 {% get_language_info_list for LANGUAGES as languages %}
 
 {% spaceless %}
 {% if page_branch_in_menu %}
-    {% if branch_level == 0 %}
-        <ul class="menu">
-            {% for page in page_branch %}
-            {% if not has_home and page.is_primary and forloop.first %}
-            <li class="menu__item{% if on_home %} active{% endif %}">
-                <a href="{% url "home" %}" class="menu__item__link">{% trans "Home" %}</a>
-            </li>
+    {% for page in page_branch %}
+        {% if page.is_primary %}
+            {% if forloop.first %}
+                <ul class="nav-header" role="navigation">
+                    <li class="nav-header__item nav-header__item--image">
+                        <a href="/" title="{% trans 'Home' %}"><img src="{% static "img/logo-ircam.png" %}" width="118" height="80" /></a>
+                    </li>
             {% endif %}
-            {% if page.in_menu %}
-            <li class="menu__item{% if page.has_children_in_menu %}header{% endif %}{% if page.is_current_or_ascendant %} active{% endif %}" id="{{ page.html_id }}">
-                <a href="{{ page.get_absolute_url }}" class="menu__item__link" {% if page.has_children_in_menu %} data-toggle="header"{% endif %}>{{ page.title }}{% if page.has_children_in_menu %}<b class="caret"></b>{% endif %}</a>
-                {% if page.has_children_in_menu %}{% page_menu page %}{% endif %}
+        {% endif %}
+        {% if page.in_menu %}
+            <li class="nav-header__item {% if page.is_current_or_ascendant %}active{% endif %}">
+                <a class="nav-header__item-link" href="{{ page.get_absolute_url }}" title="{{ page.title }}">{{ page.title }}</a>
             </li>
+        {% endif %}
+        {% if page.is_primary %}
+            {% if forloop.last %}
+                <li class="nav-header__item nav-header__item--special">
+                    <a href="{% url 'event_list' %}"><span class="fss ffss">rendez-vous</span><br /><span class="fsxxxl ffss">15.16</span></a>
+                </li>
+                <li class="nav-header__item nav-header__item--image">
+                    <a href="http://manifeste.ircam.fr" target="_blank" title="{% trans 'Manifest' %}"><img src="{% static "img/logo-manifest.png" %}" width="83" height="65" /></a>
+                </li>
+                <li class="nav-header__item nav-header__item--special nav-header__item--centered">
+                    <a href="" class="fsxl"><i class="fa fa-search" aria-hidden="true"></i></a>
+                </li>
+            </ul>
             {% endif %}
-            {% endfor %}
-        </ul>
-        {% else %}
-        <ul class="header-menu">
-            {% for page in page_branch %}
-            {% if page.in_menu %}
-            <li class="{% if page.has_children_in_menu %}header-submenu{% endif %}{% if page.is_current_or_ascendant %} active{% endif %}"id="{{ page.html_id }}">
-                <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
-                {% if page.has_children_in_menu %}{% page_menu page %}{% endif %}
-            </li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-    {% endif %}
+        {% endif %}
+    {% endfor %}
 {% endif %}
 {% endspaceless %}

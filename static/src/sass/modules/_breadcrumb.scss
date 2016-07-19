@@ -6,6 +6,9 @@ $module: ".breadcrumb";
     margin: 0;
     padding: 0;
 
+    background: white;
+    @include padding(0 1);
+
     @include clearfix;
     @include font-size(xs);
     @include line-height(1);

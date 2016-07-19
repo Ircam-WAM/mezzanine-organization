@@ -32,12 +32,25 @@
 
     {% compress css %}
     <link rel="stylesheet" href="{% static "css/index.min.css" %}">
+    <link rel="stylesheet" href="{% static "font-awesome/css/font-awesome.css" %}">
     {% endcompress %}
 
     {% block extra_head %}{% endblock %}
 </head>
 
 <body id="{% block body_id %}body{% endblock %}">
+
+    {% nevercache %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="notification" id="js-notificationContainer">
+                    <button type="button" class="btn btn-small js-notificationClose">X</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endnevercache %}
+
     <div class="banner" role="banner">
         <div class="header">
             <div class="container">
@@ -50,60 +63,53 @@
                             {% nevercache %}
                             {% include "includes/language_selector.html" %}
                             {% endnevercache %}
-                            <ul class="lang-switcher">
+                            <ul class="lang-switcher" id="langSelector">
                                 {% for language in languages %}
-                                    <li class="nav__complementary__item__lang {% if language.code == LANGUAGE_CODE %}active{% endif %}">
-                                        <a href="#" onclick="$('#language_selector_select').val('{{ language.code }}'); $('#language_selector_form').submit();">
-                                          {{ language.code|title }}
-                                        </a>
-                                    </li>
+                                    {% if language.code == LANGUAGE_CODE %}
+                                        <li class="lang-switcher__item active">
+                                            <a href="#">
+                                              {{ language.code|title }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for language in languages %}
+                                    {% if language.code != LANGUAGE_CODE %}
+                                        <li class="lang-switcher__item">
+                                            <a href="#" data-lang="{{ language.code }}">
+                                              {{ language.code|title }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                         {% endif %}
                     </div>
                 </div>
-
-                {% if settings.SITE_TITLE %}
-                <h1>
-                    <div class="header__logo">
-                        <a href="http://www.ircam.fr" title="Url site ircam">
-                            <img class="header__logo__img" src="{% static "img/logo_ircam_black.png" %}" alt="Logo Manifeste 2016 ircam" width="200">
-                        </a>
+                <div class="row header__nav">
+                    <div class="col-md-10 col-md-push-1 tac">
+                        {% page_menu "pages/menus/header.html" %}
                     </div>
-                </h1>
+                </div>
+                {% if not on_home %}
+                    <div class="row">
+                        <div class="col-md-8 col-md-push-2">
+                            <ul class="breadcrumb">
+                                {% spaceless %}
+                                {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
+                                {% endspaceless %}
+                            </ul>
+                        </div>
+                    </div>
                 {% endif %}
-
             </div>
         </div>
 
-        <div class="navigation" role="navigation">
-            {% page_menu "pages/menus/header.html" %}
-        </div>
-        
     </div>
 
     {% if on_home %}
-     {% include "includes/slider.html" %}
+        {% include "includes/slider.html" %}
     {% endif %}
-
-    {% nevercache %}
-    {% if messages %}
-        {% for message in messages %}
-        <div class="notification" id="js-notificationContainer">
-            <button type="button" class="btn btn-small js-notificationClose">X</button>
-            {{ message }}
-        </div>
-        {% endfor %}
-    {% endif %}
-    {% endnevercache %}
-
-    {% comment %}
-    <ul class="breadcrumb">
-    {% spaceless %}
-    {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
-    {% endspaceless %}
-    </ul>
-    {% endcomment %}
 
     {% featured as featured_list %}
 
