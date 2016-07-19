@@ -65,3 +65,30 @@
         display: none;
     }
 }
+.ffss {
+    @include typeface(sans-serif);
+}
+.ffs {
+    @include typeface(serif);
+}
+.fsxxxl {
+    @include font-size(xxxl);
+}
+.fsxxl {
+    @include font-size(xxl);
+}
+.fsxl {
+    @include font-size(xl);
+}
+.fsl {
+    @include font-size(l);
+}
+.fsm {
+    @include font-size(m);
+}
+.fss {
+    @include font-size(s);
+}
+.fsxs {
+    @include font-size(xs);
+}
