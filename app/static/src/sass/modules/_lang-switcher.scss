@@ -10,6 +10,7 @@ $module: ".lang-switcher";
     position: absolute;
     top: 0;
     right: .25rem;
+    z-index: 2;
 
     &__item {
 
