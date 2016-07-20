@@ -1,0 +1,23 @@
+{
+  "name": "IrcamWWW",
+  "description": "IrcamWWW",
+  "main": "",
+  "authors": [
+    "Fabre Jérémy"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "fontawesome#^4.6.3",
+    "jquery": "^3.1.0",
+    "overflow.js": "*"
+  }
+}
