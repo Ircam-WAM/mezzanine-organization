@@ -9,47 +9,55 @@
 {% endblock %}
 
 {% block breadcrumb_menu %}
-<li>
+<li class="breadcrumb__item">
     <a href="{% url "home" %}">{% trans "Home" %}</a>
 </li>
-<li class="active">{% trans "Search Results" %}</li>
+<li class="breadcrumb__item active">{% trans "Search Results" %}</li>
 {% endblock %}
 
 {% block main %}
 
-<p>
-{% if results.paginator.count == 0 %}
-{% blocktrans %}
-No results were found in {{ search_type }} matching your query: {{ query }}
-{% endblocktrans %}
-{% else %}
-{% blocktrans with start=results.start_index end=results.end_index total=results.paginator.count %}
-Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} matching your query: {{ query }}
-{% endblocktrans %}
-{% endif %}
-</p>
-
-<div id="search-results">
-{% for result in results.object_list %}
-{% with result.get_absolute_url as result_url %}
-    <h5>
-        {{ forloop.counter0|add:results.start_index }})
-        {% if result_url %}
-            <a href="{{ result_url }}">{{ result }}</a>
-        {% else %}
-            {{ result }}
-        {% endif %}
-    </h5>
-    {% if result.description != result|stringformat:"s" %}
-        <p>{{ result.description|truncatewords_html:20|safe }}</p>
-    {% endif %}
-    {% if result_url %}
-        <a href="{{ result_url }}">{% trans "read more" %}</a>
-    {% endif %}
-{% endwith %}
-{% endfor %}
+<div class="row">
+    <div class="col-lg-8 col-md-push-2">
+        <h1 class="dotted">{% trans "Search Results" %}</h1>
+    </div>
 </div>
 
-{% pagination_for results %}
+<div class="row">
+    <div class="col-lg-8 col-lg-push-2">
+        <p>
+            {% if results.paginator.count == 0 %}
+            {% blocktrans %}
+            No results were found in {{ search_type }} matching your query: {{ query }}
+            {% endblocktrans %}
+            {% else %}
+            {% blocktrans with start=results.start_index end=results.end_index total=results.paginator.count %}
+            Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} matching your query: {{ query }}
+            {% endblocktrans %}
+            {% endif %}
+        </p>
+
+        {% for result in results.object_list %}
+        {% with result.get_absolute_url as result_url %}
+            <h5>
+                {{ forloop.counter0|add:results.start_index }})
+                {% if result_url %}
+                    <a href="{{ result_url }}">{{ result }}</a>
+                {% else %}
+                    {{ result }}
+                {% endif %}
+            </h5>
+            {% if result.description != result|stringformat:"s" %}
+                <p>{{ result.description|truncatewords_html:20|safe }}</p>
+            {% endif %}
+            {% if result_url %}
+                <a href="{{ result_url }}">{% trans "read more" %}</a>
+            {% endif %}
+        {% endwith %}
+        {% endfor %}
+
+        {% pagination_for results %}
+    </div>
+</div>
 
 {% endblock %}
