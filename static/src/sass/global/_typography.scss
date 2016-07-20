@@ -23,7 +23,7 @@ h1, h2, h3 {
 h1 {
     @include typeset(heading-1);
     @include typeface(sans-serif);
-    @include margin-bottom(1);
+    @include margin-bottom(3);
 	@include margin-top(1);
 }
 
@@ -104,7 +104,6 @@ figure {
 	@include font-size(l);
     @include line-height(1.25);
 	@include typeface(serif);
-	@include margin-top(5);
     @include margin-bottom(3);
 	font-weight: weight(heavy);
 }

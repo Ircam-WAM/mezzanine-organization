@@ -16,30 +16,37 @@
 {% endmetablock %}{% endblock %}
 
 {% block title %}
-  {% editable page.title %}
-    {{ page.title }}
-  {% endeditable %}
+    {% editable page.title %}
+        {{ page.title }}
+    {% endeditable %}
 
-  {% editable page.basicpage.sub_title %}
-    {{ page.basicpage.sub_title }}
-  {% endeditable %}
+    {% editable page.basicpage.sub_title %}
+        {{ page.basicpage.sub_title }}
+    {% endeditable %}
 {% endblock %}
 
 {% block main %}
 
-  {% editable page.basicpage.content %}
-    {{ page.basicpage.content|richtext_filters|safe }}
-  {% endeditable %}
+    <div class="row">
+        <div class="col-lg-8 col-md-push-2">
+            {% editable page.basicpage.title %}
+                <h1 class="dotted">{{ page.basicpage.title }}</h1>
+            {% endeditable %}
+        </div>
+    </div>
 
-  <br/>
-  <br/>
-  <br/>
-  <br/>
+    <div class="row">
+        <div class="col-lg-8 col-lg-push-2">
+            {% editable page.basicpage.content %}
+                {{ page.basicpage.content|richtext_filters|safe }}
+            {% endeditable %}
+        </div>
+    </div>
 
-  {{ page.basicpage.photo }}<br/>
-  {{ page.basicpage.photo_credits }}<br/>
-  {{ page.basicpage.photo_alignment }}<br/>
-  {{ page.basicpage.photo_description }}<br/>
-  {{ page.basicpage.photo_featured }}<br/>
-  {{ page.basicpage.photo_featured_credits }}<br/>
+    {{ page.basicpage.photo }}<br/>
+    {{ page.basicpage.photo_credits }}<br/>
+    {{ page.basicpage.photo_alignment }}<br/>
+    {{ page.basicpage.photo_description }}<br/>
+    {{ page.basicpage.photo_featured }}<br/>
+    {{ page.basicpage.photo_featured_credits }}<br/>
 {% endblock %}

@@ -1,7 +1,6 @@
-.section {
-    @include margin-top(4);
+.main {
+    @include margin(3 0 0 0);
+    @include padding(1 0 0 0);
 
-    &:first-child {
-        margin-top: 0;
-    }
+    background: white;
 }

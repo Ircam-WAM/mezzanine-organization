@@ -40,17 +40,6 @@
 
 <body id="{% block body_id %}body{% endblock %}">
 
-    {% nevercache %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="notification" id="js-notificationContainer">
-                    <button type="button" class="btn btn-small js-notificationClose">X</button>
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endnevercache %}
-
     <div class="banner" role="banner">
         <div class="header">
             <div class="container">
@@ -87,7 +76,7 @@
                     </div>
                 </div>
                 <div class="row header__nav">
-                    <div class="col-md-10 col-md-push-1 tac">
+                    <div class="col-md-12 tac">
                         {% page_menu "pages/menus/header.html" %}
                     </div>
                 </div>
@@ -111,45 +100,150 @@
         {% include "includes/slider.html" %}
     {% endif %}
 
-    {% featured as featured_list %}
-
-    <div class="site__content">
+    <main class="main" role="main">
         <div class="container">
-
-            <main class="main" role="main">
-                {% featured_breaking_news_content as bk_content %}
-                {% if on_home and bk_content %}
-                    <div class="bk__news">
-                        <div class="media bk__news__inner">
-                            <div class="media-img">
-                                <span class="bk__news__title">
-                                    {% trans "Breaking" %} <br> {% trans "news" %} !
-                                </span>
-                            </div>
-                            <div class="media-content bk__news__content">
-                                    {{ bk_content|safe }}
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-                {% block content_header %}
-                <div class="site__content__header">
-                    <h2 class="page__title">{% block title %}{% endblock %}</h2>
-                </div>
-                {% endblock %}
-                {% block main %}{% endblock %}
-            </main>
+            {% block content_header %}{% endblock %}
+            {% block main %}{% endblock %}
+            {% block content_footer %}{% endblock %}
         </div>
-    </div>
+    </main>
 
     <footer class="footer" role="footer">
-        <div class="container">
 
-            {% page_menu "pages/menus/footer.html" %}
+        <div class="footer__pre">
 
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-lg-6 col-lg-push-1">
+
+                        newsletter
+
+                    </div>
+
+                    <div class="col-lg-3 col-lg-push-1 tac">
+
+                        <a class="footer__follow-link facebook" href="https://www.facebook.com/iIRCAM/" target="_blank" title="{% trans 'Follow us on Facebook' %}"><i class="fa fa-facebook-square"></i></a>
+                        <a class="footer__follow-link twitter" href="https://twitter.com/ircam" target="_blank" title="{% trans 'Follow us on Twitter' %}"><i class="fa fa-twitter-square"></i></a>
+                        <a class="footer__follow-link instagram" href="https://www.instagram.com/ircam_paris/" target="_blank" title="{% trans 'Follow us on Instagram' %}"><i class="fa fa-instagram"></i></a>
+                        <a class="footer__follow-link youtube" href="https://www.youtube.com/user/Ircam75" target="_blank" title="{% trans 'Follow us on Youtube' %}"><i class="fa fa-youtube-square"></i></a>
+                        <a class="footer__follow-link vimeo" href="https://vimeo.com/ircam" target="_blank" title="{% trans 'Follow us on Vimeo' %}"><i class="fa fa-vimeo-square"></i></a>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
+
+        <div class="footer__content">
+
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-lg-3 col-lg-push-1">
+
+                        <a href="{% url "home" %}" title="{% trans 'Home' %}"><img src="{% static "img/logo-ircam-white.png" %}" width="151" /></a>
+
+                    </div>
+
+                    <div class="col-lg-2 col-lg-push-1 tar">
+
+                        <strong>IRCAM</strong><br />
+                        <br />
+                        1 Place Igor-Stravinsky<br />
+                        75004 Paris<br />
+                        t. +33 1 44 78 48 43
+
+                    </div>
+
+                    <div class="col-lg-2 col-lg-push-1 tar">
+
+                        <strong>{% trans 'Opening times' %}</strong><br />
+                        <br />
+                        du lundi au vendredi<br />
+                         09:30–19:00<br />
+                        fermé le samedi et dimanche
+
+                    </div>
+
+                    <div class="col-lg-2 col-lg-push-1 tar">
+
+                        <strong>{% trans 'Subway access' %}</strong><br />
+                        <br />
+                        Hôtel de Ville, Rambuteau,<br />
+                        Châtelet, Les Halles
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-10 col-lg-push-1">
+
+                        <div class="footer__separator"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-3 col-lg-push-1">
+
+                        {% page_menu "pages/menus/footer.html" %}
+
+                    </div>
+
+                    <div class="col-lg-5 col-lg-push-1">
+
+                        <strong>Institut de Recherche et Coordination Acoustique/Musique</strong> {% trans 'under the tutelage of' %} :<br />
+                        <br />
+                        <a href="http://www.culturecommunication.gouv.fr/" target="_blank" title="Ministère de la Culture et de la Communication"><img width="120" height="66" src="{% static "img/partners/logo-ministere-culture.png" %}" /></a>
+                        <a href="http://www.cnrs.fr/" target="_blank" title="Centre National de la Recherche Scientifique"><img width="120" height="66" src="{% static "img/partners/logo-cnrs.png" %}" /></a>
+                        <a href="http://www.upmc.fr/" target="_blank" title="Université Pierre et Marie Curie"><img width="120" height="66" src="{% static "img/partners/logo-upmc.png" %}" /></a>
+                        <a href="http://www.inria.fr/" target="_blank" title="Inria"><img width="120" height="66" src="{% static "img/partners/logo-inria.png" %}" /></a>
+
+                    </div>
+
+                    <div class="col-lg-2 col-lg-push-1">
+
+                        {% trans 'go to' %} :
+                        <ul class="unstyled-list">
+                            <li>
+                                <a class="footer__link" href="https://www.centrepompidou.fr/" target="_blank" title="Centre Pompidou">Centre Pompidou</a>
+                            </li>
+                            <li>
+                                <a class="footer__link" href="http://www.bpi.fr/home.html" target="_blank" title="Bibliothèque Public d’Information">Bibliothèque Public d’Information</a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-10 col-lg-push-1">
+
+                        <div class="footer__separator footer__seprator--small"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </footer>
+
+    {% include "includes/search_form.html" %}
+
     {% include "includes/footer_scripts.html" %}
 
 </body>
@@ -159,7 +253,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-3416995-12', 'auto');
+  ga('create', 'UA-XXXXXX-XX', 'auto');
   ga('send', 'pageview');
 
 </script>
