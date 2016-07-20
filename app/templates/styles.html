@@ -6,5 +6,16 @@
 {% block title %}{% trans "Styles" %}{% endblock %}
 
 {% block main %}
-{% include "includes/html_styleguide.html" %}
+
+<div class="row">
+    <div class="col-lg-8 col-md-push-2">
+        <h1 class="dotted">{% trans "Styles" %}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-8 col-md-push-2">
+        {% include "includes/html_styleguide.html" %}
+    </div>
+</div>
+
 {% endblock %}
