@@ -2,6 +2,12 @@ $module: ".footer";
 
 #{$module} {
 
+    @include mq($until: xs) {
+        div[class^="col-"] {
+            @include margin(.5 0);
+        }
+    }
+
     &__pre {
 
         background: $color-black;
@@ -9,6 +15,11 @@ $module: ".footer";
         color: white;
 
         @include padding(1 0);
+
+        @include mq($until: xs) {
+            @include padding(0);
+            border: 0;
+        }
 
     }
 
@@ -23,6 +34,11 @@ $module: ".footer";
         font-weight: weight(light);
 
         color: white;
+
+        @include mq($until: xs) {
+            @include padding(0);
+            background: $color-black;
+        }
 
     }
 
@@ -71,10 +87,21 @@ $module: ".footer";
 
         @include margin(1 0);
 
+        @include mq($until: xs) {
+            @include margin(0);
+        }
+
         &--small {
             height: 1px;
         }
 
+    }
+
+    &__partner {
+        @include mq($until: xs) {
+            width: 48%;
+            height: auto;
+        }
     }
 
 }
