@@ -1,7 +1,8 @@
 {% load mezzanine_tags i18n staticfiles %}
 
 {% compress js %}
-    <script src="{{ STATIC_URL }}jquery/dist/jquery.min.js"></script>
+    <script src="{% static "vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "vendors/overflow.js/js/overflow.js" %}"></script>
     <script src="{% static "js/index.min.js" %}"></script>
 {% block extra_js %}{% endblock %}
 {% editable_loader %}
