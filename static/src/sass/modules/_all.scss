@@ -3,14 +3,20 @@
 @import "navs/nav-header";
 @import "navs/nav-footer";
 
+// Page modules
 @import 'breadcrumb';
-@import 'search';
+@import 'pagination';
+
+// Specific modules
 @import 'lang-switcher';
+@import 'search';
+@import 'pattern';
+@import 'article-box';
+@import 'tag';
+
+// Typography modules
 @import 'dashed';
 @import 'dotted';
-@import 'tag';
 @import 'blockquote';
 @import 'well';
-@import 'pattern';
 @import 'flash';
-@import 'article-box';
