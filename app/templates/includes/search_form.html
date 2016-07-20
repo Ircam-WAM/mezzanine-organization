@@ -1,24 +1,21 @@
 {% load mezzanine_tags i18n %}
-<form action="{% url "search" %}" role="search">
-    <div class="sticked-form">
-        <input class="form-control" placeholder="{% trans "Search" %}" type="text" name="q" value="{{ request.REQUEST.q }}">
-        {% if search_model_choices %}
-            {% if search_model_choices|length == 1 %}
-            <input type="hidden" name="type" value="{{ search_model_choices.0.1 }}">
-            {% else %}
-            <div class="select  search__form__select">
-                <select class="select" name="type">
-                    <option value="">{% trans "Everything" %}</option>
-                    {% for verbose_name, model in search_model_choices %}
-                    <option value="{{ model }}"
-                        {% if model == request.REQUEST.type  %}selected{% endif %}>
-                        {{ verbose_name }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
-            {% endif %}
-        {% endif %}
-        <input type="submit" class="btn" value="{% trans "Go" %}">
+<div class="search" id="search" data-open-button-target="search" data-close-button-target="search" data-close-escape>
+    <div class="search__close">
+        <a href="#" data-close-button="search" aria-hidden="true"><i class="fa fa-close"></i></a>
     </div>
-</form>
+    <div class="search__container">
+        <div class="search__content">
+            <div class="container">
+                <div class="col-md-10 col-md-push-1">
+                    <form action="{% url "search" %}" role="search">
+                        <input class="form-control" placeholder="{% trans "Type something" %}" type="text" name="q" value="{{ request.GET.q }}">
+                        <button type="submit">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
