@@ -1,0 +1,17 @@
+$module: ".nav-footer";
+
+#{$module} {
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+
+    &__item-link {
+        @include font-size(m);
+        @include typeface(sans-serif);
+        font-weight: weight(regular);
+        color: white;
+    }
+
+}
