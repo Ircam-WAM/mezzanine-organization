@@ -64,6 +64,7 @@ class Organization(Named, Address, Photo):
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
     url = models.URLField(_('URL'), max_length=512, blank=True)
+    is_on_map = models.BooleanField(_('is on map'), default=True)
 
     def __unicode__(self):
         return self.name
