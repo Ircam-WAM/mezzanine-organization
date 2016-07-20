@@ -25,7 +25,9 @@
 	padding-left: $grid-gutter / 2;
 	padding-right: $grid-gutter / 2;
     min-height: 1px;
-    float: left;
+    /*float: left;*/
+	display: inline-block;
+	vertical-align: top;
 
 }
 

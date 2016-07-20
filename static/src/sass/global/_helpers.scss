@@ -31,14 +31,35 @@
 .bg {
     background-color: $color-main;
 }
+.tal {
+    text-align: left;
+}
+@each $size, $width in $breakpoints {
+    .tal-#{$size} {
+        @include mq($from: $size) {
+            text-align: left;
+        }
+    }
+}
 .tac {
     text-align: center;
+}
+@each $size, $width in $breakpoints {
+    .tac-#{$size} {
+        @include mq($from: $size) {
+            text-align: center;
+        }
+    }
 }
 .tar {
     text-align: right;
 }
-.tal {
-    text-align: left;
+@each $size, $width in $breakpoints {
+    .tar-#{$size} {
+        @include mq($from: $size) {
+            text-align: right;
+        }
+    }
 }
 .hide-xxs {
     @include mq($until: xs) {

@@ -7,19 +7,19 @@
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor quis nulla, molestias temporibus dignissimos quisquam facilis, sint reiciendis maiores ut. Voluptate sequi asperiores laborum, harum similique iusto pariatur at totam?
+                    {{ page.subtitle }}
                 </p>
             </div>
         </div>
         <div class="row">
             {% for page in page_branch %}
                 {% if page.in_menu %}
-                    <ul class="unstyled-list col-sm-3">
+                    <ul class="unstyled-list col-sm-6 col-md-3">
                         <li class="nav-header__item-sub nav-header__item-sub--first{% if page.is_current_or_ascendant %} active{% endif %}">
                             <a class="" href="{{ page.get_absolute_url }}" title="{{ page.title }}">{{ page.title }}</a>
 
                 {% endif %}
-                {% if page.has_children_in_menu and not forloop.first %}
+                {% if page.has_children_in_menu %}
                     {% page_menu page "pages/menus/header_tree_secondary.html" %}
                 {% endif %}
                         </li>
