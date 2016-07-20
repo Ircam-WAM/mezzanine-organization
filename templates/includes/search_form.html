@@ -6,15 +6,16 @@
     <div class="search__container">
         <div class="search__content">
             <div class="container">
-                <div class="col-md-10 col-md-push-1">
-                    <form action="{% url "search" %}" role="search">
-                        <input class="form-control" placeholder="{% trans "Type something" %}" type="text" name="q" value="{{ request.GET.q }}">
-                        <button type="submit">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
-                    </form>
+                <div class="row">
+                    <div class="col-md-10">
+                        <form action="{% url "search" %}" role="search">
+                            <input class="form-control" placeholder="{% trans "Type something" %}" type="text" name="q" value="{{ request.GET.q }}">
+                            <button type="submit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
