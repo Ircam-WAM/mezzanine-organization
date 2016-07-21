@@ -12,7 +12,7 @@ class Named(models.Model):
 
     name = models.CharField(_('name'), max_length=512)
     description = models.TextField(_('description'), blank=True)
-
+    
     class Meta:
         abstract = True
 

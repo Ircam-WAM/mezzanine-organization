@@ -67,20 +67,21 @@ Gulp require nodejs installed on your computer to work.
 
 1. Install gulp globally:
 
-  If you have previously installed a version of gulp globally, please run `npm rm --global gulp`
-  to make sure your old version doesn't collide with gulp-cli::
+    sudo npm install --global gulp
 
-    npm install --global gulp
+2. Install bower globally:
 
-2. Install gulp dependancies::
+    sudo npm install -g bower
+
+3. Install gulp dependancies::
 
     npm install
 
-3. Install bower components::
+4. Install bower components::
 
     bower install
 
-4. Run gulp::
+5. Run gulp::
 
     gulp [task]
 
