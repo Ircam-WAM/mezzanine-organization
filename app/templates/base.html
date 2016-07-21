@@ -42,39 +42,43 @@
     {% spaceless %}
     <div class="banner" role="banner">
         <div class="header">
-            <div class="container">
-                <div class="row header__pre">
-                    <div class="col-md-10 col-md-push-1 tac">
-                        {% page_menu "pages/menus/action.html" %}
-                    </div>
-                    <div class="col-md-1 col-md-push-1 tar">
-                        {% if settings.USE_MODELTRANSLATION and languages|length > 1 %}
-                            {% nevercache %}
-                            {% include "includes/language_selector.html" %}
-                            {% endnevercache %}
-                            <ul class="lang-switcher" id="langSelector">
-                                {% for language in languages %}
-                                    {% if language.code == LANGUAGE_CODE %}
-                                        <li class="lang-switcher__item active">
-                                            <a href="#">
-                                              {{ language.code|title }}
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                                {% for language in languages %}
-                                    {% if language.code != LANGUAGE_CODE %}
-                                        <li class="lang-switcher__item">
-                                            <a href="#" data-lang="{{ language.code }}">
-                                              {{ language.code|title }}
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
+            <div class="header__pre">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 col-md-push-1 tac">
+                            {% page_menu "pages/menus/action.html" %}
+                        </div>
+                        <div class="col-md-1 col-md-push-1 tar">
+                            {% if settings.USE_MODELTRANSLATION and languages|length > 1 %}
+                                {% nevercache %}
+                                {% include "includes/language_selector.html" %}
+                                {% endnevercache %}
+                                <ul class="lang-switcher" id="langSelector">
+                                    {% for language in languages %}
+                                        {% if language.code == LANGUAGE_CODE %}
+                                            <li class="lang-switcher__item active">
+                                                <a href="#">
+                                                  {{ language.code|title }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for language in languages %}
+                                        {% if language.code != LANGUAGE_CODE %}
+                                            <li class="lang-switcher__item">
+                                                <a href="#" data-lang="{{ language.code }}">
+                                                  {{ language.code|title }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="container">
                 <div class="row header__nav">
                     <div class="col-md-12 tac">
                         {% page_menu "pages/menus/header.html" %}
