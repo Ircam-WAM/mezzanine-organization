@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n mezzanine_tags keyword_tags featured_tags %}
+{% load i18n mezzanine_tags keyword_tags featured_tags pages_tags %}
 
 {% block meta_title %}{{ page.meta_title }}{% endblock %}
 
@@ -28,7 +28,7 @@
 {% block main %}
 
     <div class="row">
-        <div class="col-lg-8 col-md-push-2">
+        <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
             {% editable page.basicpage.title %}
                 <h1 class="dotted">{{ page.basicpage.title }}</h1>
             {% endeditable %}
@@ -36,17 +36,14 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-8 col-lg-push-2">
+        <div class="col-sm-3 col-lg-2">
+            {% page_menu "pages/menus/current_tree.html" %}
+        </div>
+        <div class="col-sm-9 col-lg-8">
             {% editable page.basicpage.content %}
                 {{ page.basicpage.content|richtext_filters|safe }}
             {% endeditable %}
         </div>
     </div>
 
-    {{ page.basicpage.photo }}<br/>
-    {{ page.basicpage.photo_credits }}<br/>
-    {{ page.basicpage.photo_alignment }}<br/>
-    {{ page.basicpage.photo_description }}<br/>
-    {{ page.basicpage.photo_featured }}<br/>
-    {{ page.basicpage.photo_featured_credits }}<br/>
 {% endblock %}
