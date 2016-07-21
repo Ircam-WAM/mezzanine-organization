@@ -5,18 +5,27 @@ from django.core.urlresolvers import reverse, reverse_lazy
 
 from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
+from mezzanine.core.models import Displayable, Slugged
 
 
-class Named(models.Model):
-    """Named object with description"""
+class Description(models.Model):
+    """Base object description"""
 
-    name = models.CharField(_('name'), max_length=512)
     description = models.TextField(_('description'), blank=True)
-    
+
     class Meta:
         abstract = True
 
-    def __unicode__(self):
+
+class Named(Description):
+    """Named object with description"""
+
+    name = models.CharField(_('name'), max_length=512)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
         return self.name
 
     @property
@@ -24,17 +33,11 @@ class Named(models.Model):
         return slugify(self.__unicode__())
 
 
-class Titled(models.Model):
-    """Base object with title and description"""
-
-    title = models.CharField(_('title'), max_length=512)
-    description = models.TextField(_('description'), blank=True)
+class Titled(Slugged, Description):
+    """Base object with title, slug and description"""
 
     class Meta:
         abstract = True
-
-    def __unicode__(self):
-        return self.title
 
 
 class SubTitle(models.Model):
