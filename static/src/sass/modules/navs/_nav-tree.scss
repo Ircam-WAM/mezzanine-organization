@@ -6,6 +6,14 @@ $module: ".nav-tree";
     margin: 0;
     list-style-type: none;
 
+    &--level-0 {
+
+        @include mq($until: xs) {
+            @include margin-bottom(3);
+        }
+
+    }
+
     &__item {
 
         margin-top: 2px;
