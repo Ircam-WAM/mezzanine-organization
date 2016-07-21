@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n mezzanine_tags keyword_tags featured_tags %}
+{% load i18n mezzanine_tags keyword_tags featured_tags pages_tags %}
 
 {% block meta_title %}{{ page.meta_title }}{% endblock %}
 
@@ -36,7 +36,10 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-8 col-lg-push-2">
+        <div class="col-lg-2">
+            {% page_menu "pages/menus/current_tree.html" %}
+        </div>
+        <div class="col-lg-8">
             {% editable page.basicpage.content %}
                 {{ page.basicpage.content|richtext_filters|safe }}
             {% endeditable %}
