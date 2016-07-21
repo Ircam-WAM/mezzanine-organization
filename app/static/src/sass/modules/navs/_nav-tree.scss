@@ -1,0 +1,40 @@
+$module: ".nav-tree";
+
+#{$module} {
+
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+
+    &__item {
+
+        margin-top: 2px;
+
+    }
+
+    &__link {
+
+        display: block;
+        color: white;
+        background: $color-black-light;
+        padding: 4px 20px;
+
+        @include font-size(xs);
+        @include typeface(sans-serif);
+
+        &.active {
+            background: $color-main;
+            color: $color-black-light;
+            padding: 8px 20px;
+            @include font-size(s);
+        }
+
+        &--sub {
+            @include padding-left(2);
+            background: rgba($color_main, 0.6);
+            color: $color-black-light;
+        }
+
+    }
+
+}
