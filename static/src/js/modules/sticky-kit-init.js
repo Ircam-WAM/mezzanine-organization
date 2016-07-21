@@ -38,7 +38,7 @@ StickyKitInit.prototype.init = function() {
 
     });
 
-    $(window).resize(that.windowResize.bind(that));
+    $(window).resize( $.throttle(1000, that.windowResize.bind(that)) );
 
 };
 
