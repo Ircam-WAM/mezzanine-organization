@@ -20,7 +20,7 @@ from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 
 from organization.media.models import Photo
-from organization.core.models import Named
+from organization.core.models import Named, Titled
 
 from django_countries.fields import CountryField
 from .nationalities.fields import NationalityField
@@ -52,22 +52,19 @@ class Address(models.Model):
     postal_code = models.CharField(_('postal code'), max_length=16, blank=True)
     country = CountryField(_('country'))
 
-    def __unicode__(self):
-        return u"Address"
+    def __str__(self):
+        return ' '.join((self.address, self.postal_code, self.country))
 
         class Meta:
             abstract = True
 
 
-class Organization(Named, Address, Photo):
+class Organization(Titled, Address, Photo):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
     url = models.URLField(_('URL'), max_length=512, blank=True)
     is_on_map = models.BooleanField(_('is on map'), default=True)
-
-    def __unicode__(self):
-        return self.name
 
     class Meta:
         verbose_name = _('organization')
@@ -80,21 +77,18 @@ class OrganizationType(Named):
         verbose_name = _('organization type')
 
 
-class Department(Named):
+class Department(Titled):
     """(Department description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'))
     url = models.URLField(_('URL'), max_length=512, blank=True)
     weaving_css_class = models.CharField(_('weaving CSS class'), max_length=64, blank=True)
 
-    def __unicode__(self):
-        return self.name
-
     class Meta:
         verbose_name = _('department')
 
 
-class Team(Named):
+class Team(Titled):
     """(Team description)"""
 
     department = models.ForeignKey('Department', verbose_name=_('department'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -103,9 +97,6 @@ class Team(Named):
 
     class Meta:
         verbose_name = _('team')
-
-    def __unicode__(self):
-        return self.name
 
 
 class Person(AdminThumbMixin, Photo):

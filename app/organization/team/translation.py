@@ -12,13 +12,13 @@ class OrganizationTranslationOptions(TranslationOptions):
 @register(Department)
 class DepartmentTranslationOptions(TranslationOptions):
 
-    fields = ('name', 'description',)
+    fields = ('title', 'description',)
 
 
 @register(Team)
 class TeamTranslationOptions(TranslationOptions):
 
-    fields = ('name', 'description',)
+    fields = ('title', 'description',)
 
 
 @register(Person)
