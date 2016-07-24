@@ -53,7 +53,7 @@ class Address(models.Model):
     country = CountryField(_('country'))
 
     def __str__(self):
-        return ' '.join((self.address, self.postal_code, self.country))
+        return ' '.join((self.address, self.postal_code))
 
         class Meta:
             abstract = True
