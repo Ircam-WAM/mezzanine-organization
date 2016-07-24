@@ -8,8 +8,11 @@ from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.core.models import Displayable, Slugged
 
 
+COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')))
+
+
 class Description(models.Model):
-    """Base object description"""
+    """Abstract model providing a description field"""
 
     description = models.TextField(_('description'), blank=True)
 
@@ -17,8 +20,8 @@ class Description(models.Model):
         abstract = True
 
 
-class Named(Description):
-    """Named object with description"""
+class Named(models.Model):
+    """Abstract model providing a name field"""
 
     name = models.CharField(_('name'), max_length=512)
 
@@ -33,11 +36,16 @@ class Named(Description):
         return slugify(self.__unicode__())
 
 
-class Titled(Slugged, Description):
-    """Base object with title, slug and description"""
+class Titled(models.Model):
+    """Abstract model providing a title field"""
+
+    title = models.CharField(_('name'), max_length=1024)
 
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return self.title
 
 
 class SubTitle(models.Model):
@@ -48,7 +56,25 @@ class SubTitle(models.Model):
         abstract = True
 
 
-class BasicPage(Page, RichText, SubTitle):
+class Category(Named):
+    """Category description)"""
+
+    class Meta:
+        verbose_name = _('category')
+
+    def __str__(self):
+        return self.name
+
+
+class BasicPage(Page, SubTitle, RichText):
 
     class Meta:
         verbose_name = 'basic page'
+
+
+class PageBlock(Titled, RichText):
+
+    background_color = models.CharField(_('background color'), max_length=32, choices=COLOR_CHOICES, blank=True)
+
+    class Meta:
+        verbose_name = 'page block'
