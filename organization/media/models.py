@@ -119,7 +119,7 @@ class VideoCategory(Slugged):
         return self.videos.published().count()+1
 
 
-class Playlist(Titled):
+class Playlist(Slugged, Description):
     """(Playlist description)"""
 
     audios = models.ManyToManyField('Audio', verbose_name=_('audios'), related_name='playlists', blank=True)

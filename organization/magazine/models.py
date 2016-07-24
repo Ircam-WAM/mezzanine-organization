@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.blog.models import BlogPost
-from organization.core.models import Named
+from organization.core.models import Named, Description
 
 
 class Article(BlogPost):
@@ -31,21 +31,8 @@ class Brief(Displayable, RichText):
         verbose_name = _('brief')
 
 
-class Category(Named):
-    """(Category description)"""
-
-    class Meta:
-        verbose_name = _('category')
-
-    def __unicode__(self):
-        return self.name
-
-
-class Topic(Named):
-    """(Topic description)"""
+class Topic(Named, Description):
+    """Topic for magazine menu"""
 
     class Meta:
         verbose_name = _('topic')
-
-    def __unicode__(self):
-        return self.name
