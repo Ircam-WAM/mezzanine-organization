@@ -11,11 +11,13 @@ class OrganizationTranslationOptions(TranslationOptions):
 
 @register(Department)
 class DepartmentTranslationOptions(TranslationOptions):
-    pass
+
+    fields = ('content',)
 
 @register(Team)
 class TeamTranslationOptions(TranslationOptions):
-    pass
+
+    fields = ('content',)
 
 @register(Person)
 class PersonTranslationOptions(TranslationOptions):

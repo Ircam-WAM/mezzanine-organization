@@ -2,22 +2,13 @@ from django.contrib import admin
 from django import forms
 from copy import deepcopy
 from mezzanine.core.admin import *
+from mezzanine.pages.admin import PageAdmin
 from organization.team.models import *
 
 
 class OrganizationAdmin(BaseTranslationModelAdmin):
 
     model = Organization
-
-
-class DepartmentAdmin(BaseTranslationModelAdmin):
-
-    model = Department
-
-
-class TeamAdmin(BaseTranslationModelAdmin):
-
-    model = Team
 
 
 class ActivityAdmin(BaseTranslationModelAdmin):
@@ -52,7 +43,7 @@ class PersonAdmin(BaseTranslationModelAdmin):
 
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationType)
-admin.site.register(Department, DepartmentAdmin)
-admin.site.register(Team, TeamAdmin)
+admin.site.register(Department, PageAdmin)
+admin.site.register(Team, PageAdmin)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Activity, ActivityAdmin)
