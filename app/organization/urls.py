@@ -13,9 +13,9 @@ from mezzanine.conf import settings
 
 urlpatterns = [
     url("^", include('organization.core.urls')),
-    url("^festival/", include('organization.festival.urls')),
-    url("^magazine/", include('organization.magazine.urls')),
-    url("^media/", include('organization.media.urls')),
-    url("^project/", include('organization.project.urls')),
-    url("^team/", include('organization.team.urls')),
+    url("^", include('organization.festival.urls')),
+    url("^", include('organization.magazine.urls')),
+    url("^", include('organization.media.urls')),
+    url("^", include('organization.project.urls')),
+    url("^", include('organization.team.urls')),
 ]
