@@ -29,6 +29,14 @@
 
 {% block page_content %}
 
+    {% if page.basicpage.sub_title %}
+        {% editable page.basicpage.sub_title %}
+            <div class="chapo">
+                {{ page.basicpage.sub_title }}
+            </div>
+        {% endeditable %}
+    {% endif %}
+
     {% editable page.basicpage.content %}
         {{ page.basicpage.content|richtext_filters|safe }}
     {% endeditable %}
