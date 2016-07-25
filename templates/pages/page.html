@@ -46,6 +46,13 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-12">
+                {% block page_sub_content %}
+                    {{ page.content }}
+                {% endblock %}
+            </div>
+        </div>
 
     </div>
 {% endblock %}
