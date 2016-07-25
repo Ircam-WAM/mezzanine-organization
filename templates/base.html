@@ -105,11 +105,9 @@
     {% endif %}
 
     <main class="main" role="main">
-        <div class="container">
-            {% block content_header %}{% endblock %}
-            {% block main %}{% endblock %}
-            {% block content_footer %}{% endblock %}
-        </div>
+        {% block content_header %}{% endblock %}
+        {% block main %}{% endblock %}
+        {% block content_footer %}{% endblock %}
     </main>
 
     <footer class="footer" role="footer">

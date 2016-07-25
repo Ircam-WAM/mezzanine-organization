@@ -43,14 +43,11 @@
     Don't know why this doesn't work :(
     {% endcomment %}
     {% if related_posts %}
-        <hr />
         <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
         {% for post in related_posts %}
             {% include 'magazine/article/includes/article_card.html' %}
         {% endfor %}
     {% endif %}
-
-    <hr />
 
     <div class="tac">
         <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
