@@ -1,0 +1,33 @@
+{% load i18n pages_tags mezzanine_tags %}
+
+<div class="col-md-3 col-sm-4 col-xs-6">
+    <a class="article-box" href="{{ article.get_absolute_url }}">
+        <div class="article-box__header">
+            <figure class="article-box__image">
+                <img src="//placehold.it/710x475" data-src="//placehold.it/710x475" class="lazyload" />
+            </figure>
+            <div class="article-box__tags">
+                <div class="tag tag--small tag--category">
+                    {% trans 'Actualité' %}
+                </div>
+                <div class="tag tag--small dashed dashed--gray">
+                    transmission
+                </div>
+            </div>
+        </div>
+        <div class="article-box__content tal">
+            <h3 class="article-box__title">{{ article.title }}</h3>
+            <div class="article-box__subtitle">
+                {{ article.publish_date|date:"DATE_FORMAT" }}
+                {% if article.categories %}
+                    {% for category in article.categories.all %}
+                        | <strong>{{ category }}</strong>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="article-box__desc">
+                {{ article.content|richtext_filters|safe }}
+            </div>
+        </div>
+    </a>
+</div>
