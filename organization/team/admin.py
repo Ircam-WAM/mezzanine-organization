@@ -4,6 +4,7 @@ from copy import deepcopy
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from organization.team.models import *
+from organization.core.admin import PageBlockInline
 
 
 class OrganizationAdmin(BaseTranslationModelAdmin):
@@ -19,6 +20,11 @@ class ActivityAdmin(BaseTranslationModelAdmin):
 class ActivityInline(StackedDynamicInlineAdmin):
 
     model = Activity
+
+
+class TeamAdmin(PageAdmin):
+
+    inlines = [PageBlockInline,]
 
 
 class PersonAdminBase(admin.ModelAdmin):
@@ -40,10 +46,9 @@ class PersonAdmin(BaseTranslationModelAdmin):
         return res
 
 
-
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationType)
 admin.site.register(Department, PageAdmin)
-admin.site.register(Team, PageAdmin)
+admin.site.register(Team, TeamAdmin)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Activity, ActivityAdmin)

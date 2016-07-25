@@ -39,7 +39,7 @@ class Named(models.Model):
 class Titled(models.Model):
     """Abstract model providing a title field"""
 
-    title = models.CharField(_('name'), max_length=1024)
+    title = models.CharField(_('title'), max_length=1024)
 
     class Meta:
         abstract = True
@@ -74,6 +74,7 @@ class BasicPage(Page, SubTitle, RichText):
 
 class PageBlock(Titled, RichText):
 
+    page = models.ForeignKey(Page, verbose_name=_('page'), blank=True, null=True, on_delete=models.SET_NULL)
     background_color = models.CharField(_('background color'), max_length=32, choices=COLOR_CHOICES, blank=True)
 
     class Meta:
