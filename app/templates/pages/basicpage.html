@@ -15,17 +15,9 @@
 {{ page.description }}
 {% endmetablock %}{% endblock %}
 
-{% block title %}
-    {% editable page.title %}
-        {{ page.title }}
-    {% endeditable %}
-
-    {% editable page.basicpage.sub_title %}
-        {{ page.basicpage.sub_title }}
-    {% endeditable %}
+{% block page_class %}
+    basicpage
 {% endblock %}
-
-
 
 {% block page_title %}
 

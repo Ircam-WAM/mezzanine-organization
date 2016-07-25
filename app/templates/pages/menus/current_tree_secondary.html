@@ -33,10 +33,12 @@
         {% for page in page_branch %}
             <li class="nav-tree__item">
                 <a class="nav-tree__link{% if page.is_current or page.is_current_or_ascendant %} active{% endif %}" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+                {% if page.is_current_or_ascendant %}
+                    <ul class="nav-tree" data-summary>
+                        {% include "pages/menus/current_tree_summary.html" %}
+                    </ul>
+                {% endif %}
             </li>
-            {% if page.is_current_or_ascendant %}
-                {% include "pages/menus/current_tree_summary.html" %}
-            {% endif %}
         {% endfor %}
     {% endif %}
 {% endif %}
