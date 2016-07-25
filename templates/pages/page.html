@@ -55,8 +55,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <hr class="mt0" />
-                        {% block page_sub_content %}{% endblock %}
+                        {% block page_sub_content %}
+                            {% if page.get_ascendants|length == 0 %}
+                                <hr class="mt0" />
+                            {% endif %}
+                        {% endblock %}
                     </div>
                 </div>
             </div>

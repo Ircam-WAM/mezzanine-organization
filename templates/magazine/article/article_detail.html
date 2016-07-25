@@ -38,10 +38,12 @@
 {% endblock %}
 
 {% block page_sub_content %}
+    {{ block.super }}
 
     {% comment %}
     Don't know why this doesn't work :(
     {% endcomment %}
+    
     {% if related_posts %}
         <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
         {% for post in related_posts %}
