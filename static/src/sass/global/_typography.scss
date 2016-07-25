@@ -104,6 +104,6 @@ figure {
 	@include font-size(l);
     @include line-height(1.25);
 	@include typeface(serif);
-    @include margin-bottom(3);
+    @include margin-bottom(2);
 	font-weight: weight(heavy);
 }
