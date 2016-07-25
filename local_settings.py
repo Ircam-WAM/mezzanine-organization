@@ -80,6 +80,11 @@ ADMIN_MENU_ORDER = (
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
 )
 
+# ADMIN_REMOVAL = [
+#     'mezzanine.blog.models.BlogPost',
+#     'generic.ThreadedComment',
+# ]
+
 GRAPPELLI_ADMIN_TITLE = 'IRCAM Admin'
 
 SEARCH_MODEL_CHOICES = ()
