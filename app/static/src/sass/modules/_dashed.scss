@@ -32,4 +32,13 @@ $module: ".dashed";
 
     }
 
+    &--center {
+
+        @include padding(0 .5);
+        &:before {
+            display: none;
+        }
+
+    }
+
 }
