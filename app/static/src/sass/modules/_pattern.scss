@@ -1,6 +1,29 @@
 $module: ".pattern";
 
-#{$module} {
+#{$module}-bg {
+
+    background-repeat: repeat;
+    background-position: top left;
+
+    &--circles {
+        background-image: url(../img/patterns/circles.png);
+    }
+
+    &--squares {
+        background-image: url(../img/patterns/squares.png);
+    }
+
+    &--stripes {
+        background-image: url(../img/patterns/stripes.png);
+    }
+
+    &--triangles {
+        background-image: url(../img/patterns/triangles.png);
+    }
+
+}
+
+#{$module}-over {
 
     position: relative;
 
@@ -17,27 +40,27 @@ $module: ".pattern";
         opacity: 0.2;
     }
 
-    &--creation {
+    &--circles {
         &:after {
-            background-image: url(../img/patterns/creation.png);
+            background-image: url(../img/patterns/circles.png);
         }
     }
 
-    &--innovation {
+    &--squares {
         &:after {
-            background-image: url(../img/patterns/innovation.png);
+            background-image: url(../img/patterns/squares.png);
         }
     }
 
-    &--recherche {
+    &--stripes {
         &:after {
-            background-image: url(../img/patterns/recherche.png);
+            background-image: url(../img/patterns/stripes.png);
         }
     }
 
-    &--transmission {
+    &--triangles {
         &:after {
-            background-image: url(../img/patterns/transmission.png);
+            background-image: url(../img/patterns/triangles.png);
         }
     }
 

@@ -1,3 +1,15 @@
+.m0 {
+    @include margin(0);
+}
+.mt0 {
+    @include margin-top(0);
+}
+.mb0 {
+    @include margin-bottom(0);
+}
+.mr0 {
+    @include margin-right(0);
+}
 .m1 {
     @include margin(1);
 }
@@ -120,4 +132,7 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+.white-bg {
+    background: white;
 }
