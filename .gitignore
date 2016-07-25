@@ -19,6 +19,7 @@ data/mysql
 data/postgresql
 .thumbnails
 .tmp
+doc
 
 # Installer logs
 pip-log.txt
