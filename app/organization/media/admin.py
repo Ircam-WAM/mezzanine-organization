@@ -29,7 +29,7 @@ class AudioAdminDisplayable(DisplayableAdmin):
 class PlaylistAdmin(admin.ModelAdmin):
 
     model = Playlist
-    list_display = ('__unicode__',)
+    list_display = ('__str__',)
     filter_horizontal = ['audios']
 
 

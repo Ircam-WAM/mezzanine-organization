@@ -5,18 +5,30 @@ from django.core.urlresolvers import reverse, reverse_lazy
 
 from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
+from mezzanine.core.models import Displayable, Slugged
 
 
-class Named(models.Model):
-    """Named object with description"""
+COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')))
 
-    name = models.CharField(_('name'), max_length=512)
+
+class Description(models.Model):
+    """Abstract model providing a description field"""
+
     description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True
 
-    def __unicode__(self):
+
+class Named(models.Model):
+    """Abstract model providing a name field"""
+
+    name = models.CharField(_('name'), max_length=512)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
         return self.name
 
     @property
@@ -25,15 +37,14 @@ class Named(models.Model):
 
 
 class Titled(models.Model):
-    """Base object with title and description"""
+    """Abstract model providing a title field"""
 
-    title = models.CharField(_('title'), max_length=512)
-    description = models.TextField(_('description'), blank=True)
+    title = models.CharField(_('title'), max_length=1024)
 
     class Meta:
         abstract = True
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
@@ -45,7 +56,26 @@ class SubTitle(models.Model):
         abstract = True
 
 
-class BasicPage(Page, RichText, SubTitle):
+class Category(Named):
+    """Category description)"""
+
+    class Meta:
+        verbose_name = _('category')
+
+    def __str__(self):
+        return self.name
+
+
+class BasicPage(Page, SubTitle, RichText):
 
     class Meta:
         verbose_name = 'basic page'
+
+
+class PageBlock(Titled, RichText):
+
+    page = models.ForeignKey(Page, verbose_name=_('page'), blank=True, null=True, on_delete=models.SET_NULL)
+    background_color = models.CharField(_('background color'), max_length=32, choices=COLOR_CHOICES, blank=True)
+
+    class Meta:
+        verbose_name = 'page block'

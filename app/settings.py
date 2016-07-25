@@ -44,7 +44,8 @@ from django.utils.translation import ugettext_lazy as _
 PAGE_MENU_TEMPLATES = (
     (1, _("Action"), "pages/menus/action.html"),
     (2, _("Departement"), "pages/menus/header.html"),
-    (3, _("Footer"), "pages/menus/footer.html")
+    (3, _("Footer vertical"), "pages/menus/footer.html"),
+    (4, _("Footer horizontal"), "pages/menus/footer.html"),
 )
 
 # A sequence of fields that will be injected into Mezzanine's (or any

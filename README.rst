@@ -59,7 +59,7 @@ If the app is broken after a restore script, restart the composition with::
     docker-compose restart
 
 
-Installing gulp dependencies
+Installing dependencies
 ==================
 
 Gulp allow to compile scss to css, concatenate js files and has a watcher, who do this tasks on file change.
@@ -67,19 +67,21 @@ Gulp require nodejs installed on your computer to work.
 
 1. Install gulp globally:
 
-  If you have previously installed a version of gulp globally, please run `npm rm --global gulp`
-  to make sure your old version doesn't collide with gulp-cli::
+    sudo npm install --g gulp
 
-    npm install --global gulp
+2. Install bower globally:
 
-2. Install gulp dependencies::
+    sudo npm install -g bower
+
+3. Install gulp dependencies::
 
     npm install
 
-3. Install ruby dependencies::
+4. Install ruby dependencies::
 
     gem install bundler
     bundle install
+
 
 Compile static files
 ==================

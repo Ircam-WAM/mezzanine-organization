@@ -15,15 +15,16 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib.auth.models import User
 
+from mezzanine.pages.models import Page
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 
 from organization.media.models import Photo
-from organization.core.models import Named
+from organization.core.models import Named, Titled, Description, SubTitle
 
 from django_countries.fields import CountryField
-from .nationalities.fields import NationalityField
+# from .nationalities.fields import NationalityField
 
 
 # Hack to have these strings translated
@@ -41,8 +42,7 @@ TITLE_CHOICES = [
     ('Prof Dr', _('Prof Dr')),
 ]
 
-ALIGNMENT_CHOICES = (('left', _('left')), ('right', _('right')))
-
+ALIGNMENT_CHOICES = (('left', _('left')), ('left', _('left')), ('right', _('right')))
 
 
 class Address(models.Model):
@@ -52,22 +52,19 @@ class Address(models.Model):
     postal_code = models.CharField(_('postal code'), max_length=16, blank=True)
     country = CountryField(_('country'))
 
-    def __unicode__(self):
-        return u"Address"
+    def __str__(self):
+        return ' '.join((self.address, self.postal_code))
 
         class Meta:
             abstract = True
 
 
-class Organization(Named, Address, Photo):
+class Organization(Slugged, Description, Address, Photo):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
     url = models.URLField(_('URL'), max_length=512, blank=True)
     is_on_map = models.BooleanField(_('is on map'), default=True)
-
-    def __unicode__(self):
-        return self.name
 
     class Meta:
         verbose_name = _('organization')
@@ -80,39 +77,33 @@ class OrganizationType(Named):
         verbose_name = _('organization type')
 
 
-class Department(Named):
+class Department(Page, SubTitle, RichText):
     """(Department description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'))
     url = models.URLField(_('URL'), max_length=512, blank=True)
     weaving_css_class = models.CharField(_('weaving CSS class'), max_length=64, blank=True)
 
-    def __unicode__(self):
-        return self.name
-
     class Meta:
         verbose_name = _('department')
 
 
-class Team(Named):
+class Team(Page, SubTitle, RichText):
     """(Team description)"""
 
-    department = models.ForeignKey('Department', verbose_name=_('department'), blank=True, null=True, on_delete=models.SET_NULL)
+    # department = models.ForeignKey('Department', verbose_name=_('department'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
     partner_organizations = models.ManyToManyField(Organization, verbose_name=_('partner organizations'), blank=True)
     partner_teams = models.ManyToManyField('Team', verbose_name=_('partner teams'), blank=True)
 
     class Meta:
         verbose_name = _('team')
 
-    def __unicode__(self):
-        return self.name
 
-
-class Person(AdminThumbMixin, Photo):
+class Person(Displayable, AdminThumbMixin, Photo):
     """(Person description)"""
 
     user = models.ForeignKey(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
-    title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
+    person_title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
     gender = models.CharField(_('gender'), max_length=16, choices=GENDER_CHOICES, blank=True)
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
