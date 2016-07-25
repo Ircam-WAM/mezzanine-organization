@@ -11,5 +11,5 @@ from organization.team.views import *
 
 
 urlpatterns = [
-    
+    url(r'^(?P<department>.*)/teams/$', TeamListView.as_view(), name="organization-team-team-list"),
 ]
