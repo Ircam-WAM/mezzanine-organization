@@ -13,21 +13,26 @@ var Summary = function() {
 Summary.prototype.init = function() {
 
     var that = this,
-        $template;
+        $template, sectionCount = 0;
 
-    if(that.$summary.length == 1 && that.$content.length == 1) {
+    if(that.$summary.length == 1 && that.$content.length > 0) {
 
         $template = that.$summary.find('li:first-child');
-        that.$content.find('h2').each(function(idx) {
+        that.$content.each(function(idx) {
 
-            var $element = $(this),
-                $template_clone = $template.clone();
-            $template_clone.find('a').text($element.text());
-            $template_clone.find('a').attr('href', '#section-' + idx);
-            $template_clone.removeClass('hide');
-            that.$summary.append($template_clone);
+            $(this).find('h2').each(function(idx) {
 
-            $element.attr('id', "section-" + idx);
+                var $element = $(this),
+                    $template_clone = $template.clone();
+                $template_clone.find('a').text($element.text());
+                $template_clone.find('a').attr('href', '#section-' + sectionCount);
+                $template_clone.removeClass('hide');
+                that.$summary.append($template_clone);
+
+                $element.attr('id', "section-" + sectionCount);
+                sectionCount++;
+
+            });
 
         });
 
