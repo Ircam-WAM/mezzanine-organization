@@ -2,23 +2,44 @@ $module: ".pattern";
 
 #{$module}-bg {
 
-    background-repeat: repeat;
-    background-position: top left;
+    position: relative;
+
+    &:after {
+        content: "";
+        background-repeat: repeat;
+        background-position: top left;
+        opacity: 0.2;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;
+    }
+
 
     &--circles {
-        background-image: url(../img/patterns/circles.png);
+        &:after {
+            background-image: url(../img/patterns/circles.png);
+        }
     }
 
     &--squares {
-        background-image: url(../img/patterns/squares.png);
+        &:after {
+            background-image: url(../img/patterns/squares.png);
+        }
     }
 
     &--stripes {
-        background-image: url(../img/patterns/stripes.png);
+        &:after {
+            background-image: url(../img/patterns/stripes.png);
+        }
     }
 
     &--triangles {
-        background-image: url(../img/patterns/triangles.png);
+        &:after {
+            background-image: url(../img/patterns/triangles.png);
+        }
     }
 
 }

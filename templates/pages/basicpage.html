@@ -46,3 +46,29 @@
     {% endcomment %}
 
 {% endblock %}
+
+{% block main %}
+    {{ block.super }}
+
+    {% if page.basicpage.pageblock_set.all %}
+        <div class="white-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% block page_sub_content %}
+                            <hr class="mt0" />
+                            {% for pageblock in page.basicpage.pageblock_set.all %}
+                                <div class="row" data-summary-content>
+                                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
+                                        <h2 class="dotted">{{ pageblock.title }}</h2>
+                                        {{ pageblock.content|richtext_filters|safe }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

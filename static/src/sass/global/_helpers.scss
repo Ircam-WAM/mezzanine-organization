@@ -25,6 +25,18 @@
 .ml1 {
     @include margin-left(1);
 }
+.mt2 {
+    @include margin-top(2);
+}
+.mb2 {
+    @include margin-bottom(2);
+}
+.mr2 {
+    @include margin-right(2);
+}
+.ml2 {
+    @include margin-left(2);
+}
 .p1 {
     @include padding(1);
 }

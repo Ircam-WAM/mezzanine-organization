@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "pages/basicpage.html" %}
 {% load i18n mezzanine_tags keyword_tags featured_tags pages_tags %}
 
 {% block meta_title %}{{ page.meta_title }}{% endblock %}
@@ -15,41 +15,64 @@
 {{ page.description }}
 {% endmetablock %}{% endblock %}
 
-{% block title %}
-    {% editable page.title %}
-        {{ page.title }}
+{% block page_class %}
+    department
+{% endblock %}
+
+{% block body_class %}
+    pattern pattern-bg pattern-bg--circles
+{% endblock %}
+
+{% block page_title %}
+
+    {% editable page.department.title %}
+        <h1 class="dashed">{{ page.department.title }}</h1>
     {% endeditable %}
 
-    {% editable page.department.sub_title %}
-        {{ page.department.sub_title }}
+{% endblock %}
+
+{% block page_content %}
+
+    {% if page.department.sub_title %}
+        {% editable page.department.sub_title %}
+            <div class="chapo">
+                {{ page.department.sub_title }}
+            </div>
+        {% endeditable %}
+    {% endif %}
+
+    {% editable page.department.content %}
+        {{ page.department.content|richtext_filters|safe }}
     {% endeditable %}
+
+    {% comment %}
+        Add the slider here
+    {% endcomment %}
+
 {% endblock %}
 
 {% block main %}
+    {{ block.super }}
 
-    <div class="row">
-        <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
-            {% editable page.department.title %}
-                <h1 class="dotted">{{ page.department.title }}</h1>
-            {% endeditable %}
+    {% if page.department.pageblock_set.all %}
+        <div class="white-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% block page_sub_content %}
+                            <hr class="mt0" />
+                            {% for pageblock in page.department.pageblock_set.all %}
+                                <div class="row">
+                                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
+                                        <h2 class="dotted">{{ pageblock.title }}</h2>
+                                        {{ pageblock.content|richtext_filters|safe }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-3 col-lg-2">
-            {% page_menu "pages/menus/current_tree_summary.html" %}
-        </div>
-        <div class="col-sm-9 col-lg-8">
-            {% editable page.department.content %}
-                {{ page.department.content|richtext_filters|safe }}
-            {% endeditable %}
-        </div>
-    </div>
-
-    {% for pageblock in page.department.pageblock_set.all %}
-     <div class="row">
-         {{ pageblock.content|richtext_filters|safe }}
-    </div>
-    {% endfor %}
-
+    {% endif %}
 {% endblock %}
