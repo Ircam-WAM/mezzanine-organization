@@ -4,6 +4,10 @@
 @import "navs/nav-footer";
 @import "navs/nav-tree";
 
+// Boxes
+@import 'boxes/article-box';
+@import 'boxes/page-box';
+
 // Page modules
 @import 'breadcrumb';
 @import 'pagination';
@@ -12,7 +16,6 @@
 @import 'lang-switcher';
 @import 'search';
 @import 'pattern';
-@import 'article-box';
 @import 'tag';
 
 // Typography modules
