@@ -6,11 +6,28 @@ $module: ".nav-footer";
     margin: 0;
     padding: 0;
 
+    &--horizontal {
+
+        #{$module}__item {
+
+            display: inline-block;
+            @include margin-right(2);
+
+        }
+
+        #{$module}__item-link {
+
+            @include font-size(s);
+
+        }
+
+    }
+
     &__item-link {
         @include font-size(m);
         @include typeface(sans-serif);
         font-weight: weight(regular);
         color: white;
     }
-    
+
 }
