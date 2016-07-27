@@ -72,8 +72,8 @@
                             <hr class="mt0" />
                             {% for pageblock in page.basicpage.pageblock_set.all %}
                                 <div class="row" data-summary-content>
-                                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg" data-summary-content>
-                                        {% if not forloop.first %}
+                                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
+                                        {% if not forloop.first and pageblock.with_separator %}
                                             <hr />
                                         {% endif %}
                                         <h2 class="dotted">{{ pageblock.title }}</h2>
