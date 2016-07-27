@@ -10,4 +10,9 @@ class PageBlockInline(StackedDynamicInlineAdmin):
     model = PageBlock
 
 
+class PageImageInline(TabularDynamicInlineAdmin):
+
+    model = PageImage
+
+
 admin.site.register(BasicPage, PageAdmin)

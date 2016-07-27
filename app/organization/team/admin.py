@@ -4,7 +4,7 @@ from copy import deepcopy
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from organization.team.models import *
-from organization.core.admin import PageBlockInline
+from organization.core.admin import PageBlockInline, PageImageInline
 
 
 class OrganizationAdmin(BaseTranslationModelAdmin):
@@ -17,17 +17,14 @@ class ActivityAdmin(BaseTranslationModelAdmin):
     model = Activity
 
 
-class ActivityInline(StackedDynamicInlineAdmin):
+class ActivityInline(TabularDynamicInlineAdmin):
 
     model = Activity
 
 
 class TeamAdmin(PageAdmin):
 
-    inlines = [PageBlockInline,]
-
-    def in_menu(self):
-        return True
+    inlines = [PageBlockInline, PageImageInline]
 
 
 class PersonAdminBase(admin.ModelAdmin):
