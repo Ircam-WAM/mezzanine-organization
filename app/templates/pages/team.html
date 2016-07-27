@@ -1,5 +1,5 @@
 {% extends "pages/basicpage.html" %}
-{% load i18n mezzanine_tags keyword_tags featured_tags pages_tags %}
+{% load i18n mezzanine_tags keyword_tags featured_tags pages_tags organization_tags %}
 
 {% block meta_title %}{{ page.meta_title }}{% endblock %}
 
@@ -57,7 +57,9 @@
                 <div class="row">
                     {% for children in childrens %}
                         <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
-                            <a href="{{ children.get_absolute_url }}" title="{{ children.title }}">{{ children.title }}</a>
+                            {% with children as object %}
+                                {% include "pages/includes/page_card.html" %}
+                            {% endwith %}
                         </div>
                     {% endfor %}
                 </div>
