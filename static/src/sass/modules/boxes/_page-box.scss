@@ -8,6 +8,12 @@ $module: ".page-box";
 
     @include margin-bottom(1);
 
+    &:first-of-type {
+
+        @include margin-top(3);
+
+    }
+
     &__image {
 
         @include fluid-aspect(9 4, "img");
@@ -59,7 +65,6 @@ $module: ".page-box";
         font-weight: weight(bold);
 
         @include font-size(m);
-        @include margin(0 0 1 0);
 
     }
 
