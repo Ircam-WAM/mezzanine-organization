@@ -26,6 +26,10 @@ class TeamAdmin(PageAdmin):
 
     inlines = [PageBlockInline, PageImageInline]
 
+class DepartmentAdmin(PageAdmin):
+
+    inlines = [PageBlockInline, PageImageInline]
+
 
 class PersonAdminBase(admin.ModelAdmin):
 
@@ -48,7 +52,7 @@ class PersonAdmin(BaseTranslationModelAdmin):
 
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationType)
-admin.site.register(Department, PageAdmin)
+admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Team, TeamAdmin)
 # admin.site.register(Team)
 admin.site.register(Person, PersonAdmin)

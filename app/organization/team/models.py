@@ -78,7 +78,7 @@ class OrganizationType(Named):
         verbose_name = _('organization type')
 
 
-class Department(Page, SubTitle, RichText):
+class Department(Page, SubTitle, RichText, Photo):
     """(Department description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'))
@@ -89,7 +89,7 @@ class Department(Page, SubTitle, RichText):
         verbose_name = _('department')
 
 
-class Team(Page, SubTitle, RichText):
+class Team(Page, SubTitle, RichText, Photo):
     """(Team description)"""
 
     # department = models.ForeignKey('Department', verbose_name=_('department'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)

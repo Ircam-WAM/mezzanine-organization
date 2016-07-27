@@ -83,6 +83,9 @@ Gulp require nodejs installed on your computer to work.
     bundle install
 
 
+/!\ If you have an issue with ffi module, try to install dev package from ruby:
+apt-get install ruby-dev
+
 Compile static files
 ==================
 

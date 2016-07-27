@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.core.models import Displayable, Slugged, Orderable
-
+from organization.media.models import Photo
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')))
 
@@ -55,7 +55,6 @@ class SubTitle(models.Model):
     class Meta:
         abstract = True
 
-
 class Category(Named):
     """Category description)"""
 
@@ -66,7 +65,7 @@ class Category(Named):
         return self.name
 
 
-class BasicPage(Page, SubTitle, RichText):
+class BasicPage(Page, SubTitle, Photo, RichText):
 
     class Meta:
         verbose_name = 'basic page'
@@ -75,6 +74,7 @@ class BasicPage(Page, SubTitle, RichText):
 class PageBlock(Titled, RichText):
 
     page = models.ForeignKey(Page, verbose_name=_('page'), blank=True, null=True, on_delete=models.SET_NULL)
+    with_separator = models.BooleanField(default=False)
     background_color = models.CharField(_('background color'), max_length=32, choices=COLOR_CHOICES, blank=True)
 
     class Meta:
