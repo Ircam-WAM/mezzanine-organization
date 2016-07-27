@@ -14,9 +14,6 @@
                 <a class="nav-footer__item-link" href="{{ page.get_absolute_url }}" title="{{ page.title }}">{{ page.title }}</a>
 
         {% endif %}
-        {% if page.has_children_in_menu and not forloop.first %}
-            {% page_menu page "pages/menus/header_tree.html" %}
-        {% endif %}
             </li>
         {% if page.is_primary %}
             {% if forloop.last %}
