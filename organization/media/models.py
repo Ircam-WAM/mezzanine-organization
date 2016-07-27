@@ -8,8 +8,7 @@ from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 
 from mezzanine_agenda.models import Event
-from organization.core.models import *
-
+from django.conf import settings
 
 ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
 MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
@@ -119,10 +118,11 @@ class VideoCategory(Slugged):
         return self.videos.published().count()+1
 
 
-class Playlist(Slugged, Description):
+class Playlist(Slugged):
     """(Playlist description)"""
 
     audios = models.ManyToManyField('Audio', verbose_name=_('audios'), related_name='playlists', blank=True)
+    #description = models.OneToOneField('organization-core.Description', verbose_name=_('description'), related_name='description', blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
