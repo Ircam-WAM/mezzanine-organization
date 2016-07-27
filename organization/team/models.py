@@ -19,6 +19,7 @@ from mezzanine.pages.models import Page
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
+from mezzanine.galleries.models import BaseGallery
 
 from organization.media.models import Photo
 from organization.core.models import Named, Titled, Description, SubTitle

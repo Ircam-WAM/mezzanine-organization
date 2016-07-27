@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 
 from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
-from mezzanine.core.models import Displayable, Slugged
+from mezzanine.core.models import Displayable, Slugged, Orderable
 
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')))
@@ -79,3 +79,28 @@ class PageBlock(Titled, RichText):
 
     class Meta:
         verbose_name = 'page block'
+
+
+class PageImage(Orderable):
+    """
+    An image for a page
+    """
+
+    file = FileField(_("Image"), max_length=1024, format="Image", upload_to="images/pages")
+    description = models.TextField(_('photo description'), blank=True)
+    credits = models.CharField(_('photo credits'), max_length=256, blank=True, null=True)
+    page = models.ForeignKey(Page)
+
+
+    class Meta:
+        verbose_name = _("Image")
+        verbose_name_plural = _("Images")
+        order_with_respect_to = "page"
+
+    def __str__(self):
+        value = self.description
+        if not value:
+            value = self.file.name
+        if not value:
+            value = ""
+        return value

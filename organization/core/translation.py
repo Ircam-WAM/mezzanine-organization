@@ -1,7 +1,7 @@
 from modeltranslation.translator import translator, register, TranslationOptions
 from mezzanine.pages.models import Page, RichText
 from mezzanine.pages.translation import TranslatedRichText
-from organization.core.models import BasicPage, PageBlock
+from organization.core.models import BasicPage, PageBlock, PageImage
 
 # @register(SubTitle)
 # class SubTitleTranslationOptions(TranslationOptions):
@@ -18,3 +18,9 @@ class BasicPageTranslationOptions(TranslationOptions):
 class PageBlockTranslationOptions(TranslationOptions):
 
     fields = ('title', 'content')
+
+
+@register(PageImage)
+class PageImageTranslationOptions(TranslationOptions):
+
+    fields = ('description',)
