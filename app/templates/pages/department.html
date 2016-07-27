@@ -48,11 +48,13 @@
     {% if page.get_ascendants|length == 1 %}
         {% children_pages page.id as childrens %}
         {% if childrens %}
-            {% for children in childrens %}
-                {% with children as object %}
-                    {% include "pages/includes/page_card.html" %}
-                {% endwith %}
-            {% endfor %}
+            <div class="page__childrens">
+                {% for children in childrens %}
+                    {% with children as object %}
+                        {% include "pages/includes/page_card.html" %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
         {% endif %}
     {% endif %}
 
