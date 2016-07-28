@@ -1,0 +1,22 @@
+{% load mezzanine_tags %}
+<a href="{{ object.get_absolute_url }}" title="{{ object.title }}" class="page-box">
+    <div class="page-box__image">
+        {% if object.basicpage.photo_card %}
+            <img src="{{ MEDIA_URL }}{% thumbnail object.basicpage.photo_card 900 400 %}" />
+        {% elif object.department.photo_card %}
+            <img src="{{ MEDIA_URL }}{% thumbnail object.department.photo_card 900 400 %}" />
+        {% elif object.team.photo_card %}
+            <img src="{{ MEDIA_URL }}{% thumbnail object.team.photo_card 900 400 %}" />
+        {% else %}
+            
+        {% endif %}
+    </div>
+    <div class="page-box__content">
+        <div>
+            <h2 class="page-box__title">{{ object.title }}</h2>
+            <div class="page-box__subtitle">
+                {{ object.basicpage.sub_title }}
+            </div>
+        </div>
+    </div>
+</a>
