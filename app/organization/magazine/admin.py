@@ -6,14 +6,12 @@ from organization.magazine.models import Article, Brief, Topic
 
 
 class ArticleAdmin(admin.ModelAdmin):
-
     model = Article
-
 
 class ArticleAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
-
+    exclude = ('related_posts',)
 
 class BriefAdmin(admin.ModelAdmin):
 
