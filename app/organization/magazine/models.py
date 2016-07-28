@@ -6,12 +6,14 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.blog.models import BlogPost
 from organization.core.models import Named, Description
+from organization.media.models import Photo
 
-
-class Article(BlogPost):
+class Article(BlogPost, Photo):
 
     sub_title = models.CharField(_('sub title'), blank=True, max_length=1000)
-
+    related_articles = models.ManyToManyField("self",
+                                 verbose_name=_("Related articles"), blank=True)
+    model_name = _('article')                                
     def get_absolute_url(self):
         return reverse("magazine-article-detail", kwargs={"slug": self.slug})
 
