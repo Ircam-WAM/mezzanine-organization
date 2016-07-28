@@ -17,6 +17,13 @@ def subtract(value, arg):
     return value - arg
 
 @register.as_tag
+def children_pages(page_id):
+    childrens = Page.objects.filter(parent_id=page_id)
+    if childrens:
+        return childrens
+    return None
+
+@register.as_tag
 def featured_edito(*args):
     qs = Page.objects.filter(slug="edito")
     if qs:

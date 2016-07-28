@@ -1,5 +1,5 @@
 {% extends "pages/basicpage.html" %}
-{% load i18n mezzanine_tags keyword_tags featured_tags pages_tags %}
+{% load i18n mezzanine_tags keyword_tags featured_tags pages_tags organization_tags %}
 
 {% block meta_title %}{{ page.meta_title }}{% endblock %}
 
@@ -41,6 +41,19 @@
         {{ page.team.content|richtext_filters|safe }}
     {% endeditable %}
 
+    {% if page.get_ascendants|length == 1 %}
+        {% children_pages page.id as childrens %}
+        {% if childrens %}
+            <div class="page__childrens">
+                {% for children in childrens %}
+                    {% with children as object %}
+                        {% include "pages/includes/page_card.html" %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+
     {% comment %}
         Add the slider here
     {% endcomment %}
@@ -50,6 +63,23 @@
 {% block main %}
     {{ block.super }}
 
+    {% if page.get_ascendants|length == 1 %}
+        {% children_pages page.id as childrens %}
+        {% if childrens %}
+            <div class="container">
+                <div class="row">
+                    {% for children in childrens %}
+                        <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
+                            {% with children as object %}
+                                {% include "pages/includes/page_card.html" %}
+                            {% endwith %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
     {% if page.team.pageblock_set.all %}
         <div class="white-bg">
             <div class="container">
@@ -58,8 +88,11 @@
                         {% block page_sub_content %}
                             <hr class="mt0" />
                             {% for pageblock in page.team.pageblock_set.all %}
-                                <div class="row">
+                                <div class="row" data-summary-content>
                                     <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
+                                        {% if not forloop.first and pageblock.with_separator %}
+                                            <hr />
+                                        {% endif %}
                                         <h2 class="dotted">{{ pageblock.title }}</h2>
                                         {{ pageblock.content|richtext_filters|safe }}
                                     </div>
