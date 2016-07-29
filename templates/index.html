@@ -11,10 +11,24 @@
 
 {% block main %}
 
+<ul>
+  <li><a href="#" title="{% trans "News Headlines" %}">{% trans "News Headlines" %}</a></li>
+  <li><a href="#" title="{% trans "Magazine" %}">{% trans "Magazine" %}</a></li>
+  <li><a href="#" title="{% trans "Brief" %}">{% trans "Brief" %}</a></li>
+  <li><a href="#" title="{% trans "Media" %}">{% trans "Media" %}</a></li>
+</ul>
+{% if topics %}
+<div>
+  {% for topic in topics %}
+  {% include "magazine/topic/inc_list_topic.html" %}
+  {% endfor %}
+</div>
+{% endif %}
+
 <div class="last__media">
-    <h2 class="section__title">{% trans "Featured" %}</h2>
     <div class="msry__container">
         <div class="msry__sizer"></div>
+        {% featured as featured_list %}
         {% for item in featured_list %}
         <div class="last__media__entry  msry__item">
             {% if item|get_class == 'Brief' %}
@@ -23,7 +37,7 @@
                 {% endwith %}
             {% elif item|get_class == 'Article' %}
                 {% with item as article %}
-                    {% include "magazine/article/includes/post_card.html" %}
+                    {% include "magazine/article/includes/article_card.html" %}
                 {% endwith %}
             {% elif item|get_class == 'Video' %}
                 {% with item as video %}

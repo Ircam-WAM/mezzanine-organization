@@ -13,7 +13,7 @@ class Article(BlogPost, Photo):
     sub_title = models.CharField(_('sub title'), blank=True, max_length=1000)
     related_articles = models.ManyToManyField("self",
                                  verbose_name=_("Related articles"), blank=True)
-    model_name = _('article')                                
+    model_name = _('article')
     def get_absolute_url(self):
         return reverse("magazine-article-detail", kwargs={"slug": self.slug})
 
@@ -33,8 +33,10 @@ class Brief(Displayable, RichText):
         verbose_name = _('brief')
 
 
-class Topic(Named, Description):
+class Topic(Displayable):
     """Topic for magazine menu"""
+
+    articles = models.ManyToManyField(Article, verbose_name=_('articles'), blank=True)
 
     class Meta:
         verbose_name = _('topic')
