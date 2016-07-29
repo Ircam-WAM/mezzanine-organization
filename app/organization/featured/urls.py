@@ -6,8 +6,8 @@ from django.conf.urls.i18n import i18n_patterns
 
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
-
+from organization.featured.views import HomeView
 
 urlpatterns = [
-
+    url("^$", HomeView.as_view(), name="home"),
 ]

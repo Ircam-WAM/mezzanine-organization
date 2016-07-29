@@ -13,6 +13,7 @@ from mezzanine.conf import settings
 
 urlpatterns = [
     url("^", include('organization.core.urls')),
+    url("^", include('organization.featured.urls')),
     url("^", include('organization.festival.urls')),
     url("^", include('organization.magazine.urls')),
     url("^", include('organization.media.urls')),
