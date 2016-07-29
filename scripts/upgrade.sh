@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Use this script to update a dev/prod server
+
+git pull origin dev
+docker-compose run app python /srv/app/manage.py migrate  --noinput
+bower install
+gulp build
+docker-compose run app python /srv/app/manage.py collectstatic --noinput
