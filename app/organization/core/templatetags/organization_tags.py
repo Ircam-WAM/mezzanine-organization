@@ -84,3 +84,8 @@ def unique_posts(events):
 @register.filter
 def no_parents(events):
     return events.filter(parent=None)
+
+@register.filter
+def get_mezzanine_menu_name(menu_id):
+    return settings.PAGE_MENU_TEMPLATES[int(menu_id)-1][1]
+    #return getattr(settings, 'PAGE_MENU_TEMPLATES', menu_id)
