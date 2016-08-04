@@ -71,15 +71,4 @@ class Migration(migrations.Migration):
                 'verbose_name': 'category',
             },
         ),
-        migrations.CreateModel(
-            name='Topic',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=512, verbose_name='name')),
-                ('description', models.TextField(blank=True, verbose_name='description')),
-            ],
-            options={
-                'verbose_name': 'topic',
-            },
-        ),
     ]

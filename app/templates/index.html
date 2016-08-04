@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n featured_tags %}
+{% load i18n featured_tags pages_tags mezzanine_tags %}
 
 {% block meta_title %}{% trans "Home" %}{% endblock %}
 
@@ -10,6 +10,7 @@
 {% block content_header %}{% endblock %}
 
 {% block main %}
+{% page_menu "pages/menus/magazine.html" %}
 
 <ul>
   <li><a href="#" title="{% trans "News Headlines" %}">{% trans "News Headlines" %}</a></li>
@@ -17,13 +18,6 @@
   <li><a href="#" title="{% trans "Brief" %}">{% trans "Brief" %}</a></li>
   <li><a href="#" title="{% trans "Media" %}">{% trans "Media" %}</a></li>
 </ul>
-{% if topics %}
-<div>
-  {% for topic in topics %}
-  {% include "magazine/topic/inc_list_topic.html" %}
-  {% endfor %}
-</div>
-{% endif %}
 
 <div class="last__media">
     <div class="msry__container">
