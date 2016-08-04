@@ -29,7 +29,7 @@ sh $app/scripts/wait.sh
 # django setup
 python $manage wait-for-db
 python $manage migrate --noinput
-python $manage bower_install -- --allow-root
+# python $manage bower_install -- --allow-root
 python $manage collectstatic --noinput
 python $manage create-admin-user
 
@@ -39,8 +39,8 @@ then
     python $manage runserver 0.0.0.0:8000
 else
     # static files auto update
-    watchmedo shell-command --patterns="$patterns" --recursive \
-        --command='python '$manage' collectstatic --noinput' $app &
+    # watchmedo shell-command --patterns="$patterns" --recursive \
+    #     --command='python '$manage' collectstatic --noinput' $app &
 
     uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \
     --processes $processes --threads $threads \

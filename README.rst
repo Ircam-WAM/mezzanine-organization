@@ -79,7 +79,7 @@ Gulp require nodejs installed on your computer to work.
 
 4. Install ruby dependencies::
 
-    gem install bundler
+    sudo gem install bundler
     bundle install
 
 
