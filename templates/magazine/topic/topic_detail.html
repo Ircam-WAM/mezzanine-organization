@@ -1,64 +1,72 @@
 {% extends "base.html" %}
 {% load i18n mezzanine_tags blog_tags keyword_tags disqus_tags %}
 
-{% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans "Articles" %}{% endif %}{% endblock %}
+{% block meta_title %}
+    {{ topic.title }} | {% trans "Magazine" %}
+{% endblock %}
 
 {% block meta_keywords %}{% metablock %}
-{% keywords_for page as keywords %}
-{% for keyword in keywords %}
-    {% if not forloop.first %}, {% endif %}
-    {{ keyword }}
-{% endfor %}
+    {% keywords_for topic as keywords %}
+    {% for keyword in keywords %}
+        {% if not forloop.first %}, {% endif %}
+        {{ keyword }}
+    {% endfor %}
 {% endmetablock %}{% endblock %}
 
 {% block meta_description %}{% metablock %}
-{{ page.description }}
+    {{ topic.description }}
 {% endmetablock %}{% endblock %}
 
 {% block title %}
-{% if page %}
-{% editable page.title %}{{ page.title }}{% endeditable %}
-{% else %}
-{% trans "Articles" %}
-{% endif %}
+    {% if page %}
+        {% editable page.title %}{{ page.title }}{% endeditable %}
+    {% else %}
+        {% trans "Articles" %}
+    {% endif %}
 {% endblock %}
 
 {% block breadcrumb_menu %}
-{{ block.super }}
-{% if tag or category or year or month or author %}
-<li>{% spaceless %}
-{% if tag %}
-    {% trans "Tag:" %} {{ tag }}
-{% else %}{% if category %}
-    {% trans "Category:" %} {{ category }}
-{% else %}{% if year or month %}
-    {% if month %}{{ month }}, {% endif %}{{ year }}
-{% else %}{% if author %}
-    {% trans "Author:" %} {{ author.get_full_name|default:author.username }}
-{% endif %}{% endif %}{% endif %}{% endif %}
-{% endspaceless %}
-</li>
-{% endif %}
+    {{ block.super }}
+    <li class="breadcrumb__item">{% trans "Magazine" %}</li>
+    <li class="breadcrumb__item active">{{ topic.title }}</li>
 {% endblock %}
 
 {% block main %}
-<div class="msry__container">
-  <div class="msry__sizer"></div>
+    <div class="mb2 page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
+        <div class="container">
 
-  <h1>{{ topic.title }}</h1>
-  <p>{{ topic.description }}</p>
+            <div class="row">
+                <div class="col-sm-9 col-lg-8 col-lg-push-2 white-bg">
+                    {% editable topic.title %}
+                        <h1 class="dotted">{{ topic.title }}</h1>
+                    {% endeditable %}
+                </div>
+            </div>
 
-  {% for article in topic.articles.all %}
-     {% include 'magazine/article/includes/article_card.html' %}
-  {% endfor %}
-</div>
+            <div class="row">
+                <div class="col-sm-9 col-lg-8 col-lg-push-2 white-bg page__content">
+                    {% if topic.description %}
+                        {% editable topic.description %}
+                            <div class="chapo">
+                                {{ topic.description }}
+                            </div>
+                        {% endeditable %}
+                    {% endif %}
+                </div>
+            </div>
 
-{% if settings.COMMENTS_DISQUS_SHORTNAME %}
-{% include "generic/includes/disqus_counts.html" %}
-{% endif %}
+        </div>
 
-{% endblock %}
+    </div>
 
-{% block right_panel %}
-{% include "blog/includes/filter_panel.html" %}
+    <div class="container">
+        <div class="row">
+            {% for article in topic.articles.all %}
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                    {% include 'magazine/article/includes/article_card.html' %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}
