@@ -8,7 +8,9 @@
         {% elif object.team.photo_card %}
             <img src="{{ MEDIA_URL }}{% thumbnail object.team.photo_card 900 400 %}" />
         {% else %}
-            
+            {% comment %}
+                Placeholder ?
+            {% endcomment %}
         {% endif %}
     </div>
     <div class="page-box__content">
