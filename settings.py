@@ -221,6 +221,7 @@ INSTALLED_APPS = [
     'djangobower',
     "meta",
     "mezzanine_agenda",
+    "orderable",
     "organization.core",
     "organization.team",
     "organization.festival",

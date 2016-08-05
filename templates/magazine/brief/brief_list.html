@@ -1,0 +1,5 @@
+{% for brief in briefs %}
+  <h2>{{ brief.title }}</h2>
+  <p>{{ brief.description|truncatechars:100 }}</p>
+  <a href="{{ brief.local_content }}" title="brief.title">{{ brief.text_button }}</a>
+{% endfor %}
