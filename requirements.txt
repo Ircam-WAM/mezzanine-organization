@@ -12,3 +12,4 @@ django-bower
 django-debug-toolbar
 django-extensions
 django-countries
+django-orderable

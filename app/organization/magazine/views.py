@@ -5,7 +5,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.base import *
 from django.shortcuts import get_object_or_404
 
-from organization.magazine.models import Article, Brief, Topic
+from organization.magazine.models import Article, Topic ,Brief
 from organization.core.views import SlugMixin
 from django.template.defaultfilters import slugify
 
@@ -40,6 +40,16 @@ class BriefDetailView(SlugMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(BriefDetailView, self).get_context_data(**kwargs)
+        return context
+
+class BriefListView(SlugMixin, ListView):
+
+    model = Brief
+    template_name='magazine/brief/brief_list.html'
+    context_object_name = 'brief'
+
+    def get_context_data(self, **kwargs):
+        context = super(BriefListView, self).get_context_data(**kwargs)
         return context
 
 
