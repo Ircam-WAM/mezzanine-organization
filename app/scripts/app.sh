@@ -30,7 +30,6 @@ sh $app/scripts/wait.sh
 python $manage wait-for-db
 python $manage migrate --noinput
 # python $manage bower_install -- --allow-root
-python $manage collectstatic --noinput
 python $manage create-admin-user
 
 # app start
@@ -42,6 +41,8 @@ else
     # watchmedo shell-command --patterns="$patterns" --recursive \
     #     --command='python '$manage' collectstatic --noinput' $app &
 
+    python $manage collectstatic --noinput
+    
     uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \
     --processes $processes --threads $threads \
     --uid $uid --gid $gid \
