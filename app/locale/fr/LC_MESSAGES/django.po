@@ -119,7 +119,7 @@ msgstr "artiste"
 
 #: organization/magazine/models.py:19
 msgid "article"
-msgstr "articles"
+msgstr "article"
 
 #: organization/magazine/models.py:31
 msgid "brief"
@@ -452,7 +452,7 @@ msgstr ""
 #: templates/generic/includes/comments.html:3
 #: templates/magazine/article/article_detail.html:38
 msgid "Comments"
-msgstr ""
+msgstr "Commentaires"
 
 #: templates/agenda/event_detail.html:48
 #: templates/blog/blog_post_detail.html:42
@@ -498,16 +498,16 @@ msgstr "Programme"
 #: templates/agenda/event_list.html:31 templates/blog/blog_post_list.html:31
 #: templates/magazine/article/article_list.html:31
 msgid "Tag:"
-msgstr "Mot clé:"
+msgstr "Mot clé :"
 
 #: templates/agenda/event_list.html:33
 msgid "Location:"
-msgstr "Lieu:"
+msgstr "Lieu :"
 
 #: templates/agenda/event_list.html:37 templates/blog/blog_post_list.html:37
 #: templates/magazine/article/article_list.html:37
 msgid "Author:"
-msgstr "Auteur:"
+msgstr "Auteur :"
 
 #: templates/agenda/event_list.html:93
 msgid "All"
@@ -547,14 +547,14 @@ msgstr "Événements récents"
 #: templates/agenda/includes/filter_panel.html:38
 #: templates/blog/includes/filter_panel.html:27
 msgid "Archive"
-msgstr ""
+msgstr "Archive"
 
 #: templates/agenda/includes/filter_panel.html:74
 #: templates/blog/blog_post_detail.html:72
 #: templates/blog/includes/filter_panel.html:56
 #: templates/magazine/article/article_detail.html:71
 msgid "Tags"
-msgstr ""
+msgstr "Mots clés"
 
 #: templates/base.html:147
 msgid "Breaking"
@@ -578,11 +578,11 @@ msgstr "Articles"
 #: templates/blog/blog_post_list.html:33
 #: templates/magazine/article/article_list.html:33
 msgid "Category:"
-msgstr "Catégorie:"
+msgstr "Catégorie :"
 
 #: templates/blog/includes/filter_panel.html:6
 msgid "Recent Posts"
-msgstr ""
+msgstr "Articles récents"
 
 #: templates/blog/includes/filter_panel.html:43
 msgid "Categories"
@@ -590,11 +590,11 @@ msgstr "Catégories"
 
 #: templates/blog/includes/filter_panel.html:72
 msgid "Authors"
-msgstr ""
+msgstr "Auteurs"
 
 #: templates/blog/includes/filter_panel.html:84
 msgid "Feeds"
-msgstr ""
+msgstr "Fils"
 
 #: templates/blog/includes/filter_panel.html:86
 #: templates/blog/includes/filter_panel.html:90
@@ -618,7 +618,7 @@ msgstr ""
 #: templates/email/account_approve.html:5
 #: templates/email/account_approve.txt:5
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: templates/email/account_approve.html:6
 #: templates/email/account_approve.txt:6
@@ -808,7 +808,7 @@ msgstr "Rechercher"
 
 #: templates/includes/search_form.html:11
 msgid "Everything"
-msgstr ""
+msgstr "Tout"
 
 #: templates/includes/search_form.html:22
 msgid "Go"
@@ -855,7 +855,7 @@ msgstr "Soumettre"
 
 #: templates/pages/menus/admin.html:31
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: templates/pages/richtextpage.html:17
 msgid "Related events"
@@ -868,7 +868,7 @@ msgstr "Articles associés"
 #: templates/search_results.html:5 templates/search_results.html:6
 #: templates/search_results.html:15
 msgid "Search Results"
-msgstr ""
+msgstr "Resultats de recherche"
 
 #: templates/search_results.html:22
 #, python-format

@@ -16,5 +16,8 @@ class Project(Displayable, RichText):
     partner_teams = models.ManyToManyField(Team, verbose_name=_('partner teams'), related_name='project_partners', blank=True)
     partner_organizations = models.ManyToManyField(Organization, verbose_name=_('partner organizations'), blank=True)
 
+    class Meta:
+        verbose_name = _('project')
+
     def __unicode__(self):
         return self.title
