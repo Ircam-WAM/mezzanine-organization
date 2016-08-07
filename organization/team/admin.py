@@ -17,14 +17,16 @@ class ActivityAdmin(BaseTranslationModelAdmin):
     model = Activity
 
 
-class ActivityInline(TabularDynamicInlineAdmin):
+class ActivityInline(StackedDynamicInlineAdmin):
 
     model = Activity
+    filter_horizontal = ['teams', ]
 
 
 class TeamAdmin(PageAdmin):
 
     inlines = [PageBlockInline, PageImageInline]
+
 
 class DepartmentAdmin(PageAdmin):
 
@@ -56,4 +58,4 @@ admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Team, TeamAdmin)
 # admin.site.register(Team)
 admin.site.register(Person, PersonAdmin)
-admin.site.register(Activity, ActivityAdmin)
+# admin.site.register(Activity, ActivityAdmin)

@@ -20,6 +20,7 @@ patterns='*.js;*.css;*.jpg;*.jpeg;*.gif;*.png;*.svg;*.ttf;*.eot;*.woff;*.woff2'
 # Staging
 # pip install psycopg2
 # pip install -U https://forge.ircam.fr/p/django-eve/source/download/dev/
+# pip install -U https://github.com/stephenmcd/grappelli-safe/archive/dynamic_stacked.zip
 
 chown -R $uid:$gid $media
 
@@ -42,7 +43,7 @@ else
     #     --command='python '$manage' collectstatic --noinput' $app &
 
     python $manage collectstatic --noinput
-    
+
     uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \
     --processes $processes --threads $threads \
     --uid $uid --gid $gid \
