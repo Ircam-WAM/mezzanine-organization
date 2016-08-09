@@ -26,7 +26,13 @@ class PersonTranslationOptions(TranslationOptions):
     fields = ('bio',)
 
 
-@register(Activity)
-class ActivityTranslationOptions(TranslationOptions):
+@register(PersonActivity)
+class PersonActivityTranslationOptions(TranslationOptions):
 
     fields = ('description', 'content')
+
+
+@register(PersonLink)
+class PersonTranslationOptions(TranslationOptions):
+
+    pass
