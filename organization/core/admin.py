@@ -14,8 +14,12 @@ class PageImageInline(TabularDynamicInlineAdmin):
 
     model = PageImage
 
+
 class BasicPageAdmin(PageAdmin):
 
     inlines = [PageBlockInline, PageImageInline]
 
+
+
 admin.site.register(BasicPage, BasicPageAdmin)
+admin.site.register(LinkType)

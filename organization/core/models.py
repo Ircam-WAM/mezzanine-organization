@@ -55,6 +55,7 @@ class SubTitle(models.Model):
     class Meta:
         abstract = True
 
+
 class Category(Named):
     """Category description)"""
 
@@ -71,31 +72,22 @@ class BasicPage(Page, SubTitle, Photo, RichText):
         verbose_name = 'basic page'
 
 
-class PageBlock(Titled, RichText):
+class Block(RichText, Titled):
 
-    page = models.ForeignKey(Page, verbose_name=_('page'), blank=True, null=True, on_delete=models.SET_NULL)
     with_separator = models.BooleanField(default=False)
     background_color = models.CharField(_('background color'), max_length=32, choices=COLOR_CHOICES, blank=True)
 
     class Meta:
-        verbose_name = 'page block'
+        abstract = True
 
 
-class PageImage(Orderable):
-    """
-    An image for a page
-    """
+class Image(Description, Orderable):
 
-    file = FileField(_("Image"), max_length=1024, format="Image", upload_to="images/pages")
-    description = models.TextField(_('photo description'), blank=True)
-    credits = models.CharField(_('photo credits'), max_length=256, blank=True, null=True)
-    page = models.ForeignKey(Page)
-
+    file = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
+    credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
 
     class Meta:
-        verbose_name = _("Image")
-        verbose_name_plural = _("Images")
-        order_with_respect_to = "page"
+        abstract = True
 
     def __str__(self):
         value = self.description
@@ -104,3 +96,70 @@ class PageImage(Orderable):
         if not value:
             value = ""
         return value
+
+
+class PageBlock(Block):
+
+    page = models.ForeignKey(Page, verbose_name=_('page'), blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'page block'
+
+
+class PageImage(Image):
+
+    page = models.ForeignKey(Page, verbose_name=_('page'))
+
+    class Meta:
+        verbose_name = _("image")
+        verbose_name_plural = _("images")
+        order_with_respect_to = "page"
+
+
+class LinkType(models.Model):
+    """
+    A link type could be ``Facebook`` or ``Twitter`` or ``Website``.
+    This is masterdata that should be created by the admins when the site is
+    deployed for the first time.
+    :ordering: Enter numbers here if you want links to be displayed in a
+      special order.
+    """
+
+    name = models.CharField(max_length=256, verbose_name=_('name'))
+    slug = models.SlugField(max_length=256, verbose_name=_('slug'), help_text=_(
+            'Use this field to define a simple identifier that can be used'
+            ' to style the different link types (i.e. assign social media'
+            ' icons to them)'),
+        blank=True,
+    )
+    ordering = models.PositiveIntegerField(verbose_name=_('ordering'), null=True, blank=True)
+
+    class Meta:
+        ordering = ['ordering', ]
+
+    def __str__(self):
+        return self.name
+
+
+class Link(models.Model):
+    """A person can have many links."""
+
+    link_type = models.ForeignKey(LinkType, verbose_name=_('link type'))
+    url = models.URLField(verbose_name=_('URL'))
+
+    class Meta:
+        abstract = True
+        verbose_name = _('link')
+        verbose_name_plural = _('links')
+
+    def __str__(self):
+        return self.url
+
+
+class Period(models.Model):
+
+    date_begin = models.DateField(_('begin date'), null=True, blank=True)
+    date_end = models.DateField(_('end date'), null=True, blank=True)
+
+    class Meta:
+        abstract = True

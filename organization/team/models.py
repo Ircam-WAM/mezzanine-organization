@@ -22,7 +22,7 @@ from mezzanine.utils.models import AdminThumbMixin, upload_to
 from mezzanine.galleries.models import BaseGallery
 
 from organization.media.models import Photo
-from organization.core.models import Named, Titled, Description, SubTitle
+from organization.core.models import *
 
 from django_countries.fields import CountryField
 # from .nationalities.fields import NationalityField
@@ -64,7 +64,7 @@ class Organization(Slugged, Description, Address, Photo):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
-    url = models.URLField(_('URL'), max_length=512, blank=True)
+    website = models.URLField(_('website'), max_length=512, blank=True)
     is_on_map = models.BooleanField(_('is on map'), default=True)
 
     class Meta:
@@ -110,7 +110,6 @@ class Person(Displayable, AdminThumbMixin, Photo):
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
-    organization = models.ForeignKey('Organization', verbose_name=_('organization'), blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('person')
@@ -143,57 +142,36 @@ class Person(Displayable, AdminThumbMixin, Photo):
         super(Person, self).save(*args, **kwargs)
 
 
-class Link(models.Model):
-    """A person can have many links."""
+class TeamLink(Link):
 
-    person = models.ForeignKey('Person', verbose_name=_('person'))
-    link_type = models.ForeignKey('LinkType', verbose_name=_('link type'))
-    url = models.URLField(verbose_name=_('URL'))
-
-    class Meta:
-        verbose_name = _('link')
+    team = models.ForeignKey(Team, verbose_name=_('links'))
 
     def __str__(self):
         return self.url
 
 
-class LinkType(models.Model):
-    """
-    A link type could be ``Facebook`` or ``Twitter`` or ``Website``.
-    This is masterdata that should be created by the admins when the site is
-    deployed for the first time.
-    :ordering: Enter numbers here if you want links to be displayed in a
-      special order.
-    """
-
-    name = models.CharField(max_length=256, verbose_name=_('name'))
-    slug = models.SlugField(max_length=256, verbose_name=_('slug'), help_text=_(
-            'Use this field to define a simple identifier that can be used'
-            ' to style the different link types (i.e. assign social media'
-            ' icons to them)'),
-        blank=True,
-    )
-    ordering = models.PositiveIntegerField(verbose_name=_('ordering'), null=True, blank=True)
-
-    class Meta:
-        ordering = ['ordering', ]
-
-    def __str__(self):
-        return self.name
-
-
-class Activity(RichText):
+class PersonActivity(Description, Period, RichText):
     """(Activity description)"""
 
     person = models.ForeignKey('Person', verbose_name=_('person'))
-    teams = models.ManyToManyField('Team', verbose_name=_('teams'))
-    date_begin = models.DateField(_('begin date'), null=True, blank=True)
-    date_end = models.DateField(_('end date'), null=True, blank=True)
+    team = models.ForeignKey('Team', verbose_name=_('team'))
     role = models.CharField(_('role'), blank=True, max_length=512)
-    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         verbose_name = _('activity')
+        verbose_name_plural = _('activities')
 
     def __unicode__(self):
         return ' - '.join((self.person, self.role, self.date_begin, self.date_end))
+
+
+class PersonLink(Link):
+    """A person can have many links."""
+
+    person = models.ForeignKey('Person', verbose_name=_('person'))
+
+    class Meta:
+        verbose_name = _('person link')
+
+    def __str__(self):
+        return self.url

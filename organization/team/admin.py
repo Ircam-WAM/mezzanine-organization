@@ -3,8 +3,9 @@ from django import forms
 from copy import deepcopy
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
+
 from organization.team.models import *
-from organization.core.admin import PageBlockInline, PageImageInline
+from organization.core.admin import *
 
 
 class OrganizationAdmin(BaseTranslationModelAdmin):
@@ -12,15 +13,9 @@ class OrganizationAdmin(BaseTranslationModelAdmin):
     model = Organization
 
 
-class ActivityAdmin(BaseTranslationModelAdmin):
+class PersonActivityInline(StackedDynamicInlineAdmin):
 
-    model = Activity
-
-
-class ActivityInline(StackedDynamicInlineAdmin):
-
-    model = Activity
-    filter_horizontal = ['teams', ]
+    model = PersonActivity
 
 
 class TeamAdmin(PageAdmin):
@@ -38,10 +33,15 @@ class PersonAdminBase(admin.ModelAdmin):
     model = Person
 
 
+class PersonLinkInline(StackedDynamicInlineAdmin):
+
+    model = PersonLink
+
+
 class PersonAdmin(BaseTranslationModelAdmin):
 
     model = Person
-    inlines = [ActivityInline,]
+    inlines = [PersonActivityInline, PersonLinkInline, ]
     first_fields = ['first_name', 'last_name', 'title', 'gender', 'user']
 
     def get_fieldsets(self, request, obj = None):
@@ -56,6 +56,4 @@ admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationType)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Team, TeamAdmin)
-# admin.site.register(Team)
 admin.site.register(Person, PersonAdmin)
-# admin.site.register(Activity, ActivityAdmin)
