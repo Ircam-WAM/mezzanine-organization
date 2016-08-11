@@ -32,7 +32,6 @@
 {% endblock %}
 
 {% block page_content %}
-
     {% if page.department.sub_title %}
         {% editable page.department.sub_title %}
             <div class="chapo">
@@ -83,6 +82,14 @@
             </div>
         {% endif %}
     {% endif %}
+
+    {% if page.department.articles_related.all %}
+      <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
+      {% for article in page.department.articles_related.all %}
+          {% include 'magazine/article/includes/article_card.html' %}
+      {% endfor %}
+    {% endif %}
+
 
     {% if page.department.pageblock_set.all %}
         <div class="white-bg">

@@ -23,6 +23,7 @@ from mezzanine.galleries.models import BaseGallery
 
 from organization.media.models import Photo
 from organization.core.models import *
+from organization.magazine.models import Article
 
 from django_countries.fields import CountryField
 # from .nationalities.fields import NationalityField
@@ -84,6 +85,7 @@ class Department(Page, SubTitle, RichText, Photo):
     organization = models.ForeignKey('Organization', verbose_name=_('organization'))
     url = models.URLField(_('URL'), max_length=512, blank=True)
     weaving_css_class = models.CharField(_('weaving CSS class'), max_length=64, blank=True)
+    articles_related = models.ManyToManyField(Article, verbose_name=_('Related articles'), blank=True)
 
     class Meta:
         verbose_name = _('department')
