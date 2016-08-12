@@ -46,20 +46,27 @@
 
 {% block page_content %}
 
-
     {% editable article.content %}
         {{ article.content|richtext_filters|safe }}
     {% endeditable %}
-    {% block page_sub_content %}
-        {% if article.related_articles.all %}
 
-            <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
-            {% for article in article.related_articles.all %}
-                {% include 'magazine/article/includes/article_card.html' %}
-            {% endfor %}
-        {% endif %}
-    {% endblock %}
+{% endblock %}
 
+{% block page_slider %}
+  {% if article.articleimage_set.all %}
+    {% with article.articleimage_set.all as slider_images %}
+        {% include 'core/inc/slider.html' %}
+    {% endwith %}
+  {% endif %}
+{% endblock %}
+
+{% block page_sub_content %}
+    {% if article.related_articles.all %}
+        <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
+        {% for article in article.related_articles.all %}
+            {% include 'magazine/article/includes/article_card.html' %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block page_sidebar %}

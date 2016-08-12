@@ -3,8 +3,8 @@ from mezzanine.pages.models import Page, RichText
 from modeltranslation.translator import TranslationOptions
 from mezzanine.core.translation import (TranslatedSlugged,
                                         TranslatedDisplayable,
-                                        TranslatedRichText)                                
-from organization.magazine.models import Article, Topic, Brief
+                                        TranslatedRichText)
+from organization.magazine.models import Article, Topic, Brief, ArticleImage
 
 @register(Article)
 class ArticleTranslationOptions(TranslationOptions):
@@ -21,3 +21,8 @@ class BriefTranslationOptions(TranslationOptions):
 class TopicTranslationOptions(TranslationOptions):
 
     fields = ()
+
+@register(ArticleImage)
+class ArticleImageTranslationOptions(TranslationOptions):
+
+    fields = ('description',)

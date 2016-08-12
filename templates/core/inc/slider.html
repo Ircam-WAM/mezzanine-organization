@@ -1,0 +1,5 @@
+{% for image in slider_images %}
+{{ image.description }}<br/>
+<img src="{{ MEDIA_URL}}{{ image.file }}" alt="" /><br/>
+{{ image.credits }}<br/>
+{% endfor %}

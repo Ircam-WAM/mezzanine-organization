@@ -7,9 +7,18 @@ from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from orderable.models import Orderable
-from organization.core.models import Named, Description
+from organization.core.models import Named, Description, Image
 from organization.media.models import Photo
 
+
+class ArticleImage(Image):
+
+    article_fk = models.ForeignKey("Article", verbose_name=_('article'))
+
+    class Meta:
+        verbose_name = _("image")
+        verbose_name_plural = _("images")
+        order_with_respect_to = "article"
 
 class Article(BlogPost, Photo):
 
