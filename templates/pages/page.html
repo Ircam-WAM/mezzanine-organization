@@ -43,14 +43,12 @@
                         {{ page.content }}
                     {% endblock %}
                 </div>
-                <div class="col-sm-9 col-lg-8 white-bg page__content" data-summary-content>
-                    {% block page_slider %}
-                    {% endblock %}
-                </div>
-                <div class="col-sm-9 col-lg-8 white-bg page__content" data-summary-content>
-                  {% block page_sub_content %}
-                  {% endblock %}
-                </div>
+                {% block page_slider %}
+                {% endblock %}
+                {% block page_sub_content %}
+                {% endblock %}
+                {% block page_related_content %}
+                {% endblock %}
             </div>
 
         </div>

@@ -30,8 +30,8 @@ $module: ".tag";
         @include padding-right(.5);
     }
 
-    & + #{$module} {
+    /*& + #{$module} {
         margin-left: -0.25em;
-    }
+    }*/
 
 }
