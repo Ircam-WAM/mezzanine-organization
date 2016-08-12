@@ -44,6 +44,13 @@ TITLE_CHOICES = [
     ('Prof Dr', _('Prof Dr')),
 ]
 
+PATTERN_CHOICES = [
+    ('pattern-bg--circles', _('circles')),
+    ('pattern-bg--squares', _('squares')),
+    ('pattern-bg--stripes', _('stripes')),
+    ('pattern-bg--triangles', _('triangles')),
+]
+
 ALIGNMENT_CHOICES = (('left', _('left')), ('left', _('left')), ('right', _('right')))
 
 
@@ -84,7 +91,7 @@ class Department(Page, SubTitle, RichText, Photo):
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'))
     url = models.URLField(_('URL'), max_length=512, blank=True)
-    weaving_css_class = models.CharField(_('weaving CSS class'), max_length=64, blank=True)
+    weaving_css_class = models.CharField(_('background pattern'), choices=PATTERN_CHOICES, max_length=64, blank=True)
     articles_related = models.ManyToManyField(Article, verbose_name=_('Related articles'), blank=True)
 
     class Meta:
