@@ -17,6 +17,7 @@ var
 data/static
 data/mysql
 data/postgresql
+data/var
 .thumbnails
 .tmp
 doc
