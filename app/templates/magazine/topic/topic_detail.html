@@ -27,7 +27,7 @@
 
 {% block breadcrumb_menu %}
     {{ block.super }}
-    <li class="breadcrumb__item">{% trans "Magazine" %}</li>
+    <li class="breadcrumb__item"><a class="breadcrumb__link" href="{% url 'magazine-article-list' %}">{% trans "News" %}</a></li>
     <li class="breadcrumb__item active">{{ topic.title }}</li>
 {% endblock %}
 
@@ -62,7 +62,7 @@
     <div class="container">
         <div class="row">
             {% for article in topic.articles.all %}
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
                     {% include 'magazine/article/includes/article_card.html' %}
                 </div>
             {% endfor %}
