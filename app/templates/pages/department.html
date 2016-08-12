@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block body_class %}
-    pattern pattern-bg pattern-bg--circles
+    pattern pattern-bg {{ page.department.weaving_css_class }}
 {% endblock %}
 
 {% block page_title %}
@@ -48,6 +48,14 @@
         Add the slider here
     {% endcomment %}
 
+{% endblock %}
+
+{% block page_slider %}
+  {% if page.department.pageimage_set.all %}
+    {% with page.department.pageimage_set.all as slider_images %}
+        {% include 'core/inc/slider.html' %}
+    {% endwith %}
+  {% endif %}
 {% endblock %}
 
 {% block page_sub_content %}
