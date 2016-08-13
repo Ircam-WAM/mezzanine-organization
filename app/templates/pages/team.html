@@ -27,6 +27,14 @@
 
 {% endblock %}
 
+{% block page_slider %}
+  {% if page.team.pageimage_set.all %}
+    {% with page.team.pageimage_set.all as slider_images %}
+        {% include 'core/inc/slider.html' %}
+    {% endwith %}
+  {% endif %}
+{% endblock %}
+
 {% block page_content %}
 
     {% if page.team.sub_title %}
@@ -54,54 +62,31 @@
         {% endif %}
     {% endif %}
 
-    {% comment %}
-        Add the slider here
-    {% endcomment %}
-
 {% endblock %}
 
-{% block main %}
-    {{ block.super }}
-
-    {% if page.get_ascendants|length == 1 %}
-        {% children_pages page.id as childrens %}
-        {% if childrens %}
-            <div class="container">
-                <div class="row">
-                    {% for children in childrens %}
-                        <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
-                            {% with children as object %}
-                                {% include "pages/includes/page_card.html" %}
-                            {% endwith %}
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-    {% endif %}
+{% block page_sub_content %}
 
     {% if page.team.pageblock_set.all %}
-        <div class="white-bg">
+        <div class="white-bg pb2">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        {% block page_sub_content %}
-                            <hr class="mt0" />
-                            {% for pageblock in page.team.pageblock_set.all %}
-                                <div class="row" data-summary-content>
-                                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
-                                        {% if not forloop.first and pageblock.with_separator %}
-                                            <hr />
-                                        {% endif %}
-                                        <h2 class="dotted">{{ pageblock.title }}</h2>
-                                        {{ pageblock.content|richtext_filters|safe }}
-                                    </div>
+                        <hr class="mt0" />
+                        {% for pageblock in page.team.pageblock_set.all %}
+                            <div class="row" data-summary-content>
+                                <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
+                                    {% if not forloop.first and pageblock.with_separator %}
+                                        <hr />
+                                    {% endif %}
+                                    <h2 class="dotted">{{ pageblock.title }}</h2>
+                                    {{ pageblock.content|richtext_filters|safe }}
                                 </div>
-                            {% endfor %}
-                        {% endblock %}
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     {% endif %}
+
 {% endblock %}

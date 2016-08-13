@@ -16,18 +16,30 @@
 {% endmetablock %}{% endblock %}
 
 {% block main %}
-    <div class="mb2 page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
+    <div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
         <div class="container">
 
             <div class="row">
+
+                <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
+                    {% block page_tags %}
+                    {% endblock %}
+                </div>
+
+            </div>
+
+            <div class="row">
+
                 <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
                     {% block page_title %}
                         {{ page.title }}
                     {% endblock %}
                 </div>
+
             </div>
 
             <div class="row">
+
                 <div class="col-sm-3 col-lg-2 page__sidebar">
                     {% block page_sidebar %}
                         {% if page.get_ascendants|length < 2 %}
@@ -38,20 +50,22 @@
                         {% endif %}
                     {% endblock %}
                 </div>
-                <div class="col-sm-9 col-lg-8 white-bg page__content" data-summary-content>
+                <div class="mb2 col-sm-9 col-lg-8 white-bg page__content" data-summary-content>
                     {% block page_content %}
                         {{ page.content }}
                     {% endblock %}
                 </div>
-                {% block page_slider %}
-                {% endblock %}
-                {% block page_sub_content %}
-                {% endblock %}
-                {% block page_related_content %}
-                {% endblock %}
+
             </div>
 
         </div>
+
+        {% block page_slider %}
+        {% endblock %}
+        {% block page_sub_content %}
+        {% endblock %}
+        {% block page_related_content %}
+        {% endblock %}
 
     </div>
 {% endblock %}

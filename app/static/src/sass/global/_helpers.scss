@@ -52,6 +52,21 @@
 .pl1 {
     @include padding-left(1);
 }
+.p2 {
+    @include padding(2);
+}
+.pt2 {
+    @include padding-top(2);
+}
+.pb2 {
+    @include padding-bottom(2);
+}
+.pr2 {
+    @include padding-right(2);
+}
+.pl2 {
+    @include padding-left(2);
+}
 .bg {
     background-color: $color-main;
 }

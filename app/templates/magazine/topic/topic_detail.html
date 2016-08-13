@@ -27,7 +27,7 @@
 
 {% block breadcrumb_menu %}
     {{ block.super }}
-    <li class="breadcrumb__item"><a class="breadcrumb__link" href="{% url 'magazine-article-list' %}">{% trans "News" %}</a></li>
+    <li class="breadcrumb__item">{% trans "Magazine" %}</li>
     <li class="breadcrumb__item active">{{ topic.title }}</li>
 {% endblock %}
 
