@@ -16,30 +16,48 @@
     article
 {% endblock %}
 
+{% block body_class %}
+    {% if department_parent %}
+        pattern pattern-bg {{ department_parent.weaving_css_class }}
+    {% endif %}
+{% endblock %}
+
 {% block breadcrumb_menu %}
     {{ block.super }}
     {% if topic_parent %}
-    <li class="breadcrumb__item"><a href="{% url "topic-detail" parent_topic.slug %}" class="breadcrumb__link" title="{{ parent_topic.title }}">{{ parent_topic.title }}</a></li>
+        <li class="breadcrumb__item">{% trans "Magazine" %}</li>
+        <li class="breadcrumb__item"><a href="{% url "topic-detail" parent_topic.slug %}" class="breadcrumb__link" title="{{ parent_topic.title }}">{{ parent_topic.title }}</a></li>
     {% endif %}
     {% if department_parent %}
-    <li class="breadcrumb__item"><a href="{% url "page" department_parent.slug %}" class="breadcrumb__link" title="{{ department_parent.title }}">{{ department_parent.title }}</a></li>
+        <li class="breadcrumb__item"><a href="{% url "page" department_parent.slug %}" class="breadcrumb__link" title="{{ department_parent.title }}">{{ department_parent.title }}</a></li>
     {% endif %}
 
     <li class="breadcrumb__item active">{{ article.title }}</li>
 {% endblock %}
 
-{% block page_title %}
+{% block page_tags %}
 
+    <div class="tag tag--category">
+        {% trans 'News' %}
+    </div>
     {% if article.keywords %}
-      {{ article.keywords.first }} | {{ article.model_name }}
+        <div class="tag dashed dashed--gray">
+          {{ article.keywords.first }}
+        </div>
     {% endif %}
 
+{% endblock %}
+
+{% block page_title %}
+
     {% editable article.title %}
-        <h1>{{ article.title }}</h1>
+        <h1 class="dotted">{{ article.title }}</h1>
     {% endeditable %}
 
     {% editable article.sub_title %}
-        <h2>{{ article.sub_title }}</h2>
+        <div class="chapo">
+            {{ article.sub_title }}
+        </div>
     {% endeditable %}
 
 {% endblock %}
@@ -60,29 +78,30 @@
   {% endif %}
 {% endblock %}
 
-{% block page_sub_content %}
+{% block page_related_content %}
 
     {% if article.related_articles.all %}
 
-        <div class="container">
-            <div class="row tac">
-                <div class="col-xs-12">
-                    <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
-                </div>
-            </div>
-            <div class="row tac">
-                {% for article in article.related_articles.all %}
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                        {% include 'magazine/article/includes/article_card.html' %}
+        <div class="white-bg pb2">
+            <div class="container">
+                <div class="row tac">
+                    <div class="col-xs-12">
+                        <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
                     </div>
-                {% endfor %}
+                </div>
+                <div class="row tac">
+                    {% for article in article.related_articles.all %}
+                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                            {% include 'magazine/article/includes/article_card.html' %}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
 
     {% endif %}
 
 {% endblock %}
-
 
 {% block page_sidebar %}
 

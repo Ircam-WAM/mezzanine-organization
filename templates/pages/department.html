@@ -44,10 +44,6 @@
         {{ page.department.content|richtext_filters|safe }}
     {% endeditable %}
 
-    {% comment %}
-        Add the slider here
-    {% endcomment %}
-
 {% endblock %}
 
 {% block page_slider %}
@@ -61,17 +57,17 @@
 {% block page_sub_content %}
 
     {% if page.department.pageblock_set.all %}
-        <div class="white-bg">
+        <div class="white-bg pb2">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
                         <hr class="mt0" />
                         {% for pageblock in page.department.pageblock_set.all %}
+                            {% if not forloop.first and pageblock.with_separator %}
+                                <hr />
+                            {% endif %}
                             <div class="row" data-summary-content>
                                 <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
-                                    {% if not forloop.first and pageblock.with_separator %}
-                                        <hr />
-                                    {% endif %}
                                     <h2 class="dotted">{{ pageblock.title }}</h2>
                                     {{ pageblock.content|richtext_filters|safe }}
                                 </div>
@@ -88,19 +84,21 @@
 {% block page_related_content %}
 
     {% if page.department.articles_related.all %}
-
-        <div class="container">
-            <div class="row tac">
-                <div class="col-xs-12">
-                    <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
-                </div>
-            </div>
-            <div class="row tac">
-                {% for article in page.department.articles_related.all %}
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                        {% include 'magazine/article/includes/article_card.html' %}
+    
+        <div class="white-bg pb2">
+            <div class="container">
+                <div class="row tac">
+                    <div class="col-xs-12">
+                        <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
                     </div>
-                {% endfor %}
+                </div>
+                <div class="row tac">
+                    {% for article in page.department.articles_related.all %}
+                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                            {% include 'magazine/article/includes/article_card.html' %}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
 
