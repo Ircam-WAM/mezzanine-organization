@@ -12,16 +12,16 @@ from organization.team.models import Person, Team, Organization
 class Project(Displayable, RichText):
     """(Project description)"""
 
-    leader_team = models.ForeignKey(Team, verbose_name=_('lead team'), related_name='project_leader', blank=True, null=True)
-    partner_persons = models.ManyToManyField(Person, verbose_name=_('partner persons'), blank=True)
-    partner_teams = models.ManyToManyField(Team, verbose_name=_('partner teams'), related_name='project_partners', blank=True)
-    partner_organizations = models.ManyToManyField(Organization, verbose_name=_('partner organizations'), blank=True)
+    lead_team = models.ForeignKey(Team, verbose_name=_('lead team'), related_name='leader_projects', blank=True, null=True)
+    persons = models.ManyToManyField(Person, verbose_name=_('persons'), blank=True)
+    teams = models.ManyToManyField(Team, verbose_name=_('teams'), , related_name='patner_projects', blank=True)
+    organizations = models.ManyToManyField(Organization, verbose_name=_('organizations'), blank=True)
     website = models.URLField(_('website'), max_length=512, blank=True)
 
     class Meta:
         verbose_name = _('project')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
