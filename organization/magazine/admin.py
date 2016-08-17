@@ -3,8 +3,8 @@ from django import forms
 from copy import deepcopy
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
-from orderable.admin import OrderableAdmin, OrderableTabularInline
-from organization.magazine.models import Article, Brief, Topic, ArticleImage
+#from orderable.admin import OrderableTabularInline #OrderableAdmin,
+from organization.magazine.models import Article, Brief, Topic, ArticleImage, BriefForm
 
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
@@ -25,15 +25,19 @@ class ArticleAdminDisplayable(DisplayableAdmin):
     inlines = [ArticleImageInline,]
 
 
-class BriefAdmin(OrderableTabularInline):
+class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline
 
     model = Brief
 
 
-class BriefAdminDisplayable(BaseTranslationModelAdmin, OrderableAdmin):
+class BriefAdminDisplayable(BaseTranslationModelAdmin,): #, OrderableAdmin
 
-    list_display = ('title', 'local_content', 'sort_order_display',)
+    #list_display = ('title', 'local_content', 'sort_order_display',)
+    form = BriefForm
     fieldsets = deepcopy(BriefAdmin.fieldsets)
+
+    # form = BriefForm
+    # form = autocomplete_light.modelform_factory(Brief)
 
 
 admin.site.register(Article, ArticleAdminDisplayable)

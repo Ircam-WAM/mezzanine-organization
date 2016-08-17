@@ -199,6 +199,9 @@ ROOT_URLCONF = "urls"
 
 INSTALLED_APPS = [
     "modeltranslation",
+    "dal",
+    "dal_select2",
+    "dal_queryset_sequence",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -222,7 +225,7 @@ INSTALLED_APPS = [
     'djangobower',
     "meta",
     "mezzanine_agenda",
-    "orderable",
+#    "orderable",
     "organization.core",
     "organization.team",
     "organization.festival",

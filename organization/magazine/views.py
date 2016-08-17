@@ -3,8 +3,11 @@ from django.shortcuts import render
 from django.utils import timezone
 #from django.views.generic import *
 from django.views.generic import DetailView, ListView, TemplateView
+from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import *
 from django.shortcuts import get_object_or_404
+from itertools import chain
+from dal import autocomplete
 
 from organization.magazine.models import Article, Topic, Brief
 from organization.team.models import Department
@@ -79,3 +82,29 @@ class TopicDetailView(SlugMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(TopicDetailView, self).get_context_data(**kwargs)
         return context
+
+class ObjectAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+
+        #qs = chain(Topic.objects.all(), Article.objects.all())
+        #qs = Article.objects.all()
+        articles = Article.objects.all()
+        topics = Topic.objects.all()
+
+
+        if self.q:
+            #qs = qs.filter(name__istartswith=self.q)
+            articles = articles.filter(name__icontains=self.q)
+            topics = topics.filter(name__icontains=self.q)
+
+        qs = QuerySetSequence(articles, topics)
+
+        if self.q:
+            # This would apply the filter on all the querysets
+            qs = qs.filter(name__icontains=self.q)
+
+        # This will limit each queryset so that they show an equal number
+        # of results.
+        qs = self.mixup_querysets(qs)
+        print(qs)
+        return qs
