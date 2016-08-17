@@ -14,7 +14,7 @@ class Project(Displayable, RichText):
 
     lead_team = models.ForeignKey(Team, verbose_name=_('lead team'), related_name='leader_projects', blank=True, null=True)
     persons = models.ManyToManyField(Person, verbose_name=_('persons'), blank=True)
-    teams = models.ManyToManyField(Team, verbose_name=_('teams'), , related_name='patner_projects', blank=True)
+    teams = models.ManyToManyField(Team, verbose_name=_('teams'), related_name='patner_projects', blank=True)
     organizations = models.ManyToManyField(Organization, verbose_name=_('organizations'), blank=True)
     website = models.URLField(_('website'), max_length=512, blank=True)
 
