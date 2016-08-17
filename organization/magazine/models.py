@@ -6,7 +6,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
-from dal import autocomplete
+
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
@@ -81,27 +81,6 @@ class Brief(Displayable, RichText): #Orderable
 #     class Meta:
 #         model = Brief
 #         fields = ('__all__')
-
-class BriefForm(autocomplete.FutureModelForm):
-
-    selected_object = forms.ModelChoiceField(
-        queryset=ContentType.objects.all(),
-        widget=autocomplete.ModelSelect2(url='object-autocomplete')
-    )
-
-    # content_object = autocomplete.QuerySetSequenceModelField(
-    #     queryset=autocomplete.QuerySetSequence(
-    #         #Article.objects.all(),
-    #         #Topic.objects.all(),
-    #         #ContentType.objects.all(),
-    #     ),
-    #     required=False,
-    #     widget=autocomplete.QuerySetSequenceSelect2('object-autocomplete'),
-    # )
-
-    class Meta:
-        model = Brief
-        fields = ('__all__')
 
 
 class Topic(Page, RichText):

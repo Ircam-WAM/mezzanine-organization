@@ -15,6 +15,8 @@ from organization.team.models import Department
 from organization.core.views import SlugMixin
 from django.template.defaultfilters import slugify
 
+from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 
 class ArticleDetailView(SlugMixin, DetailView):
 
@@ -83,7 +85,8 @@ class TopicDetailView(SlugMixin, DetailView):
         context = super(TopicDetailView, self).get_context_data(**kwargs)
         return context
 
-class ObjectAutocomplete(autocomplete.Select2QuerySetView):
+
+class ObjectAutocomplete(Select2QuerySetSequenceView):
     def get_queryset(self):
 
         #qs = chain(Topic.objects.all(), Article.objects.all())
@@ -91,13 +94,12 @@ class ObjectAutocomplete(autocomplete.Select2QuerySetView):
         articles = Article.objects.all()
         topics = Topic.objects.all()
 
-
         if self.q:
             #qs = qs.filter(name__istartswith=self.q)
             articles = articles.filter(name__icontains=self.q)
             topics = topics.filter(name__icontains=self.q)
 
-        qs = QuerySetSequence(articles, topics)
+        qs = autocomplete.QuerySetSequence(articles, topics)
 
         if self.q:
             # This would apply the filter on all the querysets
@@ -106,5 +108,5 @@ class ObjectAutocomplete(autocomplete.Select2QuerySetView):
         # This will limit each queryset so that they show an equal number
         # of results.
         qs = self.mixup_querysets(qs)
-        print(qs)
+        # print(qs)
         return qs

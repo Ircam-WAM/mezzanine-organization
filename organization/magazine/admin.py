@@ -4,7 +4,8 @@ from copy import deepcopy
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 #from orderable.admin import OrderableTabularInline #OrderableAdmin,
-from organization.magazine.models import Article, Brief, Topic, ArticleImage, BriefForm
+from organization.magazine.models import Article, Brief, Topic, ArticleImage
+from organization.magazine.forms import BriefForm
 
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
