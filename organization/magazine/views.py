@@ -96,14 +96,14 @@ class ObjectAutocomplete(Select2QuerySetSequenceView):
 
         if self.q:
             #qs = qs.filter(name__istartswith=self.q)
-            articles = articles.filter(name__icontains=self.q)
-            topics = topics.filter(name__icontains=self.q)
+            articles = articles.filter(title__icontains=self.q)
+            topics = topics.filter(title__icontains=self.q)
 
         qs = autocomplete.QuerySetSequence(articles, topics)
 
         if self.q:
             # This would apply the filter on all the querysets
-            qs = qs.filter(name__icontains=self.q)
+            qs = qs.filter(title__icontains=self.q)
 
         # This will limit each queryset so that they show an equal number
         # of results.
