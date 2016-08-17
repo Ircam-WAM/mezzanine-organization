@@ -5,7 +5,7 @@ mysqlclient
 psycopg2
 pyquery
 Django==1.9.7
-mezzanine==4.1.0
+mezzanine==4.2.0
 django-modeltranslation
 django-meta
 django-bower
