@@ -33,12 +33,10 @@ class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline
 
 class BriefAdminDisplayable(BaseTranslationModelAdmin,): #, OrderableAdmin
 
-    #list_display = ('title', 'local_content', 'sort_order_display',)
+    list_display = ('title', 'external_content', 'content_object', )
     form = BriefForm
     fieldsets = deepcopy(BriefAdmin.fieldsets)
 
-    # form = BriefForm
-    # form = autocomplete_light.modelform_factory(Brief)
 
 
 admin.site.register(Article, ArticleAdminDisplayable)
