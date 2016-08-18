@@ -72,7 +72,7 @@ class BasicPage(Page, SubTitle, Photo, RichText):
         verbose_name = 'basic page'
 
 
-class Block(RichText, Titled):
+class Block(RichText, Titled, Orderable):
 
     with_separator = models.BooleanField(default=False)
     background_color = models.CharField(_('background color'), max_length=32, choices=COLOR_CHOICES, blank=True)
