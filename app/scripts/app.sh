@@ -22,8 +22,8 @@ patterns='*.js;*.css;*.jpg;*.jpeg;*.gif;*.png;*.svg;*.ttf;*.eot;*.woff;*.woff2'
 # pip install -U https://forge.ircam.fr/p/django-eve/source/download/dev/
 # pip install -U https://github.com/stephenmcd/grappelli-safe/archive/dynamic_stacked.zip
 # pip install django-querysetsequence
-pip install django-autocomplete-light django-querysetsequence
-/usr/bin/yes | pip uninstall django-orderable
+#pip install django-autocomplete-light django-querysetsequence
+#/usr/bin/yes | pip uninstall django-orderable
 
 chown -R $uid:$gid $media
 

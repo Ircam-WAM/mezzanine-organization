@@ -15,7 +15,7 @@ class ArticleTranslationOptions(TranslationOptions):
 @register(Brief)
 class BriefTranslationOptions(TranslationOptions):
 
-    fields = ('text_button', 'local_content')
+    fields = ('text_button', 'external_content', )
 
 @register(Topic)
 class TopicTranslationOptions(TranslationOptions):

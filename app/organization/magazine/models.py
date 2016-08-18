@@ -11,10 +11,6 @@ from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 #from orderable.models import Orderable
-# from autocomplete.dal_queryset_sequence.fields import (
-#         QuerySetSequenceModelField,
-#         QuerySetSequenceModelMultipleField,
-#     )
 from organization.core.models import Named, Description, Image
 from organization.media.models import Photo
 
@@ -44,43 +40,32 @@ class Article(BlogPost, Photo):
 class Brief(Displayable, RichText): #Orderable
 
     text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name='text button')
-    local_content = models.URLField(blank=False, max_length=1000, null=False, verbose_name='local content')
+    external_content = models.URLField(blank=True, max_length=1000, null=False, verbose_name='external content')
 
-    limit = models.Q(app_label='organization-magazine', model='article') | \
-        models.Q(app_label='organization-magazine', model='topic')
+    # used for autocomplete but hidden in admin
     content_type = models.ForeignKey(
         ContentType,
         verbose_name=_('content page'),
-        limit_choices_to=limit,
         null=True,
         blank=True,
+        editable=False,
     )
+
+    # used for autocomplete but hidden in admin
     object_id = models.PositiveIntegerField(
         verbose_name=_('related object'),
         null=True,
+        editable=False,
     )
+
     content_object = GenericForeignKey('content_type', 'object_id')
 
-
     def get_absolute_url(self):
-        return self.local_content
+        return self.external_content
 
     class Meta:
         verbose_name = _('brief')
         #ordering = ['sort_order']
-
-
-
-# class BriefForm(forms.ModelForm):
-#
-#     selected_object = forms.ModelChoiceField(
-#         queryset=ContentType.objects.all(),
-#         widget=autocomplete.ModelSelect2(url='object-autocomplete')
-#     )
-#
-#     class Meta:
-#         model = Brief
-#         fields = ('__all__')
 
 
 class Topic(Page, RichText):

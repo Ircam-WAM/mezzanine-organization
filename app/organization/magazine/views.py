@@ -8,15 +8,14 @@ from django.views.generic.base import *
 from django.shortcuts import get_object_or_404
 from itertools import chain
 from dal import autocomplete
-
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
+from mezzanine_agenda.models import Event
 from organization.magazine.models import Article, Topic, Brief
 from organization.team.models import Department
-
+from organization.core.models import BasicPage
 from organization.core.views import SlugMixin
 from django.template.defaultfilters import slugify
 
-from dal import autocomplete
-from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 
 class ArticleDetailView(SlugMixin, DetailView):
 
@@ -89,17 +88,16 @@ class TopicDetailView(SlugMixin, DetailView):
 class ObjectAutocomplete(Select2QuerySetSequenceView):
     def get_queryset(self):
 
-        #qs = chain(Topic.objects.all(), Article.objects.all())
-        #qs = Article.objects.all()
         articles = Article.objects.all()
-        topics = Topic.objects.all()
+        basicpage = BasicPage.objects.all()
+        events = Event.objects.all()
 
         if self.q:
-            #qs = qs.filter(name__istartswith=self.q)
             articles = articles.filter(title__icontains=self.q)
-            topics = topics.filter(title__icontains=self.q)
+            basicpage = basicpage.filter(title__icontains=self.q)
+            events = events.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, topics)
+        qs = autocomplete.QuerySetSequence(articles, basicpage, events )
 
         if self.q:
             # This would apply the filter on all the querysets
@@ -108,5 +106,5 @@ class ObjectAutocomplete(Select2QuerySetSequenceView):
         # This will limit each queryset so that they show an equal number
         # of results.
         qs = self.mixup_querysets(qs)
-        # print(qs)
+
         return qs

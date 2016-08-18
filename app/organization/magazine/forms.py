@@ -4,7 +4,8 @@ import dal_queryset_sequence
 import dal_select2_queryset_sequence
 
 from organization.magazine.models import Article, Topic, Brief
-
+from organization.core.models import BasicPage
+from mezzanine_agenda.models import Event
 
 class BriefForm(autocomplete.FutureModelForm):
 
@@ -16,7 +17,8 @@ class BriefForm(autocomplete.FutureModelForm):
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
         queryset=autocomplete.QuerySetSequence(
             Article.objects.all(),
-            Topic.objects.all(),
+            Event.objects.all(),
+            BasicPage.objects.all(),
             # ContentType.objects.all(),
         ),
         required=False,
