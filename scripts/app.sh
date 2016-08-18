@@ -24,6 +24,8 @@ patterns='*.js;*.css;*.jpg;*.jpeg;*.gif;*.png;*.svg;*.ttf;*.eot;*.woff;*.woff2'
 # pip install django-querysetsequence
 pip install django-autocomplete-light django-querysetsequence
 /usr/bin/yes | pip uninstall django-orderable
+# /usr/bin/yes | pip uninstall grappelli-safe
+# pip install grappelli-safe
 
 chown -R $uid:$gid $media
 

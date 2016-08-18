@@ -13,7 +13,7 @@ class ProjectLinkInline(StackedDynamicInlineAdmin):
     model = ProjectLink
 
 
-class ProjectImageInline(StackedDynamicInlineAdmin):
+class ProjectImageInline(TabularDynamicInlineAdmin):
 
     model = ProjectImage
 

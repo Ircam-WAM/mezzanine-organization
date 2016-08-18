@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from organization.project.models import *
 from organization.core.views import *
 
 
