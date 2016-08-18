@@ -227,6 +227,7 @@ INSTALLED_APPS = [
     "mezzanine_agenda",
 #    "orderable",
     "organization.core",
+    "organization.pages",
     "organization.team",
     "organization.festival",
     "organization.magazine",

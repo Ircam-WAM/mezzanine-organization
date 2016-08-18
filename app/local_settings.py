@@ -69,7 +69,7 @@ SITE_TAGLINE = 'Institut de Recherche et de Coordination Acoustique et Musique'
 SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 
 ADMIN_MENU_ORDER = (
-    (_('Pages'), ('pages.Page', 'organization-featured.Featured',)),
+    (_('Pages'), ('pages.Page', 'organization-featured.Featured', 'organization-pages.Home')),
     (_('Media'), ('organization-media.Video', 'organization-media.VideoCategory', 'organization-media.Audio', 'organization-media.Playlist',  'organization-media.Photo', (_('Media Library'), 'fb_browse'),)),
     (_('Events'), ('mezzanine_agenda.Event', 'mezzanine_agenda.EventLocation', 'mezzanine_agenda.EventCategory', 'mezzanine_agenda.EventPrice',)),
     (_('Magazine'), ('organization-magazine.Article', 'organization-magazine.Brief',)),
