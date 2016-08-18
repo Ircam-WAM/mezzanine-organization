@@ -34,6 +34,7 @@ class Article(BlogPost, Photo):
                                  verbose_name=_("Related articles"), blank=True)
 
     model_name = _('article')
+
     def get_absolute_url(self):
         return reverse("magazine-article-detail", kwargs={"slug": self.slug})
 
