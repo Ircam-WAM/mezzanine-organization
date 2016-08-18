@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
@@ -80,6 +82,29 @@ class Block(RichText, Titled, Orderable):
     class Meta:
         abstract = True
 
+
+class DynamicContent(models.Model):
+
+    # used for autocomplete but hidden in admin
+    content_type = models.ForeignKey(
+        ContentType,
+        verbose_name=_('content type'),
+        null=True,
+        blank=True,
+        editable=False,
+    )
+
+    # used for autocomplete but hidden in admin
+    object_id = models.PositiveIntegerField(
+        verbose_name=_('related object'),
+        null=True,
+        editable=False,
+    )
+
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    class Meta:
+        abstract = True
 
 class Image(Description, Orderable):
 

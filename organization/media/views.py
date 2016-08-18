@@ -2,7 +2,10 @@ from django.shortcuts import render
 
 from organization.media.models import *
 from organization.core.views import *
-
+from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
+from mezzanine_agenda.models import Event
+from organization.magazine.models import Article, Topic, Brief
 
 class VideoListView(ListView):
 
