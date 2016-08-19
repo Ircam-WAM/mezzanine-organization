@@ -15,10 +15,12 @@ class DynamicContentHomeSliderInline(StackedDynamicInlineAdmin):
     model = DynamicContentHomeSlider
     form = DynamicContentHomeSliderForm
 
+
 class DynamicContentHomeBodyInline(StackedDynamicInlineAdmin):
 
     model = DynamicContentHomeBody
     form = DynamicContentHomeBodyForm
+
 
 class HomeAdminDisplayable(BaseTranslationModelAdmin):
 
