@@ -1,11 +1,28 @@
 from django.shortcuts import render
-
-# Create your views here.
+from django.views.generic import DetailView, ListView, TemplateView
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
 from organization.core.models import BasicPage
+from organization.core.views import SlugMixin
 from organization.magazine.models import Article, Topic, Brief
+from organization.pages.models import Home
+
+class HomeView(SlugMixin, ListView):
+
+    model = Home
+    template_name = 'index.html'
+    briefs = Brief.objects.all() # with .published, order by isn't working anymore
+    context_object_name = 'home'
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.published().latest("publish_date")
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['briefs'] = self.briefs
+        return context
+
 
 
 class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
