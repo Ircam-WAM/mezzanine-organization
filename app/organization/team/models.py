@@ -23,6 +23,7 @@ from mezzanine.galleries.models import BaseGallery
 
 from organization.core.models import *
 from organization.magazine.models import Article
+from organization.project.models import Project
 
 from django_countries.fields import CountryField
 # from .nationalities.fields import NationalityField
@@ -118,6 +119,7 @@ class Person(Displayable, AdminThumbMixin, Photo):
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
+    permanent = models.BooleanField(_('permanent'))
 
     class Meta:
         verbose_name = _('person')
@@ -158,12 +160,99 @@ class TeamLink(Link):
         return self.url
 
 
+class ActivityStatus(Named, Description):
+
+    class Meta:
+        verbose_name = _('activity status')
+
+
+class ActivityGrade(Named, Description):
+
+    class Meta:
+        verbose_name = _('activity grade')
+
+
+class ActivityFramework(Named, Description):
+
+    class Meta:
+        verbose_name = _('activity framework')
+
+
+class BudgetCode(Named, Description):
+
+    class Meta:
+        verbose_name = _('budget code')
+
+
+class RecordPiece(Named, Description):
+
+    class Meta:
+        verbose_name = _('record piece')
+
+
+class TrainingType(Named, Description):
+
+    class Meta:
+        verbose_name = _('training type')
+
+
+class TrainingLevel(Named, Description):
+
+    class Meta:
+        verbose_name = _('training level')
+
+
+class TrainingTopic(Named, Description):
+
+    class Meta:
+        verbose_name = _('training topic')
+
+
+class TrainingSpectiality(Named, Description):
+
+    class Meta:
+        verbose_name = _('training speciality')
+
+
 class PersonActivity(Description, Period, RichText):
     """(Activity description)"""
 
     person = models.ForeignKey('Person', verbose_name=_('person'))
     team = models.ForeignKey('Team', verbose_name=_('team'))
-    role = models.CharField(_('role'), blank=True, max_length=512)
+    second_team = models.ForeignKey('Team', verbose_name=_('second team'))
+    function = models.CharField(_('fonction'), blank=True, max_length=1024)
+
+    status = models.ForeignKey(ActivityStatus, verbose_name=_('status'), blank=True, null=True, on_delete=models.SET_NULL)
+    grade = models.ForeignKey(ActivityGrade, verbose_name=_('grade'), blank=True, null=True, on_delete=models.SET_NULL)
+    framework = models.ForeignKey(ActivityFramework, verbose_name=_('framework'), blank=True, null=True, on_delete=models.SET_NULL)
+    hdr = models.BooleanField(_('HDR'))
+
+    employer = models.ForeignKey(Organization, verbose_name=_('employer'), blank=True, null=True, on_delete=models.SET_NULL)
+    second_employer = models.ForeignKey(Organization, verbose_name=_('second employer'), blank=True, null=True, on_delete=models.SET_NULL)
+    attachment_organization = models.ForeignKey(Organization, verbose_name=_('attachment organization'), blank=True, null=True, on_delete=models.SET_NULL)
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), blank=True, null=True, on_delete=models.SET_NULL)
+    rd_quota = models.IntegerField(_('R&D quota'), blank=True)
+    rd_program = models.TextField(_('R&D program'))
+
+    phd_doctoral_school = models.ForeignKey(Organization, verbose_name=_('doctoral school'), blank=True, null=True, on_delete=models.SET_NULL)
+    phd_director = models.ForeignKey('Person', verbose_name=_('PhD director'), blank=True, null=True, on_delete=models.SET_NULL)
+    phd_officer_1 = models.ForeignKey('Person', verbose_name=_('PhD officer 1'), blank=True, null=True, on_delete=models.SET_NULL)
+    phd_officer_2 = models.ForeignKey('Person', verbose_name=_('PhD officer 2'), blank=True, null=True, on_delete=models.SET_NULL)
+    phd_defense_date = models.DateField(_('PhD defense date'), blank=True)
+    phd_title = models.TextField(_('PhD title'))
+    phd_postdoctoralsituation =  models.CharField(_('post-doctoral situation'), blank=True, max_length=256)
+
+    training_type = models.ForeignKey(TrainingType, verbose_name=_('training type'), blank=True, null=True, on_delete=models.SET_NULL)
+    training_level = models.ForeignKey(TrainingLevel, verbose_name=_('training level'), blank=True, null=True, on_delete=models.SET_NULL)
+    training_topic = models.ForeignKey(TrainingTopic, verbose_name=_('training topic'), blank=True, null=True, on_delete=models.SET_NULL)
+    training_speciality = models.ForeignKey(TrainingSpectiality, verbose_name=_('training speciality'), blank=True, null=True, on_delete=models.SET_NULL)
+    training_title = models.TextField(_('Training title'))
+
+    comments = models.TextField(_('comments'))
+    budget_code = models.ForeignKey(BudgetCode, blank=True, null=True, on_delete=models.SET_NULL)
+    record_piece = models.ForeignKey(RecordPiece, blank=True, null=True, on_delete=models.SET_NULL)
+    record_date = models.DateField(_('last record date'), auto_now=True)
 
     class Meta:
         verbose_name = _('activity')
@@ -180,6 +269,3 @@ class PersonLink(Link):
 
     class Meta:
         verbose_name = _('person link')
-
-    def __str__(self):
-        return self.url
