@@ -142,5 +142,5 @@ DEBUG_TOOLBAR_PANELS = [
 ]
 
 GRAPPELLI_INSTALLED = True
-JQUERY_FILENAME = 'jquery-3.1.0.min.js'
-JQUERY_UI_FILENAME = 'jquery-ui-1.12.0.min.js'
+# JQUERY_FILENAME = 'jquery-3.1.0.min.js'
+# JQUERY_UI_FILENAME = 'jquery-ui-1.12.0.min.js'
