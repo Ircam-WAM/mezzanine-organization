@@ -1,0 +1,13 @@
+<hr/>
+<h1>Body</h1>
+<br/>
+{% for body in home.dynamiccontenthomebody_set.all %}
+  {% if body.content_type.model == "brief" %}
+    {% include "home/inc/brief_card.html" %}
+  {% else %}
+    {% include "home/inc/generic_card.html" %}
+  {% endif %}
+{% endfor %}
+
+<br/>
+<hr/>
