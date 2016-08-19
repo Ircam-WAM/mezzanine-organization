@@ -1,0 +1,12 @@
+<hr/>
+<h1>Slider</h1>
+<be/>
+{% for slider in home.dynamiccontenthomeslider_set.all %}
+<h2>{{ slider.content_object.title }}<h2><br/>
+<img src="{{ MEDIA_URL }}{{ slider.content_object.photo_slider }}" title="{{ slider.content_object.photo_slider_credits }}" /><br/>
+{{ slider.content_object.photo_slider_credits }}<br/>
+<a href="{{ slider.content_object.get_absolute_url }}" title="{{ slider.content_object.title }}">{{ slider.content_object.title }}</a><br/>
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br/>
+{% endfor %}
+<br/>
+<hr/>
