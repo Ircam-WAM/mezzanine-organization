@@ -21,7 +21,6 @@ from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 from mezzanine.galleries.models import BaseGallery
 
-from organization.media.models import Photo
 from organization.core.models import *
 from organization.magazine.models import Article
 
