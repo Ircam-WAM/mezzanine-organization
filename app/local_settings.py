@@ -69,9 +69,9 @@ SITE_TAGLINE = 'Institut de Recherche et de Coordination Acoustique et Musique'
 SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 
 ADMIN_MENU_ORDER = (
-    (_('Pages'), ('pages.Page', 'organization-featured.Featured', 'organization-pages.Home')),
+    (_('Pages'), ('pages.Page', 'organization-pages.Home')),
     (_('Media'), ('organization-media.Video', 'organization-media.VideoCategory', 'organization-media.Audio', 'organization-media.Playlist', (_('Media Library'), 'fb_browse'),)),
-    (_('Events'), ('mezzanine_agenda.Event', 'mezzanine_agenda.EventLocation', 'mezzanine_agenda.EventCategory', 'mezzanine_agenda.EventPrice',)),
+    (_('Events'), ('mezzanine_agenda.Event', 'mezzanine_agenda.EventLocation', 'mezzanine_agenda.EventPrice',)),
     (_('Magazine'), ('organization-magazine.Article', 'organization-magazine.Brief',)),
     (_('Organization'), ('organization-team.Organization', 'organization-team.Department', 'organization-team.Team', 'organization-team.Person', 'organization-team.Activity', 'organization-team.OrganizationType',)),
     (_('Projects'), ('organization-project.Project',)),
@@ -109,9 +109,6 @@ else:
     TINYMCE_SETUP_JS = "/srv/app/organization/core/static/js/tinymce_setup.js"
 
 SLUGIFY = 'django.template.defaultfilters.slugify'
-
-HOME_FEATURED_ID = 1
-BREAKING_NEWS_FEATURED_ID = 4
 
 BLOG_POST_PER_PAGE = 200
 
