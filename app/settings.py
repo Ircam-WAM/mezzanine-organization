@@ -327,7 +327,7 @@ OPTIONAL_APPS = (
 )
 
 if DEBUG:
-    OPTIONAL_APPS += "debug_toolbar"
+    OPTIONAL_APPS += ("debug_toolbar",)
 
 ##################
 # LOCAL SETTINGS #
