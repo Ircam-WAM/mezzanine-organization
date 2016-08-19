@@ -9,7 +9,7 @@ from organization.core.models import *
 from organization.team.models import Person, Team, Organization
 
 
-class Project(Displayable, RichText):
+class Project(Displayable, Period, RichText):
     """(Project description)"""
 
     lead_team = models.ForeignKey(Team, verbose_name=_('lead team'), related_name='leader_projects', blank=True, null=True)
