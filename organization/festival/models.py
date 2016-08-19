@@ -10,7 +10,6 @@ from mezzanine.blog.models import BlogPost
 from mezzanine.pages.models import Page
 
 from organization.core.models import *
-from organization.media.models import *
 
 import requests
 from pyquery import PyQuery as pq

@@ -11,8 +11,7 @@ from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 #from orderable.models import Orderable
-from organization.core.models import Named, Description, Image
-from organization.media.models import Photo
+from organization.core.models import Named, Description, Image, Photo
 
 class ArticleImage(Image):
 
