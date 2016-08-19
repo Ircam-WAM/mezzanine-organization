@@ -24,6 +24,7 @@ class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
         model = DynamicContentHomeSlider
         fields = ('__all__')
 
+
 class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
