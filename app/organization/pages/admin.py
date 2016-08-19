@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from django.contrib import admin
+from mezzanine.utils.static import static_lazy as static
 from copy import deepcopy
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
@@ -10,13 +11,18 @@ from organization.pages.forms import DynamicContentHomeSliderForm, DynamicConten
 
 # Register your models here.
 
-class DynamicContentHomeSliderInline(StackedDynamicInlineAdmin):
+class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
 
     model = DynamicContentHomeSlider
     form = DynamicContentHomeSliderForm
 
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
 
-class DynamicContentHomeBodyInline(StackedDynamicInlineAdmin):
+
+class DynamicContentHomeBodyInline(TabularDynamicInlineAdmin):
 
     model = DynamicContentHomeBody
     form = DynamicContentHomeBodyForm

@@ -2,7 +2,7 @@ from dal import autocomplete
 
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
-
+from mezzanine.core.models import Orderable
 from organization.magazine.models import Article, Topic, Brief
 from organization.core.models import BasicPage
 from mezzanine_agenda.models import Event
@@ -19,10 +19,13 @@ class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-slider'),
     )
+    # js = [static("mezzanine/js/admin/dynamic_inline.js")]
 
     class Meta:
         model = DynamicContentHomeSlider
-        fields = ('__all__')
+        fields = ('content_object',)
+
+
 
 
 class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
@@ -40,4 +43,4 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
 
     class Meta:
         model = DynamicContentHomeBody
-        fields = ('__all__')
+        fields = ('content_object',)
