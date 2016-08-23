@@ -8,6 +8,7 @@ from organization.core.views import SlugMixin
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import Home
 
+
 class HomeView(SlugMixin, ListView):
 
     model = Home
@@ -16,7 +17,10 @@ class HomeView(SlugMixin, ListView):
     context_object_name = 'home'
 
     def get_queryset(self, **kwargs):
-        return self.model.objects.published().latest("publish_date")
+        homes = self.model.objects.published()
+        if homes:
+            return homes.latest("publish_date")
+        return None
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)

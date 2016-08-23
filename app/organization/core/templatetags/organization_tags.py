@@ -89,3 +89,14 @@ def no_parents(events):
 def get_mezzanine_menu_name(menu_id):
     return settings.PAGE_MENU_TEMPLATES[int(menu_id)-1][1]
     #return getattr(settings, 'PAGE_MENU_TEMPLATES', menu_id)
+
+@register.filter
+def get_type(objects, type):
+    objs = objects.filter(type=type)
+    if objs:
+        return objs[0]
+    return None
+        
+@register.filter
+def in_category(objects, category):
+    return objects.filter(category=type)
