@@ -37,8 +37,7 @@ python $manage migrate --noinput
 python $manage create-admin-user
 
 # app start
-if [ $1 = "--runserver" ]
-then
+if [ "$1" = "--runserver" ]; then
     python $manage runserver 0.0.0.0:8000
 else
     # static files auto update
