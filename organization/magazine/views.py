@@ -11,7 +11,7 @@ from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
 from organization.magazine.models import Article, Topic, Brief
-from organization.team.models import Department
+from organization.network.models import Department
 from organization.core.models import BasicPage
 from organization.core.views import SlugMixin
 from django.template.defaultfilters import slugify

@@ -1,0 +1,92 @@
+{% extends "pages/basicpage.html" %}
+{% load i18n mezzanine_tags keyword_tags  pages_tags organization_tags %}
+
+{% block meta_title %}{{ page.meta_title }}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ page.description }}
+{% endmetablock %}{% endblock %}
+
+{% block page_class %}
+    department
+{% endblock %}
+
+{% block page_title %}
+
+    {% editable page.teampage.title %}
+        <h1 class="dotted">{{ page.teampage.title }}</h1>
+    {% endeditable %}
+
+{% endblock %}
+
+{% block page_slider %}
+  {% if page.teampage.pageimage_set.all %}
+    {% with page.teampage.pageimage_set.all as slider_images %}
+        {% include 'core/inc/slider.html' %}
+    {% endwith %}
+  {% endif %}
+{% endblock %}
+
+{% block page_content %}
+
+    {% if page.teampage.sub_title %}
+        {% editable page.teampage.sub_title %}
+            <div class="chapo">
+                {{ page.teampage.sub_title }}
+            </div>
+        {% endeditable %}
+    {% endif %}
+
+    {% editable page.teampage.content %}
+        {{ page.teampage.content|richtext_filters|safe }}
+    {% endeditable %}
+
+    {% if page.get_ascendants|length == 1 %}
+        {% children_pages page.id as childrens %}
+        {% if childrens %}
+            <div class="page__childrens">
+                {% for children in childrens %}
+                    {% with children as object %}
+                        {% include "pages/includes/page_card.html" %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block page_sub_content %}
+
+    {% if page.teampage.pageblock_set.all %}
+        <div class="white-bg pb2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr class="mt0" />
+                        {% for pageblock in page.teampage.pageblock_set.all %}
+                            <div class="row" data-summary-content>
+                                <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
+                                    {% if not forloop.first and pageblock.with_separator %}
+                                        <hr />
+                                    {% endif %}
+                                    <h2 class="dotted">{{ pageblock.title }}</h2>
+                                    {{ pageblock.content|richtext_filters|safe }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

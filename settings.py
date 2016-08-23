@@ -228,11 +228,11 @@ INSTALLED_APPS = [
 #    "orderable",
     "organization.core",
     "organization.pages",
-    "organization.team",
+    "organization.network",
     "organization.festival",
     "organization.magazine",
     "organization.media",
-    "organization.project",
+    "organization.projects",
 ]
 
 
