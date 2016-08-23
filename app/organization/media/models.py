@@ -69,7 +69,7 @@ class Video(Media):
 
     open_source_mime_type = 'video/webm'
     closed_source_mime_type = 'video/mp4'
-    category = models.ForeignKey('VideoCategory', related_name='videos', verbose_name=_('category'), blank=True, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('VideoCategory', verbose_name=_('category'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('video')
@@ -97,7 +97,6 @@ class Playlist(Slugged):
     """(Playlist description)"""
 
     audios = models.ManyToManyField('Audio', verbose_name=_('audios'), related_name='playlists', blank=True)
-    #description = models.OneToOneField('organization-core.Description', verbose_name=_('description'), related_name='description', blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

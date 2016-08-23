@@ -61,19 +61,19 @@ class Address(models.Model):
     def __str__(self):
         return ' '.join((self.address, self.postal_code))
 
-        class Meta:
-            abstract = True
+    class Meta:
+        abstract = True
 
 
-class Organization(Named, Address, Photo):
+class Organization(CustomModel, Named, Address, URL):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
-    web_site = models.URLField(_('web site'), max_length=512, blank=True)
     is_on_map = models.BooleanField(_('is on map'), default=True)
 
     class Meta:
         verbose_name = _('organization')
+
 
 
 class OrganizationType(Named):
@@ -97,22 +97,21 @@ class Department(Named):
         return self.name
 
 
-class DepartmentPage(Page, SubTitle, RichText, Photo):
+class DepartmentPage(Page, SubTitled, RichText):
     """(Department description)"""
 
-    department = models.ForeignKey('Department', verbose_name=_('department'))
+    department = models.ForeignKey('Department', verbose_name=_('department'), related_name="pages", blank=True, null=True, on_delete=models.SET_NULL)
     weaving_css_class = models.CharField(_('background pattern'), choices=PATTERN_CHOICES, max_length=64, blank=True)
 
     class Meta:
         verbose_name = _('department page')
 
 
-class Team(Named):
+class Team(Named, URL):
     """(Team description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
     department = models.ForeignKey('Department', verbose_name=_('department'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
-    web_site = models.URLField(_('web site'), max_length=512, blank=True)
 
     class Meta:
         verbose_name = _('team')
@@ -128,16 +127,17 @@ class Team(Named):
         return self.name
 
 
-class TeamPage(Page, SubTitle, RichText, Photo):
+class TeamPage(Page, SubTitled, RichText):
     """(Team description)"""
 
-    team = models.ForeignKey('Team', verbose_name=_('team'))
+    team = models.ForeignKey('Team', verbose_name=_('team'), related_name="pages", blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('team page')
 
 
-class Person(Displayable, AdminThumbMixin, Photo):
+
+class Person(CustomDisplayable, AdminThumbMixin):
     """(Person description)"""
 
     user = models.ForeignKey(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -179,13 +179,6 @@ class Person(Displayable, AdminThumbMixin, Photo):
         self.set_names()
         super(Person, self).save(*args, **kwargs)
 
-
-class TeamLink(Link):
-
-    team = models.ForeignKey(Team, verbose_name=_('links'))
-
-    def __str__(self):
-        return self.url
 
 
 class ActivityStatus(Named):
@@ -291,12 +284,3 @@ class PersonActivity(Description, Period, RichText):
 
     def __unicode__(self):
         return ' - '.join((self.person, self.role, self.date_begin, self.date_end))
-
-
-class PersonLink(Link):
-    """A person can have many links."""
-
-    person = models.ForeignKey('Person', verbose_name=_('person'))
-
-    class Meta:
-        verbose_name = _('person link')

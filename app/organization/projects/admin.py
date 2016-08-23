@@ -6,21 +6,22 @@ from django.utils.translation import ugettext_lazy as _
 from mezzanine.core.admin import *
 
 from organization.projects.models import *
+from organization.pages.models import *
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
 
-    model = ProjectLink
+    model = DisplayableLink
 
 
 class ProjectImageInline(TabularDynamicInlineAdmin):
 
-    model = ProjectImage
+    model = DisplayableImage
 
 
 class ProjectBlockInline(StackedDynamicInlineAdmin):
 
-    model = ProjectBlock
+    model = DisplayableBlock
 
 
 class ProjectAdmin(admin.ModelAdmin):

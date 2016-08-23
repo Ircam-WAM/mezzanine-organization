@@ -12,7 +12,7 @@ from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
 from organization.magazine.models import Article, Topic, Brief
 from organization.network.models import Department
-from organization.core.models import BasicPage
+from organization.pages.models import CustomPage
 from organization.core.views import SlugMixin
 from django.template.defaultfilters import slugify
 
@@ -89,15 +89,15 @@ class ObjectAutocomplete(Select2QuerySetSequenceView):
     def get_queryset(self):
 
         articles = Article.objects.all()
-        basicpage = BasicPage.objects.all()
+        custompage = CustomPage.objects.all()
         events = Event.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
-            basicpage = basicpage.filter(title__icontains=self.q)
+            custompage = custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, basicpage, events )
+        qs = autocomplete.QuerySetSequence(articles, custompage, events )
 
         if self.q:
             # This would apply the filter on all the querysets

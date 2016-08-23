@@ -14,16 +14,18 @@ class DepartmentTranslationOptions(TranslationOptions):
 
     fields = ('name', 'description')
 
+
+@register(DepartmentPage)
+class DepartmentPageTranslationOptions(TranslationOptions):
+
+    fields = ('sub_title', 'content',)
+
+
 @register(Team)
 class TeamTranslationOptions(TranslationOptions):
 
     fields = ('name', 'description')
 
-
-@register(DepartmentPage)
-class DepartmentTranslationOptions(TranslationOptions):
-
-    fields = ('sub_title', 'content',)
 
 @register(TeamPage)
 class TeamTranslationOptions(TranslationOptions):
@@ -41,9 +43,3 @@ class PersonTranslationOptions(TranslationOptions):
 class PersonActivityTranslationOptions(TranslationOptions):
 
     fields = ('description', 'content')
-
-
-@register(PersonLink)
-class PersonTranslationOptions(TranslationOptions):
-
-    pass

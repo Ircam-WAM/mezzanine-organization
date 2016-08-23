@@ -15,7 +15,7 @@ import requests
 from pyquery import PyQuery as pq
 
 
-class Artist(Displayable, RichText, AdminThumbMixin, Photo):
+class Artist(Displayable, RichText, AdminThumbMixin):
     """Artist"""
 
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)

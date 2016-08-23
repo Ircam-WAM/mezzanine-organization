@@ -10,22 +10,12 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
-#from orderable.models import Orderable
-from organization.core.models import Named, Description, Image, Photo
+
+from organization.core.models import *
 
 
-class ArticleImage(Image):
+class Article(BlogPost, SubTitled):
 
-    article_fk = models.ForeignKey("Article", verbose_name=_('article'))
-
-    class Meta:
-        verbose_name = _("image")
-        verbose_name_plural = _("images")
-        order_with_respect_to = "article"
-
-class Article(BlogPost, Photo):
-
-    sub_title = models.CharField(_('sub title'), blank=True, max_length=1000)
     related_articles = models.ManyToManyField("self",
                                  verbose_name=_("Related articles"), blank=True)
 
@@ -36,6 +26,16 @@ class Article(BlogPost, Photo):
 
     class Meta:
         verbose_name = _('article')
+
+
+class ArticleImage(Image):
+
+    article = models.ForeignKey("Article", verbose_name=_('article'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("image")
+        verbose_name_plural = _("images")
+        order_with_respect_to = "article"
 
 
 class Brief(Displayable, RichText): #Orderable

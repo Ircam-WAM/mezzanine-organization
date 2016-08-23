@@ -12,6 +12,7 @@ from mezzanine.core.models import Displayable, Slugged, Orderable
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')))
 ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
+IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('slider', _('slider')), ('card', _('card')), ('content', _('content')))
 
 
 class Description(models.Model):
@@ -53,7 +54,7 @@ class Titled(models.Model):
         return self.title
 
 
-class SubTitle(models.Model):
+class SubTitled(models.Model):
 
     sub_title = models.TextField(_('sub title'), blank=True, max_length=1024)
 
@@ -71,38 +72,6 @@ class Category(Named):
         return self.name
 
 
-class Photo(models.Model):
-    """Photo bundle with credits"""
-
-    photo = FileField(_('photo'), upload_to='images/photos', max_length=1024, blank=True, format="Image")
-    photo_credits = models.CharField(_('photo credits'), max_length=255, blank=True, null=True)
-    photo_alignment = models.CharField(_('photo alignment'), choices=ALIGNMENT_CHOICES, max_length=32, default="left", blank=True)
-    photo_description = models.TextField(_('photo description'), blank=True)
-
-    photo_card = FileField(_('card photo'), upload_to='images/photos/card', max_length=1024, blank=True, format="Image")
-    photo_card_credits = models.CharField(_('photo card credits'), max_length=255, blank=True, null=True)
-
-    photo_slider = FileField(_('slider photo'), upload_to='images/photos/slider', max_length=1024, blank=True, format="Image")
-    photo_slider_credits = models.CharField(_('photo slider credits'), max_length=255, blank=True, null=True)
-    abstract = True
-
-    class Meta:
-        abstract = True
-
-    @property
-    def card(self):
-        if self.photo_card:
-            return self.photo_card
-        else:
-            return self.photo
-
-
-class BasicPage(Page, SubTitle, Photo, RichText):
-
-    class Meta:
-        verbose_name = 'basic page'
-
-
 class Block(RichText, Titled, Orderable):
 
     with_separator = models.BooleanField(default=False)
@@ -110,6 +79,24 @@ class Block(RichText, Titled, Orderable):
 
     class Meta:
         abstract = True
+
+
+class Image(Titled, Orderable):
+
+    file = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
+    credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
+    type = models.CharField(_('type'), max_length=64, choices=IMAGE_TYPE_CHOICES, blank=True)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        value = self.description
+        if not value:
+            value = self.file.name
+        if not value:
+            value = ""
+        return value
 
 
 class DynamicContent(models.Model):
@@ -136,39 +123,12 @@ class DynamicContent(models.Model):
         abstract = True
 
 
-class Image(Description, Orderable):
+class URL(models.Model):
 
-    file = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
-    credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
+    url = models.URLField(_('URL'), max_length=512, blank=True)
 
     class Meta:
         abstract = True
-
-    def __str__(self):
-        value = self.description
-        if not value:
-            value = self.file.name
-        if not value:
-            value = ""
-        return value
-
-
-class PageBlock(Block):
-
-    page = models.ForeignKey(Page, verbose_name=_('page'), blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = 'page block'
-
-
-class PageImage(Image):
-
-    page = models.ForeignKey(Page, verbose_name=_('page'))
-
-    class Meta:
-        verbose_name = _("image")
-        verbose_name_plural = _("images")
-        order_with_respect_to = "page"
 
 
 class LinkType(models.Model):
@@ -196,11 +156,10 @@ class LinkType(models.Model):
         return self.name
 
 
-class Link(models.Model):
+class Link(URL):
     """A person can have many links."""
 
     link_type = models.ForeignKey(LinkType, verbose_name=_('link type'))
-    url = models.URLField(verbose_name=_('URL'))
 
     class Meta:
         abstract = True
@@ -211,6 +170,7 @@ class Link(models.Model):
         return self.url
 
 
+
 class Period(models.Model):
 
     date_begin = models.DateField(_('begin date'), null=True, blank=True)
@@ -218,3 +178,77 @@ class Period(models.Model):
 
     class Meta:
         abstract = True
+
+
+
+class CustomDisplayable(Displayable):
+
+    class Meta:
+        verbose_name = _('custom displayable')
+
+
+class DisplayableBlock(Block):
+
+    displayable = models.ForeignKey(CustomDisplayable, verbose_name=_('displayable'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('block')
+        verbose_name_plural = _("blocks")
+        order_with_respect_to = "displayable"
+
+
+class DisplayableImage(Image):
+
+    displayable = models.ForeignKey(CustomDisplayable, verbose_name=_('displayable'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('image')
+        verbose_name_plural = _("images")
+        order_with_respect_to = "displayable"
+
+
+class DisplayableLink(Link):
+
+    displayable = models.ForeignKey(CustomDisplayable, verbose_name=_('displayable'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('link')
+        verbose_name_plural = _("links")
+        order_with_respect_to = "displayable"
+
+
+
+class CustomModel(models.Model):
+
+    class Meta:
+        verbose_name = _('custom model')
+
+
+class ModelBlock(Block):
+
+    model = models.ForeignKey(CustomModel, verbose_name=_('model'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('block')
+        verbose_name_plural = _("blocks")
+        order_with_respect_to = "model"
+
+
+class ModelImage(Image):
+
+    model = models.ForeignKey(CustomModel, verbose_name=_('model'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('image')
+        verbose_name_plural = _("images")
+        order_with_respect_to = "model"
+
+
+class ModelLink(Link):
+
+    model = models.ForeignKey(CustomModel, verbose_name=_('model'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('link')
+        verbose_name_plural = _("links")
+        order_with_respect_to = "model"

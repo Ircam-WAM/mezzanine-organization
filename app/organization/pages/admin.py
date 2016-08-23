@@ -5,11 +5,25 @@ from mezzanine.utils.static import static_lazy as static
 from copy import deepcopy
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
-from organization.core.models import *
+from organization.pages.models import *
 from organization.pages.models import DynamicContentHomeSlider, DynamicContentHomeBody, Home
 from organization.pages.forms import DynamicContentHomeSliderForm, DynamicContentHomeBodyForm
 
-# Register your models here.
+
+class PageBlockInline(StackedDynamicInlineAdmin):
+
+    model = PageBlock
+
+
+class PageImageInline(TabularDynamicInlineAdmin):
+
+    model = PageImage
+
+
+class CustomPageAdmin(PageAdmin):
+
+    inlines = [PageBlockInline, PageImageInline]
+
 
 class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
 
@@ -33,4 +47,7 @@ class HomeAdminDisplayable(BaseTranslationModelAdmin):
     inlines = [DynamicContentHomeSliderInline, DynamicContentHomeBodyInline  ]
 
 
+
+
+admin.site.register(CustomPage, CustomPageAdmin)
 admin.site.register(Home, HomeAdminDisplayable)
