@@ -16,6 +16,7 @@ class OrganizationAdmin(BaseTranslationModelAdmin):
 class PersonActivityInline(StackedDynamicInlineAdmin):
 
     model = PersonActivity
+    fk_name = 'person'
 
 
 class TeamAdmin(PageAdmin):
@@ -42,7 +43,7 @@ class PersonAdmin(BaseTranslationModelAdmin):
 
     model = Person
     inlines = [PersonActivityInline, PersonLinkInline, ]
-    first_fields = ['first_name', 'last_name', 'title', 'gender', 'user']
+    first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
 
     def get_fieldsets(self, request, obj = None):
         res = super(PersonAdmin, self).get_fieldsets(request, obj)
@@ -55,5 +56,5 @@ class PersonAdmin(BaseTranslationModelAdmin):
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationType)
 admin.site.register(Department, DepartmentAdmin)
-admin.site.register(Team, TeamAdmin)
+# admin.site.register(Team, TeamAdmin)
 admin.site.register(Person, PersonAdmin)
