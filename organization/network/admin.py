@@ -5,18 +5,29 @@ from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 
 from organization.network.models import *
+from organization.pages.models import *
 from organization.core.admin import *
+
+
+class OrganizationImageInline(TabularDynamicInlineAdmin):
+
+    model = ModelImage
 
 
 class OrganizationAdmin(BaseTranslationModelAdmin):
 
     model = Organization
+    inlines = [OrganizationImageInline,]
 
 
-class PersonActivityInline(StackedDynamicInlineAdmin):
+class DepartmentPageImageInline(TabularDynamicInlineAdmin):
 
-    model = PersonActivity
-    fk_name = 'person'
+    model = PageImage
+
+
+class DepartmentPageAdmin(PageAdmin):
+
+    inlines = [DepartmentPageImageInline,]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -24,19 +35,19 @@ class DepartmentAdmin(BaseTranslationModelAdmin):
     model = Department
 
 
-class DepartmentPageAdmin(PageAdmin):
-
-    inlines = [PageBlockInline, PageImageInline]
-
-
 class TeamAdmin(BaseTranslationModelAdmin):
 
     model = Team
 
 
+class TeamPageImageInline(TabularDynamicInlineAdmin):
+
+    model = PageImage
+
+
 class TeamPageAdmin(PageAdmin):
 
-    inlines = [PageBlockInline, PageImageInline]
+    inlines = [TeamPageImageInline,]
 
 
 class PersonAdminBase(BaseTranslationModelAdmin):
@@ -46,13 +57,24 @@ class PersonAdminBase(BaseTranslationModelAdmin):
 
 class PersonLinkInline(StackedDynamicInlineAdmin):
 
-    model = PersonLink
+    model = DisplayableLink
+
+
+class PersonActivityInline(StackedDynamicInlineAdmin):
+
+    model = PersonActivity
+    fk_name = 'person'
+
+
+class PersonImageInline(TabularDynamicInlineAdmin):
+
+    model = DisplayableImage
 
 
 class PersonAdmin(BaseTranslationModelAdmin):
 
     model = Person
-    inlines = [PersonActivityInline, PersonLinkInline, ]
+    inlines = [PersonImageInline, PersonActivityInline, PersonLinkInline, ]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
 
     def get_fieldsets(self, request, obj = None):
@@ -66,7 +88,7 @@ class PersonAdmin(BaseTranslationModelAdmin):
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationType)
 admin.site.register(Department, DepartmentAdmin)
-admin.site.register(Team, TeamAdmin)
 admin.site.register(DepartmentPage, DepartmentPageAdmin)
+admin.site.register(Team, TeamAdmin)
 admin.site.register(TeamPage, TeamPageAdmin)
 admin.site.register(Person, PersonAdmin)

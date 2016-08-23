@@ -7,20 +7,3 @@ from organization.projects.models import *
 class ProjectTranslationOptions(TranslationOptions):
 
     fields = ('title', 'description', 'content')
-
-
-@register(ProjectImage)
-class ProjectImageTranslationOptions(TranslationOptions):
-
-    fields = ('description',)
-
-
-@register(ProjectLink)
-class ProjectLinkTranslationOptions(TranslationOptions):
-    pass
-
-
-@register(ProjectBlock)
-class ProjectBlockTranslationOptions(TranslationOptions):
-
-    fields = ('title', 'content', )
