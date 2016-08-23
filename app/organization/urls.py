@@ -17,6 +17,6 @@ urlpatterns = [
     url("^", include('organization.festival.urls')),
     url("^", include('organization.magazine.urls')),
     url("^", include('organization.media.urls')),
-    url("^", include('organization.project.urls')),
-    url("^", include('organization.team.urls')),
+    url("^", include('organization.projects.urls')),
+    url("^", include('organization.network.urls')),
 ]

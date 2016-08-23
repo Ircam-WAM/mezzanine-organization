@@ -1,0 +1,107 @@
+{% extends "pages/basicpage.html" %}
+{% load i18n mezzanine_tags keyword_tags  pages_tags organization_tags %}
+
+{% block meta_title %}{{ page.meta_title }}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ page.description }}
+{% endmetablock %}{% endblock %}
+
+{% block page_class %}
+    department
+{% endblock %}
+
+{% block body_class %}
+    pattern pattern-bg {{ page.departmentpage.weaving_css_class }}
+{% endblock %}
+
+{% block page_title %}
+
+    {% editable page.departmentpage.title %}
+        <h1 class="dashed">{{ page.departmentpage.title }}</h1>
+    {% endeditable %}
+
+{% endblock %}
+
+{% block page_content %}
+    {% if page.departmentpage.sub_title %}
+        {% editable page.departmentpage.sub_title %}
+            <div class="chapo">
+                {{ page.departmentpage.sub_title }}
+            </div>
+        {% endeditable %}
+    {% endif %}
+
+    {% editable page.departmentpage.content %}
+        {{ page.departmentpage.content|richtext_filters|safe }}
+    {% endeditable %}
+
+{% endblock %}
+
+{% block page_slider %}
+  {% if page.departmentpage.pageimage_set.all %}
+    {% with page.departmentpage.pageimage_set.all as slider_images %}
+        {% include 'core/inc/slider.html' %}
+    {% endwith %}
+  {% endif %}
+{% endblock %}
+
+{% block page_sub_content %}
+
+    {% if page.departmentpage.pageblock_set.all %}
+        <div class="white-bg pb2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr class="mt0" />
+                        {% for pageblock in page.departmentpage.pageblock_set.all %}
+                            {% if not forloop.first and pageblock.with_separator %}
+                                <hr />
+                            {% endif %}
+                            <div class="row" data-summary-content>
+                                <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
+                                    <h2 class="dotted">{{ pageblock.title }}</h2>
+                                    {{ pageblock.content|richtext_filters|safe }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block page_related_content %}
+
+    {% if page.departmentpage.articles_related.all %}
+
+        <div class="white-bg pb2">
+            <div class="container">
+                <div class="row tac">
+                    <div class="col-xs-12">
+                        <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
+                    </div>
+                </div>
+                <div class="row tac">
+                    {% for article in page.departmentpage.articles_related.all %}
+                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                            {% include 'magazine/article/includes/article_card.html' %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}

@@ -73,8 +73,8 @@ ADMIN_MENU_ORDER = (
     (_('Media'), ('organization-media.Video', 'organization-media.VideoCategory', 'organization-media.Audio', 'organization-media.Playlist', (_('Media Library'), 'fb_browse'),)),
     (_('Events'), ('mezzanine_agenda.Event', 'mezzanine_agenda.EventLocation', 'mezzanine_agenda.EventPrice',)),
     (_('Magazine'), ('organization-magazine.Article', 'organization-magazine.Brief',)),
-    (_('Organization'), ('organization-team.Organization', 'organization-team.Department', 'organization-team.Team', 'organization-team.Person', 'organization-team.Activity', 'organization-team.OrganizationType',)),
-    (_('Projects'), ('organization-project.Project',)),
+    (_('Network'), ('organization-network.Organization', 'organization-network.Department', 'organization-network.Team', 'organization-network.Person', 'organization-network.Activity', 'organization-network.OrganizationType',)),
+    (_('Projects'), ('organization-projects.Project',)),
     (_('Festival'), ('organization-festival.Artist',)),
     (_('Users'), ('auth.User', 'auth.Group',)),
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
@@ -140,4 +140,4 @@ DEBUG_TOOLBAR_PANELS = [
 
 GRAPPELLI_INSTALLED = True
 # JQUERY_FILENAME = 'jquery-3.1.0.min.js'
-# JQUERY_UI_FILENAME = 'jquery-ui-1.12.0.min.js'
+JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'

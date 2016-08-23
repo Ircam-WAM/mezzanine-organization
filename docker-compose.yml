@@ -44,7 +44,7 @@ app:
   volumes:
     - ./app/:/srv/app
     - ./lib/mezzanine-agenda/:/srv/lib/mezzanine-agenda
-    # - ./lib/mezzanine/:/srv/lib/mezzanine
+    - ./lib/mezzanine/:/srv/lib/mezzanine
   volumes_from:
     - data
   expose:

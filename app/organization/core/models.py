@@ -27,6 +27,7 @@ class Named(models.Model):
     """Abstract model providing a name field"""
 
     name = models.CharField(_('name'), max_length=512)
+    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True
@@ -43,6 +44,7 @@ class Titled(models.Model):
     """Abstract model providing a title field"""
 
     title = models.CharField(_('title'), max_length=1024)
+    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True

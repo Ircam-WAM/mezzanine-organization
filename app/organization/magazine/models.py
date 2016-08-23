@@ -13,6 +13,7 @@ from mezzanine.blog.models import BlogPost
 #from orderable.models import Orderable
 from organization.core.models import Named, Description, Image, Photo
 
+
 class ArticleImage(Image):
 
     article_fk = models.ForeignKey("Article", verbose_name=_('article'))
