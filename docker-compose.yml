@@ -40,7 +40,7 @@ db:
 
 app:
   build: .
-  command: /bin/sh scripts/app.sh
+  command: /bin/bash scripts/app.sh
   volumes:
     - ./app/:/srv/app
     - ./lib/mezzanine-agenda/:/srv/lib/mezzanine-agenda
