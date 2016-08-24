@@ -1,4 +1,4 @@
-{% load mezzanine_tags %}
+{% load mezzanine_tags organization_tags %}
 <a href="{{ object.get_absolute_url }}" title="{{ object.title }}" class="page-box">
     <div class="page-box__image">
       {% with slider.content_object.page_images.all|get_type:'card' as image %}
