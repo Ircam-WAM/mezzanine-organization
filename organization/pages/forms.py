@@ -5,7 +5,7 @@ import dal_select2_queryset_sequence
 from mezzanine.core.models import Orderable
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
-from mezzanine_agenda.models import Event
+# from mezzanine_agenda.models import Event
 from organization.pages.models import DynamicContentHomeSlider, DynamicContentHomeBody
 
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
@@ -13,7 +13,7 @@ class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
         queryset=autocomplete.QuerySetSequence(
             Article.objects.all(),
-            Event.objects.all(),
+            # Event.objects.all(),
             CustomPage.objects.all(),
         ),
         required=False,
@@ -33,7 +33,7 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
         queryset=autocomplete.QuerySetSequence(
             Article.objects.all(),
-            Event.objects.all(),
+            # Event.objects.all(),
             CustomPage.objects.all(),
             Brief.objects.all(),
         ),
