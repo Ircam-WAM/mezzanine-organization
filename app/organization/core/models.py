@@ -12,7 +12,7 @@ from mezzanine.core.models import Displayable, Slugged, Orderable
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')))
 ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
-IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('slider', _('slider')), ('card', _('card')), ('content', _('content')))
+IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('slider', _('slider')), ('card', _('card')), ('page_slider', _('page slider')))
 
 
 class Description(models.Model):
