@@ -11,7 +11,7 @@ from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
 from organization.magazine.models import Article, Topic, Brief
-from organization.network.models import Department
+from organization.network.models import DepartmentPage
 from organization.pages.models import CustomPage
 from organization.core.views import SlugMixin
 from django.template.defaultfilters import slugify
@@ -29,7 +29,7 @@ class ArticleDetailView(SlugMixin, DetailView):
         if previous_page_slug:
             #find parents page
             parsed_url = urlparse(previous_page_url)
-            self.department_parent = Department.objects.filter(slug=parsed_url.path[1:][:-1])
+            self.department_parent = DepartmentPage.objects.filter(slug=parsed_url.path[1:][:-1])
             self.topic_parent = Topic.objects.filter(slug=previous_page_slug)
         return super(ArticleDetailView, self).get(request, *args, **kwargs)
 
