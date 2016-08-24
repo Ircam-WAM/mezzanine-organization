@@ -1,5 +1,5 @@
 {% extends "pages/custompage.html" %}
-{% load i18n mezzanine_tags keyword_tags  pages_tags organization_tags %}
+{% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
 
 {% block meta_title %}{{ page.meta_title }}{% endblock %}
 
@@ -40,9 +40,13 @@
         {% endeditable %}
     {% endif %}
 
-    {% editable page.departmentpage.content %}
+    {% if page.departmentpage.content %}
+     {% editable page.departmentpage.content %}
         {{ page.departmentpage.content|richtext_filters|safe }}
-    {% endeditable %}
+     {% endeditable %}
+    {% else %}
+        {% lorem 3 p %}
+    {% endif %}
 
 {% endblock %}
 
@@ -69,7 +73,11 @@
                             <div class="row" data-summary-content>
                                 <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
                                     <h2 class="dotted">{{ pageblock.title }}</h2>
-                                    {{ pageblock.content|richtext_filters|safe }}
+                                    {% if pageblock.content %}
+                                         {{ pageblock.content|richtext_filters|safe }}
+                                    {% else %}
+                                        {% lorem 3 p %}
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endfor %}

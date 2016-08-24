@@ -45,9 +45,13 @@
         {% endeditable %}
     {% endif %}
 
-    {% editable page.teampage.content %}
+    {% if page.teampage.content %}
+     {% editable page.teampage.content %}
         {{ page.teampage.content|richtext_filters|safe }}
-    {% endeditable %}
+     {% endeditable %}
+    {% else %}
+        {% lorem 3 p %}
+    {% endif %}
 
     {% if page.get_ascendants|length == 1 %}
         {% children_pages page.id as childrens %}
@@ -79,7 +83,11 @@
                                         <hr />
                                     {% endif %}
                                     <h2 class="dotted">{{ pageblock.title }}</h2>
-                                    {{ pageblock.content|richtext_filters|safe }}
+                                    {% if pageblock.content %}
+                                         {{ pageblock.content|richtext_filters|safe }}
+                                    {% else %}
+                                        {% lorem 3 p %}
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endfor %}
