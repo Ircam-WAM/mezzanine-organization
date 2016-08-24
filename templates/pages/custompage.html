@@ -59,13 +59,13 @@
 {% endblock %}
 
 {% block page_sub_content %}
-    {% if page.custompage.page_blocks.all %}
+    {% if page.custompage.blocks.all %}
         <div class="white-bg">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
                         <hr class="mt0" />
-                        {% for pageblock in page.custompage.page_blocks.all %}
+                        {% for pageblock in page.custompage.blocks.all %}
                             <div class="row" data-summary-content>
                                 <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
                                     {% if not forloop.first and pageblock.with_separator %}

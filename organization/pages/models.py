@@ -13,7 +13,7 @@ class CustomPage(Page, SubTitled, RichText):
 
 class PageBlock(Block):
 
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='page_blocks', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _("block")
@@ -23,7 +23,7 @@ class PageBlock(Block):
 
 class PageImage(Image):
 
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='page_images', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _("image")
