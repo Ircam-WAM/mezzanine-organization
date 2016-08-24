@@ -17,7 +17,7 @@
                 <a class="nav-header__item-link{% if page.is_current_or_ascendant %} active{% endif %}" href="{{ page.get_absolute_url }}" title="{{ page.title }}">{{ page.title }}</a>
 
         {% endif %}
-        {% if page.has_children_in_menu and not forloop.first %}
+        {% if page.has_children_in_menu %}
             {% page_menu page "pages/menus/header_tree_primary.html" %}
         {% endif %}
             </li>
