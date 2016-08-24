@@ -20,11 +20,9 @@
 {% endblock %}
 
 {% block page_title %}
-
     {% editable page.custompage.title %}
         <h1 class="dotted">{{ page.custompage.title }}</h1>
     {% endeditable %}
-
 {% endblock %}
 
 {% block page_content %}
@@ -37,9 +35,13 @@
         {% endeditable %}
     {% endif %}
 
-    {% editable page.custompage.content %}
+    {% if page.custompage.content %}
+     {% editable page.custompage.content %}
         {{ page.custompage.content|richtext_filters|safe }}
-    {% endeditable %}
+     {% endeditable %}
+    {% else %}
+        {% lorem 3 p %}
+    {% endif %}
 
     {% if page.get_ascendants|length == 1 %}
         {% children_pages page.id as childrens %}
@@ -57,20 +59,24 @@
 {% endblock %}
 
 {% block page_sub_content %}
-    {% if page.custompage.pageblock_set.all %}
+    {% if page.custompage.page_blocks.all %}
         <div class="white-bg">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
                         <hr class="mt0" />
-                        {% for pageblock in page.custompage.pageblock_set.all %}
+                        {% for pageblock in page.custompage.page_blocks.all %}
                             <div class="row" data-summary-content>
                                 <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
                                     {% if not forloop.first and pageblock.with_separator %}
                                         <hr />
                                     {% endif %}
                                     <h2 class="dotted">{{ pageblock.title }}</h2>
-                                    {{ pageblock.content|richtext_filters|safe }}
+                                    {% if pageblock.content %}
+                                         {{ pageblock.content|richtext_filters|safe }}
+                                    {% else %}
+                                        {% lorem 3 p %}
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endfor %}
