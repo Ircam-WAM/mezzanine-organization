@@ -3,6 +3,7 @@
 <h1>Slider</h1>
 <br/>
 {% for slider in home.dynamiccontenthomeslider_set.all %}
+{{ slider.content_object }}
   {% with slider.content_object.images.all|get_type:'slider' as image %}
     {% if image %}
           <h2>{{ slider.content_object.title }}<h2><br/>
