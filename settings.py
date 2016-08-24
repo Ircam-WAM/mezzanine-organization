@@ -176,7 +176,6 @@ STATIC_ROOT = '/srv/static/'
 
 STATICFILES_DIRS = [
     '/srv/app/static',
-
 ]
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
