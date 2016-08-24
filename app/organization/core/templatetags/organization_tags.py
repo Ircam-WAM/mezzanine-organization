@@ -96,7 +96,7 @@ def get_type(objects, type):
     if objs:
         return objs[0]
     return None
-        
+
 @register.filter
 def in_category(objects, category):
     return objects.filter(category=type)

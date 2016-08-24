@@ -24,13 +24,6 @@
 
 {% block breadcrumb_menu %}
     {{ block.super }}
-    {% if topic_parent %}
-        <li class="breadcrumb__item">{% trans "Magazine" %}</li>
-        <li class="breadcrumb__item"><a href="{% url "topic-detail" parent_topic.slug %}" class="breadcrumb__link" title="{{ parent_topic.title }}">{{ parent_topic.title }}</a></li>
-    {% endif %}
-    {% if department_parent %}
-        <li class="breadcrumb__item"><a href="{% url "page" department_parent.slug %}" class="breadcrumb__link" title="{{ department_parent.title }}">{{ department_parent.title }}</a></li>
-    {% endif %}
 
     <li class="breadcrumb__item active">{{ article.title }}</li>
 {% endblock %}
