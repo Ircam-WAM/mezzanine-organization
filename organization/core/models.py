@@ -85,7 +85,7 @@ class Image(Titled, Orderable):
 
     file = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
     credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
-    type = models.CharField(_('type'), max_length=64, choices=IMAGE_TYPE_CHOICES, blank=True)
+    type = models.CharField(_('type'), max_length=64, choices=IMAGE_TYPE_CHOICES)
 
     class Meta:
         abstract = True

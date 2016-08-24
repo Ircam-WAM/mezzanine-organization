@@ -1,6 +1,7 @@
 {% load mezzanine_tags %}
 <a href="{{ object.get_absolute_url }}" title="{{ object.title }}" class="page-box">
     <div class="page-box__image">
+        
         <img src="{{ MEDIA_URL }}{% thumbnail object.get_content_model.photo_card 900 400 %}" />
     </div>
     <div class="page-box__content">
