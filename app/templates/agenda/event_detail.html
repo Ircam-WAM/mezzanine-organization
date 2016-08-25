@@ -67,9 +67,19 @@
 {% endif %}
 
 {% block event_detail_content %}
-{% editable event.content %}
-{{ event.content|richtext_filters|safe }}
-{% endeditable %}
+{% if event.content %}
+  {% editable event.content %}
+    {{ event.content|richtext_filters|safe }}
+  {% endeditable %}
+{% else %}
+  {% lorem 3 p %}
+{% endif %}
+{% endblock %}
+
+{% block event_sub_content %}
+   {% with event.blocks.all as blocks %}
+     {% include "core/inc/block.html" %}
+  {% endwith %}
 {% endblock %}
 
 {% if event.brochure %}
