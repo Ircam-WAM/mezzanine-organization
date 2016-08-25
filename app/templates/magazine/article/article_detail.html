@@ -1,5 +1,5 @@
 {% extends "pages/page.html" %}
-{% load mezzanine_tags keyword_tags i18n  %}
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
 
 {% block meta_title %}{{ article.meta_title }}{% endblock %}
 
@@ -63,11 +63,11 @@
 {% endblock %}
 
 {% block page_slider %}
-  {% if article.articleimage_set.all %}
-    {% with article.articleimage_set.all as slider_images %}
-        {% include 'core/inc/slider.html' %}
-    {% endwith %}
-  {% endif %}
+  {% with article.images.all|get_type:'page_slider' as slider_images %}
+    {% if slider_images %}
+      {% include 'core/inc/slider.html' %}
+    {% endif %}
+  {% endwith %}
 {% endblock %}
 
 {% block page_related_content %}

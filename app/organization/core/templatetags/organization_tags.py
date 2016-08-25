@@ -94,7 +94,7 @@ def get_mezzanine_menu_name(menu_id):
 def get_type(objects, type):
     objs = objects.filter(type=type)
     if objs:
-        return objs[0]
+        return objs
     return None
 
 @register.filter
