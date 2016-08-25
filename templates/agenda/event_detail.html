@@ -1,5 +1,5 @@
 {% extends "agenda/event_list.html" %}
-{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n future disqus_tags event_tags  %}
+{% load mezzanine_tags comment_tags keyword_tags rating_tags i18n future disqus_tags event_tags organization_tags %}
 
 {% block meta_title %}{{ event.meta_title }}{% endblock %}
 
@@ -53,11 +53,13 @@
 {% endblock %}
 
 {% block event_detail_featured_image %}
-{% if settings.EVENT_USE_FEATURED_IMAGE and event.featured_image %}
-<p>
-    <img src="{{ MEDIA_URL }}{% thumbnail event.featured_image 600 0 %}">
-</p>
-{% endif %}
+{% with event.images.all|get_type:'page_slider' as image %}
+  {% if image %}
+    <p>
+        <img src="{{ MEDIA_URL }}{% thumbnail image.file 600 0 %}">
+    </p>
+  {% endif %}
+{% endwith %}
 {% endblock %}
 
 {% if settings.COMMENTS_DISQUS_SHORTNAME %}
