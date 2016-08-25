@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
-
+from organization.network.models import Department
 from organization.core.models import *
 
 
@@ -18,7 +18,7 @@ class Article(BlogPost, SubTitled):
 
     related_articles = models.ManyToManyField("self",
                                  verbose_name=_("Related articles"), blank=True)
-
+    department = models.ForeignKey(Department, related_name='articles', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
     model_name = _('article')
 
     def get_absolute_url(self):

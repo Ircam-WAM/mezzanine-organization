@@ -14,3 +14,4 @@ django-extensions
 django-countries
 django-querysetsequence
 django-autocomplete-light
+ipython
