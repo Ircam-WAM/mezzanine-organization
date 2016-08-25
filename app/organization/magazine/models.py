@@ -18,7 +18,7 @@ class Article(BlogPost, SubTitled):
 
     related_articles = models.ManyToManyField("self",
                                  verbose_name=_("Related articles"), blank=True)
-    department = models.ForeignKey(Department, related_name='articles', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
+    department = models.ForeignKey(Department, verbose_name=_('department'), related_name='articles', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
     topics = models.ManyToManyField("Topic", verbose_name=_('topics'), related_name="articles", blank=True, null=True)
 
     def get_absolute_url(self):
@@ -40,13 +40,13 @@ class ArticleImage(Image):
 
 class Brief(Displayable, RichText): #Orderable
 
-    text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name='text button')
-    external_content = models.URLField(blank=True, max_length=1000, null=False, verbose_name='external content')
+    text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'))
+    external_content = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'))
 
     # used for autocomplete but hidden in admin
     content_type = models.ForeignKey(
         ContentType,
-        verbose_name=_('content page'),
+        verbose_name=_('local content'),
         null=True,
         blank=True,
         editable=False,
