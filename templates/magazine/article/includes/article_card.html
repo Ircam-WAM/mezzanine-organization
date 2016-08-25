@@ -11,9 +11,9 @@
             <div class="tag tag--small tag--category">
                 {% trans 'News' %}
             </div>
-            {% if article.keywords %}
+            {% if article.department %}
             <div class="tag tag--small dashed dashed--gray">
-              {{ article.keywords.first }}
+              {{ article.department.name }}
             </div>
             {% endif %}
         </div>

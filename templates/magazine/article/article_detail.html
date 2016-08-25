@@ -17,14 +17,13 @@
 {% endblock %}
 
 {% block body_class %}
-    {% if department_parent %}
-        pattern pattern-bg {{ department_parent.weaving_css_class }}
+    {% if department_weaving_css_class %}
+        pattern pattern-bg {{ department_weaving_css_class }}
     {% endif %}
 {% endblock %}
 
 {% block breadcrumb_menu %}
     {{ block.super }}
-
     <li class="breadcrumb__item active">{{ article.title }}</li>
 {% endblock %}
 
@@ -33,9 +32,9 @@
     <div class="tag tag--category">
         {% trans 'News' %}
     </div>
-    {% if article.keywords %}
+    {% if department_name %}
         <div class="tag dashed dashed--gray">
-          {{ article.keywords.first }}
+          {{ department_name }}
         </div>
     {% endif %}
 

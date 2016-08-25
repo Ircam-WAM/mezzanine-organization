@@ -23,20 +23,20 @@ class ArticleDetailView(SlugMixin, DetailView):
     template_name='magazine/article/article_detail.html'
     context_object_name = 'article'
 
-    # def get_context_data(self, **kwargs):
-    #     # context = super(ArticleDetailView, self).get_context_data(**kwargs)
-    #     # if self.topic_parent:
-    #     #     context['topic_parent'] = self.topic_parent.all()[0]
-    #     # if self.department_parent:
-    #     #     context['department_parent'] =  self.department_parent.all()[0]
-    #     return context
+    def get_context_data(self, **kwargs):
+        article = self.get_object()
+        context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        if article.department:
+            context['department_weaving_css_class'] = article.department.pages.first().weaving_css_class
+            context['department_name'] = article.department.name
+        return context
 
 
 class ArticleListView(SlugMixin, ListView):
 
     model = Article
     template_name='magazine/article/article_list.html'
-    # context_object_name = 'article'
+    context_object_name = 'article'
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
