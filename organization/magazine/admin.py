@@ -36,7 +36,7 @@ class BriefAdminDisplayable(BaseTranslationModelAdmin,): #, OrderableAdmin
     list_display = ('title', 'external_content', 'content_object', )
     form = BriefForm
     fieldsets = deepcopy(BriefAdmin.fieldsets)
-
+    exclude = ("short_url", "keywords", "description", "slug", )
 
 
 admin.site.register(Article, ArticleAdminDisplayable)
