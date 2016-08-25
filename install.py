@@ -103,7 +103,7 @@ class DockerCompositionInstaller(object):
 
     docker = '/etc/init.d/docker'
     docker_compose = '/usr/local/bin/docker-compose'
-    cron_rule = "* * * * * %s %s"
+    cron_rule = "* */6 * * * %s %s"
 
     def __init__(self, config='docker-compose.yml', init_type='sysvinit', cron=False, user=None):
         self.init_type = init_type
