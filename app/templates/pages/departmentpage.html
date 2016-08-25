@@ -51,11 +51,11 @@
 {% endblock %}
 
 {% block page_slider %}
-  {% if page.departmentpage.pageimage_set.all %}
-    {% with page.departmentpage.pageimage_set.all as slider_images %}
-        {% include 'core/inc/slider.html' %}
-    {% endwith %}
+{% with page.departmentpage.images.all|get_type:'page_slider' as slider_images %}
+  {% if slider_images %}
+    {% include 'core/inc/slider.html' %}
   {% endif %}
+{% endwith %}
 {% endblock %}
 
 {% block page_sub_content %}
