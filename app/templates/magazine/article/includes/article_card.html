@@ -3,8 +3,10 @@
 <a class="article-box" href="{% url 'magazine-article-detail' article.slug %}">
     <div class="article-box__header">
         <figure class="article-box__image">
-          {% with article.images.all|get_type:'card' as image %}
-            <img src="{{ MEDIA_URL }}{% thumbnail image.file 427 286 top=0.5 left=article.photo_alignment|get_photo_alignment %}" data-src="{{ MEDIA_URL }}{% thumbnail image.file 427 286 %}" class="lazyload" />
+          {% with article.images.all|get_type:'card' as images %}
+           {% if images %}
+            <img src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 top=0.5 left=article.photo_alignment|get_photo_alignment %}" data-src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 %}" class="lazyload" />
+           {% endif %}
           {% endwith %}
         </figure>
         <div class="article-box__tags">
