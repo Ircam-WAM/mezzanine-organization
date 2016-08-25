@@ -96,7 +96,7 @@ warnings.filterwarnings(
         'ignore', r"DateTimeField .* received a naive datetime",
         RuntimeWarning, r'django\.db\.models\.fields')
 
-EVENT_SLUG = 'events'
+EVENT_SLUG = 'agenda'
 EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
