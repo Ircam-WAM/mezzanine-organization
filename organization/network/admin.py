@@ -20,6 +20,11 @@ class OrganizationAdmin(BaseTranslationModelAdmin):
     inlines = [OrganizationImageInline,]
 
 
+class DepartmentPageBlockInline(StackedDynamicInlineAdmin):
+
+    model = PageBlock
+
+
 class DepartmentPageImageInline(TabularDynamicInlineAdmin):
 
     model = PageImage
@@ -27,7 +32,7 @@ class DepartmentPageImageInline(TabularDynamicInlineAdmin):
 
 class DepartmentPageAdmin(PageAdmin):
 
-    inlines = [DepartmentPageImageInline,]
+    inlines = [DepartmentPageImageInline, DepartmentPageBlockInline]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -44,10 +49,14 @@ class TeamPageImageInline(TabularDynamicInlineAdmin):
 
     model = PageImage
 
+class TeamPageBlockInline(StackedDynamicInlineAdmin):
+
+    model = PageBlock
+
 
 class TeamPageAdmin(PageAdmin):
 
-    inlines = [TeamPageImageInline,]
+    inlines = [TeamPageImageInline, TeamPageBlockInline]
 
 
 class PersonAdminBase(BaseTranslationModelAdmin):

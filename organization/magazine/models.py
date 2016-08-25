@@ -72,7 +72,5 @@ class Brief(Displayable, RichText): #Orderable
 class Topic(Page, RichText):
     """Topic for magazine menu"""
 
-    #articles = models.ManyToManyField(Article, verbose_name=_('articles'), related_name="topics", blank=True)
-
     class Meta:
         verbose_name = _('topic')
