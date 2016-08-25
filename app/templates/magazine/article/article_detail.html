@@ -56,9 +56,13 @@
 
 {% block page_content %}
 
-    {% editable article.content %}
+    {% if article.content %}
+      {% editable article.content %}
         {{ article.content|richtext_filters|safe }}
-    {% endeditable %}
+      {% endeditable %}
+    {% else %}
+        {% lorem 3 p %}
+    {% endif %}
 
 {% endblock %}
 
