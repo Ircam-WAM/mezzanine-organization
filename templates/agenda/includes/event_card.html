@@ -2,12 +2,11 @@
 
 {% block event_list_event_title %}
     <div class="event__card msry__item">
-      {% with event.images.all|get_type:'card' as image %}
-        {% if image %}
-            {% block event_list_event_featured_image %}
-
+      {% with event.images.all|get_type:'card' as images %}
+        {% if images %}
+              {% block event_list_event_featured_image %}
                 <a href="{{ event.get_absolute_url }}" class="event__thumbnail">
-                    <img src="{{ MEDIA_URL }}{% thumbnail image.file 500 500 %}" width="500" height="500">
+                    <img src="{{ MEDIA_URL }}{% thumbnail images.0.file 500 500 %}" width="500" height="500">
                 </a>
             {% endblock %}
         {% endif %}

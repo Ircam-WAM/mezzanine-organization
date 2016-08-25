@@ -53,10 +53,10 @@
 {% endblock %}
 
 {% block event_detail_featured_image %}
-{% with event.images.all|get_type:'page_slider' as image %}
-  {% if image %}
+{% with event.images.all|get_type:'page_slider' as images %}
+  {% if images %}
     <p>
-        <img src="{{ MEDIA_URL }}{% thumbnail image.file 600 0 %}">
+        <img src="{{ MEDIA_URL }}{% thumbnail images.0.file 600 0 %}">
     </p>
   {% endif %}
 {% endwith %}
