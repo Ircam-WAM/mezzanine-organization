@@ -28,11 +28,11 @@
 {% endblock %}
 
 {% block page_slider %}
-  {% if page.teampage.pageimage_set.all %}
-    {% with page.teampage.pageimage_set.all as slider_images %}
+    {% with page.teampage.images.all|get_type:'page_slider' as slider_images %}
+      {% if slider_images %}
         {% include 'core/inc/slider.html' %}
+      {% endif %}
     {% endwith %}
-  {% endif %}
 {% endblock %}
 
 {% block page_content %}
