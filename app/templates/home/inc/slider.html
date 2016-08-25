@@ -4,10 +4,10 @@
 <br/>
 {% for slider in home.dynamiccontenthomeslider_set.all %}
 {{ slider.content_object }}
-  {% with slider.content_object.images.all|get_type:'slider' as image %}
-    {% if image %}
+  {% with slider.content_object.images.all|get_type:'slider' as images %}
+    {% if images %}
           <h2>{{ slider.content_object.title }}<h2><br/>
-          <img src="{{ MEDIA_URL }}{{ image.file }}" title="{{ image.credits }}" /><br/>
+          <img src="{{ MEDIA_URL }}{{ images.0.file }}" title="{{ images.0.credits }}" /><br/>
           {{ image.credits }}<br/>
           <a href="{{ slider.content_object.get_absolute_url }}" title="{{ slider.content_object.title }}">{{ slider.content_object.title }}</a><br/>
           ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br/>
