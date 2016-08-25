@@ -96,7 +96,7 @@
         {% if forloop.first %} | {% endif %}
         <li>
             <a href="{% url "event_list_tag" t.slug %}" {% if tag == t %}class="is-active"{% endif %}
-                class="tag-weight-{{ tag.weight }}">{{ t }}s ({{ t.item_count }})</a>
+                class="tag-weight-{{ tag.weight }}">{{ t }} ({{ t.item_count }})</a>
         </li>
         {% if not forloop.last %} | {% endif %}
         {% endfor %}
