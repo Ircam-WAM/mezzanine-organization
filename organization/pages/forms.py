@@ -8,6 +8,7 @@ from organization.pages.models import CustomPage
 # from mezzanine_agenda.models import Event
 from organization.pages.models import DynamicContentHomeSlider, DynamicContentHomeBody
 
+
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
@@ -24,8 +25,6 @@ class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
     class Meta:
         model = DynamicContentHomeSlider
         fields = ('content_object',)
-
-
 
 
 class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
