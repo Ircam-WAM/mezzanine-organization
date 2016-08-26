@@ -13,3 +13,14 @@ class VideoTranslationOptions(TranslationOptions):
 class AudioTranslationOptions(TranslationOptions):
 
     fields = ('title', 'description', 'content')
+
+
+@register(PageVideo)
+class PageVideoTranslationOptions(TranslationOptions):
+
+    pass
+
+@register(PageAudio)
+class PageAudioTranslationOptions(TranslationOptions):
+
+    pass

@@ -19,7 +19,7 @@ class Article(BlogPost, SubTitled):
     related_articles = models.ManyToManyField("self",
                                  verbose_name=_("Related articles"), blank=True)
     department = models.ForeignKey(Department, verbose_name=_('department'), related_name='articles', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
-    topics = models.ManyToManyField("Topic", verbose_name=_('topics'), related_name="articles", blank=True, null=True)
+    topics = models.ManyToManyField("Topic", verbose_name=_('topics'), related_name="articles", blank=True)
 
     def get_absolute_url(self):
         return reverse("magazine-article-detail", kwargs={"slug": self.slug})

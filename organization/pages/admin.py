@@ -8,7 +8,7 @@ from mezzanine.pages.admin import PageAdmin
 from organization.pages.models import *
 from organization.pages.models import DynamicContentHomeSlider, DynamicContentHomeBody, Home
 from organization.pages.forms import DynamicContentHomeSliderForm, DynamicContentHomeBodyForm
-
+from organization.media.models import PageAudio, PageVideo
 
 class PageBlockInline(StackedDynamicInlineAdmin):
 
@@ -20,9 +20,19 @@ class PageImageInline(TabularDynamicInlineAdmin):
     model = PageImage
 
 
+class PageAudioInline(StackedDynamicInlineAdmin):
+
+    model = PageAudio
+
+
+class PageVideoInline(StackedDynamicInlineAdmin):
+
+    model = PageVideo
+
+
 class CustomPageAdmin(PageAdmin):
 
-    inlines = [PageBlockInline, PageImageInline]
+    inlines = [PageBlockInline, PageImageInline, PageAudioInline, PageVideoInline, ]
 
 
 class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
