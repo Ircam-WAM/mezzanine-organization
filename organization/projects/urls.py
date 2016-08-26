@@ -10,5 +10,5 @@ from mezzanine.conf import settings
 from organization.projects.views import *
 
 urlpatterns = [
-    url("^project/detail/(?P<slug>.*)/$", ProjectDetailView.as_view(), name='organization-projects-project-detail'),
+    url("^project/detail/(?P<slug>.*)/$", ProjectDetailView.as_view(), name='organization-project-detail'),
 ]
