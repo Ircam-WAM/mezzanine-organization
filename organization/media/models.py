@@ -12,7 +12,7 @@ from organization.core.models import CustomDisplayable
 from organization.pages.models import Page
 from mezzanine_agenda.models import Event
 from django.conf import settings
-
+import requests
 
 MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
 

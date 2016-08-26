@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load mezzanine_tags keyword_tags %}
+
+{% block title %}
+{{ video.title }}
+{% endblock %}
+
+{% block main %}
+
+<div class="video-html">
+    {{ video.content|safe }}
+</div>
+
+<div class="embed-responsive">
+	<video width="100%" poster="{{ video.poster_url }}" controls data-title="{{ video.title }}" preload="none">
+	  <source src="{{ video.open_source_url }}" type="{{ video.open_source_mime_type }}" />
+      <source src="{{ video.closed_source_url }}" type="{{ video.closed_source_mime_type }}" />
+	  </video>
+</div>
+
+{% with video as object %}
+  {% include "includes/share_buttons.html" %}
+{% endwith %}
+
+{% if video.event %}
+<div class="video-event">
+ <h2 class="section__title">{% trans 'Also discover' %}</h2>
+  <div class="msry__container">
+   <div class="msry__sizer"></div>
+    {% with video.event as event %}
+        {% include 'agenda/includes/event_card.html' %}
+    {% for artist in video.artists.all %}
+        {% include "festival/inc/artist_card.html" %}
+    {% endfor %}
+    {% for v in event.videos.all %}
+      {% if v != video %}
+       {% with v as video %}
+        {% include 'festival/inc/video_card.html' %}
+       {% endwith %}
+      {% endif %}
+    {% endfor %}
+    {% for post in event.blog_posts.all %}
+        {% include 'blog/includes/post_card.html' %}
+    {% endfor %}
+    {% endwith %}
+
+</div>
+</div>
+{% endif %}
+
+{% endblock %}
