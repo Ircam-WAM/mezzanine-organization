@@ -17,7 +17,7 @@ from django.conf import settings
 MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
 
 
-class Media(CustomDisplayable, RichText):
+class Media(CustomDisplayable):
     """Media"""
 
     media_id = models.CharField(_('media id'), max_length=128)
