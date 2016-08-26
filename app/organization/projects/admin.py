@@ -7,7 +7,7 @@ from mezzanine.core.admin import *
 
 from organization.projects.models import *
 from organization.pages.models import *
-
+from organization.media.models import Video, Audio
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
 
@@ -24,6 +24,16 @@ class ProjectBlockInline(StackedDynamicInlineAdmin):
     model = DisplayableBlock
 
 
+class ProjectAudioInline(StackedDynamicInlineAdmin):
+
+    model = Audio
+
+
+class ProjectVideoInline(StackedDynamicInlineAdmin):
+
+    model = Video
+
+
 class ProjectAdmin(admin.ModelAdmin):
 
     model = Project
@@ -32,7 +42,7 @@ class ProjectAdmin(admin.ModelAdmin):
 class ProjectAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectAdmin.fieldsets)
-    inlines = [ProjectImageInline, ProjectBlockInline, ProjectLinkInline, ]
+    inlines = [ProjectImageInline, ProjectBlockInline, ProjectAudioInline, ProjectVideoInline]
     filter_horizontal = ['persons', 'teams', 'organizations']
 
 

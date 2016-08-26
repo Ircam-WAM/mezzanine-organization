@@ -1,12 +1,15 @@
 from __future__ import unicode_literals
 
+from pyquery import PyQuery as pq
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
-
+from organization.core.models import CustomDisplayable
+from organization.pages.models import Page
 from mezzanine_agenda.models import Event
 from django.conf import settings
 
@@ -14,7 +17,7 @@ from django.conf import settings
 MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
 
 
-class Media(Displayable, RichText):
+class Media(CustomDisplayable, RichText):
     """Media"""
 
     media_id = models.CharField(_('media id'), max_length=128)
@@ -64,6 +67,16 @@ class Audio(Media):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
 
 
+class PageAudio(Audio):
+
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("audio")
+        verbose_name_plural = _("audios")
+        order_with_respect_to = "page"
+
+
 class Video(Media):
     """Video"""
 
@@ -81,6 +94,16 @@ class Video(Media):
 
     def get_absolute_url(self):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
+
+
+class PageVideo(Video):
+
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("video")
+        verbose_name_plural = _("videos")
+        order_with_respect_to = "page"
 
 
 class VideoCategory(Slugged):

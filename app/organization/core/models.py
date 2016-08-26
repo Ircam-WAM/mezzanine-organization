@@ -170,7 +170,6 @@ class Link(URL):
         return self.url
 
 
-
 class Period(models.Model):
 
     date_begin = models.DateField(_('begin date'), null=True, blank=True)
@@ -178,7 +177,6 @@ class Period(models.Model):
 
     class Meta:
         abstract = True
-
 
 
 class CustomDisplayable(Displayable):
@@ -215,7 +213,6 @@ class DisplayableLink(Link):
         verbose_name = _('link')
         verbose_name_plural = _("links")
         order_with_respect_to = "displayable"
-
 
 
 class CustomModel(models.Model):

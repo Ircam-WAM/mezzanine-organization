@@ -7,6 +7,17 @@ from mezzanine.pages.admin import PageAdmin
 from organization.network.models import *
 from organization.pages.models import *
 from organization.core.admin import *
+from organization.media.models import PageAudio, PageVideo
+
+
+class PageAudioInline(StackedDynamicInlineAdmin):
+
+    model = PageAudio
+
+
+class PageVideoInline(StackedDynamicInlineAdmin):
+
+    model = PageVideo
 
 
 class OrganizationImageInline(TabularDynamicInlineAdmin):
@@ -32,7 +43,7 @@ class DepartmentPageImageInline(TabularDynamicInlineAdmin):
 
 class DepartmentPageAdmin(PageAdmin):
 
-    inlines = [DepartmentPageImageInline, DepartmentPageBlockInline]
+    inlines = [DepartmentPageImageInline, DepartmentPageBlockInline, PageAudioInline, PageVideoInline, ]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -56,7 +67,7 @@ class TeamPageBlockInline(StackedDynamicInlineAdmin):
 
 class TeamPageAdmin(PageAdmin):
 
-    inlines = [TeamPageImageInline, TeamPageBlockInline]
+    inlines = [TeamPageImageInline, TeamPageBlockInline, PageAudioInline, PageVideoInline, ]
 
 
 class PersonAdminBase(BaseTranslationModelAdmin):
