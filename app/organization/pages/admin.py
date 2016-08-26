@@ -23,11 +23,13 @@ class PageImageInline(TabularDynamicInlineAdmin):
 class PageAudioInline(StackedDynamicInlineAdmin):
 
     model = PageAudio
+    exclude = ("short_url", "keywords", "description", "slug", )
 
 
 class PageVideoInline(StackedDynamicInlineAdmin):
 
     model = PageVideo
+    exclude = ("short_url", "keywords", "description", "slug", )
 
 
 class CustomPageAdmin(PageAdmin):

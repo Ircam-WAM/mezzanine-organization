@@ -13,11 +13,13 @@ from organization.media.models import PageAudio, PageVideo
 class PageAudioInline(StackedDynamicInlineAdmin):
 
     model = PageAudio
+    exclude = ("short_url", "keywords", "description", "slug", )
 
 
 class PageVideoInline(StackedDynamicInlineAdmin):
 
     model = PageVideo
+    exclude = ("short_url", "keywords", "description", "slug", )
 
 
 class OrganizationImageInline(TabularDynamicInlineAdmin):
