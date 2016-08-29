@@ -54,4 +54,4 @@ class Home(Displayable):
         verbose_name_plural = _("homes")
 
     def get_absolute_url(self):
-        return reverse("organization-home", kwargs={"slug": self.slug})
+        return reverse("organization-home")
