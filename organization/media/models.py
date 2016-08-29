@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
-from organization.core.models import CustomDisplayable
+from organization.core.models import *
 from organization.pages.models import Page
 from mezzanine_agenda.models import Event
 from django.conf import settings
