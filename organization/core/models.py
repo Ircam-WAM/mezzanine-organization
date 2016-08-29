@@ -184,6 +184,10 @@ class CustomDisplayable(Displayable):
     class Meta:
         verbose_name = _('custom displayable')
 
+    def get_absolute_url(self):
+        return reverse("organization-displayable", kwargs={"slug": self.slug})
+
+
 
 class DisplayableBlock(Block):
 
