@@ -14,5 +14,6 @@ urlpatterns = [
     url("^$", HomeView.as_view(), name="home"),
     url("^dynamic-content-home-slider/$", DynamicContentHomeSliderView.as_view(), name='dynamic-content-home-slider'),
     url("^dynamic-content-home-body/$", DynamicContentHomeBodyView.as_view(), name='dynamic-content-home-body'),
+    url("^home/$", HomeView.as_view(), name='organization-home'),
 ]
 'dynamic-content-home-body'
