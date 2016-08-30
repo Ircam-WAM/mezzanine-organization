@@ -1,5 +1,17 @@
-{% for image in slider_images %}
-{{ image.description }}<br/>
-<img src="{{ MEDIA_URL}}{{ image.file }}" alt="" /><br/>
-{{ image.credits }}<br/>
-{% endfor %}
+{% load mezzanine_tags %}
+<ul class="slider-page" data-slider-page>
+    {% for image in slider_images %}
+        <li class="slider-page__slide">
+            <img title="{{ image.title }}" alt="{{ image.title }} {{ image.description }} {{ image.credits }}" class="slider-page__img" src="{{ MEDIA_URL}}{% thumbnail image.file 0 520 %}" alt="" /><br />
+            <div class="slider-page__caption">
+                {{ image.title }}
+                {% if image.description %}
+                    | {{ image.description }}
+                {% endif %}
+                {% if image.credits %}
+                    | {{ image.credits }}
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+</ul>

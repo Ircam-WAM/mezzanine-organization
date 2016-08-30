@@ -1,0 +1,11 @@
+.lSAction {
+
+    > a {
+        opacity: 1;
+        @include transition(all 0.15s ease-in-out);
+        &:hover {
+            width: 60px;
+        }
+    }
+
+}

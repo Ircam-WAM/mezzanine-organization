@@ -10,6 +10,7 @@ var Search = require('./modules/search');
 var Summary = require('./modules/summary');
 var OverflowInit = require('./modules/overflow-init');
 var StickyKitInit = require('./modules/sticky-kit-init');
+var LightSliderInit = require('./modules/lightslider-init');
 
 //
 // Init all the modules
@@ -23,3 +24,4 @@ window[Search] = new Search();
 window[Summary] = new Summary();
 window[OverflowInit] = new OverflowInit();
 window[StickyKitInit] = new StickyKitInit();
+window[LightSliderInit] = new LightSliderInit();

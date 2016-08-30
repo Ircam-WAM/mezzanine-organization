@@ -1,0 +1,54 @@
+$module: ".slider-page";
+
+#{$module} {
+
+    //
+    // Layout
+    //
+
+    &.lightSlider {
+
+        @include margin-top(3);
+        @include margin-bottom(3);
+
+        @include mq($until: sm) {
+            @include margin-top(1);
+        }
+
+    }
+
+    //
+    // Slides
+    //
+
+    &__slide {
+        visibility: hidden;
+        .lightSlider & {
+            visibility: visible;
+        }
+
+    }
+
+    //
+    // Images
+    //
+
+    &__img {
+
+        @include mq($until: sm) {
+            width: 100%;
+        }
+
+    }
+
+    &__caption {
+
+        font-weight: weight(light);
+        @include font-size(xs);
+        @include line-height(1.25);
+
+        text-align: center;
+
+    }
+
+}
