@@ -24,12 +24,10 @@
                                                 <div class="article-box__content tal">
                                                     <h3 class="article-box__title">{{ slider.content_object.title }}</h3>
                                                     <div class="article-box__subtitle">
-                                                        <strong>Subtitle</strong>
-                                                        {{ slider.content_object.subtitle|richtext_filters|safe|truncatechars_html:200 }}
+                                                        <strong>{{ slider.content_object.sub_title }}</strong>
                                                     </div>
                                                     <div class="article-box__desc">
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum deserunt voluptas laboriosam, saepe pariatur at deleniti. Est, natus totam voluptate corporis, veritatis explicabo laudantium hic voluptatibus numquam, qui ratione laboriosam.
-                                                         {{ slider.content_object.content|richtext_filters|safe|truncatechars_html:200 }}
+                                                        {{ slider.content_object.description|richtext_filters|safe|truncatechars_html:200 }}
                                                     </div>
                                                 </div>
                                             </a>
