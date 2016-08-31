@@ -15,6 +15,7 @@ LightSliderHomeInit.prototype.init = function() {
         item: 1,
         slideMargin: 0,
         pager: false,
+        loop: true,
         onAfterSlide: function(slider) {
             var $pages = slider.parents('.slider-home').find('.slider-home__pager li');
             $pages.removeClass('active');
