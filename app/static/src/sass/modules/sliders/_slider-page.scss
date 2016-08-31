@@ -2,19 +2,35 @@ $module: ".slider-page";
 
 #{$module} {
 
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 520px;
+
     //
-    // Layout
+    // Not lightslider, lets go with Flexbox W00t W00t
     //
-
-    &.lightSlider {
-
-        @include margin-top(3);
-        @include margin-bottom(3);
-
-        @include mq($until: sm) {
-            @include margin-top(1);
+    &.flexbox {
+        @include mq($from: sm) {
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -webkit-flex-wrap: nowrap;
+            -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-align-content: stretch;
+            -ms-flex-line-pack: stretch;
+            align-content: stretch;
+            -webkit-align-items: flex-start;
+            -ms-flex-align: start;
+            align-items: flex-start;
         }
-
     }
 
     //
@@ -22,10 +38,32 @@ $module: ".slider-page";
     //
 
     &__slide {
+        text-align: center;
         visibility: hidden;
         .lightSlider & {
             visibility: visible;
         }
+        .flexbox & {
+            visibility: visible;
+            @include mq($from: sm) {
+                -webkit-order: 0;
+                -ms-flex-order: 0;
+                order: 0;
+                -webkit-flex: 0 1 auto;
+                -ms-flex: 0 1 auto;
+                flex: 0 1 auto;
+                -webkit-align-self: auto;
+                -ms-flex-item-align: auto;
+                align-self: auto;
+            }
+        }
+
+    }
+
+    &__wrapper {
+
+        // Nothing ?
+        position: relative;
 
     }
 
