@@ -77,6 +77,16 @@ class PageAudio(Audio):
         order_with_respect_to = "page"
 
 
+class DisplayableAudio(Audio):
+
+    displayable = models.ForeignKey(CustomDisplayable, verbose_name=_('displayable'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("audio")
+        verbose_name_plural = _("audios")
+
+
+
 class Video(Media):
     """Video"""
 
