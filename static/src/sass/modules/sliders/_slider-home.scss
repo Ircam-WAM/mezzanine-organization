@@ -1,0 +1,94 @@
+$module: ".slider-home";
+
+#{$module} {
+
+    position: relative;
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    &__slide {
+
+        width: 100%;
+        height: $home-slider-height;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        position: relative;
+
+    }
+
+    &__wrapper {
+
+        position: absolute;
+        bottom: 75px;
+        left: 0;
+        right: 0;
+
+    }
+
+    &__content {
+
+        background: white;
+        display: inline-block;
+        @include padding(1);
+
+    }
+
+    &__credits {
+
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        @include font-size(xs);
+        @include line-height(1);
+        @include typeface(sans-serif);
+        @include padding(.25 .5);
+        font-weight: weight(light);
+
+        background: rgba(0,0,0,0.5);
+        color: white;
+
+    }
+
+    //
+    // Overrides lightSlider
+    //
+
+    &__pager {
+
+        position: absolute;
+        bottom: 33px;
+        left: 0;
+        right: 0;
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            li {
+                display: inline-block;
+                margin-right: 10px;
+                a {
+                    display: block;
+                    width: 14px;
+                    height: 14px;
+                    background: white;
+                    &:hover {
+                        background: $color-main;
+                    }
+                }
+                &.active a {
+                    background: $color-main;
+                }
+            }
+        }
+
+    }
+
+}

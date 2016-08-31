@@ -1,18 +1,66 @@
-{% load organization_tags i18n %}
-<hr/>
-<h1>Slider</h1>
-<br/>
-{% for slider in home.dynamiccontenthomeslider_set.all %}
-{{ slider.content_object }}
-  {% with slider.content_object.images.all|get_type:'slider' as images %}
-    {% if images %}
-          <h2>{{ slider.content_object.title }}<h2><br/>
-          <img src="{{ MEDIA_URL }}{{ images.0.file }}" title="{{ images.0.credits }}" /><br/>
-          {{ image.credits }}<br/>
-          <a href="{{ slider.content_object.get_absolute_url }}" title="{{ slider.content_object.title }}">{{ slider.content_object.title }}</a><br/>
-          ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br/>
-    {% endif %}
-  {% endwith %}
-{% endfor %}
-<br/>
-<hr/>
+{% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
+
+<div class="slider-home">
+    <ul data-slider-home>
+        {% for slider in home.dynamiccontenthomeslider_set.all %}
+                {% with slider.content_object.images.all|get_type:'slider' as images %}
+                    {% if images %}
+                        <li class="slider-home__slide" style="background-image: url({{ MEDIA_URL }}{% thumbnail images.0.file 1440 760 %});">
+                            <!--<img src="{{ MEDIA_URL }}{{ images.0.file }}" title="{{ images.0.credits }}" />-->
+                            <div class="slider-home__wrapper">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-11 col-sm-push-1">
+                                            <a class="article-box article-box--inline" href="{{ slider.content_object.get_absolute_url }}" title="{{ slider.content_object.title }}">
+                                                {% if slider.content_object.department %}
+                                                    <div class="tag dashed">
+                                                      {{ slider.content_object.department.name }}
+                                                    </div>
+                                                {% endif %}
+                                                <div class="tag tag--category">
+                                                    {% trans 'News' %}
+                                                </div>
+
+                                                <div class="article-box__content tal">
+                                                    <h3 class="article-box__title">{{ slider.content_object.title }}</h3>
+                                                    <div class="article-box__subtitle">
+                                                        <strong>Subtitle</strong>
+                                                        {{ slider.content_object.subtitle|richtext_filters|safe|truncatechars_html:200 }}
+                                                    </div>
+                                                    <div class="article-box__desc">
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum deserunt voluptas laboriosam, saepe pariatur at deleniti. Est, natus totam voluptate corporis, veritatis explicabo laudantium hic voluptatibus numquam, qui ratione laboriosam.
+                                                         {{ slider.content_object.content|richtext_filters|safe|truncatechars_html:200 }}
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if image.credits %}
+                                <div class="slider-home__credits">
+                                    {{ image.credits }}
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endwith %}
+
+        {% endfor %}
+    </ul>
+    <div class="slider-home__pager">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-11 col-sm-push-1">
+                    <ul class="">
+                        {% for slider in home.dynamiccontenthomeslider_set.all %}
+                            <li class="{% if forloop.first %}active{% endif %}">
+                                <a href="#"></a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
