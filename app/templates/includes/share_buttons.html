@@ -1,16 +1,16 @@
 {% load i18n %}
 
-<ul class="share__links">
-    <li>
-        <a class="share__link__item  share-facebook" target="_blank" href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t={{ object.title|urlencode }}"><i class="icon icon__facebook"></i> {% trans "Share on Facebook" %}</a>
+<ul class="share-links">
+    <li class="share-links__item share-links__item--facebook">
+        <a target="_blank" href="http://facebook.com/sharer.php?u={{ request.build_absolute_uri }}&amp;t={{ object.title|urlencode }}" title="{% trans "Share on Facebook" %}"><i class="fa fa-facebook-square"></i></a>
     </li>
-    <li>
-        <a class="share__link__item  share-twitter" target="_blank" href="http://twitter.com/home?status={{ object.title|urlencode }}%20{{ request.build_absolute_uri }}"><i class="icon icon__twitter"></i>  {% trans "Share on Twitter" %}</a>
+    <li class="share-links__item share-links__item--twitter">
+        <a target="_blank" href="http://twitter.com/home?status={{ object.title|urlencode }}%20{{ request.build_absolute_uri }}" title="{% trans "Share on Twitter" %}"><i class="fa fa-twitter-square"></i></a>
     </li>
-    <li>
-        <a class="share__link__item  share-email" href="mailto:?subject={{ object.title }}&amp;body={{ request.build_absolute_uri }}"> <i class="icon icon__envelope"></i> {% trans "Share by email" %}</a>
+    <li class="share-links__item share-links__item--email">
+        <a href="mailto:?subject={{ object.title }}&amp;body={{ request.build_absolute_uri }}" title="{% trans "Share by email" %}"> <i class="fa fa-envelope-square"></i></a>
     </li>
-    <li>
-        <a class="share__link__item  share-print" href="javascript:window.print()"><i class="icon icon__print"></i> {% trans "Print this page" %}</a>
+    <li class="share-links__item share-links__item--print">
+        <a href="javascript:window.print()" title="{% trans "Print this page" %}"><i class="fa fa-print"></i></a>
     </li>
 </ul>

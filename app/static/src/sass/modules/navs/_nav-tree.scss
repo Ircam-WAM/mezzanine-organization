@@ -8,9 +8,7 @@ $module: ".nav-tree";
 
     &--level-0 {
 
-        @include mq($until: sm) {
-            @include margin-bottom(3);
-        }
+        @include margin-bottom(2);
 
     }
 

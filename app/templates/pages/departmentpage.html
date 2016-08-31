@@ -50,6 +50,15 @@
 
 {% endblock %}
 
+{% block page_audio %}
+  {% with page.departmentpage.audios.all as audios %}
+    {% if audios %}
+      {% include 'core/inc/audio.html' %}
+    {% endif %}
+  {% endwith %}
+{% endblock %}
+
+
 {% block page_slider %}
 {% with page.departmentpage.images.all|get_type:'page_slider' as slider_images %}
   {% if slider_images %}
@@ -64,8 +73,6 @@
         {% include 'core/inc/video.html' %}
       {% endif %}
     {% endwith %}
-{% endblock %}
-{% block page_audio %}
 {% endblock %}
 
 {% block page_sub_content %}

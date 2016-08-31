@@ -27,24 +27,6 @@
 
 {% endblock %}
 
-{% block page_slider %}
-    {% with page.teampage.images.all|get_type:'page_slider' as slider_images %}
-      {% if slider_images %}
-        {% include 'core/inc/slider.html' %}
-      {% endif %}
-    {% endwith %}
-{% endblock %}
-
-{% block page_video %}
-    {% with page.teampage.videos.all as videos %}
-      {% if videos %}
-        {% include 'core/inc/video.html' %}
-      {% endif %}
-    {% endwith %}
-{% endblock %}
-{% block page_audio %}
-{% endblock %}
-
 {% block page_content %}
 
     {% if page.teampage.sub_title %}
@@ -76,6 +58,30 @@
         {% endif %}
     {% endif %}
 
+{% endblock %}
+
+{% block page_audio %}
+  {% with page.teampage.audios.all as audios %}
+    {% if audios %}
+      {% include 'core/inc/audio.html' %}
+    {% endif %}
+  {% endwith %}
+{% endblock %}
+
+{% block page_slider %}
+    {% with page.teampage.images.all|get_type:'page_slider' as slider_images %}
+      {% if slider_images %}
+        {% include 'core/inc/slider.html' %}
+      {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block page_video %}
+    {% with page.teampage.videos.all as videos %}
+      {% if videos %}
+        {% include 'core/inc/video.html' %}
+      {% endif %}
+    {% endwith %}
 {% endblock %}
 
 {% block page_sub_content %}
