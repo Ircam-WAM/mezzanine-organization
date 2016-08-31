@@ -2,6 +2,14 @@ $module: ".page";
 
 #{$module} {
 
+    &__sidebar {
+
+        @include mq($until: sm) {
+            background: white;
+        }
+
+    }
+
     &__slider {
 
     background: white;
@@ -12,6 +20,40 @@ $module: ".page";
         @include mq($until: sm) {
             @include padding-top(1);
         }
+
+    }
+
+    &__meta {
+
+        @include margin-bottom(2);
+
+    }
+
+    &__meta-separator {
+
+        height: 1px;
+        background: black;
+        width: 45px;
+
+        @include margin(1 0);
+
+    }
+
+    &__meta-date {
+
+        @include font-size(l);
+        @include line-height(1);
+        @include typeface(serif);
+        font-weight: weight(heavy);
+
+    }
+
+    &__meta-title {
+
+        @include font-size(l);
+        @include line-height(1);
+        @include typeface(serif);
+        font-weight: weight(heavy);
 
     }
 
