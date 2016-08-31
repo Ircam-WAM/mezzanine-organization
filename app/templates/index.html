@@ -1,27 +1,35 @@
 {% extends "base.html" %}
 {% load i18n  pages_tags mezzanine_tags %}
 
-{% block meta_title %}{% trans "Home" %}{% endblock %}
+{% block meta_title %}
+    {% trans "Home" %}
+{% endblock %}
+
+{% spaceless %}
+{% block body_class %}
+    home
+{% endblock %}
+{% endspaceless %}
 
 {% block breadcrumb_menu %}
-<li class="active">{% trans "Home" %}</li>
+    <li class="active">{% trans "Home" %}</li>
 {% endblock %}
 
 {% block content_header %}{% endblock %}
 
 {% block main %}
-{% include "home/inc/slider.html" %}
-{% page_menu "pages/menus/magazine.html" %}
-{% include "magazine/brief/brief_list.html" %}
 
-<ul>
-  <li><a href="#" title="{% trans "News Headlines" %}">{% trans "News Headlines" %}</a></li>
-  <li><a href="#" title="{% trans "Magazine" %}">{% trans "Magazine" %}</a></li>
-  <li><a href="#" title="{% trans "Brief" %}">{% trans "Brief" %}</a></li>
-  <li><a href="#" title="{% trans "Media" %}">{% trans "Media" %}</a></li>
-</ul>
+    {% include "home/inc/slider.html" %}
+    {% page_menu "pages/menus/magazine.html" %}
+    {% include "magazine/brief/brief_list.html" %}
 
-{% include "home/inc/body.html" %}
+    <ul>
+      <li><a href="#" title="{% trans "News Headlines" %}">{% trans "News Headlines" %}</a></li>
+      <li><a href="#" title="{% trans "Magazine" %}">{% trans "Magazine" %}</a></li>
+      <li><a href="#" title="{% trans "Brief" %}">{% trans "Brief" %}</a></li>
+      <li><a href="#" title="{% trans "Media" %}">{% trans "Media" %}</a></li>
+    </ul>
 
+    {% include "home/inc/body.html" %}
 
 {% endblock %}
