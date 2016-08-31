@@ -29,14 +29,15 @@
 
 {% block page_tags %}
 
+{% if department_name %}
+    <div class="tag dashed dashed--gray">
+      {{ department_name }}
+    </div>
+{% endif %}
     <div class="tag tag--category">
         {% trans 'News' %}
     </div>
-    {% if department_name %}
-        <div class="tag dashed dashed--gray">
-          {{ department_name }}
-        </div>
-    {% endif %}
+
 
 {% endblock %}
 
@@ -46,11 +47,13 @@
         <h1 class="dotted">{{ article.title }}</h1>
     {% endeditable %}
 
-    {% editable article.sub_title %}
-        <div class="chapo">
-            {{ article.sub_title }}
-        </div>
-    {% endeditable %}
+    {% if article.sub_title %}
+        {% editable article.sub_title %}
+            <div class="chapo">
+                {{ article.sub_title }}
+            </div>
+        {% endeditable %}
+    {% endif %}
 
 {% endblock %}
 
@@ -102,12 +105,24 @@
 
 {% block page_sidebar %}
 
-    <div class="page__meta">
+    <div class="page__meta" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
         {% editable article.publish_date %}
-            <h6 class="post-meta">
+            <div class="page__meta-date">
                 {{ article.publish_date|date:"DATE_FORMAT" }}
-            </h6>
+            </div>
         {% endeditable %}
+        <div class="page__meta-separator">
+
+        </div>
+        {% if article.categories.all.length > 0 %}
+            <div class="page__meta-date">
+                {% for category in article.categories.all %}
+                    {% if forloop.first %} | {% endif %}
+                    {% if not forloop.first %}, {% endif %}
+                    <strong>{{ category }}</strong>
+                {% endfor %}
+            </div>
+        {% endif %}
         {% with article as object %}
             {% include "includes/share_buttons.html" %}
         {% endwith %}
