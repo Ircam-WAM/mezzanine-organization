@@ -11,6 +11,7 @@ var Summary = require('./modules/summary');
 var OverflowInit = require('./modules/overflow-init');
 var StickyKitInit = require('./modules/sticky-kit-init');
 var LightSliderPageInit = require('./modules/lightsliderpage-init');
+var LightSliderHomeInit = require('./modules/lightsliderhome-init');
 
 //
 // Init all the modules
@@ -25,3 +26,4 @@ window[Summary] = new Summary();
 window[OverflowInit] = new OverflowInit();
 window[StickyKitInit] = new StickyKitInit();
 window[LightSliderPageInit] = new LightSliderPageInit();
+window[LightSliderHomeInit] = new LightSliderHomeInit();

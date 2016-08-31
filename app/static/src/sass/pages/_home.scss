@@ -1,0 +1,12 @@
+$module: ".home";
+
+#{$module} {
+
+    .main {
+
+        margin-top: -($header-height + $header-pre-height);
+        padding-top: 0;
+
+    }
+
+}

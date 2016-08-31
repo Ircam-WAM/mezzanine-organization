@@ -133,4 +133,15 @@ $module: ".article-box";
 
     }
 
+    .slider-home & {
+        display: inline-block;
+        max-width: 450px;
+        background: transparent;
+
+        &__content {
+            background: white;
+            margin-top: 1px;
+        }
+    }
+
 }
