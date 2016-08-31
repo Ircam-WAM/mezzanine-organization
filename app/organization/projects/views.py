@@ -7,11 +7,11 @@ from organization.core.views import *
 class ProjectListView(ListView):
 
     model = Project
-    template_name='project/project_list.html'
+    template_name='projects/project_list.html'
 
 
 class ProjectDetailView(SlugMixin, DetailView):
 
     model = Project
-    template_name='project/project_detail.html'
+    template_name='projects/project_detail.html'
     context_object_name = 'project'
