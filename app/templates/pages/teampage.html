@@ -35,6 +35,16 @@
     {% endwith %}
 {% endblock %}
 
+{% block page_video %}
+    {% with page.teampage.videos.all as videos %}
+      {% if videos %}
+        {% include 'core/inc/video.html' %}
+      {% endif %}
+    {% endwith %}
+{% endblock %}
+{% block page_audio %}
+{% endblock %}
+
 {% block page_content %}
 
     {% if page.teampage.sub_title %}
