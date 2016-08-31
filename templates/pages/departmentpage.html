@@ -58,6 +58,16 @@
 {% endwith %}
 {% endblock %}
 
+{% block page_video %}
+    {% with page.departmentpage.videos.all as videos %}
+      {% if videos %}
+        {% include 'core/inc/video.html' %}
+      {% endif %}
+    {% endwith %}
+{% endblock %}
+{% block page_audio %}
+{% endblock %}
+
 {% block page_sub_content %}
     {% with page.departmentpage.blocks.all as blocks %}
       {% include "core/inc/block.html" %}
