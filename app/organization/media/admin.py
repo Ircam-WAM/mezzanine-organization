@@ -9,10 +9,10 @@ class VideoAdmin(admin.ModelAdmin):
     model = Video
 
 
-class VideoAdminDisplayable(DisplayableAdmin):
-
-    fieldsets = deepcopy(VideoAdmin.fieldsets)
-    #filter_horizontal = ['artists']
+# class VideoAdminDisplayable(DisplayableAdmin):
+#
+#     fieldsets = deepcopy(VideoAdmin.fieldsets)
+#     #filter_horizontal = ['artists']
 
 
 class AudioAdmin(admin.ModelAdmin):
@@ -20,10 +20,10 @@ class AudioAdmin(admin.ModelAdmin):
     model = Audio
 
 
-class AudioAdminDisplayable(DisplayableAdmin):
-
-    fieldsets = deepcopy(AudioAdmin.fieldsets)
-    # filter_horizontal = ['artists']
+# class AudioAdminDisplayable(DisplayableAdmin):
+#
+#     fieldsets = deepcopy(AudioAdmin.fieldsets)
+#     # filter_horizontal = ['artists']
 
 
 class PlaylistAdmin(admin.ModelAdmin):
@@ -33,7 +33,7 @@ class PlaylistAdmin(admin.ModelAdmin):
     filter_horizontal = ['audios']
 
 
-admin.site.register(Video, VideoAdminDisplayable)
-admin.site.register(Audio, AudioAdminDisplayable)
+# admin.site.register(Video, VideoAdminDisplayable)
+# admin.site.register(Audio, AudioAdminDisplayable)
 admin.site.register(Playlist, PlaylistAdmin)
 admin.site.register(VideoCategory)
