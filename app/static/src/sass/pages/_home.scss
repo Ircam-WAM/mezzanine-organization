@@ -2,10 +2,79 @@ $module: ".home";
 
 #{$module} {
 
+    // Overrides .main style
     .main {
 
         margin-top: -($header-height + $header-pre-height);
         padding-top: 0;
+
+    }
+
+    &__menu {
+
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+
+        width: 700px;
+
+        @include padding-left(3);
+        @include padding-right(3);
+        @include margin(2 auto);
+
+        border-top: 1px solid #DCDCDC;
+
+        @include mq($until: sm) {
+            display: none;
+        }
+
+    }
+
+    &__menu-item {
+
+        position: relative;
+        display: inline-block;
+
+        @include margin-top(1);
+
+        @include font-size(xl);
+        @include line-height(1);
+        @include typeface(sans-serif);
+        font-weight: weight(regular);
+
+        >a {
+
+            @include padding-left(1);
+            @include padding-right(1);
+            display: block;
+
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: -34px;
+                left: 50%;
+                margin-left: -9px;
+                width: 18px;
+                height: 18px;
+                background: #FFFFFF;
+                border-left:1px solid #DCDCDC;
+                border-top:1px solid #DCDCDC;
+
+                @include transform(scaleY(0) rotate(45deg));
+                @include transition(all 0.25s ease-in-out);
+            }
+
+            &.active {
+                &:after {
+
+                    @include transform(scaleY(1) rotate(45deg));
+
+                }
+            }
+
+        }
 
     }
 
