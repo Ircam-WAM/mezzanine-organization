@@ -26,3 +26,30 @@ class Project(Displayable, Period, RichText):
 
     def get_absolute_url(self):
         return reverse("organization-project-detail", kwargs={"slug": self.slug})
+
+
+class ProjectAudio(Audio):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+
+class ProjectVideo(Video):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+
+class ProjectLink(Link):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectImage(Image):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectBlock(Block):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
