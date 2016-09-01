@@ -17,7 +17,7 @@ import requests
 MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
 
 
-class Media(CustomDisplayable):
+class Media(Titled):
     """Media"""
 
     media_id = models.CharField(_('media id'), max_length=128)
@@ -76,14 +76,14 @@ class PageAudio(Audio):
         verbose_name_plural = _("audios")
         order_with_respect_to = "page"
 
-
-class DisplayableAudio(Audio):
-
-    displayable = models.ForeignKey(CustomDisplayable, verbose_name=_('displayable'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _("audio")
-        verbose_name_plural = _("audios")
+#
+# class DisplayableAudio(Audio):
+#
+#     displayable = models.ForeignKey(Titled, verbose_name=_('displayable'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+#
+#     class Meta:
+#         verbose_name = _("audio")
+#         verbose_name_plural = _("audios")
 
 
 

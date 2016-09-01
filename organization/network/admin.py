@@ -22,15 +22,15 @@ class PageVideoInline(StackedDynamicInlineAdmin):
     exclude = ("short_url", "keywords", "description", "slug", )
 
 
-class OrganizationImageInline(TabularDynamicInlineAdmin):
-
-    model = ModelImage
-
+# class OrganizationImageInline(TabularDynamicInlineAdmin):
+#
+#     model = ModelImage
+#
 
 class OrganizationAdmin(BaseTranslationModelAdmin):
 
     model = Organization
-    inlines = [OrganizationImageInline,]
+    # inlines = [OrganizationImageInline,]
 
 
 class DepartmentPageBlockInline(StackedDynamicInlineAdmin):
@@ -45,7 +45,8 @@ class DepartmentPageImageInline(TabularDynamicInlineAdmin):
 
 class DepartmentPageAdmin(PageAdmin):
 
-    inlines = [DepartmentPageImageInline, DepartmentPageBlockInline, PageAudioInline, PageVideoInline, ]
+    pass
+    # inlines = [DepartmentPageImageInline, DepartmentPageBlockInline, PageAudioInline, PageVideoInline, ]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -77,9 +78,9 @@ class PersonAdminBase(BaseTranslationModelAdmin):
     model = Person
 
 
-class PersonLinkInline(StackedDynamicInlineAdmin):
-
-    model = DisplayableLink
+# class PersonLinkInline(StackedDynamicInlineAdmin):
+#
+#     model = DisplayableLink
 
 
 class PersonActivityInline(StackedDynamicInlineAdmin):
@@ -88,15 +89,15 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
     fk_name = 'person'
 
 
-class PersonImageInline(TabularDynamicInlineAdmin):
-
-    model = DisplayableImage
-
+# class PersonImageInline(TabularDynamicInlineAdmin):
+#
+#     model = DisplayableImage
+#
 
 class PersonAdmin(BaseTranslationModelAdmin):
 
     model = Person
-    inlines = [PersonImageInline, PersonActivityInline, PersonLinkInline, ]
+    # inlines = [PersonImageInline, PersonActivityInline, PersonLinkInline, ]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
 
     def get_fieldsets(self, request, obj = None):

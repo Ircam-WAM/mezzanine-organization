@@ -64,7 +64,7 @@ class Address(models.Model):
         abstract = True
 
 
-class Organization(CustomModel, Named, Address, URL):
+class Organization(Named, Address, URL):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -136,7 +136,7 @@ class TeamPage(Page, SubTitled, RichText):
 
 
 
-class Person(CustomDisplayable, AdminThumbMixin):
+class Person(Displayable, AdminThumbMixin):
     """(Person description)"""
 
     user = models.ForeignKey(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)

@@ -13,6 +13,6 @@ class SlugMixin(object):
         return get_object_or_404(objects, slug=self.kwargs['slug'])
 
 
-class CustomDisplayableView(SlugMixin, DetailView):
-
-    model = CustomDisplayable
+# class CustomDisplayableView(SlugMixin, DetailView):
+#
+#     model = CustomDisplayable

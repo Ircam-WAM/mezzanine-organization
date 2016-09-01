@@ -9,20 +9,20 @@ from organization.projects.models import *
 from organization.pages.models import *
 from organization.media.models import Video, Audio
 
-class ProjectLinkInline(StackedDynamicInlineAdmin):
-
-    model = DisplayableLink
-
-
-class ProjectImageInline(TabularDynamicInlineAdmin):
-
-    model = DisplayableImage
-
-
-class ProjectBlockInline(StackedDynamicInlineAdmin):
-
-    model = DisplayableBlock
-
+# class ProjectLinkInline(StackedDynamicInlineAdmin):
+#
+#     model = DisplayableLink
+#
+#
+# class ProjectImageInline(TabularDynamicInlineAdmin):
+#
+#     model = DisplayableImage
+#
+#
+# class ProjectBlockInline(StackedDynamicInlineAdmin):
+#
+#     model = DisplayableBlock
+#
 
 class ProjectAudioInline(StackedDynamicInlineAdmin):
 
@@ -42,7 +42,7 @@ class ProjectAdmin(admin.ModelAdmin):
 class ProjectAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectAdmin.fieldsets)
-    inlines = [ProjectImageInline, ProjectBlockInline, ProjectAudioInline, ProjectVideoInline]
+    # inlines = [ProjectImageInline, ProjectBlockInline, ProjectAudioInline, ProjectVideoInline]
     filter_horizontal = ['persons', 'teams', 'organizations']
 
 

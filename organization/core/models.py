@@ -178,78 +178,78 @@ class Period(models.Model):
     class Meta:
         abstract = True
 
+#
+# class Displayable(Displayable):
+#
+#     class Meta:
+#         verbose_name = _('custom displayable')
+#
+#     def get_absolute_url(self):
+#         return reverse("organization-displayable", kwargs={"slug": self.slug})
+#
+#
 
-class CustomDisplayable(Displayable):
-
-    class Meta:
-        verbose_name = _('custom displayable')
-
-    def get_absolute_url(self):
-        return reverse("organization-displayable", kwargs={"slug": self.slug})
-
-
-
-class DisplayableBlock(Block):
-
-    displayable = models.ForeignKey(CustomDisplayable, verbose_name=_('displayable'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _('block')
-        verbose_name_plural = _("blocks")
-        order_with_respect_to = "displayable"
-
-
-class DisplayableImage(Image):
-
-    displayable = models.ForeignKey(CustomDisplayable, verbose_name=_('displayable'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _('image')
-        verbose_name_plural = _("images")
-        order_with_respect_to = "displayable"
-
-
-class DisplayableLink(Link):
-
-    displayable = models.ForeignKey(CustomDisplayable, verbose_name=_('displayable'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _('link')
-        verbose_name_plural = _("links")
-        order_with_respect_to = "displayable"
-
-
-class CustomModel(models.Model):
-
-    class Meta:
-        verbose_name = _('custom model')
-
-
-class ModelBlock(Block):
-
-    model = models.ForeignKey(CustomModel, verbose_name=_('model'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _('block')
-        verbose_name_plural = _("blocks")
-        order_with_respect_to = "model"
-
-
-class ModelImage(Image):
-
-    model = models.ForeignKey(CustomModel, verbose_name=_('model'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _('image')
-        verbose_name_plural = _("images")
-        order_with_respect_to = "model"
-
-
-class ModelLink(Link):
-
-    model = models.ForeignKey(CustomModel, verbose_name=_('model'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _('link')
-        verbose_name_plural = _("links")
-        order_with_respect_to = "model"
+# class DisplayableBlock(Block):
+#
+#     displayable = models.ForeignKey(CustomDisplayable, verbose_name=_('displayable'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+#
+#     class Meta:
+#         verbose_name = _('block')
+#         verbose_name_plural = _("blocks")
+#         order_with_respect_to = "displayable"
+#
+#
+# class DisplayableImage(Image):
+#
+#     displayable = models.ForeignKey(CustomDisplayable, verbose_name=_('displayable'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+#
+#     class Meta:
+#         verbose_name = _('image')
+#         verbose_name_plural = _("images")
+#         order_with_respect_to = "displayable"
+#
+#
+# class DisplayableLink(Link):
+#
+#     displayable = models.ForeignKey(CustomDisplayable, verbose_name=_('displayable'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+#
+#     class Meta:
+#         verbose_name = _('link')
+#         verbose_name_plural = _("links")
+#         order_with_respect_to = "displayable"
+#
+#
+# class CustomModel(models.Model):
+#
+#     class Meta:
+#         verbose_name = _('custom model')
+#
+#
+# class ModelBlock(Block):
+#
+#     model = models.ForeignKey(CustomModel, verbose_name=_('model'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+#
+#     class Meta:
+#         verbose_name = _('block')
+#         verbose_name_plural = _("blocks")
+#         order_with_respect_to = "model"
+#
+#
+# class ModelImage(Image):
+#
+#     model = models.ForeignKey(CustomModel, verbose_name=_('model'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+#
+#     class Meta:
+#         verbose_name = _('image')
+#         verbose_name_plural = _("images")
+#         order_with_respect_to = "model"
+#
+#
+# class ModelLink(Link):
+#
+#     model = models.ForeignKey(CustomModel, verbose_name=_('model'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+#
+#     class Meta:
+#         verbose_name = _('link')
+#         verbose_name_plural = _("links")
+#         order_with_respect_to = "model"
