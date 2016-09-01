@@ -9,7 +9,6 @@ from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 from organization.core.models import *
-from organization.pages.models import Page
 from mezzanine_agenda.models import Event
 from django.conf import settings
 import requests
@@ -67,26 +66,6 @@ class Audio(Media):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
 
 
-class PageAudio(Audio):
-
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _("audio")
-        verbose_name_plural = _("audios")
-        order_with_respect_to = "page"
-
-#
-# class DisplayableAudio(Audio):
-#
-#     displayable = models.ForeignKey(Titled, verbose_name=_('displayable'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
-#
-#     class Meta:
-#         verbose_name = _("audio")
-#         verbose_name_plural = _("audios")
-
-
-
 class Video(Media):
     """Video"""
 
@@ -104,16 +83,6 @@ class Video(Media):
 
     def get_absolute_url(self):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
-
-
-class PageVideo(Video):
-
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _("video")
-        verbose_name_plural = _("videos")
-        order_with_respect_to = "page"
 
 
 class VideoCategory(Slugged):

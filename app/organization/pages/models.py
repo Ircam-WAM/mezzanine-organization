@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
 from mezzanine.core.models import Displayable, Slugged, Orderable
 from organization.core.models import *
+from organization.media.models import *
 
 
 class CustomPage(Page, SubTitled, RichText):
@@ -28,6 +29,26 @@ class PageImage(Image):
     class Meta:
         verbose_name = _("image")
         verbose_name_plural = _("images")
+        order_with_respect_to = "page"
+
+
+class PageAudio(Audio):
+
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("audio")
+        verbose_name_plural = _("audios")
+        order_with_respect_to = "page"
+
+
+class PageVideo(Video):
+
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("video")
+        verbose_name_plural = _("videos")
         order_with_respect_to = "page"
 
 

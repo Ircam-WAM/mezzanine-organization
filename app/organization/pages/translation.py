@@ -38,3 +38,14 @@ class PageBlockTranslationOptions(TranslationOptions):
 class PageImageTranslationOptions(TranslationOptions):
 
     fields = ('description',)
+
+
+@register(PageVideo)
+class PageVideoTranslationOptions(TranslationOptions):
+
+    pass
+
+@register(PageAudio)
+class PageAudioTranslationOptions(TranslationOptions):
+
+    pass
