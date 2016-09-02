@@ -19,7 +19,6 @@ LightSliderHomeInit.prototype.init = function() {
         onAfterSlide: function(slider) {
             var $pages = slider.parents('.slider-home').find('.slider-home__pager li');
             $pages.removeClass('active');
-            console.log(slider.getCurrentSlideCount());
             $($pages[slider.getCurrentSlideCount()-1]).addClass('active');
         },
         onSliderLoad: function(slider) {
@@ -30,7 +29,7 @@ LightSliderHomeInit.prototype.init = function() {
                     e.preventDefault();
                     $pages.removeClass('active');
                     that.addClass('active');
-                    slider.goToSlide(idx);
+                    slider.goToSlide(idx+1);
                     return false;
                 });
 
