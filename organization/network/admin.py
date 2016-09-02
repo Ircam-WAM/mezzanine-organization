@@ -9,11 +9,39 @@ from organization.pages.models import *
 from organization.core.admin import *
 from organization.pages.admin import PageImageInline, PageBlockInline, PageAudioInline, PageVideoInline
 
+class OrganizationAudioInline(StackedDynamicInlineAdmin):
+
+    model = OrganizationAudio
+
+
+class OrganizationVideoInline(StackedDynamicInlineAdmin):
+
+    model = OrganizationVideo
+
+
+class OrganizationLinkInline(StackedDynamicInlineAdmin):
+
+    model = OrganizationLink
+
+
+class OrganizationImageInline(TabularDynamicInlineAdmin):
+
+    model = OrganizationImage
+
+
+class OrganizationBlockInline(StackedDynamicInlineAdmin):
+
+    model = OrganizationBlock
+
 
 class OrganizationAdmin(BaseTranslationModelAdmin):
 
     model = Organization
-    #inlines = [OrganizationImageInline,]
+    inlines = [ OrganizationAudioInline,
+                OrganizationImageInline,
+                OrganizationVideoInline,
+                OrganizationBlockInline,
+                OrganizationLinkInline ]
 
 
 class DepartmentPageAdmin(PageAdmin):
