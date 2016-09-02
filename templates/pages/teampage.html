@@ -89,3 +89,22 @@
     {% include "core/inc/block.html" %}
   {% endwith %}
 {% endblock %}
+
+{% block related_project %}
+    {% if page.teampage.team.leader_projects.all or page.teampage.team.patner_projects.all %}
+    <hr>
+    {% endif %}
+  {% if page.teampage.team.leader_projects.all %}
+    <h4>{% trans 'Main projects' %}</h4>
+    {% with page.teampage.team.leader_projects.all as projects %}
+        {% include 'projects/project_list.html' %}
+    {% endwith %}
+  {% endif %}
+  {% if page.teampage.team.patner_projects.all %}
+    <h4>{% trans 'Partner projects' %}</h4>
+    {% with page.teampage.team.patner_projects.all as projects %}
+        {% include 'projects/project_list.html' %}
+    {% endwith %}
+  {% endif %}
+
+{% endblock %}
