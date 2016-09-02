@@ -21,6 +21,7 @@ from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 
 from organization.core.models import *
+from organization.media.models import *
 
 from django_countries.fields import CountryField
 # from .nationalities.fields import NationalityField
@@ -178,6 +179,30 @@ class Person(Displayable, AdminThumbMixin):
         self.set_names()
         super(Person, self).save(*args, **kwargs)
 
+
+class PersonAudio(Audio):
+
+    project = models.ForeignKey(Person, verbose_name=_('project'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class PersonVideo(Video):
+
+    project = models.ForeignKey(Person, verbose_name=_('project'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class PersonLink(Link):
+
+    project = models.ForeignKey(Person, verbose_name=_('project'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class PersonImage(Image):
+
+    project = models.ForeignKey(Person, verbose_name=_('project'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class PersonBlock(Block):
+
+    project = models.ForeignKey(Person, verbose_name=_('project'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ActivityStatus(Named):
