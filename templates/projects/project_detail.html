@@ -1,0 +1,80 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
+
+
+{% block page_title %}
+
+    {% editable project.title %}
+        <h1 class="dotted">{{ project.title }}</h1>
+    {% endeditable %}
+
+{% endblock %}
+
+{% block page_content %}
+  {% if project.description %}
+    {{ project.description }}
+  {% endif %}
+  <br>--------------------------------<br>
+  {% if project.content %}
+    {{ project.content|richtext_filters|safe }}
+  {% endif %}
+  <br>--------------------------------<br>
+  {% if project.lead_team %}
+    Project lead team : {{ project.lead_team }}<br>
+  {% endif %}
+  <br>--------------------------------<br>
+  {% if project.persons.all %}
+    Persons :<br>
+    {% for person in project.persons.all %}
+      {{ person }}<br>
+    {% endfor %}
+  {% endif %}
+  <br>--------------------------------<br>
+  {% if project.teams.all %}
+    Teams :<br>
+    {% for team in project.teams.all %}
+      {{ team }}<br>
+    {% endfor %}
+  {% endif %}
+  <br>--------------------------------<br>
+  {% if project.organizations.all %}
+    organizations :<br>
+    {% for organization in project.organizations.all %}
+      {{ organization }}<br>
+    {% endfor %}
+  {% endif %}
+  <br>--------------------------------<br>
+  {% if project.website %}
+    website : {{ project.website }}<br>
+  {% endif %}
+{% endblock %}
+
+{% block page_audio %}
+  {% with project.audios.all as audios %}
+    {% if audios %}
+      {% include 'core/inc/audio.html' %}
+    {% endif %}
+  {% endwith %}
+{% endblock %}
+
+{% block page_slider %}
+  {% with project.images.all|get_type:'page_slider' as slider_images %}
+    {% if slider_images %}
+      {% include 'core/inc/slider.html' %}
+    {% endif %}
+  {% endwith %}
+{% endblock %}
+
+{% block page_video %}
+    {% with project.videos.all as videos %}
+      {% if videos %}
+        {% include 'core/inc/video.html' %}
+      {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block page_sub_content %}
+    {% with project.blocks.all as blocks %}
+      {% include "core/inc/block.html" %}
+    {% endwith %}
+{% endblock %}
