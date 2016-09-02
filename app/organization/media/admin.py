@@ -14,7 +14,6 @@ class AudioAdmin(admin.ModelAdmin):
     model = Audio
 
 
-
 class PlaylistAdmin(admin.ModelAdmin):
 
     model = Playlist

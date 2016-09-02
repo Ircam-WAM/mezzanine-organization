@@ -7,45 +7,18 @@ from mezzanine.pages.admin import PageAdmin
 from organization.network.models import *
 from organization.pages.models import *
 from organization.core.admin import *
-from organization.pages.models import PageAudio, PageVideo
+from organization.pages.admin import PageImageInline, PageBlockInline, PageAudioInline, PageVideoInline
 
-
-class PageAudioInline(StackedDynamicInlineAdmin):
-
-    model = PageAudio
-    exclude = ("short_url", "keywords", "description", "slug", )
-
-
-class PageVideoInline(StackedDynamicInlineAdmin):
-
-    model = PageVideo
-    exclude = ("short_url", "keywords", "description", "slug", )
-
-
-# class OrganizationImageInline(TabularDynamicInlineAdmin):
-#
-#     model = ModelImage
-#
 
 class OrganizationAdmin(BaseTranslationModelAdmin):
 
     model = Organization
-    # inlines = [OrganizationImageInline,]
-
-
-class DepartmentPageBlockInline(StackedDynamicInlineAdmin):
-
-    model = PageBlock
-
-
-class DepartmentPageImageInline(TabularDynamicInlineAdmin):
-
-    model = PageImage
+    #inlines = [OrganizationImageInline,]
 
 
 class DepartmentPageAdmin(PageAdmin):
 
-    inlines = [DepartmentPageImageInline, DepartmentPageBlockInline, PageAudioInline, PageVideoInline, ]
+    inlines = [PageImageInline, PageBlockInline, PageAudioInline, PageVideoInline, ]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -58,28 +31,14 @@ class TeamAdmin(BaseTranslationModelAdmin):
     model = Team
 
 
-class TeamPageImageInline(TabularDynamicInlineAdmin):
-
-    model = PageImage
-
-class TeamPageBlockInline(StackedDynamicInlineAdmin):
-
-    model = PageBlock
-
-
 class TeamPageAdmin(PageAdmin):
 
-    inlines = [TeamPageImageInline, TeamPageBlockInline, PageAudioInline, PageVideoInline, ]
+    inlines = [PageImageInline, PageBlockInline, PageAudioInline, PageVideoInline, ]
 
 
 class PersonAdminBase(BaseTranslationModelAdmin):
 
     model = Person
-
-
-# class PersonLinkInline(StackedDynamicInlineAdmin):
-#
-#     model = DisplayableLink
 
 
 class PersonActivityInline(StackedDynamicInlineAdmin):
@@ -88,15 +47,35 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
     fk_name = 'person'
 
 
-# class PersonImageInline(TabularDynamicInlineAdmin):
-#
-#     model = DisplayableImage
-#
+class PersonAudioInline(StackedDynamicInlineAdmin):
+
+    model = PersonAudio
+
+
+class PersonVideoInline(StackedDynamicInlineAdmin):
+
+    model = PersonVideo
+
+
+class PersonLinkInline(StackedDynamicInlineAdmin):
+
+    model = PersonLink
+
+
+class PersonImageInline(TabularDynamicInlineAdmin):
+
+    model = PersonImage
+
+
+class PersonBlockInline(StackedDynamicInlineAdmin):
+
+    model = PersonBlock
+
 
 class PersonAdmin(BaseTranslationModelAdmin):
 
     model = Person
-    # inlines = [PersonImageInline, PersonActivityInline, PersonLinkInline, ]
+    inlines = [PersonActivityInline, PersonAudioInline, PersonImageInline, PersonVideoInline, PersonBlockInline, PersonLinkInline ]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
 
     def get_fieldsets(self, request, obj = None):

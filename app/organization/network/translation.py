@@ -43,3 +43,33 @@ class PersonTranslationOptions(TranslationOptions):
 class PersonActivityTranslationOptions(TranslationOptions):
 
     fields = ('description', 'content')
+
+
+@register(PersonAudio)
+class PersonAudioTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(PersonVideo)
+class PersonVideoTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(PersonLink)
+class PersonLinkTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(PersonImage)
+class PersonImageTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(PersonBlock)
+class PersonBlockTranslationOptions(TranslationOptions):
+
+    pass
