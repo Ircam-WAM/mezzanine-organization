@@ -73,3 +73,33 @@ class PersonImageTranslationOptions(TranslationOptions):
 class PersonBlockTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(OrganizationAudio)
+class OrganizationAudioTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(OrganizationVideo)
+class OrganizationVideoTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(OrganizationLink)
+class OrganizationLinkTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(OrganizationImage)
+class OrganizationImageTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(OrganizationBlock)
+class OrganizationBlockTranslationOptions(TranslationOptions):
+
+    pass

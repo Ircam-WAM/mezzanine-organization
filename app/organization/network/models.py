@@ -75,6 +75,30 @@ class Organization(Named, Address, URL):
         verbose_name = _('organization')
 
 
+class OrganizationAudio(Audio):
+
+    project = models.ForeignKey(Organization, verbose_name=_('project'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class OrganizationVideo(Video):
+
+    project = models.ForeignKey(Organization, verbose_name=_('project'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class OrganizationLink(Link):
+
+    project = models.ForeignKey(Organization, verbose_name=_('project'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class OrganizationImage(Image):
+
+    project = models.ForeignKey(Organization, verbose_name=_('project'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class OrganizationBlock(Block):
+
+    project = models.ForeignKey(Organization, verbose_name=_('project'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+
 
 class OrganizationType(Named):
     """(OrganizationType description)"""
@@ -134,7 +158,6 @@ class TeamPage(Page, SubTitled, RichText):
 
     class Meta:
         verbose_name = _('team page')
-
 
 
 class Person(Displayable, AdminThumbMixin):
