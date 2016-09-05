@@ -83,9 +83,12 @@ $module: ".slider-page";
 
         font-weight: weight(light);
         @include font-size(xs);
-        @include line-height(1.25);
+        @include line-height(0.75);
 
         text-align: center;
+
+        max-width: 250px;
+        margin: 0 auto;
 
     }
 
