@@ -21,20 +21,29 @@
 
     {% include "home/inc/slider.html" %}
 
-    <div style="display: none;">
-        {% page_menu "pages/menus/magazine.html" %}
-        {% include "magazine/brief/brief_list.html" %}
-    </div>
-
     <ul class="home__menu">
       <li class="home__menu-item">
-          <a href="#" title="{% trans "News Headlines" %}">{% trans "News Headlines" %}</a>
+          <a class="active" href="#" title="{% trans "News Headlines" %}">{% trans "News Headlines" %}</a>
       </li>
       <li class="home__menu-item">
           <a href="#" title="{% trans "Magazine" %}">{% trans "Magazine" %}</a>
+          <div class="home__shutter">
+              <div class="home__shutter-content">
+                  <div class="container-fluid tal">
+                      {% page_menu "pages/menus/magazine.html" %}
+                  </div>
+              </div>
+          </div>
       </li>
       <li class="home__menu-item">
           <a href="#" title="{% trans "Brief" %}">{% trans "Brief" %}</a>
+          <div class="home__shutter">
+              <div class="home__shutter-content">
+                  <div class="container-fluid tal">
+                      {% include "magazine/brief/brief_list.html" %}
+                  </div>
+              </div>
+          </div>
       </li>
       <li class="home__menu-item">
           <a href="#" title="{% trans "Media" %}">{% trans "Media" %}</a>
