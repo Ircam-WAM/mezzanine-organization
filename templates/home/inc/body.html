@@ -1,13 +1,13 @@
-<hr/>
-<h1>Body</h1>
-<br/>
-{% for body in home.dynamiccontenthomebody_set.all %}
-  {% if body.content_type.model == "brief" %}
-    {% include "home/inc/brief_card.html" %}
-  {% else %}
-    {% include "home/inc/generic_card.html" %}
-  {% endif %}
-{% endfor %}
-
-<br/>
-<hr/>
+<div class="container">
+    <div class="row">
+        {% for body in home.dynamiccontenthomebody_set.all %}
+            <div class="col-xs-4">
+                {% if body.content_type.model == "brief" %}
+                    {% include "home/inc/brief_card.html" %}
+                {% else %}
+                    {% include "home/inc/generic_card.html" %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

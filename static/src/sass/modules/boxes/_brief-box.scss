@@ -1,0 +1,68 @@
+$module: ".brief-box";
+
+#{$module} {
+
+    position: relative;
+    @include padding(1);
+    @include margin-bottom(1);
+    text-align: center;
+
+    background: $brief-box-background;
+
+    &__head {
+
+        text-transform: uppercase;
+        display: inline-block;
+        background: $brief-box-background-head;
+        color: $brief-box-color-head;
+
+        @include padding(0 1);
+
+        @include font-size(m);
+        @include line-height(1.25);
+        @include typeface(sans-serif);
+        font-weight: weight(regular);
+
+    }
+
+    &__title {
+
+        display: block;
+        margin: 0 auto;
+        color: $brief-box-color;
+
+        @include margin-top(3);
+        @include margin-bottom(1);
+
+        @include font-size(xl);
+        @include line-height(1.25);
+        @include typeface(serif);
+        font-weight: weight(heavy);
+
+    }
+
+    &__desc {
+
+        display: block;
+        margin: 0 auto;
+        color: $brief-box-color;
+
+        @include margin-bottom(1);
+
+        @include font-size(xl);
+        @include line-height(1.25);
+        @include typeface(serif);
+        font-weight: weight(light);
+
+    }
+
+    &__button {
+
+        @extend .button;
+        @extend .button--small;
+
+        @include margin-bottom(3);
+
+    }
+
+}
