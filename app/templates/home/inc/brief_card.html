@@ -1,10 +1,21 @@
-<h2>{{ body.content_object.title }}<h2><br/>
-<p>{{ body.content_object.description|slice:":500" }}</p>
-{% if body.content_object.external_content %}
-<a href="{{ body.content_object.external_content }}" title="{{ body.content_object.text_button }}">{{ body.content_object.text_button }}</a><br/>
-{% elif body.content_object.content_object %}
-<a href="{{ body.content_object.content_object.get_absolute_url }}" title="{{ body.content_object.text_button }}">{{ body.content_object.text_button }}</a><br/>
-{% endif %}
-<a href="{{ body.content_object.get_absolute_url }}" title="{{ body.content_object.title }}">{{ body.content_object.title }}</a><br/>
+{% load i18n %}
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br/>
+<div class="brief-box">
+
+    <div class="brief-box__head">
+        {% trans 'Brief !' %}
+    </div>
+
+    <h3 class="brief-box__title">{{ body.content_object.title }}</h3>
+    <div class="brief-box__desc">
+        {{ body.content_object.description|slice:":500" }}
+    </div>
+    {% if body.content_object.external_content %}
+        <a class="brief-box__button" href="{{ body.content_object.external_content }}" title="{{ body.content_object.text_button }}">{{ body.content_object.text_button }}</a>
+    {% elif body.content_object.content_object %}
+        <a class="brief-box__button" href="{{ body.content_object.content_object.get_absolute_url }}" title="{{ body.content_object.text_button }}">{{ body.content_object.text_button }}</a>
+    {% else %}
+        <a class="brief-box__button" href="{{ body.content_object.get_absolute_url }}" title="{{ body.content_object.title }}">{{ body.content_object.title }}</a>
+    {% endif %}
+
+</div>
