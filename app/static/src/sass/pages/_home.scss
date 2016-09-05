@@ -93,7 +93,7 @@ $module: ".home";
         }
         >a {
             @include font-size(s);
-            @include line-height(1);
+            @include line-height(0.5);
             @include typeface(serif);
             font-weight: weight(bold);
 
