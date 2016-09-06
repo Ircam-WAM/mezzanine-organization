@@ -45,6 +45,9 @@ class ProjectAdminDisplayable(DisplayableAdmin):
     fieldsets = deepcopy(ProjectAdmin.fieldsets)
     inlines = [ ProjectBlockInline, ProjectImageInline, ProjectAudioInline, ProjectVideoInline, ProjectLinkInline]
     filter_horizontal = ['persons', 'teams', 'organizations']
+    list_filter = ['type', 'program', 'program_type', ]
 
 
 admin.site.register(Project, ProjectAdminDisplayable)
+admin.site.register(ProjectProgram)
+admin.site.register(ProjectProgramType)
