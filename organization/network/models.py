@@ -163,14 +163,13 @@ class TeamPage(Page, SubTitled, RichText):
 class Person(Displayable, AdminThumbMixin):
     """(Person description)"""
 
-    user = models.ForeignKey(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
+    user = models.OneToOneField(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
     person_title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
     gender = models.CharField(_('gender'), max_length=16, choices=GENDER_CHOICES, blank=True)
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
-    permanent = models.BooleanField(_('permanent'), default=False)
 
     class Meta:
         verbose_name = _('person')
@@ -282,25 +281,32 @@ class TrainingSpectiality(Named):
         verbose_name = _('training speciality')
 
 
+class UMR(Named):
+
+    class Meta:
+        verbose_name = _('UMR')
+
+
 class PersonActivity(Description, Period, RichText):
     """(Activity description)"""
 
     person = models.ForeignKey('Person', verbose_name=_('person'))
-    team = models.ForeignKey('Team', verbose_name=_('team'), related_name='team_activity', blank=True, null=True, on_delete=models.SET_NULL)
-    second_team = models.ForeignKey('Team', verbose_name=_('second team'), related_name='second_team_activity', blank=True, null=True, on_delete=models.SET_NULL)
-    function = models.CharField(_('fonction'), blank=True, max_length=1024)
 
     status = models.ForeignKey(ActivityStatus, verbose_name=_('status'), blank=True, null=True, on_delete=models.SET_NULL)
-    grade = models.ForeignKey(ActivityGrade, verbose_name=_('grade'), blank=True, null=True, on_delete=models.SET_NULL)
+    is_permanent = models.BooleanField(_('permanent'), default=False)
     framework = models.ForeignKey(ActivityFramework, verbose_name=_('framework'), blank=True, null=True, on_delete=models.SET_NULL)
-    hdr = models.BooleanField(_('HDR'), default=False)
+    grade = models.ForeignKey(ActivityGrade, verbose_name=_('grade'), blank=True, null=True, on_delete=models.SET_NULL)
 
     employer = models.ForeignKey(Organization, verbose_name=_('employer'), related_name='employer_activity', blank=True, null=True, on_delete=models.SET_NULL)
-    second_employer = models.ForeignKey(Organization, verbose_name=_('second employer'), related_name='second_employer_activity', blank=True, null=True, on_delete=models.SET_NULL)
     attachment_organization = models.ForeignKey(Organization, verbose_name=_('attachment organization'), related_name='attachment_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    second_employer = models.ForeignKey(Organization, verbose_name=_('second employer'), related_name='second_employer_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    umr = models.ForeignKey(UMR, verbose_name=_('training type'), blank=True, null=True, on_delete=models.SET_NULL)
+    team = models.ForeignKey('Team', verbose_name=_('team'), related_name='team_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    second_team = models.ForeignKey('Team', verbose_name=_('second team'), related_name='second_team_activity', blank=True, null=True, on_delete=models.SET_NULL)
 
     project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), blank=True, null=True, on_delete=models.SET_NULL)
-    rd_quota = models.IntegerField(_('R&D quota'), blank=True, null=True)
+    rd_quota_float = models.IntegerField(_('R&D quota (float)'), blank=True, null=True)
+    rd_quota_text = models.CharField(_('R&D quota (text)'), blank=True, null=True, max_length=128)
     rd_program = models.TextField(_('R&D program'), blank=True)
     budget_code = models.ForeignKey(BudgetCode, blank=True, null=True, on_delete=models.SET_NULL)
 
@@ -311,6 +317,7 @@ class PersonActivity(Description, Period, RichText):
     phd_defense_date = models.DateField(_('PhD defense date'), blank=True, null=True)
     phd_title = models.TextField(_('PhD title'), blank=True)
     phd_postdoctoralsituation =  models.CharField(_('post-doctoral situation'), blank=True, max_length=256)
+    hdr = models.BooleanField(_('HDR'), default=False)
 
     training_type = models.ForeignKey(TrainingType, verbose_name=_('training type'), blank=True, null=True, on_delete=models.SET_NULL)
     training_level = models.ForeignKey(TrainingLevel, verbose_name=_('training level'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -318,12 +325,12 @@ class PersonActivity(Description, Period, RichText):
     training_speciality = models.ForeignKey(TrainingSpectiality, verbose_name=_('training speciality'), blank=True, null=True, on_delete=models.SET_NULL)
     training_title = models.TextField(_('Training title'), blank=True)
 
-    comments = models.TextField(_('comments'), blank=True)
-
     record_piece = models.ForeignKey(RecordPiece, blank=True, null=True, on_delete=models.SET_NULL)
     date_added = models.DateTimeField(_('add date'), auto_now_add=True)
     date_modified = models.DateTimeField(_('modification date'), auto_now=True)
     date_modified_manual = models.DateTimeField(_('manual modification date'), blank=True, null=True)
+
+    comments = models.TextField(_('comments'), blank=True)
 
     class Meta:
         verbose_name = _('activity')

@@ -9,12 +9,20 @@ from organization.core.models import *
 from organization.pages.models import *
 
 
+PROJECT_TYPE_CHOICES = [
+    ('internal project', _('internal project')),
+    ('external project', _('external project')),
+]
+
 class Project(Displayable, Period, RichText):
     """(Project description)"""
 
+    type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES)
+    program = models.ForeignKey('ProjectProgram', verbose_name=_('project program'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
+    program_type = models.ForeignKey('ProjectProgramType', verbose_name=_('project program type'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
     lead_team = models.ForeignKey('organization-network.Team', verbose_name=_('lead team'), related_name='leader_projects', blank=True, null=True)
     persons = models.ManyToManyField('organization-network.Person', verbose_name=_('persons'), blank=True)
-    teams = models.ManyToManyField('organization-network.Team', verbose_name=_('teams'), related_name='patner_projects', blank=True)
+    teams = models.ManyToManyField('organization-network.Team', verbose_name=_('teams'), related_name='partner_projects', blank=True)
     organizations = models.ManyToManyField('organization-network.Organization', verbose_name=_('organizations'), blank=True)
     website = models.URLField(_('website'), max_length=512, blank=True)
 
@@ -26,6 +34,18 @@ class Project(Displayable, Period, RichText):
 
     def get_absolute_url(self):
         return reverse("organization-project-detail", kwargs={"slug": self.slug})
+
+
+class ProjectProgram(Named):
+
+    class Meta:
+        verbose_name = _('project programme')
+
+
+class ProjectProgramType(Named):
+
+    class Meta:
+        verbose_name = _('project programme type')
 
 
 class ProjectAudio(Audio):
