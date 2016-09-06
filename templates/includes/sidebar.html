@@ -1,0 +1,17 @@
+{% load i18n pages_tags mezzanine_tags staticfiles keyword_tags event_tags  %}
+
+<div class="sidebar">
+
+    {% page_menu "pages/menus/header.html" %}
+    {% page_menu "pages/menus/action.html" %}
+
+    <ul class="sidebar__menu">
+        <li class="sidebar__menu-item">
+            <a href="#" title="{% trans "Magazine" %}">{% trans "Magazine" %}</a>
+        </li>
+        <li class="sidebar__menu-item">
+            <a href="#" title="{% trans "Magazine" %}">{% trans "Medias" %}</a>
+        </li>
+    </ul>
+
+</div>

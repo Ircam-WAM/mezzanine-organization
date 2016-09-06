@@ -1,0 +1,32 @@
+$module: ".sidebar";
+
+#{$module} {
+
+    @include padding-bottom(1);
+
+    &__menu {
+
+        @include padding(0 1);
+        text-align: left;
+        list-style-type: none;
+        margin: 0;
+
+    }
+
+    &__menu-item {
+
+        @include font-size(xl);
+        @include typeface(sans-serif);
+        @include line-height(2);
+        font-weight: weight(regular);
+
+        a {
+            color: black;
+            &:hover {
+                color: black;
+            }
+        }
+
+    }
+
+}

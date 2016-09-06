@@ -2,11 +2,30 @@ $module: ".header";
 
 #{$module} {
 
+    z-index: 100;
+    position: relative;
+
+    @include mq($until: sm) {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        height: $header-height-tablet;
+        @include mq($until: xs) {
+            height: $header-height-mobile;
+        }
+    }
+
     &__pre {
 
         background: $color-black;
         height: $header-pre-height;
         color: white;
+
+        @include mq($until: sm) {
+            display: none;
+        }
 
     }
 

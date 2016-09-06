@@ -6,7 +6,11 @@
     {% for page in page_branch %}
         {% if page.is_primary %}
             {% if forloop.first %}
-                <ul class="nav-header" role="navigation" id="navHeader">
+                <ul class="nav-header" role="navigation">
+                    <li class="nav-header__item menu-btn">
+                        <span class="first"></span>
+                        <span class="second"></span>
+                    </li>
                     <li class="nav-header__item nav-header__item--image">
                         <a href="{% url "home" %}" title="{% trans 'Home' %}"><img src="{% static "img/logo-ircam.png" %}" width="118" height="80" /></a>
                     </li>
@@ -15,12 +19,11 @@
         {% if page.in_menu %}
             <li class="nav-header__item">
                 <a class="nav-header__item-link{% if page.is_current_or_ascendant %} active{% endif %}" href="{{ page.get_absolute_url }}" title="{{ page.title }}">{{ page.title }}</a>
-
-        {% endif %}
-        {% if page.has_children_in_menu %}
-            {% page_menu page "pages/menus/header_tree_primary.html" %}
-        {% endif %}
+                {% if page.has_children_in_menu %}
+                    {% page_menu page "pages/menus/header_tree_primary.html" %}
+                {% endif %}
             </li>
+        {% endif %}
         {% if page.is_primary %}
             {% if forloop.last %}
                 <li class="nav-header__item nav-header__item--special">
