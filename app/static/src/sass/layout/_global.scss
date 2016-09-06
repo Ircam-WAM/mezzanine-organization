@@ -1,9 +1,25 @@
-.banner {
-    position: relative;
-    z-index: 2;
-}
-
 .main {
     @include margin(3 0 0 0);
     @include padding(1 0 0 0);
+}
+
+#container {
+    @include mq($until: sm) {
+        margin-top: $header-height-tablet;
+    }
+    @include mq($until: xs) {
+        margin-top: $header-height-mobile;
+    }
+}
+
+html, body {
+
+    @include mq($until: sm) {
+
+        overflow-x: hidden;
+        height: 100%;
+        -webkit-overflow-scrolling: touch;
+
+    }
+
 }

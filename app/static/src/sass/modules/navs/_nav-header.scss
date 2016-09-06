@@ -9,6 +9,10 @@ $module: ".nav-header";
 
     @include margin(.5 0);
 
+    @include mq($until: sm) {
+        @include margin(0);
+    }
+
     &__item {
 
         display: inline-block;
@@ -30,6 +34,10 @@ $module: ".nav-header";
             @include margin-left(.5);
         }
 
+        &:first-child {
+            display: none;
+        }
+
         &:last-child {
             &:after {
                 display: none;
@@ -40,6 +48,14 @@ $module: ".nav-header";
             vertical-align: top;
             @include margin(0 0 0 .75);
             @include padding-right(.75);
+
+            @include mq($until: sm) {
+                img {
+                    height: 70px;
+                    width: auto;
+                    display: block;
+                }
+            }
 
             /*@include mq($until: md) {
                 @include margin(0 0 0 .25);
@@ -60,6 +76,15 @@ $module: ".nav-header";
 
         &--centered {
             line-height: $header-height;
+
+            @include mq($until: sm) {
+                line-height: $header-height-tablet;
+                height: $header-height-tablet;
+            }
+            @include mq($until: xs) {
+                line-height: $header-height-mobile;
+                height: $header-height-mobile;
+            }
         }
 
         &.hover {
@@ -78,6 +103,28 @@ $module: ".nav-header";
                 border-left: 1px solid #E3E3E3;
                 border-right: 1px solid #E3E3E3;
                 border-bottom: 1px solid #F8F8F8;
+            }
+
+        }
+
+        @include mq($until: sm) {
+
+            display: none;
+            &:first-child,
+            &:nth-child(2),
+            &:last-child {
+                display: inline-block;
+            }
+
+            &:first-child {
+                float: left;
+            }
+            &:last-child {
+                float: right;
+            }
+
+            &:after {
+                display: none;
             }
 
         }
@@ -173,6 +220,99 @@ $module: ".nav-header";
 
             @include font-size(l);
             @include margin-bottom(.5);
+
+        }
+
+    }
+
+    //
+    // Sidenav overrides
+    //
+    .sidebar & {
+
+        @include padding(0.5 1 0 1);
+        text-align: left;
+
+        &__item {
+
+            display: block;
+            text-align: left;
+            @include margin-bottom(.5);
+
+            &:first-child,
+            &:nth-child(1),
+            &:last-child {
+                display: none;
+            }
+
+            &:nth-child(2) {
+                @include margin-bottom(1.5);
+            }
+
+            &:nth-child(6) {
+                @include margin-bottom(0);
+                &:after {
+
+                    display: block;
+                    position: static;
+                    content: "";
+                    background: #979797;
+                    width: 240px;
+                    height: 1px;
+                    @include margin(1.5 0 .5 0);
+
+                }
+            }
+
+            &.hover {
+                &:before {
+                    display: none;
+                }
+            }
+
+            &--special {
+
+                display: inline-block;
+                width: 50%;
+                padding: 0;
+                margin: 0;
+
+                a {
+                    color: black;
+                }
+
+            }
+
+            &--image {
+
+                display: inline-block;
+                width: 50%;
+                padding: 0;
+                margin: 0;
+
+                img {
+                    height: 80px;
+                    width: auto;
+                    display: block;
+                }
+            }
+
+        }
+
+        &__item-link {
+
+            color: black;
+            @include font-size(xxl);
+
+            &:hover {
+                color: black;
+            }
+
+        }
+
+        &__submenu {
+
+            display: none !important;
 
         }
 
