@@ -45,7 +45,13 @@ class PageVideoTranslationOptions(TranslationOptions):
 
     pass
 
+
 @register(PageAudio)
 class PageAudioTranslationOptions(TranslationOptions):
 
     pass
+
+@register(JobOffer)
+class PageAudioTranslationOptions(TranslationOptions):
+
+    fields = ('title',)

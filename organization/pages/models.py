@@ -76,3 +76,31 @@ class Home(Displayable):
 
     def get_absolute_url(self):
         return reverse("organization-home")
+
+
+class JobResponse(models.Model):
+
+    first_name = models.CharField(max_length=255, null=False, verbose_name=_('first name'))
+    last_name = models.CharField(max_length=255, null=False, verbose_name=_('last name'))
+    email = models.EmailField(max_length=255, null=False, verbose_name=_('email'))
+    #@TODO validate type format
+    curriculum_vitae = FileField(_("curriculum_vitae"), max_length=1024, upload_to="job_responses/%Y/%m/%d/")
+    cover_letter = FileField(_("curriculum_vitae"), max_length=1024, upload_to="job_responses/%Y/%m/%d/")
+    job_offer = models.ForeignKey("JobOffer", verbose_name=_('job offer'), blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('job_reponse')
+        verbose_name_plural = _("job_reponses")
+
+
+class JobOffer(Displayable, RichText):
+
+    email = models.EmailField(max_length=255, null=False, verbose_name=_('Email to forward response'))
+    type = models.CharField(blank=True, choices=[('internship', 'internship'), ('job', 'job')], max_length=32, verbose_name='Job offer type')
+
+    class Meta:
+        verbose_name = _('job offer')
+        verbose_name_plural = _("job offers")
+
+    def get_absolute_url(self):
+        return reverse("organization-job-offer-detail")
