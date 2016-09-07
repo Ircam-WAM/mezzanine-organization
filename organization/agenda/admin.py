@@ -27,6 +27,11 @@ class EventImageInline(TabularDynamicInlineAdmin):
     model = EventImage
 
 
+class EventDepartmentInline(StackedDynamicInlineAdmin):
+
+    model = EventDepartment
+
+
 class CustomEventAdmin(EventAdmin):
     """
     Admin class for events.
@@ -37,8 +42,8 @@ class CustomEventAdmin(EventAdmin):
     list_display = ["title", "start", "end", "user", "status", "admin_link"]
     if settings.EVENT_USE_FEATURED_IMAGE:
         list_display.insert(0, "admin_thumb")
-    list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location",)
-    inlines = [EventBlockInline, EventImageInline,]
+    list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location", "category")
+    inlines = [EventBlockInline, EventImageInline, EventDepartmentInline]
 
     def save_form(self, request, form, change):
         """
