@@ -44,7 +44,7 @@ class ProjectAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectAdmin.fieldsets)
     inlines = [ ProjectBlockInline, ProjectImageInline, ProjectAudioInline, ProjectVideoInline, ProjectLinkInline]
-    filter_horizontal = ['persons', 'teams', 'organizations']
+    filter_horizontal = ['teams', 'organizations']
     list_filter = ['type', 'program', 'program_type', ]
 
 

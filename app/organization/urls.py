@@ -19,4 +19,5 @@ urlpatterns = [
     url("^", include('organization.media.urls')),
     url("^", include('organization.projects.urls')),
     url("^", include('organization.network.urls')),
+    url("^", include('organization.agenda.urls')),
 ]
