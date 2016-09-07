@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker-compose run app python /srv/app/manage.py migrate
+docker-compose run app python /srv/app/manage.py migrate $1
