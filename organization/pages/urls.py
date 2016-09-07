@@ -6,7 +6,12 @@ from django.contrib import admin
 
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
-from organization.pages.views import DynamicContentHomeSliderView, DynamicContentHomeBodyView, HomeView
+from organization.pages.views import (
+    DynamicContentHomeSliderView,
+    DynamicContentHomeBodyView,
+    HomeView,
+    JobOfferDetailView
+)
 
 _slash = "/" if settings.APPEND_SLASH else ""
 
@@ -15,5 +20,5 @@ urlpatterns = [
     url("^dynamic-content-home-slider/$", DynamicContentHomeSliderView.as_view(), name='dynamic-content-home-slider'),
     url("^dynamic-content-home-body/$", DynamicContentHomeBodyView.as_view(), name='dynamic-content-home-body'),
     url("^home/$", HomeView.as_view(), name='organization-home'),
+    url("^job-offer/(?P<slug>.*)%s$", JobOfferDetailView.as_view(), name='organization-job-offer-detail'),
 ]
-'dynamic-content-home-body'

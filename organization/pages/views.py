@@ -6,7 +6,7 @@ from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from organization.pages.models import CustomPage
 from organization.core.views import SlugMixin
 from organization.magazine.models import Article, Topic, Brief
-from organization.pages.models import Home
+from organization.pages.models import Home, JobOffer
 
 
 class HomeView(SlugMixin, ListView):
@@ -27,6 +27,16 @@ class HomeView(SlugMixin, ListView):
         context['briefs'] = self.briefs
         return context
 
+
+class JobOfferDetailView(SlugMixin, DetailView):
+
+    model = JobOffer
+    template_name='pages/job_offer_detail.html'
+    context_object_name = 'job_offer'
+
+    def get_context_data(self, **kwargs):
+        context = super(JobOfferDetailView, self).get_context_data(**kwargs)
+        return context
 
 
 class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
