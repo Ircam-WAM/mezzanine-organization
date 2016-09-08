@@ -30,7 +30,6 @@ urlpatterns += [
     # App urls
 
     url("^", include('organization.urls')),
-    url("^%s/" % settings.EVENT_SLUG, include("mezzanine_agenda.urls")),
     url("^styles/$", direct_to_template, {"template": "styles.html"}, name="styles"),
 
     # We don't want to presume how your homepage works, so here are a

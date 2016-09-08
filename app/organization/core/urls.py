@@ -10,5 +10,4 @@ from mezzanine.conf import settings
 from organization.core.views import *
 
 urlpatterns = [
-    # url(r'^displayable/(?P<slug>.*)/$', CustomDisplayableView.as_view(), name="organization-displayable"),
 ]
