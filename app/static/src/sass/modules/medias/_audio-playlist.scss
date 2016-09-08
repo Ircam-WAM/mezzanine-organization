@@ -1,0 +1,19 @@
+$module: ".audio-playlist";
+
+#{$module} {
+
+    &__item {
+
+        &.playing {
+            color: red;
+        }
+
+        >a  {
+
+
+
+        }
+
+    }
+
+}

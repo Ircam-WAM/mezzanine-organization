@@ -13,6 +13,7 @@ var StickyKitInit = require('./modules/sticky-kit-init');
 var LightSliderPageInit = require('./modules/lightsliderpage-init');
 var LightSliderHomeInit = require('./modules/lightsliderhome-init');
 var HomeMenu = require('./modules/home-menu');
+var Audio = require('./modules/audio');
 
 //
 // Init all the modules
@@ -29,3 +30,4 @@ window[StickyKitInit] = new StickyKitInit();
 window[LightSliderPageInit] = new LightSliderPageInit();
 window[LightSliderHomeInit] = new LightSliderHomeInit();
 window[HomeMenu] = new HomeMenu();
+window[Audio] = new Audio();

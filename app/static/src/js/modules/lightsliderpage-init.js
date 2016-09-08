@@ -30,10 +30,16 @@ LightSliderPageInit.prototype.init = function() {
                         breakpoint: 752,
                         settings: {
                             autoWidth: false,
+                            adaptiveHeight: true,
                             item: 1
                         }
                     }
-                ]
+                ],
+                onBeforeSlide: function(el) {
+                    $(el).find('video').each(function(i) {
+                        this.pause();
+                    });
+                }
             }
         };
 
@@ -61,8 +67,16 @@ LightSliderPageInit.prototype.windowResize = function(e) {
         element = that.elements[i];
         totalWidth = 0;
 
-        element.$element.find('li').each(function() {
-            totalWidth += $(this).find('img').get(0).naturalWidth;
+        element.$element.find('li.slider-page__slide').each(function() {
+
+            var img =  $(this).find('img').get(0);
+
+            if(img) {
+                totalWidth += img.naturalWidth;
+            } else {
+                totalWidth += 905;
+            }
+
         });
 
         if(totalWidth > windowWidth) {
