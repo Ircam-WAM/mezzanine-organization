@@ -24,6 +24,9 @@
     "lightgallery": "^1.2.21",
     "jquery": "https://github.com/components/jquery.git#2.2.4",
     "imagesloaded": "^4.1.1",
-    "pushy": "^1.0.0"
+    "pushy": "^1.0.0",
+    "audiojs": "^1.0.1",
+    "video.js": "^5.13.0",
+    "videojs-playlist": "^2.4.0"
   }
 }
