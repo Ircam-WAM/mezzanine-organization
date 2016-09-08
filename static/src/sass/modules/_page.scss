@@ -2,6 +2,8 @@ $module: ".page";
 
 #{$module} {
 
+    @include padding-bottom(3);
+
     &__sidebar {
 
         @include mq($until: sm) {
