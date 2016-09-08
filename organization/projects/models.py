@@ -21,7 +21,6 @@ class Project(Displayable, Period, RichText):
     program = models.ForeignKey('ProjectProgram', verbose_name=_('project program'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
     program_type = models.ForeignKey('ProjectProgramType', verbose_name=_('project program type'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
     lead_team = models.ForeignKey('organization-network.Team', verbose_name=_('lead team'), related_name='leader_projects', blank=True, null=True)
-    persons = models.ManyToManyField('organization-network.Person', verbose_name=_('persons'), blank=True)
     teams = models.ManyToManyField('organization-network.Team', verbose_name=_('teams'), related_name='partner_projects', blank=True)
     organizations = models.ManyToManyField('organization-network.Organization', verbose_name=_('organizations'), blank=True)
     website = models.URLField(_('website'), max_length=512, blank=True)
@@ -39,13 +38,13 @@ class Project(Displayable, Period, RichText):
 class ProjectProgram(Named):
 
     class Meta:
-        verbose_name = _('project programme')
+        verbose_name = _('program')
 
 
 class ProjectProgramType(Named):
 
     class Meta:
-        verbose_name = _('project programme type')
+        verbose_name = _('program type')
 
 
 class ProjectAudio(Audio):

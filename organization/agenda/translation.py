@@ -13,3 +13,9 @@ class EventBlockTranslationOptions(TranslationOptions):
 class EventImageTranslationOptions(TranslationOptions):
 
     fields = ()
+
+
+@register(EventDepartment)
+class EventDepartmentTranslationOptions(TranslationOptions):
+
+    fields = ()

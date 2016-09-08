@@ -223,6 +223,7 @@ INSTALLED_APPS = [
     # "eve",
     'djangobower',
     "meta",
+    "cartridge.shop",
     "mezzanine_agenda",
 #    "orderable",
     "organization.core",
@@ -233,6 +234,7 @@ INSTALLED_APPS = [
     "organization.magazine",
     "organization.projects",
     "organization.agenda",
+    "organization.products",
 ]
 
 
@@ -250,6 +252,7 @@ MIGRATION_MODULES = {
     "galleries": "migrations.galleries",
     "pages": "migrations.pages",
     "conf": "migrations.conf",
+    "shop": "migrations.shop",
 }
 
 MODELTRANSLATION_TRANSLATION_FILES = (
@@ -299,6 +302,7 @@ MIDDLEWARE_CLASSES = (
     # "mezzanine.core.middleware.SSLRedirectMiddleware",
     "mezzanine.pages.middleware.PageMiddleware",
     # "mezzanine.core.middleware.FetchFromCacheMiddleware",
+    "cartridge.shop.middleware.ShopMiddleware",
 )
 
 # Store these package names here as they may change in the future since
