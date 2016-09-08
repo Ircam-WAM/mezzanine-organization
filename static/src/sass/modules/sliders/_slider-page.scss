@@ -92,4 +92,18 @@ $module: ".slider-page";
 
     }
 
+    &__video {
+
+        margin-bottom: 5px;
+        @include fluid-aspect(905 520);
+        width: 905px;
+
+        @include mq($until: xs) {
+
+            width: 100%;
+
+        }
+
+    }
+
 }
