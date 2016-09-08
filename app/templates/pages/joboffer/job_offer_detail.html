@@ -1,0 +1,22 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
+
+
+{% block page_title %}
+
+    {% editable project.title %}
+        <h1 class="dotted">{{ job_offer.title }}</h1>
+    {% endeditable %}
+
+{% endblock %}
+
+{% block page_content %}
+
+  {% include "core/inc/messages.html" %}
+
+  <p>{% trans "Category" %} : {{ job_offer.type }}</p>
+  <p>{{ job_offer.content|richtext_filters|safe }}</p>
+  {% with form as job_offer.job_response %}
+    {% include "pages/joboffer/inc/job_response_form.html" %}
+  {% endwith %}
+{% endblock %}
