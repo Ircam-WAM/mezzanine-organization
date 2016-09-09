@@ -18,7 +18,7 @@
 {% block page_content %}
     {% if job_offer %}
       {% for jo in job_offer %}
-        {% include "pages/joboffer/inc/job_offer_card.html" %}
+        {% include "job/inc/job_offer_card.html" %}
       {% endfor %}
     {% else %}
       <p>{% trans "Please come back later. There is no job offer at the moment." %}</p>

@@ -1,6 +1,4 @@
 from django.contrib import admin
-
-from django.contrib import admin
 from mezzanine.utils.static import static_lazy as static
 from copy import deepcopy
 from mezzanine.core.admin import *
@@ -9,8 +7,7 @@ from organization.pages.models import *
 from organization.pages.models import (
     DynamicContentHomeSlider,
     DynamicContentHomeBody,
-    Home,
-    JobOffer
+    Home
 )
 from organization.pages.forms import DynamicContentHomeSliderForm, DynamicContentHomeBodyForm
 
@@ -64,11 +61,6 @@ class HomeAdminDisplayable(BaseTranslationModelAdmin):
     inlines = [DynamicContentHomeSliderInline, DynamicContentHomeBodyInline  ]
 
 
-class JobOfferAdminDisplayable(BaseTranslationModelAdmin):
-
-    model = JobOffer
-
 
 admin.site.register(CustomPage, CustomPageAdmin)
 admin.site.register(Home, HomeAdminDisplayable)
-admin.site.register(JobOffer, JobOfferAdminDisplayable)

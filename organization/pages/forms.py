@@ -9,7 +9,7 @@ from django.forms import ModelForm
 from mezzanine.core.models import Orderable
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
-from organization.pages.models import DynamicContentHomeSlider, DynamicContentHomeBody, JobResponse
+from organization.pages.models import DynamicContentHomeSlider, DynamicContentHomeBody
 
 
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
@@ -43,14 +43,3 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
     class Meta:
         model = DynamicContentHomeBody
         fields = ('content_object',)
-
-
-class JobResponseForm(ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(JobResponseForm, self).__init__(*args, **kwargs)
-        self.fields['job_offer'].widget = forms.HiddenInput()
-
-    class Meta:
-        model = JobResponse
-        fields = ['first_name', 'last_name', 'email', 'curriculum_vitae', 'cover_letter', 'job_offer']

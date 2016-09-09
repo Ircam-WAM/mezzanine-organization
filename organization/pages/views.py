@@ -1,7 +1,5 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, TemplateView
-from django.views.generic.edit import CreateView
-from django.contrib import messages
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -10,8 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 from organization.pages.models import CustomPage
 from organization.core.views import SlugMixin
 from organization.magazine.models import Article, Topic, Brief
-from organization.pages.models import Home, JobOffer, JobResponse
-from organization.pages.forms import JobResponseForm
+from organization.pages.models import Home
+
 
 class HomeView(SlugMixin, ListView):
 
@@ -30,64 +28,6 @@ class HomeView(SlugMixin, ListView):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['briefs'] = self.briefs
         return context
-
-
-class JobOfferDetailView(CreateView):
-
-    model = JobResponse
-    template_name='pages/joboffer/job_offer_detail.html'
-    context_object_name = 'job_offer'
-    form_class = JobResponseForm
-
-    def get_context_data(self, **kwargs):
-        context = super(JobOfferDetailView, self).get_context_data(**kwargs)
-        job_offer = JobOffer.objects.get(slug=self.kwargs['slug'])
-        if job_offer :
-            context['job_offer'] = job_offer
-        return context
-
-    def get_initial(self):
-        initial = super(JobOfferDetailView, self).get_initial()
-        job_offer = JobOffer.objects.get(slug=self.kwargs['slug'])
-        if job_offer :
-            initial['job_offer'] = job_offer
-        return initial
-
-    def get_success_url(self):
-        return reverse_lazy('organization-job-offer-detail', kwargs={'slug':self.kwargs['slug']})
-
-    def form_valid(self, form):
-        messages.info(self.request, _("You have successfully submitted your application."))
-        return super(JobOfferDetailView, self).form_valid(form)
-
-
-class JobOfferListView(ListView):
-
-    model = JobOffer
-    template_name='pages/joboffer/job_offer_list.html'
-    context_object_name = 'job_offer'
-
-    def get_queryset(self, **kwargs):
-        return self.model.objects.published()
-
-    def get_context_data(self, **kwargs):
-        context = super(JobOfferListView, self).get_context_data(**kwargs)
-        return context
-
-
-# class JobResponseCreate(CreateView):
-#
-#     template_name = 'pages/joboffer/inc/job_response_form.html'
-#     model = JobResponse
-#     # form_class = JobResponseForm
-#     fields = ['first_name', 'last_name', 'email', 'curriculum_vitae', 'cover_letter']
-#     # success_url = '/job-offer-success/'
-#
-#     def form_valid(self, form):
-#         # This method is called when valid form data has been POSTed.
-#         # It should return an HttpResponse.
-#         # form.send_email()
-#         return super(JobResponseView, self).form_valid(form)
 
 
 class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
@@ -113,6 +53,7 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
         qs = self.mixup_querysets(qs)
 
         return qs
+
 
 class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
     def get_queryset(self):
