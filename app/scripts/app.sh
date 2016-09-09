@@ -35,6 +35,8 @@ python $manage wait-for-db
 python $manage migrate --noinput
 # python $manage bower_install -- --allow-root
 python $manage create-admin-user
+# @todo searching every fixtures file in each folder
+python $manage loaddata $app/organization/job/fixtures/organization-job.json
 
 # app start
 if [ "$1" = "--runserver" ]; then

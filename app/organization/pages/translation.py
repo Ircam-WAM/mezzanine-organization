@@ -50,8 +50,3 @@ class PageVideoTranslationOptions(TranslationOptions):
 class PageAudioTranslationOptions(TranslationOptions):
 
     pass
-
-@register(JobOffer)
-class PageAudioTranslationOptions(TranslationOptions):
-
-    fields = ('title',)

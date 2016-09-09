@@ -17,6 +17,6 @@
   <p>{% trans "Category" %} : {{ job_offer.type }}</p>
   <p>{{ job_offer.content|richtext_filters|safe }}</p>
   {% with form as job_offer.job_response %}
-    {% include "pages/joboffer/inc/job_response_form.html" %}
+    {% include "job/inc/job_response_form.html" %}
   {% endwith %}
 {% endblock %}
