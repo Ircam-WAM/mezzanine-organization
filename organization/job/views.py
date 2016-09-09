@@ -1,4 +1,5 @@
 import os
+import mimetypes
 from django import forms
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -11,11 +12,13 @@ from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from mezzanine.conf import settings
 from organization.job.models import JobOffer, JobResponse
 from organization.job.forms import JobResponseForm
 
 extention = ['.pdf', '.PDF', '.doc', '.docx']
+
 
 class JobOfferDetailView(CreateView):
 
@@ -26,16 +29,13 @@ class JobOfferDetailView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(JobOfferDetailView, self).get_context_data(**kwargs)
-        job_offer = JobOffer.objects.get(slug=self.kwargs['slug'])
-        if job_offer :
-             context['job_offer'] = job_offer
+        context['job_offer'] = self.job_offer
         return context
 
     def get_initial(self):
         initial = super(JobOfferDetailView, self).get_initial()
-        job_offer = JobOffer.objects.get(slug=self.kwargs['slug'])
-        if job_offer :
-            initial['job_offer'] = job_offer
+        self.job_offer = get_object_or_404(JobOffer, slug=self.kwargs['slug'])
+        initial['job_offer'] = self.job_offer
         return initial
 
     def get_success_url(self):
@@ -49,8 +49,7 @@ class JobOfferDetailView(CreateView):
             messages.info(self.request, _("Only .pdf, .doc, .docx files allowed."))
             return super(JobOfferDetailView, self).form_invalid(form)
 
-        job_offer = JobOffer.objects.get(slug=self.kwargs['slug'])
-        email_application_notification(self.request, job_offer, form.cleaned_data)
+        email_application_notification(self.request, self.job_offer, form.cleaned_data)
         messages.info(self.request, _("You have successfully submitted your application."))
         return super(JobOfferDetailView, self).form_valid(form)
 
