@@ -8,3 +8,9 @@ from organization.job.models import *
 class JobOfferTranslationOptions(TranslationOptions):
 
     fields = ('title', 'content')
+
+
+@register(JobResponse)
+class JobResponseTranslationOptions(TranslationOptions):
+
+    pass
