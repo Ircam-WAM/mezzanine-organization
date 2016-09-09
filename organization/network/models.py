@@ -178,8 +178,8 @@ class Person(Displayable, AdminThumbMixin):
     def __str__(self):
         return ' '.join((self.first_name, self.last_name))
 
-    # def get_absolute_url(self):
-    #     return reverse("festival-artist-detail", kwargs={'slug': self.slug})
+    def get_absolute_url(self):
+        return reverse("organization-network-person-detail", kwargs={'slug': self.slug})
 
     def set_names(self):
         names = self.title.split(' ')
