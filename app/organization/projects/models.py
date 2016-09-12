@@ -52,11 +52,9 @@ class ProjectAudio(Audio):
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-
 class ProjectVideo(Video):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
-
 
 
 class ProjectLink(Link):

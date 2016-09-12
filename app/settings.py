@@ -220,10 +220,10 @@ INSTALLED_APPS = [
     "mezzanine.twitter",
     "mezzanine.accounts",
     # "mezzanine.mobile",
+    "cartridge.shop",
     # "eve",
     'djangobower',
     "meta",
-    "cartridge.shop",
     "mezzanine_agenda",
 #    "orderable",
     "organization.core",
@@ -234,7 +234,7 @@ INSTALLED_APPS = [
     "organization.magazine",
     "organization.projects",
     "organization.agenda",
-    "organization.products",
+    "organization.shop",
     "organization.job",
 ]
 
