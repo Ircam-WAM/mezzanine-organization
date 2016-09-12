@@ -7,8 +7,8 @@ from django.conf.urls.i18n import i18n_patterns
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
-from organization.projects.views import *
+from organization.shop.views import *
 
 urlpatterns = [
-    # url("^project/detail/(?P<slug>.*)/$", ProjectDetailView.as_view(), name='organization-project-detail'),
+    url("^shop/", include("cartridge.shop.urls")),
 ]

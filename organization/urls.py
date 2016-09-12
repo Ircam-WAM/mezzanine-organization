@@ -21,4 +21,5 @@ urlpatterns = [
     url("^", include('organization.network.urls')),
     url("^", include('organization.agenda.urls')),
     url("^", include('organization.job.urls')),
+    url("^", include('organization.shop.urls')),
 ]
