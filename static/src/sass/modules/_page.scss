@@ -67,6 +67,7 @@ $module: ".page";
             background-color: $color-main;
             @include padding-top(2);
             @include padding-bottom(2);
+            @include margin(2 0);
 
             h2:first-child {
                 margin-top: 0;
@@ -80,6 +81,7 @@ $module: ".page";
             color: white;
             @include padding-top(2);
             @include padding-bottom(2);
+            @include margin(2 0);
 
             h2:first-child {
                 margin-top: 0;
@@ -93,6 +95,7 @@ $module: ".page";
             color: white;
             @include padding-top(2);
             @include padding-bottom(2);
+            @include margin(2 0);
 
             h2:first-child {
                 margin-top: 0;
