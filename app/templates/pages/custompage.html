@@ -68,11 +68,17 @@
 
 {% block page_slider %}
   {% with page.custompage.images.all|get_type:'page_slider' as slider_images %}
-  {% with page.custompage.videos.all as videos %}
     {% if slider_images %}
       {% include 'core/inc/slider.html' %}
     {% endif %}
   {% endwith %}
+{% endblock %}
+
+{% block page_video %}
+  {% with page.custompage.videos.all as videos %}
+    {% if videos %}
+      {% include 'core/inc/slider_video.html' %}
+    {% endif %}
   {% endwith %}
 {% endblock %}
 

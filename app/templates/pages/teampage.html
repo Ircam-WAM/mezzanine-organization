@@ -70,13 +70,20 @@
 
 {% block page_slider %}
     {% with page.teampage.images.all|get_type:'page_slider' as slider_images %}
-    {% with page.teampage.videos.all as videos %}
       {% if slider_images %}
         {% include 'core/inc/slider.html' %}
       {% endif %}
     {% endwith %}
-    {% endwith %}
 {% endblock %}
+
+{% block page_video %}
+  {% with page.teampage.videos.all as videos %}
+    {% if videos %}
+      {% include 'core/inc/slider_video.html' %}
+    {% endif %}
+  {% endwith %}
+{% endblock %}
+
 
 {% block page_sub_content %}
   {% with page.teampage.blocks.all as blocks %}
