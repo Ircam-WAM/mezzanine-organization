@@ -57,4 +57,55 @@ $module: ".page";
 
     }
 
+    &__block {
+
+        @include padding-bottom(1);
+        background-color: white;
+
+        &--yellow {
+
+            background-color: $color-main;
+            @include padding-top(2);
+            @include padding-bottom(2);
+
+            h2:first-child {
+                margin-top: 0;
+            }
+
+        }
+
+        &--black {
+
+            background-color: $color-black;
+            color: white;
+            @include padding-top(2);
+            @include padding-bottom(2);
+
+            h2:first-child {
+                margin-top: 0;
+            }
+
+        }
+
+        &--red {
+
+            background-color: red;
+            color: white;
+            @include padding-top(2);
+            @include padding-bottom(2);
+
+            h2:first-child {
+                margin-top: 0;
+            }
+
+        }
+
+        p:last-child {
+
+            margin-bottom: 0;
+
+        }
+
+    }
+
 }
