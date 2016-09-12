@@ -2,15 +2,34 @@ $module: ".audio-playlist";
 
 #{$module} {
 
+    margin-top: 0;
+    padding: 0;
+    background: $color-black-light;
+    list-style-type: none;
+
     &__item {
 
+        @include padding(0.25 1);
+        @include font-size(xs);
+        @include typeface(sans-serif);
+        @include transition(all 0.25s ease-in-out);
+        color: white;
+
         &.playing {
-            color: red;
+
+            background: $color-main;
+            color: $color-black-light;
+
+            >a {
+                color: $color-black-light;
+            }
+
         }
 
         >a  {
 
-
+            @include transition(all 0.25s ease-in-out);
+            color: white;
 
         }
 
