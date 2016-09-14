@@ -82,6 +82,14 @@
   {% endwith %}
 {% endblock %}
 
+{% block page_link %}
+{% with page.custompage.links.all as links %}
+  {% if links %}
+    {% include 'core/inc/link.html' %}
+  {% endif %}
+{% endwith %}
+{% endblock %}
+
 {% block page_sub_content %}
    {% with page.custompage.blocks.all as blocks %}
      {% include "core/inc/block.html" %}
