@@ -155,6 +155,21 @@
 .fsxs {
     @include font-size(xs);
 }
+.fwl {
+    font-weight: weight(light);
+}
+.lh1 {
+    @include line-height(1);
+}
+.lh2 {
+    @include line-height(2);
+}
+.fcl {
+    color: white;
+}
+.fcb {
+    color: $color-black;
+}
 .unstyled-list {
     list-style-type: none;
     margin: 0;
