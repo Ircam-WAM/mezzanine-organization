@@ -23,6 +23,9 @@ $module: ".button";
     &:hover {
         background: black;
         color: $color-main;
+        a {
+            color: $color-main;
+        }
     }
 
     &--small {
