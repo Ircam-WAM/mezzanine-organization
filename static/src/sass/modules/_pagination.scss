@@ -6,9 +6,39 @@ $module: ".pagination";
     margin: 0;
     padding: 0;
 
+    @include typeface(sans-serif);
+
+    @include margin(0 0 2 0);
+
     &__item {
 
         display: inline-block;
+        vertical-align: middle;
+        cursor: pointer;
+
+        @include margin(0 0.1);
+
+    }
+
+    &__link {
+
+        @include font-size(xs);
+        @include line-height(1);
+        @include typeface(sans-serif);
+        @include margin(0);
+        font-weight: weight(regular);
+
+        display: block;
+        background: $color-main;
+        color: $color-black;
+
+        @include padding(.15 .5);
+        @include transition(all .25s ease-in-out);
+
+        &.active, &:hover {
+            background: $color-black;
+            color: $color-main;
+        }
 
     }
 
