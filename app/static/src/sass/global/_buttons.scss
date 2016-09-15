@@ -14,6 +14,7 @@ $module: ".button";
     font-weight: weight(light);
 
     background: $color-main;
+    color: $color-black;
     display: inline-block;
     vertical-align: middle;
     cursor: pointer;
@@ -21,10 +22,10 @@ $module: ".button";
     @include transition(all 0.25s ease-in-out);
 
     &:hover {
-        background: black;
-        color: $color-main;
+        background: $color-black;
+        color: white;
         a {
-            color: $color-main;
+            color: white;
         }
     }
 
