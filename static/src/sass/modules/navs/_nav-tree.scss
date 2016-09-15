@@ -5,6 +5,17 @@ $module: ".nav-tree";
     padding: 0;
     margin: 0;
     list-style-type: none;
+    z-index: 2;
+    opacity: 1;
+    @include transition(opacity 0.25s ease-in-out);
+
+    &.faded {
+        opacity: 0;
+    }
+
+    &.is_stuck {
+        background: white;
+    }
 
     &--level-0 {
 
@@ -37,7 +48,7 @@ $module: ".nav-tree";
 
         &--sub {
             @include padding-left(2);
-            background: rgba($color_main, 0.6);
+            background: lighten($color_main, 20%);
             color: $color-black-light;
         }
 
