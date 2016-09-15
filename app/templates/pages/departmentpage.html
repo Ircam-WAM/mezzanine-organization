@@ -104,3 +104,9 @@
     {% endif %}
 
 {% endblock %}
+
+{% block logo %}
+  {% with page.departmentpage.images.all|get_type:'logo' as images %}
+    {% include 'core/inc/logo.html' %}
+  {% endwith %}
+{% endblock %}
