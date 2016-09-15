@@ -148,6 +148,7 @@ class LinkType(models.Model):
         blank=True,
     )
     ordering = models.PositiveIntegerField(verbose_name=_('ordering'), null=True, blank=True)
+    picto = FileField(_("picto"), max_length=1024, format="Image", upload_to="images/picto")
 
     class Meta:
         ordering = ['ordering', ]

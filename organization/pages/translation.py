@@ -50,3 +50,9 @@ class PageVideoTranslationOptions(TranslationOptions):
 class PageAudioTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(PageLink)
+class PageLinkTranslationOptions(TranslationOptions):
+
+    pass
