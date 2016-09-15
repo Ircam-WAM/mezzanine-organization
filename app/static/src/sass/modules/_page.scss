@@ -83,6 +83,10 @@ $module: ".page";
             @include padding-bottom(2);
             @include margin(2 0 0 0);
 
+            a {
+                color: white;
+            }
+
             h2:first-child {
                 margin-top: 0;
             }
