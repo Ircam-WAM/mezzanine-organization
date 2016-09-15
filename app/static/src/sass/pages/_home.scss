@@ -46,7 +46,7 @@ $module: ".home";
         background: white;
         z-index: 100;
 
-        @include padding(1 0);
+        @include padding(2 0 0 0);
         @include transform(scaleY(0));
         @include transition(transform 0.35s ease-in-out);
         transition-delay: 0.15s;
@@ -71,7 +71,7 @@ $module: ".home";
 
     &__shutter-content {
 
-        @include padding(0 9);
+        @include padding(0 7);
         @include transition(opacity 0.15s ease-in-out);
         opacity: 0;
         transition-delay: 0s;
@@ -80,15 +80,32 @@ $module: ".home";
             @include padding(0 3);
         }
 
+        @include mq($until: md) {
+            @include padding(0 1);
+        }
+
+        .col-xs-3:nth-child(n+5) {
+
+            &:before {
+
+                content: "";
+                display: block;
+                background: #979797;
+                height: 1px;
+                width: 100%;
+                @include margin-bottom(1);
+                @include margin-top(3);
+
+            }
+
+        }
+
     }
 
     &__shutter-item {
 
         text-decoration: none;
         display: block;
-
-        @include margin-top(1);
-        @include margin-bottom(1);
 
         >h2 {
             @include font-size(l);
