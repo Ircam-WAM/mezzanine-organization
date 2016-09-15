@@ -15,3 +15,8 @@ from organization.core.views import *
 #     model = Project
 #     template_name='projects/project_detail.html'
 #     context_object_name = 'project'
+
+
+class ProductDetailView(SlugMixin, DetailView):
+
+    pass

@@ -77,27 +77,27 @@ class Organization(Named, Address, URL):
 
 class OrganizationAudio(Audio):
 
-    organization = models.ForeignKey(Organization, verbose_name=_('project'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class OrganizationVideo(Video):
 
-    organization = models.ForeignKey(Organization, verbose_name=_('project'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class OrganizationLink(Link):
 
-    organization = models.ForeignKey(Organization, verbose_name=_('project'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class OrganizationImage(Image):
 
-    organization = models.ForeignKey(Organization, verbose_name=_('project'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class OrganizationBlock(Block):
 
-    organization = models.ForeignKey(Organization, verbose_name=_('project'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class OrganizationType(Named):
@@ -204,27 +204,27 @@ class Person(Displayable, AdminThumbMixin):
 
 class PersonAudio(Audio):
 
-    person = models.ForeignKey(Person, verbose_name=_('project'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class PersonVideo(Video):
 
-    person = models.ForeignKey(Person, verbose_name=_('project'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class PersonLink(Link):
 
-    person = models.ForeignKey(Person, verbose_name=_('project'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class PersonImage(Image):
 
-    person = models.ForeignKey(Person, verbose_name=_('project'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class PersonBlock(Block):
 
-    person = models.ForeignKey(Person, verbose_name=_('project'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 # class PersonListBlock(Titled):
