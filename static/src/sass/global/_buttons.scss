@@ -28,6 +28,18 @@ $module: ".button";
         }
     }
 
+    &--black {
+
+        background-color: $color-black;
+        color: white;
+
+        &:hover {
+            background-color: $color-main;
+            color: $color-black;
+        }
+
+    }
+
     &--small {
         @include font-size(m);
         @include padding(.18 1);
