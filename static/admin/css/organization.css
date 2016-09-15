@@ -4,3 +4,9 @@
     margin-top: 10px;
     width: 100%;
 }
+
+.yellow_button {
+    display: inline-block;
+    padding: 20px;
+    background: yellow;
+}
