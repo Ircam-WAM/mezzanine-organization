@@ -2,7 +2,7 @@
 {% if images %}
 <ul>
   {% for image in images %}
-    <li><img src="{{ MEDIA_URL }}{% thumbnail image.file 100 100 %}"></li>
+    <li><img src="{{ MEDIA_URL }}{{ image.file }}"></li>
   {% endfor %}
 </ul>
 {% endif %}
