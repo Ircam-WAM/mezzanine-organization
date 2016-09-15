@@ -95,3 +95,9 @@
      {% include "core/inc/block.html" %}
   {% endwith %}
 {% endblock %}
+
+{% block logo %}
+  {% with page.custompage.images.all|get_type:'logo' as images %}
+    {% include 'core/inc/logo.html' %}
+  {% endwith %}
+{% endblock %}
