@@ -57,6 +57,18 @@ $module: ".page";
 
     }
 
+    hr + #{$module}__block--yellow {
+
+        @include margin-top(-2);
+
+    }
+
+    hr + #{$module}__block--black {
+
+        @include margin-top(-2);
+
+    }
+
     &__block {
 
         @include padding-bottom(1);

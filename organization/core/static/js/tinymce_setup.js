@@ -64,10 +64,19 @@ jQuery(function($) {
         toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image table | code fullscreen",
         image_advtab: !0,
         file_browser_callback: custom_file_browser,
-        content_css: [window.__tinymce_css, '/static/admin/css/organization.css'] ,
+        content_css: [window.__tinymce_css, '/static/admin/css/organization.css', '/static/css/index.min.css'] ,
         valid_elements: "*[*]",
         style_formats: [
-          { title: 'Button Yellow', inline: 'a', classes: 'yellow_button'}
+          {
+            title: 'Boutons', items: [
+              { title: 'Boutons Jaune', selector: 'a', classes: 'wys-button'},
+              { title: 'Boutons Jaune Small', selector: 'a', classes: 'wys-button-small'},
+              { title: 'Boutons Jaune XSmall', selector: 'a', classes: 'wys-button-xsmall'},
+              { title: 'Boutons Noir', selector: 'a', classes: 'wys-button-black'},
+              { title: 'Boutons Noir Small', selector: 'a', classes: 'wys-button-black-small'},
+              { title: 'Boutons Noir XSmall', selector: 'a', classes: 'wys-button-black-xsmall'}
+            ]
+          }
         ],
         style_formats_merge: true
     })
