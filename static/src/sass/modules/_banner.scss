@@ -10,11 +10,22 @@ $module: ".banner";
     height: 350px;
     position: relative;
 
-    @include margin-bottom(1);
+    @include margin-bottom(2);
 
     @include mq($until: lg) {
 
         height: 250px;
+
+    }
+
+    &:hover {
+
+        #{$module}__title:after {
+
+            opacity: 1;
+            @include transform(scaleX(1));
+
+        }
 
     }
 
@@ -70,6 +81,18 @@ $module: ".banner";
 
     }
 
+    &--light {
+
+        color: white;
+
+    }
+
+    &--dark {
+
+        color: $color-black;
+
+    }
+
     &__content {
 
         position: absolute;
@@ -79,30 +102,62 @@ $module: ".banner";
         height: 100%;
         z-index: 2;
 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        @include padding(1);
+        padding-top: 120px;
         text-align: center;
 
-        @include padding(1);
+        @include mq($until: lg) {
+            padding-top: 50px;
+        }
+
+        @include mq($until: md) {
+            padding-top: 25px;
+        }
+
+        @include mq($until: sm) {
+            padding-top: 75px;
+        }
 
     }
 
     &__title {
 
-        @include font-size(xxl);
         @include line-height(1.2);
         @include typeface(sans-serif);
         font-weight: weight(bold);
+        display: inline-block;
+        position: relative;
 
         @include margin(0 0 1 0);
+
+        &:after {
+
+            content: "";
+            display: block;
+            position: absolute;
+            top: 50%;
+            height: 10px;
+            left: -10px;
+            right: -10px;
+            background: white;
+            z-index: -1;
+            opacity: 0;
+            @include transform(scaleX(0));
+            @include transition(all 0.25s ease-in-out);
+
+            #{$module}--light & {
+                background: $color-black;
+            }
+            #{$module}--dark & {
+                background: white;
+            }
+
+        }
 
     }
 
     &__desc {
 
-        @include font-size(s);
         @include line-height(1);
         @include typeface(serif);
         font-weight: weight(bold);
