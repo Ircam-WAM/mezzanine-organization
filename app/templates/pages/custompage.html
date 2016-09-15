@@ -68,16 +68,36 @@
 
 {% block page_slider %}
   {% with page.custompage.images.all|get_type:'page_slider' as slider_images %}
-  {% with page.custompage.videos.all as videos %}
     {% if slider_images %}
       {% include 'core/inc/slider.html' %}
     {% endif %}
   {% endwith %}
+{% endblock %}
+
+{% block page_video %}
+  {% with page.custompage.videos.all as videos %}
+    {% if videos %}
+      {% include 'core/inc/slider_video.html' %}
+    {% endif %}
   {% endwith %}
+{% endblock %}
+
+{% block page_link %}
+{% with page.custompage.links.all as links %}
+  {% if links %}
+    {% include 'core/inc/link.html' %}
+  {% endif %}
+{% endwith %}
 {% endblock %}
 
 {% block page_sub_content %}
    {% with page.custompage.blocks.all as blocks %}
      {% include "core/inc/block.html" %}
+  {% endwith %}
+{% endblock %}
+
+{% block logo %}
+  {% with page.custompage.images.all|get_type:'logo' as images %}
+    {% include 'core/inc/logo.html' %}
   {% endwith %}
 {% endblock %}

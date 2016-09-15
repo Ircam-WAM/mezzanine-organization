@@ -15,6 +15,10 @@ $module: ".breadcrumb";
     @include typeface(serif);
     font-weight: weight(light);
 
+    @include mq($until: sm) {
+        display: none;
+    }
+
     &__item {
 
         float: left;

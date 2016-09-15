@@ -34,9 +34,14 @@ class PageVideoInline(StackedDynamicInlineAdmin):
     exclude = ("short_url", "keywords", "description", "slug", )
 
 
+class PageLinkInline(StackedDynamicInlineAdmin):
+
+    model = PageLink
+
+
 class CustomPageAdmin(PageAdmin):
 
-    inlines = [PageBlockInline, PageImageInline, PageAudioInline, PageVideoInline, ]
+    inlines = [PageBlockInline, PageImageInline, PageAudioInline, PageVideoInline, PageLinkInline]
 
 
 class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):

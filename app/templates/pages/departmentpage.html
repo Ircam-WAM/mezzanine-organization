@@ -58,15 +58,20 @@
   {% endwith %}
 {% endblock %}
 
-
 {% block page_slider %}
 {% with page.departmentpage.images.all|get_type:'page_slider' as slider_images %}
-{% with page.departmentpage.videos.all as videos %}
   {% if slider_images %}
     {% include 'core/inc/slider.html' %}
   {% endif %}
 {% endwith %}
-{% endwith %}
+{% endblock %}
+
+{% block page_video %}
+  {% with page.departmentpage.videos.all as videos %}
+    {% if videos %}
+      {% include 'core/inc/slider_video.html' %}
+    {% endif %}
+  {% endwith %}
 {% endblock %}
 
 {% block page_sub_content %}
@@ -98,4 +103,10 @@
 
     {% endif %}
 
+{% endblock %}
+
+{% block logo %}
+  {% with page.departmentpage.images.all|get_type:'logo' as images %}
+    {% include 'core/inc/logo.html' %}
+  {% endwith %}
 {% endblock %}

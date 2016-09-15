@@ -57,4 +57,90 @@ $module: ".page";
 
     }
 
+    hr + #{$module}__block--yellow {
+
+        @include margin-top(-2);
+
+    }
+
+    hr + #{$module}__block--black {
+
+        @include margin-top(-2);
+
+    }
+
+    &__block {
+
+        @include padding-bottom(1);
+        background-color: white;
+
+        &--yellow {
+
+            background-color: $color-main;
+            @include padding-top(2);
+            @include padding-bottom(2);
+            @include margin(2 0 0 0);
+
+            h2:first-child {
+                margin-top: 0;
+            }
+
+            & + hr {
+                margin-top: 1px;
+            }
+
+            & + .page__block {
+                @include margin-top(2);
+            }
+
+        }
+
+        &--black {
+
+            background-color: $color-black;
+            color: white;
+            @include padding-top(2);
+            @include padding-bottom(2);
+            @include margin(2 0 0 0);
+
+            a {
+                color: white;
+            }
+
+            h2:first-child {
+                margin-top: 0;
+            }
+
+            & + hr {
+                margin-top: 1px;
+            }
+
+            & + .page__block {
+                @include margin-top(2);
+            }
+
+        }
+
+        &--red {
+
+            background-color: red;
+            color: white;
+            @include padding-top(2);
+            @include padding-bottom(2);
+            @include margin(2 0);
+
+            h2:first-child {
+                margin-top: 0;
+            }
+
+        }
+
+        p:last-child {
+
+            margin-bottom: 0;
+
+        }
+
+    }
+
 }

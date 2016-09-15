@@ -1,0 +1,20 @@
+{% load mezzanine_tags i18n %}
+{% if images %}
+    <div class="white-bg pb2">
+        <hr class="mt0" />
+        <div class="page__block{% if block.background_color %} page__block--{{ block.background_color }}{% endif %}">
+            <div class="container">
+                <div class="row" data-summary-content>
+                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
+                        <h2>{% trans 'Partners' %}</h2>
+                        <ul class="partners-list">
+                            {% for image in images %}
+                                <li class="partners-list__item" style="background-image:url('{{ MEDIA_URL }}{{ image.file }}');"><img alt="{{ image.title }}" src="{{ MEDIA_URL }}{{ image.file }}"></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

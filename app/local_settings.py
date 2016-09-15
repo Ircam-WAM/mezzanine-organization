@@ -112,6 +112,7 @@ else:
 SLUGIFY = 'django.template.defaultfilters.slugify'
 
 BLOG_POST_PER_PAGE = 200
+ARTICLE_PER_PAGE = 4 # just for tests because we haven't got enough content
 
 # The numeric mode to set newly-uploaded files to. The value should be
 # a mode you'd pass directly to os.chmod.
