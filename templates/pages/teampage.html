@@ -107,5 +107,10 @@
         {% include 'projects/project_list.html' %}
     {% endwith %}
   {% endif %}
+{% endblock %}
 
+{% block logo %}
+  {% with page.teampage.images.all|get_type:'logo' as images %}
+    {% include 'core/inc/logo.html' %}
+  {% endwith %}
 {% endblock %}
