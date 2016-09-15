@@ -81,10 +81,22 @@ $module: ".page";
             color: white;
             @include padding-top(2);
             @include padding-bottom(2);
-            @include margin(2 0);
+            @include margin(2 0 0 0);
+
+            a {
+                color: white;
+            }
 
             h2:first-child {
                 margin-top: 0;
+            }
+
+            & + hr {
+                margin-top: 1px;
+            }
+
+            & + .page__block {
+                @include margin-top(2);
             }
 
         }
