@@ -5,6 +5,7 @@
 
 {% block extrahead %}
 <link rel="stylesheet" type="text/css" href="{% static "mezzanine/css/admin/global.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/organization.css" %}" />
 <style>
     /* These are set in PageAdmin's view methods, and mezzanine.utils.admin.SingletonAdmin */
     {% if hide_delete_link or singleton %}.submit-row .deletelink {display:none !important;}{% endif %}
@@ -72,5 +73,4 @@ jQuery(function($) {
         {% endif %}
     {% endif %}
 {% endif %}
-<link rel="stylesheet" type="text/css" href="{% static "admin/css/organization.css" %}" />
 {% endblock %}
