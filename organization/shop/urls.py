@@ -11,4 +11,5 @@ from organization.shop.views import *
 
 urlpatterns = [
     url("^shop/", include("cartridge.shop.urls")),
+    url("^product/(?P<slug>.*)/$", ProductDetailView.as_view(), name='shop_product'),
 ]

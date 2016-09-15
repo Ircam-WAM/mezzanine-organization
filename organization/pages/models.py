@@ -52,6 +52,16 @@ class PageVideo(Video):
         order_with_respect_to = "page"
 
 
+class PageLink(Link):
+
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("link")
+        verbose_name_plural = _("links")
+        order_with_respect_to = "page"
+
+
 class DynamicContentHomeSlider(DynamicContent, Orderable):
 
     home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.SET_NULL)

@@ -1,3 +1,37 @@
-.audiojs .play-pause {
-    width: 37px;
+.audiojs {
+    background: $color-black;
+    box-shadow: none;
+    width: 100%;
+
+    .play-pause {
+        width: 37px;
+    }
+
+    .scrubber {
+        width: calc(80% - 37px);
+    }
+
+    .time {
+        width: calc(20% - 37px);
+        @include font-size(xs);
+        @include typeface(sans-serif);
+    }
+
+    .progress {
+        background: $color-main;
+    }
+
+    .loaded {
+        background: $color-gray;
+    }
+
+    @include mq($until: xs) {
+        width: 100%;
+        .scrubber {
+            width: calc(60% - 37px);
+        }
+        .time {
+            width: calc(40% - 37px);
+        }
+    }
 }

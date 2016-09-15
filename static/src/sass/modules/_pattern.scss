@@ -8,7 +8,7 @@ $module: ".pattern";
         content: "";
         background-repeat: repeat;
         background-position: top left;
-        opacity: 0.2;
+        opacity: 1.0;
         top: 0;
         left: 0;
         bottom: 0;
@@ -21,24 +21,28 @@ $module: ".pattern";
     &--circles {
         &:after {
             background-image: url(../img/patterns/circles.png);
+            opacity: 0.2;
         }
     }
 
     &--squares {
         &:after {
             background-image: url(../img/patterns/squares.png);
+            opacity: 0.4;
         }
     }
 
     &--stripes {
         &:after {
             background-image: url(../img/patterns/stripes.png);
+            opacity: 0.4;
         }
     }
 
     &--triangles {
         &:after {
             background-image: url(../img/patterns/triangles.png);
+            opacity: 0.2;
         }
     }
 
@@ -64,24 +68,28 @@ $module: ".pattern";
     &--circles {
         &:after {
             background-image: url(../img/patterns/circles.png);
+            opacity: 0.2;
         }
     }
 
     &--squares {
         &:after {
             background-image: url(../img/patterns/squares.png);
+            opacity: 0.4;
         }
     }
 
     &--stripes {
         &:after {
             background-image: url(../img/patterns/stripes.png);
+            opacity: 0.4;
         }
     }
 
     &--triangles {
         &:after {
             background-image: url(../img/patterns/triangles.png);
+            opacity: 0.2;
         }
     }
 

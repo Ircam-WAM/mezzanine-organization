@@ -1,0 +1,81 @@
+a.wys-button {
+
+    @extend .button;
+    .page__block--black & {
+        color: $color-black;
+        &:hover {
+            color: $color-main;
+        }
+    }
+
+}
+
+a.wys-button-small {
+
+    @extend .button;
+    @extend .button--small;
+    .page__block--black & {
+        color: $color-black;
+        &:hover {
+            color: $color-main;
+        }
+    }
+
+}
+
+a.wys-button-xsmall {
+
+    @extend .button;
+    @extend .button--xsmall;
+    .page__block--black & {
+        color: $color-black;
+        &:hover {
+            color: $color-main;
+        }
+    }
+
+}
+
+a.wys-button-black {
+
+    @extend .button;
+    @extend .button--black;
+
+    .page__block--black & {
+        color: white;
+        &:hover {
+            color: $color-black;
+        }
+    }
+
+}
+
+a.wys-button-black-small {
+
+    @extend .button;
+    @extend .button--black;
+    @extend .button--small;
+
+    .page__block--black & {
+        color: white;
+        &:hover {
+            color: $color-black;
+        }
+    }
+
+}
+
+a.wys-button-black-xsmall {
+
+    @extend .button;
+    @extend .button--black;
+    @extend .button--xsmall;
+
+    .page__block--black & {
+        color: white;
+        &:hover {
+            color: $color-black;
+        }
+    }
+
+}

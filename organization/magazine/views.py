@@ -10,6 +10,8 @@ from itertools import chain
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
+from mezzanine.utils.views import paginate
+from mezzanine.conf import settings
 from organization.magazine.models import Article, Topic, Brief
 from organization.network.models import DepartmentPage
 from organization.pages.models import CustomPage
@@ -53,6 +55,7 @@ class BriefDetailView(SlugMixin, DetailView):
         context = super(BriefDetailView, self).get_context_data(**kwargs)
         return context
 
+
 class BriefListView(SlugMixin, ListView):
 
     model = Brief
@@ -72,6 +75,11 @@ class TopicDetailView(SlugMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(TopicDetailView, self).get_context_data(**kwargs)
+        # paginate "manually" articles because we are not in a ListView
+        articles = paginate(self.object.articles.all(), self.request.GET.get("page", 1),
+                          settings.ARTICLE_PER_PAGE,
+                          settings.MAX_PAGING_LINKS)
+        context['articles'] = articles
         return context
 
 

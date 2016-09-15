@@ -39,6 +39,13 @@ h2 {
 	}
 }
 
+h3 {
+    @include typeset(heading-3);
+    @include typeface(sans-serif);
+    @include margin-bottom(1);
+    @include margin-top(1);
+}
+
 p {
     @include margin-top(0);
     @include margin-bottom(1);
@@ -106,4 +113,13 @@ figure {
 	@include typeface(serif);
     @include margin-bottom(2);
 	font-weight: weight(heavy);
+}
+
+h1 + .chapo {
+	@include margin-top(-2);
+	@include margin-bottom(4);
+	@include typeface(sans-serif);
+	@include font-size(xxl);
+	font-weight: weight(regular);
+
 }
