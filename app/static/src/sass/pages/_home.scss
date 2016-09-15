@@ -46,7 +46,7 @@ $module: ".home";
         background: white;
         z-index: 100;
 
-        @include padding(1 8);
+        @include padding(1 0);
         @include transform(scaleY(0));
         @include transition(transform 0.35s ease-in-out);
         transition-delay: 0.15s;
