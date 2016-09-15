@@ -1,0 +1,42 @@
+.wys-button {
+
+    @extend .button;
+
+}
+
+.wys-button-small {
+
+    @extend .button;
+    @extend .button--small;
+
+}
+
+.wys-button-xsmall {
+
+    @extend .button;
+    @extend .button--xsmall;
+
+}
+
+.wys-button-black {
+
+    @extend .button;
+    @extend .button--black;
+
+}
+
+.wys-button-black-small {
+
+    @extend .button;
+    @extend .button--black;
+    @extend .button--small;
+
+}
+
+.wys-button-black-xsmall {
+
+    @extend .button;
+    @extend .button--black;
+    @extend .button--xsmall;
+
+}
