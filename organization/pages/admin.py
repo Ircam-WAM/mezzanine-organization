@@ -7,10 +7,10 @@ from organization.pages.models import *
 from organization.pages.models import (
     DynamicContentHomeSlider,
     DynamicContentHomeBody,
-    Home
+    Home,
 )
-from organization.pages.forms import DynamicContentHomeSliderForm, DynamicContentHomeBodyForm
-
+from organization.pages.forms import *
+from organization.network.forms import *
 
 class PageBlockInline(StackedDynamicInlineAdmin):
 
@@ -39,9 +39,20 @@ class PageLinkInline(StackedDynamicInlineAdmin):
     model = PageLink
 
 
+class DynamicContentPersonListBlockInline(TabularDynamicInlineAdmin):
+
+    model = DynamicPersonListBlockPage
+    form = DynamicContentPersonListBlockForm
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+
 class CustomPageAdmin(PageAdmin):
 
-    inlines = [PageBlockInline, PageImageInline, PageAudioInline, PageVideoInline, PageLinkInline]
+    inlines = [PageBlockInline, PageImageInline, PageAudioInline, PageVideoInline, PageLinkInline, DynamicContentPersonListBlockInline]
 
 
 class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
@@ -67,5 +78,10 @@ class HomeAdminDisplayable(BaseTranslationModelAdmin):
 
 
 
+
+
+
+
 admin.site.register(CustomPage, CustomPageAdmin)
 admin.site.register(Home, HomeAdminDisplayable)
+# admin.site.register(PersonListBlock, PersonListBlockAdmin)

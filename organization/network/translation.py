@@ -103,3 +103,15 @@ class OrganizationImageTranslationOptions(TranslationOptions):
 class OrganizationBlockTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(DynamicPersonList)
+class DynamicPersonListTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(PersonListBlock)
+class PersonListBlockTranslationOptions(TranslationOptions):
+
+    pass

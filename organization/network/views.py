@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from organization.network.models import *
 from organization.core.views import *
 
@@ -59,3 +60,29 @@ class PersonDetailView(SlugMixin, DetailView):
     model = Person
     template_name='team/person_detail.html'
     context_object_name = 'person'
+
+
+class DynamicPersonListView(Select2QuerySetSequenceView):
+
+    def get_queryset(self):
+        persons = Person.objects.all()
+        if self.q:
+            persons = persons.filter(person_title__icontains=self.q)
+        qs = autocomplete.QuerySetSequence(persons)
+        if self.q:
+            qs = qs.filter(person_title__icontains=self.q)
+        qs = self.mixup_querysets(qs)
+        return qs
+
+
+class DynamicContentPersonListBlockView(Select2QuerySetSequenceView):
+
+    def get_queryset(self):
+        person_list_blocks = PersonListBlock.objects.all()
+        if self.q:
+            person_list_blocks = person_list_blocks.filter(title__icontains=self.q)
+        qs = autocomplete.QuerySetSequence(person_list_blocks)
+        if self.q:
+            qs = qs.filter(title__icontains=self.q)
+        qs = self.mixup_querysets(qs)
+        return qs

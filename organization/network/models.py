@@ -227,10 +227,21 @@ class PersonBlock(Block):
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-# class PersonListBlock(Titled):
-#
-#     class Meta:
-#         verbose_name = _('Person List')
+class PersonListBlock(Titled):
+
+    class Meta:
+        verbose_name = _('Person List')
+
+    def __str__(self):
+        return self.title
+
+
+class DynamicPersonList(DynamicContent, Orderable):
+
+    person_list_block = models.ForeignKey("PersonListBlock", verbose_name=_('Person List Block'), related_name='dynamic_person_list', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Person List'
 
 
 class ActivityStatus(Named):
