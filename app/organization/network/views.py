@@ -62,27 +62,39 @@ class PersonDetailView(SlugMixin, DetailView):
     context_object_name = 'person'
 
 
-class DynamicPersonListView(Select2QuerySetSequenceView):
+class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):
 
     def get_queryset(self):
-        persons = Person.objects.all()
+        # if not self.request.is_authenticated():
+        #     return PersonListBlock.objects.none()
+
+        qs = PersonListBlock.objects.all()
+
+        title = self.forwarded.get('title', None)
+
+        if title:
+            qs = qs.filter(title=title)
+
         if self.q:
-            persons = persons.filter(person_title__icontains=self.q)
-        qs = autocomplete.QuerySetSequence(persons)
-        if self.q:
-            qs = qs.filter(person_title__icontains=self.q)
-        qs = self.mixup_querysets(qs)
+            qs = qs.filter(title__istartswith=self.q)
+
         return qs
 
 
-class DynamicContentPersonListBlockView(Select2QuerySetSequenceView):
+class PersonListView(autocomplete.Select2QuerySetView):
 
     def get_queryset(self):
-        person_list_blocks = PersonListBlock.objects.all()
+        # if not self.request.is_authenticated():
+        #     return PersonListBlock.objects.none()
+
+        qs = Person.objects.all()
+
+        person_title = self.forwarded.get('person_title', None)
+
+        if person_title:
+            qs = qs.filter(person_title=person_title)
+
         if self.q:
-            person_list_blocks = person_list_blocks.filter(title__icontains=self.q)
-        qs = autocomplete.QuerySetSequence(person_list_blocks)
-        if self.q:
-            qs = qs.filter(title__icontains=self.q)
-        qs = self.mixup_querysets(qs)
+            qs = qs.filter(person_title__istartswith=self.q)
+
         return qs

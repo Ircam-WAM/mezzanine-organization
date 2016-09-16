@@ -39,20 +39,20 @@ class PageLinkInline(StackedDynamicInlineAdmin):
     model = PageLink
 
 
-class DynamicContentPersonListBlockInline(TabularDynamicInlineAdmin):
+class PersonListBlockAutocompleteInline(TabularDynamicInlineAdmin):
 
-    model = DynamicPersonListBlockPage
-    form = DynamicContentPersonListBlockForm
-
-    class Media:
-        js = (
-            static("mezzanine/js/admin/dynamic_inline.js"),
-        )
+    model = PersonListBlock
+    form = PagePersonListForm
 
 
 class CustomPageAdmin(PageAdmin):
 
-    inlines = [PageBlockInline, PageImageInline, PageAudioInline, PageVideoInline, PageLinkInline, DynamicContentPersonListBlockInline]
+    inlines = [PageBlockInline, PageImageInline,
+            PageAudioInline,
+            PageVideoInline,
+            PageLinkInline,
+            PersonListBlockAutocompleteInline,
+            ]
 
 
 class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
@@ -77,11 +77,5 @@ class HomeAdminDisplayable(BaseTranslationModelAdmin):
     inlines = [DynamicContentHomeSliderInline, DynamicContentHomeBodyInline  ]
 
 
-
-
-
-
-
 admin.site.register(CustomPage, CustomPageAdmin)
 admin.site.register(Home, HomeAdminDisplayable)
-# admin.site.register(PersonListBlock, PersonListBlockAdmin)

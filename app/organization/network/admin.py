@@ -117,23 +117,15 @@ class PersonAdmin(BaseTranslationModelAdmin):
         return res
 
 
-class DynamicContentPersonListInline(TabularDynamicInlineAdmin):
+class PersonAutocompleteInline(TabularDynamicInlineAdmin):
 
-    model = DynamicPersonList
-    form = DynamicPersonListForm
-
-    class Media:
-        js = (
-            static("mezzanine/js/admin/dynamic_inline.js"),
-            static("mezzanine/js/jquery-ui-1.9.2.min.js"),
-        )
+    model = PersonAutocomplete
+    form = PersonAutocompleteForm
 
 
 class PersonListBlockAdmin(admin.ModelAdmin):
 
-    inlines = [DynamicContentPersonListInline, ]
-
-
+    inlines = [PersonAutocompleteInline,]
 
 
 admin.site.register(Organization, OrganizationAdmin)
