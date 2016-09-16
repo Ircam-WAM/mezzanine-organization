@@ -115,3 +115,9 @@ class DynamicPersonListTranslationOptions(TranslationOptions):
 class PersonListBlockTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(PersonAutocomplete)
+class PersonListBlockTranslationOptions(TranslationOptions):
+
+    pass

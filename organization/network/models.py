@@ -229,11 +229,22 @@ class PersonBlock(Block):
 
 class PersonListBlock(Titled):
 
+    page = models.ForeignKey(Page, verbose_name=_('Page'), related_name='person_list_block', blank=True, null=True, on_delete=models.SET_NULL)
+
     class Meta:
         verbose_name = _('Person List')
 
     def __str__(self):
         return self.title
+
+
+class PersonAutocomplete(models.Model):
+
+    person_list_block = models.ForeignKey(PersonListBlock, verbose_name=_('Person List Block'), related_name='person_autocomplete', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('Person autocomplete')
 
 
 class DynamicPersonList(DynamicContent, Orderable):
