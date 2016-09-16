@@ -24,6 +24,8 @@ class Project(Displayable, Period, RichText):
     teams = models.ManyToManyField('organization-network.Team', verbose_name=_('teams'), related_name='partner_projects', blank=True)
     organizations = models.ManyToManyField('organization-network.Organization', verbose_name=_('organizations'), blank=True)
     website = models.URLField(_('website'), max_length=512, blank=True)
+    topic = models.ForeignKey('ProjectTopic', verbose_name=_('topic'), related_name='projects', blank=True, null=True)
+    sub_topic = models.ForeignKey('ProjectSubTopic', verbose_name=_('sub topic'), related_name='projects', blank=True, null=True)
 
     class Meta:
         verbose_name = _('project')
@@ -33,6 +35,18 @@ class Project(Displayable, Period, RichText):
 
     def get_absolute_url(self):
         return reverse("organization-project-detail", kwargs={"slug": self.slug})
+
+
+class ProjectTopic(Named):
+
+    class Meta:
+        verbose_name = _('project topic')
+
+
+class ProjectSubTopic(Named):
+
+    class Meta:
+        verbose_name = _('project sub topic')
 
 
 class ProjectProgram(Named):
