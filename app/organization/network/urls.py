@@ -13,4 +13,7 @@ from organization.network.views import *
 urlpatterns = [
     url(r'^(?P<department>.*)/teams/$', TeamListView.as_view(), name="organization-network-team-list"),
     url(r'^person/(?P<slug>.*)/$', PersonDetailView.as_view(), name="organization-network-person-detail"),
-]
+    url("^dynamic-person-list/$", DynamicPersonListView.as_view(), name='dynamic-person-list'),
+    url("^dynamic-content-person-list-block/$", DynamicContentPersonListBlockView.as_view(), name='dynamic-content-person-list-block'),
+
+    ]

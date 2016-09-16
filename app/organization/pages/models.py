@@ -86,3 +86,13 @@ class Home(Displayable):
 
     def get_absolute_url(self):
         return reverse("organization-home")
+
+        verbose_name = _('Person List')
+
+
+class DynamicPersonListBlockPage(DynamicContent, Orderable):
+
+    page = models.ForeignKey(Page, verbose_name=_('Page'), related_name='person_list_blocks', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('Person List')
