@@ -56,8 +56,3 @@ class PageAudioTranslationOptions(TranslationOptions):
 class PageLinkTranslationOptions(TranslationOptions):
 
     pass
-
-@register(DynamicPersonListBlockPage)
-class DynamicPersonListBlockPageTranslationOptions(TranslationOptions):
-
-    pass

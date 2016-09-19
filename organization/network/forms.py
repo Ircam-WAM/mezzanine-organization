@@ -5,11 +5,11 @@ from django import forms
 from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
 from mezzanine.core.models import Orderable
-from organization.network.models import Person, PersonListBlock, DynamicPersonList, PersonAutocomplete #DynamicContentPersonList,
-from organization.pages.models import DynamicPersonListBlockPage, Page
+from organization.network.models import Person, PersonListBlock, PersonListBlockInline, PageCustomPersonListBlockInline
+from organization.pages.models import Page, CustomPage
 
 
-class PagePersonListForm(forms.ModelForm):
+class PageCustomPersonListForm(forms.ModelForm):
 
     person_list_block = forms.ModelChoiceField(
         queryset=PersonListBlock.objects.all(),
@@ -17,11 +17,11 @@ class PagePersonListForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Page
-        fields = ('person_list_block',)
+        model = PageCustomPersonListBlockInline #CustomPage
+        fields = ('person_list_block',) #person_list_block
 
 
-class PersonAutocompleteForm(forms.ModelForm):
+class PersonListBlockInlineForm(forms.ModelForm):
 
     person = forms.ModelChoiceField(
         queryset=Person.objects.all(),
@@ -29,5 +29,5 @@ class PersonAutocompleteForm(forms.ModelForm):
     )
 
     class Meta:
-        model = PersonAutocomplete
+        model = PersonListBlockInline
         fields = ('__all__')

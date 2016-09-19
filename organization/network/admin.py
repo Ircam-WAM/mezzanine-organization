@@ -118,15 +118,15 @@ class PersonAdmin(BaseTranslationModelAdmin):
         return res
 
 
-class PersonAutocompleteInline(TabularDynamicInlineAdmin):
+class PersonListBlockInlineAdmin(TabularDynamicInlineAdmin):
 
-    model = PersonAutocomplete
-    form = PersonAutocompleteForm
+    model = PersonListBlockInline
+    form = PersonListBlockInlineForm
 
 
 class PersonListBlockAdmin(admin.ModelAdmin):
 
-    inlines = [PersonAutocompleteInline,]
+    inlines = [PersonListBlockInlineAdmin,]
 
 
 admin.site.register(Organization, OrganizationAdmin)
