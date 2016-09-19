@@ -7,8 +7,9 @@ from django.conf.urls.i18n import i18n_patterns
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
-from organization.products.views import *
+from organization.shop.views import *
 
 urlpatterns = [
+    url("^shop/", include("cartridge.shop.urls")),
     url("^product/(?P<slug>.*)/$", ProductDetailView.as_view(), name='shop_product'),
 ]

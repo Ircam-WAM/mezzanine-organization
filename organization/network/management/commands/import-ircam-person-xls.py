@@ -46,7 +46,7 @@ def get_instance(model, field, value):
 class IrcamXLS:
 
     sheet_id = 2
-    first_row = 21
+    first_row = 20
 
     def __init__(self, file):
         self.book = xlrd.open_workbook(file)
@@ -69,6 +69,7 @@ class IrcamPerson(object):
         self.datemode = datemode
         last_name = self.row[0].value
         first_name = self.row[1].value
+        print(last_name)
         title = ' '.join((first_name, last_name))
 
         self.person, c = Person.objects.get_or_create(title=title, first_name=first_name, last_name=last_name)
@@ -85,12 +86,50 @@ class IrcamPerson(object):
         if birthday:
             self.person.birthday = datetime.datetime(*xlrd.xldate_as_tuple(birthday, self.datemode))
 
+        # self.person.nationality = self.get_or_create_name(Nationality, self.row[33].value)
+
         self.person.save()
 
     def get_or_create_name(self, model, column_id):
         return model.objects.get_or_create(name=self.row[column_id].value)[0] if self.row[column_id].value else None
 
+    def get_person(self, value):
+        if value:
+            name_exceptions = ['de', 'von']
+
+            names = value.split(' / ')[0]
+            names = names.split(' ')
+
+            if names[0] == 'M.':
+                names.remove('M.')
+
+            if names[0] == 'Mm.':
+                names.remove('Mm.')
+
+            first_name = names[0].capitalize()
+
+            last_name = []
+            for name in names[1:]:
+                if name:
+                    if name[0] != '(' and not name in name_exceptions:
+                        last_name.append(name.capitalize())
+            last_name = ' '.join(last_name)
+
+            title = ' '.join((first_name, last_name))
+            person, c = Person.objects.get_or_create(title=title)
+
+            return person
+
+        return None
+
     def get_activity(self):
+        self.activity.date_begin = datetime.datetime(*xlrd.xldate_as_tuple(self.row[4].value, self.datemode)) if self.row[4].value else None
+        self.activity.date_end = datetime.datetime(*xlrd.xldate_as_tuple(self.row[5].value, self.datemode)) if self.row[5].value else None
+        try:
+            self.activity.weeks = int(self.row[6].value) if self.row[6].value else None
+        except:
+            pass
+
         self.activity.status = self.get_or_create_name(ActivityStatus, 10)
         self.activity.is_permanent = True if self.row[11].value else False
         self.activity.framework = self.get_or_create_name(ActivityFramework, 12)
@@ -101,22 +140,43 @@ class IrcamPerson(object):
         self.activity.second_employer = self.get_or_create_name(Organization, 16)
         self.activity.umr = self.get_or_create_name(UMR, 17)
 
-        self.activity.team, c = Team.objects.get_or_create(name=self.row[18].value, organization=self.organization) if self.row[18].value else (None, False)
-        self.activity.second_team, c = Team.objects.get_or_create(name=self.row[19].value, organization=self.organization) if self.row[19].value else (None, False)
-        self.activity.project, c = Project.objects.get_or_create(title=self.row[19].value) if self.row[19].value else (None, False)
+        self.activity.team, c = Team.objects.get_or_create(code=self.row[19].value, organization=self.organization) if self.row[19].value else (None, False)
+        self.activity.second_team, c = Team.objects.get_or_create(code=self.row[21].value, organization=self.organization) if self.row[21].value else (None, False)
+        self.activity.project, c = Project.objects.get_or_create(title=self.row[22].value) if self.row[22].value else (None, False)
 
-        quota = self.row[21].value
+        quota = self.row[23].value
         try:
             self.activity.rd_quota_float = float(quota)
         except:
             self.activity.rd_quota_text = str(quota)
 
-        self.activity.phd_doctoral_school = self.get_or_create_name(Organization, 23)
-        self.activity.phd_director, c = Person.objects.get_or_create(title=self.row[24].value.capitalize()) if self.row[24].value else (None, False)
-        self.activity.phd_officer_1, c = Person.objects.get_or_create(title=self.row[25].value.capitalize()) if self.row[25].value else (None, False)
-        self.activity.phd_officer_2, c = Person.objects.get_or_create(title=self.row[26].value.capitalize()) if self.row[26].value else (None, False)
-        # self.activity.phd_defense_date = datetime.datetime(*xlrd.xldate_as_tuple(self.row[27].value, self.datemode)) if self.row[27].value else None
-        # self.activity.phd_title = self.row[28].value
+        self.activity.phd_doctoral_school = self.get_or_create_name(Organization, 25)
+        self.activity.phd_director = self.get_person(self.row[26].value)
+        self.activity.phd_officer_1 = self.get_person(self.row[27].value)
+        self.activity.phd_officer_2 = self.get_person(self.row[28].value)
+
+        self.activity.training_type = self.get_or_create_name(TrainingType, 29)
+        self.activity.training_level = self.get_or_create_name(TrainingLevel, 30)
+        self.activity.training_topic = self.get_or_create_name(TrainingTopic, 31)
+        self.activity.training_speciality = self.get_or_create_name(TrainingSpectiality, 32)
+        self.activity.function = self.get_or_create_name(ActivityFunction, 34)
+
+        if self.activity.phd_director:
+            self.activity.phd_title = self.row[35].value
+            try:
+                self.activity.phd_defense_date = datetime.datetime(*xlrd.xldate_as_tuple(self.row[38].value, self.datemode)) if self.row[38].value else None
+            except:
+                pass
+            self.activity.phd_postdoctoralsituation = self.row[39].value
+        elif self.activity.training_type:
+            self.activity.training_title = self.row[35].value
+
+        self.activity.rd_program = self.row[36].value
+        self.activity.comments = self.row[37].value
+        self.activity.hdr = self.row[40].value
+        self.activity.budget_code = self.get_or_create_name(BudgetCode, 41)
+        self.activity.date_modified_manual = datetime.datetime(*xlrd.xldate_as_tuple(self.row[42].value, self.datemode)) if self.row[42].value else None
+        self.activity.record_piece = self.get_or_create_name(RecordPiece, 43) if self.row[43].value else None
 
         self.activity.save()
 

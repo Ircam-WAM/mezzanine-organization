@@ -114,3 +114,12 @@ figure {
     @include margin-bottom(2);
 	font-weight: weight(heavy);
 }
+
+h1 + .chapo {
+	@include margin-top(-2);
+	@include margin-bottom(4);
+	@include typeface(sans-serif);
+	@include font-size(xxl);
+	font-weight: weight(regular);
+
+}

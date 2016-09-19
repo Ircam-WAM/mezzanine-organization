@@ -1,205 +1,187 @@
-{% extends "agenda/event_list.html" %}
+{% extends "pages/page.html" %}
 {% load mezzanine_tags comment_tags keyword_tags rating_tags i18n future disqus_tags event_tags organization_tags %}
 
 {% block meta_title %}{{ event.meta_title }}{% endblock %}
 
 {% block meta_keywords %}{% metablock %}
 {% keywords_for event as tags %}
-{% for tag in tags %}{% if not forloop.first %}, {% endif %}{{ tag }}{% endfor %}
+{% for tag in tags %}
+    {% if not forloop.first %}, {% endif %}
+    {{ tag }}
+{% endfor %}
 {% endmetablock %}{% endblock %}
 
 {% block meta_description %}{% metablock %}
 {{ event.description }}
 {% endmetablock %}{% endblock %}
 
-{% block title %}
-    {% editable event.title %}{{ event.title }}{% endeditable %}
+{% block page_class %}
+    event
+{% endblock %}
+
+{% block page_title %}
+    {% editable event.title %}
+        <h1 class="dotted">{{ event.title }}</h1>
+    {% endeditable %}
+    {% if event.sub_title %}
+        {% editable event.sub_title %}
+            <div class="chapo">
+                {{ event.sub_title }}
+            </div>
+        {% endeditable %}
+    {% endif %}
 {% endblock %}
 
 {% block breadcrumb_menu %}
-{{ block.super }}
-<li class="active">{{ event.title }}</li>
+    {{ block.super }}
+    <li class="breadcrumb__item active">{{ event.title }}</li>
 {% endblock %}
 
-{% block main %}
+{% block page_content %}
 
-{% block event_detail_postedby %}
-{% editable event.start event.end event.location %}
-{% with True as unit_booking %}
- {% include 'agenda/includes/event_metainfo.html' %}
- {% for child in event.children.all %}
-  {% with child as event %}
-   {% include "agenda/includes/event_metainfo.html" %}
-  {% endwith %}
- {% endfor %}
-{% endwith %}
-{% endeditable %}
-{% endblock %}
-
-{% block event_detail_commentlink %}
-<p>
-    {% if event.allow_comments %}
-        {% if settings.COMMENTS_DISQUS_SHORTNAME %}
-            (<a href="{{ event.get_absolute_url }}#disqus_thread"
-                data-disqus-identifier="{% disqus_id_for event %}">{% spaceless %}
-                {% trans "Comments" %}
-            {% endspaceless %}</a>)
-        {% else %}(<a href="#comments">{% spaceless %}
-            {% blocktrans count comments_count=event.comments_count %}{{ comments_count }} comment{% plural %}{{ comments_count }} comments{% endblocktrans %}
-            {% endspaceless %}</a>)
+    {% block event_detail_content %}
+        {% if event.content %}
+            {% editable event.content %}
+                {{ event.content|richtext_filters|safe }}
+            {% endeditable %}
+        {% else %}
+            {% lorem 3 p %}
         {% endif %}
+    {% endblock %}
+
+    {% if event.brochure %}
+        <br/>
+        <a href='{{ event.brochure.url }}' target="_blank" class="push__calendar__item">
+            <i class="icon icon__file"></i>
+            {% trans "Download" %} {% trans "the room program" %}
+        </a>
     {% endif %}
-</p>
+
+    {% comment %}
+        {% if event.location %}
+        <h3 class="section__title">Le lieu :</h3>
+        {% block event_detail_location %}
+        <a href="{% url 'location-detail' event.location.slug %}">{{ event.location }}</a>
+        <p>
+            <p>{{ event.location }} {{ event.location.address|linebreaksbr }}</p>
+            <a href="{{ event|google_nav_url }}" target="_blank">
+                Get Directions
+            </a>
+        </p>
+        <a href="{{ event|google_nav_url }}" target="_blank" class="">
+         {% google_static_map event 900 300 15 %}
+        </a/>
+        {% endblock %}
+        {% endif %}
+
+        {% block event_detail_keywords %}
+        {% keywords_for event as tags %}
+        {% if tags %}
+        {% spaceless %}
+        <ul class="list-inline tags">
+            <li>{% trans "Tags" %}:</li>
+            {% for tag in tags %}
+            <li><a href="{% url "event_list_tag" tag.slug %}">{{ tag }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endspaceless %}
+        {% endif %}
+        {% endblock %}
+
+        {% block event_detail_rating %}
+        <div class="panel panel-default rating">
+            <div class="panel-body">
+            {% rating_for event %}
+            </div>
+        </div>
+        {% endblock %}
+    {% endcomment %}
+
+    {% block event_related %}
+        {% if event.artists.all or event.videos.all or event.blog_posts.all %}
+        <h2 class="section__title">{% trans "Also discover" %}</h2>
+        <div class="msry__container">
+         <div class="msry__sizer"></div>
+        {% if event.artists.all %}
+            {% for artist in event.artists.all %}
+                {% include "festival/inc/artist_card.html" %}
+            {% endfor %}
+        {% endif %}
+        {% if event.videos.all %}
+            {% for video in event.videos.all %}
+                {% include 'festival/inc/video_card.html' %}
+            {% endfor %}
+        {% endif %}
+        {% if event.blog_posts.all %}
+            {% for post in event.blog_posts.all %}
+                {% include 'blog/includes/post_card.html' %}
+            {% endfor %}
+        {% endif %}
+        </div>
+        {% endif %}
+    {% endblock %}
+
 {% endblock %}
 
-{% block event_detail_featured_image %}
-{% with event.images.all|get_type:'page_slider' as images %}
-  {% if images %}
-    <p>
-        <img src="{{ MEDIA_URL }}{% thumbnail images.0.file 600 0 %}">
-    </p>
-  {% endif %}
-{% endwith %}
+{% block page_audio %}
+    {% with event.audios.all as audios %}
+        {% if audios %}
+            {% include 'core/inc/audio.html' %}
+        {% endif %}
+    {% endwith %}
 {% endblock %}
 
-{% if settings.COMMENTS_DISQUS_SHORTNAME %}
-{% include "generic/includes/disqus_counts.html" %}
-{% endif %}
-
-{% block event_detail_content %}
-{% if event.content %}
-  {% editable event.content %}
-    {{ event.content|richtext_filters|safe }}
-  {% endeditable %}
-{% else %}
-  {% lorem 3 p %}
-{% endif %}
+{% block page_slider %}
+    {% with event.images.all|get_type:'page_slider' as slider_images %}
+        {% if slider_images %}
+            {% include 'core/inc/slider.html' %}
+        {% endif %}
+    {% endwith %}
 {% endblock %}
 
-{% block event_sub_content %}
-   {% with event.blocks.all as blocks %}
-     {% include "core/inc/block.html" %}
-  {% endwith %}
+{% block page_videos %}
+    {% with event.videos.all as videos %}
+        {% if videos %}
+            {% include 'core/inc/slider_video.html' %}
+        {% endif %}
+    {% endwith %}
 {% endblock %}
 
-{% if event.brochure %}
-<br/>
-<a href='{{ event.brochure.url }}' target="_blank" class="push__calendar__item">
-    <i class="icon icon__file"></i>
-    {% trans "Download" %} {% trans "the room program" %}
-</a>
-{% endif %}
-
-{% block event_detail_sharebuttons %}
-{% set_short_url_for event %}
-  {% with event as object %}
-    {% include "includes/share_buttons.html" %}
-  {% endwith %}
+{% block page_sub_content %}
+    {% with event.blocks.all as blocks %}
+        {% include "core/inc/block.html" %}
+    {% endwith %}
 {% endblock %}
 
-{% block event_detail_calendar %}
-<div class="push__calendar">
-    <a href='{{ event|google_calendar_url }}' target="_blank" class="push__calendar__item">
-        <i class="icon icon__calendar"></i>
-        {% trans "Add to" %} Google Calendar
-    </a>
-    <a href='{% icalendar_url %}' class="push__calendar__item">
-        <i class="icon icon__windows"></i>
-        {% trans "Add to" %} Outlook/iCal
-    </a>
-</div>
-{% endblock %}
+{% block page_sidebar %}
 
-{% comment %}
-{% if event.location %}
-<h3 class="section__title">Le lieu :</h3>
-{% block event_detail_location %}
-<a href="{% url 'location-detail' event.location.slug %}">{{ event.location }}</a>
-<p>
-    <p>{{ event.location }} {{ event.location.address|linebreaksbr }}</p>
-    <a href="{{ event|google_nav_url }}" target="_blank">
-        Get Directions
-    </a>
-</p>
-<a href="{{ event|google_nav_url }}" target="_blank" class="">
- {% google_static_map event 900 300 15 %}
-</a/>
-{% endblock %}
-{% endif %}
+    <div class="page__meta" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
 
-{% block event_detail_keywords %}
-{% keywords_for event as tags %}
-{% if tags %}
-{% spaceless %}
-<ul class="list-inline tags">
-    <li>{% trans "Tags" %}:</li>
-    {% for tag in tags %}
-    <li><a href="{% url "event_list_tag" tag.slug %}">{{ tag }}</a></li>
-    {% endfor %}
-</ul>
-{% endspaceless %}
-{% endif %}
-{% endblock %}
+        {% block event_detail_postedby %}
+            {% editable event.start event.end event.location %}
+                {% with True as unit_booking %}
+                    {% include 'agenda/includes/event_metainfo.html' %}
+                    {% for child in event.children.all %}
+                        {% with child as event %}
+                            {% include "agenda/includes/event_metainfo.html" %}
+                        {% endwith %}
+                    {% endfor %}
+                {% endwith %}
+            {% endeditable %}
+        {% endblock %}
 
-{% block event_detail_rating %}
-<div class="panel panel-default rating">
-    <div class="panel-body">
-    {% rating_for event %}
+        {% set_short_url_for event %}
+        {% with event as object %}
+            {% include "includes/share_buttons.html" %}
+            <a href='{{ event|google_calendar_url }}' target="_blank" class="push__calendar__item">
+                <i class="icon icon__calendar"></i>
+                {% trans "Add to" %} Google Calendar
+            </a>
+            <a href='{% icalendar_url %}' class="push__calendar__item">
+                <i class="icon icon__windows"></i>
+                {% trans "Add to" %} Outlook/iCal
+            </a>
+        {% endwith %}
     </div>
-</div>
-{% endblock %}
-{% endcomment %}
-
-{% block event_previous_next %}
-<ul class="split-container pager">
-    {% with event.get_previous_by_start_date as previous %}
-        {% if previous %}
-            <li class="split-left">
-                <a href="{{ previous.get_absolute_url }}" class="pager__item--before event__meta__btn">&larr; {% trans "Previous event" %}</a>
-            </li>
-        {% endif %}
-    {% endwith %}
-
-    {% with event.get_next_by_start_date as next %}
-        {% if next %}
-            <li class="split-right">
-                <a href="{{ next.get_absolute_url }}" class="pager__item--after event__meta__btn">{% trans "Next event" %} &rarr;</a>
-            </li>
-        {% endif %}
-    {% endwith %}
-</ul>
-{% endblock %}
-
-{% block event_related %}
-{% if event.artists.all or event.videos.all or event.blog_posts.all %}
-<h2 class="section__title">{% trans "Also discover" %}</h2>
-<div class="msry__container">
- <div class="msry__sizer"></div>
-{% if event.artists.all %}
-    {% for artist in event.artists.all %}
-        {% include "festival/inc/artist_card.html" %}
-    {% endfor %}
-{% endif %}
-{% if event.videos.all %}
-    {% for video in event.videos.all %}
-        {% include 'festival/inc/video_card.html' %}
-    {% endfor %}
-{% endif %}
-{% if event.blog_posts.all %}
-    {% for post in event.blog_posts.all %}
-        {% include 'blog/includes/post_card.html' %}
-    {% endfor %}
-{% endif %}
-</div>
-{% endif %}
-{% endblock %}
-
-{% block event_detail_comments %}
-{% if event.allow_comments %}{% comments_for event %}{% endif %}
-{% endblock %}
-
-{% block ical %}
-{# <a href='{% icalendar_url %}' target="_blank" class="small push-ical">{% trans "Subscribe to all events in" %} Google Calendar/Outlook/iCal</a>#}
-{% endblock %}
 
 {% endblock %}
