@@ -1,6 +1,8 @@
 var StickyKitInit = function() {
 
     this.elements = [];
+    this.pageContentTop = -1;
+    this.pageContentBottom = -1;
 
     //
     // Init
@@ -15,14 +17,23 @@ StickyKitInit.prototype.init = function() {
         options = {},
         data, element, $element;
 
+    /*var sliders = $('.page__slider');
+    if(sliders.length > 0) {
+        that.pageContentTop = $('.page__content').offset().top + $('.page__content').height() - 400;
+        that.pageContentBottom = $('.page__sub').offset().top;
+    }*/
+
     $('[data-sticky]').each(function(i) {
 
         $element = $(this);
         $element.on('sticky_kit:bottom', function(e) {
+            var $self = $(this);
             $(this).parent().css('position', 'static');
+            $(this).addClass('to-bottom');
         })
         .on('sticky_kit:unbottom', function(e) {
             $(this).parent().css('position', 'relative');
+            $(this).removeClass('to-bottom');
         });
 
         data = $(this).data();
@@ -46,6 +57,30 @@ StickyKitInit.prototype.init = function() {
     });
 
     $(window).resize( $.throttle(1000, that.windowResize.bind(that)) );
+    //$(window).scroll( that.windowScroll.bind(that) );
+
+};
+
+StickyKitInit.prototype.windowScroll = function(e) {
+
+    var that = this;
+
+    if(that.pageContentTop >= 0 && that.pageContentBottom >= 0) {
+        for(var i=0; i<that.elements.length; i++) {
+
+            if(that.elements[i].attached) {
+
+                var top = $(window).scrollTop();
+                if(top >= that.pageContentTop && top < that.pageContentBottom) {
+                    that.elements[i].$element.addClass('faded');
+                } else {
+                    that.elements[i].$element.removeClass('faded');
+                }
+
+            }
+
+        }
+    }
 
 };
 

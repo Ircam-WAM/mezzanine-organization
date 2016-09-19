@@ -16,3 +16,4 @@ django-querysetsequence
 django-autocomplete-light
 ipython
 cartridge
+xlrd

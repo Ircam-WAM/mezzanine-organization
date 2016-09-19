@@ -10,7 +10,7 @@ $module: ".banner";
     height: 350px;
     position: relative;
 
-    @include margin-bottom(2);
+    @include margin-top(2);
 
     @include mq($until: lg) {
 

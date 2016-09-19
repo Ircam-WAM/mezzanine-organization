@@ -29,15 +29,14 @@
 
 {% block page_tags %}
 
-{% if department_name %}
-    <div class="tag dashed dashed--gray">
-      {{ department_name }}
-    </div>
-{% endif %}
+    {% if department_name %}
+        <div class="tag dashed dashed--gray">
+          {{ department_name }}
+        </div>
+    {% endif %}
     <div class="tag tag--category">
         {% trans 'News' %}
     </div>
-
 
 {% endblock %}
 
