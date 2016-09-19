@@ -1,0 +1,6 @@
+<h3>{{ person_list_block.title }}</h3>
+<p>{{ person_list_block.description }}</p>
+{% for person in person_list_block.person %}
+-----------{{person}}---------
+  <h4>{{ person.person_title }}</h4>
+{% endfor %}

@@ -105,19 +105,19 @@ class OrganizationBlockTranslationOptions(TranslationOptions):
     pass
 
 
-@register(DynamicPersonList)
-class DynamicPersonListTranslationOptions(TranslationOptions):
-
-    pass
-
-
 @register(PersonListBlock)
 class PersonListBlockTranslationOptions(TranslationOptions):
 
     pass
 
 
-@register(PersonAutocomplete)
-class PersonListBlockTranslationOptions(TranslationOptions):
+@register(PersonListBlockInline)
+class PersonListBlockInlineTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(PageCustomPersonListBlockInline)
+class PageCustomPersonListBlockInlineTranslationOptions(TranslationOptions):
 
     pass
