@@ -4,9 +4,11 @@ a.wys-button {
     .page__block--black & {
         color: $color-black;
         &:hover {
-            color: $color-main;
+            color: white;
         }
     }
+
+    @include margin(1);
 
 }
 
@@ -17,9 +19,11 @@ a.wys-button-small {
     .page__block--black & {
         color: $color-black;
         &:hover {
-            color: $color-main;
+            color: white;
         }
     }
+
+    @include margin(1);
 
 }
 
@@ -30,9 +34,11 @@ a.wys-button-xsmall {
     .page__block--black & {
         color: $color-black;
         &:hover {
-            color: $color-main;
+            color: white;
         }
     }
+
+    @include margin(1);
 
 }
 
@@ -47,6 +53,8 @@ a.wys-button-black {
             color: $color-black;
         }
     }
+
+    @include margin(1);
 
 }
 
@@ -63,6 +71,8 @@ a.wys-button-black-small {
         }
     }
 
+    @include margin(1);
+
 }
 
 a.wys-button-black-xsmall {
@@ -77,5 +87,7 @@ a.wys-button-black-xsmall {
             color: $color-black;
         }
     }
+
+    @include margin(1);
 
 }
