@@ -74,7 +74,10 @@ jQuery(function($) {
               { title: 'Boutons Jaune XSmall', selector: 'a', classes: 'wys-button-xsmall'},
               { title: 'Boutons Noir', selector: 'a', classes: 'wys-button-black'},
               { title: 'Boutons Noir Small', selector: 'a', classes: 'wys-button-black-small'},
-              { title: 'Boutons Noir XSmall', selector: 'a', classes: 'wys-button-black-xsmall'}
+              { title: 'Boutons Noir XSmall', selector: 'a', classes: 'wys-button-black-xsmall'},
+              { title: 'Boutons Blanc', selector: 'a', classes: 'wys-button-white'},
+              { title: 'Boutons Blanc Small', selector: 'a', classes: 'wys-button-white-small'},
+              { title: 'Boutons Blanc XSmall', selector: 'a', classes: 'wys-button-white-xsmall'}
             ]
           }
         ],
