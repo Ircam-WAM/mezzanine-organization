@@ -2,3 +2,4 @@
 -e git+https://github.com/yomguy/mezzanine.git@jquery#egg=mezzanine-4.2-dev
 -e git+https://github.com/yomguy/grappelli-safe.git@dynamic_stacked#egg=grappelli-safe-0.4.2
 https://forge.ircam.fr/p/django-eve/source/download/dev/
+https://forge.ircam.fr/p/django-prestashop/source/download/master/
