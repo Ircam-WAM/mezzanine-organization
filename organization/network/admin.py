@@ -105,6 +105,7 @@ class PersonAdmin(BaseTranslationModelAdmin):
     model = Person
     inlines = [PersonActivityInline, PersonAudioInline, PersonImageInline, PersonVideoInline, PersonBlockInline, PersonLinkInline ]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
+    search_fields = ['last_name', 'first_name']
 
     def get_fieldsets(self, request, obj = None):
         res = super(PersonAdmin, self).get_fieldsets(request, obj)
@@ -121,3 +122,4 @@ admin.site.register(DepartmentPage, DepartmentPageAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(TeamPage, TeamPageAdmin)
 admin.site.register(Person, PersonAdmin)
+admin.site.register(ActivityStatus)

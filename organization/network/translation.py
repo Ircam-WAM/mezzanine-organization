@@ -42,7 +42,7 @@ class PersonTranslationOptions(TranslationOptions):
 @register(PersonActivity)
 class PersonActivityTranslationOptions(TranslationOptions):
 
-    fields = ('description', 'content')
+    fields = ('comments',)
 
 
 @register(PersonAudio)
