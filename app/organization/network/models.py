@@ -136,6 +136,7 @@ class Team(Named, URL):
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
     department = models.ForeignKey('Department', verbose_name=_('department'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
+    code = models.CharField(_('code'), max_length=64, blank=True, null=True)
 
     class Meta:
         verbose_name = _('team')
@@ -168,6 +169,7 @@ class Person(Displayable, AdminThumbMixin):
     gender = models.CharField(_('gender'), max_length=16, choices=GENDER_CHOICES, blank=True)
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
+    email = models.EmailField(_('email'), blank=True, null=True)
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
 
@@ -251,6 +253,12 @@ class ActivityFramework(Named):
         verbose_name = _('activity framework')
 
 
+class ActivityFunction(Named):
+
+    class Meta:
+        verbose_name = _('activity function')
+
+
 class BudgetCode(Named):
 
     class Meta:
@@ -293,20 +301,22 @@ class UMR(Named):
         verbose_name = _('UMR')
 
 
-class PersonActivity(Description, Period, RichText):
+class PersonActivity(Period):
     """(Activity description)"""
 
     person = models.ForeignKey('Person', verbose_name=_('person'))
 
+    weeks = models.IntegerField(_('number of weeks'), blank=True, null=True)
     status = models.ForeignKey(ActivityStatus, verbose_name=_('status'), blank=True, null=True, on_delete=models.SET_NULL)
     is_permanent = models.BooleanField(_('permanent'), default=False)
     framework = models.ForeignKey(ActivityFramework, verbose_name=_('framework'), blank=True, null=True, on_delete=models.SET_NULL)
     grade = models.ForeignKey(ActivityGrade, verbose_name=_('grade'), blank=True, null=True, on_delete=models.SET_NULL)
+    function = models.ForeignKey(ActivityFunction, verbose_name=_('function'), blank=True, null=True, on_delete=models.SET_NULL)
 
     employer = models.ForeignKey(Organization, verbose_name=_('employer'), related_name='employer_activity', blank=True, null=True, on_delete=models.SET_NULL)
     attachment_organization = models.ForeignKey(Organization, verbose_name=_('attachment organization'), related_name='attachment_activity', blank=True, null=True, on_delete=models.SET_NULL)
     second_employer = models.ForeignKey(Organization, verbose_name=_('second employer'), related_name='second_employer_activity', blank=True, null=True, on_delete=models.SET_NULL)
-    umr = models.ForeignKey(UMR, verbose_name=_('training type'), blank=True, null=True, on_delete=models.SET_NULL)
+    umr = models.ForeignKey(UMR, verbose_name=_('UMR'), blank=True, null=True, on_delete=models.SET_NULL)
     team = models.ForeignKey('Team', verbose_name=_('team'), related_name='team_activity', blank=True, null=True, on_delete=models.SET_NULL)
     second_team = models.ForeignKey('Team', verbose_name=_('second team'), related_name='second_team_activity', blank=True, null=True, on_delete=models.SET_NULL)
 
@@ -332,6 +342,7 @@ class PersonActivity(Description, Period, RichText):
     training_title = models.TextField(_('Training title'), blank=True)
 
     record_piece = models.ForeignKey(RecordPiece, blank=True, null=True, on_delete=models.SET_NULL)
+
     date_added = models.DateTimeField(_('add date'), auto_now_add=True)
     date_modified = models.DateTimeField(_('modification date'), auto_now=True)
     date_modified_manual = models.DateTimeField(_('manual modification date'), blank=True, null=True)
@@ -342,5 +353,8 @@ class PersonActivity(Description, Period, RichText):
         verbose_name = _('activity')
         verbose_name_plural = _('activities')
 
-    def __unicode__(self):
-        return ' - '.join((self.person, self.role, self.date_begin, self.date_end))
+    def __str__(self):
+        if self.status:
+            return ' - '.join((self.status.name, str(self.date_begin), str(self.date_end)))
+        else:
+            return ' - '.join((str(self.date_begin), str(self.date_end)))
