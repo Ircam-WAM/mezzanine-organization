@@ -8,7 +8,7 @@ SECRET_KEY = "j1qa@u$5ktqr^0_kwh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
 NEVERCACHE_KEY = "m)u^%r@uh#r3wu0&$=#$1ogx)uy4hv93^2lt%c3@xi=^gifoj8paozijdihazefd"
 
 # DATABASE_ROUTERS = ['eve.routers.EveRouter', 'festival.routers.FestivalRouter',]
-# DATABASE_ROUTERS = ['eve.routers.EveRouter',]
+DATABASE_ROUTERS = ['eve.routers.EveRouter',]
 
 DATABASES = {
     'default': {
@@ -22,11 +22,20 @@ DATABASES = {
     'eve': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'eve',
-        'USER': 'eve',
-        'PASSWORD': 'HmazS2frT',
-        'HOST': 'pgdb',
+        'USER': 'django',
+        'PASSWORD': "q2nqzt0WGnwWé,256",
+        'HOST': 'eve',
         'PORT': '5432',
     },
+    'presta': {
+        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'USER': 'ircam_shops',      # Not used with sqlite3.
+        'PASSWORD': 'pUmt97e4MgR9EP4knyWea0n',  # Not used with sqlite3.
+        'NAME': 'ircam_shops',
+        'HOST': 'mysql2.ircam.fr',      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
+    }
+
 }
 
 # DATABASE_ROUTERS = ['eve.routers.EveRouter',]
