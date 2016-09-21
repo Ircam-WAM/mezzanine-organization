@@ -32,7 +32,7 @@ DATABASES = {
         'USER': 'ircam_shops',      # Not used with sqlite3.
         'PASSWORD': 'pUmt97e4MgR9EP4knyWea0n',  # Not used with sqlite3.
         'NAME': 'ircam_shops',
-        'HOST': 'localhost',      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': 'prestadb',      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
     }
 
