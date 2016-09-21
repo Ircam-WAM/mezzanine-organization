@@ -20,7 +20,7 @@
       {% endif %}
       {% with person.links.first as link %}
         {% if link %}
-          <a href="{{ link }}" title="Site Web"><span class="fa fa-{{ link.link_type.name }}">{{ link.link_type.name }}</span></a>
+          <a href="{{ link }}" title="Site Web" class="fa fa-{{ link.link_type.name }}">{{ link.link_type.name }}</a>
         {% endif %}
       {% endwith %}
     {% endwith %}
