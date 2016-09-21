@@ -7,10 +7,11 @@ from organization.pages.models import *
 from organization.pages.models import (
     DynamicContentHomeSlider,
     DynamicContentHomeBody,
-    Home
+    Home,
 )
-from organization.pages.forms import DynamicContentHomeSliderForm, DynamicContentHomeBodyForm
-
+from organization.pages.forms import *
+from organization.network.forms import *
+from organization.network.models import PageCustomPersonListBlockInline
 
 class PageBlockInline(StackedDynamicInlineAdmin):
 
@@ -39,9 +40,21 @@ class PageLinkInline(StackedDynamicInlineAdmin):
     model = PageLink
 
 
+class PersonListBlockAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
+
+    model = PageCustomPersonListBlockInline
+    form = PageCustomPersonListForm
+
+
 class CustomPageAdmin(PageAdmin):
 
-    inlines = [PageBlockInline, PageImageInline, PageAudioInline, PageVideoInline, PageLinkInline]
+    inlines = [PageBlockInline,
+            PageImageInline,
+            PageAudioInline,
+            PageVideoInline,
+            PageLinkInline,
+            PersonListBlockAutocompleteInlineAdmin,
+            ]
 
 
 class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
@@ -64,7 +77,6 @@ class DynamicContentHomeBodyInline(TabularDynamicInlineAdmin):
 class HomeAdminDisplayable(BaseTranslationModelAdmin):
 
     inlines = [DynamicContentHomeSliderInline, DynamicContentHomeBodyInline  ]
-
 
 
 admin.site.register(CustomPage, CustomPageAdmin)

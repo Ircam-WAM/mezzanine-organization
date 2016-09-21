@@ -86,3 +86,5 @@ class Home(Displayable):
 
     def get_absolute_url(self):
         return reverse("organization-home")
+
+        verbose_name = _('Person List')
