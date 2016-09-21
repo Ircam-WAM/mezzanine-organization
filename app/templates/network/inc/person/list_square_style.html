@@ -29,31 +29,35 @@
 
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
 
-                        <a href="{{ person.get_absolute_url }}" title="{{ person }}" class="article-box article-box--person" >
+                        <div class="article-box article-box--person" >
                             {% with person_list_block_inline.person as person %}
 
                                     {% with person.images.all|get_type:'card' as card_images %}
                                         {% if card_images %}
                                             <div class="article-box__header">
-                                                <figure class="article-box__image">
-                                                    <img class="lazyload" src="{{ MEDIA_URL }}{% thumbnail card_images.first 427 500 top=0.5 %}" alt="person"/>
-                                                </figure>
+                                                <a href="{{ person.get_absolute_url }}" title="{{ person }}">
+                                                    <figure class="article-box__image">
+                                                        <img class="lazyload" src="{{ MEDIA_URL }}{% thumbnail card_images.first 427 500 top=0.5 %}" alt="person"/>
+                                                    </figure>
+                                                </a>
                                             </div>
                                         {% endif %}
                                     {% endwith %}
 
                                     <div class="article-box__content tal">
 
-                                        <h3 class="article-box__title">{{ person }}</h3>
+                                        <a href="{{ person.get_absolute_url }}" title="{{ person }}"><h3 class="article-box__title">{{ person }}</h3></a>
 
-                                        {% if person.description %}
-                                            <div class="article-box__desc">{{ person.description|slice:":255" }}</div>
+                                        {% if person.bio %}
+                                            <div class="article-box__desc">{{ person.bio|richtext_filters|safe|truncatechars_html:255 }}</div>
+                                        {% elif person.description %}
+                                            <div class="article-box__desc">{{ person.description|richtext_filters|safe|truncatechars_html:255 }}</div>
                                         {% endif %}
 
                                     </div>
 
                             {% endwith %}
-                        </a>
+                        </div>
 
                     </div>
 
