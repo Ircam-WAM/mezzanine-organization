@@ -123,8 +123,8 @@ class IrcamPerson(object):
         return None
 
     def get_activity(self):
-        self.activity.date_begin = datetime.datetime(*xlrd.xldate_as_tuple(self.row[4].value, self.datemode)) if self.row[4].value else None
-        self.activity.date_end = datetime.datetime(*xlrd.xldate_as_tuple(self.row[5].value, self.datemode)) if self.row[5].value else None
+        self.activity.date_from = datetime.datetime(*xlrd.xldate_as_tuple(self.row[4].value, self.datemode)) if self.row[4].value else None
+        self.activity.date_to = datetime.datetime(*xlrd.xldate_as_tuple(self.row[5].value, self.datemode)) if self.row[5].value else None
         try:
             self.activity.weeks = int(self.row[6].value) if self.row[6].value else None
         except:
