@@ -8,7 +8,7 @@ SECRET_KEY = "j1qa@u$5ktqr^0_kwh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
 NEVERCACHE_KEY = "m)u^%r@uh#r3wu0&$=#$1ogx)uy4hv93^2lt%c3@xi=^gifoj8paozijdihazefd"
 
 # DATABASE_ROUTERS = ['eve.routers.EveRouter', 'festival.routers.FestivalRouter',]
-DATABASE_ROUTERS = ['eve.routers.EveRouter',]
+DATABASE_ROUTERS = ['eve.routers.EveRouter', 'prestashop.routers.PrestaRouter']
 
 DATABASES = {
     'default': {
@@ -32,7 +32,7 @@ DATABASES = {
         'USER': 'ircam_shops',      # Not used with sqlite3.
         'PASSWORD': 'pUmt97e4MgR9EP4knyWea0n',  # Not used with sqlite3.
         'NAME': 'ircam_shops',
-        'HOST': 'mysql2.ircam.fr',      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': 'localhost',      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
     }
 
