@@ -37,7 +37,7 @@ class Project(Displayable, Period, RichText):
         return reverse("organization-project-detail", kwargs={"slug": self.slug})
 
     @property
-    def status(self):
+    def project_status(self):
         if datetime.date.today() >= self.date_from and datetime.date.today() <= self.date_to:
             return _('in progress')
         elif datetime.date.today() < self.date_from and datetime.date.today() < self.date_to:
