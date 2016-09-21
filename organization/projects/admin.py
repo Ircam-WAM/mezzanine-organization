@@ -51,3 +51,4 @@ class ProjectAdminDisplayable(DisplayableAdmin):
 admin.site.register(Project, ProjectAdminDisplayable)
 admin.site.register(ProjectProgram)
 admin.site.register(ProjectProgramType)
+admin.site.register(ProjectTopic)
