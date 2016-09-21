@@ -18,9 +18,9 @@
       {% if person.description %}
       <p>{{ person.description|slice:":255" }}</p>
       {% endif %}
-      {% with person.links.all|get_type_link:'site internet' as web_site %}
-        {% if web_site %}
-          <a href="{{ web_site.first }}" title="Site Web">Site Web</a>
+      {% with person.links.first as link %}
+        {% if link %}
+          <a href="{{ link }}" title="Site Web"><span class="fa fa-{{ link.link_type.name }}">{{ link.link_type.name }}</span></a>
         {% endif %}
       {% endwith %}
     {% endwith %}
