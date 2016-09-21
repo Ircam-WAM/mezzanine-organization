@@ -27,7 +27,7 @@ DATABASES = {
         'HOST': 'eve',
         'PORT': '5432',
     },
-    'presta': {
+    'prestashop': {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'USER': 'ircam_shops',      # Not used with sqlite3.
         'PASSWORD': 'pUmt97e4MgR9EP4knyWea0n',  # Not used with sqlite3.
