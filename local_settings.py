@@ -114,10 +114,7 @@ ADMIN_MENU_ORDER = (
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
 )
 
-# ADMIN_REMOVAL = [
-#     'mezzanine.blog.models.BlogPost',
-#     'generic.ThreadedComment',
-# ]
+DASHBOARD_TAGS = ( ("mezzanine_tags.app_list",), (), ("mezzanine_tags.recent_actions",), )
 
 GRAPPELLI_ADMIN_TITLE = 'IRCAM Admin'
 
