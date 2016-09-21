@@ -19,12 +19,18 @@
     department
 {% endblock %}
 
-{% block page_title %}
+{% block body_class %}
+    {% with page.get_ascendants|last as top_level_parent %}
+        {% if top_level_parent.get_content_model.weaving_css_class %}
+        pattern pattern-bg {{ top_level_parent.get_content_model.weaving_css_class }}
+        {% endif %}
+    {% endwith %}
+{% endblock %}
 
+{% block page_title %}
     {% editable page.teampage.title %}
         <h1 class="dotted">{{ page.teampage.title }}</h1>
     {% endeditable %}
-
 {% endblock %}
 
 {% block page_content %}
