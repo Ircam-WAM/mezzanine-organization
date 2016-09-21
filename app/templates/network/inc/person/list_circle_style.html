@@ -1,7 +1,27 @@
+{% load organization_tags mezzanine_tags %}
 <h3>{{ person_list_block.title }}</h3>
+{% if person_list_block.description %}
 <p>{{ person_list_block.description }}</p>
-{{ person_list_block.persons.all }}
-{% for person in person_list_block.person %}
------------{{person}}---------
-  <h4>{{ person.person_title }}</h4>
-{% endfor %}
+{% endif %}
+  {% for person_list_block_inline in person_list_block.person_list_block_inlines.all %}
+    {% with person_list_block_inline.person as person %}
+      <a href="{{ person.get_absolute_url }}" title="{{ person }}">
+        {% with person.images.all|get_type:'card' as card_images %}
+          {% if card_images %}
+          <img src="{{ MEDIA_URL }}{% thumbnail card_images.first 135 135 top=0.5 %}" alt="person"/>
+          {% endif %}
+        {% endwith %}
+      </a>
+      <a href="{{ person.get_absolute_url }}" title="{{ person }}">
+        <h4>{{ person }}</h4>
+      </a>
+      {% if person.description %}
+      <p>{{ person.description|slice:":255" }}</p>
+      {% endif %}
+      {% with person.links.all|get_type_link:'site internet' as web_site %}
+        {% if web_site %}
+          <a href="{{ web_site.first }}" title="Site Web">Site Web</a>
+        {% endif %}
+      {% endwith %}
+    {% endwith %}
+  {% endfor %}

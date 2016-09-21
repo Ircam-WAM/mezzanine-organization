@@ -237,8 +237,8 @@ class PersonBlock(Block):
 
 class PageCustomPersonListBlockInline(Titled):
 
-    page = models.ForeignKey(CustomPage, verbose_name=_('Page'), related_name='page_custom_person_list_block_inline', blank=True, null=True, on_delete=models.SET_NULL)
-    person_list_block = models.ForeignKey("PersonListBlock", verbose_name=_('Person List Block'), related_name='page_custom_person_list_block_inline', blank=True, null=True)
+    page = models.ForeignKey(CustomPage, verbose_name=_('Page'), related_name='page_custom_person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
+    person_list_block = models.ForeignKey("PersonListBlock", related_name='page_custom_person_list_block_inlines', verbose_name=_('Person List Block'), blank=True, null=True)
 
     class Meta:
         verbose_name = _('Person List')
@@ -260,12 +260,11 @@ class PersonListBlock(Titled):
 
 class PersonListBlockInline(models.Model):
 
-    person_list_block = models.ForeignKey(PersonListBlock, verbose_name=_('Person List Block'), related_name='person_list_block_inline', blank=True, null=True, on_delete=models.SET_NULL)
-    person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inline', blank=True, null=True, on_delete=models.SET_NULL)
+    person_list_block = models.ForeignKey(PersonListBlock, verbose_name=_('Person List Block'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('Person autocomplete')
-
 
 
 class ActivityStatus(Named):
