@@ -24,4 +24,4 @@ class ArtistAdminDisplayable(DisplayableAdmin):
     fieldsets = deepcopy(ArtistAdmin.fieldsets)
 
 
-admin.site.register(Artist, ArtistAdminDisplayable)
+# admin.site.register(Artist, ArtistAdminDisplayable)
