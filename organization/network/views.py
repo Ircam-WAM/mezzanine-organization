@@ -84,8 +84,6 @@ class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):
 class PersonListView(autocomplete.Select2QuerySetView):
 
     def get_queryset(self):
-        # if not self.request.is_authenticated():
-        #     return PersonListBlock.objects.none()
 
         qs = Person.objects.all()
 
