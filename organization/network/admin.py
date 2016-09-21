@@ -1,13 +1,16 @@
 from django.contrib import admin
 from django import forms
 from copy import deepcopy
+from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
-
 from organization.network.models import *
+from organization.network.forms import *
 from organization.pages.models import *
 from organization.core.admin import *
 from organization.pages.admin import PageImageInline, PageBlockInline, PageAudioInline, PageVideoInline
+
 
 class OrganizationAudioInline(StackedDynamicInlineAdmin):
 
@@ -115,6 +118,17 @@ class PersonAdmin(BaseTranslationModelAdmin):
         return res
 
 
+class PersonListBlockInlineAdmin(TabularDynamicInlineAdmin):
+
+    model = PersonListBlockInline
+    form = PersonListBlockInlineForm
+
+
+class PersonListBlockAdmin(admin.ModelAdmin):
+
+    inlines = [PersonListBlockInlineAdmin,]
+
+
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationType)
 admin.site.register(Department, DepartmentAdmin)
@@ -123,3 +137,4 @@ admin.site.register(Team, TeamAdmin)
 admin.site.register(TeamPage, TeamPageAdmin)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(ActivityStatus)
+admin.site.register(PersonListBlock, PersonListBlockAdmin)

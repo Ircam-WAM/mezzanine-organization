@@ -22,6 +22,7 @@ from mezzanine.utils.models import AdminThumbMixin, upload_to
 
 from organization.core.models import *
 from organization.media.models import *
+from organization.pages.models import CustomPage
 
 from django_countries.fields import CountryField
 # from .nationalities.fields import NationalityField
@@ -33,6 +34,11 @@ mrs = _('Ms')
 GENDER_CHOICES = [
     ('male', _('male')),
     ('female', _('female')),
+]
+
+PERSON_LIST_STYLE_CHOICES = [
+    ('square', _('square')),
+    ('circle', _('circle')),
 ]
 
 TITLE_CHOICES = [
@@ -229,10 +235,36 @@ class PersonBlock(Block):
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-# class PersonListBlock(Titled):
-#
-#     class Meta:
-#         verbose_name = _('Person List')
+class PageCustomPersonListBlockInline(Titled):
+
+    page = models.ForeignKey(CustomPage, verbose_name=_('Page'), related_name='page_custom_person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
+    person_list_block = models.ForeignKey("PersonListBlock", related_name='page_custom_person_list_block_inlines', verbose_name=_('Person List Block'), blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('Person List')
+
+    def __str__(self):
+        return self.title
+
+
+class PersonListBlock(Titled):
+
+    style = models.CharField(_('style'), max_length=16, choices=PERSON_LIST_STYLE_CHOICES)
+
+    class Meta:
+        verbose_name = _('Person List')
+
+    def __str__(self):
+        return self.title
+
+
+class PersonListBlockInline(models.Model):
+
+    person_list_block = models.ForeignKey(PersonListBlock, verbose_name=_('Person List Block'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('Person autocomplete')
 
 
 class ActivityStatus(Named):

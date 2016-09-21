@@ -1,4 +1,4 @@
-a.wys-button {
+.wys-button {
 
     @extend .button;
     .page__block--black & {
@@ -12,7 +12,7 @@ a.wys-button {
 
 }
 
-a.wys-button-small {
+.wys-button-small {
 
     @extend .button;
     @extend .button--small;
@@ -27,7 +27,7 @@ a.wys-button-small {
 
 }
 
-a.wys-button-xsmall {
+.wys-button-xsmall {
 
     @extend .button;
     @extend .button--xsmall;
@@ -42,7 +42,7 @@ a.wys-button-xsmall {
 
 }
 
-a.wys-button-black {
+.wys-button-black {
 
     @extend .button;
     @extend .button--black;
@@ -58,7 +58,7 @@ a.wys-button-black {
 
 }
 
-a.wys-button-black-small {
+.wys-button-black-small {
 
     @extend .button;
     @extend .button--black;
@@ -75,7 +75,7 @@ a.wys-button-black-small {
 
 }
 
-a.wys-button-black-xsmall {
+.wys-button-black-xsmall {
 
     @extend .button;
     @extend .button--black;
@@ -92,7 +92,7 @@ a.wys-button-black-xsmall {
 
 }
 
-a.wys-button-white {
+.wys-button-white {
 
     @extend .button;
     @extend .button--white;
@@ -108,7 +108,7 @@ a.wys-button-white {
 
 }
 
-a.wys-button-white-small {
+.wys-button-white-small {
 
     @extend .button;
     @extend .button--white;
@@ -125,7 +125,7 @@ a.wys-button-white-small {
 
 }
 
-a.wys-button-white-xsmall {
+.wys-button-white-xsmall {
 
     @extend .button;
     @extend .button--white;
