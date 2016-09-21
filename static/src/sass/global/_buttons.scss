@@ -41,6 +41,18 @@ $module: ".button";
 
     }
 
+    &--white {
+
+        background-color: white;
+        color: $color-black;
+
+        &:hover {
+            background-color: $color-black;
+            color: white;
+        }
+
+    }
+
     &--small {
         @include font-size(m);
         @include padding(.18 1);
