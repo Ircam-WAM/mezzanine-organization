@@ -172,8 +172,8 @@ class Link(URL):
 
 class Period(models.Model):
 
-    date_begin = models.DateField(_('begin date'), null=True, blank=True)
-    date_end = models.DateField(_('end date'), null=True, blank=True)
+    date_from = models.DateField(_('begin date'), null=True, blank=True)
+    date_to = models.DateField(_('end date'), null=True, blank=True)
 
     class Meta:
         abstract = True
