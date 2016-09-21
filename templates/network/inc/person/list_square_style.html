@@ -48,10 +48,10 @@
 
                                         <a href="{{ person.get_absolute_url }}" title="{{ person }}"><h3 class="article-box__title">{{ person }}</h3></a>
 
-                                        {% if person.bio %}
-                                            <div class="article-box__desc">{{ person.bio|richtext_filters|safe|truncatechars_html:255 }}</div>
-                                        {% elif person.description %}
+                                        {% if person.description %}
                                             <div class="article-box__desc">{{ person.description|richtext_filters|safe|truncatechars_html:255 }}</div>
+                                        {% elif person.bio %}
+                                            <div class="article-box__desc">{{ person.bio|richtext_filters|safe|truncatechars_html:255 }}</div>
                                         {% endif %}
 
                                     </div>
