@@ -321,7 +321,7 @@ class TrainingTopic(Named):
         verbose_name = _('training topic')
 
 
-class TrainingSpectiality(Named):
+class TrainingSpeciality(Named):
 
     class Meta:
         verbose_name = _('training speciality')
@@ -370,7 +370,7 @@ class PersonActivity(Period):
     training_type = models.ForeignKey(TrainingType, verbose_name=_('training type'), blank=True, null=True, on_delete=models.SET_NULL)
     training_level = models.ForeignKey(TrainingLevel, verbose_name=_('training level'), blank=True, null=True, on_delete=models.SET_NULL)
     training_topic = models.ForeignKey(TrainingTopic, verbose_name=_('training topic'), blank=True, null=True, on_delete=models.SET_NULL)
-    training_speciality = models.ForeignKey(TrainingSpectiality, verbose_name=_('training speciality'), blank=True, null=True, on_delete=models.SET_NULL)
+    training_speciality = models.ForeignKey(TrainingSpeciality, verbose_name=_('training speciality'), blank=True, null=True, on_delete=models.SET_NULL)
     training_title = models.TextField(_('Training title'), blank=True)
 
     record_piece = models.ForeignKey(RecordPiece, blank=True, null=True, on_delete=models.SET_NULL)
