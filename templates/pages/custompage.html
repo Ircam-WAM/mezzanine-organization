@@ -91,17 +91,13 @@
 {% endblock %}
 
 {% block page_person_list %}
-{% with page.custompage.person_list_block.all as person_list_blocks %}
-  {% for person_list_block in person_list_blocks %}
-    {% with person_list_block.person_list_block as person_list_block %}
-    {% with "network/inc/person/list_"|add:person_list_block.style|add:"_style.html" as template %}
-      {% include template %}
+    {% for page_custom_person_list_block_inline in page.custompage.page_custom_person_list_block_inlines.all  %}
+      {% with page_custom_person_list_block_inline.person_list_block as person_list_block %}
+        {% with "network/inc/person/list_"|add:person_list_block.style|add:"_style.html" as template %}
+          {% include template %}
+        {% endwith %}
       {% endwith %}
-
-    {% endwith %}
-  {% endfor %}
-{% endwith %}
-
+    {% endfor %}
 {% endblock %}
 
 {% block page_sub_content %}
