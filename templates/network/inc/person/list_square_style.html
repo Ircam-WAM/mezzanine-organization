@@ -1,22 +1,68 @@
 {% load organization_tags mezzanine_tags %}
-<h3>{{ person_list_block.title }}</h3>
-{% if person_list_block.description %}
-<p>{{ person_list_block.description }}</p>
+{% if person_list_block.title %}
+
+    <div class="white-bg pb2">
+
+        <hr class="mt0" />
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
+
+                    <h2 class="dotted">{{ person_list_block.title }}</h2>
+                    {% if person_list_block.description %}
+                        <p>{{ person_list_block.description }}</p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="container-fluid">
+
+            <div class="row tac">
+
+                {% for person_list_block_inline in person_list_block.person_list_block_inlines.all %}
+
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+
+                        <a href="{{ person.get_absolute_url }}" title="{{ person }}" class="article-box article-box--person" >
+                            {% with person_list_block_inline.person as person %}
+
+                                    {% with person.images.all|get_type:'card' as card_images %}
+                                        {% if card_images %}
+                                            <div class="article-box__header">
+                                                <figure class="article-box__image">
+                                                    <img class="lazyload" src="{{ MEDIA_URL }}{% thumbnail card_images.first 427 500 top=0.5 %}" alt="person"/>
+                                                </figure>
+                                            </div>
+                                        {% endif %}
+                                    {% endwith %}
+
+                                    <div class="article-box__content tal">
+
+                                        <h3 class="article-box__title">{{ person }}</h3>
+
+                                        {% if person.description %}
+                                            <div class="article-box__desc">{{ person.description|slice:":255" }}</div>
+                                        {% endif %}
+
+                                    </div>
+
+                            {% endwith %}
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
 {% endif %}
-  {% for person_list_block_inline in person_list_block.person_list_block_inlines.all %}
-    {% with person_list_block_inline.person as person %}
-      <a href="{{ person.get_absolute_url }}" title="{{ person }}">
-        {% with person.images.all|get_type:'card' as card_images %}
-          {% if card_images %}
-          <img src="{{ MEDIA_URL }}{% thumbnail card_images.first 323 380 top=0.5 %}" alt="person"/>
-          {% endif %}
-        {% endwith %}
-      </a>
-      <a href="{{ person.get_absolute_url }}" title="{{ person }}">
-        <h4>{{ person }}</h4>
-      </a>
-      {% if person.description %}
-      <p>{{ person.description|slice:":255" }}</p>
-      {% endif %}
-    {% endwith %}
-  {% endfor %}
