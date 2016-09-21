@@ -26,4 +26,12 @@ $module: ".person-list-box";
 
     }
 
+    &__desc {
+        @include font-size(s);
+        @include line-height(.75);
+        @include typeface(serif);
+        @include margin(1 0 .25 0);
+        font-weight: weight(light);
+    }
+
 }
