@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, TemplateView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -31,6 +33,7 @@ class HomeView(SlugMixin, ListView):
 
 
 class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
+
     def get_queryset(self):
 
         articles = Article.objects.all()
@@ -56,6 +59,7 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
 
 
 class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
+
     def get_queryset(self):
 
         articles = Article.objects.all()

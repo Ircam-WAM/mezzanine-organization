@@ -144,4 +144,67 @@ $module: ".article-box";
         }
     }
 
+    &--person {
+
+        @include margin-top(2);
+        position: relative;
+
+        &:after {
+
+            content: "";
+            display: block;
+            height: 1px;
+            width: 100%;
+            background: #979797;
+            position: absolute;
+            bottom: -24px;
+            left: 0;
+            right: 0;
+
+        }
+
+        #{$module}__title {
+
+            @include font-size(xl);
+            @include line-height(1.25);
+            @include typeface(sans-serif);
+            @include margin(.25 0 .25 0);
+            font-weight: weight(heavy);
+
+        }
+
+        #{$module}__desc {
+            @include line-height(1);
+        }
+
+        #{$module}__content {
+
+            height: 350px;
+
+            @include mq($until: xs) {
+                height: auto;
+            }
+
+            &:after {
+
+                @include mq($until: xs) {
+                    display: none;
+                }
+
+                content: "";
+                display: block;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 100px;
+                background-color: rgba(255,255,255,0);
+                @include filter-gradient(#ffffff, #ffffff, vertical);
+                @include background-image(linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%));
+            }
+
+        }
+
+    }
+
 }
