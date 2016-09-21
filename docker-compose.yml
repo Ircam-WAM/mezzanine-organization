@@ -38,21 +38,35 @@ db:
   environment:
     - POSTGRES_PASSWORD=hyRob0otlaz4
 
+prestadb:
+  image: mariadb
+  volumes_from:
+    - data
+  volumes:
+    - ./scripts/:/srv/scripts
+    - ./data/mysql/:/var/lib/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=mysecretpassword
+    - MYSQL_DATABASE=ircam_shops
+    - MYSQL_USER=ircam_shops
+    - MYSQL_PASSWORD=pUmt97e4MgR9EP4knyWea0n
+
 app:
   build: .
   command: /bin/bash scripts/app.sh
   volumes:
     - ./app/:/srv/app
+    - ./lib/grappelli-safe/:/srv/lib/grappelli-safe
     - ./lib/mezzanine-agenda/:/srv/lib/mezzanine-agenda
     - ./lib/django-eve/:/srv/lib/django-eve
     - ./lib/django-prestashop/:/srv/lib/django-prestashop
-    - ./lib/grappelli-safe/:/srv/lib/grappelli-safe
   volumes_from:
     - data
   expose:
     - "8000"
   links:
     - db
+    - prestadb
   environment:
    - DEBUG=False
 

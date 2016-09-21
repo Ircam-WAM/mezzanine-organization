@@ -1,5 +1,5 @@
 -e git+https://github.com/yomguy/mezzanine-agenda.git#egg=mezzanine-agenda-0.2.2
 -e git+https://github.com/yomguy/mezzanine.git@jquery#egg=mezzanine-4.2-dev
 -e git+https://github.com/yomguy/grappelli-safe.git@dynamic_stacked#egg=grappelli-safe-0.4.2
-https://forge.ircam.fr/p/django-eve/source/download/dev/
-https://forge.ircam.fr/p/django-prestashop/source/download/master/
+-e git+https://github.com/yomguy/django-eve.git@dev#egg=django-eve-1.0
+-e git+https://github.com/yomguy/django-prestashop.git@dev#egg=django-prestashop-1.0
