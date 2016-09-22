@@ -54,7 +54,7 @@
 <div>
   <div>
     {% trans "Project details" %}<br>
-    
+
     {% if project.program %}
       {% trans "Program" %} {{ project.program }}<br>
     {% endif %}
@@ -95,6 +95,7 @@
 {% endblock %}
 
 {% block logo %}
+{% trans "Partners" %}<br>
 {% for organization in project.organizations.all %}
   {% with organization.images.all|get_type:'logo' as images %}
     {% include 'core/inc/logo.html' %}
