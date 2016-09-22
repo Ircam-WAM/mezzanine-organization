@@ -18,6 +18,12 @@ $module: ".banner";
 
     }
 
+    @include mq($until: sm) {
+
+        height: auto;
+
+    }
+
     &:hover {
 
         #{$module}__title:after {
@@ -102,6 +108,13 @@ $module: ".banner";
         height: 100%;
         z-index: 2;
 
+        @include mq($until: sm) {
+
+            height: auto;
+            position: relative;
+
+        }
+
         @include padding(1);
         padding-top: 120px;
         text-align: center;
@@ -116,6 +129,7 @@ $module: ".banner";
 
         @include mq($until: sm) {
             padding-top: 75px;
+            padding-bottom: 75px;
         }
 
     }
