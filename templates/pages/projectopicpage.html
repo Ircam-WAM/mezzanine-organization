@@ -1,0 +1,59 @@
+{% extends "pages/custompage.html" %}
+{% load i18n mezzanine_tags keyword_tags  pages_tags organization_tags %}
+
+{% block meta_title %}{{ page.meta_title }}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ page.description }}
+{% endmetablock %}{% endblock %}
+
+{% block page_class %}
+    department
+{% endblock %}
+
+{% block body_class %}
+    {% with page.get_ascendants|last as top_level_parent %}
+        {% if top_level_parent.get_content_model.weaving_css_class %}
+        pattern pattern-bg {{ top_level_parent.get_content_model.weaving_css_class }}
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block page_title %}
+    {% editable page.projecttopicpage.title %}
+        <h1 class="dotted">{{ page.projecttopicpage.title }}</h1>
+    {% endeditable %}
+{% endblock %}
+
+{% block page_content %}
+
+    {% if page.projecttopicpage.sub_title %}
+        {% editable page.projecttopicpage.sub_title %}
+            <div class="chapo">
+                {{ page.projecttopicpage.sub_title }}
+            </div>
+        {% endeditable %}
+    {% endif %}
+
+    {% with page.projecttopicpage.project_topic as topic %}
+      {% for sub_topic in topic.topics.all %}
+        {{ sub_topic }}
+          {% trans "European and national projects" %}<br>
+          {% for project in sub_topic.projects.all|get_type:"external project" %}
+            {{ project }}
+          {% enfor %}
+          {% trans "Internal projects" %}<br>
+          {% for project in sub_topic.projects.all|get_type:"internal project" %}
+            {{ project }}
+          {% enfor %}
+      {% endfor %}
+      
+{% endblock %}
