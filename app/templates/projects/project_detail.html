@@ -50,7 +50,7 @@
     {% endwith %}
 {% endblock %}
 
-{% block project_details %}
+{% block page_related_content %}
 <div>
   <div>
     {% trans "Project details" %}
@@ -92,7 +92,7 @@
     {% endfor %}
   </div>
 </div>
-{% endblock project_details %}
+{% endblock %}
 
 {% block logo %}
 {% for organization in project.organizations.all %}
