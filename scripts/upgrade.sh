@@ -3,7 +3,7 @@
 # Use this script to update a dev/prod server
 
 git pull origin dev
-git submodule foreach git pull origin master
+git submodule update --init --recursive
 docker-compose run app python /srv/app/manage.py migrate  --noinput
 bower install
 gulp build
