@@ -26,6 +26,10 @@ Audio.prototype.init = function() {
             as[i].title = $('<div class="title"></div>');
             $(as[i].wrapper).append(as[i].title);
 
+            as[i].element.onplay = function (e) {
+                that.pauseAllExcept(this);
+            };
+
             //
             // Future refs
             //
@@ -73,6 +77,21 @@ Audio.prototype.init = function() {
         }
 
     });
+
+};
+
+Audio.prototype.pauseAllExcept = function(audio) {
+
+    var that = this,
+        i = 0;
+
+    for(i=0; i<that.audios.length; i++) {
+
+        if(that.audios[i].element != audio) {
+            that.audios[i].element.pause();
+        }
+
+    }
 
 };
 
