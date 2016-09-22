@@ -48,7 +48,22 @@ class ProjectAdminDisplayable(DisplayableAdmin):
     list_filter = ['type', 'program', 'program_type', ]
 
 
+class ProjectTopicAdmin(BaseTranslationModelAdmin):
+
+    model = ProjectTopic
+
+
+class ProjectProgramAdmin(BaseTranslationModelAdmin):
+
+    model = ProjectProgram
+
+
+class ProjectProgramTypeAdmin(BaseTranslationModelAdmin):
+
+    model = ProjectProgramType
+
+
 admin.site.register(Project, ProjectAdminDisplayable)
-admin.site.register(ProjectProgram)
-admin.site.register(ProjectProgramType)
-admin.site.register(ProjectTopic)
+admin.site.register(ProjectProgram, ProjectProgramAdmin)
+admin.site.register(ProjectProgramType, ProjectProgramTypeAdmin)
+admin.site.register(ProjectTopic, ProjectTopicAdmin)
