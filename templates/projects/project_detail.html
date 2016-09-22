@@ -1,6 +1,31 @@
 {% extends "pages/page.html" %}
 {% load mezzanine_tags keyword_tags i18n organization_tags %}
 
+{% block meta_title %}{{ project.meta_title }}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for project as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block page_class %}
+    project
+{% endblock %}
+
+{% block breadcrumb_menu %}
+
+    {{ block.super }}
+
+    {% comment %}
+        <!-- TODO: Make the breadcrumb -->
+    {% endcomment %}
+
+    <li class="breadcrumb__item active">{{ project.title }}</li>
+
+{% endblock %}
 
 {% block page_title %}
 
@@ -8,96 +33,193 @@
         <h1 class="dotted">{{ project.title }}</h1>
     {% endeditable %}
 
+    {% if project.description %}
+        {% editable project.description %}
+            <div class="chapo">
+                {{ project.description }}
+            </div>
+        {% endeditable %}
+    {% endif %}
+
 {% endblock %}
 
 {% block page_content %}
-  {% if project.description %}
-    {{ project.description }}
-  {% endif %}
 
-  {% if project.content %}
-    {{ project.content|richtext_filters|safe }}
-  {% endif %}
+    {% if project.content %}
+        {{ project.content|richtext_filters|safe }}
+    {% endif %}
+
 {% endblock %}
 
 {% block page_audio %}
-  {% with project.audios.all as audios %}
-    {% if audios %}
-      {% include 'core/inc/audio.html' %}
-    {% endif %}
-  {% endwith %}
+    {% with project.audios.all as audios %}
+        {% if audios %}
+            {% include 'core/inc/audio.html' %}
+        {% endif %}
+    {% endwith %}
 {% endblock %}
 
 {% block page_slider %}
-  {% with project.images.all|get_type:'page_slider' as slider_images %}
-    {% if slider_images %}
-      {% include 'core/inc/slider.html' %}
-    {% endif %}
-  {% endwith %}
+    {% with project.images.all|get_type:'page_slider' as slider_images %}
+        {% if slider_images %}
+            {% include 'core/inc/slider.html' %}
+        {% endif %}
+    {% endwith %}
 {% endblock %}
 
 {% block page_video %}
     {% with project.videos.all as videos %}
-      {% if videos %}
-        {% include 'core/inc/video.html' %}
-      {% endif %}
+        {% if videos %}
+            {% include 'core/inc/video.html' %}
+        {% endif %}
     {% endwith %}
 {% endblock %}
 
 {% block page_sub_content %}
     {% with project.blocks.all as blocks %}
-      {% include "core/inc/block.html" %}
+        {% include "core/inc/block.html" %}
     {% endwith %}
 {% endblock %}
 
 {% block page_related_content %}
-<div>
-  <div>
-    {% trans "Project details" %}<br>
 
-    {% if project.program %}
-      {% trans "Program" %} {{ project.program }}<br>
-    {% endif %}
+    <div class="page__block page__block--yellow">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-lg-10 col-lg-push-1">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="project-details">
+                                <h3 class="dotted project-details__title">{% trans "Project details" %}</h3>
 
-    {% if project.program_type %}
-      {% trans "Program type" %} {{ project.program_type }}<br>
-    {% endif %}
+                                <div>
+                                    {% if project.program %}
+                                        <div class="project-details__item">
+                                            <div class="project-details__item-title">
+                                                {% trans "Program" %}
+                                            </div>
+                                            <div class="project-details__item-desc">
+                                                {{ project.program }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
 
-    {% trans "Beginning" %} {{ project.date_from }}<br>
-    {% trans "End" %} {{ project.date_to }}<br>
-    {% trans "Status" %} {{ project.project_status }}<br>
+                                    {% if project.program_type %}
+                                        <div class="project-details__item">
+                                            <div class="project-details__item-title">
+                                                {% trans "Program type" %}
+                                            </div>
+                                            <div class="project-details__item-desc">
+                                                {{ project.program_type }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
 
-    {% if project.website %}
-      {% trans "Website" %} {{ project.website }}<br>
-    {% endif %}
+                                    <div class="project-details__item">
+                                        <div class="project-details__item-title">
+                                            {% trans "Beginning" %}
+                                        </div>
+                                        <div class="project-details__item-desc">
+                                            {{ project.date_from }}
+                                        </div>
+                                    </div>
 
-    {% with project.images.all|get_type:'logo' as images %}
-      {% include 'core/inc/logo.html' %}
-    {% endwith %}
-  </div>
-  <div>
-    {% trans "Participants" %}<br>
+                                    <div class="project-details__item">
+                                        <div class="project-details__item-title">
+                                            {% trans "End" %}
+                                        </div>
+                                        <div class="project-details__item-desc">
+                                            {{ project.date_to }}
+                                        </div>
+                                    </div>
 
-    {% if project.lead_team %}
-      {% trans "Project lead team"%} {{ project.lead_team }}<br>
-    {% endif %}
+                                    <div class="project-details__item">
+                                        <div class="project-details__item-title">
+                                            {% trans "Status" %}
+                                        </div>
+                                        <div class="project-details__item-desc">
+                                            {{ project.project_status }}
+                                        </div>
+                                    </div>
 
-    {% trans "Partners" %}
+                                    {% if project.website %}
+                                        <div class="project-details__item">
+                                            <div class="project-details__item-title">
+                                                {% trans "Website" %}
+                                            </div>
+                                            <div class="project-details__item-desc">
+                                                <a href="{{ project.website }}" target="_blank" title="{{ project.title }}">{{ project.website }}</a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
 
-    {% for team in project.teams.all %}
-      {{ team }}<br>
-    {% endfor %}
-    {% for organization in project.organizations.all %}
-      {{ organization }}<br>
-    {% endfor %}
-  </div>
-</div>
+                                    <div class="project-details__logo">
+                                        {% with project.images.all|get_type:'logo' as images %}
+                                            {% include 'core/inc/logo.html' %}
+                                        {% endwith %}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="project-details">
+                                <h3 class="dotted project-details__title">{% trans "Participants" %}</h3>
+
+                                <div>
+
+                                    {% if project.lead_team %}
+                                        <div class="project-details__item">
+                                            <div class="project-details__item-title">
+                                                {% trans "Project lead team" %}
+                                            </div>
+                                            <div class="project-details__item-desc">
+                                                {{ project.lead_team }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="project-details__item">
+                                        <div class="project-details__item-title">
+                                            {% trans "Partners" %}
+                                        </div>
+                                        <div class="project-details__item-desc">
+                                            {% for team in project.teams.all %}
+                                                {{ team }}<br>
+                                            {% endfor %}
+                                            {% for organization in project.organizations.all %}
+                                                {{ organization }}<br>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block logo %}
-{% for organization in project.organizations.all %}
-  {% with organization.images.all|get_type:'logo' as images %}
-    {% include 'core/inc/logo.html' %}
-  {% endwith %}
-{% endfor %}
+    <div class="page__block{% if block.background_color %} page__block--{{ block.background_color }}{% endif %}">
+        <div class="white-bg pb2">
+            <div class="container">
+                <div class="row" data-summary-content>
+                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
+                        <ul class="partners-list">
+                            {% for organization in project.organizations.all %}
+                                {% with organization.images.all|get_type:'logo' as images %}
+                                    {% include 'core/inc/logo.html' %}
+                                {% endwith %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

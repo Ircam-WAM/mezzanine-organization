@@ -1,0 +1,99 @@
+$module: ".project-details";
+
+#{$module} {
+
+    &__title {
+
+        text-align: left;
+        @include padding-left(2);
+        margin-left: 200px;
+        @include margin-top(0);
+
+        @include mq($until: lg) {
+            margin-left: 150px;
+        }
+
+        @include mq($until: md) {
+            margin-left: 150px;
+        }
+
+        @include mq($until: sm) {
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+    }
+
+    &__item {
+
+
+    }
+
+    &__item-title {
+
+        font-weight: weight(bold);
+        float: left;
+        clear: both;
+        width: 200px;
+        text-align: right;
+        @include margin-right(2);
+
+        @include mq($until: lg) {
+            width: 150px;
+        }
+
+        @include mq($until: md) {
+            width: 150px;
+        }
+
+        @include mq($until: sm) {
+            float: none;
+            text-align: left;
+        }
+
+    }
+
+    &__item-desc {
+
+        float: left;
+        width: 200px;
+        @include font-size(m);
+        font-weight: weight(light);
+
+        @include mq($until: lg) {
+            width: 200px;
+        }
+
+        @include mq($until: md) {
+            width: 200px;
+        }
+
+        @include mq($until: sm) {
+            float: none;
+        }
+
+    }
+
+    &__logo {
+
+        clear: both;
+        @include padding-left(0);
+        margin-left: 200px;
+        text-align: left;
+
+        @include mq($until: lg) {
+            margin-left: 150px;
+        }
+
+        @include mq($until: md) {
+            margin-left: 150px;
+        }
+
+        @include mq($until: sm) {
+            margin-left: 0;
+            @include margin-bottom(2);
+        }
+
+    }
+
+}
