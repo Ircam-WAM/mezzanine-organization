@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import datetime
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -36,7 +37,6 @@ class Project(Displayable, Period, RichText):
     def get_absolute_url(self):
         return reverse("organization-project-detail", kwargs={"slug": self.slug})
 
-    @property
     def project_status(self):
         if datetime.date.today() >= self.date_from and datetime.date.today() <= self.date_to:
             return _('in progress')
