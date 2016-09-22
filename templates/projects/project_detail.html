@@ -14,38 +14,9 @@
   {% if project.description %}
     {{ project.description }}
   {% endif %}
-  <br>--------------------------------<br>
+
   {% if project.content %}
     {{ project.content|richtext_filters|safe }}
-  {% endif %}
-  <br>--------------------------------<br>
-  {% if project.lead_team %}
-    Project lead team : {{ project.lead_team }}<br>
-  {% endif %}
-  <br>--------------------------------<br>
-  {% if project.persons.all %}
-    Persons :<br>
-    {% for person in project.persons.all %}
-      {{ person }}<br>
-    {% endfor %}
-  {% endif %}
-  <br>--------------------------------<br>
-  {% if project.teams.all %}
-    Teams :<br>
-    {% for team in project.teams.all %}
-      {{ team }}<br>
-    {% endfor %}
-  {% endif %}
-  <br>--------------------------------<br>
-  {% if project.organizations.all %}
-    organizations :<br>
-    {% for organization in project.organizations.all %}
-      {{ organization }}<br>
-    {% endfor %}
-  {% endif %}
-  <br>--------------------------------<br>
-  {% if project.website %}
-    website : {{ project.website }}<br>
   {% endif %}
 {% endblock %}
 
@@ -78,3 +49,39 @@
       {% include "core/inc/block.html" %}
     {% endwith %}
 {% endblock %}
+
+{% block project_details %}
+<div>
+  <div>
+    {% trans "Project details" %}
+
+    <ul>
+      <li>{% trans "Program" %}></li>
+    </ul>
+  </div>
+</div>
+
+{% if project.lead_team %}
+  Project lead team : {{ project.lead_team }}<br>
+{% endif %}
+{% if project.persons.all %}
+  Persons :<br>
+  {% for person in project.persons.all %}
+    {{ person }}<br>
+  {% endfor %}
+{% endif %}
+{% if project.teams.all %}
+  Teams :<br>
+  {% for team in project.teams.all %}
+    {{ team }}<br>
+  {% endfor %}
+{% endif %}
+{% if project.organizations.all %}
+  organizations :<br>
+  {% for organization in project.organizations.all %}
+    {{ organization }}<br>
+  {% endfor %}
+{% endif %}
+{% if project.website %}
+  website : {{ project.website }}<br>
+{% endif %}
