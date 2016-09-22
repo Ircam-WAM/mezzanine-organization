@@ -79,6 +79,7 @@ class Organization(Named, Address, URL):
 
     class Meta:
         verbose_name = _('organization')
+        ordering = ['name',]
 
 
 class OrganizationAudio(Audio):
@@ -111,6 +112,7 @@ class OrganizationType(Named):
 
     class Meta:
         verbose_name = _('organization type')
+        ordering = ['name',]
 
 
 class Department(Named):
@@ -120,6 +122,7 @@ class Department(Named):
 
     class Meta:
         verbose_name = _('department')
+        ordering = ['name',]
 
     def __str__(self):
         if self.organization:
@@ -146,6 +149,7 @@ class Team(Named, URL):
 
     class Meta:
         verbose_name = _('team')
+        ordering = ['name',]
 
     def __str__(self):
         if self.organization:
@@ -184,7 +188,7 @@ class Person(Displayable, AdminThumbMixin):
         ordering = ['last_name',]
 
     def __str__(self):
-        return ' '.join((self.first_name, self.last_name))
+        return ' '.join((self.last_name, self.first_name))
 
     def get_absolute_url(self):
         return reverse("organization-network-person-detail", kwargs={'slug': self.slug})

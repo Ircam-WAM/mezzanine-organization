@@ -28,6 +28,7 @@ class Project(Displayable, Period, RichText):
 
     class Meta:
         verbose_name = _('project')
+        ordering = ['title',]
 
     def __str__(self):
         return self.title
@@ -51,18 +52,21 @@ class ProjectTopic(Named):
 
     class Meta:
         verbose_name = _('project topic')
+        ordering = ['name',]
 
 
 class ProjectProgram(Named):
 
     class Meta:
         verbose_name = _('program')
+        ordering = ['name',]
 
 
 class ProjectProgramType(Named):
 
     class Meta:
         verbose_name = _('program type')
+        ordering = ['name',]
 
 
 class ProjectAudio(Audio):
