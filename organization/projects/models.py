@@ -92,3 +92,11 @@ class ProjectImage(Image):
 class ProjectBlock(Block):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectTopicPage(Page, SubTitled):
+
+    project_topic = models.ForeignKey('ProjectTopic', verbose_name=_('project topic'), related_name="pages", blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('project topic page')
