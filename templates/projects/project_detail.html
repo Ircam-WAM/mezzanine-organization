@@ -19,9 +19,8 @@
 
     {{ block.super }}
 
-    {% comment %}
-        <!-- TODO: Make the breadcrumb -->
-    {% endcomment %}
+    <li class="breadcrumb__item"><a href="{{ department.get_absolute_url }}">{{ department.name }}</a></li>
+    <li class="breadcrumb__item"><a href="{{ project.lead_team.get_absolute_url }}">{{ project.lead_team.name }}</a></li>
 
     <li class="breadcrumb__item active">{{ project.title }}</li>
 

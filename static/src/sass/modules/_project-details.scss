@@ -26,6 +26,8 @@ $module: ".project-details";
 
     &__item {
 
+        @include clearfix;
+        @include margin(0 0 .5 0);
 
     }
 
