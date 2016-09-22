@@ -54,6 +54,12 @@ class ProjectTopic(Named):
         verbose_name = _('project topic')
         ordering = ['name',]
 
+    def __str__(self):
+        if self.parent:
+            return ' - '.join((self.parent.name, self.name))
+        else:
+            return self.name
+
 
 class ProjectProgram(Named):
 
