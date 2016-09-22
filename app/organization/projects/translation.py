@@ -55,3 +55,9 @@ class ProjectProgramTypeTranslationOptions(TranslationOptions):
 class ProjectTopicTranslationOptions(TranslationOptions):
 
     fields = ('name', 'description')
+
+
+@register(ProjectTopicPage)
+class ProjectTopicPageTranslationOptions(TranslationOptions):
+
+    fields = ('sub_title',)
