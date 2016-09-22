@@ -23,6 +23,9 @@ Audio.prototype.init = function() {
 
             playlist = $(as[i].element).parent().next('.audio-playlist');
 
+            as[i].title = $('<div class="title"></div>');
+            $(as[i].wrapper).append(as[i].title);
+
             //
             // Future refs
             //
@@ -52,6 +55,7 @@ Audio.prototype.init = function() {
             //
             var first = playlist.find('li a').attr('data-src');
             playlist.find('li').first().addClass('playing');
+            that.setTitle(as[i], playlist.find('li a').text());
             as[i].load(first);
 
             playlist.find('li').bind('click', function(e) {
@@ -62,12 +66,29 @@ Audio.prototype.init = function() {
                 $(this).addClass('playing').siblings().removeClass('playing');
                 that.audios[idx].load($('a', this).attr('data-src'));
                 that.audios[idx].play();
+                that.setTitle(that.audios[idx], $('a', this).text());
 
             });
 
         }
 
     });
+
+};
+
+Audio.prototype.setTitle = function(audio, title) {
+
+    var split = title.split(",");
+    var html = '';
+
+    if(split[0]) {
+        html += split[0];
+    }
+    if(split[1]) {
+        html += '<br/><span>'+split[1]+'</span>'
+    }
+
+    audio.title.html(html);
 
 };
 
