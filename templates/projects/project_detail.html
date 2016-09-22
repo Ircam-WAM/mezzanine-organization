@@ -210,6 +210,7 @@
             <div class="container">
                 <div class="row" data-summary-content>
                     <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
+                        {% trans "Partners" %}
                         <ul class="partners-list">
                             {% for organization in project.organizations.all %}
                                 {% with organization.images.all|get_type:'logo' as images %}
