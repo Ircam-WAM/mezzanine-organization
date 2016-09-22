@@ -141,3 +141,18 @@
     @include margin(1);
 
 }
+
+.wys-highlighted-paragraph {
+
+    @include padding-left(1);
+    @include margin-top(1.5);
+    border-left: 1px solid $color-black;
+
+    & + .wys-highlighted-paragraph {
+
+        @include margin-top(-1);
+        @include padding-top(1);
+
+    }
+
+}
