@@ -21,7 +21,7 @@
                 {% endif %}
             </div>
         {% elif body.content_type.model == 'event' %}
-            <!-- TODO: Add event type tags -->
+            {% trans 'Event' %}
         {% endif %}
     </div>
 
@@ -36,7 +36,18 @@
                     <strong>{{ category }}</strong>
                 {% endfor %}
             {% elif body.content_type.model == 'event' %}
-                <!-- TODO: Add event type categories -->
+                {% if body.content_object.start %}
+                    {% if body.content_object.end %}
+                        {% trans "From" %}
+                    {% endif %}
+                    {{ body.content_object.start }}
+                    {% if body.content_object.end %}
+                        {% trans "to" %} {{ body.content_object.end }}
+                    {% endif %}
+                {% endif %}
+                {% if body.content_object.location %}
+                    {{ body.content_object.location }}
+                {% endif %}
             {% endif %}
         </div>
         <div class="article-box__desc">
