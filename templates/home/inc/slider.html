@@ -22,7 +22,11 @@
                                                 </div>
                                                 {% elif slider.content_type.model == 'event' %}
                                                 <div class="tag tag--category">
-                                                    {% trans 'Event' %}
+                                                    {% if slider.content_object.category %}
+                                                        {{ slider.content_object.category }}
+                                                    {% else %}
+                                                        {% trans 'Event' %}
+                                                    {% endif %}
                                                 </div>
                                                 {% endif %}
 
@@ -36,10 +40,13 @@
                                                             {% if slider.content_object.end %}
                                                                 {% trans "From" %}
                                                             {% endif %}
-                                                            {{ slider.content_object.start }}
+                                                            {{ slider.content_object.start|date:"DATE_FORMAT" }}
                                                             {% if slider.content_object.end %}
-                                                                {% trans "to" %} {{ slider.content_object.end }}
+                                                                {% trans "to" %} {{ slider.content_object.end|date:"DATE_FORMAT" }}
                                                             {% endif %}
+                                                        {% endif %}
+                                                        {% if slider.content_object.location %}
+                                                             <br /><strong>{{ slider.content_object.location }}</strong>
                                                         {% endif %}
                                                     </div>
                                                     <div class="article-box__desc">
