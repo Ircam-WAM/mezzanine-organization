@@ -4,7 +4,11 @@ from modeltranslation.translator import TranslationOptions
 from mezzanine.core.translation import (TranslatedSlugged,
                                         TranslatedDisplayable,
                                         TranslatedRichText)
-from organization.magazine.models import Article, Topic, Brief, ArticleImage
+from organization.magazine.models import (Article,
+                                          Topic,
+                                          Brief,
+                                          ArticleImage,
+                                          ArticlePersonListBlockInline)
 
 @register(Article)
 class ArticleTranslationOptions(TranslationOptions):
@@ -17,12 +21,20 @@ class BriefTranslationOptions(TranslationOptions):
 
     fields = ('text_button', )
 
+
 @register(Topic)
 class TopicTranslationOptions(TranslationOptions):
 
     fields = ()
 
+
 @register(ArticleImage)
 class ArticleImageTranslationOptions(TranslationOptions):
 
     fields = ('description',)
+
+
+@register(ArticlePersonListBlockInline)
+class ArticlePersonListBlockInlineTranslationOptions(TranslationOptions):
+
+    pass

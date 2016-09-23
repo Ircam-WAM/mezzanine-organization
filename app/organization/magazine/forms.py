@@ -1,10 +1,10 @@
 from dal import autocomplete
-
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
-
-from organization.magazine.models import Article, Topic, Brief
+from django import forms
+from organization.magazine.models import Article, Topic, Brief, ArticlePersonListBlockInline
 from organization.pages.models import CustomPage
+from organization.network.models import PersonListBlock
 from mezzanine_agenda.models import Event
 
 class BriefForm(autocomplete.FutureModelForm):
@@ -22,3 +22,15 @@ class BriefForm(autocomplete.FutureModelForm):
     class Meta:
         model = Brief
         fields = ('__all__')
+
+
+class ArticlePersonListForm(forms.ModelForm):
+
+    person_list_block = forms.ModelChoiceField(
+        queryset=PersonListBlock.objects.all(),
+        widget=autocomplete.ModelSelect2(url='person-list-block-autocomplete')
+    )
+
+    class Meta:
+        model = ArticlePersonListBlockInline
+        fields = ('person_list_block',)

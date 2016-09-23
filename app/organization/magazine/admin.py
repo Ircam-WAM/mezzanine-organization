@@ -4,8 +4,8 @@ from copy import deepcopy
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 #from orderable.admin import OrderableTabularInline #OrderableAdmin,
-from organization.magazine.models import Article, Brief, Topic, ArticleImage
-from organization.magazine.forms import BriefForm
+from organization.magazine.models import Article, Brief, Topic, ArticleImage, ArticlePersonListBlockInline
+from organization.magazine.forms import BriefForm, ArticlePersonListForm
 
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
@@ -18,12 +18,18 @@ class ArticleAdmin(admin.ModelAdmin):
     model = Article
 
 
+class ArticlePersonAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
+
+    model = ArticlePersonListBlockInline
+    form = ArticlePersonListForm
+
+
 class ArticleAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     exclude = ('related_posts',)
     filter_horizontal = ['categories', 'related_articles', ]
-    inlines = [ArticleImageInline,]
+    inlines = [ArticleImageInline, ArticlePersonAutocompleteInlineAdmin]
 
 
 class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline
