@@ -66,6 +66,14 @@
 
 {% endblock %}
 
+{% block page_link %}
+    {% with page.teampage.links.all as links %}
+        {% if links %}
+            {% include 'core/inc/link.html' %}
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
 {% block page_audio %}
   {% with page.teampage.audios.all as audios %}
     {% if audios %}
