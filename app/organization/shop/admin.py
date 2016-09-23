@@ -30,7 +30,7 @@ class ProductLinkInline(TabularDynamicInlineAdmin):
 
 class CustomProductAdmin(ProductAdmin):
 
-    inlines = [ProductLinkInline, ]
+    inlines = [ProductImageAdmin, ProductVariationAdmin, ProductLinkInline]
 
 
 admin.site.register(ProductBlock, ProductBlockAdmin)
