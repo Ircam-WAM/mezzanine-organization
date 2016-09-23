@@ -46,7 +46,7 @@ h3 {
     @include margin-top(1);
 }
 
-p {
+p, ul {
     @include margin-top(0);
     @include margin-bottom(1);
 	@include line-height(1.25);
