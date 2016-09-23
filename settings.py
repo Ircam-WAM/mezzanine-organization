@@ -256,6 +256,7 @@ MIGRATION_MODULES = {
     "pages": "migrations.pages",
     "conf": "migrations.conf",
     "shop": "migrations.shop",
+    "generic": "migrations.generic",
 }
 
 MODELTRANSLATION_TRANSLATION_FILES = (
