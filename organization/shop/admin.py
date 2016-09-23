@@ -10,6 +10,8 @@ from organization.pages.models import *
 from organization.media.models import Video, Audio
 from organization.shop.models import *
 
+from cartridge.shop.admin import *
+
 
 class ProductBlockProductInline(TabularDynamicInlineAdmin):
 
@@ -21,4 +23,16 @@ class ProductBlockAdmin(BaseTranslationModelAdmin):
     inlines = [ProductBlockProductInline, ]
 
 
+class ProductLinkInline(TabularDynamicInlineAdmin):
+
+    model = ProductLink
+
+
+class CustomProductAdmin(ProductAdmin):
+
+    inlines = [ProductLinkInline, ]
+
+
 admin.site.register(ProductBlock, ProductBlockAdmin)
+admin.site.unregister(Product)
+admin.site.register(Product, CustomProductAdmin)
