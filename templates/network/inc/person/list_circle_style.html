@@ -60,7 +60,7 @@
                                             <div class="person-list-box__desc">{{ person.bio|richtext_filters|safe }}</div>
                                         {% endif %}
 
-                                        <a href="{{ person.get_absolute_url }}" class="button button--small button--white">{% trans "resume" %}</a>
+                                        <a href="{{ person.get_absolute_url }}" class="button button--small">{% trans "resume" %}</a>
                                         {% for link in person.links.all %}
                                             {% if link %}
                                                 <a href="{{ link }}" title="Site Web" class="button button--small"><i class="fa fa-{{ link.link_type.name }}"></i> {{ link.link_type.name }}</a>
