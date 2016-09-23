@@ -11,14 +11,14 @@ from organization.media.models import Video, Audio
 from organization.shop.models import *
 
 
-class ProductBlockProductInline(StackedDynamicInlineAdmin):
+class ProductBlockProductInline(TabularDynamicInlineAdmin):
 
     model = ProductBlockProduct
 
 
-class ProductBlockAdmin(admin.ModelAdmin):
+class ProductBlockAdmin(BaseTranslationModelAdmin):
 
-    inlines = [ProductBlockProductInline]
+    inlines = [ProductBlockProductInline, ]
 
 
 admin.site.register(ProductBlock, ProductBlockAdmin)
