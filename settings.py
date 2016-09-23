@@ -128,6 +128,7 @@ USE_L10N = True
 
 AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
 
+SHOP_CURRENCY_LOCALE = ''
 
 #############
 # DATABASES #
@@ -220,8 +221,8 @@ INSTALLED_APPS = [
     # "mezzanine.galleries",
     "mezzanine.twitter",
     "mezzanine.accounts",
-    # "mezzanine.mobile",
     "cartridge.shop",
+    # "mezzanine.mobile",
     # "eve",
     'djangobower',
     "meta",
@@ -255,6 +256,7 @@ MIGRATION_MODULES = {
     "pages": "migrations.pages",
     "conf": "migrations.conf",
     "shop": "migrations.shop",
+    "generic": "migrations.generic",
 }
 
 MODELTRANSLATION_TRANSLATION_FILES = (

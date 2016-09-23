@@ -19,3 +19,14 @@ class EventImageTranslationOptions(TranslationOptions):
 class EventDepartmentTranslationOptions(TranslationOptions):
 
     fields = ()
+
+
+@register(EventPerson)
+class EventPersonTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+@register(EventLink)
+class EventPersonTranslationOptions(TranslationOptions):
+
+    fields = ()
