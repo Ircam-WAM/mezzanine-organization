@@ -34,3 +34,22 @@ class EventDepartment(models.Model):
     class Meta:
         verbose_name = _("department")
         verbose_name_plural = _("departments")
+
+
+class EventPerson(models.Model):
+
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='persons', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='events', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("person")
+        verbose_name_plural = _("persons")
+
+
+class EventLink(Link):
+
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("link")
+        verbose_name_plural = _("links")
