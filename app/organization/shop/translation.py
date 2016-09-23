@@ -20,3 +20,9 @@ class ProductBlockProductTranslationOptions(TranslationOptions):
 class PageProductBlockTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(ProductLink)
+class ProductLinkTranslationOptions(TranslationOptions):
+
+    pass

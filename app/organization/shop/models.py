@@ -46,3 +46,8 @@ class PageProductBlock(models.Model):
     class Meta:
         verbose_name = _("product block")
         verbose_name_plural = _("product blocks")
+
+
+class ProductLink(Link):
+
+    product = models.ForeignKey(Product, verbose_name=_('product'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
