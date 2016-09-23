@@ -114,11 +114,10 @@ $module: ".page";
         		}
 
         		&:hover {
-                    color: $color-main;
         			&:after {
         				bottom: 0;
         				background: $color-black;
-        				height: 100%;
+        				height: 1px;
         			}
         		}
         	}
