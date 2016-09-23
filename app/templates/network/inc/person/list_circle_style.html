@@ -55,9 +55,9 @@
                                         <h3 class="mt0 fsxl">{{ person.first_name }}&nbsp;{{ person.last_name }}</h3>
 
                                         {% if person.description %}
-                                            <div class="person-list-box__desc">{{ person.description|richtext_filters|safe|truncatechars_html:255 }}</div>
+                                            <div class="person-list-box__desc">{{ person.description|richtext_filters|safe }}</div>
                                         {% elif person.bio %}
-                                            <div class="person-list-box__desc">{{ person.bio|richtext_filters|safe|truncatechars_html:255 }}</div>
+                                            <div class="person-list-box__desc">{{ person.bio|richtext_filters|safe }}</div>
                                         {% endif %}
 
                                         <a href="{{ person.get_absolute_url }}" class="button button--small button--white">{% trans "resume" %}</a>
