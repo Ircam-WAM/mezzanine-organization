@@ -47,6 +47,7 @@ PAGE_MENU_TEMPLATES = (
     (3, _("Footer vertical"), "pages/menus/footer_vertical.html"),
     (4, _("Footer horizontal"), "pages/menus/footer_horizontal.html"),
     (5, _("Magazine"), "pages/menus/magazine.html"),
+    (6, _("Vous êtes"), "pages/menus/vous_etes.html"),
 
 )
 
