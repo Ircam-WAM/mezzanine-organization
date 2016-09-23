@@ -63,11 +63,11 @@ class SubTitled(models.Model):
         abstract = True
 
 
-class Category(Named):
+class CustomCategory(Named):
     """Category description)"""
 
     class Meta:
-        verbose_name = _('category')
+        verbose_name = _('custom category')
 
     def __str__(self):
         return self.name

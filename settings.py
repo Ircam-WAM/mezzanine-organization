@@ -127,6 +127,7 @@ USE_L10N = True
 
 AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
 
+SHOP_CURRENCY_LOCALE = ''
 
 #############
 # DATABASES #
@@ -220,11 +221,11 @@ INSTALLED_APPS = [
     "mezzanine.twitter",
     "mezzanine.accounts",
     # "mezzanine.mobile",
-    "cartridge.shop",
     # "eve",
     'djangobower',
     "meta",
     "mezzanine_agenda",
+    "cartridge.shop",
 #    "orderable",
     "organization.core",
     "organization.media",
