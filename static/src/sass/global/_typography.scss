@@ -39,6 +39,12 @@ h2 {
 	}
 }
 
+p + h2 {
+
+	@include margin-top(2);
+
+}
+
 h3 {
     @include typeset(heading-3);
     @include typeface(sans-serif);
