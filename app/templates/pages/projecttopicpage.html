@@ -48,11 +48,11 @@
         {{ sub_topic }}<br>
           {% trans "European and national projects" %}<br>
           {% for project in sub_topic.projects.all|get_type:"external project" %}
-            {{ project }}<br>
+            <a href="{% url 'organization-project-detail' project.slug %}">{{ project }}</a><br>
           {% endfor %}
           {% trans "Internal projects" %}<br>
           {% for project in sub_topic.projects.all|get_type:"internal project" %}
-            {{ project }}<br>
+            <a href="{% url 'organization-project-detail' project.slug %}">{{ project }}</a><br>
           {% endfor %}
       {% endfor %}
     {% endwith %}
