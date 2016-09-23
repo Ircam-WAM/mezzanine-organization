@@ -1,37 +1,37 @@
 {% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
 
-<a class="article-box" href="{{ body.content_object.get_absolute_url }}" title="{{ body.content_object.title }}">
+<a class="article-box" href="{{ content.content_object.get_absolute_url }}" title="{{ content.content_object.title }}">
     <div class="article-box__header">
         <figure class="article-box__image">
-            {% with body.content_object.images.all|get_type:'card' as image %}
+            {% with content.content_object.images.all|get_type:'card' as image %}
                 {% if image %}
                     <img src="{{ MEDIA_URL }}{% thumbnail image.first.file 427 286 %}" data-src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 %}" class="lazyload" alt="" />
                 {% endif %}
             {% endwith %}
         </figure>
-        {% if body.content_type.model == 'article' %}
+        {% if content.content_type.model == 'article' %}
             <div class="article-box__tags">
                 <div class="tag tag--small tag--category">
                     {% trans 'News' %}
                 </div>
-                {% if body.content_object.department %}
+                {% if content.content_object.department %}
                     <div class="tag tag--small dashed dashed--gray">
-                      {{ body.content_object.department.name }}
+                      {{ content.content_object.department.name }}
                     </div>
                 {% endif %}
             </div>
-        {% elif body.content_type.model == 'event' %}
+        {% elif content.content_type.model == 'event' %}
         <div class="article-box__tags">
-            {% if body.content_object.departments.first %}
-                {% with body.content_object.departments.first as department %}
+            {% if content.content_object.departments.first %}
+                {% with content.content_object.departments.first as department %}
                     <div class="tag tag--small dashed">
                       {{ department.department.name }}
                     </div>
                 {% endwith %}
             {% endif %}
-            {% if body.content_object.category %}
+            {% if content.content_object.category %}
                 <div class="tag tag--small tag--category">
-                    {{ body.content_object.category }}
+                    {{ content.content_object.category }}
                 </div>
             {% endif %}
         </div>
@@ -39,32 +39,32 @@
     </div>
 
     <div class="article-box__content tal">
-        <h3 class="article-box__title">{{ body.content_object.title }}</h3>
+        <h3 class="article-box__title">{{ content.content_object.title }}</h3>
         <div class="article-box__subtitle">
-            {% if body.content_type.model == 'article' %}
-                {{ body.content_object.publish_date|date:"DATE_FORMAT" }}
-                {% for category in body.content_object.categories.all %}
+            {% if content.content_type.model == 'article' %}
+                {{ content.content_object.publish_date|date:"DATE_FORMAT" }}
+                {% for category in content.content_object.categories.all %}
                     {% if forloop.first %} | {% endif %}
                     {% if not forloop.first %}, {% endif %}
                     <strong>{{ category }}</strong>
                 {% endfor %}
-            {% elif body.content_type.model == 'event' %}
-                {% if body.content_object.start %}
-                    {% if body.content_object.end %}
+            {% elif content.content_type.model == 'event' %}
+                {% if content.content_object.start %}
+                    {% if content.content_object.end %}
                         {% trans "From" %}
                     {% endif %}
-                    {{ body.content_object.start|date:"DATE_FORMAT" }}
-                    {% if body.content_object.end %}
-                        {% trans "to" %} {{ body.content_object.end|date:"DATE_FORMAT" }}
+                    {{ content.content_object.start|date:"DATE_FORMAT" }}
+                    {% if content.content_object.end %}
+                        {% trans "to" %} {{ content.content_object.end|date:"DATE_FORMAT" }}
                     {% endif %}
                 {% endif %}
-                {% if body.content_object.location %}
-                     <br /><strong>{{ body.content_object.location }}</strong>
+                {% if content.content_object.location %}
+                     <br /><strong>{{ content.content_object.location }}</strong>
                 {% endif %}
             {% endif %}
         </div>
         <div class="article-box__desc">
-             {{ body.content_object.description|richtext_filters|safe|truncatechars_html:200 }}
+             {{ content.content_object.description|richtext_filters|safe|truncatechars_html:200 }}
         </div>
     </div>
 </a>

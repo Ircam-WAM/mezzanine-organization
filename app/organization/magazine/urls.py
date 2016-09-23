@@ -16,4 +16,5 @@ urlpatterns = [
     url("^article/detail/(?P<slug>.*)%s$" % _slash, ArticleDetailView.as_view(), name="magazine-article-detail"),
     url("^topic/detail/(?P<slug>.*)%s$" % _slash, TopicDetailView.as_view(), name='topic-detail'),
     url("^object-autocomplete/$", ObjectAutocomplete.as_view(), name='object-autocomplete'),
+    url("^dynamic-content-article/$",  DynamicContentArticleView.as_view(), name='dynamic-content-article'),
 ]

@@ -85,3 +85,11 @@ class ArticlePersonListBlockInline(Titled):
 
     def __str__(self):
         return self.title
+
+
+class DynamicContentArticle(DynamicContent, Orderable):
+
+    article = models.ForeignKey(Article, verbose_name=_('article'), related_name='dynamic_content_articles', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Article'
