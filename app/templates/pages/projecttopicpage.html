@@ -44,17 +44,37 @@
     {% endif %}
 
     {% with page.projecttopicpage.project_topic as topic %}
-      {% for sub_topic in topic|sub_topics %}
-        {{ sub_topic }}<br>
-          {% trans "European and national projects" %}<br>
-          {% for project in sub_topic.projects.all|get_type:"external project" %}
-            <a href="{% url 'organization-project-detail' project.slug %}">{{ project }}</a><br>
-          {% endfor %}
-          {% trans "Internal projects" %}<br>
-          {% for project in sub_topic.projects.all|get_type:"internal project" %}
-            <a href="{% url 'organization-project-detail' project.slug %}">{{ project }}</a><br>
-          {% endfor %}
-      {% endfor %}
+        {% for sub_topic in topic|sub_topics %}
+            <h2 class="dotted">{{ sub_topic }}</h2>
+            {% if sub_topic.description %}
+                <p>
+                    {{ sub_topic.description }}
+                </p>
+            {% endif %}
+            {% if sub_topic.projects.all|get_type:"external project" %}
+                <p>
+                    <strong>{% trans "European and national projects" %}</strong>
+                </p>
+                <ul class="unstyled-list">
+                    {% for project in sub_topic.projects.all|get_type:"external project" %}
+                        <li>
+                            <a href="{% url 'organization-project-detail' project.slug %}">{{ project }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if sub_topic.projects.all|get_type:"internal project" %}
+                <p>
+                    <strong>{% trans "Internal projects" %}</strong>
+                    <ul class="unstyled-list">
+                        {% for project in sub_topic.projects.all|get_type:"internal project" %}
+                            <li>
+                                <a href="{% url 'organization-project-detail' project.slug %}">{{ project }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+            {% endif %}
+        {% endfor %}
     {% endwith %}
 
 {% endblock %}
