@@ -36,7 +36,7 @@
 
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 tac">
 
-                                        <a href="{{ person.get_absolute_url }}" title="{{ person }}">
+                                        <a href="{{ person.get_absolute_url }}" title="{{ person.first_name }}&nbsp;{{ person.last_name }}">
                                             <figure class="person-list-box__image">
 
                                                 {% with person.images.all|get_type:'card' as card_images %}
@@ -52,7 +52,7 @@
 
                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
 
-                                        <h3 class="mt0 fsxl">{{ person }}</h3>
+                                        <h3 class="mt0 fsxl">{{ person.first_name }}&nbsp;{{ person.last_name }}</h3>
 
                                         {% if person.description %}
                                             <div class="person-list-box__desc">{{ person.description|richtext_filters|safe|truncatechars_html:255 }}</div>
