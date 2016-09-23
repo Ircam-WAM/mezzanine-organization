@@ -21,13 +21,18 @@
                                                     {% trans 'News' %}
                                                 </div>
                                                 {% elif slider.content_type.model == 'event' %}
-                                                <div class="tag tag--category">
-                                                    {% if slider.content_object.category %}
-                                                        {{ slider.content_object.category }}
-                                                    {% else %}
-                                                        {% trans 'Event' %}
+                                                    {% if slider.content_object.departments.first %}
+                                                        {% with slider.content_object.departments.first as department %}
+                                                            <div class="tag dashed">
+                                                              {{ department.department.name }}
+                                                            </div>
+                                                        {% endwith %}
                                                     {% endif %}
-                                                </div>
+                                                    {% if slider.content_object.category %}
+                                                        <div class="tag tag--category">
+                                                            {{ slider.content_object.category }}
+                                                        </div>
+                                                    {% endif %}
                                                 {% endif %}
 
                                                 <div class="article-box__content tal">

@@ -22,13 +22,18 @@
             </div>
         {% elif body.content_type.model == 'event' %}
         <div class="article-box__tags">
-            <div class="tag tag--small tag--category">
-                {% if body.content_object.category %}
+            {% if body.content_object.departments.first %}
+                {% with body.content_object.departments.first as department %}
+                    <div class="tag tag--small dashed">
+                      {{ department.department.name }}
+                    </div>
+                {% endwith %}
+            {% endif %}
+            {% if body.content_object.category %}
+                <div class="tag tag--small tag--category">
                     {{ body.content_object.category }}
-                {% else %}
-                    {% trans 'Event' %}
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
         </div>
         {% endif %}
     </div>
