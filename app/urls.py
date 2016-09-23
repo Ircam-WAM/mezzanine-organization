@@ -28,7 +28,6 @@ if settings.USE_MODELTRANSLATION:
 
 urlpatterns += [
     # App urls
-
     url("^", include('organization.urls')),
     url("^styles/$", direct_to_template, {"template": "styles.html"}, name="styles"),
 
