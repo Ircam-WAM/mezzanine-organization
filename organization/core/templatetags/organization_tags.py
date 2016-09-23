@@ -111,4 +111,4 @@ def in_category(objects, category):
 
 @register.filter
 def sub_topics(topic):
-    return Topic.objects.filter(parent=topic)
+    return ProjectTopic.objects.filter(parent=topic)
