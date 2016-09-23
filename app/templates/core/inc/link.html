@@ -2,7 +2,7 @@
 <p>
     <strong>{% trans "Linked websites" %}</strong>
 </p>
-<ul class="unstyled-list">
+<ul class="unstyled-list fss">
     {% for link in links %}
       <li><a href="{{ link.url }}" title=""><i class="fa fa-{{ link.link_type.name }}"></i> {{ link.url }}</a></li>
     {% endfor %}

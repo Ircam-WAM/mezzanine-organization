@@ -31,7 +31,7 @@
                         {% page_menu page %}
                     </ul>
                 {% endif %}
-                {% if page.is_current_or_ascendant and not page.has_children_in_menu%}
+                {% if page.is_current_or_ascendant and not page.has_children_in_menu %}
                     <ul class="nav-tree" data-summary>
                         {% include "pages/menus/current_tree_summary.html" %}
                     </ul>
