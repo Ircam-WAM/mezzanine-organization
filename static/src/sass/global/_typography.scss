@@ -58,6 +58,7 @@ main p, main ul.unstyled-list {
 	@include line-height(1.25);
     @include typeface(serif);
     @include typey-debug-grid;
+	font-weight: weight(light);
 
 	a:not(.button) {
 
