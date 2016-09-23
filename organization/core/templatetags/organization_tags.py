@@ -8,6 +8,7 @@ from random import shuffle
 
 from organization.festival.models import *
 from organization.magazine.models import *
+from organization.projects.models import *
 
 register = Library()
 
@@ -107,3 +108,7 @@ def get_type_link(objects, name):
 @register.filter
 def in_category(objects, category):
     return objects.filter(category=type)
+
+@register.filter
+def sub_topics(topic):
+    return ProjectTopic.objects.filter(parent=topic)

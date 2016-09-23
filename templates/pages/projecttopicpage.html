@@ -1,4 +1,4 @@
-{% extends "pages/custompage.html" %}
+{% extends "pages/page.html" %}
 {% load i18n mezzanine_tags keyword_tags  pages_tags organization_tags %}
 
 {% block meta_title %}{{ page.meta_title }}{% endblock %}
@@ -44,16 +44,17 @@
     {% endif %}
 
     {% with page.projecttopicpage.project_topic as topic %}
-      {% for sub_topic in topic.topics.all %}
-        {{ sub_topic }}
+      {% for sub_topic in topic|sub_topics %}
+        {{ sub_topic }}<br>
           {% trans "European and national projects" %}<br>
           {% for project in sub_topic.projects.all|get_type:"external project" %}
-            {{ project }}
-          {% enfor %}
+            <a href="{% url 'organization-project-detail' project.slug %}">{{ project }}</a><br>
+          {% endfor %}
           {% trans "Internal projects" %}<br>
           {% for project in sub_topic.projects.all|get_type:"internal project" %}
-            {{ project }}
-          {% enfor %}
+            <a href="{% url 'organization-project-detail' project.slug %}">{{ project }}</a><br>
+          {% endfor %}
       {% endfor %}
+    {% endwith %}
 
 {% endblock %}
