@@ -1,0 +1,11 @@
+{% load pages_tags i18n %}
+{% if page_branch_in_menu %}
+    <select>
+        <option value="">{% trans "You are" %}</option>
+        {% for page in page_branch %}
+            {% if page.in_menu %}
+                <option value="{{ page.get_absolute_url }}">{{ page.title }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+{% endif %}
