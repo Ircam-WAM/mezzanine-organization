@@ -1,5 +1,4 @@
 {% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
-
 <div class="slider-home">
     <ul data-slider-home>
         {% for slider in home.dynamiccontenthomeslider_set.all %}
@@ -17,14 +16,31 @@
                                                       {{ slider.content_object.department.name }}
                                                     </div>
                                                 {% endif %}
+                                                {% if slider.content_type.model == 'article' %}
                                                 <div class="tag tag--category">
                                                     {% trans 'News' %}
                                                 </div>
+                                                {% elif slider.content_type.model == 'event' %}
+                                                <div class="tag tag--category">
+                                                    {% trans 'Event' %}
+                                                </div>
+                                                {% endif %}
 
                                                 <div class="article-box__content tal">
                                                     <h3 class="article-box__title">{{ slider.content_object.title }}</h3>
                                                     <div class="article-box__subtitle">
                                                         <strong>{{ slider.content_object.sub_title }}</strong>
+                                                    </div>
+                                                    <div>
+                                                        {% if slider.content_object.start %}
+                                                            {% if slider.content_object.end %}
+                                                                {% trans "From" %}
+                                                            {% endif %}
+                                                            {{ slider.content_object.start }}
+                                                            {% if slider.content_object.end %}
+                                                                {% trans "to" %} {{ slider.content_object.end }}
+                                                            {% endif %}
+                                                        {% endif %}
                                                     </div>
                                                     <div class="article-box__desc">
                                                         {{ slider.content_object.description|richtext_filters|safe|truncatechars_html:200 }}
