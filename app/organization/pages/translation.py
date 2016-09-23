@@ -56,3 +56,9 @@ class PageAudioTranslationOptions(TranslationOptions):
 class PageLinkTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(LinkImage)
+class LinkImageTranslationOptions(TranslationOptions):
+
+    pass

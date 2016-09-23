@@ -2,7 +2,8 @@ from django.contrib import admin
 from mezzanine.utils.static import static_lazy as static
 from copy import deepcopy
 from mezzanine.core.admin import *
-from mezzanine.pages.admin import PageAdmin
+from mezzanine.pages.admin import PageAdmin, LinkAdmin
+from mezzanine.pages.models import Link as MezzanineLink
 from organization.pages.models import *
 from organization.pages.models import (
     DynamicContentHomeSlider,
@@ -38,6 +39,16 @@ class PageVideoInline(StackedDynamicInlineAdmin):
 class PageLinkInline(StackedDynamicInlineAdmin):
 
     model = PageLink
+
+
+class LinkImageInline(StackedDynamicInlineAdmin):
+
+    model = LinkImage
+
+
+class LinkImageAdmin(LinkAdmin):
+
+    inlines = [LinkImageInline,]
 
 
 class PersonListBlockAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
@@ -81,3 +92,5 @@ class HomeAdminDisplayable(BaseTranslationModelAdmin):
 
 admin.site.register(CustomPage, CustomPageAdmin)
 admin.site.register(Home, HomeAdminDisplayable)
+admin.site.unregister(MezzanineLink)
+admin.site.register(MezzanineLink, LinkImageAdmin)
