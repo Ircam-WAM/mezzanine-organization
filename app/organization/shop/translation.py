@@ -1,11 +1,22 @@
 from modeltranslation.translator import translator, register, TranslationOptions
 
-from organization.projects.models import *
+from organization.shop.models import *
 
 
-# @register(Project)
-# class ProjectTranslationOptions(TranslationOptions):
-#
-#     fields = ('title', 'description', 'content')
-#
-#
+
+@register(ProductBlock)
+class ProductBlockTranslationOptions(TranslationOptions):
+
+    fields = ['title',]
+
+
+@register(ProductBlockProduct)
+class ProductBlockProductTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(PageProductBlock)
+class PageProductBlockTranslationOptions(TranslationOptions):
+
+    pass

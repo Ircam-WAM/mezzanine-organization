@@ -12,6 +12,8 @@ from organization.pages.models import (
 from organization.pages.forms import *
 from organization.network.forms import *
 from organization.network.models import PageCustomPersonListBlockInline
+from organization.shop.models import *
+
 
 class PageBlockInline(StackedDynamicInlineAdmin):
 
@@ -46,6 +48,11 @@ class PersonListBlockAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
     form = PageCustomPersonListForm
 
 
+class PageProductBlockInline(TabularDynamicInlineAdmin):
+
+    model = PageProductBlock
+
+
 class CustomPageAdmin(PageAdmin):
 
     inlines = [PageBlockInline,
@@ -54,6 +61,7 @@ class CustomPageAdmin(PageAdmin):
             PageVideoInline,
             PageLinkInline,
             PersonListBlockAutocompleteInlineAdmin,
+            PageProductBlockInline
             ]
 
 
