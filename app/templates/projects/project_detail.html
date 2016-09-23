@@ -181,12 +181,21 @@
 
                                     {% if project.lead_team %}
                                         <div class="project-details__item">
+                                          {% if project.lead_team %}
                                             <div class="project-details__item-title">
                                                 {% trans "Project lead team" %}
                                             </div>
                                             <div class="project-details__item-desc">
                                                 {{ project.lead_team }}
                                             </div>
+                                          {% elif project.lead_organization %}
+                                            <div class="project-details__item-title">
+                                                {% trans "Project lead organization" %}
+                                            </div>
+                                            <div class="project-details__item-desc">
+                                                {{ project.lead_organization }}
+                                            </div>
+                                          {% endif %}
                                         </div>
                                     {% endif %}
 
