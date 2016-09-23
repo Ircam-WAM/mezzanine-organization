@@ -44,7 +44,7 @@
     {% endif %}
 
     {% with page.projecttopicpage.project_topic as topic %}
-      {% for sub_topic in topic.topics.all %}
+      {% for sub_topic in topic|sub_topics %}
         {{ sub_topic }}
           {% trans "European and national projects" %}<br>
           {% for project in sub_topic.projects.all|get_type:"external project" %}
