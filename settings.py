@@ -47,6 +47,7 @@ PAGE_MENU_TEMPLATES = (
     (3, _("Footer vertical"), "pages/menus/footer_vertical.html"),
     (4, _("Footer horizontal"), "pages/menus/footer_horizontal.html"),
     (5, _("Magazine"), "pages/menus/magazine.html"),
+    (6, _("Vous êtes"), "pages/menus/vous_etes.html"),
 
 )
 
@@ -127,6 +128,7 @@ USE_L10N = True
 
 AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
 
+SHOP_CURRENCY_LOCALE = ''
 
 #############
 # DATABASES #
@@ -220,11 +222,11 @@ INSTALLED_APPS = [
     "mezzanine.twitter",
     "mezzanine.accounts",
     # "mezzanine.mobile",
-    "cartridge.shop",
     # "eve",
     'djangobower',
     "meta",
     "mezzanine_agenda",
+    "cartridge.shop",
 #    "orderable",
     "organization.core",
     "organization.media",
