@@ -45,7 +45,7 @@
 
     {% with page.projecttopicpage.project_topic as topic %}
         {% for sub_topic in topic|sub_topics %}
-            <h2 class="dotted">{{ sub_topic }}</h2>
+            <h2 class="dotted">{{ sub_topic.name }}</h2>
             {% if sub_topic.description %}
                 <p>
                     {{ sub_topic.description }}
