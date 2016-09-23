@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
 from mezzanine.core.models import Displayable, Slugged, Orderable
+from mezzanine.pages.models import Link as MezzanineLink
 from organization.core.models import *
 from organization.media.models import *
 
@@ -60,6 +61,17 @@ class PageLink(Link):
         verbose_name = _("link")
         verbose_name_plural = _("links")
         order_with_respect_to = "page"
+
+
+class LinkImage(models.Model):
+
+    link = models.ForeignKey(MezzanineLink, verbose_name=_('link'), related_name='link_images', blank=True, null=True, on_delete=models.SET_NULL)
+    image = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
+
+    class Meta:
+        verbose_name = _("link image")
+        verbose_name_plural = _("link images")
+        order_with_respect_to = "link"
 
 
 class DynamicContentHomeSlider(DynamicContent, Orderable):
