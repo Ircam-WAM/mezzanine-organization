@@ -3,9 +3,8 @@ from django import forms
 from copy import deepcopy
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
-#from orderable.admin import OrderableTabularInline #OrderableAdmin,
-from organization.magazine.models import Article, Brief, Topic, ArticleImage, ArticlePersonListBlockInline
-from organization.magazine.forms import BriefForm, ArticlePersonListForm
+from organization.magazine.models import *
+from organization.magazine.forms import *
 
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
@@ -24,12 +23,25 @@ class ArticlePersonAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
     form = ArticlePersonListForm
 
 
+class DynamicContentArticleInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentArticle
+    form = DynamicContentArticleForm
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+
 class ArticleAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     exclude = ('related_posts',)
     filter_horizontal = ['categories', 'related_articles', ]
-    inlines = [ArticleImageInline, ArticlePersonAutocompleteInlineAdmin]
+    inlines = [ArticleImageInline,
+              ArticlePersonAutocompleteInlineAdmin,
+              DynamicContentArticleInline]
 
 
 class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline

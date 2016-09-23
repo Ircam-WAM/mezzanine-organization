@@ -2,7 +2,7 @@ from dal import autocomplete
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
 from django import forms
-from organization.magazine.models import Article, Topic, Brief, ArticlePersonListBlockInline
+from organization.magazine.models import *
 from organization.pages.models import CustomPage
 from organization.network.models import PersonListBlock
 from mezzanine_agenda.models import Event
@@ -34,3 +34,19 @@ class ArticlePersonListForm(forms.ModelForm):
     class Meta:
         model = ArticlePersonListBlockInline
         fields = ('person_list_block',)
+
+
+class DynamicContentArticleForm(autocomplete.FutureModelForm):
+
+    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
+        queryset=autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            Event.objects.all()
+        ),
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-article'),
+    )
+
+    class Meta:
+        model = DynamicContentArticle
+        fields = ('content_object',)
