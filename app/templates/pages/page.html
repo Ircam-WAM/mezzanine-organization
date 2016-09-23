@@ -54,6 +54,8 @@
                     {% block page_content %}
                         {{ page.content }}
                     {% endblock %}
+                    {% block page_link %}
+                    {% endblock %}
                     {% block page_audio %}
                     {% endblock %}
                 </div>
@@ -64,8 +66,6 @@
         {% block page_slider %}
         {% endblock %}
         {% block page_video %}
-        {% endblock %}
-        {% block page_link %}
         {% endblock %}
         {% block page_person_list %}
         {% endblock %}
