@@ -38,12 +38,15 @@ class Project(Displayable, Period, RichText):
         return reverse("organization-project-detail", kwargs={"slug": self.slug})
 
     def project_status(self):
-        if datetime.date.today() >= self.date_from and datetime.date.today() <= self.date_to:
-            return _('in progress')
-        elif datetime.date.today() < self.date_from and datetime.date.today() < self.date_to:
+        if self.date_from and self.date_to:
+            if datetime.date.today() >= self.date_from and datetime.date.today() <= self.date_to:
+                return _('in progress')
+            elif datetime.date.today() < self.date_from and datetime.date.today() < self.date_to:
+                return _('pending')
+            elif datetime.date.today() > self.date_to and datetime.date.today() > self.date_to:
+                return _('completed')
+        else:
             return _('pending')
-        elif datetime.date.today() > self.date_to and datetime.date.today() > self.date_to:
-            return _('completed')
 
 
 class ProjectTopic(Named):
