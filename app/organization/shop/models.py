@@ -40,7 +40,7 @@ class ProductBlockProduct(Orderable):
 
 class PageProductBlock(models.Model):
 
-    page = models.ForeignKey('organization-pages.CustomPage', verbose_name=_('page'), related_name='product_blocks', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey('pages.Page', verbose_name=_('page'), related_name='product_blocks', blank=True, null=True, on_delete=models.SET_NULL)
     product_block = models.ForeignKey('organization-shop.ProductBlock', verbose_name=_('product block'), related_name='pages', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
