@@ -21,7 +21,15 @@
                 {% endif %}
             </div>
         {% elif body.content_type.model == 'event' %}
-            {% trans 'Event' %}
+        <div class="article-box__tags">
+            <div class="tag tag--small tag--category">
+                {% if body.content_object.category %}
+                    {{ body.content_object.category }}
+                {% else %}
+                    {% trans 'Event' %}
+                {% endif %}
+            </div>
+        </div>
         {% endif %}
     </div>
 
@@ -40,13 +48,13 @@
                     {% if body.content_object.end %}
                         {% trans "From" %}
                     {% endif %}
-                    {{ body.content_object.start }}
+                    {{ body.content_object.start|date:"DATE_FORMAT" }}
                     {% if body.content_object.end %}
-                        {% trans "to" %} {{ body.content_object.end }}
+                        {% trans "to" %} {{ body.content_object.end|date:"DATE_FORMAT" }}
                     {% endif %}
                 {% endif %}
                 {% if body.content_object.location %}
-                    {{ body.content_object.location }}
+                     <br /><strong>{{ body.content_object.location }}</strong>
                 {% endif %}
             {% endif %}
         </div>
