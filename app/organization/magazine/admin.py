@@ -38,7 +38,7 @@ class ArticleAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     exclude = ('related_posts',)
-    filter_horizontal = ['categories', 'related_articles', ]
+    filter_horizontal = ['categories',]
     inlines = [ArticleImageInline,
               ArticlePersonAutocompleteInlineAdmin,
               DynamicContentArticleInline]
