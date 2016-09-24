@@ -16,7 +16,7 @@ class ArticleTranslationOptions(TranslationOptions):
 @register(Brief)
 class BriefTranslationOptions(TranslationOptions):
 
-    fields = ('text_button', )
+    fields = ('title', 'content', 'text_button', )
 
 
 @register(Topic)

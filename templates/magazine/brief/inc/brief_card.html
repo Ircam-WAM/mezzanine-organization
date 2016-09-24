@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n mezzanine_tags %}
 
 <div class="brief-box">
 
@@ -8,7 +8,7 @@
 
     <h3 class="brief-box__title">{{content.content_object.title }}</h3>
     <div class="brief-box__desc">
-        {{content.content_object.description|slice:":500" }}
+        {{content.content_object.content|richtext_filters|safe|truncatechars_html:150 }}
     </div>
     {% if content.content_object.external_content %}
         <a class="brief-box__button" href="{{ content.content_object.external_content }}" title="{{ content.content_object.text_button }}">{{ content.content_object.text_button }}</a>
