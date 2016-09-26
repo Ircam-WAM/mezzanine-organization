@@ -59,9 +59,9 @@ class PersonListBlockAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
     form = PageCustomPersonListForm
 
 
-class PageProductBlockInline(TabularDynamicInlineAdmin):
+class PageProductListInline(TabularDynamicInlineAdmin):
 
-    model = PageProductBlock
+    model = PageProductList
 
 
 class CustomPageAdmin(PageAdmin):
@@ -72,7 +72,7 @@ class CustomPageAdmin(PageAdmin):
             PageVideoInline,
             PageLinkInline,
             PersonListBlockAutocompleteInlineAdmin,
-            PageProductBlockInline
+            PageProductListInline
             ]
 
 
