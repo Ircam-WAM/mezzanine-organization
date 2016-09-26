@@ -39,19 +39,15 @@
                                                     <h3 class="article-box__title">{{ slider.content_object.title }}</h3>
                                                     <div class="article-box__subtitle">
                                                         <strong>{{ slider.content_object.sub_title }}</strong>
-                                                    </div>
-                                                    <div>
                                                         {% if slider.content_object.start %}
-                                                            {% if slider.content_object.end %}
-                                                                {% trans "From" %}
-                                                            {% endif %}
-                                                            {{ slider.content_object.start|date:"DATE_FORMAT" }}
-                                                            {% if slider.content_object.end %}
-                                                                {% trans "to" %} {{ slider.content_object.end|date:"DATE_FORMAT" }}
-                                                            {% endif %}
+                                                            {% with slider.content_object as event %}
+                                                                <strong>
+                                                                    {% include 'agenda/includes/event_date.html' %}
+                                                                </strong>
+                                                            {% endwith %}
                                                         {% endif %}
                                                         {% if slider.content_object.location %}
-                                                             <br /><strong>{{ slider.content_object.location }}</strong>
+                                                             <br />{{ slider.content_object.location }}
                                                         {% endif %}
                                                     </div>
                                                     <div class="article-box__desc">

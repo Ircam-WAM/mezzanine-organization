@@ -1,0 +1,49 @@
+{% load i18n %}
+
+<!-- Start date only  -->
+{% if event.start and not event.end %}
+
+    {{ event.start|date:"l j F" }}
+
+    <!-- Start date with hour  -->
+    {% if event.start|date:"H:i" != "23:59" %}
+        {% trans "at" %}
+        {{ event.start|date:"H\hi" }}
+    {% endif %}
+
+<!-- Start and end date  -->
+{% else %}
+
+    <!-- Start and end date is the same day  -->
+    {% if event.start|date:"d.m.y" == event.end|date:"d.m.y" %}
+
+        {{ event.start|date:"l j F" }}
+
+        <!-- Start date with hour  -->
+        {% if event.start|date:"H:i" != "23:59" %}
+            {% trans "from" %}
+            {{ event.start|date:"H\hi" }}
+            {% if event.end|date:"H:i" != "23:59" %}
+                {% trans "to" %}
+                {{ event.end|date:"H\hi" }}
+            {% endif %}
+        {% endif %}
+
+    <!-- Start and end date are the same month  -->
+    {% elif event.start|date:"m.y" == event.end|date:"m.y" %}
+
+        {% trans "From" %}
+        {{ event.start|date:"j" }}
+        {% trans "to" %}
+        {{ event.end|date:"j F" }}
+
+    <!-- Start and end date are completely different  -->
+    {% else %}
+
+        {{ event.start|date:"j F" }}
+        -
+        {{ event.end|date:"j F" }}
+
+    {% endif %}
+
+{% endif %}
