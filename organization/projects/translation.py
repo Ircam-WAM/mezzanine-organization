@@ -37,3 +37,27 @@ class ProjectBlockTranslationOptions(TranslationOptions):
 class ProjectLinkTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(ProjectProgram)
+class ProjectProgramTranslationOptions(TranslationOptions):
+
+    fields = ('name', 'description')
+
+
+@register(ProjectProgramType)
+class ProjectProgramTypeTranslationOptions(TranslationOptions):
+
+    fields = ('name', 'description')
+
+
+@register(ProjectTopic)
+class ProjectTopicTranslationOptions(TranslationOptions):
+
+    fields = ('name', 'description')
+
+
+@register(ProjectTopicPage)
+class ProjectTopicPageTranslationOptions(TranslationOptions):
+
+    fields = ('sub_title',)

@@ -79,10 +79,21 @@ SITE_TAGLINE = 'Institut de Recherche et de Coordination Acoustique et Musique'
 SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 
 ADMIN_MENU_ORDER = (
-    (_('Pages'), ('pages.Page', 'organization-pages.Home', 'organization-job.JobOffer',)),
-    (_('Media'), ('organization-media.Video', 'organization-media.VideoCategory', 'organization-media.Audio', 'organization-media.Playlist', (_('Media Library'), 'fb_browse'),)),
-    (_('Events'), ('mezzanine_agenda.Event', 'mezzanine_agenda.EventLocation', 'mezzanine_agenda.EventPrice', 'mezzanine_agenda.EventCategory')),
-    (_('Magazine'), ('organization-magazine.Article', 'organization-magazine.Brief',)),
+    (_('Pages'), ('pages.Page', 'organization-pages.Home',
+                 'organization-core.LinkType')),
+    (_('Media'), ('organization-media.Video',
+                 'organization-media.VideoCategory',
+                 'organization-media.Audio',
+                 'organization-media.Playlist',
+                 (_('Media Library'), 'fb_browse'),
+                 )),
+    (_('Events'), ('mezzanine_agenda.Event',
+                  'mezzanine_agenda.EventLocation',
+                  'mezzanine_agenda.EventPrice',
+                  'mezzanine_agenda.EventCategory',
+                  )),
+    (_('Magazine'), ('organization-magazine.Article',
+                    'organization-magazine.Brief',)),
     (_('Network'), ('organization-network.Organization',
                     'organization-network.Department',
                     'organization-network.Team',
@@ -91,16 +102,34 @@ ADMIN_MENU_ORDER = (
                     'organization-network.OrganizationType',
                     'organization-network.PersonListBlock',
                     )),
-    (_('Projects'), ('organization-projects.Project','organization-projects.ProjectProgram', 'organization-projects.ProjectProgramType' )),
+    (_('Activity'), ('organization-network.ActivityStatus',
+                    'organization-network.ActivityGrade',
+                    'organization-network.ActivityFramework',
+                    'organization-network.ActivityFunction',
+                    'organization-network.TrainingType',
+                    'organization-network.TrainingTopic',
+                    'organization-network.TrainingLevel',
+                    'organization-network.TrainingSpeciality',
+                    )),
+    (_('Projects'), ('organization-projects.Project',
+                    'organization-projects.ProjectProgram',
+                    'organization-projects.ProjectProgramType',
+                    'organization-projects.ProjectTopic',
+                    'organization-projects.ProjectProgramType',
+                    )),
+    (_('Shop'), ('shop.Product',
+                    'organization-shop.ProductList',
+                    'shop.Order',
+                    'shop.DiscountCode',
+                    'shop.Sale',
+                    )),
+    (_('Jobs'), ('organization-job.JobOffer',)),
     (_('Festival'), ('organization-festival.Artist',)),
     (_('Users'), ('auth.User', 'auth.Group',)),
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
 )
 
-# ADMIN_REMOVAL = [
-#     'mezzanine.blog.models.BlogPost',
-#     'generic.ThreadedComment',
-# ]
+DASHBOARD_TAGS = ( ("mezzanine_tags.app_list",), (), ("mezzanine_tags.recent_actions",), )
 
 GRAPPELLI_ADMIN_TITLE = 'IRCAM Admin'
 

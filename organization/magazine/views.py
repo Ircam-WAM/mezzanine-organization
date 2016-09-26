@@ -106,3 +106,26 @@ class ObjectAutocomplete(Select2QuerySetSequenceView):
         qs = self.mixup_querysets(qs)
 
         return qs
+
+
+class DynamicContentArticleView(Select2QuerySetSequenceView):
+    def get_queryset(self):
+
+        articles = Article.objects.all()
+        events = Event.objects.all()
+
+        if self.q:
+            articles = articles.filter(title__icontains=self.q)
+            events = events.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(articles, events )
+
+        if self.q:
+            # This would apply the filter on all the querysets
+            qs = qs.filter(title__icontains=self.q)
+
+        # This will limit each queryset so that they show an equal number
+        # of results.
+        qs = self.mixup_querysets(qs)
+
+        return qs

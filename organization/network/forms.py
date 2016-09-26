@@ -17,8 +17,8 @@ class PageCustomPersonListForm(forms.ModelForm):
     )
 
     class Meta:
-        model = PageCustomPersonListBlockInline #CustomPage
-        fields = ('person_list_block',) #person_list_block
+        model = PageCustomPersonListBlockInline
+        fields = ('person_list_block',)
 
 
 class PersonListBlockInlineForm(forms.ModelForm):

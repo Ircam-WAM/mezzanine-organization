@@ -1,12 +1,14 @@
 {% for video in videos %}
-  {# video.title #}<br>
-  {# video.open_source_mime_type #}<br>
-  {# video.closed_source_mime_type #}<br>
-  {# video.category #}<br>
-  {# video.media_id #}<br>
-  {# video.open_source_url #}<br>
-  {# video.closed_source_url #}<br>
-  {# video.poster_url #}<br>
+    {% comment %}
+        {# video.title #}<br>
+        {# video.open_source_mime_type #}<br>
+        {# video.closed_source_mime_type #}<br>
+        {# video.category #}<br>
+        {# video.media_id #}<br>
+        {# video.open_source_url #}<br>
+        {# video.closed_source_url #}<br>
+        {# video.poster_url #}<br>
+    {% endcomment %}
 
   <video width="905" height="520" controls>
     <source src="{{ video.closed_source_url }}" type="{{ video.closed_source_mime_type }}">

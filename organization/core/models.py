@@ -32,6 +32,7 @@ class Named(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ['name',]
 
     def __str__(self):
         return self.name
@@ -62,11 +63,11 @@ class SubTitled(models.Model):
         abstract = True
 
 
-class Category(Named):
+class CustomCategory(Named):
     """Category description)"""
 
     class Meta:
-        verbose_name = _('category')
+        verbose_name = _('custom category')
 
     def __str__(self):
         return self.name
@@ -172,8 +173,8 @@ class Link(URL):
 
 class Period(models.Model):
 
-    date_begin = models.DateField(_('begin date'), null=True, blank=True)
-    date_end = models.DateField(_('end date'), null=True, blank=True)
+    date_from = models.DateField(_('begin date'), null=True, blank=True)
+    date_to = models.DateField(_('end date'), null=True, blank=True)
 
     class Meta:
         abstract = True

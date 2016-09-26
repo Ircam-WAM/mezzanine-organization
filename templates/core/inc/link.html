@@ -1,6 +1,9 @@
-{% load mezzanine_tags %}
-<ul>
-{% for link in links %}
-  <li><img src="{{ link.link_type.picto.url }}" alt="{{ link.link_type.name }}"/><a href="{{ link.url }}" title="">{{ link.url }}</a></li>
-{% endfor %}
+{% load mezzanine_tags i18n %}
+<p>
+    <strong>{% trans "Linked websites" %}</strong>
+</p>
+<ul class="unstyled-list fss">
+    {% for link in links %}
+      <li><a href="{{ link.url }}" title=""><i class="fa fa-{{ link.link_type.name }}"></i> {{ link.url }}</a></li>
+    {% endfor %}
 </ul>
