@@ -1,7 +1,7 @@
 {% load i18n future mezzanine_tags event_tags %}
 
 <div class="c-tab__content">
-    <h3 class="location__title">{% if location.featured_name %}{{ location.featured_name }}{% else %}{{ location.title }}{% endif %}</h3>
+    <h3 class="location__title">{{ location.title }}{% if location.room %} - {{ location.room }}{% endif %}</h3>
         {% block event_detail_location %}
         <p>{{ location.address }}</p>
         <p>{% trans "Room" %} {{ event.location.room }}</p>
