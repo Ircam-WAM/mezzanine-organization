@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from mezzanine.core.admin import *
+from mezzanine.pages.admin import PageAdmin
 
 from organization.projects.models import *
 from organization.pages.models import *
@@ -48,6 +49,23 @@ class ProjectAdminDisplayable(DisplayableAdmin):
     list_filter = ['type', 'program', 'program_type', ]
 
 
+class ProjectTopicAdmin(BaseTranslationModelAdmin):
+
+    model = ProjectTopic
+
+
+class ProjectProgramAdmin(BaseTranslationModelAdmin):
+
+    model = ProjectProgram
+
+
+class ProjectProgramTypeAdmin(BaseTranslationModelAdmin):
+
+    model = ProjectProgramType
+
+
 admin.site.register(Project, ProjectAdminDisplayable)
-admin.site.register(ProjectProgram)
-admin.site.register(ProjectProgramType)
+admin.site.register(ProjectProgram, ProjectProgramAdmin)
+admin.site.register(ProjectProgramType, ProjectProgramTypeAdmin)
+admin.site.register(ProjectTopic, ProjectTopicAdmin)
+admin.site.register(ProjectTopicPage, PageAdmin)

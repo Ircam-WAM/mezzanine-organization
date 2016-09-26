@@ -19,12 +19,18 @@
     department
 {% endblock %}
 
-{% block page_title %}
+{% block body_class %}
+    {% with page.get_ascendants|last as top_level_parent %}
+        {% if top_level_parent.get_content_model.weaving_css_class %}
+        pattern pattern-bg {{ top_level_parent.get_content_model.weaving_css_class }}
+        {% endif %}
+    {% endwith %}
+{% endblock %}
 
+{% block page_title %}
     {% editable page.teampage.title %}
         <h1 class="dotted">{{ page.teampage.title }}</h1>
     {% endeditable %}
-
 {% endblock %}
 
 {% block page_content %}
@@ -58,6 +64,14 @@
         {% endif %}
     {% endif %}
 
+{% endblock %}
+
+{% block page_link %}
+    {% with page.teampage.links.all as links %}
+        {% if links %}
+            {% include 'core/inc/link.html' %}
+        {% endif %}
+    {% endwith %}
 {% endblock %}
 
 {% block page_audio %}
@@ -110,7 +124,21 @@
 {% endblock %}
 
 {% block logo %}
-  {% with page.teampage.images.all|get_type:'logo' as images %}
-    {% include 'core/inc/logo.html' %}
-  {% endwith %}
+    {% with page.teampage.images.all|get_type:'logo' as images %}
+        {% if images %}
+            <div class="page__block{% if block.background_color %} page__block--{{ block.background_color }}{% endif %}">
+                <div class="white-bg pb2">
+                    <div class="container">
+                        <div class="row" data-summary-content>
+                            <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
+                                <ul class="partners-list">
+                                    {% include 'core/inc/logo.html' %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
 {% endblock %}

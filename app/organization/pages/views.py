@@ -1,15 +1,16 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, TemplateView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-# from mezzanine_agenda.models import Event
 from organization.pages.models import CustomPage
 from organization.core.views import SlugMixin
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import Home
-
+from organization.agenda.models import Event
 
 class HomeView(SlugMixin, ListView):
 
@@ -31,18 +32,19 @@ class HomeView(SlugMixin, ListView):
 
 
 class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
+
     def get_queryset(self):
 
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
-        # events = Event.objects.all()
+        events = Event.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
-            # events = events.filter(title__icontains=self.q)
+            events = events.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage ) #, events
+        qs = autocomplete.QuerySetSequence(articles, custompage, events)
 
         if self.q:
             # This would apply the filter on all the querysets
@@ -56,20 +58,21 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
 
 
 class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
+
     def get_queryset(self):
 
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
-        # events = Event.objects.all()
+        events = Event.objects.all()
         briefs = Brief.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
-            # events = events.filter(title__icontains=self.q)
+            events = events.filter(title__icontains=self.q)
             briefs = briefs.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, briefs) #, events
+        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events)
 
         if self.q:
             # This would apply the filter on all the querysets

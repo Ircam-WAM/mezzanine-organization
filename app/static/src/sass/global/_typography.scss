@@ -39,6 +39,12 @@ h2 {
 	}
 }
 
+p + h2 {
+
+	@include margin-top(2);
+
+}
+
 h3 {
     @include typeset(heading-3);
     @include typeface(sans-serif);
@@ -46,12 +52,20 @@ h3 {
     @include margin-top(1);
 }
 
-p {
+.page__content ul {
+	font-weight: weight(light);
+	@include line-height(1.25);
+	@include margin-top(0);
+    @include margin-bottom(1);
+}
+
+main p, main ul.unstyled-list {
     @include margin-top(0);
     @include margin-bottom(1);
 	@include line-height(1.25);
     @include typeface(serif);
     @include typey-debug-grid;
+	font-weight: weight(light);
 
 	a:not(.button) {
 
@@ -79,6 +93,29 @@ p {
 				height: 100%;
 			}
 		}
+	}
+}
+
+h3 {
+	a:not(.button) {
+
+		position: relative;
+		z-index: 1;
+		text-decoration: none;
+
+		&:after {
+			@include transition(all 0.15s ease-in-out);
+			content: "";
+			display: block;
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			height: 1px;
+			background: $color-main;
+			z-index: -1;
+		}
+
 	}
 }
 

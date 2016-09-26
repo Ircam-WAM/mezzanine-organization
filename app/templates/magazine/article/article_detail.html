@@ -76,10 +76,18 @@
   {% endwith %}
 {% endblock %}
 
+{% block page_person_list %}
+    {% for article_custom_person_list_block_inline in article.article_person_list_block_inlines.all  %}
+      {% with article_custom_person_list_block_inline.person_list_block as person_list_block %}
+        {% with "network/inc/person/list_"|add:person_list_block.style|add:"_style.html" as template %}
+          {% include template %}
+        {% endwith %}
+      {% endwith %}
+    {% endfor %}
+{% endblock %}
+
 {% block page_related_content %}
-
-    {% if article.related_articles.all %}
-
+    {% if article.dynamic_content_articles.all %}
         <hr class="mt0 mb0" />
         <div class="white-bg pb2">
             <div class="container">
@@ -89,17 +97,21 @@
                     </div>
                 </div>
                 <div class="row tac">
-                    {% for article in article.related_articles.all %}
+                    {% for content in article.dynamic_content_articles.all %}
+                        {% if content.content_model == "article" %}
+                            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                                {% include 'magazine/article/includes/article_card.html' %}
+                            </div>
+                        {% else %}
                         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            {% include 'magazine/article/includes/article_card.html' %}
+                            {% include "core/inc/generic_card.html" %}
                         </div>
+                        {%endif%}
                     {% endfor %}
                 </div>
             </div>
         </div>
-
     {% endif %}
-
 {% endblock %}
 
 {% block page_sidebar %}

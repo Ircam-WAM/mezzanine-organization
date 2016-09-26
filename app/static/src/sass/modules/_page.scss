@@ -93,6 +93,35 @@ $module: ".page";
                 @include margin-top(2);
             }
 
+            a:not(.button) {
+
+        		position: relative;
+        		z-index: 1;
+        		text-decoration: none;
+                @include transition(all 0.15s ease-in-out);
+
+        		&:after {
+        			@include transition(all 0.15s ease-in-out);
+        			content: "";
+        			display: block;
+        			position: absolute;
+        			left: 0;
+        			right: 0;
+        			bottom: 0;
+        			height: 1px;
+        			background: $color-black;
+        			z-index: -1;
+        		}
+
+        		&:hover {
+        			&:after {
+        				bottom: 0;
+        				background: $color-black;
+        				height: 1px;
+        			}
+        		}
+        	}
+
         }
 
         &--black {

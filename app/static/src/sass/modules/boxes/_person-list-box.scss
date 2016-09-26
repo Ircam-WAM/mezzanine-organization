@@ -1,0 +1,37 @@
+$module: ".person-list-box";
+
+#{$module} {
+
+    position: relative;
+    @include margin-top(2);
+    @include margin-bottom(1);
+
+    &__image {
+
+        @include mq($until: xs) {
+
+            margin: 0;
+            @include margin-bottom(1);
+
+        }
+
+        margin: 0 auto;
+        width: 135px;
+        height: 135px;
+        border-radius: 135px;
+
+        img {
+            border-radius: 135px;
+        }
+
+    }
+
+    &__desc {
+        @include font-size(s);
+        @include line-height(.75);
+        @include typeface(serif);
+        @include margin(1 0 .25 0);
+        font-weight: weight(light);
+    }
+
+}

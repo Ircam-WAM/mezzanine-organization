@@ -1,4 +1,0 @@
-{% for project in projects %}
-  <h5><a href="{{ project.get_absolute_url }}" title="">{{ project.title }}</a></h5>
-  <p>{{ project.description|slice:":500" }}</p>
-{% endfor %}

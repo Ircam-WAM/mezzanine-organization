@@ -47,6 +47,7 @@ PAGE_MENU_TEMPLATES = (
     (3, _("Footer vertical"), "pages/menus/footer_vertical.html"),
     (4, _("Footer horizontal"), "pages/menus/footer_horizontal.html"),
     (5, _("Magazine"), "pages/menus/magazine.html"),
+    (6, _("Vous êtes"), "pages/menus/vous_etes.html"),
 
 )
 
@@ -126,6 +127,9 @@ USE_I18N = True
 USE_L10N = True
 
 AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
+
+SHOP_CURRENCY_LOCALE = ''
+SHOP_USE_VARIATIONS = False
 
 
 #############
@@ -217,16 +221,15 @@ INSTALLED_APPS = [
     "mezzanine.blog",
     "mezzanine.forms",
     # "mezzanine.galleries",
+    # "mezzanine.mobile",
     "mezzanine.twitter",
     "mezzanine.accounts",
-    # "mezzanine.mobile",
     "cartridge.shop",
     "eve",
     "prestashop",
     'djangobower',
     "meta",
     "mezzanine_agenda",
-#    "orderable",
     "organization.core",
     "organization.media",
     "organization.pages",
@@ -255,6 +258,7 @@ MIGRATION_MODULES = {
     "pages": "migrations.pages",
     "conf": "migrations.conf",
     "shop": "migrations.shop",
+    "generic": "migrations.generic",
 }
 
 MODELTRANSLATION_TRANSLATION_FILES = (
