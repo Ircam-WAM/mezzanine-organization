@@ -20,7 +20,7 @@ Summary.prototype.init = function() {
         $template = that.$summary.find('li:first-child');
         that.$content.each(function(idx) {
 
-            $(this).find('h2').each(function(idx) {
+            $(this).find('h2:not(.page-box__title)').each(function(idx) {
 
                 var $element = $(this),
                     $template_clone = $template.clone();
