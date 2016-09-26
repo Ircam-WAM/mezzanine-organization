@@ -15,9 +15,6 @@ RoleSelector.prototype.init = function() {
 
     that.$element = $('.role-switcher');
 
-    console.log('init la');
-
-    console.log(that.$element.find('li:first-child a').text());
     that.$element.find('li:first-child a').click(function(e) {
 
         e.preventDefault();
