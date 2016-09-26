@@ -64,6 +64,7 @@
         <a href="{% url 'location-detail' event.location.slug %}">{{ event.location }}</a>
         <p>
             <p>{{ event.location }} {{ event.location.address|linebreaksbr }}</p>
+            <p>{% trans "Room" %} {{ event.location.room }}</p>
             <a href="{{ event|google_nav_url }}" target="_blank">
                 Get Directions
             </a>

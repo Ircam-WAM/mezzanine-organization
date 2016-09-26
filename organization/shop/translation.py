@@ -4,20 +4,20 @@ from organization.shop.models import *
 
 
 
-@register(ProductBlock)
-class ProductBlockTranslationOptions(TranslationOptions):
+@register(ProductList)
+class ProductListTranslationOptions(TranslationOptions):
 
-    fields = ['title',]
+    fields = ['title', 'description', 'content']
 
 
-@register(ProductBlockProduct)
-class ProductBlockProductTranslationOptions(TranslationOptions):
+@register(ProductListProduct)
+class ProductListProductTranslationOptions(TranslationOptions):
 
     pass
 
 
-@register(PageProductBlock)
-class PageProductBlockTranslationOptions(TranslationOptions):
+@register(PageProductList)
+class PageProductListTranslationOptions(TranslationOptions):
 
     pass
 
