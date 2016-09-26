@@ -15,22 +15,22 @@ PRODUCT_LIST_STYLE_CHOICES = [
 ]
 
 
-class ProductBlock(Titled):
+class ProductList(Titled, RichText):
 
     style = models.CharField(_('style'), max_length=16, choices=PRODUCT_LIST_STYLE_CHOICES)
 
     class Meta:
-        verbose_name = _("product block")
-        verbose_name_plural = _("product blocks")
+        verbose_name = _("product list")
+        verbose_name_plural = _("product lists")
 
     def __str__(self):
         return self.title
 
 
-class ProductBlockProduct(Orderable):
+class ProductListProduct(Orderable):
 
-    product_block = models.ForeignKey(ProductBlock, verbose_name=_('product block'), related_name='products', blank=True, null=True, on_delete=models.SET_NULL)
-    product = models.ForeignKey(Product, verbose_name=_('product'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+    list = models.ForeignKey(ProductList, verbose_name=_('product list'), related_name='products', blank=True, null=True, on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product, verbose_name=_('product'), related_name='lists', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _("product")
@@ -38,14 +38,14 @@ class ProductBlockProduct(Orderable):
 
 
 
-class PageProductBlock(models.Model):
+class PageProductList(models.Model):
 
-    page = models.ForeignKey('pages.Page', verbose_name=_('page'), related_name='product_blocks', blank=True, null=True, on_delete=models.SET_NULL)
-    product_block = models.ForeignKey('organization-shop.ProductBlock', verbose_name=_('product block'), related_name='pages', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey('pages.Page', verbose_name=_('page'), related_name='product_lists', blank=True, null=True, on_delete=models.SET_NULL)
+    list = models.ForeignKey('organization-shop.ProductList', verbose_name=_('product list'), related_name='pages', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = _("product block")
-        verbose_name_plural = _("product blocks")
+        verbose_name = _("product list")
+        verbose_name_plural = _("product lists")
 
 
 class ProductLink(Link):
