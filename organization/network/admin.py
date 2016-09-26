@@ -103,19 +103,12 @@ class PersonBlockInline(StackedDynamicInlineAdmin):
     model = PersonBlock
 
 
-class PersonAdmin(BaseTranslationModelAdmin):
+class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Person
     inlines = [PersonActivityInline, PersonAudioInline, PersonImageInline, PersonVideoInline, PersonBlockInline, PersonLinkInline ]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
     search_fields = ['last_name', 'first_name']
-
-    def get_fieldsets(self, request, obj = None):
-        res = super(PersonAdmin, self).get_fieldsets(request, obj)
-        for field in reversed(self.first_fields):
-            index = res[0][1]['fields'].index(field)
-            res[0][1]['fields'].insert(0, res[0][1]['fields'].pop(index))
-        return res
 
 
 class PersonListBlockInlineAdmin(TabularDynamicInlineAdmin):
