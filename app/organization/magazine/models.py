@@ -16,7 +16,6 @@ from organization.core.models import *
 
 class Article(BlogPost, SubTitled):
 
-    related_articles = models.ManyToManyField("self", verbose_name=_("Related articles"), blank=True)
     department = models.ForeignKey(Department, verbose_name=_('department'), related_name='articles', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
     topics = models.ManyToManyField("Topic", verbose_name=_('topics'), related_name="articles", blank=True)
 
@@ -85,3 +84,11 @@ class ArticlePersonListBlockInline(Titled):
 
     def __str__(self):
         return self.title
+
+
+class DynamicContentArticle(DynamicContent, Orderable):
+
+    article = models.ForeignKey(Article, verbose_name=_('article'), related_name='dynamic_content_articles', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Article'
