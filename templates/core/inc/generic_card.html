@@ -42,24 +42,20 @@
         <h3 class="article-box__title">{{ content.content_object.title }}</h3>
         <div class="article-box__subtitle">
             {% if content.content_type.model == 'article' %}
-                {{ content.content_object.publish_date|date:"DATE_FORMAT" }}
+                {{ content.content_object.publish_date|date:"d.m.y" }}
                 {% for category in content.content_object.categories.all %}
                     {% if forloop.first %} | {% endif %}
                     {% if not forloop.first %}, {% endif %}
                     <strong>{{ category }}</strong>
                 {% endfor %}
             {% elif content.content_type.model == 'event' %}
-                {% if content.content_object.start %}
-                    {% if content.content_object.end %}
-                        {% trans "From" %}
-                    {% endif %}
-                    {{ content.content_object.start|date:"DATE_FORMAT" }}
-                    {% if content.content_object.end %}
-                        {% trans "to" %} {{ content.content_object.end|date:"DATE_FORMAT" }}
-                    {% endif %}
-                {% endif %}
+                {% with content.content_object as event %}
+                    <strong>
+                        {% include 'agenda/includes/event_date.html' %}
+                    </strong>
+                {% endwith %}
                 {% if content.content_object.location %}
-                     <br /><strong>{{ content.content_object.location }}</strong>
+                     <br />{{ content.content_object.location }}
                 {% endif %}
             {% endif %}
         </div>
