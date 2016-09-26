@@ -4,6 +4,7 @@
     <h3 class="location__title">{% if location.featured_name %}{{ location.featured_name }}{% else %}{{ location.title }}{% endif %}</h3>
         {% block event_detail_location %}
         <p>{{ location.address }}</p>
+        <p>{% trans "Room" %} {{ event.location.room }}</p>
         <p><a href="{{ location.link }}" target="_blank">{{ location.link }}</a></p>
         <p>{{ location.description|safe }}</p>
         <a href="{{ location|google_nav_url }}" target="_blank" class="location__map">
