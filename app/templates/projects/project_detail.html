@@ -20,10 +20,10 @@
     {{ block.super }}
 
     {% if department %}
-        <li class="breadcrumb__item"><a href="{{ department.pages.all.0.get_absolute_url }}">{{ department.name }}</a></li>
+        <li class="breadcrumb__item"><a class="breadcrumb__link" href="{{ department.pages.all.0.get_absolute_url }}">{{ department.name }}</a></li>
     {% endif %}
     {% if project.topic %}
-        <li class="breadcrumb__item"><a href="{{ project.topic.parent.pages.all.0.get_absolute_url }}">{{ project.topic.name }}</a></li>
+        <li class="breadcrumb__item"><a class="breadcrumb__link" href="{{ project.topic.parent.pages.all.0.get_absolute_url }}">{{ project.topic.name }}</a></li>
     {% endif %}
 
     <li class="breadcrumb__item active">{{ project.title }}</li>
