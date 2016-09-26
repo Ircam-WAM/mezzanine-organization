@@ -108,6 +108,17 @@ $module: ".article-box";
         @include typeface(serif);
         @include margin-top(.25);
         font-weight: weight(regular);
+
+        .slider-home & {
+
+            @include font-size(m);
+            @include line-height(1);
+            @include typeface(sans-serif);
+            @include margin-top(.25);
+            font-weight: weight(regular);
+
+        }
+
     }
 
     &__desc {
