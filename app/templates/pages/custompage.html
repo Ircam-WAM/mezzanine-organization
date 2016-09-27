@@ -56,7 +56,7 @@
         {% if childrens %}
             <div class="page__childrens">
                 {% for children in childrens %}
-                    {% if children.in_menu %}
+                    {% if children.in_menus %}
                         {% with children as object %}
                             {% include "pages/includes/page_card.html" %}
                         {% endwith %}
