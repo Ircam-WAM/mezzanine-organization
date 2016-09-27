@@ -4,8 +4,7 @@
         {% for slider in home.dynamiccontenthomeslider_set.all %}
                 {% with slider.content_object.images.all|get_type:'slider' as images %}
                     {% if images %}
-                        <li class="slider-home__slide" style="background-image: url({{ MEDIA_URL }}{% thumbnail images.0.file 1440 760 %});">
-                            <!--<img src="{{ MEDIA_URL }}{{ images.0.file }}" title="{{ images.0.credits }}" />-->
+                        <li class="slider-home__slide" style="background-image: url('{{ MEDIA_URL }}{% thumbnail images.0.file 1440 760 %}');">
                             <div class="slider-home__wrapper">
                                 <div class="container">
                                     <div class="row">
@@ -38,12 +37,13 @@
                                                 <div class="article-box__content tal">
                                                     <h3 class="article-box__title">{{ slider.content_object.title }}</h3>
                                                     <div class="article-box__subtitle">
-                                                        <strong>{{ slider.content_object.sub_title }}</strong>
+                                                        {{ slider.content_object.sub_title }}
                                                         {% if slider.content_object.start %}
                                                             {% with slider.content_object as event %}
-                                                                <strong>
-                                                                    {% include 'agenda/includes/event_date.html' %}
-                                                                </strong>
+                                                                {% if slider.content_object.sub_title %}
+                                                                    <br />
+                                                                {% endif %}
+                                                                {% include 'agenda/includes/event_date.html' %}
                                                             {% endwith %}
                                                         {% endif %}
                                                         {% if slider.content_object.location %}
