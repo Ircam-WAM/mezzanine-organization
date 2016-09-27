@@ -54,3 +54,23 @@ class EventLink(Link):
     class Meta:
         verbose_name = _("link")
         verbose_name_plural = _("links")
+
+
+class EventAudio(Image):
+
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("audio")
+        verbose_name_plural = _("audios")
+        order_with_respect_to = "event"
+
+
+class EventVideo(Image):
+
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("video")
+        verbose_name_plural = _("videos")
+        order_with_respect_to = "event"
