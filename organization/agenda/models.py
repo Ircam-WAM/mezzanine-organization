@@ -24,6 +24,7 @@ class EventImage(Image):
     class Meta:
         verbose_name = _("image")
         verbose_name_plural = _("images")
+        order_with_respect_to = "event"
 
 
 class EventDepartment(models.Model):
