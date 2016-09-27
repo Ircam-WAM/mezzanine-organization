@@ -93,15 +93,8 @@ def get_mezzanine_menu_name(menu_id):
 
 @register.filter
 def get_type(objects, type):
-    print(objects)
     if objects:
-        if isinstance(objects, list):
-            objs = []
-            for object in objects:
-                if obj.type == type:
-                    objs.append(obj)
-        else:
-            objs = objects.filter(type=type)
+        objs = objects.filter(type=type)
         if objs:
             return objs
     return None
