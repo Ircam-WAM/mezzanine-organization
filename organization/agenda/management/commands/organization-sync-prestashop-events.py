@@ -23,6 +23,9 @@ class Command(BaseCommand):
           )
 
     default_user = User.objects.get(username='admin')
+    languages = { 1 : {'code': 'en', 'names': ['english', 'anglais']},
+                  2 : {'code': 'fr', 'names': ['french', 'français']},}
+
 
     def cleanup(self):
         # for event in ma_models.Event.objects.all():
@@ -34,15 +37,37 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # self.cleanup()
+
+        products = []
+        category_lang_name = kwargs.get('category_lang_name')
+
+        if not category_lang_name:
+            for category in pa_models.PsCategoryLang.objects.all():
+                print(category.name)
+
+        print('---------------------------')
+
         category_lang_name = kwargs.get('category_lang_name')
         category_lang = pa_models.PsCategoryLang.objects.get(name=category_lang_name)
         category = pa_models.PsCategory.objects.get(id_category=category_lang.id_category)
-        products = pa_models.PsProduct.objects.filter(id_category_default=category.id_category)
+
+        category_products = pa_models.PsCategoryProduct.objects.filter(id_category=category.id_category)
+        for category_product in category_products:
+            products.append(pa_models.PsProduct.objects.get(id_product=category_product.id_product))
 
         for product in products:
+            print(product.id_product)
             product_langs = pa_models.PsProductLang.objects.filter(id_product=product.id_product)
             for product_lang in product_langs:
-                print(product_lang.name, product_lang.dates, product_lang.times)
+                lang_code = self.languages[product_lang.id_lang]['code']
+
+                for lang in self.languages:
+                    if product_lang.teaching_lang.lower() in self.languages[product_lang.id_lang]['names']:
+                        teaching_lang = self.languages[product_lang.id_lang]['code']
+                        print(teaching_lang)
+                        break
+
+                print(product_lang.name, lang_code, product_lang.dates, product_lang.times, product_lang.description)
 
         # meta_trans_all = eve_models.MetaEventTranslation.objects.all()
         # for meta_trans in meta_trans_all:
