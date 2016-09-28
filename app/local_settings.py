@@ -154,6 +154,7 @@ ARTICLE_PER_PAGE = 4 # just for tests because we haven't got enough content
 # a mode you'd pass directly to os.chmod.
 FILE_UPLOAD_PERMISSIONS = 0o664
 FILE_UPLOAD_TEMP_DIR = '/srv/media/uploads/tmp/'
+MAX_UPLOAD_SIZE = 512000000
 FILEBROWSER_MAX_UPLOAD_SIZE = 512000000
 
 if DEBUG:
