@@ -234,6 +234,11 @@ class PersonImage(Image):
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
+class PersonFile(File):
+
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
+
+
 class PersonBlock(Block):
 
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
