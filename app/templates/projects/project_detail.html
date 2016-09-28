@@ -59,15 +59,12 @@
     {% if project.content %}
         {{ project.content|richtext_filters|safe }}
     {% endif %}
+    {{ page_branch }}
 
 {% endblock %}
 
 {% block page_sidebar %}
-    {% if project.topic and project.topic.parent %}
-        {% page_menu "pages/menus/current_tree_secondary.html" project.topic.parent.pages.all.0 %}
-    {% elif project.topic %}
-        {% page_menu "pages/menus/current_tree_secondary.html" project.topic.pages.all.0 %}
-    {% endif %}
+    {{ block.super }}
 {% endblock %}
 
 {% block page_link %}
