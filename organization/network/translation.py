@@ -69,6 +69,12 @@ class PersonImageTranslationOptions(TranslationOptions):
     pass
 
 
+@register(PersonFile)
+class PersonFileTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(PersonBlock)
 class PersonBlockTranslationOptions(TranslationOptions):
 

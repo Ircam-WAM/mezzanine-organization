@@ -100,6 +100,22 @@ class Image(Titled, Orderable):
         return value
 
 
+class File(Titled, Orderable):
+
+    file = FileField(_("document"), max_length=1024, upload_to="Documents/%Y/%m/%d/")
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        value = self.description
+        if not value:
+            value = self.file.name
+        if not value:
+            value = ""
+        return value
+
+
 class DynamicContent(models.Model):
 
     # used for autocomplete but hidden in admin
