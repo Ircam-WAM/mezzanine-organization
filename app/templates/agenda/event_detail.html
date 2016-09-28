@@ -12,7 +12,7 @@
 {% endmetablock %}{% endblock %}
 
 {% block meta_description %}{% metablock %}
-{{ event.description }}
+    {{ event.description }}
 {% endmetablock %}{% endblock %}
 
 {% block page_class %}
@@ -70,7 +70,7 @@
             </a>
         </p>
         <a href="{{ event|google_nav_url }}" target="_blank" class="">
-         {% google_static_map event 900 300 15 %}
+             {% google_static_map event 900 300 15 %}
         </a/>
         {% endblock %}
         {% endif %}
@@ -173,15 +173,9 @@
 
         {% set_short_url_for event %}
         {% with event as object %}
+        {% with True as is_event %}
             {% include "includes/share_buttons.html" %}
-            <a href='{{ event|google_calendar_url }}' target="_blank" class="push__calendar__item">
-                <i class="icon icon__calendar"></i>
-                {% trans "Add to" %} Google Calendar
-            </a>
-            <a href='{% icalendar_url %}' class="push__calendar__item">
-                <i class="icon icon__windows"></i>
-                {% trans "Add to" %} Outlook/iCal
-            </a>
+        {% endwith %}
         {% endwith %}
     </div>
 

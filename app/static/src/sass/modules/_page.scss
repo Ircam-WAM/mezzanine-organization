@@ -50,7 +50,7 @@ $module: ".page";
 
     &__meta-title {
 
-        @include font-size(l);
+        @include font-size(m);
         @include line-height(1);
         @include typeface(serif);
         font-weight: weight(heavy);
