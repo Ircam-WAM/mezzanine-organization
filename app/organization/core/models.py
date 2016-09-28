@@ -12,7 +12,7 @@ from mezzanine.core.models import Displayable, Slugged, Orderable
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')))
 ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
-IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('slider', _('slider')), ('card', _('card')), ('page_slider', _('page slider')))
+IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('slider', _('slider')), ('card', _('card')), ('page_slider', _('page - slider')), ('page_featured', _('page - featured')))
 
 
 class Description(models.Model):
@@ -87,6 +87,22 @@ class Image(Titled, Orderable):
     file = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
     credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
     type = models.CharField(_('type'), max_length=64, choices=IMAGE_TYPE_CHOICES)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        value = self.description
+        if not value:
+            value = self.file.name
+        if not value:
+            value = ""
+        return value
+
+
+class File(Titled, Orderable):
+
+    file = FileField(_("document"), max_length=1024, upload_to="Documents/%Y/%m/%d/")
 
     class Meta:
         abstract = True

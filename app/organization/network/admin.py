@@ -98,6 +98,11 @@ class PersonImageInline(TabularDynamicInlineAdmin):
     model = PersonImage
 
 
+class PersonFileInline(TabularDynamicInlineAdmin):
+
+    model = PersonFile
+
+
 class PersonBlockInline(StackedDynamicInlineAdmin):
 
     model = PersonBlock
@@ -106,7 +111,13 @@ class PersonBlockInline(StackedDynamicInlineAdmin):
 class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Person
-    inlines = [PersonActivityInline, PersonAudioInline, PersonImageInline, PersonVideoInline, PersonBlockInline, PersonLinkInline ]
+    inlines = [PersonActivityInline,
+               PersonAudioInline,
+               PersonImageInline,
+               PersonVideoInline,
+               PersonBlockInline,
+               PersonLinkInline,
+               PersonFileInline ]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
     search_fields = ['last_name', 'first_name']
 
