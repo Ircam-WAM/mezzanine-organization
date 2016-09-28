@@ -25,6 +25,9 @@ $module: ".role-switcher";
 
         >a {
             color: white;
+            &:hover {
+                color: $color-main;
+            }
         }
 
         &.active {
@@ -36,6 +39,10 @@ $module: ".role-switcher";
             width: auto;
             position: static;
             @include padding(0);
+
+            >a:hover {
+                color: white;
+            }
 
             &:after {
                 display: block;
