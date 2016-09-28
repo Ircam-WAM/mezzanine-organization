@@ -23,10 +23,12 @@
         {% if event.start|date:"H:i" != "23:59" %}
             {% trans "from" %}
             {{ event.start|date:"H\hi" }}
-            {% if event.end|date:"H:i" != "23:59" %}
-                {% trans "to" %}
-                {{ event.end|date:"H\hi" }}
-            {% endif %}
+            {% comment %}
+                {% if event.end|date:"H:i" != "23:59" %}
+                    {% trans "to" %}
+                    {{ event.end|date:"H\hi" }}
+                {% endif %}
+            {% endcomment %}
         {% endif %}
 
     <!-- Start and end date are the same month  -->
