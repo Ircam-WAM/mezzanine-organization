@@ -14,4 +14,4 @@ class JobResponseForm(ModelForm):
 
     class Meta:
         model = JobResponse
-        fields = ['first_name', 'last_name', 'email', 'curriculum_vitae', 'cover_letter', 'job_offer']
+        fields = ['first_name', 'last_name', 'email', 'message', 'curriculum_vitae', 'cover_letter', 'job_offer']

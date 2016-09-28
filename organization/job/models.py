@@ -10,6 +10,7 @@ class JobResponse(models.Model):
     first_name = models.CharField(max_length=255, null=False, verbose_name=_('first name'))
     last_name = models.CharField(max_length=255, null=False, verbose_name=_('last name'))
     email = models.EmailField(max_length=255, null=False, verbose_name=_('email'))
+    message = models.TextField(max_length=800, verbose_name=_('message'))
     #@TODO validate type format
     curriculum_vitae = models.FileField(_("curriculum vitae"), max_length=1024, upload_to="job_responses/%Y/%m/%d/")
     cover_letter = models.FileField(_("cover letter"), max_length=1024, upload_to="job_responses/%Y/%m/%d/")
@@ -31,5 +32,3 @@ class JobOffer(Displayable, RichText):
     class Meta:
         verbose_name = _('job offer')
         verbose_name_plural = _("job offers")
-
-        

@@ -48,7 +48,6 @@ class JobOfferDetailView(CreateView):
         if ext_cv not in extention or ext_cl not in extention :
             messages.info(self.request, _("Only .pdf, .doc, .docx files allowed."))
             return super(JobOfferDetailView, self).form_invalid(form)
-
         email_application_notification(self.request, self.job_offer, form.cleaned_data)
         messages.info(self.request, _("You have successfully submitted your application."))
         return super(JobOfferDetailView, self).form_valid(form)
@@ -67,7 +66,6 @@ class JobOfferListView(ListView):
         context = super(JobOfferListView, self).get_context_data(**kwargs)
         return context
 
-
 def email_application_notification(request, job_offer, data):
     subject = "Candidature > " + job_offer.title
     to = [job_offer.email if job_offer.email else settings.DEFAULT_TO_EMAIL]
@@ -77,9 +75,10 @@ def email_application_notification(request, job_offer, data):
         'first_name': data['first_name'],
         'last_name': data['last_name'],
         'email': data['email'],
+        'message': data['message']
     }
 
-    message = get_template('core/email/application_notification.html').render(Context(ctx))
+    message = get_template('email/application_notification.html').render(Context(ctx))
     msg = EmailMessage(subject, message, to=to, from_email=from_email)
     msg.attach(data['curriculum_vitae'].name, data['curriculum_vitae'].read(), data['curriculum_vitae'].content_type)
     msg.attach(data['cover_letter'].name, data['cover_letter'].read(), data['cover_letter'].content_type)
