@@ -16,9 +16,11 @@
             <small><u>{{ event.location.room }}</u></small>
         {% endif %}
     </a>
+    {% if not line_display %}
     <a href="{{ event|google_nav_url }}" target="_blank" class="">
          {% google_static_map event 900 300 15 %}
-    </a/>
+    </a>
+    {% endif %}
 
     <div class="page__meta-separator"></div>
 {% endif %}
@@ -43,7 +45,9 @@
         </p>
 
     {% else %}
-        {% trans "Free entry. Limited seats available" %}
+        <p>
+            {% trans "Free entry. Limited seats available" %}
+        </p>
     {% endif %}
 
 {% endif %}
