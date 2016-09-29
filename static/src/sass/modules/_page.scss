@@ -41,7 +41,7 @@ $module: ".page";
 
     &__meta-date {
 
-        @include font-size(l);
+        @include font-size(m);
         @include line-height(1);
         @include typeface(serif);
         font-weight: weight(heavy);
