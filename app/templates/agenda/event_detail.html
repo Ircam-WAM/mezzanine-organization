@@ -46,6 +46,9 @@
 
 {% block breadcrumb_menu %}
     {{ block.super }}
+    <li class="breadcrumb__item">
+        <a href="{% url 'event_list' %}" class="breadcrumb__link">{% trans "Agenda" %}</a>
+    </li>
     <li class="breadcrumb__item active">{{ event.title }}</li>
 {% endblock %}
 
