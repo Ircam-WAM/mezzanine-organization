@@ -7,7 +7,7 @@ from organization.job.models import *
 @register(JobOffer)
 class JobOfferTranslationOptions(TranslationOptions):
 
-    fields = ('title', 'content')
+    fields = ('title', 'description', 'content')
 
 
 @register(JobResponse)
