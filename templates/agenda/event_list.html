@@ -50,6 +50,23 @@
     {% endif %}
 {% endblock %}
 
+{% block main %}
+<div class="msry__container">
+    <div class="msry__sizer">
+        {% for event in events.object_list %}
+         {% include 'agenda/includes/event_card.html' %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{# <a href='{% icalendar_url %}' target="_blank" class="small  push-ical">{% trans "Subscribe to all events in" %} Google Calendar/Outlook/iCal</a>#}
+
+{% pagination_for events %}
+
+{% if settings.COMMENTS_DISQUS_SHORTNAME %}
+{% include "generic/includes/disqus_counts.html" %}
+{% endif %}
+
 {% block page_title %}
     <h1 class="dotted">
         {% if page %}
