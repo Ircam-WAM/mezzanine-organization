@@ -1,0 +1,69 @@
+$module: ".form";
+
+#{$module} {
+
+    @include margin-top(2);
+
+    input[type="submit"] {
+        @extend .button;
+        margin-left: 200px !important;
+        display: inline-block;
+    }
+
+    label {
+        width: 200px;
+        text-align: right;
+        display: inline-block;
+        vertical-align: top;
+
+        @include padding(0.25 1 0.25 0);
+        @include font-size(m);
+        @include line-height(1);
+        @include typeface(sans-serif);
+
+        @include mq($until: xs) {
+            width: 100%;
+            display: block;
+            text-align: left;
+        }
+    }
+
+    .errorlist {
+        list-style-type: none;
+        padding: 0;
+        padding-left: 200px;
+        @include margin-left(1);
+        margin: 0;
+
+        color: red;
+        @include font-size(xs);
+        @include line-height(1);
+
+        @include mq($until: xs) {
+            padding-left: 0;
+        }
+    }
+
+    input[type="text"], input[type="email"], textarea {
+
+        @include font-size(m);
+        @include line-height(1);
+        @include padding(.25 .25);
+
+        @include transition(all 0.25s ease-in-out);
+
+        outline: 0;
+        border: 1px solid $color-black;
+        width: calc(100% - 220px);
+
+        &:focus {
+            border-color: $color-main;
+        }
+
+        @include mq($until: xs) {
+            width: 100%;
+        }
+
+    }
+
+}
