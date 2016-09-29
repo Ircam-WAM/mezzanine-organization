@@ -64,6 +64,12 @@ $module: ".page";
 
     }
 
+    &__filters {
+
+        @include margin(0 0 6 0);
+
+    }
+
     hr + #{$module}__block--yellow {
 
         @include margin-top(-2);
