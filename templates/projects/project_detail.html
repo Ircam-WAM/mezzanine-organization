@@ -26,14 +26,16 @@
 
 {% block page_tags %}
 
-    {% if department %}
-        <div class="tag dashed dashed--gray">
-          {{ department.pages.all.0.title }}
+    {% comment %}
+        {% if department %}
+            <div class="tag dashed dashed--gray">
+              {{ department.pages.all.0.title }}
+            </div>
+        {% endif %}
+        <div class="tag tag--category">
+            {% trans 'Project' %}
         </div>
-    {% endif %}
-    <div class="tag tag--category">
-        {% trans 'Project' %}
-    </div>
+    {% endcomment %}
 
 {% endblock %}
 
@@ -63,6 +65,9 @@
 
 {% block page_sidebar %}
     <ul class="nav-tree nav-tree--level-{{ branch_level }}" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
+        <li class="nav-tree__item">
+            <a class="nav-tree__link" href="{{ page.get_ascendants.0.get_absolute_url }}">{% trans "Home" %}</a>
+        </li>
         <li class="nav-tree__item">
             <a class="nav-tree__link" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
         </li>
