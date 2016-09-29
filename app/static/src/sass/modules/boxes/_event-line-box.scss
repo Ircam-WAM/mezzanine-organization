@@ -1,0 +1,72 @@
+$module: ".event-line-box";
+
+#{$module} {
+
+    &__content {
+
+        &:after {
+
+            content: "";
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.5);
+
+            @include margin(1 0 2 0);
+
+            @include mq($until: sm) {
+                @include margin(1 0 1 0);
+            }
+
+        }
+
+    }
+
+    &__month {
+
+        @include font-size(l);
+        @include line-height(1);
+        @include typeface(serif);
+        font-weight: weight(heavy);
+
+        @include mq($until: sm) {
+            display: none;
+        }
+
+    }
+
+    &__image {
+
+        width: 100%;
+        height: auto;
+
+    }
+
+    &__tags {
+
+        margin-bottom: 5px;
+
+    }
+
+    &__title {
+
+        @include font-size(xxl);
+        @include line-height(1.25);
+        @include typeface(sans-serif);
+        font-weight: weight(bold);
+
+        margin-top: 0;
+        @include margin-bottom(1);
+
+    }
+
+    &__desc {
+
+        @include font-size(m);
+        @include line-height(1);
+        @include typeface(serif);
+        font-weight: weight(light);
+
+    }
+
+}
