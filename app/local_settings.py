@@ -73,7 +73,7 @@ ADMIN_MENU_ORDER = (
     (_('Pages'), ('pages.Page', 'organization-pages.Home',
                  'organization-core.LinkType')),
     (_('Media'), ('organization-media.Video',
-                 'organization-media.VideoCategory',
+                 'organization-media.MediaCategory',
                  'organization-media.Audio',
                  'organization-media.Playlist',
                  (_('Media Library'), 'fb_browse'),
@@ -82,6 +82,7 @@ ADMIN_MENU_ORDER = (
                   'mezzanine_agenda.EventLocation',
                   'mezzanine_agenda.EventPrice',
                   'mezzanine_agenda.EventCategory',
+                  'generic.Keyword',
                   )),
     (_('Magazine'), ('organization-magazine.Article',
                     'organization-magazine.Brief',)),
@@ -155,6 +156,7 @@ ARTICLE_PER_PAGE = 4 # just for tests because we haven't got enough content
 FILE_UPLOAD_PERMISSIONS = 0o664
 FILE_UPLOAD_TEMP_DIR = '/srv/media/uploads/tmp/'
 MAX_UPLOAD_SIZE = 512000000
+MAX_UPLOAD_SIZE_FRONT = 10485760
 FILEBROWSER_MAX_UPLOAD_SIZE = 512000000
 
 if DEBUG:

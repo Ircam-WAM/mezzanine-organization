@@ -24,4 +24,4 @@ class PlaylistAdmin(admin.ModelAdmin):
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Audio, AudioAdmin)
 admin.site.register(Playlist, PlaylistAdmin)
-admin.site.register(VideoCategory)
+admin.site.register(MediaCategory)

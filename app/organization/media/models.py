@@ -58,12 +58,13 @@ class Audio(Media):
 
     open_source_mime_type = 'audio/ogg'
     closed_source_mime_type = 'audio/mp4'
+    category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('audio')
 
     def get_absolute_url(self):
-        return reverse("festival-video-detail", kwargs={"slug": self.slug})
+        return reverse("festival-audio-detail", kwargs={"slug": self.slug})
 
 
 class Video(Media):
@@ -71,28 +72,27 @@ class Video(Media):
 
     open_source_mime_type = 'video/webm'
     closed_source_mime_type = 'video/mp4'
-    category = models.ForeignKey('VideoCategory', verbose_name=_('category'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('video')
-
-    @property
-    def html(self):
-        #TODO: get html content from medias.ircam.fr with request module
-        pass
 
     def get_absolute_url(self):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
 
 
-class VideoCategory(Slugged):
-    """Video Category"""
+class MediaCategory(Slugged):
+    """Media Category"""
 
     class Meta:
-        verbose_name = _('video category')
+        verbose_name = _('media category')
+        verbose_name_plural = _('media categories')
 
     def count(self):
-        return self.videos.published().count()+1
+        try:
+            return self.videos.published().count()+1
+        except:
+            return self.audios.published().count()+1
 
 
 class Playlist(Slugged):
