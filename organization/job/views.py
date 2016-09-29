@@ -1,5 +1,6 @@
 import os
 import mimetypes
+import humanize
 from django import forms
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -17,8 +18,7 @@ from mezzanine.conf import settings
 from organization.job.models import JobOffer, JobResponse
 from organization.job.forms import JobResponseForm
 
-extention = ['.pdf', '.PDF', '.doc', '.docx']
-
+mime_types = ['pdf', 'msword', 'vnd.oasis.opendocument.text', 'vnd.openxmlformats-officedocument.wordprocessingml.document']
 
 class JobOfferDetailView(CreateView):
 
@@ -42,11 +42,15 @@ class JobOfferDetailView(CreateView):
         return reverse_lazy('organization-job-offer-detail', kwargs={'slug':self.kwargs['slug']})
 
     def form_valid(self, form):
-        # check extension uploaded files
-        name_cv, ext_cv = os.path.splitext(form.cleaned_data['curriculum_vitae'].name)
-        name_cl, ext_cl = os.path.splitext(form.cleaned_data['cover_letter'].name)
-        if ext_cv not in extention or ext_cl not in extention :
-            messages.info(self.request, _("Only .pdf, .doc, .docx files allowed."))
+        # check mimetype uploaded files
+        mime_type_cv = form.cleaned_data['curriculum_vitae'].content_type.split('/')[1]
+        mime_type_cl = form.cleaned_data['cover_letter'].content_type.split('/')[1]
+        if mime_type_cv not in mime_types or mime_type_cl not in mime_types :
+            messages.info(self.request, _("Only .pdf, .odt, .doc, .docx files allowed."))
+            return super(JobOfferDetailView, self).form_invalid(form)
+        # check max upload file for anonymous user
+        if form.cleaned_data['curriculum_vitae'].size > settings.MAX_UPLOAD_SIZE_FRONT or form.cleaned_data['cover_letter'].size > settings.MAX_UPLOAD_SIZE_FRONT :
+            messages.info(self.request, _("Uploaded files cannot exceed "+humanize.naturalsize(settings.MAX_UPLOAD_SIZE_FRONT)+"."))
             return super(JobOfferDetailView, self).form_invalid(form)
         email_application_notification(self.request, self.job_offer, form.cleaned_data)
         messages.info(self.request, _("You have successfully submitted your application."))
