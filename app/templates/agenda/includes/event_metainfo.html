@@ -2,6 +2,9 @@
 
 <div class="page__meta-date">
     {% include 'agenda/includes/event_date.html' %}
+    {% if event.date_text %}
+        <span>{{event.date_text}}</span>
+    {% endif %}
 </div>
 
 <div class="page__meta-separator"></div>
