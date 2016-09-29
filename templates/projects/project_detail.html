@@ -51,7 +51,7 @@
 {% block page_sidebar %}
     <ul class="nav-tree nav-tree--level-{{ branch_level }}" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
         <li class="nav-tree__item">
-            <a class="nav-tree__link" href="{{ page.get_absolute_url }}">{{ project.topic.parent.pages.all.0.title }}</a>
+            <a class="nav-tree__link" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
         </li>
         <li class="nav-tree__item">
             <a class="nav-tree__link active" href="{{ page.get_absolute_url }}">{{ project.title }}</a>
