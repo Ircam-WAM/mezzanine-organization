@@ -1,40 +1,43 @@
 {% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags %}
 
 {% block event_list_event_title %}
-    <div class="event__card msry__item">
-      {% with event.images.all|get_type:'card' as images %}
-        {% if images %}
-              {% block event_list_event_featured_image %}
-                <a href="{{ event.get_absolute_url }}" class="event__thumbnail">
-                    <img src="{{ MEDIA_URL }}{% thumbnail images.0.file 500 500 %}" width="500" height="500">
-                </a>
-            {% endblock %}
-        {% endif %}
-      {% endwith %}
-        <h3 class="event__name">
-            <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
-        </h3>
-        <span class="event__card__description">{{ event.description|slice:":128" }}</span>
-{% endblock %}
+<div class="event__card msry__item">
+    {% ifchanged event.start.month %}
+        <h1>{{ event.start|date:'F' }}</h1>
+    {% endifchanged %}
+    {% with event.images.all|get_type:'card' as images %}
+    {% if images %}
+    {% block event_list_event_featured_image %}
+    <a href="{{ event.get_absolute_url }}" class="event__thumbnail">
+        <img src="{{ MEDIA_URL }}{% thumbnail images.0.file 500 500 %}" width="500" height="500">
+    </a>
+    {% endblock %}
+    {% endif %}
+    {% endwith %}
+    <h3 class="event__name">
+        <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
+    </h3>
+    <span class="event__card__description">{{ event.description|slice:":128" }}</span>
+    {% endblock %}
 
-{% block event_list_event_metainfo %}
-  {% with False as unit_booking %}
-     {% include "agenda/includes/event_metainfo.html" %}
+    {% block event_list_event_metainfo %}
+    {% with False as unit_booking %}
+    {% include "agenda/includes/event_metainfo.html" %}
     {% for child in event.children.all %}
-     {% with child as event %}
-      {% include "agenda/includes/event_metainfo.html" %}
-     {% endwith %}
+    {% with child as event %}
+    {% include "agenda/includes/event_metainfo.html" %}
+    {% endwith %}
     {% endfor %}
-  {% endwith %}
-{% endblock %}
+    {% endwith %}
+    {% endblock %}
 
-{% block event_list_event_content %}
-        {% comment %}
-        <div class="event__description">
-            {{ event.description_from_content|safe }}
-            <a href="{{ event.get_absolute_url }}" class="event__meta__cta">{% trans "read more" %}</a>
-        </div>
-        {% endcomment %}
+    {% block event_list_event_content %}
+    {% comment %}
+    <div class="event__description">
+    {{ event.description_from_content|safe }}
+    <a href="{{ event.get_absolute_url }}" class="event__meta__cta">{% trans "read more" %}</a>
+</div>
+{% endcomment %}
 {% endblock %}
 <!--[if IE]><![endif]-->
 {% block booking %}
