@@ -161,6 +161,16 @@ class Team(Named, URL):
                 return ' - '.join((self.department.name, self.name))
         return self.name
 
+    def short(self):
+        if self.organization:
+            return ' - '.join((self.organization.name, self.code))
+        elif self.department:
+            if self.department.organization:
+                return ' - '.join((self.department.organization.name, self.code))
+            else:
+                return ' - '.join((self.department.name, self.code))
+        return self.code
+
 
 class TeamPage(Page, SubTitled, RichText):
     """(Team description)"""
