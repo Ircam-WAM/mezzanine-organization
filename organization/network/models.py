@@ -355,7 +355,7 @@ class UMR(Named):
 class PersonActivity(Period):
     """(Activity description)"""
 
-    person = models.ForeignKey('Person', verbose_name=_('person'))
+    person = models.ForeignKey('Person', verbose_name=_('person'), related_name='activities')
 
     weeks = models.IntegerField(_('number of weeks'), blank=True, null=True)
     status = models.ForeignKey(ActivityStatus, verbose_name=_('status'), blank=True, null=True, on_delete=models.SET_NULL)
