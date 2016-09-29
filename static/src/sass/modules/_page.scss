@@ -46,6 +46,13 @@ $module: ".page";
         @include typeface(serif);
         font-weight: weight(heavy);
 
+        span {
+            @include font-size(s);
+            margin-top: 4px;
+            font-weight: weight(regular);
+            display: block;
+        }
+
     }
 
     &__meta-title {
