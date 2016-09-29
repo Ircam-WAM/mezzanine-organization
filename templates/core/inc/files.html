@@ -1,0 +1,6 @@
+{% load i18n %}
+{% for file in files %}
+    <h3>{{ file.title }}</h3>
+    <p>{{ file.description }}</p>
+    <a href="{{ file.file.url }}" class="button button--small">{% trans "download" %}</a>
+{% endfor %}

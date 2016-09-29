@@ -14,7 +14,7 @@ class PersonListView(ListView):
 class PersonDetailView(SlugMixin, DetailView):
 
     model = Person
-    template_name='team/person_detail.html'
+    template_name='network/person_detail.html'
     context_object_name = 'person'
 
 
