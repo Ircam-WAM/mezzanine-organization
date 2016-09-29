@@ -27,12 +27,12 @@ class EventImageInline(TabularDynamicInlineAdmin):
     model = EventImage
 
 
-class EventAudioInline(TabularDynamicInlineAdmin):
+class EventAudioInline(StackedDynamicInlineAdmin):
 
     model = EventAudio
 
 
-class EventVideoInline(TabularDynamicInlineAdmin):
+class EventVideoInline(StackedDynamicInlineAdmin):
 
     model = EventVideo
 
