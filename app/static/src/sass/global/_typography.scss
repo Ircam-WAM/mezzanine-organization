@@ -123,6 +123,11 @@ hr {
 	height: 11px;
 	background-color: $color-main;
 	@include margin(5 0 2 0);
+
+	&.invisible {
+		height: 0;
+		border: 0;
+	}
 }
 
 figure {
