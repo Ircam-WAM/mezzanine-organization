@@ -28,5 +28,5 @@ class ProjectDetailView(SlugMixin, DetailView):
         if project.topic and project.topic.parent:
             context['page'] = project.topic.parent.pages.all().first()
         elif project.topic:
-            context['page'] = roject.topic.pages.all().first()
+            context['page'] = project.topic.pages.all().first()
         return context

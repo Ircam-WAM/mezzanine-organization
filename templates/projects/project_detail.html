@@ -20,22 +20,8 @@
 {% endblock %}
 
 {% block breadcrumb_menu %}
-
     {{ block.super }}
-
-    {% if department %}
-        <li class="breadcrumb__item"><a class="breadcrumb__link" href="{{ department.pages.all.0.get_absolute_url }}">{{ department.name }}</a></li>
-    {% endif %}
-    {% if project.topic and project.topic.parent %}
-        <li class="breadcrumb__item"><a class="breadcrumb__link" href="{{ project.topic.parent.pages.all.0.get_ascendants.0.get_absolute_url }}">{{ project.topic.parent.pages.all.0.get_ascendants.0.title }}</a></li>
-        <li class="breadcrumb__item"><a class="breadcrumb__link" href="{{ project.topic.parent.pages.all.0.get_absolute_url }}">{{ project.topic.parent }}</a></li>
-    {% elif project.topic %}
-        <li class="breadcrumb__item"><a class="breadcrumb__link" href="{{ project.topic.pages.all.0.get_ascendants.0.get_absolute_url }}">{{ project.topic.pages.all.0.get_ascendants.0.title }}</a></li>
-        <li class="breadcrumb__item"><a class="breadcrumb__link" href="{{ project.topic.pages.all.0.get_absolute_url }}">{{ project.topic }}</a></li>
-    {% endif %}
-
     <li class="breadcrumb__item active">{{ project.title }}</li>
-
 {% endblock %}
 
 {% block page_title %}
@@ -195,7 +181,7 @@
                                                         {% trans "Project lead team" %}
                                                     </div>
                                                     <div class="project-details__item-desc">
-                                                        {{ project.lead_team }}
+                                                        <a href="{% url "page" project.lead_team.pages.all.0 %}">{{ project.lead_team.short }}</a>
                                                     </div>
                                                   {% elif project.lead_organization %}
                                                     <div class="project-details__item-title">
@@ -214,7 +200,9 @@
                                                 </div>
                                                 <div class="project-details__item-desc">
                                                     {% for team in project.teams.all %}
-                                                        {{ team }}<br>
+                                                        {% if team.pages.all %}
+                                                            <a href="{% url "page" team.pages.all.0 %}">{{ team.short }}</a><br>
+                                                        {% endif %}
                                                     {% endfor %}
                                                     {% for organization in project.organizations.all %}
                                                         {% if organization.url %}
