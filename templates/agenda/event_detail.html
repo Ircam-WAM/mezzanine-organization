@@ -32,6 +32,18 @@
     {% endif %}
 {% endblock %}
 
+{% block page_tags %}
+    {% if event.departments.all.0 %}
+        <div class="tag dashed dashed--gray">
+          {{ event.departments.all.0.department.name }}
+        </div>
+    {% endif %}
+    <div class="tag tag--category">
+        {% keywords_for event as tags %}
+        {{tags.0}}
+    </div>
+{% endblock %}
+
 {% block breadcrumb_menu %}
     {{ block.super }}
     <li class="breadcrumb__item active">{{ event.title }}</li>
@@ -186,11 +198,18 @@
             {% endeditable %}
         {% endblock %}
 
+        {% if event.language %}
+            <div class="page__meta-separator"></div>
+            <p>
+                {% trans "Language" %}: {{event.language}}
+            </p>
+        {% endif %}
+
         {% set_short_url_for event %}
         {% with event as object %}
-        {% with True as is_event %}
-            {% include "includes/share_buttons.html" %}
-        {% endwith %}
+            {% with True as is_event %}
+                {% include "includes/share_buttons.html" %}
+            {% endwith %}
         {% endwith %}
     </div>
 
