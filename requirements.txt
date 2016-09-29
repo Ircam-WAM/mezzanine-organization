@@ -4,6 +4,7 @@ watchdog
 mysqlclient
 psycopg2
 pyquery
+humanize
 Django==1.9.7
 mezzanine==4.2.0
 django-modeltranslation
