@@ -47,8 +47,8 @@ $module: ".page";
         font-weight: weight(heavy);
 
         span {
-            @include font-size(s);
-            margin-top: 4px;
+            font-size: 13px;
+            margin-top: 2px;
             font-weight: weight(regular);
             display: block;
         }
