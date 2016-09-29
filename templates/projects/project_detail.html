@@ -28,7 +28,7 @@
 
     {% comment %}
         {% if department %}
-            <div class="tag dashed dashed--gray">
+            <div class="tag dashed dashed--yellow">
               {{ department.pages.all.0.title }}
             </div>
         {% endif %}
@@ -211,7 +211,7 @@
                                                         {% trans "Project lead team" %}
                                                     </div>
                                                     <div class="project-details__item-desc">
-                                                        <a href="{% url "page" project.lead_team.pages.all.0 %}">{{ project.lead_team }}</a>
+                                                        <a href="{% url "page" project.lead_team.pages.all.0 %}">{{ project.lead_team.pages.all.0.title }}</a>
                                                     </div>
                                                   {% elif project.lead_organization %}
                                                     <div class="project-details__item-title">
@@ -231,7 +231,7 @@
                                                 <div class="project-details__item-desc">
                                                     {% for team in project.teams.all %}
                                                         {% if team.pages.all %}
-                                                            <a href="{% url "page" team.pages.all.0 %}">{{ team }}</a><br>
+                                                            <a href="{% url "page" team.pages.all.0 %}">{{ team.pages.all.0.title }}</a><br>
                                                         {% endif %}
                                                     {% endfor %}
                                                     {% for organization in project.organizations.all %}
