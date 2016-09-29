@@ -24,6 +24,19 @@
     <li class="breadcrumb__item active">{{ project.title }}</li>
 {% endblock %}
 
+{% block page_tags %}
+
+    {% if department %}
+        <div class="tag dashed dashed--gray">
+          {{ department.pages.all.0.title }}
+        </div>
+    {% endif %}
+    <div class="tag tag--category">
+        {% trans 'Project' %}
+    </div>
+
+{% endblock %}
+
 {% block page_title %}
 
     {% editable project.title %}
