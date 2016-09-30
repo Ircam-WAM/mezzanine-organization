@@ -1,0 +1,61 @@
+{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags %}
+
+<div class="row event-line-box">
+
+    <div class="col-sm-2 col-md-3 col-lg-3 event-line-box__month">
+
+        {% ifchanged event.start.month %}
+            {{ event.start|date:'F' }}
+        {% endifchanged %}
+
+    </div>
+
+    <div class="col-sm-10 col-md-9 col-lg-9 event-line-box__content">
+
+        <div class="row">
+
+            <div class="col-xs-3">
+                {% with True as unit_booking %}
+                    {% include 'agenda/includes/event_metainfo_line.html' %}
+                {% endwith %}
+            </div>
+            <div class="col-xs-3">
+                {% with event.images.all|get_type:'card' as images %}
+                    {% if images %}
+                        <a href="{{ event.get_absolute_url }}">
+                            <img class="event-line-box__image" src="{{ MEDIA_URL }}{% thumbnail images.0.file 203 140 %}" width="203" height="140">
+                        </a>
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="col-xs-6">
+                {% keywords_for event as tags %}
+                {% if event.departments.all.0 or tags %}
+                    <div class="event-line-box__tags">
+                        {% if event.departments.all.0 %}
+                            <div class="tag tag--small dashed">
+                              {{ event.departments.all.0.department.name }}
+                            </div>
+                        {% endif %}
+                        {% keywords_for event as tags %}
+                        {% if tags %}
+                            <div class="tag tag--small tag--category">
+                                {% keywords_for event as tags %}
+                                {{tags.0}}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <h2 class="event-line-box__title">
+                    <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
+                </h2>
+                <div class="event-line-box__desc">
+                    {{ event.description|slice:":100" }}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
