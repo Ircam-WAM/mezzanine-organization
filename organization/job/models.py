@@ -34,9 +34,10 @@ class JobOffer(Displayable, RichText):
         verbose_name_plural = _("job offers")
 
 
-class Candidacy(Displayable, RichText):
+class Candidacy(Displayable, RichText, Period):
 
-    text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'))
+    text_button_external = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('external text button'))
+    text_button_internal = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('internal text button'))
     external_content = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'))
 
     # used for autocomplete but hidden in admin

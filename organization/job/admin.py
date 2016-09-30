@@ -31,9 +31,13 @@ class CandidacyAdminDisplayable(BaseTranslationModelAdmin,):
 
     list_display = ('title', 'external_content', 'content_object', )
     form = CandidacyForm
-    fieldsets = deepcopy(CandidacyAdmin.fieldsets)
     inlines = [CandidacyImageInline,]
     exclude = ("short_url", "keywords", "description", "slug", )
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'status', 'publish_date', 'expiry_date', 'content', 'date_from', 'date_to', 'text_button_external', 'external_content', 'text_button_internal', 'content_object',),
+        }),
+    )
 
 
 admin.site.register(JobOffer, JobOfferAdminDisplayable)

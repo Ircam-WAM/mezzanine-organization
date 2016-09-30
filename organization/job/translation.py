@@ -18,7 +18,7 @@ class JobResponseTranslationOptions(TranslationOptions):
 @register(Candidacy)
 class JobResponseTranslationOptions(TranslationOptions):
 
-    fields = ('title', 'content', 'text_button', )
+    fields = ('title', 'content', 'text_button_internal', 'text_button_external', )
 
 
 @register(CandidacyImage)
