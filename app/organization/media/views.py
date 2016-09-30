@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from organization.media.models import *
 from organization.core.views import *
+from organization.core.utils import *
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
@@ -42,3 +43,19 @@ class VideoListCategoryView(VideoListView):
         context = super(VideoListCategoryView, self).get_context_data(**kwargs)
         context['category'] = self.category
         return context
+
+
+class MediaListView(ListView):
+
+    template_name='media/media_list.html'
+    context_object_name = 'media'
+
+    def get_queryset(self):
+
+        audios = Audio.objects.all()
+        videos = Video.objects.all()
+        qsseq = QuerySetSequence(audios, videos)
+        qsseq.order_by('blog.name','-title')
+        print("----------------------------------")
+        print(len(qsseq))
+        return qsseq

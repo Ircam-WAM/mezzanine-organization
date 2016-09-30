@@ -15,7 +15,6 @@ import requests
 
 MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
 
-
 class Media(Titled):
     """Media"""
 
@@ -23,6 +22,7 @@ class Media(Titled):
     open_source_url = models.URLField(_('open source URL'), max_length=1024, blank=True)
     closed_source_url = models.URLField(_('closed source URL'), max_length=1024, blank=True)
     poster_url = models.URLField(_('poster'), max_length=1024, blank=True)
+    created_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True

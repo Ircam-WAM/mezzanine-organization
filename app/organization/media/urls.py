@@ -11,6 +11,7 @@ from organization.media.views import *
 
 
 urlpatterns = [
+    url(r'^media-list/$', MediaListView.as_view(), name="media"),
     url(r'^videos/$', VideoListView.as_view(), name="festival-video-list"),
     url(r'^videos/detail/(?P<slug>.*)/$', VideoDetailView.as_view(), name="festival-video-detail"),
     url(r'^videos/category/(?P<slug>.*)/$', VideoListCategoryView.as_view(), name="festival-video-list-category"),
