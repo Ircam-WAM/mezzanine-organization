@@ -55,7 +55,7 @@ class MediaListView(ListView):
         audios = Audio.objects.all()
         videos = Video.objects.all()
         qsseq = QuerySetSequence(audios, videos)
-        qsseq.order_by('blog.name','-title')
+        qsseq.order_by('created_at',)
         print("----------------------------------")
         print(len(qsseq))
         return qsseq

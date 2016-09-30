@@ -144,7 +144,7 @@ class IableSequence(object):
             items[-1] = "...(remaining elements truncated)..."
         return repr(items)
 
-
+# http://stackoverflow.com/questions/1516249/python-list-sorting-with-multiple-attributes-and-mixed-order
 class QuerySetSequence(IableSequence):
     '''
     Wrapper for the query sets sequence without the restriction on the identity
@@ -173,19 +173,18 @@ class QuerySetSequence(IableSequence):
                 field_names[i] = field_name[1:]
         # wanna iterable and attrgetter returns single item if 1 arg supplied
         fields_getter = lambda i: chain_sing(attrgetter(*field_names)(i))
+        print("************************")
+        print(fields_getter)
+        print("************************")
         # comparator gets the first non-zero value of the field comparison
         # results taking into account reverse order for fields prefixed with '-'
         comparator = lambda i1, i2:\
             dropwhile(__not__,
-              mul_it(map(cmp, fields_getter(i1), fields_getter(i2)), reverses)
+              mul_it(map(key, fields_getter(i1), fields_getter(i2)), reverses)
             ).__next__()
-        print("-----------------------------------------");
-        print(comparator);
-        print("******************************************");
-        print("comparator");
 
         # return new sorted list
-        return sorted(self.collapse(), cmp=comparator)
+        return sorted(self.collapse(), key=fields_getter)
 
     def filter(self, *args, **kwargs):
         """
@@ -235,3 +234,23 @@ class QuerySetSequence(IableSequence):
             if qs.exists():
                 return True
         return False
+
+
+def cmp_to_key(mycmp):
+    'Convert a cmp= function into a key= function'
+    class K(object):
+        def __init__(self, obj, *args):
+            self.obj = obj
+        def __lt__(self, other):
+            return mycmp(self.obj, other.obj) < 0
+        def __gt__(self, other):
+            return mycmp(self.obj, other.obj) > 0
+        def __eq__(self, other):
+            return mycmp(self.obj, other.obj) == 0
+        def __le__(self, other):
+            return mycmp(self.obj, other.obj) <= 0
+        def __ge__(self, other):
+            return mycmp(self.obj, other.obj) >= 0
+        def __ne__(self, other):
+            return mycmp(self.obj, other.obj) != 0
+    return K
