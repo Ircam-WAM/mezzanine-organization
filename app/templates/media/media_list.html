@@ -29,7 +29,7 @@
 {% block page_content %}
 
 {% for m in media %}
-    {{ m.get_content_model }} : {{ m.created_at }} : {{ m.title }}
+    {{ m|classname }} : {{ m.created_at }} : {{ m.title }}
     <br>
 {% endfor %}
 

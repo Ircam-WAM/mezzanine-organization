@@ -62,6 +62,7 @@ class Audio(Media):
 
     class Meta:
         verbose_name = _('audio')
+        ordering = ('-created_at',)
 
     def get_absolute_url(self):
         return reverse("festival-audio-detail", kwargs={"slug": self.slug})
@@ -76,6 +77,7 @@ class Video(Media):
 
     class Meta:
         verbose_name = _('video')
+        ordering = ('-created_at',)
 
     def get_absolute_url(self):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})

@@ -113,3 +113,7 @@ def in_category(objects, category):
 @register.filter
 def sub_topics(topic):
     return ProjectTopic.objects.filter(parent=topic)
+
+@register.filter
+def classname(obj):
+    return obj.__class__.__name__
