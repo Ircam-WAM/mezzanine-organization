@@ -14,3 +14,14 @@ class JobOfferTranslationOptions(TranslationOptions):
 class JobResponseTranslationOptions(TranslationOptions):
 
     pass
+
+@register(Candidacy)
+class JobResponseTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'content', 'text_button', )
+
+
+@register(CandidacyImage)
+class JobResponseTranslationOptions(TranslationOptions):
+
+    pass

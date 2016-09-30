@@ -1,0 +1,19 @@
+{% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
+<div>
+    {% with content.images.all|get_type:'card' as images %}
+        {% if images %}
+            <img src="{{ MEDIA_URL }}{% thumbnail images.first 150 150 %}" alt="{{ content.title }}">
+        {% endif %}
+    {% endwith %}
+    <h2>{{ content.title }}</h2>
+    <div>
+        <strong>{{ content.publish_date|date:"DATE_FORMAT" }}</strong><br />
+        {{ content.description|slice:":500" }}
+    </div>
+    <br>
+    {% if content.external_content %}
+        <a class="" href="{{ content.external_content }}" title="{{ content.text_button }}">{{ content.text_button }}</a>
+    {% elif content.content_object %}
+        <a class="" href="{{ content.content_object.get_absolute_url }}" title="{{ content.text_button }}">{{ content.text_button }}</a>
+    {% endif %}
+</div>

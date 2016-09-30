@@ -115,7 +115,7 @@ ADMIN_MENU_ORDER = (
                     'shop.DiscountCode',
                     'shop.Sale',
                     )),
-    (_('Jobs'), ('organization-job.JobOffer',)),
+    (_('Jobs'), ('organization-job.JobOffer','organization-job.Candidacy')),
     (_('Festival'), ('organization-festival.Artist',)),
     (_('Users'), ('auth.User', 'auth.Group',)),
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
