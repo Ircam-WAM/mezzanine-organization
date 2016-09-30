@@ -51,11 +51,10 @@ class MediaListView(ListView):
     context_object_name = 'media'
 
     def get_queryset(self):
-
         audios = Audio.objects.all()
         videos = Video.objects.all()
-        qsseq = QuerySetSequence(audios, videos)
-        qsseq.order_by('created_at',)
-        print("----------------------------------")
-        print(len(qsseq))
-        return qsseq
+        media_list = [video for video in videos]
+        media_list += [audio for audio in audios]
+        media_list.sort(key=lambda x: x.created_at, reverse=True)
+
+        return media_list
