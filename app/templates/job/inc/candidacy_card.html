@@ -7,13 +7,21 @@
     {% endwith %}
     <h2>{{ content.title }}</h2>
     <div>
-        <strong>{{ content.publish_date|date:"DATE_FORMAT" }}</strong><br />
+        {# TODO à refaire en template tag #}
+        {% if content.date_from and content.date_to %}
+            <strong>{% trans "From" %}&nbsp;{{ content.date_from|date:"DATE_FORMAT" }}&nbsp;{% trans "to" %}&nbsp;{{ content.date_to|date:"DATE_FORMAT" }}</strong><br/>
+        {% elif content.date_from %}
+            <strong>{% trans "From" %}&nbsp;{{ content.date_from|date:"DATE_FORMAT" }}</strong><br/>
+        {% elif content.date_to %}
+            <strong>{% trans "until" %}{{ content.date_to|date:"DATE_FORMAT" }}</strong><br/>
+        {% endif %}
         {{ content.description|slice:":500" }}
     </div>
     <br>
-    {% if content.external_content %}
-        <a class="" href="{{ content.external_content }}" title="{{ content.text_button }}">{{ content.text_button }}</a>
-    {% elif content.content_object %}
-        <a class="" href="{{ content.content_object.get_absolute_url }}" title="{{ content.text_button }}">{{ content.text_button }}</a>
+    {% if content.external_content and content.text_button_external %}
+        <a class="" href="{{ content.external_content }}" title="{{ content.text_button_external }}">{{ content.text_button_external }}</a>
+    {% endif %}
+    {% if content.content_object  and content.text_button_internal %}
+        <a class="" href="{{ content.content_object.get_absolute_url }}" title="{{ content.text_button_internal }}">{{ content.text_button_internal }}</a>
     {% endif %}
 </div>
