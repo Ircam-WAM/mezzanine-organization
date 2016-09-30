@@ -16,9 +16,7 @@
 
             <div class="col-xs-3">
                 {% with True as unit_booking %}
-                {% with True as line_display %}
-                    {% include 'agenda/includes/event_metainfo.html' %}
-                {% endwith %}
+                    {% include 'agenda/includes/event_metainfo_line.html' %}
                 {% endwith %}
             </div>
             <div class="col-xs-3">
@@ -35,7 +33,7 @@
                 {% if event.departments.all.0 or tags %}
                     <div class="event-line-box__tags">
                         {% if event.departments.all.0 %}
-                            <div class="tag tag--small dashed dashed--gray">
+                            <div class="tag tag--small dashed">
                               {{ event.departments.all.0.department.name }}
                             </div>
                         {% endif %}
@@ -52,7 +50,7 @@
                     <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
                 </h2>
                 <div class="event-line-box__desc">
-                    {{ event.description|slice:":128" }}
+                    {{ event.description|slice:":100" }}
                 </div>
             </div>
 
