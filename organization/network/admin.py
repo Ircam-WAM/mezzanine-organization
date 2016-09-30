@@ -134,6 +134,46 @@ class PersonListBlockAdmin(admin.ModelAdmin):
     inlines = [PersonListBlockInlineAdmin,]
 
 
+class ActivityFunctionAdmin(BaseTranslationModelAdmin):
+
+    model = ActivityFunction
+
+
+class ActivityGradeAdmin(BaseTranslationModelAdmin):
+
+    model = ActivityGrade
+
+
+class ActivityFrameworkAdmin(BaseTranslationModelAdmin):
+
+    model = ActivityFramework
+
+
+class ActivityStatusAdmin(BaseTranslationModelAdmin):
+
+    model = ActivityStatus
+
+
+class TrainingTypeAdmin(BaseTranslationModelAdmin):
+
+    model = TrainingType
+
+
+class TrainingLevelAdmin(BaseTranslationModelAdmin):
+
+    model = TrainingLevel
+
+
+class TrainingSpecialityAdmin(BaseTranslationModelAdmin):
+
+    model = TrainingSpeciality
+
+
+class TrainingTopicAdmin(BaseTranslationModelAdmin):
+
+    model = TrainingTopic
+
+
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationType)
 admin.site.register(Department, DepartmentAdmin)
@@ -142,11 +182,11 @@ admin.site.register(Team, TeamAdmin)
 admin.site.register(TeamPage, TeamPageAdmin)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(PersonListBlock, PersonListBlockAdmin)
-admin.site.register(ActivityStatus)
-admin.site.register(ActivityGrade)
-admin.site.register(ActivityFramework)
-admin.site.register(ActivityFunction)
-admin.site.register(TrainingType)
-admin.site.register(TrainingLevel)
-admin.site.register(TrainingTopic)
-admin.site.register(TrainingSpeciality)
+admin.site.register(ActivityStatus, ActivityStatusAdmin)
+admin.site.register(ActivityGrade, ActivityGradeAdmin)
+admin.site.register(ActivityFramework, ActivityFrameworkAdmin)
+admin.site.register(ActivityFunction, ActivityFunctionAdmin)
+admin.site.register(TrainingType, TrainingTypeAdmin)
+admin.site.register(TrainingLevel, TrainingLevelAdmin)
+admin.site.register(TrainingTopic, TrainingTopicAdmin)
+admin.site.register(TrainingSpeciality, TrainingSpecialityAdmin)

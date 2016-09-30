@@ -81,7 +81,7 @@ class Video(Media):
         return reverse("festival-video-detail", kwargs={"slug": self.slug})
 
 
-class MediaCategory(Slugged):
+class MediaCategory(Slugged, Description):
     """Media Category"""
 
     class Meta:
@@ -95,7 +95,7 @@ class MediaCategory(Slugged):
             return self.audios.published().count()+1
 
 
-class Playlist(Slugged):
+class Playlist(Slugged, Description):
     """(Playlist description)"""
 
     audios = models.ManyToManyField('Audio', verbose_name=_('audios'), related_name='playlists', blank=True)
