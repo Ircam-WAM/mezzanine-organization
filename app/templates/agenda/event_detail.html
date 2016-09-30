@@ -34,7 +34,7 @@
 
 {% block page_tags %}
     {% if event.departments.all.0 %}
-        <div class="tag dashed dashed--gray">
+        <div class="tag dashed">
           {{ event.departments.all.0.department.name }}
         </div>
     {% endif %}
@@ -46,6 +46,9 @@
 
 {% block breadcrumb_menu %}
     {{ block.super }}
+    <li class="breadcrumb__item">
+        <a href="{% url 'event_list' %}" class="breadcrumb__link">{% trans "Agenda" %}</a>
+    </li>
     <li class="breadcrumb__item active">{{ event.title }}</li>
 {% endblock %}
 
@@ -138,11 +141,22 @@
 {% endblock %}
 
 {% block page_link %}
-    {% with event.links.all as links %}
-        {% if links %}
-            {% include 'core/inc/link.html' %}
-        {% endif %}
-    {% endwith %}
+    <div class="row">
+        {% with event.links.all as links %}
+            {% if links %}
+                <div class="col-xs-6">
+                    {% include 'core/inc/link.html' %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div class="col-xs-6">
+            <div class="small-text">
+                Notes de productions<br />
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, modi sunt culpa sequi. Consequatur voluptate sapiente minus repellat earum, rerum asperiores, architecto quibusdam, dolore, soluta placeat aliquid. Voluptatum, dignissimos, quisquam.
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block page_audio %}

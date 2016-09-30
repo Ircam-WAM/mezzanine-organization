@@ -17,15 +17,15 @@
         {% endif %}
     </a>
     <a href="{{ event|google_nav_url }}" target="_blank" class="">
-         {% google_static_map event 900 300 15 %}
-    </a/>
+         {% google_static_map event 900 300 20 %}
+    </a>
 
     <div class="page__meta-separator"></div>
 {% endif %}
 
 {% if unit_booking %}
 
-    {% if event.prices.all.0|floatformat != '0' %}
+    {% if event.prices.all.0|floatformat != '0' and event.prices.all|length > 0 %}
         {% for price in event.prices.all %}
             {% if forloop.first %}
                 <div class="page__meta-title">Tarifs</div>
@@ -43,7 +43,9 @@
         </p>
 
     {% else %}
-        {% trans "Free entry. Limited seats available" %}
+        <p>
+            {% trans "Free entry. Limited seats available" %}
+        </p>
     {% endif %}
 
 {% endif %}
