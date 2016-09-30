@@ -102,6 +102,9 @@ class CandidacyListView(ListView):
     template_name='job/candidacy_list.html'
     context_object_name = 'candidacy'
 
+    def get_queryset(self, **kwargs):
+        return self.model.objects.published()
+        
     def get_context_data(self, **kwargs):
         context = super(CandidacyListView, self).get_context_data(**kwargs)
         return context
