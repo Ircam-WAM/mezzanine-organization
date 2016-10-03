@@ -45,7 +45,7 @@ class OrganizationAdmin(BaseTranslationModelAdmin):
                 OrganizationVideoInline,
                 OrganizationBlockInline,
                 OrganizationLinkInline ]
-
+    list_display = ['name', 'admin_thumb']
 
 class DepartmentPageAdmin(PageAdmin):
 
