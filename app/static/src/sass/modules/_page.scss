@@ -112,10 +112,12 @@ $module: ".page";
         		z-index: 1;
         		text-decoration: none;
                 border-color: $color-black;
+                border-bottom: 1px solid $color-black;
+                @include transition(all 0.15s ease-in-out);
 
                 &:hover {
-                    box-shadow: none;
-                    color: $color-black;
+                    box-shadow: inset 0 -30px $color-black;
+                    color: $color-main;
                 }
 
         	}
