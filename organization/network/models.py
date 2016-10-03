@@ -71,12 +71,14 @@ class Address(models.Model):
         abstract = True
 
 
-class Organization(Named, Address, URL):
+class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
     is_on_map = models.BooleanField(_('is on map'), default=True)
 
+    admin_thumb_type = 'logo'
+    
     class Meta:
         verbose_name = _('organization')
         ordering = ['name',]
