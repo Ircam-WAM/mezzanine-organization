@@ -78,7 +78,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     is_on_map = models.BooleanField(_('is on map'), default=True)
 
     admin_thumb_type = 'logo'
-    
+
     class Meta:
         verbose_name = _('organization')
         ordering = ['name',]
@@ -148,6 +148,8 @@ class Team(Named, URL):
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
     department = models.ForeignKey('Department', verbose_name=_('department'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
     code = models.CharField(_('code'), max_length=64, blank=True, null=True)
+    is_legacy = models.BooleanField(_('is legacy'), default=False)
+    parent = models.ForeignKey('Team', verbose_name=_('parent team'), related_name="children", blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('team')
@@ -194,6 +196,7 @@ class Person(Displayable, AdminThumbMixin):
     email = models.EmailField(_('email'), blank=True, null=True)
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
+    external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
 
     class Meta:
         verbose_name = _('person')
@@ -372,6 +375,7 @@ class PersonActivity(Period):
     umr = models.ForeignKey(UMR, verbose_name=_('UMR'), blank=True, null=True, on_delete=models.SET_NULL)
     team = models.ForeignKey('Team', verbose_name=_('team'), related_name='team_activity', blank=True, null=True, on_delete=models.SET_NULL)
     second_team = models.ForeignKey('Team', verbose_name=_('second team'), related_name='second_team_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    second_team_text = models.CharField(_('second team text'), blank=True, null=True, max_length=256)
 
     project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), blank=True, null=True, on_delete=models.SET_NULL)
     rd_quota_float = models.IntegerField(_('R&D quota (float)'), blank=True, null=True)
@@ -402,12 +406,14 @@ class PersonActivity(Period):
 
     comments = models.TextField(_('comments'), blank=True)
 
+    external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
+
     class Meta:
         verbose_name = _('activity')
         verbose_name_plural = _('activities')
 
     def __str__(self):
         if self.status:
-            return ' - '.join((self.status.name, str(self.date_begin), str(self.date_end)))
+            return ' - '.join((self.status.name, str(self.date_from), str(self.date_to)))
         else:
-            return ' - '.join((str(self.date_begin), str(self.date_end)))
+            return ' - '.join((str(self.date_from), str(self.date_to)))

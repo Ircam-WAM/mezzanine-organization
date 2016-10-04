@@ -10,6 +10,7 @@ from itertools import takewhile
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from organization.core.models import *
 from organization.network.models import *
@@ -119,7 +120,20 @@ class IrcamPerson(object):
             person, c = Person.objects.get_or_create(title=title)
 
             return person
+        return None
 
+    def get_team(self, code):
+        code = str(code)
+        qs = Q(code=code) | Q(code=code.lower()) | Q(code=code.upper()) | Q(code=code.capitalize())
+        teams = Team.objects.filter(qs)
+        if teams:
+            return teams[0]
+
+        qs = Q(title=code) | Q(title=code.lower()) | Q(title=code.upper()) | Q(title=code.capitalize())
+        projects = Project.objects.filter(qs)
+        if projects:
+            self.activity.project = projects[0]
+            return None
         return None
 
     def get_activity(self):
@@ -140,8 +154,11 @@ class IrcamPerson(object):
         self.activity.second_employer = self.get_or_create_name(Organization, 16)
         self.activity.umr = self.get_or_create_name(UMR, 17)
 
-        self.activity.team, c = Team.objects.get_or_create(code=self.row[19].value, organization=self.organization) if self.row[19].value else (None, False)
-        self.activity.second_team, c = Team.objects.get_or_create(code=self.row[21].value, organization=self.organization) if self.row[21].value else (None, False)
+        self.activity.team = self.get_team(self.row[19].value)
+        try:
+            self.activity.second_team = self.get_team(self.row[21].value)
+        except:
+            self.activity.second_team_text =  self.row[21].value
         self.activity.project, c = Project.objects.get_or_create(title=self.row[22].value) if self.row[22].value else (None, False)
 
         quota = self.row[23].value
@@ -158,7 +175,7 @@ class IrcamPerson(object):
         self.activity.training_type = self.get_or_create_name(TrainingType, 29)
         self.activity.training_level = self.get_or_create_name(TrainingLevel, 30)
         self.activity.training_topic = self.get_or_create_name(TrainingTopic, 31)
-        self.activity.training_speciality = self.get_or_create_name(TrainingSpectiality, 32)
+        self.activity.training_speciality = self.get_or_create_name(TrainingSpeciality, 32)
         self.activity.function = self.get_or_create_name(ActivityFunction, 34)
 
         if self.activity.phd_director:
@@ -175,7 +192,10 @@ class IrcamPerson(object):
         self.activity.comments = self.row[37].value
         self.activity.hdr = self.row[40].value
         self.activity.budget_code = self.get_or_create_name(BudgetCode, 41)
-        self.activity.date_modified_manual = datetime.datetime(*xlrd.xldate_as_tuple(self.row[42].value, self.datemode)) if self.row[42].value else None
+        try:
+            self.activity.date_modified_manual = datetime.datetime(*xlrd.xldate_as_tuple(self.row[42].value, self.datemode)) if self.row[42].value else None
+        except:
+            pass
         self.activity.record_piece = self.get_or_create_name(RecordPiece, 43) if self.row[43].value else None
 
         self.activity.save()
