@@ -60,6 +60,7 @@ class DepartmentAdmin(BaseTranslationModelAdmin):
 class TeamAdmin(BaseTranslationModelAdmin):
 
     model = Team
+    list_filter = ['department',]
 
 
 class TeamPageAdmin(PageAdmin):
@@ -123,6 +124,13 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
     list_display = ['last_name', 'first_name', 'email', 'gender']
     list_filter = ['person_title', 'activities__date_from', 'activities__date_to', 'activities__is_permanent', 'activities__framework', 'activities__grade', 'activities__function', 'activities__team', 'activities__project',]
 
+
+class PersonActivityAdmin(admin.ModelAdmin):
+
+    model = PersonActivity
+    list_display = ['person', 'team', 'status', 'date_from', 'date_to']
+
+
 class PersonListBlockInlineAdmin(TabularDynamicInlineAdmin):
 
     model = PersonListBlockInline
@@ -182,6 +190,7 @@ admin.site.register(Team, TeamAdmin)
 admin.site.register(TeamPage, TeamPageAdmin)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(PersonListBlock, PersonListBlockAdmin)
+admin.site.register(PersonActivity, PersonActivityAdmin)
 admin.site.register(ActivityStatus, ActivityStatusAdmin)
 admin.site.register(ActivityGrade, ActivityGradeAdmin)
 admin.site.register(ActivityFramework, ActivityFrameworkAdmin)
