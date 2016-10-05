@@ -2,43 +2,43 @@
 
 <!-- Start date only  -->
 {% if event.start and not event.end %}
-
     {{ event.start|date:"l j F" }}
-
     <!-- Start date with hour  -->
-    {% if event.start|date:"H:i" != "23:59" %}
+    {% if event.start|date:"H:i" != "00:00" %}
         {% trans "at" %}
         {{ event.start|date:"H\hi" }}
     {% endif %}
 
 <!-- Start and end date  -->
 {% else %}
-
     <!-- Start and end date is the same day  -->
     {% if event.start|date:"d.m.y" == event.end|date:"d.m.y" %}
-
-        {{ event.start|date:"l j F" }}
-
-        <!-- Start date with hour  -->
-        {% if event.start|date:"H:i" != "23:59" %}
-            {% trans "from" %}
-            {{ event.start|date:"H\hi" }}
-            {% comment %}
-                {% if event.end|date:"H:i" != "23:59" %}
-                    {% trans "to" %}
-                    {{ event.end|date:"H\hi" }}
-                {% endif %}
-            {% endcomment %}
+        {% if not event.periods.all %}
+            {{ event.start|date:"l j F" }}
+            <!-- Start date with hour  -->
+            {% if event.start|date:"H:i" != "00:00" %}
+                {% trans "from" %}
+                {{ event.start|date:"H\hi" }}
+                {% comment %}
+                    {% if event.end|date:"H:i" != "00:00" %}
+                        {% trans "to" %}
+                        {{ event.end|date:"H\hi" }}
+                    {% endif %}
+                {% endcomment %}
+            {% endif %}
+        {% else %}
+            {{ event.start|date:"j F" }}<br>
+            {% for period in event.periods.all %}
+                {% trans "From" %} {{ period.date_from|date:"H:i" }} {% trans "to" %} {{ period.date_to|date:"H:i" }}
+            {% endfor %}
         {% endif %}
 
     <!-- Start and end date are the same month  -->
     {% elif event.start|date:"m.y" == event.end|date:"m.y" %}
-
-        {% trans "From" %}
-        {{ event.start|date:"j" }}
-        {% trans "to" %}
-        {{ event.end|date:"j F" }}
-
+        {% for period in event.periods.all %}
+            {% trans "From" %} {{ period.date_from|date:"j H:i" }} {% trans "to" %} {{ period.date_to|date:"j F H:i" }}
+        {% endfor %}
+        
     <!-- Start and end date are completely different  -->
     {% else %}
 
