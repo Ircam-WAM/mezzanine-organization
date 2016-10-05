@@ -113,12 +113,14 @@ class DynamicContentArticleView(Select2QuerySetSequenceView):
 
         articles = Article.objects.all()
         events = Event.objects.all()
+        pages = CustomPage.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
+            pages = pages.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, events )
+        qs = autocomplete.QuerySetSequence(articles, events, pages)
 
         if self.q:
             # This would apply the filter on all the querysets
