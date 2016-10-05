@@ -1,0 +1,25 @@
+$module: ".messages";
+
+#{$module} {
+
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+
+    &__item {
+
+        background: $color-main;
+        color: $color-black;
+        @include padding(.5 1);
+        font-weight: weight(bold);
+
+        &.info {
+
+            background: $color-main;
+            color: $color-black;
+
+        }
+
+    }
+
+}
