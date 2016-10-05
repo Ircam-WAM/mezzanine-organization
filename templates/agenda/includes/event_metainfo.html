@@ -24,11 +24,10 @@
 {% endif %}
 
 {% if unit_booking %}
-
     {% if event.prices.all.0|floatformat != '0' and event.prices.all|length > 0 %}
         {% for price in event.prices.all %}
             {% if forloop.first %}
-                <div class="page__meta-title">Tarifs</div>
+                <div class="page__meta-title">{% trans "Tarifs" %}</div>
                 <p>
             {% endif %}
             {{ price.value|floatformat:"-2" }} €{% if not forloop.last %} <br /> {% endif %}
@@ -41,11 +40,23 @@
                 {% trans "Reserve" %}
             </a>
         </p>
-
     {% else %}
         <p>
             {% trans "Free entry. Limited seats available" %}
         </p>
     {% endif %}
-
 {% endif %}
+
+{% with event.trainings.all.0 as training %}
+    {% if training %}
+        <div class="page__meta-title">{% trans "Language" %}
+            <p>{{ training.language }}</p>
+        </div>
+        <div class="page__meta-title">{% trans "Public type" %}
+            <p>{{ training.public_type }}</p>
+        </div>
+        <div class="page__meta-title">{% trans "Level" %}
+            <p>{{ training.level }}</p>
+        </div>
+    {% endif %}
+{% endwith %}
