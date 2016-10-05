@@ -83,3 +83,7 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
         qs = self.mixup_querysets(qs)
 
         return qs
+
+class NewsletterView(TemplateView):
+
+    template_name = "pages/newsletter.html"

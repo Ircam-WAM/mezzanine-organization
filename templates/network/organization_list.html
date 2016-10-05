@@ -1,0 +1,48 @@
+{% extends "pages/page.html" %}
+{% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
+
+{% block meta_title %}{% trans "Network" %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ organization.description }}
+{% endmetablock %}{% endblock %}
+
+{% block page_class %}
+    organization
+{% endblock %}
+
+{% block page_title %}
+  <h1 class="dotted">{% trans "Network" %}</h1>
+{% endblock %}
+
+{% block page_content %}
+
+
+    {% for organization in organizations %}
+
+        {{ organization.name }}<br>
+        {{ organization.lat }}<br>
+        {{ organization.lon }}<br>
+        {{ organization.city }}<br>
+        {{ organization.country.name }}<br>
+
+        <!-- optional -->
+        {% with organization.links|get_type_link:'link' as links %}
+            {% if links %}
+                {{ links.first }}
+            {% endif %}
+        {% endwith %}
+        <br>
+        <!-- optional -->
+        {% with organization.images.all|get_type:'logo' as images %}
+            {% if images %}
+                <img src="{{ MEDIA_URL }}{% thumbnail images.first.file 100 0 left=0 top=0 %}" alt="logo {{ organization.name }}" />
+            {% endif %}
+        {% endwith %}
+        <br><br>
+
+    {% endfor %}
+
+
+
+{% endblock %}

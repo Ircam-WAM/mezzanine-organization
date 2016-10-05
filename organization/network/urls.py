@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^person/(?P<slug>.*)/$', PersonDetailView.as_view(), name="organization-network-person-detail"),
     url("^person-list-block-autocomplete/$", permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view()), name='person-list-block-autocomplete'),
     url("^person-autocomplete/$", permission_required('person.can_edit')(PersonListView.as_view()), name='person-autocomplete'),
+    url("^network/$", OrganizationListView.as_view(), name='network'),
     ]

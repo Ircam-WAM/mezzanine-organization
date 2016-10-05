@@ -9,11 +9,15 @@ import string
 import datetime
 import mimetypes
 
+from geopy.geocoders import GoogleV3 as GoogleMaps
+from geopy.exc import GeocoderQueryError
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 from mezzanine.pages.models import Page
 from mezzanine.core.models import RichText, Displayable, Slugged
@@ -60,8 +64,9 @@ ALIGNMENT_CHOICES = (('left', _('left')), ('left', _('left')), ('right', _('righ
 class Address(models.Model):
     """(Address description)"""
 
-    address = models.TextField(_('address'), blank=True)
-    postal_code = models.CharField(_('postal code'), max_length=16, blank=True)
+    address = models.TextField(_('address'))
+    postal_code = models.CharField(_('postal code'), max_length=16)
+    city = models.CharField(_('city'), max_length=255)
     country = CountryField(_('country'))
 
     def __str__(self):
@@ -74,14 +79,50 @@ class Address(models.Model):
 class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     """(Organization description)"""
 
+    mappable_location = models.CharField(max_length=128, blank=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
+    lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
+    lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
-    is_on_map = models.BooleanField(_('is on map'), default=True)
+    is_on_map = models.BooleanField(_('is on map'), default=False)
 
     admin_thumb_type = 'logo'
 
     class Meta:
         verbose_name = _('organization')
         ordering = ['name',]
+
+    def clean(self):
+        """
+        Validate set/validate mappable_location, longitude and latitude.
+        """
+        super(Organization, self).clean()
+
+        if self.lat and not self.lon:
+            raise ValidationError("Longitude required if specifying latitude.")
+
+        if self.lon and not self.lat:
+            raise ValidationError("Latitude required if specifying longitude.")
+
+        if not (self.lat and self.lon) and not self.mappable_location:
+            self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
+
+        if self.mappable_location and not (self.lat and self.lon): #location should always override lat/long if set
+            g = GoogleMaps(domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
+            try:
+                mappable_location, (lat, lon) = g.geocode(self.mappable_location)
+            except GeocoderQueryError as e:
+                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
+            except ValueError as e:
+                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
+            except TypeError as e:
+                raise ValidationError("The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.")
+            self.mappable_location = mappable_location
+            self.lat = lat
+            self.lon = lon
+
+    def save(self):
+        self.clean()
+        super(Organization, self).save()
 
 
 class OrganizationAudio(Audio):

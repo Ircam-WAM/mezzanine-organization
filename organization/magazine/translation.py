@@ -41,3 +41,15 @@ class ArticlePersonListBlockInlineTranslationOptions(TranslationOptions):
 class DynamicContentArticleTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(ArticleAudio)
+class ArticleAudioTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(ArticleVideo)
+class ArticleVideoTranslationOptions(TranslationOptions):
+
+    pass
