@@ -165,15 +165,16 @@ class Team(Named, URL):
                 return ' - '.join((self.department.name, self.name))
         return self.name
 
+    @property
     def short(self):
         if self.organization:
-            return ' - '.join((self.organization.name, self.code))
+            return ' - '.join((self.organization.name, self.name))
         elif self.department:
             if self.department.organization:
-                return ' - '.join((self.department.organization.name, self.code))
+                return ' - '.join((self.department.organization.name, self.name))
             else:
-                return ' - '.join((self.department.name, self.code))
-        return self.code
+                return ' - '.join((self.department.name, self.name))
+        return self.name
 
 
 class TeamPage(Page, SubTitled, RichText):
