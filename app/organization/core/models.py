@@ -196,6 +196,15 @@ class Period(models.Model):
         abstract = True
 
 
+class PeriodDateTime(models.Model):
+
+    date_from = models.DateTimeField(_('begin date'), null=True, blank=True)
+    date_to = models.DateTimeField(_('end date'), null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
 class AdminThumbRelatedMixin(object):
     """
     Provides a thumbnail method on models for admin classes to
