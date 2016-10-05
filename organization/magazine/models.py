@@ -11,6 +11,7 @@ from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from organization.network.models import Department, PersonListBlock
+from organization.media.models import Audio, Video
 from organization.core.models import *
 
 
@@ -34,6 +35,16 @@ class ArticleImage(Image):
         verbose_name = _("image")
         verbose_name_plural = _("images")
         order_with_respect_to = "article"
+
+
+class ArticleAudio(Audio):
+
+    article = models.ForeignKey(Article, verbose_name=_('article'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ArticleVideo(Video):
+
+    article = models.ForeignKey(Article, verbose_name=_('article'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class Brief(Displayable, RichText): #Orderable
