@@ -28,9 +28,14 @@
 
 {% block page_content %}
 
-{% for m in media %}
-    {{ m|classname }} : {{ m.created_at }} : {{ m.title }}
-    <br>
-{% endfor %}
+    {% for object in media %}
+        {% with object|classname|lower as class_name %}
+            {% with "media/"|add:class_name|add:"/inc/"|add:class_name|add:"_card.html" as template %}
+                {% include template %}
+            {% endwith %}
+        {% endwith %}
+        {{ m|classname }} : {{ m.created_at }} : {{ m.title }}
+        <br>
+    {% endfor %}
 
 {% endblock %}

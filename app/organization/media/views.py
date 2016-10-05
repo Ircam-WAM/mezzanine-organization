@@ -2,7 +2,6 @@ from django.shortcuts import render
 
 from organization.media.models import *
 from organization.core.views import *
-from organization.core.utils import *
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
