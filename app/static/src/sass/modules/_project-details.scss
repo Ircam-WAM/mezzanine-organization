@@ -6,15 +6,15 @@ $module: ".project-details";
 
         text-align: left;
         @include padding-left(2);
-        margin-left: 100px;
+        margin-left: 72px;
         @include margin-top(0);
 
         @include mq($until: lg) {
-            margin-left: 100px;
+            margin-left: 72px;
         }
 
         @include mq($until: md) {
-            margin-left: 100px;
+            margin-left: 72px;
         }
 
         @include mq($until: sm) {
@@ -38,7 +38,7 @@ $module: ".project-details";
         clear: both;
         width: 100px;
         text-align: right;
-        @include margin-right(2);
+        margin-right: 18px;
 
         @include mq($until: lg) {
             width: 100px;
@@ -58,16 +58,16 @@ $module: ".project-details";
     &__item-desc {
 
         float: left;
-        width: 350px;
+        width: 380px;
         @include font-size(m);
         font-weight: weight(light);
 
         @include mq($until: lg) {
-            width: 330px;
+            width: 360px;
         }
 
         @include mq($until: md) {
-            width: 300px;
+            width: 330px;
         }
 
         @include mq($until: sm) {
