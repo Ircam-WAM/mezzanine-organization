@@ -30,7 +30,7 @@ class Project(Displayable, Period, RichText):
 
     class Meta:
         verbose_name = _('project')
-        ordering = ['title',]
+        ordering = ['-date_from', '-date_to']
 
     def __str__(self):
         return self.title

@@ -34,7 +34,7 @@
 
 {% block page_tags %}
     {% if event.departments.all.0 %}
-        <div class="tag dashed dashed--gray">
+        <div class="tag dashed">
           {{ event.departments.all.0.department.name }}
         </div>
     {% endif %}
@@ -114,38 +114,25 @@
         {% endblock %}
     {% endcomment %}
 
-    {% block event_related %}
-        {% if event.artists.all or event.videos.all or event.blog_posts.all %}
-        <h2 class="section__title">{% trans "Also discover" %}</h2>
-        <div class="msry__container">
-         <div class="msry__sizer"></div>
-        {% if event.artists.all %}
-            {% for artist in event.artists.all %}
-                {% include "festival/inc/artist_card.html" %}
-            {% endfor %}
-        {% endif %}
-        {% if event.videos.all %}
-            {% for video in event.videos.all %}
-                {% include 'festival/inc/video_card.html' %}
-            {% endfor %}
-        {% endif %}
-        {% if event.blog_posts.all %}
-            {% for post in event.blog_posts.all %}
-                {% include 'blog/includes/post_card.html' %}
-            {% endfor %}
-        {% endif %}
-        </div>
-        {% endif %}
-    {% endblock %}
-
 {% endblock %}
 
 {% block page_link %}
-    {% with event.links.all as links %}
-        {% if links %}
-            {% include 'core/inc/link.html' %}
-        {% endif %}
-    {% endwith %}
+    <div class="row">
+        {% with event.links.all as links %}
+            {% if links %}
+                <div class="col-xs-6">
+                    {% include 'core/inc/link.html' %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div class="col-xs-6">
+            <div class="small-text">
+                Notes de productions<br />
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, modi sunt culpa sequi. Consequatur voluptate sapiente minus repellat earum, rerum asperiores, architecto quibusdam, dolore, soluta placeat aliquid. Voluptatum, dignissimos, quisquam.
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block page_audio %}
@@ -173,9 +160,17 @@
 {% endblock %}
 
 {% block page_person_list %}
-    {% for page_custom_person_list_block_inline in event.persons.all  %}
-        <!-- TODO: Add persons -->
-    {% endfor %}
+    {% if event.persons.all %}
+        {% if event.trainings.all %}
+            {% trans "Trainers" %}<br>
+        {% else %}
+            {% trans "Persons" %}<br>
+        {% endif %}
+        {% for person in event.persons.all %}
+            {{ person.person.title }}<br>
+            {{ person.person.bio|safe }}<br>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block page_sub_content %}
@@ -200,13 +195,6 @@
                 {% endwith %}
             {% endeditable %}
         {% endblock %}
-
-        {% if event.language %}
-            <div class="page__meta-separator"></div>
-            <p>
-                {% trans "Language" %}: {{event.language}}
-            </p>
-        {% endif %}
 
         {% set_short_url_for event %}
         {% with event as object %}

@@ -67,22 +67,27 @@ jQuery(function($) {
         content_css: [window.__tinymce_css, '/static/admin/css/organization.css', '/static/css/index.min.css'] ,
         valid_elements: "*[*]",
         style_formats: [
-          {
-            title: 'Boutons', items: [
-              { title: 'Boutons Jaune', selector: 'a', classes: 'wys-button'},
-              { title: 'Boutons Jaune Small', selector: 'a', classes: 'wys-button-small'},
-              { title: 'Boutons Jaune XSmall', selector: 'a', classes: 'wys-button-xsmall'},
-              { title: 'Boutons Noir', selector: 'a', classes: 'wys-button-black'},
-              { title: 'Boutons Noir Small', selector: 'a', classes: 'wys-button-black-small'},
-              { title: 'Boutons Noir XSmall', selector: 'a', classes: 'wys-button-black-xsmall'},
-              { title: 'Boutons Blanc', selector: 'a', classes: 'wys-button-white'},
-              { title: 'Boutons Blanc Small', selector: 'a', classes: 'wys-button-white-small'},
-              { title: 'Boutons Blanc XSmall', selector: 'a', classes: 'wys-button-white-xsmall'}
-          ],
-          title: 'Paragraphs', items: [
-            { title: 'Highlighted paragraph', selector: 'p', classes: 'wys-highlighted-paragraph'}
-          ]
-          }
+            {
+                title: 'Boutons', items: [
+                    { title: 'Boutons Jaune', selector: 'a', classes: 'wys-button'},
+                    { title: 'Boutons Jaune Small', selector: 'a', classes: 'wys-button-small'},
+                    { title: 'Boutons Jaune XSmall', selector: 'a', classes: 'wys-button-xsmall'},
+                    { title: 'Boutons Noir', selector: 'a', classes: 'wys-button-black'},
+                    { title: 'Boutons Noir Small', selector: 'a', classes: 'wys-button-black-small'},
+                    { title: 'Boutons Noir XSmall', selector: 'a', classes: 'wys-button-black-xsmall'},
+                    { title: 'Boutons Blanc', selector: 'a', classes: 'wys-button-white'},
+                    { title: 'Boutons Blanc Small', selector: 'a', classes: 'wys-button-white-small'},
+                    { title: 'Boutons Blanc XSmall', selector: 'a', classes: 'wys-button-white-xsmall'}
+                ]
+
+            },
+            {
+
+                title: 'Paragraphs', items: [
+                    { title: 'Highlighted paragraph', selector: 'p', classes: 'wys-highlighted-paragraph'}
+                ]
+
+            }
         ],
         style_formats_merge: true
     })

@@ -12,7 +12,7 @@ $module: ".event-line-box";
             height: 1px;
             background: rgba(0, 0, 0, 0.25);
 
-            @include margin(1 0 2 0);
+            @include margin(1 0 1 0);
 
             @include mq($until: sm) {
                 @include margin(1 0 1 0);

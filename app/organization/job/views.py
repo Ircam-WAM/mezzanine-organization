@@ -1,6 +1,8 @@
 import os
 import mimetypes
 import humanize
+from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django import forms
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -15,7 +17,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from mezzanine.conf import settings
-from organization.job.models import JobOffer, JobResponse
+from organization.pages.models import CustomPage
+from organization.magazine.models import Article
+from organization.job.models import *
 from organization.job.forms import JobResponseForm
 
 mime_types = ['pdf', 'msword', 'vnd.oasis.opendocument.text', 'vnd.openxmlformats-officedocument.wordprocessingml.document']
@@ -90,3 +94,42 @@ def email_application_notification(request, job_offer, data):
     msg.send()
 
     return HttpResponse('email_application_notification')
+
+
+class CandidacyListView(ListView):
+
+    model = Candidacy
+    template_name='job/candidacy_list.html'
+    context_object_name = 'candidacy'
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.published()
+        
+    def get_context_data(self, **kwargs):
+        context = super(CandidacyListView, self).get_context_data(**kwargs)
+        return context
+
+
+class CandidacyAutocomplete(Select2QuerySetSequenceView):
+    def get_queryset(self):
+
+        articles = Article.objects.all()
+        custompage = CustomPage.objects.all()
+        events = Event.objects.all()
+
+        if self.q:
+            articles = articles.filter(title__icontains=self.q)
+            custompage = custompage.filter(title__icontains=self.q)
+            events = events.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(articles, custompage, events )
+
+        if self.q:
+            # This would apply the filter on all the querysets
+            qs = qs.filter(title__icontains=self.q)
+
+        # This will limit each queryset so that they show an equal number
+        # of results.
+        qs = self.mixup_querysets(qs)
+
+        return qs

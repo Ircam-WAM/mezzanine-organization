@@ -40,6 +40,30 @@ class EventPersonTranslationOptions(TranslationOptions):
 
 
 @register(EventLink)
-class EventPersonTranslationOptions(TranslationOptions):
+class EventLinkTranslationOptions(TranslationOptions):
 
     fields = ()
+
+
+@register(EventPeriod)
+class EventPeriodTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(EventTraining)
+class EventTrainingTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(EventTrainingLevel)
+class EventTrainingLevelTranslationOptions(TranslationOptions):
+
+    fields = ('name',)
+
+
+@register(EventPublicType)
+class EventPublicTypeTranslationOptions(TranslationOptions):
+
+    fields = ('name',)
