@@ -24,7 +24,7 @@
     {% if event.prices.all.0|floatformat != '0' and event.prices.all|length > 0 %}
         {% for price in event.prices.all %}
             {% if forloop.first %}
-                <div class="page__meta-title">{% trans "Tarifs" %}</div>
+                <div class="page__meta-title">{% trans "Prices" %}</div>
                 <p>
             {% endif %}
             {{ price.value|floatformat:"-2" }} €{% if not forloop.last %} <br /> {% endif %}
