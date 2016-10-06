@@ -17,7 +17,7 @@
             {{ event.start|date:"l j F" }}
             <!-- Start date with hour  -->
             {% if event.start|date:"H:i" != "00:00" %}
-                {% trans "from" %}
+                {% trans "at" %}
                 {{ event.start|date:"H\hi" }}
                 {% comment %}
                     {% if event.end|date:"H:i" != "00:00" %}
@@ -38,7 +38,7 @@
         {% for period in event.periods.all %}
             {% trans "From" %} {{ period.date_from|date:"j H:i" }} {% trans "to" %} {{ period.date_to|date:"j F H:i" }}
         {% endfor %}
-        
+
     <!-- Start and end date are completely different  -->
     {% else %}
 

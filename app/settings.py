@@ -257,11 +257,6 @@ MIGRATION_MODULES = {
     "generic": "migrations.generic",
 }
 
-MODELTRANSLATION_TRANSLATION_FILES = (
-    'organization.core.translation',
-    'organization.festival.translation',
-    'organization.magazine.translation'
-)
 
 TEMPLATES = [{'APP_DIRS': True,
                'BACKEND': 'django.template.backends.django.DjangoTemplates',
