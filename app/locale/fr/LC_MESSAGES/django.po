@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-06 14:45+0200\n"
+"POT-Creation-Date: 2016-10-06 14:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1879,7 +1879,7 @@ msgstr ""
 #: templates/agenda/includes/event_date.html:30
 #: templates/agenda/includes/event_date.html:41
 msgid "from"
-msgstr ""
+msgstr "de"
 
 #: templates/agenda/includes/event_date.html:21
 #: templates/agenda/includes/event_date.html:30
@@ -1887,11 +1887,11 @@ msgstr ""
 #: templates/agenda/includes/event_date.html:49
 #: templates/job/inc/candidacy_card.html:19
 msgid "to"
-msgstr ""
+msgstr "à"
 
 #: templates/agenda/includes/event_location.html:7
 msgid "Room"
-msgstr ""
+msgstr "Salle"
 
 #: templates/agenda/includes/event_location.html:13
 msgid "Click to get the interactive map"
@@ -1902,7 +1902,7 @@ msgid "Viewing events for the location"
 msgstr "Événements du lieu"
 
 #: templates/agenda/includes/event_metainfo.html:27
-msgid "Tarifs"
+msgid "Prices"
 msgstr ""
 
 #: templates/agenda/includes/event_metainfo.html:37
