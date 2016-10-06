@@ -3,6 +3,7 @@ from future.builtins import str
 
 from django.utils.translation import ugettext_lazy as _
 
+from mezzanine.conf import settings
 from mezzanine_agenda.models import *
 from organization.core.models import *
 from organization.network.models import *
@@ -74,3 +75,38 @@ class EventVideo(Video):
         verbose_name = _("video")
         verbose_name_plural = _("videos")
         order_with_respect_to = "event"
+
+
+class EventPeriod(PeriodDateTime):
+
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='periods', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("period")
+        verbose_name_plural = _("periods")
+
+
+class EventPublicType(Named):
+
+    class Meta:
+        verbose_name = _("public type")
+        verbose_name_plural = _("public types")
+
+
+class EventTrainingLevel(Named):
+
+    class Meta:
+        verbose_name = _("training level")
+        verbose_name_plural = _("training levels")
+
+
+class EventTraining(models.Model):
+
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
+    language = models.CharField(_('Language'), max_length=64, blank=True, null=True, choices=settings.LANGUAGES)
+    public_type = models.ForeignKey(EventPublicType, verbose_name=_('public type'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
+    level = models.ForeignKey(EventTrainingLevel, verbose_name=_('level'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("training")
+        verbose_name_plural = _("trainings")

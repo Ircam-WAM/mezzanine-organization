@@ -52,14 +52,14 @@ h3 {
     @include margin-top(1);
 }
 
-.page__content ul {
+.page__content ul, .page__block ul {
 	font-weight: weight(light);
 	@include line-height(1.25);
 	@include margin-top(0);
     @include margin-bottom(1);
 }
 
-main p, main ul.unstyled-list {
+main p, main ul.unstyled-list, main ul[class=""] {
     @include margin-top(0);
     @include margin-bottom(1);
 	@include line-height(1.25);
@@ -162,5 +162,14 @@ h1 + .chapo {
 	@include typeface(sans-serif);
 	@include font-size(xxl);
 	font-weight: weight(regular);
+
+}
+
+.small-text {
+
+	@include font-size(xs);
+    @include line-height(1);
+	@include typeface(serif);
+	font-weight: weight(light);
 
 }

@@ -41,14 +41,14 @@ $module: ".page";
 
     &__meta-date {
 
-        @include font-size(l);
+        @include font-size(m);
         @include line-height(1);
         @include typeface(serif);
         font-weight: weight(heavy);
 
         span {
-            @include font-size(s);
-            margin-top: 4px;
+            font-size: 13px;
+            margin-top: 2px;
             font-weight: weight(regular);
             display: block;
         }
@@ -112,10 +112,12 @@ $module: ".page";
         		z-index: 1;
         		text-decoration: none;
                 border-color: $color-black;
+                border-bottom: 1px solid $color-black;
+                @include transition(all 0.15s ease-in-out);
 
                 &:hover {
-                    box-shadow: none;
-                    color: $color-black;
+                    box-shadow: inset 0 -30px $color-black;
+                    color: $color-main;
                 }
 
         	}

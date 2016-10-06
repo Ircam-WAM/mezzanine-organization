@@ -15,5 +15,5 @@ urlpatterns = [
     url("^dynamic-content-home-slider/$", permission_required('home.can_edit')(DynamicContentHomeSliderView.as_view()), name='dynamic-content-home-slider'),
     url("^dynamic-content-home-body/$",  permission_required('home.can_edit')(DynamicContentHomeBodyView.as_view()), name='dynamic-content-home-body'),
     url("^home/$", HomeView.as_view(), name='organization-home'),
-
+    url("^newsletter/$", NewsletterView.as_view(), name='organization-newsletter'),
 ]

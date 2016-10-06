@@ -82,6 +82,8 @@ ADMIN_MENU_ORDER = (
                   'mezzanine_agenda.EventLocation',
                   'mezzanine_agenda.EventPrice',
                   'mezzanine_agenda.EventCategory',
+                  'organization-agenda.EventPublicType',
+                  'organization-agenda.EventTrainingLevel',
                   'generic.Keyword',
                   )),
     (_('Magazine'), ('organization-magazine.Article',
@@ -94,7 +96,8 @@ ADMIN_MENU_ORDER = (
                     'organization-network.OrganizationType',
                     'organization-network.PersonListBlock',
                     )),
-    (_('Activity'), ('organization-network.ActivityStatus',
+    (_('Activity'), ('organization-network.PersonActivity',
+                    'organization-network.ActivityStatus',
                     'organization-network.ActivityGrade',
                     'organization-network.ActivityFramework',
                     'organization-network.ActivityFunction',
@@ -115,7 +118,7 @@ ADMIN_MENU_ORDER = (
                     'shop.DiscountCode',
                     'shop.Sale',
                     )),
-    (_('Jobs'), ('organization-job.JobOffer',)),
+    (_('Jobs'), ('organization-job.JobOffer','organization-job.Candidacy')),
     (_('Festival'), ('organization-festival.Artist',)),
     (_('Users'), ('auth.User', 'auth.Group',)),
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
@@ -182,3 +185,7 @@ DEBUG_TOOLBAR_PANELS = [
 GRAPPELLI_INSTALLED = True
 # JQUERY_FILENAME = 'jquery-3.1.0.min.js'
 JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'
+
+#SHOP_CURRENCY_LOCALE = ''
+SHOP_USE_VARIATIONS = True
+SHOP_USE_RATINGS = False
