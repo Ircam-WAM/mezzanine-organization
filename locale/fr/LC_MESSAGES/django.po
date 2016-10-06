@@ -1873,7 +1873,7 @@ msgstr "Lieux"
 #: templates/agenda/includes/event_date.html:32
 #: templates/agenda/includes/event_date.html:43
 msgid "at"
-msgstr ""
+msgstr "à"
 
 #: templates/agenda/includes/event_date.html:21
 #: templates/agenda/includes/event_date.html:30
