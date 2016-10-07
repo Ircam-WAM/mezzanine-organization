@@ -52,3 +52,12 @@ class PersonListView(autocomplete.Select2QuerySetView):
             qs = qs.filter(person_title__istartswith=self.q)
 
         return qs
+
+class OrganizationListView(ListView):
+
+    model = Organization
+    context_object_name = 'organizations'
+    template_name='network/organization_list.html'
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.filter(is_on_map=True)

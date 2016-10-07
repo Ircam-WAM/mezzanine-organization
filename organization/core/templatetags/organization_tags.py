@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.http import QueryDict
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from mezzanine.template import Library
@@ -113,6 +114,7 @@ def in_category(objects, category):
 @register.filter
 def sub_topics(topic):
     return ProjectTopic.objects.filter(parent=topic)
+
 
 @register.filter
 def classname(obj):

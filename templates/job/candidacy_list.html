@@ -7,6 +7,13 @@
 {{ candidacy.description }}
 {% endmetablock %}{% endblock %}
 
+{% block breadcrumb_menu %}
+    {{block.super}}
+    <li class="breadcrumb__item active">
+        {% trans "Candidacies" %}
+    </li>
+{% endblock %}
+
 {% block page_class %}
     candidacy
 {% endblock %}

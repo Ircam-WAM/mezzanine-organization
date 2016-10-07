@@ -58,6 +58,12 @@ class PageLinkTranslationOptions(TranslationOptions):
     pass
 
 
+@register(DynamicContentPage)
+class DynamicContentPageTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(LinkImage)
 class LinkImageTranslationOptions(TranslationOptions):
 

@@ -83,3 +83,30 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
         qs = self.mixup_querysets(qs)
 
         return qs
+
+class NewsletterView(TemplateView):
+
+    template_name = "pages/newsletter.html"
+
+
+class DynamicContentPageView(Select2QuerySetSequenceView):
+
+    def get_queryset(self):
+
+        articles = Article.objects.all()
+        custompage = CustomPage.objects.all()
+        events = Event.objects.all()
+
+        if self.q:
+            articles = articles.filter(title__icontains=self.q)
+            custompage = custompage.filter(title__icontains=self.q)
+            events = events.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(articles, custompage, events)
+
+        if self.q:
+            qs = qs.filter(title__icontains=self.q)
+
+        qs = self.mixup_querysets(qs)
+
+        return qs
