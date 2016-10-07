@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n mezzanine_tags %}
+{% load i18n mezzanine_tags organization_tags %}
 
 {% block meta_title %}{% trans "Search Results" %}{% endblock %}
 {% block title %}{% trans "Search Results" %}{% endblock %}
@@ -37,10 +37,21 @@
             {% endif %}
         </p>
 
+        <p>
+            <h4>Filter:</h4>
+            {% for key,value in filter_dict.items %}
+                <a href="{{ value.url }}" title="{{ key }}">{{ key }} {{ value.count }}</a><br>
+            {% endfor %}
+            {% if cancel_filter_url %}
+                <a href="{{ cancel_filter_url }}" title="">Cancel filter</a>
+            {% endif %}
+        </p>
         {% for result in results.object_list %}
         {% with result.get_absolute_url as result_url %}
+
             <h5>
                 {{ forloop.counter0|add:results.start_index }})
+                 - {{ result|classname }} -
                 {% if result_url %}
                     <a href="{{ result_url }}">{{ result }}</a>
                 {% else %}
