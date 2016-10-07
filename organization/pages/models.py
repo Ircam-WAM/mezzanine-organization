@@ -63,6 +63,14 @@ class PageLink(Link):
         order_with_respect_to = "page"
 
 
+class DynamicContentPage(DynamicContent, Orderable):
+
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='dynamic_content_pages', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Page'
+
+
 class LinkImage(models.Model):
 
     link = models.ForeignKey(MezzanineLink, verbose_name=_('link'), related_name='link_images', blank=True, null=True, on_delete=models.SET_NULL)
