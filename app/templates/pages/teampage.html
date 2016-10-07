@@ -106,21 +106,26 @@
 {% endblock %}
 
 {% block related_project %}
-    {% if page.teampage.team.leader_projects.all or page.teampage.team.patner_projects.all %}
-    <hr>
+    {% if page.teampage.team.leader_projects.all or page.teampage.team.partner_projects.all %}
+        <hr class="mt0" />
+        <h4>{% trans "European and national projects" %}</h4>
+        {% with page.teampage.team.leader_projects.all|get_type:"external" as projects %}
+            {% include 'projects/inc/project_list.html' %}
+        {% endwith %}
+        {% with page.teampage.team.partner_projects.all|get_type:"external" as projects %}
+            {% include 'projects/inc/project_list.html' %}
+        {% endwith %}
+        {% if page.teampage.product_lists.all %}
+            <h4>{% trans "Products" %}</h4>
+            {% for page_product_list in page.teampage.product_lists.all %}
+              {% with page_product_list.list as list %}
+                {% with "shop/includes/product_list_"|add:list.style|add:"_style.html" as template %}
+                  {% include template %}
+                {% endwith %}
+              {% endwith %}
+            {% endfor %}
+        {% endif %}
     {% endif %}
-  {% if page.teampage.team.leader_projects.all %}
-    <h4>{% trans 'Main projects' %}</h4>
-    {% with page.teampage.team.leader_projects.all as projects %}
-        {% include 'projects/project_list.html' %}
-    {% endwith %}
-  {% endif %}
-  {% if page.teampage.team.patner_projects.all %}
-    <h4>{% trans 'Partner projects' %}</h4>
-    {% with page.teampage.team.patner_projects.all as projects %}
-        {% include 'projects/project_list.html' %}
-    {% endwith %}
-  {% endif %}
 {% endblock %}
 
 {% block logo %}
