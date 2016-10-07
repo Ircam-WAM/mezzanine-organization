@@ -19,12 +19,14 @@
 {% block page_content %}
 
     {% include "core/inc/messages.html" %}
-    
+
     {% comment %}
         <p>{% trans "Category" %} : {{ job_offer.type }}</p>
     {% endcomment %}
 
     {{ job_offer.content|richtext_filters|safe }}
+
+
 
     {% with form as job_offer.job_response %}
         {% include "job/inc/job_response_form.html" %}

@@ -82,6 +82,8 @@ ADMIN_MENU_ORDER = (
                   'mezzanine_agenda.EventLocation',
                   'mezzanine_agenda.EventPrice',
                   'mezzanine_agenda.EventCategory',
+                  'organization-agenda.EventPublicType',
+                  'organization-agenda.EventTrainingLevel',
                   'generic.Keyword',
                   )),
     (_('Magazine'), ('organization-magazine.Article',
@@ -94,7 +96,8 @@ ADMIN_MENU_ORDER = (
                     'organization-network.OrganizationType',
                     'organization-network.PersonListBlock',
                     )),
-    (_('Activity'), ('organization-network.ActivityStatus',
+    (_('Activity'), ('organization-network.PersonActivity',
+                    'organization-network.ActivityStatus',
                     'organization-network.ActivityGrade',
                     'organization-network.ActivityFramework',
                     'organization-network.ActivityFunction',
@@ -125,7 +128,9 @@ DASHBOARD_TAGS = ( ("mezzanine_tags.app_list",), (), ("mezzanine_tags.recent_act
 
 GRAPPELLI_ADMIN_TITLE = 'IRCAM Admin'
 
-SEARCH_MODEL_CHOICES = ()
+SEARCH_MODEL_CHOICES = None # all objects
+SEARCH_PER_PAGE = 10
+MAX_PAGING_LINKS = 10
 
 RATINGS_ACCOUNT_REQUIRED = True
 
@@ -182,3 +187,7 @@ DEBUG_TOOLBAR_PANELS = [
 GRAPPELLI_INSTALLED = True
 # JQUERY_FILENAME = 'jquery-3.1.0.min.js'
 JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'
+
+#SHOP_CURRENCY_LOCALE = ''
+SHOP_USE_VARIATIONS = True
+SHOP_USE_RATINGS = False

@@ -62,6 +62,13 @@
                             {% endif %}
                         {% endwith %}
                     {% endblock %}
+                    {% block page_file %}
+                        {% with object.files.all as files %}
+                            {% if files %}
+                                {% include 'core/inc/files.html' %}
+                            {% endif %}
+                        {% endwith %}
+                    {% endblock %}
                     {% block page_audio %}
                         {% with object.audios.all as audios %}
                             {% if audios %}
@@ -90,13 +97,6 @@
         {% endblock %}
         {% block page_person_list %}
         {% endblock %}
-        {% block page_file %}
-            {% with object.files.all as files %}
-                {% if files %}
-                    {% include 'core/inc/files.html' %}
-                {% endif %}
-            {% endwith %}
-        {% endblock %}
         {% block products %}
         {% endblock %}
         {% block page_sub_content %}
@@ -105,6 +105,9 @@
             {% endwith %}
         {% endblock %}
         {% block page_related_content %}
+            {% with page.dynamic_content_pages.all as dynamic_content %}
+                {% include "core/inc/related_content.html" %}
+            {% endwith %}
         {% endblock %}
         {% block related_project %}
         {% endblock %}

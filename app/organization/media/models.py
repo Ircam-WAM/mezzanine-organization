@@ -4,7 +4,7 @@ from pyquery import PyQuery as pq
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
+from mezzanine.core.managers import SearchableManager
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
@@ -15,7 +15,8 @@ import requests
 
 MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
 
-class Media(Titled):
+
+class Media(Displayable):
     """Media"""
 
     media_id = models.CharField(_('media id'), max_length=128)
@@ -23,6 +24,9 @@ class Media(Titled):
     closed_source_url = models.URLField(_('closed source URL'), max_length=1024, blank=True)
     poster_url = models.URLField(_('poster'), max_length=1024, blank=True)
     created_at = models.DateTimeField(auto_now=True)
+
+    objects = SearchableManager()
+    search_fields = ("title",)
 
     class Meta:
         abstract = True

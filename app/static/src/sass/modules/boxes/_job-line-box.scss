@@ -18,6 +18,16 @@ $module: ".job-line-box";
 
     }
 
+    &--candidacy {
+
+        #{$module}__title {
+
+            @include margin-top(0);
+
+        }
+
+    }
+
     &__title {
 
         @include margin-bottom(1);

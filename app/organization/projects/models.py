@@ -11,8 +11,8 @@ from organization.pages.models import *
 
 
 PROJECT_TYPE_CHOICES = [
-    ('internal project', _('internal project')),
-    ('external project', _('external project')),
+    ('internal', _('internal')),
+    ('external', _('external')),
 ]
 
 class Project(Displayable, Period, RichText):
@@ -30,7 +30,7 @@ class Project(Displayable, Period, RichText):
 
     class Meta:
         verbose_name = _('project')
-        ordering = ['title',]
+        ordering = ['-date_from', '-date_to']
 
     def __str__(self):
         return self.title
