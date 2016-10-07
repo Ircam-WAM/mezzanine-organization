@@ -2,10 +2,9 @@
 
 <!-- Start date only  -->
 {% if event.start and not event.end %}
-    {{ event.start|date:"l j F" }}
+    {{ event.start|date:"l j F" }}<br>
     <!-- Start date with hour  -->
-    {% if event.start|date:"H:i" != "00:00" %}
-        {% trans "at" %}
+    {% if event.start|date:"H:i" != "23:59" %}
         {{ event.start|date:"H\hi" }}
     {% endif %}
 
@@ -14,22 +13,22 @@
     <!-- Start and end date is the same day  -->
     {% if event.start|date:"d.m.y" == event.end|date:"d.m.y" %}
         {% if not event.periods.all %}
-            {{ event.start|date:"l j F" }}
+            {{ event.start|date:"l j F" }}<br>
             <!-- Start date with hour  -->
-            {% if event.start|date:"H:i" != "00:00" %}
-                {% if event.end|date:"H:i" != "00:00" %}
-                    {% trans "from" %} {{ event.start|date:"H\hi" }} {% trans "to" %} {{ event.end|date:"H\hi" }}
+            {% if event.start|date:"H:i" != "23:59" %}
+                {% if event.end|date:"H:i" != "23:59" %}
+                    {{ event.start|date:"H\hi" }} - {{ event.end|date:"H\hi" }}
                 {% else %}
-                    {% trans "at" %} {{ event.start|date:"H\hi" }}
+                    {{ event.start|date:"H\hi" }}
                 {% endif %}
             {% endif %}
         {% else %}
             {{ event.start|date:"j F" }}<br>
             {% for period in event.periods.all %}
-                {% if period.date_to|date:"H:i" != "00:00" %}
-                    {% trans "from" %} {{ period.date_from|date:"H\hi" }} {% trans "to" %} {{ period.date_to|date:"H\hi" }}<br>
+                {% if period.date_to|date:"H:i" != "23:59" %}
+                    {{ period.date_from|date:"H\hi" }} - {{ period.date_to|date:"H\hi" }}<br>
                 {% else %}
-                    {% trans "at" %} {{ period.date_from|date:"H\hi" }}<br>
+                    {{ period.date_from|date:"H\hi" }}<br>
                 {% endif %}
             {% endfor %}
         {% endif %}
@@ -37,7 +36,7 @@
     <!-- Start and end date are the same month  -->
     {% elif event.start|date:"m.y" == event.end|date:"m.y" %}
         {% for period in event.periods.all %}
-            {% if period.date_to and period.date_to|date:"H:i" != "00:00" %}
+            {% if period.date_to and period.date_to|date:"H:i" != "23:59" %}
                 {{ period.date_from|date:"j F" }} {% trans "from" %} {{ period.date_from|date:"H\hi" }} {% trans "to" %} {{ period.date_to|date:"H\hi" }}<br>
             {% else %}
                 {{ period.date_from|date:"j F" }} {% trans "at" %} {{ period.date_from|date:"H\hi" }}<br>
@@ -46,7 +45,7 @@
 
     <!-- Start and end date are completely different  -->
     {% else %}
-        {{ event.start|date:"j F" }} {% if event.end|date:"H:i" != "00:00" %} {% trans "to" %} {{ event.end|date:"j F" }} {% endif %}
+        {{ event.start|date:"j F" }} {% if event.end|date:"H:i" != "23:59" %} {% trans "to" %} {{ event.end|date:"j F" }}<br>{{ event.start|date:"H\hi" }} {% endif %}
     {% endif %}
 
 {% endif %}
