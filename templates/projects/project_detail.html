@@ -204,7 +204,7 @@
 
                                         <div>
 
-                                            {% if project.lead_team %}
+                                            {% if project.lead_team or project.lead_organization %}
                                                 <div class="project-details__item">
                                                   {% if project.lead_team %}
                                                     <div class="project-details__item-title">
