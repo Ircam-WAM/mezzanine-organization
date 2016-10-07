@@ -60,7 +60,7 @@
       {% endif %}
     <!-- Start and end date are completely different  -->
     {% else %}
-        {{ event.start|date:"j F" }}  {% trans "to" %} {{ event.end|date:"j F" }}
+        {% trans "from" %} {{ event.start|date:"j F" }} {% trans "to" %} {{ event.end|date:"j F" }}
     {% endif %}
 
 {% endif %}
