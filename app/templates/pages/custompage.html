@@ -114,6 +114,10 @@
   {% endwith %}
 {% endblock %}
 
+{% block page_related_content %}
+    {{ block.super }}
+{% endblock %}
+
 {% block products %}
     {% for page_product_list in page.custompage.product_lists.all %}
       {% with page_product_list.list as list %}

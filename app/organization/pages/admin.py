@@ -64,6 +64,17 @@ class PageProductListInline(TabularDynamicInlineAdmin):
     model = PageProductList
 
 
+class DynamicContentPageInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentPage
+    form = DynamicContentPageForm
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+
 class CustomPageAdmin(PageAdmin):
 
     inlines = [PageBlockInline,
@@ -72,7 +83,8 @@ class CustomPageAdmin(PageAdmin):
             PageVideoInline,
             PageLinkInline,
             PersonListBlockAutocompleteInlineAdmin,
-            PageProductListInline
+            PageProductListInline,
+            DynamicContentPageInline
             ]
 
 
