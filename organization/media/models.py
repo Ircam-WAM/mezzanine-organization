@@ -16,7 +16,7 @@ import requests
 MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
 
 
-class Media(Titled):
+class Media(Displayable):
     """Media"""
 
     media_id = models.CharField(_('media id'), max_length=128)
