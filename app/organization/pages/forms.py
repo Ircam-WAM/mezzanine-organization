@@ -11,6 +11,7 @@ from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
 from organization.pages.models import *
 from organization.agenda.models import Event
+from organization.media.models import Audio, Video
 
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
 
@@ -45,6 +46,23 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
     class Meta:
         model = DynamicContentHomeBody
         fields = ('content_object',)
+
+
+class DynamicContentHomeMediaForm(autocomplete.FutureModelForm):
+
+    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
+        queryset=autocomplete.QuerySetSequence(
+            Audio.objects.all(),
+            Video.objects.all(),
+        ),
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-media'),
+    )
+
+    class Meta:
+        model = DynamicContentHomeMedia
+        fields = ('content_object',)
+
 
 
 class DynamicContentPageForm(autocomplete.FutureModelForm):

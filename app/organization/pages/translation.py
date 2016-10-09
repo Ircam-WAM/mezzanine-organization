@@ -11,13 +11,19 @@ class HomeTranslationOptions(TranslationOptions):
 
 
 @register(DynamicContentHomeSlider)
-class DynamicContentHomeSliderOptions(TranslationOptions):
+class DynamicContentHomeSliderTranslationOptions(TranslationOptions):
 
     pass
 
 
 @register(DynamicContentHomeBody)
-class DynamicContentHomeBodyOptions(TranslationOptions):
+class DynamicContentHomeBodyTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(DynamicContentHomeMedia)
+class DynamicContentHomeMediaTranslationOptions(TranslationOptions):
 
     pass
 

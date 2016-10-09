@@ -1,11 +1,12 @@
 from django.shortcuts import render
-
+from collections import defaultdict
 from organization.media.models import *
 from organization.core.views import *
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
-from organization.magazine.models import Article, Topic, Brief
+from organization.agenda.models import EventVideo
+from organization.magazine.models import Article, Topic, Brief, ArticleVideo
 
 class VideoListView(ListView):
 
@@ -50,10 +51,10 @@ class MediaListView(ListView):
     context_object_name = 'media'
 
     def get_queryset(self):
-        audios = Audio.objects.all()
+        # audios = Audio.objects.all()
         videos = Video.objects.all()
         media_list = [video for video in videos]
-        media_list += [audio for audio in audios]
+        # media_list += [audio for audio in audios]
         media_list.sort(key=lambda x: x.created_at, reverse=True)
 
         return media_list

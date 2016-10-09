@@ -105,9 +105,18 @@ class DynamicContentHomeBodyInline(TabularDynamicInlineAdmin):
     form = DynamicContentHomeBodyForm
 
 
+class DynamicContentHomeMediaInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentHomeMedia
+    form = DynamicContentHomeMediaForm
+
+
 class HomeAdminDisplayable(BaseTranslationModelAdmin):
 
-    inlines = [DynamicContentHomeSliderInline, DynamicContentHomeBodyInline  ]
+    inlines = [ DynamicContentHomeSliderInline,
+                DynamicContentHomeMediaInline,
+                DynamicContentHomeBodyInline,
+                ]
 
 
 admin.site.register(CustomPage, CustomPageAdmin)
