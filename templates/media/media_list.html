@@ -27,14 +27,14 @@
 {% endblock %}
 
 {% block page_content %}
-
+    {# not working for audio for the moment... #}
     {% for object in media %}
         {% with object|classname|lower as class_name %}
             {% with "media/"|add:class_name|add:"/inc/"|add:class_name|add:"_card.html" as template %}
                 {% include template %}
             {% endwith %}
         {% endwith %}
-        {{ m|classname }} : {{ m.created_at }} : {{ m.title }}
+        {{ object|classname }} : {{ object.created_at }} : {{ object.title }}
         <br>
     {% endfor %}
 

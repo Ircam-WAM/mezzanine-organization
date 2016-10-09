@@ -87,7 +87,7 @@ class DynamicContentHomeSlider(DynamicContent, Orderable):
     home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = 'Dynamic Content Home Slider'
+        verbose_name = 'Slider'
 
 
 class DynamicContentHomeBody(DynamicContent, Orderable):
@@ -95,7 +95,15 @@ class DynamicContentHomeBody(DynamicContent, Orderable):
     home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = 'Dynamic Content Home Body'
+        verbose_name = _('Body')
+
+
+class DynamicContentHomeMedia(DynamicContent, Orderable):
+
+    home = models.ForeignKey("home", verbose_name=_('home'), related_name='dynamic_content_home_media', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Media'
 
 
 class Home(Displayable):
