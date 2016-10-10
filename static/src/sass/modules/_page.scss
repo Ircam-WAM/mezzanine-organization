@@ -64,6 +64,15 @@ $module: ".page";
 
     }
 
+    &__meta-text {
+
+        font-size: 13px;
+        margin-top: 2px;
+        font-weight: weight(regular);
+        display: block;
+
+    }
+
     &__filters {
 
         @include margin(0 0 6 0);
