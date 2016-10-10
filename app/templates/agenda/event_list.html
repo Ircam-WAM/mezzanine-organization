@@ -74,10 +74,10 @@
                         {% keywords_for mezzanine_agenda.event as tags %}
                         {% all_events as all_events %}
                         {% if tags %}
-                            <a href="{% url 'event_list' %}" class="button{% if not tag %} button--black{% else %} button--white{% endif %}">{% trans "All events" %} ({{ all_events.count }})</a>
+                            <a href="{% url 'event_list' %}" class="button{% if not tag %} button--black{% else %} button--white{% endif %}">{% trans "All events" %}</a>
                             {% for t in tags %}
                                 <a href="{% url "event_list_tag" t.slug %}" class="button{% if tag == t %} button--black{% else %} button--white{% endif %}">
-                                    {{ t }} ({{ t.item_count }})
+                                    {{ t }}
                                 </a>
                             {% endfor %}
                         {% endif %}
