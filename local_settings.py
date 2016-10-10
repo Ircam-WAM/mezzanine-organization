@@ -145,6 +145,7 @@ EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
 EVENT_SHOP_URL = 'http://eve.ircam.fr/manifeste.php/manifestation/'
 EVENT_PASS_URL = 'http://eve.ircam.fr/manifeste.php/pass/'
+EVENT_EXCLUDE_TAG_LIST = ['tournees', ]
 
 if DEBUG:
     TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
