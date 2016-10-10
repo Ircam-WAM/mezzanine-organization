@@ -13,19 +13,33 @@
             <small><u>{{ event.location.room }}</u></small>
         {% endif %}
     </a>
-    <a href="{{ event|google_nav_url }}" target="_blank" class="">
+    <a href="{{ event|google_nav_url }}" target="_blank" class="mt1" style="display: block;">
          {% google_static_map event 900 300 20 %}
     </a>
 
     <div class="page__meta-separator"></div>
 {% endif %}
 
+{% with event.trainings.all.0 as training %}
+    {% if training %}
+        <div class="page__meta-title page__meta-title--small">{% trans "Language" %}</div>
+        <p class="page__meta-text">{{ training.language }}</p>
+        <div class="page__meta-title page__meta-title--small">{% trans "Public type" %}</div>
+        <p class="page__meta-text">{{ training.public_type }}</p>
+        <div class="page__meta-title page__meta-title--small">{% trans "Level" %}</div>
+        <p class="page__meta-text">{{ training.level }}</p>
+    {% endif %}
+{% endwith %}
+
 {% if unit_booking %}
     {% if event.prices.all.0|floatformat != '0' and event.prices.all|length > 0 %}
         {% for price in event.prices.all %}
             {% if forloop.first %}
-                <div class="page__meta-title">{% trans "Prices" %}</div>
-                <p>
+                <div class="page__meta-title page__meta-title--small">{% trans "Prices" %}</div>
+                <p class="page__meta-text">
+            {% endif %}
+            {% if price.unit %}
+                {{ price.unit }}:
             {% endif %}
             {{ price.value|floatformat:"-2" }} €{% if not forloop.last %} <br /> {% endif %}
             {% if forloop.last %}
@@ -38,22 +52,14 @@
             </a>
         </p>
     {% else %}
-        <p>
-            {% trans "Free entry. Limited seats available" %}
-        </p>
+        {% if event.prices.all.0|floatformat != '0' %}
+            <p>
+                {{ price.unit }}
+            </p>
+        {% else %}
+            <p>
+                {% trans "Free entry. Limited seats available" %}
+            </p>
+        {% endif %}
     {% endif %}
 {% endif %}
-
-{% with event.trainings.all.0 as training %}
-    {% if training %}
-        <div class="page__meta-title">{% trans "Language" %}
-            <p>{{ training.language }}</p>
-        </div>
-        <div class="page__meta-title">{% trans "Public type" %}
-            <p>{{ training.public_type }}</p>
-        </div>
-        <div class="page__meta-title">{% trans "Level" %}
-            <p>{{ training.level }}</p>
-        </div>
-    {% endif %}
-{% endwith %}

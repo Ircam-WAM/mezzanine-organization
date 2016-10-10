@@ -117,19 +117,23 @@
 {% endblock %}
 
 {% block page_link %}
-    <div class="row">
-        {% with event.links.all as links %}
-            {% if links %}
+
+    <div class="mt4">
+        <div class="row">
+            {% with event.links.all as links %}
+                {% if links %}
+                    <div class="col-xs-6">
+                        {% include 'core/inc/link.html' %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% if event.mentions %}
                 <div class="col-xs-6">
-                    {% include 'core/inc/link.html' %}
+                    <div class="small-text">
+                        {{ event.mentions }}
+                   </div>
                 </div>
             {% endif %}
-        {% endwith %}
-        <div class="col-xs-6">
-            <div class="small-text">
-                Notes de productions<br />
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, modi sunt culpa sequi. Consequatur voluptate sapiente minus repellat earum, rerum asperiores, architecto quibusdam, dolore, soluta placeat aliquid. Voluptatum, dignissimos, quisquam.
-            </div>
         </div>
     </div>
 
@@ -151,7 +155,7 @@
     {% endwith %}
 {% endblock %}
 
-{% block page_videos %}
+{% block page_video %}
     {% with event.videos.all as videos %}
         {% if videos %}
             {% include 'core/inc/slider_video.html' %}
@@ -161,15 +165,50 @@
 
 {% block page_person_list %}
     {% if event.persons.all %}
-        {% if event.trainings.all %}
-            {% trans "Trainers" %}<br>
-        {% else %}
-            {% trans "Persons" %}<br>
-        {% endif %}
-        {% for person in event.persons.all %}
-            {{ person.person.title }}<br>
-            {{ person.person.bio|safe }}<br>
-        {% endfor %}
+        <div class="white-bg pb2">
+            <hr class="mt0" />
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2" data-summary-content>
+
+                        <h2 class="dotted">
+                            {% if event.trainings.all %}
+                                {% trans "Trainers" %}<br>
+                            {% else %}
+                                {% trans "Persons" %}<br>
+                            {% endif %}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="container-fluid">
+
+                <div class="row tac">
+
+                    {% for person in event.persons.all %}
+
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+
+                            <div class="article-box article-box--person" >
+                                {% with person.person as person %}
+                                    {% include "network/inc/person/person_card_square.html" %}
+                                {% endwith %}
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        </div>
     {% endif %}
 {% endblock %}
 
