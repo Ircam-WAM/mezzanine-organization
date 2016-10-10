@@ -37,11 +37,9 @@
                               {{ event.departments.all.0.department.name }}
                             </div>
                         {% endif %}
-                        {% keywords_for event as tags %}
-                        {% if tags %}
+                        {% if event.category %}
                             <div class="tag tag--small tag--category">
-                                {% keywords_for event as tags %}
-                                {{tags.0}}
+                                {{ event.category }}
                             </div>
                         {% endif %}
                     </div>
