@@ -11,6 +11,8 @@ from organization.core.views import SlugMixin
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import Home
 from organization.agenda.models import Event
+from organization.media.models import Audio, Video
+
 
 class HomeView(SlugMixin, ListView):
 
@@ -83,6 +85,28 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
         qs = self.mixup_querysets(qs)
 
         return qs
+
+
+class DynamicContentHomeMediaView(Select2QuerySetSequenceView):
+
+    def get_queryset(self):
+
+        videos = Video.objects.all()
+        audios = Audio.objects.all()
+
+        if self.q:
+            videos = videos.filter(title__icontains=self.q)
+            audios = audios.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(videos, audios,)
+
+        if self.q:
+            qs = qs.filter(title__icontains=self.q)
+
+        qs = self.mixup_querysets(qs)
+
+        return qs
+
 
 class NewsletterView(TemplateView):
 
