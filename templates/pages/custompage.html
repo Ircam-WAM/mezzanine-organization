@@ -114,6 +114,10 @@
   {% endwith %}
 {% endblock %}
 
+{% block page_related_content %}
+    {{ block.super }}
+{% endblock %}
+
 {% block products %}
     {% if page.custompage.product_lists.all|length > 0 %}
         {% for page_product_list in page.custompage.product_lists.all %}
