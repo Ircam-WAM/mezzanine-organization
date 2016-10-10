@@ -116,7 +116,7 @@
 
 {% block page_sub_content %}
 
-    {% if project.type == 'external project' %}
+    {% if project.type == 'external' %}
         <div class="white-bg pb2">
             <hr class="mt0 invisible" />
             <div class="page__block page__block--yellow">
@@ -204,7 +204,7 @@
 
                                         <div>
 
-                                            {% if project.lead_team %}
+                                            {% if project.lead_team or project.lead_organization %}
                                                 <div class="project-details__item">
                                                   {% if project.lead_team %}
                                                     <div class="project-details__item-title">
@@ -218,7 +218,13 @@
                                                         {% trans "Project lead organization" %}
                                                     </div>
                                                     <div class="project-details__item-desc">
-                                                        {{ project.lead_organization }}
+                                                        {% if project.lead_organization.url %}
+                                                            <a href="{{ project.lead_organization.url }}" target="_blank" title="{{ project.lead_organization }}">
+                                                        {% endif %}
+                                                            {{ project.lead_organization }}
+                                                        {% if project.lead_organization.url %}
+                                                            </a>
+                                                        {% endif %}
                                                     </div>
                                                   {% endif %}
                                                 </div>
@@ -231,14 +237,14 @@
                                                 <div class="project-details__item-desc">
                                                     {% for team in project.teams.all %}
                                                         {% if team.pages.all %}
-                                                            <a href="{% url "page" team.pages.all.0 %}">{{ team.short }}</a><br>
+                                                            <a href="{% url "page" team.pages.all.0.slug %}">{{ team.short }}</a><br>
                                                         {% endif %}
                                                     {% endfor %}
                                                     {% for organization in project.organizations.all %}
                                                         {% if organization.url %}
-                                                            <a href="{{organisation.url}}" target="_blank" title="{{organisation}}">
+                                                            <a href="{{ organization.url }}" target="_blank" title="{{ organization }}">
                                                         {% endif %}
-                                                        {{ organization }}<br>
+                                                            {{ organization }}<br>
                                                         {% if organization.url %}
                                                             </a>
                                                         {% endif %}

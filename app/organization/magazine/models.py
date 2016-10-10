@@ -4,6 +4,7 @@ from django.db import models
 from django import forms
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from mezzanine.core.managers import SearchableManager
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
 
@@ -13,12 +14,14 @@ from mezzanine.blog.models import BlogPost
 from organization.network.models import Department, PersonListBlock
 from organization.media.models import Audio, Video
 from organization.core.models import *
+from organization.magazine.apps import *
 
 
 class Article(BlogPost, SubTitled):
 
     department = models.ForeignKey(Department, verbose_name=_('department'), related_name='articles', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
     topics = models.ManyToManyField("Topic", verbose_name=_('topics'), related_name="articles", blank=True)
+    search_fields = ("title", "content")
 
     def get_absolute_url(self):
         return reverse("magazine-article-detail", kwargs={"slug": self.slug})
