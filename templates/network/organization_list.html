@@ -3,9 +3,11 @@
 
 {% block meta_title %}{% trans "Network" %}{% endblock %}
 
-{% block meta_description %}{% metablock %}
-{{ organization.description }}
-{% endmetablock %}{% endblock %}
+{% block meta_description %}
+    {% metablock %}
+        {{ organization.description }}
+    {% endmetablock %}
+{% endblock %}
 
 {% block page_class %}
     organization
@@ -20,31 +22,78 @@
     <li class="breadcrumb__item active">{% trans "Network" %}</li>
 {% endblock %}
 
-{% block page_content %}
+{% block page_slider %}
 
-    {% for organization in organizations %}
+    <div class="container">
 
-        {{ organization.name }}<br>
-        {{ organization.lat }}<br>
-        {{ organization.lon }}<br>
-        {{ organization.city }}<br>
-        {{ organization.country.name }}<br>
+        <div class="row">
 
-        <!-- optional -->
-        {% with organization.links|get_type_link:'link' as links %}
-            {% if links %}
-                {{ links.first }}
-            {% endif %}
-        {% endwith %}
-        <br>
-        <!-- optional -->
-        {% with organization.images.all|get_type:'logo' as images %}
-            {% if images %}
-                <img src="{{ MEDIA_URL }}{% thumbnail images.first.file 100 0 left=0 top=0 %}" alt="logo {{ organization.name }}" />
-            {% endif %}
-        {% endwith %}
-        <br><br>
+            <div class="col-xs-12 col-md-10 col-md-push-1">
 
-    {% endfor %}
+                <div class="map" id="network-map" style="width: 100%; height: 550px;">
+
+                </div>
+
+                <div class="slider-network">
+
+                    <ul class="slider-network__slider" data-slider-network>
+
+                        {% for organization in organizations %}
+
+                            <li class="slider-network__slide" data-marker-idx="{{forloop.counter0}}" data-marker-lat="{{ organization.lat }}" data-marker-lng="{{ organization.lon }}">
+                                <div class="slider-network__slide-image"
+
+                                    {% with organization.images.all|get_type:'logo' as images %}
+                                        {% if images %}
+                                            style="background-image: url('{{ MEDIA_URL }}{{images.first.file}}');"
+                                        {% endif %}
+                                    {% endwith %}
+
+                                >
+                                </div>
+                                <div class="slider-network__slide-title">
+                                    {{ organization.name }}
+                                </div>
+                                <div class="slider-network__slide-subtitle">
+                                    {{ organization.city }}, {{ organization.country.name }}
+                                </div>
+                            </li>
+
+                            {% comment %}
+                                {{ organization.name }}<br>
+                                {{ organization.lat }}<br>
+                                {{ organization.lon }}<br>
+                                {{ organization.city }}<br>
+                                {{ organization.country.name }}<br>
+
+                                <!-- optional -->
+                                {% with organization.links|get_type_link:'link' as links %}
+                                    {% if links %}
+                                        {{ links.first }}
+                                    {% endif %}
+                                {% endwith %}
+                                <br>
+                                <!-- optional -->
+                                {% with organization.images.all|get_type:'logo' as images %}
+                                    {% if images %}
+                                        <img src="{{ MEDIA_URL }}{% thumbnail images.first.file 100 0 left=0 top=0 %}" alt="logo {{ organization.name }}" />
+                                    {% endif %}
+                                {% endwith %}
+                                <br><br>
+                            {% endcomment %}
+
+                        {% endfor %}
+
+                    </ul>
+
+                    <div class="lSAction"><a class="lSPrev"></a><a class="lSNext"></a></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 {% endblock %}
