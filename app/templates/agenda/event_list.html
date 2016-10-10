@@ -76,7 +76,7 @@
                         {% if tags %}
                             <a href="{% url 'event_list' %}" class="button{% if not tag %} button--black{% else %} button--white{% endif %}">{% trans "All events" %}</a>
                             {% for t in tags %}
-                                <a href="{% url "event_list_tag" t.slug %}" class="button{% if tag == t %} button--black{% else %} button--white{% endif %}">
+                                <a href="{% url "event_list_tag" t.slug %}" class="button{% if tag == t %} button--black{% else %} button--white{% endif %}{% if t|tag_is_excluded %} button--excluded{% endif %}">
                                     {{ t }}
                                 </a>
                             {% endfor %}
