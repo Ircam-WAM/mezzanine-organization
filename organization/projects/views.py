@@ -25,4 +25,8 @@ class ProjectDetailView(SlugMixin, DetailView):
                     break
 
         context['department'] = department
+        if project.topic and project.topic.parent:
+            context['page'] = project.topic.parent.pages.all().first()
+        elif project.topic:
+            context['page'] = project.topic.pages.all().first()
         return context

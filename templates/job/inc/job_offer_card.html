@@ -1,4 +1,14 @@
-<a href="{{ jo.get_absolute_url }}" title="{{ jo.title }}">
-  <h2>{{ jo.title }}</h2>
-  <p>{{ jo.description|slice:":255" }}</p>
-</a>
+{% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
+<div class="job-line-box">
+    {% if jo.type %}
+        <div class="tag tag--small tag--category">
+            {{jo.type}}
+        </div>
+    {% endif %}
+    <a href="{{ jo.get_absolute_url }}"><h2 class="job-line-box__title">{{ jo.title }}</h2></a>
+    <div class="job-line-box__desc">
+        <strong>{{ jo.publish_date|date:"DATE_FORMAT" }}</strong><br />
+        {{ jo.description|slice:":255" }}
+    </div>
+    <a href="{{ jo.get_absolute_url }}" class="button button--small">{% trans "View" %}</a>
+</div>

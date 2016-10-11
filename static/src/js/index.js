@@ -2,6 +2,7 @@
 // Require all the modules
 //
 var LangSelector = require('./modules/lang-selector');
+var RoleSelector = require('./modules/role-selector');
 var NavHeader = require('./modules/nav-header');
 var OpenButton = require('./modules/open-button');
 var CloseButton = require('./modules/close-button');
@@ -12,6 +13,7 @@ var OverflowInit = require('./modules/overflow-init');
 var StickyKitInit = require('./modules/sticky-kit-init');
 var LightSliderPageInit = require('./modules/lightsliderpage-init');
 var LightSliderHomeInit = require('./modules/lightsliderhome-init');
+var LightSliderNetworkInit = require('./modules/lightslidernetwork-init');
 var HomeMenu = require('./modules/home-menu');
 var Audio = require('./modules/audio');
 
@@ -19,6 +21,7 @@ var Audio = require('./modules/audio');
 // Init all the modules
 //
 window[LangSelector] = new LangSelector();
+window[RoleSelector] = new RoleSelector();
 window[NavHeader] = new NavHeader();
 window[OpenButton] = new OpenButton();
 window[CloseButton] = new CloseButton();
@@ -29,5 +32,6 @@ window[OverflowInit] = new OverflowInit();
 window[StickyKitInit] = new StickyKitInit();
 window[LightSliderPageInit] = new LightSliderPageInit();
 window[LightSliderHomeInit] = new LightSliderHomeInit();
+window[LightSliderNetworkInit] = new LightSliderNetworkInit();
 window[HomeMenu] = new HomeMenu();
 window[Audio] = new Audio();

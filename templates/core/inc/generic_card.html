@@ -3,9 +3,9 @@
 <a class="article-box" href="{{ content.content_object.get_absolute_url }}" title="{{ content.content_object.title }}">
     <div class="article-box__header">
         <figure class="article-box__image">
-            {% with content.content_object.images.all|get_type:'card' as image %}
-                {% if image %}
-                    <img src="{{ MEDIA_URL }}{% thumbnail image.first.file 427 286 %}" data-src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 %}" class="lazyload" alt="" />
+            {% with content.content_object.images.all|get_type:'card' as images %}
+                {% if images %}
+                    <img src="{{ MEDIA_URL }}{% thumbnail images.first.file 427 286 %}" data-src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 %}" class="lazyload" alt="" />
                 {% endif %}
             {% endwith %}
         </figure>
@@ -22,6 +22,7 @@
             </div>
         {% elif content.content_type.model == 'event' %}
         <div class="article-box__tags">
+
             {% if content.content_object.departments.first %}
                 {% with content.content_object.departments.first as department %}
                     <div class="tag tag--small dashed">
@@ -35,6 +36,15 @@
                 </div>
             {% endif %}
         </div>
+            {% if content.content_object.prices.all.0|floatformat != '0' and content.content_object.prices.all|length > 0 %}
+                {% for price in content.content_object.prices.all %}
+                    {% if forloop.first %}
+                        <div class="article-box__btn">
+                            <object><a href="{% url 'event_booking' content.content_object.slug %}" class="button button--small mr0">{% trans "Reserve" %}</a></object>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         {% endif %}
     </div>
 

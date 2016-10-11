@@ -1,27 +1,32 @@
 from copy import deepcopy
 from django.contrib import admin
-from mezzanine.core.admin import DisplayableAdmin, OwnableAdmin
+from mezzanine.core.admin import *
 from organization.media.models import *
 
 
-class VideoAdmin(admin.ModelAdmin):
+class VideoAdmin(BaseTranslationModelAdmin):
 
     model = Video
 
 
-class AudioAdmin(admin.ModelAdmin):
+class AudioAdmin(BaseTranslationModelAdmin):
 
     model = Audio
 
 
-class PlaylistAdmin(admin.ModelAdmin):
+class PlaylistAdmin(BaseTranslationModelAdmin):
 
     model = Playlist
     list_display = ('__str__',)
     filter_horizontal = ['audios']
 
 
+class MediaCategoryAdmin(BaseTranslationModelAdmin):
+
+    model = MediaCategory
+
+
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Audio, AudioAdmin)
 admin.site.register(Playlist, PlaylistAdmin)
-admin.site.register(VideoCategory)
+admin.site.register(MediaCategory, MediaCategoryAdmin)

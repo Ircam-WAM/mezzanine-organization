@@ -20,7 +20,7 @@
             {% if page.content_model == "link" %}
                 <li class="nav-header__item nav-header__item--image">
                     {% with page.link.link_images.all|first as link_image %}
-                        <a href="{{ page.get_absolute_url }}" target="_blank" title="{{ page.title }}"><img src="{{ MEDIA_URL }}{% thumbnail link_image.image 83 65 %}" /></a>
+                        <a href="{{ page.get_absolute_url }}"{% if 'http' in page.link.slug %} target="_blank"{% endif %} title="{{ page.title }}"><img src="{{ MEDIA_URL }}{% thumbnail link_image.image 83 65 %}" /></a>
                     {% endwith %}
                 </li>
             {% else %}
@@ -35,7 +35,7 @@
         {% if page.is_primary %}
             {% if forloop.last %}
                 <li class="nav-header__item nav-header__item--special nav-header__item--centered">
-                    <a href="#" class="fsxl" data-open-button="search" id="searchBtn"><i class="fa fa-search" aria-hidden="true"></i></a>
+                    <a href="#" class="fsxl" data-open-button="search" data-search-button><i class="fa fa-search" aria-hidden="true"></i></a>
                 </li>
             </ul>
             {% endif %}

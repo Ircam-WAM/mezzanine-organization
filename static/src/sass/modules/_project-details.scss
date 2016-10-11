@@ -6,15 +6,15 @@ $module: ".project-details";
 
         text-align: left;
         @include padding-left(2);
-        margin-left: 200px;
+        margin-left: 72px;
         @include margin-top(0);
 
         @include mq($until: lg) {
-            margin-left: 150px;
+            margin-left: 72px;
         }
 
         @include mq($until: md) {
-            margin-left: 150px;
+            margin-left: 72px;
         }
 
         @include mq($until: sm) {
@@ -36,16 +36,16 @@ $module: ".project-details";
         font-weight: weight(bold);
         float: left;
         clear: both;
-        width: 200px;
+        width: 100px;
         text-align: right;
-        @include margin-right(2);
+        margin-right: 18px;
 
         @include mq($until: lg) {
-            width: 150px;
+            width: 100px;
         }
 
         @include mq($until: md) {
-            width: 150px;
+            width: 100px;
         }
 
         @include mq($until: sm) {
@@ -58,16 +58,16 @@ $module: ".project-details";
     &__item-desc {
 
         float: left;
-        width: 200px;
+        width: 380px;
         @include font-size(m);
         font-weight: weight(light);
 
         @include mq($until: lg) {
-            width: 200px;
+            width: 360px;
         }
 
         @include mq($until: md) {
-            width: 200px;
+            width: 330px;
         }
 
         @include mq($until: sm) {

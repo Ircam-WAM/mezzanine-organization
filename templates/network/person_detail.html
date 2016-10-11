@@ -1,0 +1,69 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags keyword_tags i18n organization_tags pages_tags %}
+
+{% block meta_title %}{{ person.meta_title }}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for person as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block page_class %}
+    person
+{% endblock %}
+
+{% block breadcrumb_menu %}
+    {{ block.super }}
+    <li class="breadcrumb__item active">{{ person }}</li>
+{% endblock %}
+
+{% block page_title %}
+    {% editable person.title %}
+        <h1 class="dotted">{{ person.title }}</h1>
+    {% endeditable %}
+{% endblock %}
+
+{% block page_content %}
+    {% editable person.bio %}
+        {{ person.bio|richtext_filters|safe }}
+    {% endeditable %}
+{% endblock %}
+
+{% block page_sidebar %}
+    {% if person.images.all %}
+        {% with person.images.all|get_type:'page_featured' as images %}
+            {% if images.first %}
+                <figure class="person-list-box__image">
+                    <img src="{{ MEDIA_URL }}{% thumbnail images.first 135 135 top=0.5 %}" alt="person"/>
+                </figure>
+            {% endif %}
+        {% endwith %}
+    {% endif%}
+{% endblock %}
+
+{% block page_link %}
+    {{ block.super }}
+{% endblock %}
+
+{% block page_audio %}
+    {{ block.super }}
+{% endblock %}
+
+{% block page_slider %}
+    {{ block.super }}
+{% endblock %}
+
+{% block page_video %}
+    {{ block.super }}
+{% endblock %}
+
+{% block page_file %}
+    {{ block.super }}
+{% endblock %}
+
+{% block page_sub_content %}
+   {{ block.super }}
+{% endblock %}

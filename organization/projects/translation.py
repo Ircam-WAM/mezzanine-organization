@@ -27,6 +27,12 @@ class ProjectImageTranslationOptions(TranslationOptions):
     pass
 
 
+@register(ProjectFile)
+class ProjectFileTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(ProjectBlock)
 class ProjectBlockTranslationOptions(TranslationOptions):
 

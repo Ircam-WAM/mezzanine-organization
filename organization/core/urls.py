@@ -10,4 +10,5 @@ from mezzanine.conf import settings
 from organization.core.views import *
 
 urlpatterns = [
+     url("^search/$", CustomSearchView.as_view(), name="search"),
 ]
