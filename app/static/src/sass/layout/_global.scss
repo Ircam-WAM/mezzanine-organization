@@ -1,6 +1,12 @@
 .main {
     @include margin(3 0 0 0);
     @include padding(1 0 0 0);
+
+    @media screen and (max-height: 900px) {
+
+        @include margin(.5 0 0 0);
+
+    }
 }
 
 #container {

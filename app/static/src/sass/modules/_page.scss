@@ -85,6 +85,12 @@ $module: ".page";
 
         @include margin(0 0 6 0);
 
+        @media screen and (max-height: 900px) {
+
+            @include margin(0 0 3 0);
+
+        }
+
     }
 
     hr + #{$module}__block--yellow {
