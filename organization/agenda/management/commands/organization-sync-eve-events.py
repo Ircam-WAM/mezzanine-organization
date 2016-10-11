@@ -49,6 +49,7 @@ class Command(BaseCommand):
             first = True
             eve_locations = []
             event_trans = eve_models.EventTranslation.objects.filter(id=eve_event, lang='fr')[0]
+            event_trans_en = eve_models.EventTranslation.objects.filter(id=eve_event, lang='en')[0]
             manifestations = eve_event.manifestations.all().order_by('happens_at')
             events = ma_models.Event.objects.filter(external_id=eve_event.id)
 
@@ -60,6 +61,7 @@ class Command(BaseCommand):
             for manifestation in manifestations:
                 if first:
                     event.title = event_trans.name
+                    event.title_en = event_trans_en.name
                     event.user = self.default_user
                     locations = ma_models.EventLocation.objects.filter(title=manifestation.location.name)
                     if locations:
