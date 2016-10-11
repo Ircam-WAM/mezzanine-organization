@@ -80,20 +80,23 @@
 
     <div class="mt4">
         <div class="row">
-            {% with event.links.all as links %}
-                {% if links %}
-                    <div class="col-xs-6">
-                        {% include 'core/inc/link.html' %}
-                    </div>
-                {% endif %}
-            {% endwith %}
-            {% with child.links.all as links %}
-                {% if links %}
-                    <div class="col-xs-6">
-                        {% include 'core/inc/link.html' %}
-                    </div>
-                {% endif %}
-            {% endwith %}
+            {% if child %}
+                {% with child.links.all as links %}
+                    {% if links %}
+                        <div class="col-xs-6">
+                            {% include 'core/inc/link.html' %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            {% else %}
+                {% with event.links.all as links %}
+                    {% if links %}
+                        <div class="col-xs-6">
+                            {% include 'core/inc/link.html' %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
             {% if event.mentions %}
                 <div class="col-xs-6">
                     <div class="small-text">
