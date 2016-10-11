@@ -82,7 +82,7 @@ ADMIN_MENU_ORDER = (
     (_('Pages'), ('pages.Page', 'organization-pages.Home',
                  'organization-core.LinkType')),
     (_('Media'), ('organization-media.Video',
-                 'organization-media.VideoCategory',
+                 'organization-media.MediaCategory',
                  'organization-media.Audio',
                  'organization-media.Playlist',
                  (_('Media Library'), 'fb_browse'),
@@ -91,6 +91,9 @@ ADMIN_MENU_ORDER = (
                   'mezzanine_agenda.EventLocation',
                   'mezzanine_agenda.EventPrice',
                   'mezzanine_agenda.EventCategory',
+                  'organization-agenda.EventPublicType',
+                  'organization-agenda.EventTrainingLevel',
+                  'generic.Keyword',
                   )),
     (_('Magazine'), ('organization-magazine.Article',
                     'organization-magazine.Brief',)),
@@ -102,7 +105,8 @@ ADMIN_MENU_ORDER = (
                     'organization-network.OrganizationType',
                     'organization-network.PersonListBlock',
                     )),
-    (_('Activity'), ('organization-network.ActivityStatus',
+    (_('Activity'), ('organization-network.PersonActivity',
+                    'organization-network.ActivityStatus',
                     'organization-network.ActivityGrade',
                     'organization-network.ActivityFramework',
                     'organization-network.ActivityFunction',
@@ -123,7 +127,7 @@ ADMIN_MENU_ORDER = (
                     'shop.DiscountCode',
                     'shop.Sale',
                     )),
-    (_('Jobs'), ('organization-job.JobOffer',)),
+    (_('Jobs'), ('organization-job.JobOffer','organization-job.Candidacy')),
     (_('Festival'), ('organization-festival.Artist',)),
     (_('Users'), ('auth.User', 'auth.Group',)),
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
@@ -133,7 +137,9 @@ DASHBOARD_TAGS = ( ("mezzanine_tags.app_list",), (), ("mezzanine_tags.recent_act
 
 GRAPPELLI_ADMIN_TITLE = 'IRCAM Admin'
 
-SEARCH_MODEL_CHOICES = ()
+SEARCH_MODEL_CHOICES = None # all objects
+SEARCH_PER_PAGE = 10
+MAX_PAGING_LINKS = 10
 
 RATINGS_ACCOUNT_REQUIRED = True
 
@@ -148,6 +154,7 @@ EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
 EVENT_SHOP_URL = 'http://eve.ircam.fr/manifeste.php/manifestation/'
 EVENT_PASS_URL = 'http://eve.ircam.fr/manifeste.php/pass/'
+EVENT_EXCLUDE_TAG_LIST = ['tournees', ]
 
 if DEBUG:
     TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
@@ -163,6 +170,8 @@ ARTICLE_PER_PAGE = 4 # just for tests because we haven't got enough content
 # a mode you'd pass directly to os.chmod.
 FILE_UPLOAD_PERMISSIONS = 0o664
 FILE_UPLOAD_TEMP_DIR = '/srv/media/uploads/tmp/'
+MAX_UPLOAD_SIZE = 512000000
+MAX_UPLOAD_SIZE_FRONT = 10485760
 FILEBROWSER_MAX_UPLOAD_SIZE = 512000000
 
 if DEBUG:
@@ -188,3 +197,7 @@ DEBUG_TOOLBAR_PANELS = [
 GRAPPELLI_INSTALLED = True
 # JQUERY_FILENAME = 'jquery-3.1.0.min.js'
 JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'
+
+#SHOP_CURRENCY_LOCALE = ''
+SHOP_USE_VARIATIONS = True
+SHOP_USE_RATINGS = False

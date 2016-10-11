@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.http import QueryDict
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from mezzanine.template import Library
@@ -93,9 +94,10 @@ def get_mezzanine_menu_name(menu_id):
 
 @register.filter
 def get_type(objects, type):
-    objs = objects.filter(type=type)
-    if objs:
-        return objs
+    if objects:
+        objs = objects.filter(type=type)
+        if objs:
+            return objs
     return None
 
 @register.filter
@@ -112,3 +114,8 @@ def in_category(objects, category):
 @register.filter
 def sub_topics(topic):
     return ProjectTopic.objects.filter(parent=topic)
+
+
+@register.filter
+def classname(obj):
+    return obj.__class__.__name__

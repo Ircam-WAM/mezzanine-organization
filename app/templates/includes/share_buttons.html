@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n event_tags %}
 
 <ul class="share-links">
     <li class="share-links__item share-links__item--facebook">
@@ -13,4 +13,16 @@
     <li class="share-links__item share-links__item--print">
         <a href="javascript:window.print()" title="{% trans "Print this page" %}"><i class="fa fa-print"></i></a>
     </li>
+    {% if is_event %}
+        <li class="share-links__item">
+            <a href='{{ event|google_calendar_url }}' target="_blank" title="{% trans "Add to" %} Google Calendar">
+                <i class="fa fa-google"></i>
+            </a>
+        </li>
+        <li class="share-links__item">
+            <a href='{% icalendar_url %}' class="push__calendar__item" title="{% trans "Add to" %} Outlook/iCal">
+                <i class="fa fa-calendar"></i>
+            </a>
+        </li>
+    {% endif %}
 </ul>

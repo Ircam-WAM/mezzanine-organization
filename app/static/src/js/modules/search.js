@@ -1,6 +1,6 @@
 var Search = function() {
 
-    this.$element = $('#searchBtn');
+    this.$element = $('[data-search-button]');
     this.$search = $('#search');
     this.$searchInput = this.$search.find('input[type="text"]');
 
@@ -15,9 +15,8 @@ Search.prototype.init = function() {
 
     var that = this;
 
-    that.$element = $('#searchBtn');
+    that.$element = $('[data-search-button]');
     that.$search = $('#search');
-
 
     that.$element.click(function(e) {
 

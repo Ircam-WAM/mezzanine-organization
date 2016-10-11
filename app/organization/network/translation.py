@@ -69,6 +69,12 @@ class PersonImageTranslationOptions(TranslationOptions):
     pass
 
 
+@register(PersonFile)
+class PersonFileTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(PersonBlock)
 class PersonBlockTranslationOptions(TranslationOptions):
 
@@ -121,3 +127,51 @@ class PersonListBlockInlineTranslationOptions(TranslationOptions):
 class PageCustomPersonListBlockInlineTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(ActivityGrade)
+class ActivityGradeTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(ActivityFunction)
+class ActivityFunctionTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(ActivityFramework)
+class ActivityFrameworkTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(ActivityStatus)
+class ActivityGradeTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(TrainingTopic)
+class TrainingTopicTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(TrainingType)
+class TrainingTypeTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(TrainingLevel)
+class TrainingLevelTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(TrainingSpeciality)
+class TrainingSpecialityTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']

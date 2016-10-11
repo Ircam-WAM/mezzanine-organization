@@ -37,6 +37,30 @@
 .ml2 {
     @include margin-left(2);
 }
+.mt3 {
+    @include margin-top(3);
+}
+.mb3 {
+    @include margin-bottom(3);
+}
+.mr3 {
+    @include margin-right(3);
+}
+.ml3 {
+    @include margin-left(3);
+}
+.mt4 {
+    @include margin-top(4);
+}
+.mb4 {
+    @include margin-bottom(4);
+}
+.mr4 {
+    @include margin-right(4);
+}
+.ml4 {
+    @include margin-left(4);
+}
 .p1 {
     @include padding(1);
 }

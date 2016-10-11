@@ -13,10 +13,13 @@
 @import 'boxes/page-box';
 @import 'boxes/brief-box';
 @import 'boxes/person-list-box';
+@import 'boxes/event-line-box';
+@import 'boxes/job-line-box';
 
 // Sliders
 @import 'sliders/slider-page';
 @import 'sliders/slider-home';
+@import 'sliders/slider-network';
 
 // Page modules
 @import 'breadcrumb';
@@ -25,12 +28,14 @@
 
 // Specific modules
 @import 'lang-switcher';
+@import 'role-switcher';
 @import 'search';
 @import 'pattern';
 @import 'tag';
 @import 'share-links';
 @import 'partners-list';
 @import 'banner';
+@import 'messages';
 @import 'project-details';
 
 // Typography modules

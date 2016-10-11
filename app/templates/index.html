@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n  pages_tags mezzanine_tags %}
+{% load i18n pages_tags mezzanine_tags %}
 
 {% block meta_title %}
     {% trans "Home" %}
@@ -47,6 +47,14 @@
       </li>
       <li class="home__menu-item">
           <a href="#" title="{% trans "Media" %}">{% trans "Medias" %}</a>
+          <div class="home__shutter">
+              <div class="home__shutter-content">
+                  <div class="container-fluid tal">
+                      {% include "media/inc/media_shutter.html" %}
+                  </div>
+                  <div><a href="{% url 'media-list' %}" title="">{% trans 'See more media >' %}</a></div>
+              </div>
+          </div>
       </li>
     </ul>
 

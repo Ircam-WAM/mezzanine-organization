@@ -9,11 +9,15 @@ import string
 import datetime
 import mimetypes
 
+from geopy.geocoders import GoogleV3 as GoogleMaps
+from geopy.exc import GeocoderQueryError
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 from mezzanine.pages.models import Page
 from mezzanine.core.models import RichText, Displayable, Slugged
@@ -60,8 +64,9 @@ ALIGNMENT_CHOICES = (('left', _('left')), ('left', _('left')), ('right', _('righ
 class Address(models.Model):
     """(Address description)"""
 
-    address = models.TextField(_('address'), blank=True)
-    postal_code = models.CharField(_('postal code'), max_length=16, blank=True)
+    address = models.TextField(_('address'))
+    postal_code = models.CharField(_('postal code'), max_length=16)
+    city = models.CharField(_('city'), max_length=255)
     country = CountryField(_('country'))
 
     def __str__(self):
@@ -71,15 +76,53 @@ class Address(models.Model):
         abstract = True
 
 
-class Organization(Named, Address, URL):
+class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     """(Organization description)"""
 
+    mappable_location = models.CharField(max_length=128, blank=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
+    lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
+    lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
-    is_on_map = models.BooleanField(_('is on map'), default=True)
+    is_on_map = models.BooleanField(_('is on map'), default=False)
+
+    admin_thumb_type = 'logo'
 
     class Meta:
         verbose_name = _('organization')
         ordering = ['name',]
+
+    def clean(self):
+        """
+        Validate set/validate mappable_location, longitude and latitude.
+        """
+        super(Organization, self).clean()
+
+        if self.lat and not self.lon:
+            raise ValidationError("Longitude required if specifying latitude.")
+
+        if self.lon and not self.lat:
+            raise ValidationError("Latitude required if specifying longitude.")
+
+        if not (self.lat and self.lon) and not self.mappable_location:
+            self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
+
+        if self.mappable_location and not (self.lat and self.lon): #location should always override lat/long if set
+            g = GoogleMaps(domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
+            try:
+                mappable_location, (lat, lon) = g.geocode(self.mappable_location)
+            except GeocoderQueryError as e:
+                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
+            except ValueError as e:
+                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
+            except TypeError as e:
+                raise ValidationError("The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.")
+            self.mappable_location = mappable_location
+            self.lat = lat
+            self.lon = lon
+
+    def save(self):
+        self.clean()
+        super(Organization, self).save()
 
 
 class OrganizationAudio(Audio):
@@ -146,6 +189,8 @@ class Team(Named, URL):
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
     department = models.ForeignKey('Department', verbose_name=_('department'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
     code = models.CharField(_('code'), max_length=64, blank=True, null=True)
+    is_legacy = models.BooleanField(_('is legacy'), default=False)
+    parent = models.ForeignKey('Team', verbose_name=_('parent team'), related_name="children", blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('team')
@@ -157,6 +202,17 @@ class Team(Named, URL):
         elif self.department:
             if self.department.organization:
                 return ' - '.join((self.department.organization.name, self.department.name, self.name))
+            else:
+                return ' - '.join((self.department.name, self.name))
+        return self.name
+
+    @property
+    def short(self):
+        if self.organization:
+            return ' - '.join((self.organization.name, self.name))
+        elif self.department:
+            if self.department.organization:
+                return ' - '.join((self.department.organization.name, self.name))
             else:
                 return ' - '.join((self.department.name, self.name))
         return self.name
@@ -182,6 +238,7 @@ class Person(Displayable, AdminThumbMixin):
     email = models.EmailField(_('email'), blank=True, null=True)
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
+    external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
 
     class Meta:
         verbose_name = _('person')
@@ -232,6 +289,11 @@ class PersonLink(Link):
 class PersonImage(Image):
 
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class PersonFile(File):
+
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class PersonBlock(Block):
@@ -340,7 +402,7 @@ class UMR(Named):
 class PersonActivity(Period):
     """(Activity description)"""
 
-    person = models.ForeignKey('Person', verbose_name=_('person'))
+    person = models.ForeignKey('Person', verbose_name=_('person'), related_name='activities')
 
     weeks = models.IntegerField(_('number of weeks'), blank=True, null=True)
     status = models.ForeignKey(ActivityStatus, verbose_name=_('status'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -355,6 +417,7 @@ class PersonActivity(Period):
     umr = models.ForeignKey(UMR, verbose_name=_('UMR'), blank=True, null=True, on_delete=models.SET_NULL)
     team = models.ForeignKey('Team', verbose_name=_('team'), related_name='team_activity', blank=True, null=True, on_delete=models.SET_NULL)
     second_team = models.ForeignKey('Team', verbose_name=_('second team'), related_name='second_team_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    second_team_text = models.CharField(_('second team text'), blank=True, null=True, max_length=256)
 
     project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), blank=True, null=True, on_delete=models.SET_NULL)
     rd_quota_float = models.IntegerField(_('R&D quota (float)'), blank=True, null=True)
@@ -385,12 +448,14 @@ class PersonActivity(Period):
 
     comments = models.TextField(_('comments'), blank=True)
 
+    external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
+
     class Meta:
         verbose_name = _('activity')
         verbose_name_plural = _('activities')
 
     def __str__(self):
         if self.status:
-            return ' - '.join((self.status.name, str(self.date_begin), str(self.date_end)))
+            return ' - '.join((self.status.name, str(self.date_from), str(self.date_to)))
         else:
-            return ' - '.join((str(self.date_begin), str(self.date_end)))
+            return ' - '.join((str(self.date_from), str(self.date_to)))

@@ -1,5 +1,8 @@
 import os
 import mimetypes
+import humanize
+from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django import forms
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -14,11 +17,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from mezzanine.conf import settings
-from organization.job.models import JobOffer, JobResponse
+from organization.pages.models import CustomPage
+from organization.magazine.models import Article
+from organization.job.models import *
 from organization.job.forms import JobResponseForm
 
-extention = ['.pdf', '.PDF', '.doc', '.docx']
-
+mime_types = ['pdf', 'msword', 'vnd.oasis.opendocument.text', 'vnd.openxmlformats-officedocument.wordprocessingml.document']
 
 class JobOfferDetailView(CreateView):
 
@@ -42,13 +46,16 @@ class JobOfferDetailView(CreateView):
         return reverse_lazy('organization-job-offer-detail', kwargs={'slug':self.kwargs['slug']})
 
     def form_valid(self, form):
-        # check extension uploaded files
-        name_cv, ext_cv = os.path.splitext(form.cleaned_data['curriculum_vitae'].name)
-        name_cl, ext_cl = os.path.splitext(form.cleaned_data['cover_letter'].name)
-        if ext_cv not in extention or ext_cl not in extention :
-            messages.info(self.request, _("Only .pdf, .doc, .docx files allowed."))
+        # check mimetype uploaded files
+        mime_type_cv = form.cleaned_data['curriculum_vitae'].content_type.split('/')[1]
+        mime_type_cl = form.cleaned_data['cover_letter'].content_type.split('/')[1]
+        if mime_type_cv not in mime_types or mime_type_cl not in mime_types :
+            messages.info(self.request, _("Only .pdf, .odt, .doc, .docx files allowed."))
             return super(JobOfferDetailView, self).form_invalid(form)
-
+        # check max upload file for anonymous user
+        if form.cleaned_data['curriculum_vitae'].size > settings.MAX_UPLOAD_SIZE_FRONT or form.cleaned_data['cover_letter'].size > settings.MAX_UPLOAD_SIZE_FRONT :
+            messages.info(self.request, _("Uploaded files cannot exceed "+humanize.naturalsize(settings.MAX_UPLOAD_SIZE_FRONT)+"."))
+            return super(JobOfferDetailView, self).form_invalid(form)
         email_application_notification(self.request, self.job_offer, form.cleaned_data)
         messages.info(self.request, _("You have successfully submitted your application."))
         return super(JobOfferDetailView, self).form_valid(form)
@@ -67,7 +74,6 @@ class JobOfferListView(ListView):
         context = super(JobOfferListView, self).get_context_data(**kwargs)
         return context
 
-
 def email_application_notification(request, job_offer, data):
     subject = "Candidature > " + job_offer.title
     to = [job_offer.email if job_offer.email else settings.DEFAULT_TO_EMAIL]
@@ -77,9 +83,10 @@ def email_application_notification(request, job_offer, data):
         'first_name': data['first_name'],
         'last_name': data['last_name'],
         'email': data['email'],
+        'message': data['message']
     }
 
-    message = get_template('core/email/application_notification.html').render(Context(ctx))
+    message = get_template('email/application_notification.html').render(Context(ctx))
     msg = EmailMessage(subject, message, to=to, from_email=from_email)
     msg.attach(data['curriculum_vitae'].name, data['curriculum_vitae'].read(), data['curriculum_vitae'].content_type)
     msg.attach(data['cover_letter'].name, data['cover_letter'].read(), data['cover_letter'].content_type)
@@ -87,3 +94,42 @@ def email_application_notification(request, job_offer, data):
     msg.send()
 
     return HttpResponse('email_application_notification')
+
+
+class CandidacyListView(ListView):
+
+    model = Candidacy
+    template_name='job/candidacy_list.html'
+    context_object_name = 'candidacy'
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.published()
+        
+    def get_context_data(self, **kwargs):
+        context = super(CandidacyListView, self).get_context_data(**kwargs)
+        return context
+
+
+class CandidacyAutocomplete(Select2QuerySetSequenceView):
+    def get_queryset(self):
+
+        articles = Article.objects.all()
+        custompage = CustomPage.objects.all()
+        events = Event.objects.all()
+
+        if self.q:
+            articles = articles.filter(title__icontains=self.q)
+            custompage = custompage.filter(title__icontains=self.q)
+            events = events.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(articles, custompage, events )
+
+        if self.q:
+            # This would apply the filter on all the querysets
+            qs = qs.filter(title__icontains=self.q)
+
+        # This will limit each queryset so that they show an equal number
+        # of results.
+        qs = self.mixup_querysets(qs)
+
+        return qs

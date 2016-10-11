@@ -1,0 +1,27 @@
+{% load i18n mezzanine_tags event_tags  %}
+
+<div class="page__meta-date">
+    <a href="{{ event.get_absolute_url }}">
+        {% include 'agenda/includes/event_date.html' %}
+    </a>
+</div>
+
+<div class="page__meta-separator page__meta-separator--small"></div>
+
+{% if event.location %}
+    <a href="{% url 'location-detail' event.location.slug %}">
+        <div class="page__meta-title">{{ event.location }}</div>
+    </a>
+{% endif %}
+
+{% if unit_booking %}
+
+    {% if event.prices.all.0|floatformat != '0' and event.prices.all|length > 0 %}
+        <p>
+            <a class="button button--small mt1" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
+                {% trans "Reserve" %}
+            </a>
+        </p>
+    {% endif %}
+
+{% endif %}

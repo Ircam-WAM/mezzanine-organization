@@ -36,6 +36,11 @@ class ProjectVideoInline(StackedDynamicInlineAdmin):
     model = ProjectVideo
 
 
+class ProjectFileInline(TabularDynamicInlineAdmin):
+
+    model = ProjectFile
+
+
 class ProjectAdmin(admin.ModelAdmin):
 
     model = Project
@@ -44,7 +49,12 @@ class ProjectAdmin(admin.ModelAdmin):
 class ProjectAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectAdmin.fieldsets)
-    inlines = [ ProjectBlockInline, ProjectImageInline, ProjectAudioInline, ProjectVideoInline, ProjectLinkInline]
+    inlines = [ ProjectBlockInline,
+                ProjectImageInline,
+                ProjectAudioInline,
+                ProjectVideoInline,
+                ProjectLinkInline,
+                ProjectFileInline]
     filter_horizontal = ['teams', 'organizations']
     list_filter = ['type', 'program', 'program_type', ]
 

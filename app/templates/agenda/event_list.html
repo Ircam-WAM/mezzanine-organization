@@ -1,130 +1,111 @@
-{% extends "base.html" %}
+{% extends "pages/page.html" %}
 {% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags %}
 
-{% block meta_title %}{% if page %}{{ page.richtextpage.meta_title }}{% else %}{% trans "Events" %}{% endif %}{% endblock %}
+{% block meta_title %}
+    {% if page %}
+        {{ page.richtextpage.meta_title }}
+    {% else %}
+        {% trans "Events" %}
+    {% endif %}
+{% endblock %}
 
-{% block meta_keywords %}{% metablock %}
-{% keywords_for page as keywords %}
-{% for keyword in keywords %}
-    {% if not forloop.first %}, {% endif %}
-    {{ keyword }}
-{% endfor %}
-{% endmetablock %}{% endblock %}
+{% block meta_keywords %}
+    {% metablock %}
+        {% keywords_for page as keywords %}
+        {% for keyword in keywords %}
+            {% if not forloop.first %}, {% endif %}
+            {{ keyword }}
+        {% endfor %}
+    {% endmetablock %}
+{% endblock %}
 
-{% block meta_description %}{% metablock %}
-{{ page.description }}
-{% endmetablock %}{% endblock %}
-
-{% block title %}
-{% if page %}
-{{ page.title }}
-{% else %}
-{% trans "Program" %}
-{% endif %}
+{% block meta_description %}
+    {% metablock %}
+        {{ page.description }}
+    {% endmetablock %}
 {% endblock %}
 
 {% block breadcrumb_menu %}
-{{ block.super }}
-{% if tag or location or year or month or author %}
-<li>{% spaceless %}
-{% if tag %}
-    {% trans "Tag:" %} {{ tag }}
-{% else %}{% if location %}
-    {% trans "Location:" %} {{ location }}
-{% else %}{% if year or month %}
-    {% if month %}{{ month }}, {% endif %}{{ year }}
-{% else %}{% if author %}
-    {% trans "Author:" %} {{ author.get_full_name|default:author.username }}
-{% endif %}{% endif %}{% endif %}{% endif %}
-{% endspaceless %}
-</li>
-{% endif %}
+    {{ block.super }}
+    {% if tag or location or month or week or author %}
+        <li class="breadcrumb__item">
+            <a href="{% url 'event_list' %}" class="breadcrumb__link">{% trans "Agenda" %}</a>
+        </li>
+        <li class="breadcrumb__item active">
+            {% if tag %}
+                {% trans "Tag:" %} {{ tag }}
+            {% elif location %}
+                {% trans "Location:" %} {{ location }}
+            {% elif month %}
+                {% if month %}{{ month }}, {% endif %}{{ year }}
+            {% elif week %}
+                {% for d in week|week_range:year %}
+                    {{ d|date:"d M" }}{% if forloop.first %} - {% endif %}
+                {% endfor %}
+                , {{ year }}
+            {% elif author %}
+                {% trans "Author:" %} {{ author.get_full_name|default:author.username }}
+            {% endif %}
+        </li>
+    {% else %}
+        <li class="breadcrumb__item active">
+            {% trans "Agenda" %}
+        </li>
+    {% endif %}
 {% endblock %}
 
 {% block main %}
+    <div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
 
-{% comment %}
-{% if tag or location or year or month or author %}
-    {% block event_list_filterinfo %}
-    <p>
-    {% if tag %}
-        {% trans "Viewing events tagged" %} <a href="{% url "event_list_tag" tag.slug %}">{{ tag }}</a>
-    {% elif location %}
-        {% trans "Viewing events for the location" %} {{ location }}
-    {% elif year or month %}
-      {% if not day %}
-         {% trans "Viewing events from" %} {% if month %}{{ month }}, {% endif %}{{ year }}
-      {% else %}
-         {% trans "Viewing events from" %} {{ day_date }}
-      {% endif %}
-    {% elif author %}
-        {% trans "Viewing events by" %}
-        {{ author.get_full_name|default:author.username }}
-    {% endif %}
-    {% endblock %}
-    </p>
-{% else %}
-{% endcomment %}
+        <div class="container">
 
-{% if page %}
-    {% block event_list_pagecontent %}
-    {{ page.richtextpage.content|richtext_filters|safe }}
-    {% endblock %}
-    {% else %}
+            <div class="row">
 
-    <ul class="list-inline tag-cloud">
-        {% all_weeks as weeks %}
-        {% for w in weeks %}
-        <li>
-            <a href="{% url "event_list_week" year w %}" {% if week|add:0 == w %}class="is-active"{% endif %}>{% for d in w|week_range:year %}{{ d|date:"d M" }}{% if forloop.first %} - {% endif %}{% endfor %}</a>
-        </li>
-        {% if not forloop.last %} | {% endif %}
-        {% endfor %}
-    </ul>
+                <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
+                    <h1 class="dotted">
+                        {% if page %}
+                            {{ page.richtextpage.meta_title }}
+                        {% else %}
+                            {% trans "Agenda" %}
+                        {% endif %}
+                    </h1>
 
-    <hr/>
+                    <div class="page__filters">
+                        {% keywords_for mezzanine_agenda.event as tags %}
+                        {% all_events as all_events %}
+                        {% if tags %}
+                            <a href="{% url 'event_list' %}" class="button{% if not tag %} button--black{% else %} button--white{% endif %}">{% trans "All events" %}</a>
+                            {% for t in tags %}
+                                <a href="{% url "event_list_tag" t.slug %}" class="button{% if tag == t %} button--black{% else %} button--white{% endif %}{% if t|tag_is_excluded %} button--excluded{% endif %}">
+                                    {{ t }}
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
 
-    {% block event_keywords %}
-    {% keywords_for mezzanine_agenda.event as tags %}
-    {% all_events as all_events %}
-    {% if tags %}
-    <ul class="list-inline tag-cloud">
-        <li>
-            <a href="/events/" {% if not tag %}class="is-active"{% endif %}>{% trans "All" %} ({{ all_events.count }})</a>
-        </li>
-        {% for t in tags %}
-        {% if forloop.first %} | {% endif %}
-        <li>
-            <a href="{% url "event_list_tag" t.slug %}" {% if tag == t %}class="is-active"{% endif %}
-                class="tag-weight-{{ tag.weight }}">{{ t }} ({{ t.item_count }})</a>
-        </li>
-        {% if not forloop.last %} | {% endif %}
-        {% endfor %}
-    </ul>
-    <br/>
-    {% endif %}
-    {% endblock %}
-{% endif %}
-{# {% endif %}#}
+                </div>
 
-<div class="msry__container">
-    <div class="msry__sizer">
-{% for event in events.object_list %}
- {% include 'agenda/includes/event_card.html' %}
-{% endfor %}
+            </div>
+
+            <div class="row">
+
+                <div class="col-xs-12">
+
+                    <div class="white-bg page__content">
+                        <div class="container">
+                            {% for event in events.object_list %}
+                                {% include 'agenda/includes/event_linecard.html' %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% pagination_for events %}
+
     </div>
-</div>
-
-{# <a href='{% icalendar_url %}' target="_blank" class="small  push-ical">{% trans "Subscribe to all events in" %} Google Calendar/Outlook/iCal</a>#}
-
-{% pagination_for events %}
-
-{% if settings.COMMENTS_DISQUS_SHORTNAME %}
-{% include "generic/includes/disqus_counts.html" %}
-{% endif %}
-
-{% endblock %}
-
-{% block right_panel %}
-{% include "agenda/includes/filter_panel.html" %}
 {% endblock %}

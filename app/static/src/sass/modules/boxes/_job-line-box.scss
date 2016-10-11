@@ -1,0 +1,50 @@
+$module: ".job-line-box";
+
+#{$module} {
+
+    &:after {
+
+        content: "";
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: rgba(0, 0, 0, 0.25);
+
+        @include margin(2 0 1 0);
+
+        @include mq($until: sm) {
+            @include margin(1 0 1 0);
+        }
+
+    }
+
+    &--candidacy {
+
+        #{$module}__title {
+
+            @include margin-top(0);
+
+        }
+
+        #{$module}__image {
+
+            border-radius: 150px;
+
+        }
+
+    }
+
+    &__title {
+
+        @include margin-bottom(1);
+        @include margin-top(0.5);
+
+    }
+
+    &__desc {
+
+        @include margin-bottom(1);
+
+    }
+
+}

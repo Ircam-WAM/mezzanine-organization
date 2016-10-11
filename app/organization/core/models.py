@@ -12,7 +12,7 @@ from mezzanine.core.models import Displayable, Slugged, Orderable
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')))
 ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
-IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('slider', _('slider')), ('card', _('card')), ('page_slider', _('page slider')))
+IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('slider', _('slider')), ('card', _('card')), ('page_slider', _('page - slider')), ('page_featured', _('page - featured')))
 
 
 class Description(models.Model):
@@ -24,11 +24,10 @@ class Description(models.Model):
         abstract = True
 
 
-class Named(models.Model):
+class Named(Description):
     """Abstract model providing a name field"""
 
     name = models.CharField(_('name'), max_length=512)
-    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True
@@ -42,11 +41,10 @@ class Named(models.Model):
         return slugify(self.__unicode__())
 
 
-class Titled(models.Model):
+class Titled(Description):
     """Abstract model providing a title field"""
 
     title = models.CharField(_('title'), max_length=1024)
-    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True
@@ -87,6 +85,22 @@ class Image(Titled, Orderable):
     file = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
     credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
     type = models.CharField(_('type'), max_length=64, choices=IMAGE_TYPE_CHOICES)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        value = self.description
+        if not value:
+            value = self.file.name
+        if not value:
+            value = ""
+        return value
+
+
+class File(Titled, Orderable):
+
+    file = FileField(_("document"), max_length=1024, upload_to="Documents/%Y/%m/%d/")
 
     class Meta:
         abstract = True
@@ -178,3 +192,37 @@ class Period(models.Model):
 
     class Meta:
         abstract = True
+
+
+class PeriodDateTime(models.Model):
+
+    date_from = models.DateTimeField(_('begin date'), null=True, blank=True)
+    date_to = models.DateTimeField(_('end date'), null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
+class AdminThumbRelatedMixin(object):
+    """
+    Provides a thumbnail method on models for admin classes to
+    reference in the ``list_display`` definition.
+    """
+
+    admin_thumb_type = None
+
+    def admin_thumb(self):
+        thumb = ""
+        if self.admin_thumb_type:
+            images = self.images.filter(type=self.admin_thumb_type)
+            if images:
+                thumb = images[0].file
+        if not thumb:
+            return ""
+        from mezzanine.conf import settings
+        from mezzanine.core.templatetags.mezzanine_tags import thumbnail
+        x, y = settings.ADMIN_THUMB_SIZE.split('x')
+        thumb_url = thumbnail(thumb, x, y)
+        return "<img src='%s%s'>" % (settings.MEDIA_URL, thumb_url)
+    admin_thumb.allow_tags = True
+    admin_thumb.short_description = ""
