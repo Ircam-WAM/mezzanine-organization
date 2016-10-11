@@ -277,6 +277,11 @@
                     <div class="row" data-summary-content>
                         <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
                             <ul class="partners-list">
+                                {% if project.lead_organization %}
+                                    {% with project.lead_organization.images.all|get_type:'logo' as images %}
+                                        {% include 'core/inc/logo.html' %}
+                                    {% endwith %}
+                                {% endif %}
                                 {% for organization in project.organizations.all %}
                                     {% with organization.images.all|get_type:'logo' as images %}
                                         {% include 'core/inc/logo.html' %}
