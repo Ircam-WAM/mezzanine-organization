@@ -25,7 +25,7 @@ class Media(Displayable):
     poster_url = models.URLField(_('poster'), max_length=1024, blank=True)
     created_at = models.DateTimeField(auto_now=True)
 
-    objects = SearchableManager()
+    # objects = SearchableManager()
     search_fields = ("title",)
 
     class Meta:
