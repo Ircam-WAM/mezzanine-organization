@@ -37,7 +37,9 @@
                                                 <div class="article-box__content tal">
                                                     <h3 class="article-box__title">{{ slider.content_object.title }}</h3>
                                                     <div class="article-box__subtitle">
-                                                        {{ slider.content_object.sub_title }}
+                                                        {% if slider.content_type.model != 'event' %}
+                                                            {{ slider.content_object.sub_title }}
+                                                        {% endif %}
                                                         {% if slider.content_object.start %}
                                                             {% with slider.content_object as event %}
                                                                 {% if slider.content_object.sub_title %}
