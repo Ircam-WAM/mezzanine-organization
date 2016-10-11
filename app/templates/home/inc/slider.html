@@ -78,9 +78,13 @@
                 <div class="col-xs-12 col-sm-11 col-sm-push-1">
                     <ul class="">
                         {% for slider in home.dynamiccontenthomeslider_set.all %}
-                            <li class="{% if forloop.first %}active{% endif %}">
-                                <a href="#"></a>
-                            </li>
+                            {% with slider.content_object.images.all|get_type:'slider' as images %}
+                                {% if images %}
+                                    <li class="{% if forloop.first %}active{% endif %}">
+                                        <a href="#"></a>
+                                    </li>
+                                {% endif %}
+                            {% endwith %}
                         {% endfor %}
                     </ul>
                 </div>
