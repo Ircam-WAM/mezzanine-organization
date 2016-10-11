@@ -74,47 +74,6 @@
         </p>
     {% endif %}
 
-    {% comment %}
-        {% if event.location %}
-        <h3 class="section__title">Le lieu :</h3>
-        {% block event_detail_location %}
-        <a href="{% url 'location-detail' event.location.slug %}">{{ event.location }}</a>
-        <p>
-            <p>{{ event.location }} {{ event.location.address|linebreaksbr }}</p>
-            <p>{% trans "Room" %} {{ event.location.room }}</p>
-            <a href="{{ event|google_nav_url }}" target="_blank">
-                Get Directions
-            </a>
-        </p>
-        <a href="{{ event|google_nav_url }}" target="_blank" class="">
-             {% google_static_map event 900 300 15 %}
-        </a/>
-        {% endblock %}
-        {% endif %}
-
-        {% block event_detail_keywords %}
-        {% keywords_for event as tags %}
-        {% if tags %}
-        {% spaceless %}
-        <ul class="list-inline tags">
-            <li>{% trans "Tags" %}:</li>
-            {% for tag in tags %}
-            <li><a href="{% url "event_list_tag" tag.slug %}">{{ tag }}</a></li>
-            {% endfor %}
-        </ul>
-        {% endspaceless %}
-        {% endif %}
-        {% endblock %}
-
-        {% block event_detail_rating %}
-        <div class="panel panel-default rating">
-            <div class="panel-body">
-            {% rating_for event %}
-            </div>
-        </div>
-        {% endblock %}
-    {% endcomment %}
-
 {% endblock %}
 
 {% block page_link %}
@@ -122,6 +81,13 @@
     <div class="mt4">
         <div class="row">
             {% with event.links.all as links %}
+                {% if links %}
+                    <div class="col-xs-6">
+                        {% include 'core/inc/link.html' %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% with child.links.all as links %}
                 {% if links %}
                     <div class="col-xs-6">
                         {% include 'core/inc/link.html' %}
@@ -227,11 +193,6 @@
             {% editable event.start event.end event.location %}
                 {% with True as unit_booking %}
                     {% include 'agenda/includes/event_metainfo.html' %}
-                    {% for child in event.children.all %}
-                        {% with child as event %}
-                            {% include "agenda/includes/event_metainfo.html" %}
-                        {% endwith %}
-                    {% endfor %}
                 {% endwith %}
             {% endeditable %}
         {% endblock %}
