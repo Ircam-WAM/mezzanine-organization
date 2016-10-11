@@ -11,7 +11,7 @@ $module: ".button";
     @include font-size(l);
     @include line-height(1);
     @include typeface(sans-serif);
-    @include padding(.25 1 .5 1);
+    @include padding(.25 1 .25 1);
     //@include margin(0);
     font-weight: weight(light);
 
@@ -75,6 +75,24 @@ $module: ".button";
         text-align: center;
 
         @include margin(0 0 1 0);
+    }
+
+    &--tournees {
+
+        color: white;
+        @include line-height(1);
+        @include padding(.25 .5 .25 .5);
+        background: $color-black;
+        text-transform: uppercase;
+        font-weight: weight(regular);
+        border: 1px solid $color-black;
+
+        &:hover {
+            background-color: $color-main;
+            color: $color-black;
+            border: 1px solid $color-main;
+        }
+
     }
 
 }

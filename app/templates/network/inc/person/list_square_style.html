@@ -29,12 +29,16 @@
 
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
 
-                        <div class="article-box article-box--person" >
+                        <div class="row">
+
                             {% with person_list_block_inline.person as person %}
 
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
                                     {% include "network/inc/person/person_card_square.html" %}
+                                </div>
 
                             {% endwith %}
+
                         </div>
 
                     </div>
