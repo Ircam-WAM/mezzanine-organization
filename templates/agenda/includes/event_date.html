@@ -25,7 +25,7 @@
             {{ event.start|date:"l j F" }}<br>
             {% for period in event.periods.all %}
                 {% if period.date_to and period.date_to|date:"H:i" != "23:59" %}
-                    {{ period.date_from|date:"H\hi" }} - {{ period.date_to|date:"H\hi" }}<br>
+                    {{ period.date_from|date:"H\hi" }}{% if period|period_is_more_than_hours:4 %} - {{ period.date_to|date:"H\hi" }}{% endif %}<br>
                 {% else %}
                     {% if forloop.last or event.periods.all|length == 2 %} {% trans "and"%} {% elif not forloop.first %}, {% endif %}
                         {{ period.date_from|date:"H\hi" }}
@@ -39,7 +39,12 @@
         {% with event.periods.all|same_time_in_periods as same_time_in_periods %}
         {% for period in event.periods.all %}
             {% if period.date_to and period.date_to|date:"H:i" != "23:59" %}
-                {{ period.date_from|date:"l j F" }} {% trans "from" %} {{ period.date_from|date:"H\hi" }} {% trans "to" %} {{ period.date_to|date:"H\hi" }}<br>
+                {{ period.date_from|date:"l j F" }}
+                {% if period|period_is_more_than_hours:4 %}
+                    {% trans "from" %} {{ period.date_from|date:"H\hi" }} {% trans "to" %} {{ period.date_to|date:"H\hi" }}<br>
+                {% else %}
+                    {{ period.date_from|date:"H\hi" }}<br>
+                {% endif %}
             {% else %}
                 {% if event.periods.all|length > 1 and not forloop.last %}
                     {{ period.date_from|date:"l j" }}{% if event.periods.all|length == 2 %} {% trans "and" %} {% else %}, {% endif %}
