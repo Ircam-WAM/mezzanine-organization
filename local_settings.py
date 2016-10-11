@@ -22,9 +22,9 @@ DATABASES = {
     'eve': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'eve',
-        'USER': 'django',
+        'USER': 'eve',
         'PASSWORD': "q2nqzt0WGnwWé,256",
-        'HOST': 'eve',
+        'HOST': 'evedb',
         'PORT': '5432',
     },
     'prestashop': {

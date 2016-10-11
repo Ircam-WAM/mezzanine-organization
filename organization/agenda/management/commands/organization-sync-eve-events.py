@@ -25,15 +25,15 @@ class Command(BaseCommand):
     default_user = User.objects.get(username='admin')
 
     def cleanup(self):
-        # for event in ma_models.Event.objects.all():
-        #     event.delete()
-        # for location in ma_models.EventLocation.objects.all():
-        #     location.delete()
+        for event in ma_models.Event.objects.all():
+            event.delete()
+        for location in ma_models.EventLocation.objects.all():
+            location.delete()
         for event_price in ma_models.EventPrice.objects.all():
             event_price.delete()
 
     def handle(self, *args, **kwargs):
-        # self.cleanup()
+        self.cleanup()
         meta_event_name = kwargs.get('meta_event')
         meta_trans_all = eve_models.MetaEventTranslation.objects.all()
         for meta_trans in meta_trans_all:
@@ -44,6 +44,8 @@ class Command(BaseCommand):
             event_trans = eve_models.EventTranslation.objects.filter(id=eve_event, lang='fr')[0]
             manifestations = eve_event.manifestations.all().order_by('happens_at')
             first = True
+            eve_locations = []
+
             for manifestation in manifestations:
                 events = ma_models.Event.objects.filter(external_id=manifestation.id)
                 if not events:
@@ -67,8 +69,9 @@ class Command(BaseCommand):
                 location.save()
                 event.location = location
                 event.save()
-                keyword, _ = Keyword.objects.get_or_create(title=eve_event.event_category.name)
-                event.keywords.add(AssignedKeyword(keyword=keyword), bulk=False)
+
+                # keyword, c = Keyword.objects.get_or_create(title=eve_event.event_category.name)
+                # event.keywords.add(AssignedKeyword(keyword=keyword), bulk=False)
 
                 eve_prices = eve_models.PriceManifestation.objects.filter(manifestation=manifestation)
                 for price in eve_prices:
@@ -77,10 +80,14 @@ class Command(BaseCommand):
                         if not event_price in event.prices.all():
                             event.prices.add(event_price)
 
-                if not first:
+                if not first and not manifestation.location in eve_locations:
                     event.parent = parent
                 else:
                     parent = event
                     first = False
 
+                event.status = 1
                 event.save()
+
+                if not manifestation.location in eve_locations:
+                    eve_locations.append(manifestation.location)
