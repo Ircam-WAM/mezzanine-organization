@@ -26,10 +26,12 @@ $module: ".slider-network";
 
         background-size: contain;
         background-repeat: no-repeat;
-        background-color: #D8D8D8;
+        background-color: #FFF;
         background-position: center center;
-        width: 100%;
+        width: 60%;
         height: 140px;
+        display: block;
+        margin: 0 auto;
 
         @include margin-bottom(.5);
 
@@ -47,9 +49,11 @@ $module: ".slider-network";
     &__slide-subtitle {
 
         @include font-size(xs);
-        @include line-height(1);
+        @include line-height(.5);
         @include typeface(serif);
         font-weight: weight(bold);
+
+        height: 3rem;
 
     }
 
