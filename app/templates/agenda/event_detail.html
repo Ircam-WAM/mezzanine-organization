@@ -38,10 +38,11 @@
           {{ event.departments.all.0.department.name }}
         </div>
     {% endif %}
-    <div class="tag tag--category">
-        {% keywords_for event as tags %}
-        {{tags.0}}
-    </div>
+    {% if event.category %}
+        <div class="tag tag--category">
+            {{ event.category }}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block breadcrumb_menu %}
