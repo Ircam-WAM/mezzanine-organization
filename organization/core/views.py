@@ -53,12 +53,24 @@ class CustomSearchView(TemplateView):
         # count objects
         filter_dict = dict()
         for result in results:
-            if result.__class__.__name__ in filter_dict:
-                filter_dict[result.__class__.__name__]['count'] += 1
-            else:
-                filter_dict[result.__class__.__name__] = {'count' : 1}
-                filter_dict[result.__class__.__name__].update({'app_label' : result._meta.app_label})
+            # print('---------------------------')
+            parent_class = result._meta.get_parent_list()[0]
+            print(parent_class.__class__.__name__)
+            # print(parent_class == "<class 'mezzanine.pages.models.Page'>")
+            # print('---------------------------')
 
+            if result._meta.get_parent_list() == 'mezzanine.pages.models.Page':
+                classname = 'Page'
+            else :
+                classname = result.__class__.__name__
+
+            if classname in filter_dict:
+                filter_dict[classname]['count'] += 1
+            else:
+                filter_dict[classname] = {'count' : 1}
+                filter_dict[classname].update({'app_label' : result._meta.app_label})
+
+        print(filter_dict)
         # get url param
         current_query = QueryDict(mutable=True)
         current_query = request.GET.copy()

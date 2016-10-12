@@ -129,6 +129,7 @@ DASHBOARD_TAGS = ( ("mezzanine_tags.app_list",), (), ("mezzanine_tags.recent_act
 GRAPPELLI_ADMIN_TITLE = 'IRCAM Admin'
 
 SEARCH_MODEL_CHOICES = None # all objects
+SEARCH_MODEL_CHOICES = ('pages.Page',)
 SEARCH_PER_PAGE = 10
 MAX_PAGING_LINKS = 10
 
