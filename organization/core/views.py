@@ -53,11 +53,12 @@ class CustomSearchView(TemplateView):
         # count objects
         filter_dict = dict()
         for result in results:
-            # print('---------------------------')
+            print('---------------------------')
             parent_class = result._meta.get_parent_list()[0]
-            print(parent_class.__class__.__name__)
+            print(parent_class)
+            print(parent_class.__name__)
             # print(parent_class == "<class 'mezzanine.pages.models.Page'>")
-            # print('---------------------------')
+            print('---------------------------')
 
             if result._meta.get_parent_list() == 'mezzanine.pages.models.Page':
                 classname = 'Page'
