@@ -29,7 +29,8 @@
         <div class="row">
 
             <div class="col-xs-12 col-md-10 col-md-push-1">
-
+                <!-- list organization types dynamically functions of activated organization -->
+                {{ organization_types }}
                 <div class="map" id="network-map" style="width: 100%; height: 550px;">
 
                 </div>
@@ -56,6 +57,9 @@
                                 </div>
                                 <div class="slider-network__slide-subtitle">
                                     {{ organization.city }}, {{ organization.country.name }}
+                                </div>
+                                <div class="">
+                                    {{ organization.type }}
                                 </div>
                             </li>
 
