@@ -1,12 +1,4 @@
-{% extends "base.html" %}
-{% load i18n %}
-{% load mezzanine_tags keyword_tags %}
-
-{% block title %}
-{{ playlist.title }}
-{% endblock %}
-
-{% block main %}
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
 
 {% for media in playlist.medias.all %}
     {% if forloop.first %}
@@ -19,19 +11,9 @@
         </div>
         <ol>
     {% else %}
-        <li>{{ media.title }}</li>
+        <li><a href="#" data-src="{{ media.url }}">>{{ media.title }}</a></li>
     {% endif %}
     {% if forloop.last %}
         </ol>
     {% endif %}
 {% endfor %}
-
-<div class="video-html">
-    {{ playlist.content|safe }}
-</div>
-
-{% with playlist as object %}
-  {% include "includes/share_buttons.html" %}
-{% endwith %}
-
-{% endblock %}
