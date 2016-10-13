@@ -26,7 +26,6 @@ class Media(Displayable):
 
     external_id = models.CharField(_('media id'), max_length=128)
     poster_url = models.URLField(_('poster'), max_length=1024, blank=True)
-    created_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='medias', blank=True, null=True, on_delete=models.SET_NULL)
 
     # objects = SearchableManager()
@@ -35,7 +34,7 @@ class Media(Displayable):
     class Meta:
         verbose_name = "media"
         verbose_name_plural = "medias"
-        ordering = ('-created_at',)
+        ordering = ('created',)
 
     def __str__(self):
         return self.title
