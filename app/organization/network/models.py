@@ -153,6 +153,8 @@ class OrganizationBlock(Block):
 class OrganizationType(Named):
     """(OrganizationType description)"""
 
+    css_class = models.CharField(_('class css'), max_length=64, blank=True, null=True,  help_text="Determine color on map.")
+
     class Meta:
         verbose_name = _('organization type')
         ordering = ['name',]
