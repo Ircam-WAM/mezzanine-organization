@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load mezzanine_tags keyword_tags %}
+
+{% block title %}
+{{ playlist.title }}
+{% endblock %}
+
+{% block main %}
+
+{% for media in playlist.medias.all %}
+    {% if forloop.first %}
+        <div class="embed-responsive">
+        	<audio width="100%" poster="{{ media.poster_url }}" controls data-title="{{ media.title }}" preload="none">
+                {% for transcoded_media in media.transcoded.all %}
+        	       <source src="{{ transcoded_media.url }}" type="{{ transcoded_media.mime_type }}" />
+                {% endfor %}
+        	</audio>
+        </div>
+        <ul>
+    {% else %}
+        <li>{{ media.title }}</li>
+    {% endif %}
+    {% if forloop.last %}
+        </ul>
+    {% endif %}
+{% endfor %}
+
+<div class="video-html">
+    {{ playlist.content|safe }}
+</div>
+
+{% with playlist as object %}
+  {% include "includes/share_buttons.html" %}
+{% endwith %}
+
+{% endblock %}
