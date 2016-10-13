@@ -4,21 +4,25 @@ from mezzanine.core.admin import *
 from organization.media.models import *
 
 
-class VideoAdmin(BaseTranslationModelAdmin):
+class MediaTranscodedAdmin(TabularDynamicInlineAdmin):
 
-    model = Video
+    model = MediaTranscoded
 
 
-class AudioAdmin(BaseTranslationModelAdmin):
+class MediaAdmin(BaseTranslationModelAdmin):
 
-    model = Audio
+    model = Media
+    inlines = (MediaTranscodedAdmin,)
+
+class PlaylistMediaInline(TabularDynamicInlineAdmin):
+
+    model = PlaylistMedia
 
 
 class PlaylistAdmin(BaseTranslationModelAdmin):
 
     model = Playlist
-    list_display = ('__str__',)
-    filter_horizontal = ['audios']
+    inlines = (PlaylistMediaInline,)
 
 
 class MediaCategoryAdmin(BaseTranslationModelAdmin):
@@ -26,7 +30,6 @@ class MediaCategoryAdmin(BaseTranslationModelAdmin):
     model = MediaCategory
 
 
-admin.site.register(Video, VideoAdmin)
-admin.site.register(Audio, AudioAdmin)
+admin.site.register(Media, MediaAdmin)
 admin.site.register(Playlist, PlaylistAdmin)
 admin.site.register(MediaCategory, MediaCategoryAdmin)

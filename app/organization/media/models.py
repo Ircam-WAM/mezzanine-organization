@@ -13,78 +13,84 @@ from mezzanine_agenda.models import Event
 from django.conf import settings
 import requests
 
+
 MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
 
+PLAYLIST_TYPE_CHOICES = [
+    ('audio', _('audio')),
+    ('video', _('video')),
+]
 
 class Media(Displayable):
     """Media"""
 
-    media_id = models.CharField(_('media id'), max_length=128)
-    open_source_url = models.URLField(_('open source URL'), max_length=1024, blank=True)
-    closed_source_url = models.URLField(_('closed source URL'), max_length=1024, blank=True)
+    external_id = models.CharField(_('media id'), max_length=128)
     poster_url = models.URLField(_('poster'), max_length=1024, blank=True)
     created_at = models.DateTimeField(auto_now=True)
+    category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='medias', blank=True, null=True, on_delete=models.SET_NULL)
 
     # objects = SearchableManager()
     search_fields = ("title",)
 
     class Meta:
-        abstract = True
+        verbose_name = "media"
+        verbose_name_plural = "medias"
+        ordering = ('-created_at',)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("organization-media-detail", kwargs={"slug": self.slug})
 
     @property
     def uri(self):
-        return MEDIA_BASE_URL + self.media_id
+        return MEDIA_BASE_URL + self.external_id
 
     def get_html(self):
         r = requests.get(self.uri)
         return r.content
 
-    def clean(self):
-        super(Media, self).clean()
-        self.q = pq(self.get_html())
-        sources = self.q('source')
-        for source in sources:
-            if self.open_source_mime_type in source.attrib['type']:
-                self.open_source_url = source.attrib['src']
-            elif self.closed_source_mime_type in source.attrib['type']:
-                self.closed_source_url = source.attrib['src']
-        video = self.q('video')
-        if len(video):
-            if 'poster' in video[0].attrib.keys():
-                self.poster_url = video[0].attrib['poster']
+
+def create_media(instance, created, raw, **kwargs):
+    # Ignore fixtures and saves for existing courses.
+    if not created or raw:
+        return
+
+    q = pq(instance.get_html())
+    sources = q('source')
+
+    video = q('video')
+    if len(video):
+        if 'poster' in video[0].attrib.keys():
+            instance.poster_url = video[0].attrib['poster']
+
+    for source in sources:
+        mime_type = source.attrib['type']
+        transcoded = MediaTranscoded(media=instance, mime_type=mime_type)
+        transcoded.url = source.attrib['src']
+        transcoded.save()
+
+    instance.save()
+
+models.signals.post_save.connect(create_media, sender=Media, dispatch_uid='create_media')
 
 
-class Audio(Media):
-    """Audio"""
+class MediaTranscoded(models.Model):
 
-    open_source_mime_type = 'audio/ogg'
-    closed_source_mime_type = 'audio/mp4'
-    category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
+    media = models.ForeignKey('Media', verbose_name=_('media'), related_name='transcoded')
+    file = FileField(_("Image"), max_length=1024, upload_to="uploads/media/")
+    url = models.URLField(_('URL'), max_length=1024, blank=True)
+    mime_type = models.CharField(_('mime type'), max_length=64)
 
-    class Meta:
-        verbose_name = _('audio')
-        ordering = ('-created_at',)
-
-    def get_absolute_url(self):
-        return reverse("festival-audio-detail", kwargs={"slug": self.slug})
-
-
-class Video(Media):
-    """Video"""
-
-    open_source_mime_type = 'video/webm'
-    closed_source_mime_type = 'video/mp4'
-    category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+    preferred_mime_type = ['video/webm', 'audio/ogg']
 
     class Meta:
-        verbose_name = _('video')
-        ordering = ('-created_at',)
+        verbose_name = "media"
+        verbose_name_plural = "medias"
 
-    def get_absolute_url(self):
-        return reverse("festival-video-detail", kwargs={"slug": self.slug})
+    def __str__(self):
+        return self.url
 
 
 class MediaCategory(Slugged, Description):
@@ -95,16 +101,28 @@ class MediaCategory(Slugged, Description):
         verbose_name_plural = _('media categories')
 
     def count(self):
-        try:
-            return self.videos.published().count()+1
-        except:
-            return self.audios.published().count()+1
+        return self.medias.published().count()+1
 
 
-class Playlist(Slugged, Description):
-    """(Playlist description)"""
+class Playlist(Displayable):
+    """Playlist"""
 
-    audios = models.ManyToManyField('Audio', verbose_name=_('audios'), related_name='playlists', blank=True)
+    type = models.CharField(_('type'), max_length=32, choices=PLAYLIST_TYPE_CHOICES, blank=True, null=True)
 
-    def __str__(self):
-        return self.title
+    class Meta:
+        verbose_name = _('playlist')
+        verbose_name_plural = _('playlists')
+
+    def get_absolute_url(self):
+        return reverse("organization-playlist-detail", kwargs={"slug": self.slug})
+
+
+class PlaylistMedia(models.Model):
+    """Playlist media"""
+
+    playlist = models.ForeignKey(Playlist, verbose_name=_('playlist'), related_name='medias', blank=True, null=True, on_delete=models.SET_NULL)
+    media = models.ForeignKey(Media, verbose_name=_('media'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('media')
+        verbose_name_plural = _('medias')

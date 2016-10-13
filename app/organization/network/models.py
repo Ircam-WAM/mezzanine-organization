@@ -125,14 +125,9 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
         super(Organization, self).save()
 
 
-class OrganizationAudio(Audio):
+class OrganizationPlaylist(Playlist):
 
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
-
-
-class OrganizationVideo(Video):
-
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class OrganizationLink(Link):
@@ -273,14 +268,9 @@ class Person(Displayable, AdminThumbMixin):
         super(Person, self).save(*args, **kwargs)
 
 
-class PersonAudio(Audio):
+class PersonPlaylist(Playlist):
 
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
-
-
-class PersonVideo(Video):
-
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class PersonLink(Link):
