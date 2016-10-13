@@ -26,15 +26,9 @@ class PageImageInline(TabularDynamicInlineAdmin):
     model = PageImage
 
 
-class PageAudioInline(StackedDynamicInlineAdmin):
+class PagePlaylistInline(StackedDynamicInlineAdmin):
 
-    model = PageAudio
-    exclude = ("short_url", "keywords", "description", "slug", )
-
-
-class PageVideoInline(StackedDynamicInlineAdmin):
-
-    model = PageVideo
+    model = PagePlaylist
     exclude = ("short_url", "keywords", "description", "slug", )
 
 
@@ -79,8 +73,7 @@ class CustomPageAdmin(PageAdmin):
 
     inlines = [PageBlockInline,
             PageImageInline,
-            PageAudioInline,
-            PageVideoInline,
+            PagePlaylistInline,
             PageLinkInline,
             PersonListBlockAutocompleteInlineAdmin,
             PageProductListInline,
