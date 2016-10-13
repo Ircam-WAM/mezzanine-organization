@@ -129,10 +129,18 @@ class OrganizationAudio(Audio):
 
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
 
+    class Meta:
+        verbose_name = Audio._meta.verbose_name
+        verbose_name_plural = Audio._meta.verbose_name_plural
+
 
 class OrganizationVideo(Video):
 
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = Video._meta.verbose_name
+        verbose_name_plural = Video._meta.verbose_name_plural
 
 
 class OrganizationLink(Link):
@@ -277,10 +285,18 @@ class PersonAudio(Audio):
 
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
 
+    class Meta:
+        verbose_name = Audio._meta.verbose_name
+        verbose_name_plural = Audio._meta.verbose_name_plural
+
 
 class PersonVideo(Video):
 
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = Video._meta.verbose_name
+        verbose_name_plural = Video._meta.verbose_name_plural
 
 
 class PersonLink(Link):

@@ -9,6 +9,17 @@ from organization.agenda.models import EventVideo
 from organization.magazine.models import Article, Topic, Brief, ArticleVideo
 
 
+class AudioDetailView(SlugMixin, DetailView):
+
+    model = Audio
+    template_name='festival/audio_detail.html'
+    context_object_name = 'audio'
+
+    def get_context_data(self, **kwargs):
+        context = super(AudioDetailView, self).get_context_data(**kwargs)
+        return context
+
+
 class VideoListView(ListView):
 
     model = Video

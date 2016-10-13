@@ -26,7 +26,7 @@ class Media(Displayable):
     created_at = models.DateTimeField(auto_now=True)
 
     # objects = SearchableManager()
-    search_fields = ("title",)
+    # search_fields = ("title",)
 
     class Meta:
         abstract = True
@@ -65,11 +65,12 @@ class Audio(Media):
     category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = _('audio')
+        verbose_name = _('Audio')
+        verbose_name_plural = _('Audios')
         ordering = ('-created_at',)
 
     def get_absolute_url(self):
-        return reverse("festival-audio-detail", kwargs={"slug": self.slug})
+        return reverse("audio-detail", kwargs={"slug": self.slug})
 
 
 class Video(Media):
@@ -80,11 +81,12 @@ class Video(Media):
     category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = _('video')
+        verbose_name = _('Video')
+        verbose_name_plural = _('Videos')
         ordering = ('-created_at',)
 
     def get_absolute_url(self):
-        return reverse("festival-video-detail", kwargs={"slug": self.slug})
+        return reverse("video-detail", kwargs={"slug": self.slug})
 
 
 class MediaCategory(Slugged, Description):

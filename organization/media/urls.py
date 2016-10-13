@@ -13,9 +13,7 @@ from organization.media.views import *
 urlpatterns = [
     url(r'^media-list/$', MediaListView.as_view(), name="media-list"),
     url(r'^videos/$', VideoListView.as_view(), name="festival-video-list"),
-    url(r'^videos/detail/(?P<slug>.*)/$', VideoDetailView.as_view(), name="festival-video-detail"),
-    url(r'^videos/category/(?P<slug>.*)/$', VideoListCategoryView.as_view(), name="festival-video-list-category"),
-    url(r'^audios/detail/(?P<slug>.*)/$', AudioDetailView.as_view(), name="festival-audio-detail"),
-    url(r'^audios/category/(?P<slug>.*)/$', AudioListCategoryView.as_view(), name="festival-audio-list-category"),
-
+    url(r'^audios/detail/(?P<slug>.*)/$', AudioDetailView.as_view(), name="audio-detail"),
+    url(r'^videos/detail/(?P<slug>.*)/$', VideoDetailView.as_view(), name="video-detail"),
+    url(r'^videos/category/(?P<slug>.*)/$', VideoListCategoryView.as_view(), name="video-list-category"),
 ]

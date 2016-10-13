@@ -44,13 +44,21 @@ class ArticleAudio(Audio):
 
     article = models.ForeignKey(Article, verbose_name=_('article'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
 
+    class Meta:
+        verbose_name = Audio._meta.verbose_name
+        verbose_name_plural = Audio._meta.verbose_name_plural
+
 
 class ArticleVideo(Video):
 
     article = models.ForeignKey(Article, verbose_name=_('article'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
 
+    class Meta:
+        verbose_name = Video._meta.verbose_name
+        verbose_name_plural = Video._meta.verbose_name_plural
 
-class Brief(Displayable, RichText): #Orderable
+
+class Brief(Displayable, RichText):
 
     text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'))
     external_content = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'))
