@@ -1,10 +1,10 @@
 <video preload="true"></video>
 
-<ol class="audio-playlist">
+<ol class="video-playlist">
     {% for media in playlist %}
         <li class="video-playlist__item">
-            {% for transcoded_media in media.transcoded.all %}
-                <a href="#" data-src="{{ transcoded_media.url }}">{{ media.title }}</a>
+            {% for transcoded in media.media.transcoded.all %}
+                <a href="#" data-src="{{ transcoded.url }}">{{ media.title }}</a>
             {% endfor %}
         </li>
     {% endfor %}
