@@ -1,11 +1,5 @@
-<audio preload="true"></audio>
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
 
-<ol class="audio-playlist">
-    {% for media in playlist.medias.all %}
-        <li class="audio-playlist__item">
-            {% for transcoded in media.media.transcoded.all %}
-                <a href="#" data-src="{{ transcoded.url }}">{{ media.title }}</a>
-            {% endfor %}
-        </li>
-    {% endfor %}
-</ol>
+<div class="audio-card">
+    <a href="{% url 'organization-playlist-detail' playlist.slug %}">{{ playlist.title }}</a>
+</div>

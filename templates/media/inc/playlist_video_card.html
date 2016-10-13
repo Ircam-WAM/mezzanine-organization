@@ -1,11 +1,6 @@
-<video preload="true"></video>
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
 
-<ol class="video-playlist">
-    {% for media in playlist %}
-        <li class="video-playlist__item">
-            {% for transcoded in media.media.transcoded.all %}
-                <a href="#" data-src="{{ transcoded.url }}">{{ media.title }}</a>
-            {% endfor %}
-        </li>
-    {% endfor %}
-</ol>
+<div class="video-card">
+    <img src="{{ playlist.medias.all.0.poster_url }}"><br>
+    <a href="{% url 'organization-playlist-detail' playlist.slug %}">{{ playlist.title }}</a>
+</div>
