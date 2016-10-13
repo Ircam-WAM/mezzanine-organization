@@ -33,3 +33,20 @@ class PlaylistListView(ListView):
     #     playlist_list += [audio_playlist for audio_playlist in audio_playlists]
     #     playlist_list.sort(key=lambda x: x.created_at, reverse=True)
     #     return playlist_list
+
+
+class PlayListMediaView(autocomplete.Select2QuerySetView):
+
+    def get_queryset(self):
+
+        qs = Media.objects.all()
+
+        media_title = self.forwarded.get('title', None)
+
+        if media_title:
+            qs = qs.filter(title=media_title)
+
+        if self.q:
+            qs = qs.filter(title__istartswith=self.q)
+
+        return qs
