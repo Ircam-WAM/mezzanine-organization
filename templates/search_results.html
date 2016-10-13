@@ -47,22 +47,23 @@
             {% endif %}
         </p>
         {% for result in results.object_list %}
-        {% with result.get_absolute_url as result_url %}
-            {{ result.periods.date_from }}{{ result.periods.date_to }}
-            <h5>
-                {% if result_url %}
-                    <a href="{{ result_url }}">{{ result }}</a>
-                {% else %}
-                    {{ result }}
-                {% endif %}
-            </h5>
-            {% if result.description != result|stringformat:"s" %}
-                <p>{{ result.description|truncatewords_html:200|safe }}</p>
+            {% if result|classname == 'Event' %}
+                {% with result as event %}
+                    {% include 'agenda/includes/event_search.html' %}
+                {% endwith %}
+            {% elif result|classname == 'Audio' %}
+                {% with result as audio %}
+                    {% include 'media/audio/inc/audio_search.html' %}
+                {% endwith %}
+            {% elif result|classname == 'Video' %}
+                {% with result as video %}
+                    {% include 'media/video/inc/video_search.html' %}
+                {% endwith %}
+            {% else %}
+                {% with result as page %}
+                    {% include 'pages/includes/page_search.html' %}
+                {% endwith %}
             {% endif %}
-            {% if result_url %}
-                <a href="{{ result_url }}">{% trans "read more" %}</a>
-            {% endif %}
-        {% endwith %}
         {% endfor %}
 
         {% pagination_for results %}
