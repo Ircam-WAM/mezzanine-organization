@@ -26,6 +26,12 @@ $module: ".job-line-box";
 
         }
 
+        #{$module}__image {
+
+            border-radius: 150px;
+
+        }
+
     }
 
     &__title {

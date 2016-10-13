@@ -38,10 +38,11 @@
           {{ event.departments.all.0.department.name }}
         </div>
     {% endif %}
-    <div class="tag tag--category">
-        {% keywords_for event as tags %}
-        {{tags.0}}
-    </div>
+    {% if event.category %}
+        <div class="tag tag--category">
+            {{ event.category }}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block breadcrumb_menu %}
@@ -73,63 +74,36 @@
         </p>
     {% endif %}
 
-    {% comment %}
-        {% if event.location %}
-        <h3 class="section__title">Le lieu :</h3>
-        {% block event_detail_location %}
-        <a href="{% url 'location-detail' event.location.slug %}">{{ event.location }}</a>
-        <p>
-            <p>{{ event.location }} {{ event.location.address|linebreaksbr }}</p>
-            <p>{% trans "Room" %} {{ event.location.room }}</p>
-            <a href="{{ event|google_nav_url }}" target="_blank">
-                Get Directions
-            </a>
-        </p>
-        <a href="{{ event|google_nav_url }}" target="_blank" class="">
-             {% google_static_map event 900 300 15 %}
-        </a/>
-        {% endblock %}
-        {% endif %}
-
-        {% block event_detail_keywords %}
-        {% keywords_for event as tags %}
-        {% if tags %}
-        {% spaceless %}
-        <ul class="list-inline tags">
-            <li>{% trans "Tags" %}:</li>
-            {% for tag in tags %}
-            <li><a href="{% url "event_list_tag" tag.slug %}">{{ tag }}</a></li>
-            {% endfor %}
-        </ul>
-        {% endspaceless %}
-        {% endif %}
-        {% endblock %}
-
-        {% block event_detail_rating %}
-        <div class="panel panel-default rating">
-            <div class="panel-body">
-            {% rating_for event %}
-            </div>
-        </div>
-        {% endblock %}
-    {% endcomment %}
-
 {% endblock %}
 
 {% block page_link %}
-    <div class="row">
-        {% with event.links.all as links %}
-            {% if links %}
+
+    <div class="mt4">
+        <div class="row">
+            {% if child %}
+                {% with child.links.all as links %}
+                    {% if links %}
+                        <div class="col-xs-6">
+                            {% include 'core/inc/link.html' %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            {% else %}
+                {% with event.links.all as links %}
+                    {% if links %}
+                        <div class="col-xs-6">
+                            {% include 'core/inc/link.html' %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
+            {% if event.mentions %}
                 <div class="col-xs-6">
-                    {% include 'core/inc/link.html' %}
+                    <div class="small-text">
+                        {{ event.mentions }}
+                   </div>
                 </div>
             {% endif %}
-        {% endwith %}
-        <div class="col-xs-6">
-            <div class="small-text">
-                Notes de productions<br />
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, modi sunt culpa sequi. Consequatur voluptate sapiente minus repellat earum, rerum asperiores, architecto quibusdam, dolore, soluta placeat aliquid. Voluptatum, dignissimos, quisquam.
-            </div>
         </div>
     </div>
 
@@ -151,7 +125,7 @@
     {% endwith %}
 {% endblock %}
 
-{% block page_videos %}
+{% block page_video %}
     {% with event.videos.all as videos %}
         {% if videos %}
             {% include 'core/inc/slider_video.html' %}
@@ -161,15 +135,49 @@
 
 {% block page_person_list %}
     {% if event.persons.all %}
-        {% if event.trainings.all %}
-            {% trans "Trainers" %}<br>
-        {% else %}
-            {% trans "Persons" %}<br>
-        {% endif %}
-        {% for person in event.persons.all %}
-            {{ person.person.title }}<br>
-            {{ person.person.bio|safe }}<br>
-        {% endfor %}
+        <div class="white-bg pb2">
+            <hr class="mt0" />
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2" data-summary-content>
+
+                        <h2 class="dotted">
+                            {% if event.trainings.all %}
+                                {% trans "Trainers" %}<br>
+                            {% else %}
+                                {% trans "Persons" %}<br>
+                            {% endif %}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
+
+                        {% for person in event.persons.all %}
+
+                                {% with person.person as person %}
+                                    {% include "network/inc/person/person_card_circle.html" %}
+                                {% endwith %}
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
     {% endif %}
 {% endblock %}
 
@@ -187,11 +195,6 @@
             {% editable event.start event.end event.location %}
                 {% with True as unit_booking %}
                     {% include 'agenda/includes/event_metainfo.html' %}
-                    {% for child in event.children.all %}
-                        {% with child as event %}
-                            {% include "agenda/includes/event_metainfo.html" %}
-                        {% endwith %}
-                    {% endfor %}
                 {% endwith %}
             {% endeditable %}
         {% endblock %}

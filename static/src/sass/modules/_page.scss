@@ -37,6 +37,10 @@ $module: ".page";
 
         @include margin(1 0);
 
+        &--small {
+            @include margin(.5 0);
+        }
+
     }
 
     &__meta-date {
@@ -62,6 +66,10 @@ $module: ".page";
         @include typeface(serif);
         font-weight: weight(heavy);
 
+        &--small {
+            @include font-size(s);
+        }
+
     }
 
     &__meta-text {
@@ -76,6 +84,12 @@ $module: ".page";
     &__filters {
 
         @include margin(0 0 6 0);
+
+        @media screen and (max-height: 900px) {
+
+            @include margin(0 0 3 0);
+
+        }
 
     }
 

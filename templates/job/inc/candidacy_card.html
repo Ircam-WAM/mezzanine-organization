@@ -6,7 +6,7 @@
 
             {% with content.images.all|get_type:'card' as images %}
                 {% if images %}
-                    <img src="{{ MEDIA_URL }}{% thumbnail images.first 150 150 %}" alt="{{ content.title }}">
+                    <img class="job-line-box__image" src="{{ MEDIA_URL }}{% thumbnail images.first 150 150 %}" alt="{{ content.title }}">
                 {% endif %}
             {% endwith %}
 
