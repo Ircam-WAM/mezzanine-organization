@@ -79,7 +79,7 @@ models.signals.post_save.connect(create_media, sender=Media, dispatch_uid='creat
 class MediaTranscoded(models.Model):
 
     media = models.ForeignKey('Media', verbose_name=_('media'), related_name='transcoded')
-    file = FileField(_("Image"), max_length=1024, upload_to="uploads/media/")
+    file = FileField(_("file"), max_length=1024, upload_to="uploads/media/")
     url = models.URLField(_('URL'), max_length=1024, blank=True)
     mime_type = models.CharField(_('mime type'), max_length=64)
 
