@@ -19,20 +19,13 @@ class PlaylistDetailView(SlugMixin, DetailView):
 
 class PlaylistListView(ListView):
 
+    model = Playlist
     template_name='media/playlist_list.html'
     context_object_name = 'playlists'
 
     def get_context_data(self, **kwargs):
         context = super(PlaylistListView, self).get_context_data(**kwargs)
         return context
-
-    # def get_queryset(self):
-    #     audio_playlists = PlaylistAudio.objects.all()
-    #     video_playlists = PlaylistVideo.objects.all()
-    #     playlist_list = [video_playlist for video_playlist in video_playlists]
-    #     playlist_list += [audio_playlist for audio_playlist in audio_playlists]
-    #     playlist_list.sort(key=lambda x: x.created_at, reverse=True)
-    #     return playlist_list
 
 
 class PlayListMediaView(autocomplete.Select2QuerySetView):

@@ -1,10 +1,10 @@
 <audio preload="true"></audio>
 
 <ol class="audio-playlist">
-    {% for media in playlist %}
+    {% for media in playlist.medias.all %}
         <li class="audio-playlist__item">
-            {% for transcoded_media in media.transcoded.all %}
-                <a href="#" data-src="{{ transcoded_media.url }}">{{ media.title }}</a>
+            {% for transcoded in media.media.transcoded.all %}
+                <a href="#" data-src="{{ transcoded.url }}">{{ media.title }}</a>
             {% endfor %}
         </li>
     {% endfor %}

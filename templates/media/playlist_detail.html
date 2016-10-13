@@ -27,13 +27,5 @@
 {% endblock %}
 
 {% block page_content %}
-    {% for object in media %}
-        {% with object|classname|lower as class_name %}
-            {% with "media/"|add:class_name|add:"/inc/"|add:class_name|add:"_card.html" as template %}
-                {% include template %}
-            {% endwith %}
-        {% endwith %}
-        {{ object|classname }} : {{ object.created_at }} : {{ object.title }}
-        <br>
-    {% endfor %}
+
 {% endblock %}
