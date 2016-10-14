@@ -136,6 +136,15 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'organization-media.Audio',
                         'organization-media.Video',
                         'mezzanine_agenda.Event')
+
+
+PAGES_MODELS = ('organization-pages.CustomPage',
+                'organization-magazine.Topic',
+                'organization-network.DepartmentPage',
+                'organization-network.TeamPage',
+                'organization-projects.ProjectTopicPage',
+                'organization-pages.PageLink')
+
 SEARCH_PER_PAGE = 10
 MAX_PAGING_LINKS = 10
 
