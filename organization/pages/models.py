@@ -33,7 +33,7 @@ class PageImage(Image):
         order_with_respect_to = "page"
 
 
-class PagePlaylist(Playlist):
+class PagePlaylist(PlaylistRelated):
 
     page = models.ForeignKey(Page, verbose_name=_('page'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 

@@ -27,7 +27,7 @@ class EventImageInline(TabularDynamicInlineAdmin):
     model = EventImage
 
 
-class EventPlaylistInline(StackedDynamicInlineAdmin):
+class EventPlaylistInline(TabularDynamicInlineAdmin):
 
     model = EventPlaylist
 

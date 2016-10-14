@@ -26,10 +26,9 @@ class PageImageInline(TabularDynamicInlineAdmin):
     model = PageImage
 
 
-class PagePlaylistInline(StackedDynamicInlineAdmin):
+class PagePlaylistInline(TabularDynamicInlineAdmin):
 
     model = PagePlaylist
-    exclude = ("short_url", "keywords", "description", "slug", )
 
 
 class PageLinkInline(StackedDynamicInlineAdmin):
