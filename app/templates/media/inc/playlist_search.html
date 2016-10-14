@@ -1,0 +1,26 @@
+{% load i18n mezzanine_tags organization_tags %}
+{% with playlist.get_absolute_url as playlist_url %}
+    {% if playlist.medias.first.media.poster_url %}
+        <!-- url of the media is distant. We can't generate back side thumbnail. Do it with css pliz -->
+        <img src="{{playlist.medias.first.media.poster_url }}" width="200" height="150">
+    {% else %}
+        <!--placeholder picture-->
+    {% endif %}
+
+    {{ playlist.type }}
+
+    <h5>
+        {% if playlist_url %}
+            <a href="{{ playlist_url }}">{{ playlist.title }}</a>
+        {% else %}
+            {{ playlist }}
+        {% endif %}
+    </h5>
+    {% if playlist.description != playlist|stringformat:"s" %}
+        <p>{{ playlist.description|truncatewords_html:200|safe }}</p>
+    {% endif %}
+    {% if playlist_url %}
+        <a href="{{ playlist_url }}">{% trans "read more" %}</a>
+    {% endif %}
+    <br>
+{% endwith %}

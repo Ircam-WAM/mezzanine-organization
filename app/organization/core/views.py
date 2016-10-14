@@ -56,17 +56,12 @@ class CustomSearchView(TemplateView):
             # aggregate all Page types : CustomPage, TeamPage, Topic etc...
             if result._meta.get_parent_list() :
                 parent_class = result._meta.get_parent_list()[0]
-
                 if full_classname in settings.PAGES_MODELS:
                     classname = "CustomPage"
                     verbose_name = "Page"
                     app_label = "organization-pages"
-                elif "Video" in parent_class.__name__:
-                    classname = "Video"
-                    app_label = parent_class._meta.app_label
-                elif "Audio" in parent_class.__name__:
-                    classname = "Audio"
-                    app_label = parent_class._meta.app_label
+            elif classname == "Playlist":
+                verbose_name = "Media"
 
             if classname in filter_dict:
                 filter_dict[classname]['count'] += 1
