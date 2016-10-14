@@ -33,23 +33,13 @@ class PageImage(Image):
         order_with_respect_to = "page"
 
 
-class PageAudio(Audio):
+class PagePlaylist(PlaylistRelated):
 
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _("audio")
-        verbose_name_plural = _("audios")
-        order_with_respect_to = "page"
-
-
-class PageVideo(Video):
-
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = _("video")
-        verbose_name_plural = _("videos")
+        verbose_name = _("playlist")
+        verbose_name_plural = _("playlists")
         order_with_respect_to = "page"
 
 
