@@ -17,21 +17,23 @@ StickyKitInit.prototype.init = function() {
         options = {},
         data, element, $element;
 
-    /*var sliders = $('.page__slider');
+    var sliders = $('.page__slider');
     if(sliders.length > 0) {
-        that.pageContentTop = $('.page__content').offset().top + $('.page__content').height() - 400;
-        that.pageContentBottom = $('.page__sub').offset().top;
-    }*/
+        that.pageContentTop = $(sliders[0]).offset().top - 72;
+        that.pageContentBottom = that.pageContentTop + (sliders.length * 724) + 72;
+    }
 
     $('[data-sticky]').each(function(i) {
 
         $element = $(this);
         $element.on('sticky_kit:bottom', function(e) {
             var $self = $(this);
+            $(this).parent().parent().css('position', 'static');
             $(this).parent().css('position', 'static');
             $(this).addClass('to-bottom');
         })
         .on('sticky_kit:unbottom', function(e) {
+            $(this).parent().parent().css('position', 'relative');
             $(this).parent().css('position', 'relative');
             $(this).removeClass('to-bottom');
         });
@@ -57,7 +59,8 @@ StickyKitInit.prototype.init = function() {
     });
 
     $(window).resize( $.throttle(1000, that.windowResize.bind(that)) );
-    //$(window).scroll( that.windowScroll.bind(that) );
+    $(window).scroll( that.windowScroll.bind(that) );
+    that.windowScroll();
 
 };
 
@@ -70,10 +73,12 @@ StickyKitInit.prototype.windowScroll = function(e) {
 
             if(that.elements[i].attached) {
 
+                var height = that.elements[i].$element.height();
                 var top = $(window).scrollTop();
-                if(top >= that.pageContentTop && top < that.pageContentBottom) {
+                if(top >= (that.pageContentTop - height) && top < (that.pageContentBottom)) {
                     that.elements[i].$element.addClass('faded');
                 } else {
+                    console.log('remove');
                     that.elements[i].$element.removeClass('faded');
                 }
 
