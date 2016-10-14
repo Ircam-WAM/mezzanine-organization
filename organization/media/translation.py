@@ -3,13 +3,31 @@ from modeltranslation.translator import translator, register, TranslationOptions
 from organization.media.models import *
 
 
-@register(Video)
-class VideoTranslationOptions(TranslationOptions):
+@register(Media)
+class MediaTranslationOptions(TranslationOptions):
 
     fields = ('title', 'description',)
 
 
-@register(Audio)
-class AudioTranslationOptions(TranslationOptions):
+@register(MediaTranscoded)
+class MediaTranscodedTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(Playlist)
+class PlaylistTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description',)
+
+
+@register(PlaylistMedia)
+class PlaylistMediaTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(MediaCategory)
+class MediaCategoryTranslationOptions(TranslationOptions):
 
     fields = ('title', 'description',)

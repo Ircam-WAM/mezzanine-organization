@@ -15,14 +15,8 @@ class EventImageTranslationOptions(TranslationOptions):
     fields = ()
 
 
-@register(EventAudio)
-class EventAudioTranslationOptions(TranslationOptions):
-
-    fields = ()
-
-
-@register(EventVideo)
-class EventVideoTranslationOptions(TranslationOptions):
+@register(EventPlaylist)
+class EventPlaylistTranslationOptions(TranslationOptions):
 
     fields = ()
 
@@ -40,6 +34,30 @@ class EventPersonTranslationOptions(TranslationOptions):
 
 
 @register(EventLink)
-class EventPersonTranslationOptions(TranslationOptions):
+class EventLinkTranslationOptions(TranslationOptions):
 
     fields = ()
+
+
+@register(EventPeriod)
+class EventPeriodTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(EventTraining)
+class EventTrainingTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(EventTrainingLevel)
+class EventTrainingLevelTranslationOptions(TranslationOptions):
+
+    fields = ('name',)
+
+
+@register(EventPublicType)
+class EventPublicTypeTranslationOptions(TranslationOptions):
+
+    fields = ('name',)

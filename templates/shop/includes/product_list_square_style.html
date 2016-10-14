@@ -17,7 +17,7 @@
             <div class="row tac">
                 {% for product_inline in list.products.all %}
                   {% with product_inline.product as product %}
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
                         <div class="article-box article-box--person" >
                             {% if product.images.all %}
                                 <div class="article-box__header">
@@ -37,7 +37,7 @@
                                 {% endif %}
                             </div>
                         </div>
-                    </div>
+                    {% endwith %}
                   {% endwith %}
                 {% endfor %}
             </div>

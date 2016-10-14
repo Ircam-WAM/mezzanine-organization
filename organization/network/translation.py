@@ -45,14 +45,8 @@ class PersonActivityTranslationOptions(TranslationOptions):
     fields = ('comments',)
 
 
-@register(PersonAudio)
-class PersonAudioTranslationOptions(TranslationOptions):
-
-    pass
-
-
-@register(PersonVideo)
-class PersonVideoTranslationOptions(TranslationOptions):
+@register(PersonPlaylist)
+class PersonPlaylistTranslationOptions(TranslationOptions):
 
     pass
 
@@ -81,14 +75,8 @@ class PersonBlockTranslationOptions(TranslationOptions):
     pass
 
 
-@register(OrganizationAudio)
-class OrganizationAudioTranslationOptions(TranslationOptions):
-
-    pass
-
-
-@register(OrganizationVideo)
-class OrganizationVideoTranslationOptions(TranslationOptions):
+@register(OrganizationPlaylist)
+class OrganizationTranslationOptions(TranslationOptions):
 
     pass
 
@@ -127,3 +115,51 @@ class PersonListBlockInlineTranslationOptions(TranslationOptions):
 class PageCustomPersonListBlockInlineTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(ActivityGrade)
+class ActivityGradeTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(ActivityFunction)
+class ActivityFunctionTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(ActivityFramework)
+class ActivityFrameworkTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(ActivityStatus)
+class ActivityGradeTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(TrainingTopic)
+class TrainingTopicTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(TrainingType)
+class TrainingTypeTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(TrainingLevel)
+class TrainingLevelTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']
+
+
+@register(TrainingSpeciality)
+class TrainingSpecialityTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']

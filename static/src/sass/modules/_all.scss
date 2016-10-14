@@ -14,10 +14,12 @@
 @import 'boxes/brief-box';
 @import 'boxes/person-list-box';
 @import 'boxes/event-line-box';
+@import 'boxes/job-line-box';
 
 // Sliders
 @import 'sliders/slider-page';
 @import 'sliders/slider-home';
+@import 'sliders/slider-network';
 
 // Page modules
 @import 'breadcrumb';
@@ -33,7 +35,10 @@
 @import 'share-links';
 @import 'partners-list';
 @import 'banner';
+@import 'messages';
 @import 'project-details';
+@import 'map-infowindow';
+@import 'map-legend';
 
 // Typography modules
 @import 'dashed';

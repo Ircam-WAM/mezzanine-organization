@@ -1,20 +1,6 @@
 {% extends "pages/page.html" %}
 {% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
 
-{% block meta_title %}{{ page.meta_title }}{% endblock %}
-
-{% block meta_keywords %}{% metablock %}
-{% keywords_for page as keywords %}
-{% for keyword in keywords %}
-    {% if not forloop.first %}, {% endif %}
-    {{ keyword }}
-{% endfor %}
-{% endmetablock %}{% endblock %}
-
-{% block meta_description %}{% metablock %}
-{{ page.description }}
-{% endmetablock %}{% endblock %}
-
 {% block page_class %}
     custompage
 {% endblock %}
@@ -66,35 +52,21 @@
 
 {% endblock %}
 
-{% block page_link %}
-    {% with page.custompage.links.all as links %}
-        {% if links %}
-            {% include 'core/inc/link.html' %}
-        {% endif %}
-    {% endwith %}
-{% endblock %}
-
 {% block page_audio %}
-  {% with page.custompage.audios.all as audios %}
-    {% if audios %}
-      {% include 'core/inc/audio.html' %}
-    {% endif %}
+  {% with page.custompage as object %}
+      {{ block.super }}
   {% endwith %}
 {% endblock %}
 
 {% block page_slider %}
-  {% with page.custompage.images.all|get_type:'page_slider' as slider_images %}
-    {% if slider_images %}
-      {% include 'core/inc/slider.html' %}
-    {% endif %}
-  {% endwith %}
+    {% with page.custompage as object %}
+        {{ block.super }}
+    {% endwith %}
 {% endblock %}
 
 {% block page_video %}
-  {% with page.custompage.videos.all as videos %}
-    {% if videos %}
-      {% include 'core/inc/slider_video.html' %}
-    {% endif %}
+  {% with page.custompage as object %}
+      {{ block.super }}
   {% endwith %}
 {% endblock %}
 
@@ -114,14 +86,20 @@
   {% endwith %}
 {% endblock %}
 
+{% block page_related_content %}
+    {{ block.super }}
+{% endblock %}
+
 {% block products %}
-    {% for page_product_list in page.custompage.product_lists.all %}
-      {% with page_product_list.list as list %}
-        {% with "shop/includes/product_list_"|add:list.style|add:"_style.html" as template %}
-          {% include template %}
-        {% endwith %}
-      {% endwith %}
-    {% endfor %}
+    {% if page.custompage.product_lists.all|length > 0 %}
+        {% for page_product_list in page.custompage.product_lists.all %}
+          {% with page_product_list.list as list %}
+            {% with "shop/includes/product_list_"|add:list.style|add:"_style.html" as template %}
+              {% include template %}
+            {% endwith %}
+          {% endwith %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block logo %}

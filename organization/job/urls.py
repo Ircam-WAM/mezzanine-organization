@@ -6,7 +6,7 @@ from django.contrib import admin
 
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
-from organization.job.views import JobOfferDetailView, JobOfferListView
+from organization.job.views import *
 
 
 _slash = "/" if settings.APPEND_SLASH else ""
@@ -14,5 +14,6 @@ _slash = "/" if settings.APPEND_SLASH else ""
 urlpatterns = [
     url("^job-offer/(?P<slug>.*)%s$" % _slash, JobOfferDetailView.as_view(), name='organization-job-offer-detail'),
     url("^job-offer/$", JobOfferListView.as_view(), name='organization-job-offer-list'),
-    #url(r'job-response/add/$', JobResponseCreate.as_view(), name='job-response-add'),
+    url("^candidacies/$", CandidacyListView.as_view(), name='candidacies-list'),
+    url("^candidacy-autocomplete/$", CandidacyAutocomplete.as_view(), name='candidacy-autocomplete'),
 ]
