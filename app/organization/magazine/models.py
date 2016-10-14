@@ -45,7 +45,7 @@ class ArticlePlaylist(PlaylistRelated):
     article = models.ForeignKey(Article, verbose_name=_('article'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-class Brief(Displayable, RichText): #Orderable
+class Brief(Displayable, RichText):
 
     text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'))
     external_content = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'))
