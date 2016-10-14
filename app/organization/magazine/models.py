@@ -12,7 +12,7 @@ from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from organization.network.models import Department, PersonListBlock
-from organization.media.models import Playlist
+from organization.media.models import *
 from organization.core.models import *
 from organization.magazine.apps import *
 
@@ -40,7 +40,7 @@ class ArticleImage(Image):
         order_with_respect_to = "article"
 
 
-class ArticlePlaylist(Playlist):
+class ArticlePlaylist(PlaylistRelated):
 
     article = models.ForeignKey(Article, verbose_name=_('article'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 

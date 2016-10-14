@@ -26,7 +26,7 @@ class ProjectBlockInline(StackedDynamicInlineAdmin):
     model = ProjectBlock
 
 
-class ProjectPlaylistInline(StackedDynamicInlineAdmin):
+class ProjectPlaylistInline(TabularDynamicInlineAdmin):
 
     model = ProjectPlaylist
 

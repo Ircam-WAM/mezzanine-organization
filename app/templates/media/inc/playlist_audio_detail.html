@@ -5,9 +5,11 @@
 <ol class="audio-playlist">
     {% for media in playlist.medias.all %}
         <li class="audio-playlist__item">
-            {% for transcoded in media.media.transcoded.all %}
-                <a href="#" data-src="{{ transcoded.url }}">{{ media.media.title }}</a>
-            {% endfor %}
+            {% with media.media as media %}
+                {% for transcoded in media.transcoded.all %}
+                    <a href="#" data-src="{{ transcoded.url }}">{{ media.title }}</a>
+                {% endfor %}
+            {% endwith %}
         </li>
     {% endfor %}
 </ol>

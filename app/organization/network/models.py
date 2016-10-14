@@ -125,7 +125,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
         super(Organization, self).save()
 
 
-class OrganizationPlaylist(Playlist):
+class OrganizationPlaylist(PlaylistRelated):
 
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
@@ -268,7 +268,7 @@ class Person(Displayable, AdminThumbMixin):
         super(Person, self).save(*args, **kwargs)
 
 
-class PersonPlaylist(Playlist):
+class PersonPlaylist(PlaylistRelated):
 
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 

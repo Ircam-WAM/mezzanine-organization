@@ -91,27 +91,21 @@
 {% endblock %}
 
 {% block page_audio %}
-    {% with project.audios.all as audios %}
-        {% if audios %}
-            {% include 'core/inc/audio.html' %}
-        {% endif %}
-    {% endwith %}
+  {% with project as object %}
+      {{ block.super }}
+  {% endwith %}
 {% endblock %}
 
 {% block page_slider %}
-    {% with project.images.all|get_type:'page_slider' as slider_images %}
-        {% if slider_images %}
-            {% include 'core/inc/slider.html' %}
-        {% endif %}
+    {% with project as object %}
+        {{ block.super }}
     {% endwith %}
 {% endblock %}
 
 {% block page_video %}
-    {% with project.videos.all as videos %}
-        {% if videos %}
-            {% include 'core/inc/slider_video.html' %}
-        {% endif %}
-    {% endwith %}
+  {% with project as object %}
+      {{ block.super }}
+  {% endwith %}
 {% endblock %}
 
 {% block page_sub_content %}

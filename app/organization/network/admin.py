@@ -12,7 +12,7 @@ from organization.core.admin import *
 from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline
 
 
-class OrganizationPlaylistInline(StackedDynamicInlineAdmin):
+class OrganizationPlaylistInline(TabularDynamicInlineAdmin):
 
     model = OrganizationPlaylist
 

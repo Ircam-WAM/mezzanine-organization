@@ -79,7 +79,7 @@ class ProjectProgramType(Named):
         ordering = ['name',]
 
 
-class ProjectPlaylist(Playlist):
+class ProjectPlaylist(PlaylistRelated):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 

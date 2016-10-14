@@ -57,7 +57,7 @@ class EventLink(Link):
         verbose_name_plural = _("links")
 
 
-class EventPlaylist(Playlist):
+class EventPlaylist(PlaylistRelated):
 
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 

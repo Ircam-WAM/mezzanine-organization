@@ -47,6 +47,7 @@ class Media(Displayable):
         return MEDIA_BASE_URL + self.external_id
 
     def get_html(self):
+        print(self.uri)
         r = requests.get(self.uri)
         return r.content
 
@@ -78,15 +79,15 @@ models.signals.post_save.connect(create_media, sender=Media, dispatch_uid='creat
 class MediaTranscoded(models.Model):
 
     media = models.ForeignKey('Media', verbose_name=_('media'), related_name='transcoded')
-    file = FileField(_("file"), max_length=1024, upload_to="uploads/media/")
+    file = FileField(_("file"), max_length=1024, upload_to="uploads/media/", blank=True, null=True)
     url = models.URLField(_('URL'), max_length=1024, blank=True)
     mime_type = models.CharField(_('mime type'), max_length=64)
 
     preferred_mime_type = ['video/webm', 'audio/ogg']
 
     class Meta:
-        verbose_name = "media"
-        verbose_name_plural = "medias"
+        verbose_name = "media file"
+        verbose_name_plural = "media files"
 
     def __str__(self):
         return self.url
@@ -106,11 +107,14 @@ class MediaCategory(Slugged, Description):
 class Playlist(Displayable):
     """Playlist"""
 
-    type = models.CharField(_('type'), max_length=32, choices=PLAYLIST_TYPE_CHOICES, blank=True, null=True)
+    type = models.CharField(_('type'), max_length=32, choices=PLAYLIST_TYPE_CHOICES)
 
     class Meta:
         verbose_name = _('playlist')
         verbose_name_plural = _('playlists')
+
+    def __str__(self):
+        return ' '.join((self.title, '(' + self.type + ')'))
 
     def get_absolute_url(self):
         return reverse("organization-playlist-detail", kwargs={"slug": self.slug})
@@ -125,3 +129,13 @@ class PlaylistMedia(models.Model):
     class Meta:
         verbose_name = _('media')
         verbose_name_plural = _('medias')
+
+
+class PlaylistRelated(models.Model):
+    """Playlist inline"""
+
+    playlist = models.ForeignKey(Playlist, verbose_name=_('playlist'), blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('playlist')
+        verbose_name_plural = _('playlists')
