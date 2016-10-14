@@ -13,6 +13,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 import os
 import argparse
 import platform
+from pwd import getpwnam
+from grp import getgrnam
 
 sysvinit_script = """#!/bin/sh
 ### BEGIN INIT INFO
@@ -156,8 +158,12 @@ class DockerCompositionInstaller(object):
     def install_cron(self):
         # version with migration
         # without migration
+        log_path = "/var/log/"+ self.name
+        if not os.path.exists(log_path) :
+            os.makedirs(log_path, 0o755)
+            os.chown(log_path, getpwnam(self.user).pw_uid, getgrnam(self.user).gr_gid)
         path = "PATH=/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin\n"
-        command = "cd /srv/ircam-www && ./scripts/push.sh >> /var/log/cri/ircam-www-push.log 2>&1 \n"
+        command = "cd /srv/ircam-www && ./scripts/push.sh >> /var/log/"+ self.name +"/ircam-www-push.log 2>&1 \n"
         rule = self.cron_rule % (self.user, command)
         f = open('/etc/cron.d/' + self.name, 'w')
         f.write(path + rule)
