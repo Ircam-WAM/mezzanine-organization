@@ -59,7 +59,6 @@ class PageVideo(Video):
 class PageLink(Link):
 
     page = models.ForeignKey(Page, verbose_name=_('page'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
-    objects = CustomSearchableManager()
     
     class Meta:
         verbose_name = _("link")
