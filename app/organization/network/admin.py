@@ -74,7 +74,7 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
     fk_name = 'person'
 
 
-class PersonPlaylistInline(StackedDynamicInlineAdmin):
+class PersonPlaylistInline(TabularDynamicInlineAdmin):
 
     model = PersonPlaylist
 
