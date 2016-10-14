@@ -103,7 +103,7 @@
                             {% for t in tags %}
                                 {% if not t|tag_is_excluded %}
                                     <li class="nav-tree__item">
-                                        <a class="nav-tree__link{% if tag == t %} active{% endif %}" href="{% if tag == t %}{% url 'event_list' %}{% else %}{% url "event_list_tag" t.slug %}{% endif %}">
+                                        <a class="nav-tree__link--filter nav-tree__link{% if tag == t %} active{% endif %}" href="{% if tag == t %}{% url 'event_list' %}{% else %}{% url "event_list_tag" t.slug %}{% endif %}">
                                             {{ t }} {% if tag == t %}<i class="fa fa-times"></i>{% endif %}
                                         </a>
                                     </li>
