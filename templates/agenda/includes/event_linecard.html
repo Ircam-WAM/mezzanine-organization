@@ -2,15 +2,17 @@
 
 <div class="row event-line-box">
 
-    <div class="col-sm-2 col-md-3 col-lg-3 event-line-box__month">
+    {% ifchanged event.start.month %}
 
-        {% ifchanged event.start.month %}
-            {{ event.start|date:'F' }}
-        {% endifchanged %}
+        <div class="col-sm-12 col-md-12 col-lg-12 event-line-box__month">
 
-    </div>
+            <h2>{{ event.start|date:'F' }}</h2>
 
-    <div class="col-sm-10 col-md-9 col-lg-9 event-line-box__content">
+        </div>
+
+    {% endifchanged %}
+
+    <div class="col-sm-12 col-md-12 col-lg-12 event-line-box__content">
 
         <div class="row">
 
@@ -25,6 +27,14 @@
                         <a href="{{ event.get_absolute_url }}">
                             <img class="event-line-box__image" src="{{ MEDIA_URL }}{% thumbnail images.0.file 203 140 %}" width="203" height="140">
                         </a>
+                    {% else %}
+                        {% with event.parent.images.all|get_type:'card' as images %}
+                            {% if images %}
+                                <a href="{{ event.get_absolute_url }}">
+                                    <img class="event-line-box__image" src="{{ MEDIA_URL }}{% thumbnail images.0.file 203 140 %}" width="203" height="140">
+                                </a>
+                            {% endif %}
+                        {% endwith %}
                     {% endif %}
                 {% endwith %}
             </div>
@@ -37,18 +47,16 @@
                               {{ event.departments.all.0.department.name }}
                             </div>
                         {% endif %}
-                        {% keywords_for event as tags %}
-                        {% if tags %}
+                        {% if event.category %}
                             <div class="tag tag--small tag--category">
-                                {% keywords_for event as tags %}
-                                {{tags.0}}
+                                {{ event.category }}
                             </div>
                         {% endif %}
                     </div>
                 {% endif %}
-                <h2 class="event-line-box__title">
+                <h3 class="event-line-box__title">
                     <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
-                </h2>
+                </h3>
                 <div class="event-line-box__desc">
                     {{ event.description|slice:":100" }}
                 </div>

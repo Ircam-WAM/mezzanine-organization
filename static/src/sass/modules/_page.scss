@@ -37,6 +37,10 @@ $module: ".page";
 
         @include margin(1 0);
 
+        &--small {
+            @include margin(.5 0);
+        }
+
     }
 
     &__meta-date {
@@ -62,11 +66,30 @@ $module: ".page";
         @include typeface(serif);
         font-weight: weight(heavy);
 
+        &--small {
+            @include font-size(s);
+        }
+
+    }
+
+    &__meta-text {
+
+        font-size: 13px;
+        margin-top: 2px;
+        font-weight: weight(regular);
+        display: block;
+
     }
 
     &__filters {
 
         @include margin(0 0 6 0);
+
+        @media screen and (max-height: 900px) {
+
+            @include margin(0 0 3 0);
+
+        }
 
     }
 
@@ -179,6 +202,21 @@ $module: ".page";
 
             margin-bottom: 0;
 
+        }
+
+    }
+
+    &--organization {
+
+        margin-top: -327px;
+
+        @include mq($until: xs) {
+            margin-top: -123px;
+        }
+
+        .map {
+            width: 100%;
+            height: 900px;
         }
 
     }

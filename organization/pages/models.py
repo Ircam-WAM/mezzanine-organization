@@ -63,6 +63,14 @@ class PageLink(Link):
         order_with_respect_to = "page"
 
 
+class DynamicContentPage(DynamicContent, Orderable):
+
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='dynamic_content_pages', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Page'
+
+
 class LinkImage(models.Model):
 
     link = models.ForeignKey(MezzanineLink, verbose_name=_('link'), related_name='link_images', blank=True, null=True, on_delete=models.SET_NULL)
@@ -79,7 +87,7 @@ class DynamicContentHomeSlider(DynamicContent, Orderable):
     home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = 'Dynamic Content Home Slider'
+        verbose_name = 'Slider'
 
 
 class DynamicContentHomeBody(DynamicContent, Orderable):
@@ -87,7 +95,15 @@ class DynamicContentHomeBody(DynamicContent, Orderable):
     home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = 'Dynamic Content Home Body'
+        verbose_name = _('Body')
+
+
+class DynamicContentHomeMedia(DynamicContent, Orderable):
+
+    home = models.ForeignKey("home", verbose_name=_('home'), related_name='dynamic_content_home_media', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Media'
 
 
 class Home(Displayable):

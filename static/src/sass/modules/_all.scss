@@ -19,6 +19,7 @@
 // Sliders
 @import 'sliders/slider-page';
 @import 'sliders/slider-home';
+@import 'sliders/slider-network';
 
 // Page modules
 @import 'breadcrumb';
@@ -36,6 +37,8 @@
 @import 'banner';
 @import 'messages';
 @import 'project-details';
+@import 'map-infowindow';
+@import 'map-legend';
 
 // Typography modules
 @import 'dashed';

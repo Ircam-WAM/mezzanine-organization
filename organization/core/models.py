@@ -24,11 +24,10 @@ class Description(models.Model):
         abstract = True
 
 
-class Named(models.Model):
+class Named(Description):
     """Abstract model providing a name field"""
 
     name = models.CharField(_('name'), max_length=512)
-    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True
@@ -42,11 +41,10 @@ class Named(models.Model):
         return slugify(self.__unicode__())
 
 
-class Titled(models.Model):
+class Titled(Description):
     """Abstract model providing a title field"""
 
     title = models.CharField(_('title'), max_length=1024)
-    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True
