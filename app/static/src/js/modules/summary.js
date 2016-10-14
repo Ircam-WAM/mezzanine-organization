@@ -46,6 +46,15 @@ Summary.prototype.init = function() {
         // Scrollspy
         $(document).on("scroll", that.onScroll.bind(that));
 
+        // Row height
+        if($('.page__sidebar .nav-tree--level-0').height() > $('.page__content').height()) {
+
+            $('.page__content').css({
+                'margin-bottom': $('.page__sidebar .nav-tree--level-0').height() - $('.page__content').height() + 48
+            });
+
+        }
+
     }
 
 };

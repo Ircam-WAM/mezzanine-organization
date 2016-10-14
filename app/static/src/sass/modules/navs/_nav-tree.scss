@@ -6,11 +6,20 @@ $module: ".nav-tree";
     margin: 0;
     list-style-type: none;
     z-index: 2;
+
+    position: absolute;
+    width: 100%;
+
+    .nav-tree & {
+        position: relative;
+    }
+
     opacity: 1;
     @include transition(opacity 0.25s ease-in-out);
 
     &.faded {
         opacity: 0;
+        @include transition(opacity 0.25s ease-in-out);
     }
 
     &.is_stuck {
