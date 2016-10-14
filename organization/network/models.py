@@ -129,10 +129,6 @@ class OrganizationPlaylist(PlaylistRelated):
 
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
-    class Meta:
-        verbose_name = Video._meta.verbose_name
-        verbose_name_plural = Video._meta.verbose_name_plural
-
 
 class OrganizationLink(Link):
 
@@ -275,10 +271,6 @@ class Person(Displayable, AdminThumbMixin):
 class PersonPlaylist(PlaylistRelated):
 
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = Video._meta.verbose_name
-        verbose_name_plural = Video._meta.verbose_name_plural
 
 
 class PersonLink(Link):
