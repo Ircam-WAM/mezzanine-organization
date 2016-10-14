@@ -18,3 +18,4 @@ django-autocomplete-light
 ipython
 cartridge
 xlrd
+gitpython

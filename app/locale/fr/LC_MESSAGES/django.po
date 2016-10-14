@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-06 14:48+0200\n"
+"POT-Creation-Date: 2016-10-07 15:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,12 +97,12 @@ msgstr ""
 msgid "blocks"
 msgstr ""
 
-#: organization/agenda/models.py:26 organization/magazine/models.py:35
+#: organization/agenda/models.py:26 organization/magazine/models.py:38
 #: organization/pages/models.py:31
 msgid "image"
 msgstr ""
 
-#: organization/agenda/models.py:27 organization/magazine/models.py:36
+#: organization/agenda/models.py:27 organization/magazine/models.py:39
 #: organization/pages/models.py:32
 #, fuzzy
 #| msgid "pages"
@@ -110,7 +110,7 @@ msgid "images"
 msgstr "Pages"
 
 #: organization/agenda/models.py:34 organization/agenda/models.py:37
-#: organization/magazine/models.py:20 organization/network/models.py:167
+#: organization/magazine/models.py:22 organization/network/models.py:167
 #: organization/network/models.py:179 organization/network/models.py:190
 msgid "department"
 msgstr "département"
@@ -134,7 +134,7 @@ msgid "persons"
 msgstr "personnes"
 
 #: organization/agenda/models.py:56 organization/core/models.py:183
-#: organization/pages/models.py:61 organization/pages/models.py:68
+#: organization/pages/models.py:61 organization/pages/models.py:76
 #, fuzzy
 #| msgid "link type"
 msgid "link"
@@ -147,17 +147,17 @@ msgstr "type de lien"
 msgid "links"
 msgstr "type de lien"
 
-#: organization/agenda/models.py:65 organization/media/models.py:64
+#: organization/agenda/models.py:65 organization/media/models.py:67
 #: organization/pages/models.py:41
 msgid "audio"
 msgstr ""
 
-#: organization/agenda/models.py:66 organization/media/models.py:101
+#: organization/agenda/models.py:66 organization/media/models.py:104
 #: organization/pages/models.py:42
 msgid "audios"
 msgstr ""
 
-#: organization/agenda/models.py:75 organization/media/models.py:78
+#: organization/agenda/models.py:75 organization/media/models.py:81
 #: organization/pages/models.py:51
 msgid "video"
 msgstr ""
@@ -285,7 +285,7 @@ msgstr "catégorie"
 msgid "background color"
 msgstr ""
 
-#: organization/core/models.py:87 organization/pages/models.py:69
+#: organization/core/models.py:87 organization/pages/models.py:77
 msgid "Image"
 msgstr ""
 
@@ -314,7 +314,7 @@ msgid "content type"
 msgstr "type d'organisation"
 
 #: organization/core/models.py:132 organization/job/models.py:54
-#: organization/magazine/models.py:66
+#: organization/magazine/models.py:69
 #, fuzzy
 #| msgid "Related posts"
 msgid "related object"
@@ -349,6 +349,10 @@ msgstr "date de début"
 #: organization/core/models.py:193 organization/core/models.py:202
 msgid "end date"
 msgstr "date de fin"
+
+#: organization/core/views.py:47
+msgid "Everything"
+msgstr "Tout"
 
 #: organization/festival/models.py:21 organization/job/models.py:10
 #: organization/network/models.py:236
@@ -412,11 +416,11 @@ msgstr ""
 msgid "internal text button"
 msgstr ""
 
-#: organization/job/models.py:41 organization/magazine/models.py:53
+#: organization/job/models.py:41 organization/magazine/models.py:56
 msgid "external content"
 msgstr ""
 
-#: organization/job/models.py:46 organization/magazine/models.py:58
+#: organization/job/models.py:46 organization/magazine/models.py:61
 msgid "local content"
 msgstr ""
 
@@ -440,41 +444,41 @@ msgstr ""
 msgid "You have successfully submitted your application."
 msgstr ""
 
-#: organization/magazine/models.py:21
+#: organization/magazine/models.py:23
 #, fuzzy
 #| msgid "topic"
 msgid "topics"
 msgstr "rubrique"
 
-#: organization/magazine/models.py:27 organization/magazine/models.py:32
-#: organization/magazine/models.py:42 organization/magazine/models.py:47
-#: organization/magazine/models.py:102
+#: organization/magazine/models.py:30 organization/magazine/models.py:35
+#: organization/magazine/models.py:45 organization/magazine/models.py:50
+#: organization/magazine/models.py:105
 msgid "article"
 msgstr "article"
 
-#: organization/magazine/models.py:52
+#: organization/magazine/models.py:55
 msgid "text button"
 msgstr ""
 
-#: organization/magazine/models.py:77
+#: organization/magazine/models.py:80
 msgid "brief"
 msgstr "brève"
 
-#: organization/magazine/models.py:85 organization/projects/models.py:29
+#: organization/magazine/models.py:88 organization/projects/models.py:29
 msgid "topic"
 msgstr "rubrique"
 
-#: organization/magazine/models.py:90
+#: organization/magazine/models.py:93
 msgid "Article"
 msgstr "Article"
 
-#: organization/magazine/models.py:91 organization/network/models.py:307
+#: organization/magazine/models.py:94 organization/network/models.py:307
 #: organization/network/models.py:329
 msgid "Person List Block"
 msgstr ""
 
-#: organization/magazine/models.py:94 organization/network/models.py:310
-#: organization/network/models.py:321 organization/pages/models.py:102
+#: organization/magazine/models.py:97 organization/network/models.py:310
+#: organization/network/models.py:321 organization/pages/models.py:110
 #, fuzzy
 #| msgid "Person"
 msgid "Person List"
@@ -496,17 +500,17 @@ msgstr ""
 msgid "poster"
 msgstr ""
 
-#: organization/media/models.py:61 organization/media/models.py:75
+#: organization/media/models.py:64 organization/media/models.py:78
 msgid "category"
 msgstr "catégorie"
 
-#: organization/media/models.py:88
+#: organization/media/models.py:91
 #, fuzzy
 #| msgid "category"
 msgid "media category"
 msgstr "catégorie"
 
-#: organization/media/models.py:89
+#: organization/media/models.py:92
 #, fuzzy
 #| msgid "Categories"
 msgid "media categories"
@@ -1525,39 +1529,40 @@ msgstr ""
 
 #: organization/pages/models.py:18 organization/pages/models.py:28
 #: organization/pages/models.py:38 organization/pages/models.py:48
-#: organization/pages/models.py:58 organization/shop/models.py:43
+#: organization/pages/models.py:58 organization/pages/models.py:68
+#: organization/shop/models.py:43
 #, fuzzy
 #| msgid "pages"
 msgid "page"
 msgstr "pages"
 
-#: organization/pages/models.py:72
+#: organization/pages/models.py:80
 #, fuzzy
 #| msgid "link type"
 msgid "link image"
 msgstr "type de lien"
 
-#: organization/pages/models.py:73
+#: organization/pages/models.py:81
 #, fuzzy
 #| msgid "link type"
 msgid "link images"
 msgstr "type de lien"
 
-#: organization/pages/models.py:79 organization/pages/models.py:87
-#: organization/pages/models.py:96
+#: organization/pages/models.py:87 organization/pages/models.py:95
+#: organization/pages/models.py:104
 msgid "home"
 msgstr ""
 
-#: organization/pages/models.py:97
+#: organization/pages/models.py:105
 msgid "homes"
 msgstr ""
 
 #: organization/projects/models.py:14
-msgid "internal project"
+msgid "internal"
 msgstr ""
 
 #: organization/projects/models.py:15
-msgid "external project"
+msgid "external"
 msgstr ""
 
 #: organization/projects/models.py:22
@@ -1868,26 +1873,23 @@ msgstr "événements"
 msgid "Locations"
 msgstr "Lieux"
 
-#: templates/agenda/includes/event_date.html:8
-#: templates/agenda/includes/event_date.html:23
-#: templates/agenda/includes/event_date.html:32
-#: templates/agenda/includes/event_date.html:43
-msgid "at"
-msgstr "à"
-
-#: templates/agenda/includes/event_date.html:21
 #: templates/agenda/includes/event_date.html:30
-#: templates/agenda/includes/event_date.html:41
+#: templates/agenda/includes/event_date.html:48
+msgid "and"
+msgstr ""
+
+#: templates/agenda/includes/event_date.html:42
+#: templates/agenda/includes/event_date.html:59
+#: templates/agenda/includes/event_date.html:63
 msgid "from"
-msgstr "de"
+msgstr "du"
 
-#: templates/agenda/includes/event_date.html:21
-#: templates/agenda/includes/event_date.html:30
-#: templates/agenda/includes/event_date.html:41
-#: templates/agenda/includes/event_date.html:49
+#: templates/agenda/includes/event_date.html:42
+#: templates/agenda/includes/event_date.html:59
+#: templates/agenda/includes/event_date.html:63
 #: templates/job/inc/candidacy_card.html:19
 msgid "to"
-msgstr "à"
+msgstr "au"
 
 #: templates/agenda/includes/event_location.html:7
 msgid "Room"
@@ -2002,6 +2004,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: templates/blog/blog_post_detail.html:120
+#: templates/core/inc/related_content.html:8
 #: templates/festival/artist_detail.html:27
 #: templates/festival/video_detail.html:28
 #: templates/magazine/article/article_detail.html:104
@@ -2377,17 +2380,15 @@ msgstr "Événements associés"
 msgid "Related posts"
 msgstr "Articles associés"
 
-#: templates/pages/teampage.html:113
-#, fuzzy
-#| msgid "Projects"
-msgid "Main projects"
-msgstr "Projets"
+#: templates/pages/teampage.html:111
+msgid "European and national projects"
+msgstr ""
 
 #: templates/pages/teampage.html:119
 #, fuzzy
-#| msgid "Projects"
-msgid "Partner projects"
-msgstr "Projets"
+#| msgid "Related posts"
+msgid "Products"
+msgstr "Articles associés"
 
 #: templates/projects/project_detail.html:130
 #, fuzzy
@@ -2464,7 +2465,7 @@ msgid ""
 "            "
 msgstr ""
 
-#: templates/search_results.html:54
+#: templates/search_results.html:65
 msgid "read more"
 msgstr "lire la suite"
 
@@ -2771,6 +2772,19 @@ msgstr ""
 msgid "Recent Tweets"
 msgstr "Tweets récents"
 
+#~ msgid "at"
+#~ msgstr "à"
+
+#, fuzzy
+#~| msgid "Projects"
+#~ msgid "Main projects"
+#~ msgstr "Projets"
+
+#, fuzzy
+#~| msgid "Projects"
+#~ msgid "Partner projects"
+#~ msgstr "Projets"
+
 #~ msgid "Organization"
 #~ msgstr "Organisation"
 
@@ -2803,9 +2817,6 @@ msgstr "Tweets récents"
 
 #~ msgid "Search"
 #~ msgstr "Rechercher"
-
-#~ msgid "Everything"
-#~ msgstr "Tout"
 
 #~ msgid "More"
 #~ msgstr "Plus de"

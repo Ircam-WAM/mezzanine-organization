@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.http import QueryDict
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from mezzanine.template import Library

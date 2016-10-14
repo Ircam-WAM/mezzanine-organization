@@ -30,6 +30,7 @@
     {% endifinstalled %}
 
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,700,900,300italic|Oswald:400,300,700' rel='stylesheet' type='text/css'>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqF2kIHtUASr67QP-1bXRd6FPELDS4FSs&libraries=geometry"></script>
 
     {% compress css %}
     <link rel="stylesheet" href="{% static "vendors/font-awesome/css/font-awesome.css" %}">
@@ -297,8 +298,7 @@
         </footer>
 
     </div>
-
-    {% include "includes/search_form.html" %}
+    {% search_form %}
     {% include "includes/footer_scripts.html" %}
     {% endspaceless %}
 

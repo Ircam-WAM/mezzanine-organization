@@ -82,6 +82,7 @@ $module: ".slider-home";
                     width: 14px;
                     height: 14px;
                     background: white;
+                    border-bottom: 0 !important;
                     &:hover {
                         background: $color-main;
                     }

@@ -84,7 +84,8 @@ jQuery(function($) {
             {
 
                 title: 'Paragraphs', items: [
-                    { title: 'Highlighted paragraph', selector: 'p', classes: 'wys-highlighted-paragraph'}
+                    { title: 'Highlighted paragraph', selector: 'p', classes: 'wys-highlighted-paragraph'},
+                    { title: 'Small paragraph', selector: 'p', classes: 'wys-small-text'}
                 ]
 
             }
