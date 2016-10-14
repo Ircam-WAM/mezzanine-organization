@@ -59,7 +59,7 @@ h3 {
     @include margin-bottom(1);
 }
 
-main p, main ul.unstyled-list, main ul[class=""], main td {
+main p, main ul.unstyled-list, main ul:not([class]), main td {
     @include margin-top(0);
     @include margin-bottom(1);
 	@include line-height(1.25);
