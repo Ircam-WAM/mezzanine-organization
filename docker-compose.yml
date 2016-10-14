@@ -58,7 +58,7 @@ app:
 nginx:
   image: nginx
   ports:
-    - "8020:80"
+    - "80:80"
   volumes:
     - ./etc/nginx.conf:/etc/nginx/conf.d/default.conf
     - ./data/var/log/nginx/:/var/log/nginx
