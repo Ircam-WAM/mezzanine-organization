@@ -5,6 +5,7 @@ from mezzanine.core.models import Displayable
 from organization.core.models import *
 from organization.media.models import *
 
+
 class JobResponse(models.Model):
 
     first_name = models.CharField(max_length=255, null=False, verbose_name=_('first name'))
@@ -32,3 +33,40 @@ class JobOffer(Displayable, RichText):
     class Meta:
         verbose_name = _('job offer')
         verbose_name_plural = _("job offers")
+
+
+class Candidacy(Displayable, RichText, Period):
+
+    text_button_external = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('external text button'))
+    text_button_internal = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('internal text button'))
+    external_content = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'))
+
+    # used for autocomplete but hidden in admin
+    content_type = models.ForeignKey(
+        ContentType,
+        verbose_name=_('local content'),
+        null=True,
+        blank=True,
+        editable=False,
+    )
+
+    # used for autocomplete but hidden in admin
+    object_id = models.PositiveIntegerField(
+        verbose_name=_('related object'),
+        null=True,
+        editable=False,
+    )
+
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    def get_absolute_url(self):
+        return self.external_content
+
+    class Meta:
+        verbose_name = _('candidacy')
+        verbose_name_plural = _("candidacies")
+
+
+class CandidacyImage(Image):
+
+    candidacy = models.ForeignKey(Candidacy, verbose_name=_('candidacy'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)

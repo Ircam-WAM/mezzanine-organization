@@ -5,6 +5,7 @@ $module: ".share-links";
     list-style-type: none;
     padding: 0;
     margin: 0;
+    @include margin-top(2);
 
     &__item {
 

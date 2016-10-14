@@ -27,29 +27,34 @@ class EventImageInline(TabularDynamicInlineAdmin):
     model = EventImage
 
 
-class EventAudioInline(StackedDynamicInlineAdmin):
+class EventPlaylistInline(TabularDynamicInlineAdmin):
 
-    model = EventAudio
-
-
-class EventVideoInline(StackedDynamicInlineAdmin):
-
-    model = EventVideo
+    model = EventPlaylist
 
 
-class EventDepartmentInline(StackedDynamicInlineAdmin):
+class EventDepartmentInline(TabularDynamicInlineAdmin):
 
     model = EventDepartment
 
 
-class EventPersonInline(StackedDynamicInlineAdmin):
+class EventPersonInline(TabularDynamicInlineAdmin):
 
     model = EventPerson
 
 
-class EventLinkInline(StackedDynamicInlineAdmin):
+class EventLinkInline(TabularDynamicInlineAdmin):
 
     model = EventLink
+
+
+class EventTrainingInline(StackedDynamicInlineAdmin):
+
+    model = EventTraining
+
+
+class EventPeriodInline(TabularDynamicInlineAdmin):
+
+    model = EventPeriod
 
 
 class CustomEventAdmin(EventAdmin):
@@ -63,8 +68,8 @@ class CustomEventAdmin(EventAdmin):
     if settings.EVENT_USE_FEATURED_IMAGE:
         list_display.insert(0, "admin_thumb")
     list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location", "category")
-    inlines = [EventBlockInline, EventImageInline, EventDepartmentInline, EventPersonInline,
-                EventLinkInline, EventAudioInline, EventVideoInline]
+    inlines = [EventPeriodInline, EventBlockInline, EventImageInline, EventDepartmentInline,
+                EventPersonInline, EventLinkInline, EventPlaylistInline, EventTrainingInline]
 
     def save_form(self, request, form, change):
         """
@@ -74,5 +79,18 @@ class CustomEventAdmin(EventAdmin):
         return DisplayableAdmin.save_form(self, request, form, change)
 
 
+class EventPublicTypeAdmin(BaseTranslationModelAdmin):
+
+    model = EventPublicType
+
+
+class EventTrainingLevelAdmin(BaseTranslationModelAdmin):
+
+    model = EventTrainingLevel
+
+
+
 admin.site.unregister(Event)
+admin.site.register(EventPublicType, EventPublicTypeAdmin)
+admin.site.register(EventTrainingLevel, EventTrainingLevelAdmin)
 admin.site.register(Event, CustomEventAdmin)

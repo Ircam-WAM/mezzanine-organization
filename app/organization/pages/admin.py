@@ -26,16 +26,9 @@ class PageImageInline(TabularDynamicInlineAdmin):
     model = PageImage
 
 
-class PageAudioInline(StackedDynamicInlineAdmin):
+class PagePlaylistInline(TabularDynamicInlineAdmin):
 
-    model = PageAudio
-    exclude = ("short_url", "keywords", "description", "slug", )
-
-
-class PageVideoInline(StackedDynamicInlineAdmin):
-
-    model = PageVideo
-    exclude = ("short_url", "keywords", "description", "slug", )
+    model = PagePlaylist
 
 
 class PageLinkInline(StackedDynamicInlineAdmin):
@@ -64,15 +57,26 @@ class PageProductListInline(TabularDynamicInlineAdmin):
     model = PageProductList
 
 
+class DynamicContentPageInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentPage
+    form = DynamicContentPageForm
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+
 class CustomPageAdmin(PageAdmin):
 
     inlines = [PageBlockInline,
             PageImageInline,
-            PageAudioInline,
-            PageVideoInline,
+            PagePlaylistInline,
             PageLinkInline,
             PersonListBlockAutocompleteInlineAdmin,
-            PageProductListInline
+            PageProductListInline,
+            DynamicContentPageInline
             ]
 
 
@@ -93,9 +97,18 @@ class DynamicContentHomeBodyInline(TabularDynamicInlineAdmin):
     form = DynamicContentHomeBodyForm
 
 
+class DynamicContentHomeMediaInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentHomeMedia
+    form = DynamicContentHomeMediaForm
+
+
 class HomeAdminDisplayable(BaseTranslationModelAdmin):
 
-    inlines = [DynamicContentHomeSliderInline, DynamicContentHomeBodyInline  ]
+    inlines = [ DynamicContentHomeSliderInline,
+                DynamicContentHomeMediaInline,
+                DynamicContentHomeBodyInline,
+                ]
 
 
 admin.site.register(CustomPage, CustomPageAdmin)

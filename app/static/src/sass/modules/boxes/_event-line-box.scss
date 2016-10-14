@@ -12,7 +12,7 @@ $module: ".event-line-box";
             height: 1px;
             background: rgba(0, 0, 0, 0.25);
 
-            @include margin(1 0 2 0);
+            @include margin(1 0 1 0);
 
             @include mq($until: sm) {
                 @include margin(1 0 1 0);
@@ -28,10 +28,9 @@ $module: ".event-line-box";
         @include line-height(1);
         @include typeface(serif);
         font-weight: weight(heavy);
-
-        @include mq($until: sm) {
-            display: none;
-        }
+        
+        visibility: hidden;
+        height: 0;
 
     }
 
@@ -57,6 +56,16 @@ $module: ".event-line-box";
 
         margin-top: 0;
         @include margin-bottom(1);
+
+        a:not(.button) {
+
+            border: 0;
+
+            &:hover {
+                box-shadow: none;
+            }
+
+        }
 
     }
 

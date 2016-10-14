@@ -37,18 +37,22 @@ $module: ".page";
 
         @include margin(1 0);
 
+        &--small {
+            @include margin(.5 0);
+        }
+
     }
 
     &__meta-date {
 
-        @include font-size(l);
+        @include font-size(m);
         @include line-height(1);
         @include typeface(serif);
         font-weight: weight(heavy);
 
         span {
-            @include font-size(s);
-            margin-top: 4px;
+            font-size: 13px;
+            margin-top: 2px;
             font-weight: weight(regular);
             display: block;
         }
@@ -62,11 +66,30 @@ $module: ".page";
         @include typeface(serif);
         font-weight: weight(heavy);
 
+        &--small {
+            @include font-size(s);
+        }
+
+    }
+
+    &__meta-text {
+
+        font-size: 13px;
+        margin-top: 2px;
+        font-weight: weight(regular);
+        display: block;
+
     }
 
     &__filters {
 
         @include margin(0 0 6 0);
+
+        @media screen and (max-height: 900px) {
+
+            @include margin(0 0 3 0);
+
+        }
 
     }
 
@@ -112,10 +135,12 @@ $module: ".page";
         		z-index: 1;
         		text-decoration: none;
                 border-color: $color-black;
+                border-bottom: 1px solid $color-black;
+                @include transition(all 0.15s ease-in-out);
 
                 &:hover {
-                    box-shadow: none;
-                    color: $color-black;
+                    box-shadow: inset 0 -30px $color-black;
+                    color: $color-main;
                 }
 
         	}
@@ -177,6 +202,21 @@ $module: ".page";
 
             margin-bottom: 0;
 
+        }
+
+    }
+
+    &--organization {
+
+        margin-top: -327px;
+
+        @include mq($until: xs) {
+            margin-top: -123px;
+        }
+
+        .map {
+            width: 100%;
+            height: 900px;
         }
 
     }

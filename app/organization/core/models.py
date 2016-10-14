@@ -24,11 +24,10 @@ class Description(models.Model):
         abstract = True
 
 
-class Named(models.Model):
+class Named(Description):
     """Abstract model providing a name field"""
 
     name = models.CharField(_('name'), max_length=512)
-    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True
@@ -42,11 +41,10 @@ class Named(models.Model):
         return slugify(self.__unicode__())
 
 
-class Titled(models.Model):
+class Titled(Description):
     """Abstract model providing a title field"""
 
     title = models.CharField(_('title'), max_length=1024)
-    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True
@@ -194,3 +192,37 @@ class Period(models.Model):
 
     class Meta:
         abstract = True
+
+
+class PeriodDateTime(models.Model):
+
+    date_from = models.DateTimeField(_('begin date'), null=True, blank=True)
+    date_to = models.DateTimeField(_('end date'), null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
+class AdminThumbRelatedMixin(object):
+    """
+    Provides a thumbnail method on models for admin classes to
+    reference in the ``list_display`` definition.
+    """
+
+    admin_thumb_type = None
+
+    def admin_thumb(self):
+        thumb = ""
+        if self.admin_thumb_type:
+            images = self.images.filter(type=self.admin_thumb_type)
+            if images:
+                thumb = images[0].file
+        if not thumb:
+            return ""
+        from mezzanine.conf import settings
+        from mezzanine.core.templatetags.mezzanine_tags import thumbnail
+        x, y = settings.ADMIN_THUMB_SIZE.split('x')
+        thumb_url = thumbnail(thumb, x, y)
+        return "<img src='%s%s'>" % (settings.MEDIA_URL, thumb_url)
+    admin_thumb.allow_tags = True
+    admin_thumb.short_description = ""

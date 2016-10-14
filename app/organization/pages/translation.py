@@ -11,13 +11,19 @@ class HomeTranslationOptions(TranslationOptions):
 
 
 @register(DynamicContentHomeSlider)
-class DynamicContentHomeSliderOptions(TranslationOptions):
+class DynamicContentHomeSliderTranslationOptions(TranslationOptions):
 
     pass
 
 
 @register(DynamicContentHomeBody)
-class DynamicContentHomeBodyOptions(TranslationOptions):
+class DynamicContentHomeBodyTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(DynamicContentHomeMedia)
+class DynamicContentHomeMediaTranslationOptions(TranslationOptions):
 
     pass
 
@@ -40,20 +46,20 @@ class PageImageTranslationOptions(TranslationOptions):
     fields = ('description',)
 
 
-@register(PageVideo)
-class PageVideoTranslationOptions(TranslationOptions):
-
-    pass
-
-
-@register(PageAudio)
-class PageAudioTranslationOptions(TranslationOptions):
+@register(PagePlaylist)
+class PagePlaylistTranslationOptions(TranslationOptions):
 
     pass
 
 
 @register(PageLink)
 class PageLinkTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(DynamicContentPage)
+class DynamicContentPageTranslationOptions(TranslationOptions):
 
     pass
 
