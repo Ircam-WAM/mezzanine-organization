@@ -79,18 +79,9 @@ class ProjectProgramType(Named):
         ordering = ['name',]
 
 
-class ProjectAudio(Audio):
+class ProjectPlaylist(PlaylistRelated):
 
-    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = Audio._meta.verbose_name
-        verbose_name_plural = Audio._meta.verbose_name_plural
-        
-
-class ProjectVideo(Video):
-
-    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = Video._meta.verbose_name

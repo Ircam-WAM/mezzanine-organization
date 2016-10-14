@@ -1,0 +1,50 @@
+$module: ".map-infowindow";
+
+#{$module} {
+
+    @include padding(1);
+    @include clearfix;
+
+    &__content {
+
+        //float: left;
+        @include margin-left(1);
+
+    }
+
+    &__title {
+
+        @include font-size(m);
+        @include line-height(.75);
+        @include typeface(sans-serif);
+        font-weight: weight(bold);
+
+    }
+
+    &__subtitle {
+
+        @include margin-top(.25);
+
+        @include font-size(xs);
+        @include line-height(.5);
+        @include typeface(serif);
+        font-weight: weight(bold);
+
+    }
+
+    &__image {
+
+        //float: left;
+        width: 140px;
+        margin: 0 auto;
+        @include margin-bottom(1);
+        text-align: center;
+
+        img {
+            width: 140px;
+            height: auto;
+        }
+
+    }
+
+}

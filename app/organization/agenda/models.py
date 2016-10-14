@@ -57,23 +57,13 @@ class EventLink(Link):
         verbose_name_plural = _("links")
 
 
-class EventAudio(Audio):
+class EventPlaylist(PlaylistRelated):
 
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = Audio._meta.verbose_name
-        verbose_name_plural = Audio._meta.verbose_name_plural
-        order_with_respect_to = "event"
-
-
-class EventVideo(Video):
-
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = Video._meta.verbose_name
-        verbose_name_plural = Video._meta.verbose_name_plural
+        verbose_name = _("playlist")
+        verbose_name_plural = _("playlists")
         order_with_respect_to = "event"
 
 

@@ -1,0 +1,64 @@
+$module: ".map-legend";
+
+#{$module} {
+
+    @include padding(1);
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 10;
+    background: white;
+
+    @include mq($until: xs) {
+        display: none;
+    }
+
+    &__item {
+
+        text-transform: uppercase;
+        @include font-size(xs);
+        @include line-height(.5);
+        @include margin-bottom(.25);
+        color: $color-black;
+
+        &:last-child {
+            @include margin-bottom(0);
+        }
+
+        &:before {
+
+            content :"";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            @include margin-right(.5);
+
+        }
+
+        &--red {
+
+            &:before {
+                background: #e7413c;
+            }
+
+        }
+
+        &--blue {
+
+            &:before {
+                background: #3c7be7;
+            }
+
+        }
+
+        &--green {
+
+            &:before {
+                background: #70e73c;
+            }
+
+        }
+
+    }
+
+}
