@@ -40,31 +40,27 @@
         <p>
             <h4>Filter:</h4>
             {% for key,value in filter_dict.items %}
-                <a href="{{ value.url }}" title="{{ key }}">{{ key }} {{ value.count }}</a><br>
+                <a href="{{ value.url }}" title="{{ value.verbose_name }}">{{ value.verbose_name }} {{ value.count }}</a><br>
             {% endfor %}
             {% if cancel_filter_url %}
                 <a href="{{ cancel_filter_url }}" title="">Cancel filter</a>
             {% endif %}
         </p>
         {% for result in results.object_list %}
-        {% with result.get_absolute_url as result_url %}
-
-            <h5>
-                {{ forloop.counter0|add:results.start_index }})
-                 - {{ result|classname }} -
-                {% if result_url %}
-                    <a href="{{ result_url }}">{{ result }}</a>
-                {% else %}
-                    {{ result }}
-                {% endif %}
-            </h5>
-            {% if result.description != result|stringformat:"s" %}
-                <p>{{ result.description|truncatewords_html:20|safe }}</p>
+            {{ result|classname }}
+            {% if result|classname == 'Event' %}
+                {% with result as event %}
+                    {% include 'agenda/includes/event_search.html' %}
+                {% endwith %}
+            {% elif result|classname == 'Playlist' %}
+                {% with result as playlist %}
+                    {% include 'media/inc/playlist_search.html' %}
+                {% endwith %}
+            {% else %}
+                {% with result as page %}
+                    {% include 'pages/includes/page_search.html' %}
+                {% endwith %}
             {% endif %}
-            {% if result_url %}
-                <a href="{{ result_url }}">{% trans "read more" %}</a>
-            {% endif %}
-        {% endwith %}
         {% endfor %}
 
         {% pagination_for results %}

@@ -5,9 +5,12 @@ from mezzanine.core.models import Displayable, Slugged, Orderable
 from mezzanine.pages.models import Link as MezzanineLink
 from organization.core.models import *
 from organization.media.models import *
+from organization.core.managers import *
 
 
 class CustomPage(Page, SubTitled, RichText):
+
+    objects = CustomSearchableManager()
 
     class Meta:
         verbose_name = 'custom page'

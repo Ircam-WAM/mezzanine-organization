@@ -29,7 +29,7 @@ class Media(Displayable):
     category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='medias', blank=True, null=True, on_delete=models.SET_NULL)
 
     # objects = SearchableManager()
-    search_fields = ("title",)
+    # search_fields = ("title",)
 
     class Meta:
         verbose_name = "media"
