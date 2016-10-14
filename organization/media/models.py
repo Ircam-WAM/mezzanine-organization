@@ -54,6 +54,7 @@ class Media(Displayable):
 
 def create_media(instance, created, raw, **kwargs):
     # Ignore fixtures and saves for existing courses.
+
     if not created or raw:
         return
 
