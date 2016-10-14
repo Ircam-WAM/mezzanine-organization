@@ -12,7 +12,7 @@ from organization.media.views import *
 
 
 urlpatterns = [
-    url(r'^playlist/list/$', PlaylistListView.as_view(), name="organization-playlist-list"),
-    url(r'^playlist/detail/(?P<slug>.*)/$', PlaylistDetailView.as_view(), name="organization-playlist-detail"),
-    url("^media-autocomplete/$",  permission_required('playlist.can_edit')(PlayListMediaView.as_view()), name='media-autocomplete'),
+    url("^playlist/list/$", PlaylistListView.as_view(), name="organization-playlist-list"),
+    url("^playlist/detail/(?P<slug>.*)/$", PlaylistDetailView.as_view(), name="organization-playlist-detail"),
+    url("^playlist-media-autocomplete/$",  permission_required('playlist.can_edit')(PlayListMediaView.as_view()), name='media-autocomplete'),
 ]
