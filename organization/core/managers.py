@@ -19,65 +19,9 @@ from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from mezzanine.utils.sites import current_site_id
 from mezzanine.utils.urls import home_slug
-from mezzanine.core.managers import search_fields_to_dict, SearchableQuerySet
+from mezzanine.core.managers import search_fields_to_dict, SearchableQuerySet, SearchableManager
 
-class CustomSearchableManager(Manager):
-
-    """
-    Manager providing a chainable queryset.
-    Adapted from http://www.djangosnippets.org/snippets/562/
-    search method supports spanning across models that subclass the
-    model being used to search.
-    """
-
-    def __init__(self, *args, **kwargs):
-        self._search_fields = kwargs.pop("search_fields", {})
-        super(CustomSearchableManager, self).__init__(*args, **kwargs)
-
-    def get_search_fields(self):
-        """
-        Returns the search field names mapped to weights as a dict.s
-        Used in ``get_queryset`` below to tell ``SearchableQuerySet``
-        which search fields to use. Also used by ``DisplayableAdmin``
-        to populate Django admin's ``search_fields`` attribute.
-        Search fields can be populated via
-        ``SearchableManager.__init__``, which then get stored in
-        ``SearchableManager._search_fields``, which serves as an
-        approach for defining an explicit set of fields to be used.
-        Alternatively and more commonly, ``search_fields`` can be
-        defined on models themselves. In this case, we look at the
-        model and all its base classes, and build up the search
-        fields from all of those, so the search fields are implicitly
-        built up from the inheritence chain.
-        Finally if no search fields have been defined at all, we
-        fall back to any fields that are ``CharField`` or ``TextField``
-        instances.
-        """
-        search_fields = self._search_fields.copy()
-        if not search_fields:
-            for cls in reversed(self.model.__mro__):
-                super_fields = getattr(cls, "search_fields", {})
-                search_fields.update(search_fields_to_dict(super_fields))
-        if not search_fields:
-            search_fields = []
-            for f in self.model._meta.fields:
-                if isinstance(f, (CharField, TextField)):
-                    search_fields.append(f.name)
-            search_fields = search_fields_to_dict(search_fields)
-        return search_fields
-
-    def get_queryset(self):
-        search_fields = self.get_search_fields()
-        return SearchableQuerySet(self.model, search_fields=search_fields)
-
-    def contribute_to_class(self, model, name):
-        """
-        Newer versions of Django explicitly prevent managers being
-        accessed from abstract classes, which is behaviour the search
-        API has always relied on. Here we reinstate it.
-        """
-        super(CustomSearchableManager, self).contribute_to_class(model, name)
-        setattr(model, name, ManagerDescriptor(self))
+class CustomSearchableManager(SearchableManager):
 
     def search(self, *args, **kwargs):
         """
