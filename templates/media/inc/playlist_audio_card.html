@@ -1,0 +1,5 @@
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
+
+<div class="audio-card">
+    <a href="{% url 'organization-playlist-detail' playlist.slug %}">{{ playlist.title }}</a>
+</div>

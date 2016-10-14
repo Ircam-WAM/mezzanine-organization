@@ -46,14 +46,8 @@ class PageImageTranslationOptions(TranslationOptions):
     fields = ('description',)
 
 
-@register(PageVideo)
-class PageVideoTranslationOptions(TranslationOptions):
-
-    pass
-
-
-@register(PageAudio)
-class PageAudioTranslationOptions(TranslationOptions):
+@register(PagePlaylist)
+class PagePlaylistTranslationOptions(TranslationOptions):
 
     pass
 

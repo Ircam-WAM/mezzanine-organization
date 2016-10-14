@@ -15,14 +15,8 @@ class EventImageTranslationOptions(TranslationOptions):
     fields = ()
 
 
-@register(EventAudio)
-class EventAudioTranslationOptions(TranslationOptions):
-
-    fields = ()
-
-
-@register(EventVideo)
-class EventVideoTranslationOptions(TranslationOptions):
+@register(EventPlaylist)
+class EventPlaylistTranslationOptions(TranslationOptions):
 
     fields = ()
 

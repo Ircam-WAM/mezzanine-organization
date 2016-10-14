@@ -72,10 +72,9 @@ SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 ADMIN_MENU_ORDER = (
     (_('Pages'), ('pages.Page', 'organization-pages.Home',
                  'organization-core.LinkType')),
-    (_('Media'), ('organization-media.Video',
+    (_('Media'), ('organization-media.Media',
+                  'organization-media.Playlist',
                  'organization-media.MediaCategory',
-                 'organization-media.Audio',
-                 'organization-media.Playlist',
                  (_('Media Library'), 'fb_browse'),
                  )),
     (_('Events'), ('mezzanine_agenda.Event',

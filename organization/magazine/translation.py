@@ -43,13 +43,7 @@ class DynamicContentArticleTranslationOptions(TranslationOptions):
     pass
 
 
-@register(ArticleAudio)
-class ArticleAudioTranslationOptions(TranslationOptions):
-
-    pass
-
-
-@register(ArticleVideo)
-class ArticleVideoTranslationOptions(TranslationOptions):
+@register(ArticlePlaylist)
+class ArticlePlaylistTranslationOptions(TranslationOptions):
 
     pass
