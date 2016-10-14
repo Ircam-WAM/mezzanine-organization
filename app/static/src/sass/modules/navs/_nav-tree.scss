@@ -29,6 +29,12 @@ $module: ".nav-tree";
 
     }
 
+    &__separator {
+
+        @include margin(2 0);
+
+    }
+
     &__link {
 
         display: block;
@@ -50,6 +56,14 @@ $module: ".nav-tree";
             @include padding-left(2);
             background: lighten($color_main, 20%);
             color: $color-black-light;
+
+            &.active {
+                padding: 4px 20px;
+                @include padding-left(2);
+                color: $color-black-light;
+                background: lighten($color_main, 20%);
+                font-weight: weight(bold);
+            }
         }
 
     }
