@@ -132,8 +132,7 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'organization-network.TeamPage',
                         'organization-projects.ProjectTopicPage',
                         'pages.Page',
-                        'organization-media.Audio',
-                        'organization-media.Video',
+                        'organization-media.Media',
                         'mezzanine_agenda.Event')
 
 

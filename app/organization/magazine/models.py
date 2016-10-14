@@ -44,10 +44,6 @@ class ArticlePlaylist(PlaylistRelated):
 
     article = models.ForeignKey(Article, verbose_name=_('article'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
-    class Meta:
-        verbose_name = Video._meta.verbose_name
-        verbose_name_plural = Video._meta.verbose_name_plural
-
 
 class Brief(Displayable, RichText):
 
