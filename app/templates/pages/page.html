@@ -70,17 +70,20 @@
                         {% endwith %}
                     {% endblock %}
                     {% block page_audio %}
-                        {% with object.audios.all as audios %}
-                            {% if audios %}
-                                {% include 'core/inc/audio.html' %}
-                            {% endif %}
-                        {% endwith %}
+                        {% for related in object.playlists.all %}
+                            {% with related.playlist as playlist %}
+                                {% if playlist.type == 'audio' %}
+                                    {% include 'media/inc/playlist_audio_detail.html' %}
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
                     {% endblock %}
                 </div>
 
             </div>
 
         </div>
+
         {% block page_slider %}
         {% with object.images.all|get_type:'page_slider' as slider_images %}
             {% if slider_images %}
@@ -88,13 +91,18 @@
             {% endif %}
         {% endwith %}
         {% endblock %}
+
         {% block page_video %}
-            {% with object.videos.all as videos %}
-                {% if videos %}
-                    {% include 'core/inc/slider_video.html' %}
-                {% endif %}
-            {% endwith %}
+            {% for related in object.playlists.all %}
+                {% with related.playlist as playlist %}
+                    {% if playlist.type == 'video' %}
+                        {% include 'media/inc/playlist_video_slider.html' %}
+                    {% endif %}
+                {% endwith %}
+            {% endfor %}
         {% endblock %}
+
+
         {% block page_person_list %}
         {% endblock %}
         {% block products %}
