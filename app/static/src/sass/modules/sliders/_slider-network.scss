@@ -5,6 +5,7 @@ $module: ".slider-network";
     padding-right: 140px;
     position: relative;
     @include margin-bottom(6);
+    display: none;
 
     ul {
 
