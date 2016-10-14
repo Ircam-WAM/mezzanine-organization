@@ -52,6 +52,13 @@ $module: ".nav-tree";
             @include font-size(s);
         }
 
+        &--filter {
+
+            background: #efefef;
+            color: $color-black;
+
+        }
+
         &--sub {
             @include padding-left(2);
             background: lighten($color_main, 20%);
@@ -64,6 +71,12 @@ $module: ".nav-tree";
                 background: lighten($color_main, 20%);
                 font-weight: weight(bold);
             }
+        }
+
+        i {
+            float: right;
+            position: relative;
+            top: 5px;
         }
 
     }

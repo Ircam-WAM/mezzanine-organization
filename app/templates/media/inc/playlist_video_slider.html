@@ -1,13 +1,15 @@
 {% load mezzanine_tags %}
 <div class="page__slider">
     <ul class="slider-page" data-slider-page>
-        {% for video in videos %}
+        {% for media in playlist.medias.all %}
+          {% with media.media as media %}
             <li class="slider-page__slide">
                 <div class="slider-page__wrapper">
                     <div class="slider-page__video">
-                        <video controls class="video-js vjs-ircam-skin" data-setup='{"aspectRatio":"905:520"}' {% if video.poster_url %}poster="{{ video.poster_url }}"{% endif %}>
-                            <source src="{{ video.closed_source_url }}" type="{{ video.closed_source_mime_type }}">
-                            <source src="{{ video.open_source_url }}" type="{{ video.open_source_mime_type }}">
+                        <video controls class="video-js vjs-ircam-skin" data-title="{{ media.title }}" data-setup='{"aspectRatio":"905:520"}' {% if media.poster_url %}poster="{{ media.poster_url }}"{% endif %}>
+                            {% for transcoded in media.transcoded.all %}
+                    	       <source src="{{ transcoded.url }}" type="{{ transcoded.mime_type }}" />
+                            {% endfor %}
                             Your browser does not support the video tag.
                         </video>
                     </div>
@@ -16,6 +18,7 @@
                     </div>
                 </div>
             </li>
+          {% endwith %}
         {% endfor %}
     </ul>
 </div>
