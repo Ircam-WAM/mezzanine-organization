@@ -8,7 +8,6 @@ from mezzanine.core.admin import *
 from organization.core.admin import *
 from organization.projects.models import *
 from organization.pages.models import *
-from organization.media.models import Video, Audio
 from organization.shop.models import *
 
 from cartridge.shop.admin import *

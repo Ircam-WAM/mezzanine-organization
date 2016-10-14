@@ -1,0 +1,21 @@
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
+
+{% for media in playlist.medias.all %}
+  {% with media.media as media %}
+    {% if forloop.first %}
+        <div class="embed-responsive">
+        	<video width="100%" poster="{{ media.poster_url }}" controls data-title="{{ media.title }}" preload="none">
+                {% for transcoded in media.transcoded.all %}
+        	       <source src="{{ transcoded.url }}" type="{{ transcoded.mime_type }}" />
+                {% endfor %}
+        	</video>
+        </div>
+        <ol>
+    {% else %}
+        <li><a href="#" data-src="{{ media.url }}">>{{ media.title }}</a></li>
+    {% endif %}
+    {% if forloop.last %}
+        </ol>
+    {% endif %}
+  {% endwith %}
+{% endfor %}

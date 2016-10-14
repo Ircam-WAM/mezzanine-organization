@@ -9,14 +9,8 @@ class ProjectTranslationOptions(TranslationOptions):
     fields = ('title', 'description', 'content')
 
 
-@register(ProjectVideo)
-class ProjectVideoTranslationOptions(TranslationOptions):
-
-    pass
-
-
-@register(ProjectAudio)
-class ProjectAudioTranslationOptions(TranslationOptions):
+@register(ProjectPlaylist)
+class ProjectPlaylistTranslationOptions(TranslationOptions):
 
     pass
 

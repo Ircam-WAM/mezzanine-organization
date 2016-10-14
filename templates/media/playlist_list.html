@@ -1,0 +1,25 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
+
+{% block breadcrumb_menu %}
+    {{ block.super }}
+    <li class="breadcrumb__item active">{% trans "Media" %}</li>
+{% endblock %}
+
+{% block page_title %}
+    {% editable person.title %}
+        <h1 class="dotted">{% trans "Media" %}</h1>
+    {% endeditable %}
+{% endblock %}
+
+{% block page_content %}
+    {% for playlist in playlists %}
+        {% with playlist.type as type %}
+            {% with "media/inc/playlist_"|add:type|add:"_card.html" as template %}
+                {% include template %}
+            {% endwith %}
+        {% endwith %}
+        <br>
+    {% endfor %}
+
+{% endblock %}
