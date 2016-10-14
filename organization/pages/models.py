@@ -5,9 +5,12 @@ from mezzanine.core.models import Displayable, Slugged, Orderable
 from mezzanine.pages.models import Link as MezzanineLink
 from organization.core.models import *
 from organization.media.models import *
+from organization.core.managers import *
 
 
 class CustomPage(Page, SubTitled, RichText):
+
+    objects = CustomSearchableManager()
 
     class Meta:
         verbose_name = 'custom page'
@@ -56,7 +59,8 @@ class PageVideo(Video):
 class PageLink(Link):
 
     page = models.ForeignKey(Page, verbose_name=_('page'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
-
+    objects = CustomSearchableManager()
+    
     class Meta:
         verbose_name = _("link")
         verbose_name_plural = _("links")
