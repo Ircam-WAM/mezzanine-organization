@@ -10,6 +10,12 @@ $module: ".nav-tree";
     position: absolute;
     width: 100%;
 
+    @include mq($until: sm) {
+
+        position: static;
+
+    }
+
     .nav-tree & {
         position: relative;
     }
