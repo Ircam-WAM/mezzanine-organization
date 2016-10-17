@@ -258,7 +258,7 @@ MIGRATION_MODULES = {
 }
 
 
-TEMPLATES = [{'APP_DIRS': True,
+TEMPLATES = [{'APP_DIRS': False,
                'BACKEND': 'django.template.backends.django.DjangoTemplates',
                'DIRS': ('/srv/app/templates',),
                'OPTIONS': {'builtins': ['mezzanine.template.loader_tags'],
@@ -271,7 +271,14 @@ TEMPLATES = [{'APP_DIRS': True,
                                                   'django.core.context_processors.request',
                                                   'django.core.context_processors.tz',
                                                   'mezzanine.conf.context_processors.settings',
-                                                  'mezzanine.pages.context_processors.page')}}]
+                                                  'mezzanine.pages.context_processors.page'),
+                            'loaders': [
+                                ('django.template.loaders.cached.Loader', [
+                                    'django.template.loaders.filesystem.Loader',
+                                    'django.template.loaders.app_directories.Loader',
+                                ]),],
+                          },
+            }]
 
 # List of middleware classes to use. Order is important; in the request phase,
 # these middleware classes will be applied in the order given, and in the
