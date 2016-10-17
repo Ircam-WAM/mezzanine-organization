@@ -1,38 +1,50 @@
+{% extends "core/inc/generic_card.html" %}
 {% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
 
-<a class="article-box" href="{% url 'magazine-article-detail' article.slug %}">
-    <div class="article-box__header">
-        <figure class="article-box__image">
-            {% with article.images.all|get_type:'card' as images %}
-                {% if images %}
-                    <img src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 top=0.5 left=article.photo_alignment|get_photo_alignment %}" data-src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 %}" class="lazyload" />
-                {% endif %}
-            {% endwith %}
-        </figure>
-        <div class="article-box__tags">
-            <div class="tag tag--small tag--category">
-                {% trans 'News' %}
-            </div>
-            {% if article.department %}
-                <div class="tag tag--small dashed dashed--gray">
-                  {{ article.department.name }}
-                </div>
-            {% endif %}
-        </div>
-    </div>
+{% block metatitle %}
+    {{ article.title }}
+{% endblock %}
 
-    <div class="article-box__content tal">
-        <h3 class="article-box__title">{{ article.title }}</h3>
-        <div class="article-box__subtitle">
-            {{ article.publish_date|date:"DATE_FORMAT" }}
-            {% for category in article.categories.all %}
-                {% if forloop.first %} | {% endif %}
-                {% if not forloop.first %}, {% endif %}
-                <strong>{{ category }}</strong>
-            {% endfor %}
+{% block title %}
+    {{ article.title }}
+{% endblock %}
+
+{% block url %}
+    {% url 'magazine-article-detail' article.slug %}
+{% endblock %}
+
+{% block image %}
+    <figure class="article-box__image">
+        {% with article.images.all|get_type:'card' as images %}
+            {% if images %}
+                <img src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 top=0.5 left=article.photo_alignment|get_photo_alignment %}" data-src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 %}" class="lazyload" />
+            {% endif %}
+        {% endwith %}
+    </figure>
+{% endblock %}
+
+{% block tags %}
+    <div class="article-box__tags">
+        <div class="tag tag--small tag--category">
+            {% trans 'News' %}
         </div>
-        <div class="article-box__desc">
-             {{ article.content|richtext_filters|safe|truncatechars_html:200 }}
-        </div>
+        {% if article.department %}
+            <div class="tag tag--small dashed dashed--gray">
+              {{ article.department.name }}
+            </div>
+        {% endif %}
     </div>
-</a>
+{% endblock %}
+
+{% block content %}
+    {{ article.description|richtext_filters|safe|truncatechars_html:200 }}
+{% endblock %}
+
+{% block subtitle %}
+    {{ article.publish_date|date:"DATE_FORMAT" }}
+    {% for category in article.categories.all %}
+        {% if forloop.first %} | {% endif %}
+        {% if not forloop.first %}, {% endif %}
+        <strong>{{ category }}</strong>
+    {% endfor %}
+{% endblock %}
