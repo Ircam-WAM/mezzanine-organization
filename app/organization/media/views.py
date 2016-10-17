@@ -31,15 +31,17 @@ class PlaylistListView(ListView):
 class PlayListMediaView(autocomplete.Select2QuerySetView):
 
     def get_queryset(self):
-
         qs = Media.objects.all()
-
         media_title = self.forwarded.get('title', None)
-
         if media_title:
             qs = qs.filter(title=media_title)
-
         if self.q:
             qs = qs.filter(title__istartswith=self.q)
-
         return qs
+
+
+class MediaDetailView(SlugMixin, DetailView):
+
+    model = Media
+    template_name='media/media_detail.html'
+    context_object_name = 'media'
