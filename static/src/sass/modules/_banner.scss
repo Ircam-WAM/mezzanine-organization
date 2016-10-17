@@ -99,6 +99,25 @@ $module: ".banner";
 
     }
 
+    &--small {
+
+        height: 150px;
+        margin-top: 0;
+
+        @include mq($until: lg) {
+
+            height: 150px;
+
+        }
+
+        #{$module}__content {
+
+            padding-top: 40px;
+
+        }
+
+    }
+
     &__content {
 
         position: absolute;
