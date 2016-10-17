@@ -14,7 +14,7 @@ var StickyKitInit = require('./modules/sticky-kit-init');
 var LightSliderPageInit = require('./modules/lightsliderpage-init');
 var LightSliderHomeInit = require('./modules/lightsliderhome-init');
 var LightSliderNetworkInit = require('./modules/lightslidernetwork-init');
-var LightSliderNetworkInit = require('./modules/lazyload-init');
+var LazyLoadInit = require('./modules/lazyload-init');
 var HomeMenu = require('./modules/home-menu');
 var Audio = require('./modules/audio');
 
