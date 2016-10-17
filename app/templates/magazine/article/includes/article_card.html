@@ -14,13 +14,17 @@
 {% endblock %}
 
 {% block image %}
-    <figure class="article-box__image">
-        {% with article.images.all|get_type:'card' as images %}
-            {% if images %}
-                <img src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 top=0.5 left=article.photo_alignment|get_photo_alignment %}" data-src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 %}" class="lazyload" />
-            {% endif %}
-        {% endwith %}
-    </figure>
+    {% with article.images.all|get_type:'card' as images %}
+        {% if images %}
+            <figure class="article-box__image">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 top=0.5 left=article.photo_alignment|get_photo_alignment %}" class="lazyload" />
+            </figure>
+        {% else %}
+            <figure class="article-box__image">
+
+            </figure>
+        {% endif %}
+    {% endwith %}
 {% endblock %}
 
 {% block tags %}
