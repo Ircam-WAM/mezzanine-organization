@@ -65,15 +65,6 @@
         {% endif %}
     {% endblock %}
 
-    {% if event.brochure %}
-        <p>
-            <a href='{{ event.brochure.url }}' target="_blank" class="button">
-                <i class="icon icon__file"></i>
-                {% trans "Download" %} {% trans "the room program" %}
-            </a>
-        </p>
-    {% endif %}
-
 {% endblock %}
 
 {% block page_link %}
