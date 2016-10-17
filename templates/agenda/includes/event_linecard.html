@@ -25,13 +25,13 @@
                 {% with event.images.all|get_type:'card' as images %}
                     {% if images %}
                         <a href="{{ event.get_absolute_url }}">
-                            <img class="event-line-box__image" src="{{ MEDIA_URL }}{% thumbnail images.0.file 203 140 %}" width="203" height="140">
+                            <img class="event-line-box__image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ MEDIA_URL }}{% thumbnail images.0.file 203 140 %}" width="203" height="140" class="lazyload">
                         </a>
                     {% else %}
                         {% with event.parent.images.all|get_type:'card' as images %}
                             {% if images %}
                                 <a href="{{ event.get_absolute_url }}">
-                                    <img class="event-line-box__image" src="{{ MEDIA_URL }}{% thumbnail images.0.file 203 140 %}" width="203" height="140">
+                                    <img class="event-line-box__image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ MEDIA_URL }}{% thumbnail images.0.file 203 140 %}" width="203" height="140" class="lazyload">
                                 </a>
                             {% endif %}
                         {% endwith %}
