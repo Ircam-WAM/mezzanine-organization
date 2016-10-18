@@ -102,7 +102,7 @@ class OrganizationBlockTranslationOptions(TranslationOptions):
 @register(PersonListBlock)
 class PersonListBlockTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title', 'description')
 
 
 @register(PersonListBlockInline)
