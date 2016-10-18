@@ -1,0 +1,42 @@
+$module: ".search-box";
+
+#{$module} {
+
+    position: relative;
+    @include margin-bottom(2);
+
+    &__title {
+        @include margin(0 0 1 0);
+        font-weight: weight(bold);
+        text-transform: uppercase;
+
+        i {
+            display: inline-block;
+            @include margin-left(.5);
+            font-size: 0.75em;
+            position: relative;
+            top: -5px;
+        }
+    }
+
+    &__subtitle {
+
+        @include font-size(m);
+        @include line-height(1);
+        @include typeface(sans-serif);
+
+        @include margin-top(-.5);
+        @include margin-bottom(1);
+
+    }
+
+    &__content {
+
+        @include font-size(s);
+        @include line-height(1);
+        @include typeface(serif);
+        font-weight: weight(light);
+
+    }
+
+}
