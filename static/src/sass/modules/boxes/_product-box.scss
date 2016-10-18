@@ -1,0 +1,55 @@
+$module: ".product-box";
+
+#{$module} {
+
+    position: relative;
+    @include margin-bottom(2);
+
+    &__image {
+
+        @include fluid-aspect(320 100);
+
+    }
+
+    &__title {
+
+        @include font-size(xxl);
+        @include line-height(2);
+        @include typeface(sans-serif);
+        @include margin(0 0 1 0);
+
+    }
+
+    &__desc {
+
+        @include font-size(s);
+        @include line-height(.75);
+        @include typeface(serif);
+        @include margin(1 0 .25 0);
+        font-weight: weight(light);
+
+    }
+
+    &__content {
+
+        @include padding(.5);
+
+        height: 150px;
+
+    }
+
+    &:after {
+
+        content: "";
+        display: block;
+        height: 1px;
+        width: 100%;
+        background: #979797;
+        position: absolute;
+        bottom: -24px;
+        left: 0;
+        right: 0;
+
+    }
+
+}
