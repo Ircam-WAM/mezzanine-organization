@@ -52,7 +52,7 @@ prestadb:
     - MYSQL_PASSWORD=pUmt97e4MgR9EP4knyWea0n
 
 evedb:
-  image: postgres
+  image: postgres:9.5
   volumes_from:
     - data
   volumes:
