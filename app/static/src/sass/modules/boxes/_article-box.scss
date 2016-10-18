@@ -162,6 +162,8 @@ $module: ".article-box";
         @include margin-top(2);
         position: relative;
 
+
+
         &:after {
 
             content: "";
@@ -183,6 +185,12 @@ $module: ".article-box";
             @include typeface(sans-serif);
             @include margin(.25 0 .25 0);
             font-weight: weight(heavy);
+
+        }
+
+        #{$module}__image {
+
+            @include fluid-aspect(427 500);
 
         }
 

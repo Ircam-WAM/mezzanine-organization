@@ -6,7 +6,7 @@ from organization.agenda.models import *
 @register(EventBlock)
 class EventBlockTranslationOptions(TranslationOptions):
 
-    fields = ()
+    fields = ('title', 'description', 'content')
 
 
 @register(EventImage)
