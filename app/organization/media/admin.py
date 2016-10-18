@@ -19,11 +19,6 @@ class MediaAdmin(BaseTranslationModelAdmin):
 class PlaylistMediaInline(TabularDynamicInlineAdmin):
 
     model = PlaylistMedia
-
-
-class PlaylistMediaInline(TabularDynamicInlineAdmin):
-
-    model = PlaylistMedia
     form = PlaylistMediaForm
 
 
