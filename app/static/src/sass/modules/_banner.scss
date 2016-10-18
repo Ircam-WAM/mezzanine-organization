@@ -99,20 +99,20 @@ $module: ".banner";
 
     }
 
-    &--small {
+    &--sidebar {
 
-        height: 150px;
         margin-top: 0;
+        @include margin-bottom(2);
 
-        @include mq($until: lg) {
+        #{$module}__title {
 
-            height: 150px;
+            @include line-height(2);
 
         }
 
         #{$module}__content {
 
-            padding-top: 40px;
+            @include padding(1);
 
         }
 
