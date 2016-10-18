@@ -10,7 +10,7 @@
 
                     {% with person.images.all|get_type:'card' as card_images %}
                         {% if card_images %}
-                            <img src="{{ MEDIA_URL }}{% thumbnail card_images.first 135 135 top=0.5 %}" alt="person"/>
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ MEDIA_URL }}{% thumbnail card_images.first 135 135 top=0.5 %}" class="lazyload" alt="person"/>
                         {% endif %}
                     {% endwith %}
 
