@@ -106,10 +106,7 @@
             {% endfor %}
         {% endblock %}
 
-
         {% block page_person_list %}
-        {% endblock %}
-        {% block products %}
         {% endblock %}
         {% block page_sub_content %}
             {% with object.blocks.all as blocks %}
@@ -123,6 +120,8 @@
     </div>
 
     <div>
+        {% block products %}
+        {% endblock %}
         {% block page_related_content %}
             {% with page.dynamic_content_pages.all as dynamic_content %}
                 {% include "core/inc/related_content.html" %}
