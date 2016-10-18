@@ -129,6 +129,7 @@ class PersonListBlockInlineAdmin(TabularDynamicInlineAdmin):
 class PersonListBlockAdmin(admin.ModelAdmin):
 
     inlines = [PersonListBlockInlineAdmin,]
+    list_display = ['title', 'description', 'date_created', 'date_modified']
 
 
 class ActivityFunctionAdmin(BaseTranslationModelAdmin):

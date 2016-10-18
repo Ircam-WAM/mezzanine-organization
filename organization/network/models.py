@@ -305,7 +305,7 @@ class PageCustomPersonListBlockInline(Titled):
         return self.title
 
 
-class PersonListBlock(Titled):
+class PersonListBlock(Titled, Dated):
 
     style = models.CharField(_('style'), max_length=16, choices=PERSON_LIST_STYLE_CHOICES)
 

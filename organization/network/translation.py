@@ -36,7 +36,7 @@ class TeamTranslationOptions(TranslationOptions):
 @register(Person)
 class PersonTranslationOptions(TranslationOptions):
 
-    fields = ('bio',)
+    fields = ('description','bio',)
 
 
 @register(PersonActivity)
