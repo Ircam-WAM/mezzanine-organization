@@ -4,93 +4,44 @@ from organization.media.models import *
 from organization.core.views import *
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
-from mezzanine_agenda.models import Event
-from organization.agenda.models import EventVideo
-from organization.magazine.models import Article, Topic, Brief, ArticleVideo
 
 
-class VideoListView(ListView):
+class PlaylistDetailView(SlugMixin, DetailView):
 
-    model = Video
-    template_name='festival/video_list.html'
-
-    def get_queryset(self, **kwargs):
-        return self.model.objects.published()
+    model = Playlist
+    template_name='media/playlist_detail.html'
+    context_object_name = 'playlist'
 
     def get_context_data(self, **kwargs):
-        context = super(VideoListView, self).get_context_data(**kwargs)
-        context['categories'] = MediaCategory.objects.all()
+        context = super(PlaylistDetailView, self).get_context_data(**kwargs)
         return context
 
 
-class VideoDetailView(SlugMixin, DetailView):
+class PlaylistListView(ListView):
 
-    model = Video
-    template_name='festival/video_detail.html'
-    context_object_name = 'video'
+    model = Playlist
+    template_name='media/playlist_list.html'
+    context_object_name = 'playlists'
 
     def get_context_data(self, **kwargs):
-        context = super(VideoDetailView, self).get_context_data(**kwargs)
+        context = super(PlaylistListView, self).get_context_data(**kwargs)
         return context
 
 
-class VideoListCategoryView(VideoListView):
+class PlayListMediaView(autocomplete.Select2QuerySetView):
 
     def get_queryset(self):
-        self.category = MediaCategory.objects.get(slug=self.kwargs['slug'])
-        return self.model.objects.filter(category=self.category)
+        qs = Media.objects.all()
+        media_title = self.forwarded.get('title', None)
+        if media_title:
+            qs = qs.filter(title=media_title)
+        if self.q:
+            qs = qs.filter(title__istartswith=self.q)
+        return qs
 
-    def get_context_data(self, **kwargs):
-        context = super(VideoListCategoryView, self).get_context_data(**kwargs)
-        context['category'] = self.category
-        return context
 
+class MediaDetailView(SlugMixin, DetailView):
 
-class MediaListView(ListView):
-
-    template_name='media/media_list.html'
+    model = Media
+    template_name='media/media_detail.html'
     context_object_name = 'media'
-
-    def get_queryset(self):
-        audios = Audio.objects.all()
-        videos = Video.objects.all()
-        media_list = [video for video in videos]
-        # media_list += [audio for audio in audios]
-        media_list.sort(key=lambda x: x.created_at, reverse=True)
-
-        return media_list
-
-
-class AudioDetailView(SlugMixin, DetailView):
-
-    model = Audio
-    template_name='festival/video_detail.html'
-    context_object_name = 'video'
-
-    def get_context_data(self, **kwargs):
-        context = super(AudioDetailView, self).get_context_data(**kwargs)
-        return context
-
-class AudioListView(ListView):
-
-    model = Audio
-    template_name='festival/video_list.html'
-
-    def get_queryset(self, **kwargs):
-        return self.model.objects.published()
-
-    def get_context_data(self, **kwargs):
-        context = super(AudioListView, self).get_context_data(**kwargs)
-        context['categories'] = MediaCategory.objects.all()
-        return context
-
-class AudioListCategoryView(AudioListView):
-
-    def get_queryset(self):
-        self.category = MediaCategory.objects.get(slug=self.kwargs['slug'])
-        return self.model.objects.filter(category=self.category)
-
-    def get_context_data(self, **kwargs):
-        context = super(AudioListCategoryView, self).get_context_data(**kwargs)
-        context['category'] = self.category
-        return context

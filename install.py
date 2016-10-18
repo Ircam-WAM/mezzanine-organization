@@ -13,6 +13,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 import os
 import argparse
 import platform
+from pwd import getpwnam
+from grp import getgrnam
 
 sysvinit_script = """#!/bin/sh
 ### BEGIN INIT INFO
@@ -98,12 +100,11 @@ ExecStop=%s -f %s stop
 WantedBy=local.target
 """
 
-
 class DockerCompositionInstaller(object):
 
     docker = '/etc/init.d/docker'
     docker_compose = '/usr/local/bin/docker-compose'
-    cron_rule = "* */6 * * * %s %s"
+    cron_rule = "0 */6 * * * %s %s"
 
     def __init__(self, config='docker-compose.yml', init_type='sysvinit', cron=False, user=None):
         self.init_type = init_type
@@ -156,10 +157,13 @@ class DockerCompositionInstaller(object):
 
     def install_cron(self):
         # version with migration
-        # command = "cd /srv/ircam-www && git pull origin dev &&  " + self.docker_compose + " -f " + self.config + " run app /srv/app/manage.py migrate --noinput && ./scripts/push.sh >> /var/log/cri/cron/`date +\%Y\%m\%d\%H\%M\%S`-cron.log 2>&1 \n"
         # without migration
+        log_path = "/var/log/"+ self.name
+        if not os.path.exists(log_path) :
+            os.makedirs(log_path, 0o755)
+            os.chown(log_path, getpwnam(self.user).pw_uid, getgrnam(self.user).gr_gid)
         path = "PATH=/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin\n"
-        command = "cd /srv/ircam-www && ./scripts/push.sh >> /var/log/cri/cron/`date +\%Y\%m\%d-\%H-\%M-\%S`-cron.log 2>&1 \n"
+        command = "cd /srv/ircam-www && ./scripts/push.sh >> /var/log/"+ self.name +"/ircam-www-push.log 2>&1 \n"
         rule = self.cron_rule % (self.user, command)
         f = open('/etc/cron.d/' + self.name, 'w')
         f.write(path + rule)

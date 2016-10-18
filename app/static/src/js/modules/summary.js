@@ -2,6 +2,7 @@ var Summary = function() {
 
     this.$summary = $('[data-summary]');
     this.$content = $('[data-summary-content]');
+    this.$links = [];
 
     //
     // Init
@@ -24,9 +25,13 @@ Summary.prototype.init = function() {
 
                 var $element = $(this),
                     $template_clone = $template.clone();
+
                 $template_clone.find('a').text($element.text());
                 $template_clone.find('a').attr('href', '#section-' + sectionCount);
                 $template_clone.removeClass('hide');
+
+                that.$links.push($template_clone.find('a'));
+
                 that.$summary.append($template_clone);
 
                 $element.attr('id', "section-" + sectionCount);
@@ -38,6 +43,53 @@ Summary.prototype.init = function() {
 
         $template.remove();
 
+        // Scrollspy
+        $(document).on("scroll", that.onScroll.bind(that));
+
+        // Row height
+        if($('.page__sidebar .nav-tree--level-0').height() > $('.page__content').height()) {
+
+            $('.page__content').css({
+                'margin-bottom': $('.page__sidebar .nav-tree--level-0').height() - $('.page__content').height() + 48
+            });
+
+        }
+
+    }
+
+};
+
+Summary.prototype.onScroll = function(e) {
+
+    var scrollPos = $(document).scrollTop(),
+        that = this,
+        currentTitle, minDiff = 9999999999999;
+
+    that.$links.forEach(function (elem) {
+        var currLink = elem;
+        var refElement = $(elem.attr("href"));
+        var diff = refElement.offset().top - scrollPos;
+        if(diff < minDiff && diff > 0) {
+            minDiff = diff;
+            currentTitle = refElement;
+        }
+        if (refElement.position().top <= scrollPos) {
+            that.$links.forEach(function (elem) {
+                elem.removeClass('active');
+            });
+            currLink.addClass("active");
+        }
+        else{
+            currLink.removeClass("active");
+        }
+    });
+
+    that.$links.forEach(function (elem) {
+        elem.removeClass('active');
+    });
+
+    if(currentTitle) {
+        $('[href="#' + currentTitle.attr('id') + '"]').addClass('active');
     }
 
 };

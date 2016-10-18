@@ -10,8 +10,8 @@ src='/srv/src/'
 
 # uwsgi params
 port=8000
-processes=2
-threads=2
+processes=8
+threads=16
 autoreload=3
 uid='www-data'
 gid='www-data'

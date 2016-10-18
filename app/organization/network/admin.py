@@ -9,17 +9,12 @@ from organization.network.models import *
 from organization.network.forms import *
 from organization.pages.models import *
 from organization.core.admin import *
-from organization.pages.admin import PageImageInline, PageBlockInline, PageAudioInline, PageVideoInline
+from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline
 
 
-class OrganizationAudioInline(StackedDynamicInlineAdmin):
+class OrganizationPlaylistInline(TabularDynamicInlineAdmin):
 
-    model = OrganizationAudio
-
-
-class OrganizationVideoInline(StackedDynamicInlineAdmin):
-
-    model = OrganizationVideo
+    model = OrganizationPlaylist
 
 
 class OrganizationLinkInline(StackedDynamicInlineAdmin):
@@ -40,16 +35,16 @@ class OrganizationBlockInline(StackedDynamicInlineAdmin):
 class OrganizationAdmin(BaseTranslationModelAdmin):
 
     model = Organization
-    inlines = [ OrganizationAudioInline,
+    inlines = [ OrganizationPlaylistInline,
                 OrganizationImageInline,
-                OrganizationVideoInline,
                 OrganizationBlockInline,
                 OrganizationLinkInline ]
     list_display = ['name', 'admin_thumb']
 
+
 class DepartmentPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PageAudioInline, PageVideoInline, ]
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, ]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -65,7 +60,7 @@ class TeamAdmin(BaseTranslationModelAdmin):
 
 class TeamPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PageAudioInline, PageVideoInline, ]
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, ]
 
 
 class PersonAdminBase(BaseTranslationModelAdmin):
@@ -79,14 +74,9 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
     fk_name = 'person'
 
 
-class PersonAudioInline(StackedDynamicInlineAdmin):
+class PersonPlaylistInline(TabularDynamicInlineAdmin):
 
-    model = PersonAudio
-
-
-class PersonVideoInline(StackedDynamicInlineAdmin):
-
-    model = PersonVideo
+    model = PersonPlaylist
 
 
 class PersonLinkInline(StackedDynamicInlineAdmin):
@@ -113,15 +103,14 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Person
     inlines = [PersonActivityInline,
-               PersonAudioInline,
                PersonImageInline,
-               PersonVideoInline,
                PersonBlockInline,
+               PersonPlaylistInline,
                PersonLinkInline,
                PersonFileInline ]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
     search_fields = ['last_name', 'first_name']
-    list_display = ['last_name', 'first_name', 'email', 'gender']
+    list_display = ['last_name', 'first_name', 'description', 'email', 'gender']
     list_filter = ['person_title', 'activities__date_from', 'activities__date_to', 'activities__is_permanent', 'activities__framework', 'activities__grade', 'activities__function', 'activities__team', 'activities__project',]
 
 
@@ -140,6 +129,7 @@ class PersonListBlockInlineAdmin(TabularDynamicInlineAdmin):
 class PersonListBlockAdmin(admin.ModelAdmin):
 
     inlines = [PersonListBlockInlineAdmin,]
+    list_display = ['title', 'description', 'date_created', 'date_modified']
 
 
 class ActivityFunctionAdmin(BaseTranslationModelAdmin):

@@ -54,7 +54,6 @@
 {% endblock %}
 
 {% block page_content %}
-
     {% block event_detail_content %}
         {% if event.content %}
             {% editable event.content %}
@@ -64,20 +63,9 @@
             {% lorem 3 p %}
         {% endif %}
     {% endblock %}
-
-    {% if event.brochure %}
-        <p>
-            <a href='{{ event.brochure.url }}' target="_blank" class="button">
-                <i class="icon icon__file"></i>
-                {% trans "Download" %} {% trans "the room program" %}
-            </a>
-        </p>
-    {% endif %}
-
 {% endblock %}
 
 {% block page_link %}
-
     <div class="mt4">
         <div class="row">
             {% if child %}
@@ -106,30 +94,23 @@
             {% endif %}
         </div>
     </div>
-
 {% endblock %}
 
 {% block page_audio %}
-    {% with event.audios.all as audios %}
-        {% if audios %}
-            {% include 'core/inc/audio.html' %}
-        {% endif %}
+    {% with event as object %}
+        {{ block.super }}
     {% endwith %}
 {% endblock %}
 
 {% block page_slider %}
-    {% with event.images.all|get_type:'page_slider' as slider_images %}
-        {% if slider_images %}
-            {% include 'core/inc/slider.html' %}
-        {% endif %}
+    {% with event as object %}
+        {{ block.super }}
     {% endwith %}
 {% endblock %}
 
 {% block page_video %}
-    {% with event.videos.all as videos %}
-        {% if videos %}
-            {% include 'core/inc/slider_video.html' %}
-        {% endif %}
+    {% with event as object %}
+        {{ block.super }}
     {% endwith %}
 {% endblock %}
 
@@ -138,11 +119,8 @@
         <div class="white-bg pb2">
             <hr class="mt0" />
             <div class="container">
-
                 <div class="row">
-
                     <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2" data-summary-content>
-
                         <h2 class="dotted">
                             {% if event.trainings.all %}
                                 {% trans "Trainers" %}<br>
@@ -150,33 +128,21 @@
                                 {% trans "Persons" %}<br>
                             {% endif %}
                         </h2>
-
                     </div>
-
                 </div>
-
             </div>
 
             <div class="container">
-
                 <div class="row">
-
                     <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
-
                         {% for person in event.persons.all %}
-
                                 {% with person.person as person %}
                                     {% include "network/inc/person/person_card_circle.html" %}
                                 {% endwith %}
-
                         {% endfor %}
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     {% endif %}
 {% endblock %}
@@ -188,9 +154,7 @@
 {% endblock %}
 
 {% block page_sidebar %}
-
     <div class="page__meta" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
-
         {% block event_detail_postedby %}
             {% editable event.start event.end event.location %}
                 {% with True as unit_booking %}
@@ -198,7 +162,6 @@
                 {% endwith %}
             {% endeditable %}
         {% endblock %}
-
         {% set_short_url_for event %}
         {% with event as object %}
             {% with True as is_event %}
@@ -206,5 +169,4 @@
             {% endwith %}
         {% endwith %}
     </div>
-
 {% endblock %}

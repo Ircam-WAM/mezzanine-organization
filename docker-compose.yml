@@ -29,7 +29,7 @@ data:
   command: "true"
 
 db:
-  image: postgres
+  image: postgres:9.5
   volumes_from:
     - data
   volumes:

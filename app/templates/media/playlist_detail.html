@@ -1,5 +1,5 @@
 {% extends "pages/page.html" %}
-{% load mezzanine_tags keyword_tags i18n organization_tags pages_tags %}
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
 
 {% block meta_title %}{% trans "Media" %}{% endblock %}
 
@@ -22,20 +22,23 @@
 
 {% block page_title %}
     {% editable person.title %}
-        <h1 class="dotted">{% trans "Media" %}</h1>
+        <h1 class="dotted">{{ playlist.title }}</h1>
     {% endeditable %}
 {% endblock %}
 
 {% block page_content %}
-    {# not working for audio for the moment... #}
-    {% for object in media %}
-        {% with object|classname|lower as class_name %}
-            {% with "media/"|add:class_name|add:"/inc/"|add:class_name|add:"_card.html" as template %}
-                {% include template %}
-            {% endwith %}
+    {% with playlist.type as type %}
+        {% with "media/inc/playlist_"|add:type|add:"_detail.html" as template %}
+            {% include template %}
         {% endwith %}
-        {{ object|classname }} : {{ object.created_at }} : {{ object.title }}
-        <br>
-    {% endfor %}
+    {% endwith %}
+
+    <div class="playslit-html">
+        {{ playlist.content|safe }}
+    </div>
+
+    {% with playlist as object %}
+      {% include "includes/share_buttons.html" %}
+    {% endwith %}
 
 {% endblock %}

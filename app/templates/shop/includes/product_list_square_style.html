@@ -13,28 +13,28 @@
             </div>
         </div>
 
-        <div class="container-fluid">
+        <div class="container">
             <div class="row tac">
                 {% for product_inline in list.products.all %}
                   {% with product_inline.product as product %}
-                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                        <div class="article-box article-box--person" >
-                            {% if product.images.all %}
-                                <div class="article-box__header">
-                                    <a href="{{ product.get_absolute_url }}" title="{{ product.title }}">
-                                        <figure class="article-box__image">
-                                            <img class="lazyload" src="{{ MEDIA_URL }}{% thumbnail product.images.all.0 427 500 top=0.5 %}" alt="product"/>
+                    {% with product.links.all|get_type_link:"link" as links %}
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                            <div class="product-box" >
+                                {% if product.images.all %}
+                                    <a href="{{ links.0 }}" target="_blank" title="{{ product.title }}">
+                                        <figure class="product-box__image">
+                                            <img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ MEDIA_URL }}{% thumbnail product.images.all.0 640 200 top=0.5 %}" alt="product"/>
                                         </figure>
                                     </a>
-                                </div>
-                            {% endif %}
-                            <div class="article-box__content tal">
-                                <a href="{{ product.get_absolute_url }}" title="{{ product.title }}"><h3 class="article-box__title">{{ product.title }}</h3></a>
-                                {% if product.description %}
-                                    <div class="article-box__desc">{{ product.description|richtext_filters|safe|truncatechars_html:255 }}</div>
-                                {% elif product.content %}
-                                    <div class="article-box__desc">{{ product.content|richtext_filters|safe|truncatechars_html:255 }}</div>
                                 {% endif %}
+                                <div class="product-box__content tal">
+                                    <a href="{{ links.0 }}" target="_blank" title="{{ product.title }}"><h3 class="product-box__title">{{ product.title }}</h3></a>
+                                    {% if product.description %}
+                                        <div class="product-box__desc">{{ product.description|richtext_filters|safe|truncatechars_html:100 }}</div>
+                                    {% elif product.content %}
+                                        <div class="product-box__desc">{{ product.content|richtext_filters|safe|truncatechars_html:100 }}</div>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     {% endwith %}

@@ -1,0 +1,35 @@
+{% extends "core/inc/search_card.html" %}
+{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags %}
+
+{% block title %}
+    {{ event.title }}
+{% endblock %}
+
+{% block icon %}calendar-o{% endblock %}
+
+{% block subtitle %}
+    <div class="search-box__subtitle">
+        {% include 'agenda/includes/event_date_line.html' %}
+    </div>
+{% endblock %}
+
+{% block tags %}
+    {% keywords_for event as tags %}
+    {% if event.departments.all.0 or tags %}
+        {% if event.departments.all.0 %}
+            <div class="event-line-box__tags">
+                <div class="tag tag--small dashed">
+                  {{ event.departments.all.0.department.name }}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block url %}
+    {{ event.get_absolute_url }}
+{% endblock %}
+
+{% block content %}
+    {{ event.description|slice:":100" }}
+{% endblock %}

@@ -81,10 +81,9 @@ SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 ADMIN_MENU_ORDER = (
     (_('Pages'), ('pages.Page', 'organization-pages.Home',
                  'organization-core.LinkType')),
-    (_('Media'), ('organization-media.Video',
+    (_('Media'), ('organization-media.Media',
+                  'organization-media.Playlist',
                  'organization-media.MediaCategory',
-                 'organization-media.Audio',
-                 'organization-media.Playlist',
                  (_('Media Library'), 'fb_browse'),
                  )),
     (_('Events'), ('mezzanine_agenda.Event',
@@ -137,7 +136,22 @@ DASHBOARD_TAGS = ( ("mezzanine_tags.app_list",), (), ("mezzanine_tags.recent_act
 
 GRAPPELLI_ADMIN_TITLE = 'IRCAM Admin'
 
-SEARCH_MODEL_CHOICES = None # all objects
+SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
+                        'organization-network.DepartmentPage',
+                        'organization-network.TeamPage',
+                        'organization-projects.ProjectTopicPage',
+                        'pages.Page',
+                        'organization-media.Playlist',
+                        'mezzanine_agenda.Event')
+
+
+PAGES_MODELS = ('organization-pages.CustomPage',
+                'organization-magazine.Topic',
+                'organization-network.DepartmentPage',
+                'organization-network.TeamPage',
+                'organization-projects.ProjectTopicPage',
+                )
+
 SEARCH_PER_PAGE = 10
 MAX_PAGING_LINKS = 10
 
