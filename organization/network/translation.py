@@ -36,7 +36,7 @@ class TeamTranslationOptions(TranslationOptions):
 @register(Person)
 class PersonTranslationOptions(TranslationOptions):
 
-    fields = ('bio',)
+    fields = ('description','bio',)
 
 
 @register(PersonActivity)
@@ -102,7 +102,7 @@ class OrganizationBlockTranslationOptions(TranslationOptions):
 @register(PersonListBlock)
 class PersonListBlockTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title', 'description')
 
 
 @register(PersonListBlockInline)
