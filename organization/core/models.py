@@ -226,3 +226,12 @@ class AdminThumbRelatedMixin(object):
         return "<img src='%s%s'>" % (settings.MEDIA_URL, thumb_url)
     admin_thumb.allow_tags = True
     admin_thumb.short_description = ""
+
+
+class Dated(models.Model):
+
+    date_created = models.DateTimeField(_('creation date'), auto_now_add=True)
+    date_modified = models.DateTimeField(_('last modification date'), auto_now=True)
+
+    class Meta:
+        abstract = True

@@ -125,14 +125,9 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
         super(Organization, self).save()
 
 
-class OrganizationAudio(Audio):
+class OrganizationPlaylist(PlaylistRelated):
 
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
-
-
-class OrganizationVideo(Video):
-
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class OrganizationLink(Link):
@@ -152,6 +147,8 @@ class OrganizationBlock(Block):
 
 class OrganizationType(Named):
     """(OrganizationType description)"""
+
+    css_class = models.CharField(_('class css'), max_length=64, blank=True, null=True,  help_text="Determine color on map.")
 
     class Meta:
         verbose_name = _('organization type')
@@ -271,14 +268,9 @@ class Person(Displayable, AdminThumbMixin):
         super(Person, self).save(*args, **kwargs)
 
 
-class PersonAudio(Audio):
+class PersonPlaylist(PlaylistRelated):
 
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='audios', blank=True, null=True, on_delete=models.SET_NULL)
-
-
-class PersonVideo(Video):
-
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='videos', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class PersonLink(Link):
@@ -313,7 +305,7 @@ class PageCustomPersonListBlockInline(Titled):
         return self.title
 
 
-class PersonListBlock(Titled):
+class PersonListBlock(Titled, Dated):
 
     style = models.CharField(_('style'), max_length=16, choices=PERSON_LIST_STYLE_CHOICES)
 

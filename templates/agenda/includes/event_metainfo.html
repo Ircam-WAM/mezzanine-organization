@@ -31,6 +31,15 @@
     {% endif %}
 {% endwith %}
 
+{% if event.brochure %}
+        <div class="page__meta-title page__meta-title--small">{% trans "Room program" %}</div>
+        <p class="page__meta-text">
+            <a href='{{ event.brochure.url }}' target="_blank">
+                {% trans "Download" %}
+            </a>
+        </p>
+{% endif %}
+
 {% if unit_booking %}
     {% if event.prices.all.0|floatformat != '0' and event.prices.all|length > 0 %}
         {% for price in event.prices.all %}

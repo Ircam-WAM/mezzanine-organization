@@ -1,19 +1,5 @@
-{% extends "pages/custompage.html" %}
+{% extends "pages/page.html" %}
 {% load i18n mezzanine_tags keyword_tags  pages_tags organization_tags %}
-
-{% block meta_title %}{{ page.meta_title }}{% endblock %}
-
-{% block meta_keywords %}{% metablock %}
-{% keywords_for page as keywords %}
-{% for keyword in keywords %}
-    {% if not forloop.first %}, {% endif %}
-    {{ keyword }}
-{% endfor %}
-{% endmetablock %}{% endblock %}
-
-{% block meta_description %}{% metablock %}
-{{ page.description }}
-{% endmetablock %}{% endblock %}
 
 {% block page_class %}
     department
@@ -57,7 +43,7 @@
             <div class="page__childrens">
                 {% for children in childrens %}
                     {% with children as object %}
-                        {% include "pages/includes/page_card.html" %}
+                        {% include "pages/includes/page_box.html" %}
                     {% endwith %}
                 {% endfor %}
             </div>
@@ -75,29 +61,22 @@
 {% endblock %}
 
 {% block page_audio %}
-  {% with page.teampage.audios.all as audios %}
-    {% if audios %}
-      {% include 'core/inc/audio.html' %}
-    {% endif %}
+  {% with page.teampage as object %}
+      {{ block.super }}
   {% endwith %}
 {% endblock %}
 
 {% block page_slider %}
-    {% with page.teampage.images.all|get_type:'page_slider' as slider_images %}
-      {% if slider_images %}
-        {% include 'core/inc/slider.html' %}
-      {% endif %}
+    {% with page.teampage as object %}
+        {{ block.super }}
     {% endwith %}
 {% endblock %}
 
 {% block page_video %}
-  {% with page.teampage.videos.all as videos %}
-    {% if videos %}
-      {% include 'core/inc/slider_video.html' %}
-    {% endif %}
+  {% with page.teampage as object %}
+      {{ block.super }}
   {% endwith %}
 {% endblock %}
-
 
 {% block page_sub_content %}
   {% with page.teampage.blocks.all as blocks %}

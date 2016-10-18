@@ -13,10 +13,6 @@
     organization
 {% endblock %}
 
-{% block page_title %}
-    <h1 class="dotted">{% trans "Network" %}</h1>
-{% endblock %}
-
 {% block breadcrumb_menu %}
     {{ block.super }}
     <li class="breadcrumb__item active">{% trans "Network" %}</li>
@@ -24,15 +20,27 @@
 
 {% block page_slider %}
 
+<div style="position: relative;">
+
+    <div class="map" id="network-map">
+
+    </div>
+
+    <div class="map-legend">
+
+        {% for type in organization_types %}
+            <div class="map-legend__item map-legend__item--{{ type.1 }}">{{ type.0 }}</div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
     <div class="container">
 
         <div class="row">
 
             <div class="col-xs-12 col-md-10 col-md-push-1">
-
-                <div class="map" id="network-map" style="width: 100%; height: 550px;">
-
-                </div>
 
                 <div class="slider-network">
 
@@ -40,7 +48,7 @@
 
                         {% for organization in organizations %}
 
-                            <li class="slider-network__slide" data-marker-idx="{{forloop.counter0}}" data-marker-lat="{{ organization.lat }}" data-marker-lng="{{ organization.lon }}">
+                            <li class="slider-network__slide" data-marker-url="{{organization.url}}" data-marker-color="{{ organization.type.css_class }}" {% with organization.images.all|get_type:'logo' as images %}{% if images %}data-marker-image="{{ MEDIA_URL }}{{images.first.file}}"{% endif %}{% endwith %} data-marker-idx="{{forloop.counter0}}" data-marker-lat="{{ organization.lat }}" data-marker-lng="{{ organization.lon }}">
                                 <div class="slider-network__slide-image"
 
                                     {% with organization.images.all|get_type:'logo' as images %}
@@ -51,11 +59,14 @@
 
                                 >
                                 </div>
-                                <div class="slider-network__slide-title">
+                                <div class="slider-network__slide-title" data-marker-title>
                                     {{ organization.name }}
                                 </div>
-                                <div class="slider-network__slide-subtitle">
+                                <div class="slider-network__slide-subtitle" data-marker-subtitle>
                                     {{ organization.city }}, {{ organization.country.name }}
+                                </div>
+                                <div class="">
+                                    {{ organization.type }}, {{ organization.type.css_class }}
                                 </div>
                             </li>
 
@@ -85,8 +96,6 @@
                         {% endfor %}
 
                     </ul>
-
-                    <div class="lSAction"><a class="lSPrev"></a><a class="lSNext"></a></div>
 
                 </div>
 

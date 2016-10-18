@@ -99,6 +99,25 @@ $module: ".banner";
 
     }
 
+    &--sidebar {
+
+        margin-top: 0;
+        @include margin-bottom(2);
+
+        #{$module}__title {
+
+            @include line-height(2);
+
+        }
+
+        #{$module}__content {
+
+            @include padding(1);
+
+        }
+
+    }
+
     &__content {
 
         position: absolute;

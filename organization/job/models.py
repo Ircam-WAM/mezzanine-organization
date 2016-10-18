@@ -5,6 +5,7 @@ from mezzanine.core.models import Displayable
 from organization.core.models import *
 from organization.media.models import *
 
+
 class JobResponse(models.Model):
 
     first_name = models.CharField(max_length=255, null=False, verbose_name=_('first name'))

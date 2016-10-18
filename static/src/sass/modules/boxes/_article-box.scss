@@ -27,6 +27,8 @@ $module: ".article-box";
         width: 100%;
         position: relative;
 
+        @include fluid-aspect(427 286);
+
         img {
             display: block;
             width: 100%;

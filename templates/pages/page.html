@@ -42,6 +42,9 @@
             <div class="row">
 
                 <div class="col-sm-3 col-lg-2 page__sidebar">
+                    <div style="position: relative;">
+
+
                     {% block page_sidebar %}
                         {% if page.get_ascendants|length < 2 %}
                             {% page_menu "pages/menus/current_tree_primary.html" %}
@@ -50,6 +53,7 @@
                             {% page_menu "pages/menus/current_tree_secondary.html" %}
                         {% endif %}
                     {% endblock %}
+                    </div>
                 </div>
                 <div class="mb2 col-sm-9 col-lg-8 white-bg page__content" data-summary-content>
                     {% block page_content %}
@@ -70,17 +74,20 @@
                         {% endwith %}
                     {% endblock %}
                     {% block page_audio %}
-                        {% with object.audios.all as audios %}
-                            {% if audios %}
-                                {% include 'core/inc/audio.html' %}
-                            {% endif %}
-                        {% endwith %}
+                        {% for related in object.playlists.all %}
+                            {% with related.playlist as playlist %}
+                                {% if playlist.type == 'audio' %}
+                                    {% include 'media/inc/playlist_audio_detail.html' %}
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
                     {% endblock %}
                 </div>
 
             </div>
 
         </div>
+
         {% block page_slider %}
         {% with object.images.all|get_type:'page_slider' as slider_images %}
             {% if slider_images %}
@@ -88,25 +95,22 @@
             {% endif %}
         {% endwith %}
         {% endblock %}
+
         {% block page_video %}
-            {% with object.videos.all as videos %}
-                {% if videos %}
-                    {% include 'core/inc/slider_video.html' %}
-                {% endif %}
-            {% endwith %}
+            {% for related in object.playlists.all %}
+                {% with related.playlist as playlist %}
+                    {% if playlist.type == 'video' %}
+                        {% include 'media/inc/playlist_video_slider.html' %}
+                    {% endif %}
+                {% endwith %}
+            {% endfor %}
         {% endblock %}
+
         {% block page_person_list %}
-        {% endblock %}
-        {% block products %}
         {% endblock %}
         {% block page_sub_content %}
             {% with object.blocks.all as blocks %}
                 {% include "core/inc/block.html" %}
-            {% endwith %}
-        {% endblock %}
-        {% block page_related_content %}
-            {% with page.dynamic_content_pages.all as dynamic_content %}
-                {% include "core/inc/related_content.html" %}
             {% endwith %}
         {% endblock %}
         {% block related_project %}
@@ -114,4 +118,15 @@
         {% block logo %}
         {% endblock %}
     </div>
+
+    <div>
+        {% block products %}
+        {% endblock %}
+        {% block page_related_content %}
+            {% with page.dynamic_content_pages.all as dynamic_content %}
+                {% include "core/inc/related_content.html" %}
+            {% endwith %}
+        {% endblock %}
+    </div>
+
 {% endblock %}

@@ -12,14 +12,9 @@ class ArticleImageInline(TabularDynamicInlineAdmin):
     model = ArticleImage
 
 
-class ArticleVideoInline(StackedDynamicInlineAdmin):
+class ArticlePlaylistInline(TabularDynamicInlineAdmin):
 
-    model = ArticleVideo
-
-
-class ArticleAudioInline(StackedDynamicInlineAdmin):
-
-    model = ArticleAudio
+    model = ArticlePlaylist
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -52,8 +47,7 @@ class ArticleAdminDisplayable(DisplayableAdmin):
     inlines = [ArticleImageInline,
               ArticlePersonAutocompleteInlineAdmin,
               DynamicContentArticleInline,
-              ArticleVideoInline,
-              ArticleAudioInline]
+              ArticlePlaylistInline]
 
 
 class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline

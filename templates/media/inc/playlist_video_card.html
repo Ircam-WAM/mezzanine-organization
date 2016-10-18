@@ -1,0 +1,6 @@
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
+
+<div class="video-card">
+    <img src="{{ playlist.medias.all.0.poster_url }}"><br>
+    <a href="{% url 'organization-playlist-detail' playlist.slug %}">{{ playlist.title }}</a>
+</div>
