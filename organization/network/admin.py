@@ -110,7 +110,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
                PersonFileInline ]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
     search_fields = ['last_name', 'first_name']
-    list_display = ['last_name', 'first_name', 'email', 'gender']
+    list_display = ['last_name', 'first_name', 'description', 'email', 'gender']
     list_filter = ['person_title', 'activities__date_from', 'activities__date_to', 'activities__is_permanent', 'activities__framework', 'activities__grade', 'activities__function', 'activities__team', 'activities__project',]
 
 
