@@ -1,6 +1,0 @@
-{% extends "core/inc/generic_card.html" %}
-{% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
-
-{% block image %}
-    <img src="{{ MEDIA_URL }}{% thumbnail images.first.file 427 0 %}" data-src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 %}" class="lazyload" alt="" />
-{% endblock %}
