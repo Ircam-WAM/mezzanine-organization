@@ -87,63 +87,83 @@
 
                 <div class="col-sm-3 col-lg-2 page__sidebar">
 
-                    <ul class="nav-tree nav-tree--level-{{ branch_level }}" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
-                        <li class="nav-tree__item">
-                            <a class="nav-tree__link active" href="{{ page.get_absolute_url }}">
-                                {% if tag and tag|tag_is_excluded %}
-                                    {% trans "Tournées" %}
-                                {% else %}
-                                    {% trans "Rendez-vous" %}
-                                {% endif %}
-                            </a>
-
-                            <ul class="nav-tree" data-summary>
-                                <li class="nav-tree__item nav-tree__item--sub hide">
-                                    <a class="nav-tree__link nav-tree__link--sub" href="#"></a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        {% if tag and tag|tag_is_excluded %}
-                            <li class="nav-tree__item">
-                                <a class="nav-tree__link" href="{% url 'event_list' %}">
-                                    {% trans "Rendez-vous" %}
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="nav-tree__item">
-                                <a class="nav-tree__link" href="{% url 'event_list_tag' 'tournees' %}">
-                                    {% trans "Tournées" %}
-                                </a>
-                            </li>
-                        {% endif %}
-
-                        <li class="nav-tree__separator">
-
-                        </li>
+                    <div style="position: relative;" >
 
                         {% if tag and not tag|tag_is_excluded or not tag %}
+                        <a class="banner banner--light banner--sidebar" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
 
-                            {% keywords_for mezzanine_agenda.event as tags %}
-                            {# {% all_events as all_events %}#}
-                            {% if tags %}
-                                {% comment %}
-                                    <a href="{% url 'event_list' %}" class="button{% if not tag %} button--black{% else %} button--white{% endif %}">{% trans "All events" %}</a>
-                                {% endcomment %}
-                                {% for t in tags %}
-                                    {% if not t|tag_is_excluded %}
-                                        <li class="nav-tree__item">
-                                            <a class="nav-tree__link--filter nav-tree__link{% if tag == t %} active{% endif %}" href="{% if tag == t %}{% url 'event_list' %}{% else %}{% url "event_list_tag" t.slug %}{% endif %}">
-                                                {{ t }} {% if tag == t %}<i class="fa fa-times"></i>{% endif %}
-                                            </a>
-                                        </li>
+                            <div class="banner__content">
+
+                                <div class="banner__title fsxxxl">
+                                    Tournées 16.17
+                                </div>
+                                <div class="banner__desc fss">
+                                    Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de toutes choses...
+                                </div>
+
+                            </div>
+
+                        </a>
+                        {% endif %}
+
+                        <ul class="nav-tree nav-tree--level-{{ branch_level }}" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
+                            <li class="nav-tree__item">
+                                <a class="nav-tree__link active" href="{{ page.get_absolute_url }}">
+                                    {% if tag and tag|tag_is_excluded %}
+                                        {% trans "Tournées" %}
+                                    {% else %}
+                                        {% trans "Rendez-vous" %}
                                     {% endif %}
-                                {% endfor %}
+                                </a>
+
+                                <ul class="nav-tree" data-summary>
+                                    <li class="nav-tree__item nav-tree__item--sub hide">
+                                        <a class="nav-tree__link nav-tree__link--sub" href="#"></a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            {% if tag and tag|tag_is_excluded %}
+                                <li class="nav-tree__item">
+                                    <a class="nav-tree__link" href="{% url 'event_list' %}">
+                                        {% trans "Rendez-vous" %}
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="nav-tree__item">
+                                    <a class="nav-tree__link" href="{% url 'event_list_tag' 'tournees' %}">
+                                        {% trans "Tournées" %}
+                                    </a>
+                                </li>
                             {% endif %}
 
-                        {% endif %}
-                    </ul>
+                            <li class="nav-tree__separator">
 
+                            </li>
+
+                            {% if tag and not tag|tag_is_excluded or not tag %}
+
+                                {% keywords_for mezzanine_agenda.event as tags %}
+                                {# {% all_events as all_events %}#}
+                                {% if tags %}
+                                    {% comment %}
+                                        <a href="{% url 'event_list' %}" class="button{% if not tag %} button--black{% else %} button--white{% endif %}">{% trans "All events" %}</a>
+                                    {% endcomment %}
+                                    {% for t in tags %}
+                                        {% if not t|tag_is_excluded %}
+                                            <li class="nav-tree__item">
+                                                <a class="nav-tree__link--filter nav-tree__link{% if tag == t %} active{% endif %}" href="{% if tag == t %}{% url 'event_list' %}{% else %}{% url "event_list_tag" t.slug %}{% endif %}">
+                                                    {{ t }} {% if tag == t %}<i class="fa fa-times"></i>{% endif %}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+
+                            {% endif %}
+                        </ul>
+
+                    </div>
                 </div>
 
                 <div class="mb2 col-sm-9 col-lg-10 white-bg page__content" data-summary-content>
@@ -151,31 +171,10 @@
                     <div class="white-bg page__content">
                         <div class="container">
 
-                            {% if tag and not tag|tag_is_excluded or not tag %}
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <a class="banner banner--light banner--small" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
-
-                                            <div class="banner__content">
-
-                                                <div class="banner__title fsxxxl">
-                                                    Tournées 16.17
-                                                </div>
-                                                <div class="banner__desc fss">
-                                                    Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de toutes choses...
-                                                </div>
-
-                                            </div>
-
-                                        </a>
-                                    </div>
-                                </div>
-                            {% endif %}
-
-
                             {% for event in events.object_list %}
                                 {% include 'agenda/includes/event_linecard.html' %}
                             {% endfor %}
+
                         </div>
                     </div>
 
