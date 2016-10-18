@@ -1903,7 +1903,7 @@ msgstr "Événements du lieu"
 
 #: templates/agenda/includes/event_metainfo.html:27
 msgid "Prices"
-msgstr ""
+msgstr "Tarifs"
 
 #: templates/agenda/includes/event_metainfo.html:37
 #: templates/agenda/includes/event_metainfo_line.html:22
