@@ -67,7 +67,7 @@
             </p>
         {% else %}
             <p>
-                {% trans "Free entry. Limited seats available" %}
+                {{ event.no_price_comments }}
             </p>
         {% endif %}
     {% endif %}
