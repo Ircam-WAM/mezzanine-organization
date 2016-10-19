@@ -23,7 +23,7 @@
 {% with event.trainings.all.0 as training %}
     {% if training %}
         <div class="page__meta-title page__meta-title--small">{% trans "Language" %}</div>
-        <p class="page__meta-text">{{ training.language }}</p>
+        <p class="page__meta-text">{{ training.get_language_display }}</p>
         <div class="page__meta-title page__meta-title--small">{% trans "Public type" %}</div>
         <p class="page__meta-text">{{ training.public_type }}</p>
         <div class="page__meta-title page__meta-title--small">{% trans "Level" %}</div>
