@@ -7,6 +7,3 @@
 [submodule "data"]
 	path = data
 	url = git+ssh://git@git.forge.ircam.fr/ircam-www-data.git
-[submodule "lib/django-prestashop"]
-	path = lib/django-prestashop
-	url = git+ssh://git@git.forge.ircam.fr/django-prestashop.git
