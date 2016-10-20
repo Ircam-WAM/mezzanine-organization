@@ -9,6 +9,7 @@ from organization.core.models import *
 from organization.network.models import *
 
 
+
 class EventBlock(Block):
 
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
@@ -93,7 +94,7 @@ class EventTrainingLevel(Named):
 class EventTraining(models.Model):
 
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
-    language = models.CharField(_('Language'), max_length=64, blank=True, null=True, choices=settings.LANGUAGES)
+    language = models.CharField(_('language'), max_length=64, blank=True, null=True, choices=settings.LANGUAGES)
     public_type = models.ForeignKey(EventPublicType, verbose_name=_('public type'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
     level = models.ForeignKey(EventTrainingLevel, verbose_name=_('level'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
 
