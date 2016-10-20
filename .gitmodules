@@ -11,5 +11,5 @@
 	path = lib/mezzanine
 	url = https://github.com/yomguy/mezzanine.git
 [submodule "lib/django-prestashop"]
-        path = lib/mezzanine
+        path = lib/django-prestashop
         url = https://github.com/yomguy/django-prestashop.git
