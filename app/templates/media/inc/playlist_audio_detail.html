@@ -7,7 +7,9 @@
         <li class="audio-playlist__item">
             {% with media.media as media %}
                 {% for transcoded in media.transcoded.all %}
-                    <a href="#" data-src="{{ transcoded.url }}">{{ media.title }}</a>
+                    {% if transcoded.mime_type == "audio/mp4" or transcoded.mime_type == "audio/mp3" %}
+                        <a href="#" data-src="{{ transcoded.url }}">{{ media.title }}</a>
+                    {% endif %}
                 {% endfor %}
             {% endwith %}
         </li>

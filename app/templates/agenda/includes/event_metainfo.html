@@ -23,7 +23,7 @@
 {% with event.trainings.all.0 as training %}
     {% if training %}
         <div class="page__meta-title page__meta-title--small">{% trans "Language" %}</div>
-        <p class="page__meta-text">{{ training.language }}</p>
+        <p class="page__meta-text">{{ training.get_language_display }}</p>
         <div class="page__meta-title page__meta-title--small">{% trans "Public type" %}</div>
         <p class="page__meta-text">{{ training.public_type }}</p>
         <div class="page__meta-title page__meta-title--small">{% trans "Level" %}</div>
@@ -32,10 +32,10 @@
 {% endwith %}
 
 {% if event.brochure %}
-        <div class="page__meta-title page__meta-title--small">{% trans "Room program" %}</div>
+        <div class="page__meta-title page__meta-title--small">{% trans "Downloads" %}</div>
         <p class="page__meta-text">
             <a href='{{ event.brochure.url }}' target="_blank">
-                {% trans "Download" %}
+                {{ event.brochure.filename }}
             </a>
         </p>
 {% endif %}
@@ -65,7 +65,7 @@
             <p>
                 {{ price.unit }}
             </p>
-        {% else %}
+        {% elif event.no_price_comments %}
             <p>
                 {{ event.no_price_comments }}
             </p>

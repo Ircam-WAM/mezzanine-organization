@@ -43,9 +43,11 @@ app:
   command: /bin/bash scripts/app.sh
   volumes:
     - ./app/:/srv/app
+    - ./lib/grappelli-safe/:/srv/lib/grappelli-safe
     - ./lib/mezzanine-agenda/:/srv/lib/mezzanine-agenda
     # - ./lib/mezzanine/:/srv/lib/mezzanine
-    - ./lib/grappelli-safe/:/srv/lib/grappelli-safe
+    - ./lib/django-eve/:/srv/lib/django-eve
+    - ./lib/django-prestashop/:/srv/lib/django-prestashop
   volumes_from:
     - data
   expose:
