@@ -22,7 +22,11 @@ class PlaylistListView(ListView):
     model = Playlist
     template_name='media/playlist_list.html'
     context_object_name = 'playlists'
-
+    def get_queryset(self):
+        qs = Playlist.objects.all()
+        if self.kwargs['type']:
+            qs = qs.filter(type=self.kwargs['type'])
+        return qs
     def get_context_data(self, **kwargs):
         context = super(PlaylistListView, self).get_context_data(**kwargs)
         return context
