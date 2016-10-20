@@ -30,45 +30,26 @@
                         </button>
                     </form>
 
-                    <div class="mt2 mb2">
-                        <p>
-                            {% if results.paginator.count == 0 %}
-                            {% blocktrans %}
-                            No results were found in {{ search_type }} matching your query: {{ query }}
-                            {% endblocktrans %}
-                            {% else %}
-                            {% blocktrans with start=results.start_index end=results.end_index total=results.paginator.count %}
-                            Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} matching your query: {{ query }}
-                            {% endblocktrans %}
-                            {% endif %}
-                        </p>
-                    </div>
 
                 </div>
             </div>
 
             <div class="row">
-
                 <div class="col-sm-3 col-lg-2 page__sidebar">
-
                     <div style="position: relative;">
                         <ul class="nav-tree nav-tree--level-0" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
+                            <li class="nav-tree__item">
+                                <a class="nav-tree__link nav-tree__link--filter {% if is_searching_all %} active {% endif %}" href="{{ cancel_filter_url }}" title="">{% trans 'All results' %} ({{ all_results_count }})</a>
+                            </li>
                             {% for key,value in filter_dict.items %}
                                 <li class="nav-tree__item">
-                                    <a class="nav-tree__link nav-tree__link--filter" href="{{ value.url }}">
+                                    <a class="nav-tree__link nav-tree__link--filter {% if search_model == key %} active {% endif %}" href="{{ value.url }}">
                                         {{ value.verbose_name }} ({{ value.count }})
                                     </a>
                                 </li>
                             {% endfor %}
-                            {% if cancel_filter_url %}
-                                <li class="nav-tree__item">
-                                    <a class="nav-tree__link nav-tree__link--filter active" href="{{ cancel_filter_url }}" title="">Cancel filter</a>
-                                </li>
-                            {% endif %}
                         </ul>
                     </div>
-
-
                 </div>
 
                 <div class="mb2 col-sm-9 col-lg-8 white-bg page__content">
@@ -89,7 +70,13 @@
                             {% endwith %}
                         {% endif %}
                     {% endfor %}
-
+                    <p>
+                        {% if results.paginator.count == 0 %}
+                        {% blocktrans %}
+                        No results were found matching your query: {{ query }}
+                        {% endblocktrans %}
+                        {% endif %}
+                    </p>
                 </div>
             </div>
 
