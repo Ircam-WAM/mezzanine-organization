@@ -1,19 +1,21 @@
 {% load mezzanine_tags keyword_tags i18n organization_tags %}
 
+<div class="embed-responsive">
+    <video controls id="video-js-playlist" class="video-js vjs-ircam-skin" data-title="{{ media.title }}" {% if media.poster_url %}poster="{{ media.poster_url }}"{% endif %}>
+        {% for transcoded in media.transcoded.all %}
+           <source src="{{ transcoded.url }}" type="{{ transcoded.mime_type }}" />
+        {% endfor %}
+        Your browser does not support the video tag.
+    </video>
+</div>
 {% for media in playlist.medias.all %}
   {% with media.media as media %}
     {% if forloop.first %}
-        <div class="embed-responsive">
-        	<video width="100%" poster="{{ media.poster_url }}" controls data-title="{{ media.title }}" preload="none">
-                {% for transcoded in media.transcoded.all %}
-        	       <source src="{{ transcoded.url }}" type="{{ transcoded.mime_type }}" />
-                {% endfor %}
-        	</video>
-        </div>
-        <ol>
-    {% else %}
-        <li><a href="#" data-src="{{ media.url }}">>{{ media.title }}</a></li>
+        <ol class="video-playlist">
     {% endif %}
+        {% spaceless %}
+            <li class="video-playlist__item{% if forloop.first %} playing{% endif %}"><a href="#" data-poster="{{media.poster_url }}" data-src="{% for transcoded in media.transcoded.all %}{% if forloop.first %}{% else %},{% endif %}{{ transcoded.url }}{% if forloop.last %}{% endif %}{% endfor %}" data-mime="{% for transcoded in media.transcoded.all %}{% if forloop.first %}{% else %},{% endif %}{{ transcoded.mime_type }}{% if forloop.last %}{% endif %}{% endfor %}">{{ media.title }}</a></li>
+        {% endspaceless %}
     {% if forloop.last %}
         </ol>
     {% endif %}
