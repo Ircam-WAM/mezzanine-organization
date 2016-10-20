@@ -54,14 +54,14 @@ class ProductLink(Link):
 
 class ProductPrestashopProduct(models.Model):
 
-    product = models.OneToOneField(Product, verbose_name=_('prestashop product'), related_name='prestashop_products')
-    prestashop_id = models.IntegerField(verbose_name=_('prestashop id'))
-    prestashop_slug = models.CharField(max_length=255, verbose_name=_('slug'), null=True, blank=True)
-    prestashop_url = models.CharField(max_length=512, verbose_name=_('relative url'), null=True, blank=True)
+    product = models.OneToOneField(Product, verbose_name=_('product'), related_name='prestashop_products')
+    external_id = models.IntegerField(verbose_name=_('external id'), null=True, blank=True)
+    slug = models.CharField(max_length=255, verbose_name=_('slug'), null=True, blank=True)
+    url = models.CharField(max_length=512, verbose_name=_('url'), null=True, blank=True)
 
     class Meta:
         verbose_name = _("prestashop product")
         verbose_name_plural = _("prestashop products")
 
     def __str__(self):
-        return ' - '.join((self.product.title, self.prestashop_id))
+        return ' - '.join((self.product.title, str(self.external_id)))
