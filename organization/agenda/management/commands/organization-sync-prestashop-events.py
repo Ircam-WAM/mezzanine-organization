@@ -34,7 +34,8 @@ class Command(BaseCommand):
              event.delete()
 
     def handle(self, *args, **kwargs):
-        self.cleanup()
+        # !! NOT FOR PROD !!
+        # self.cleanup()
 
         products = []
         category_lang_name = kwargs.get('category_lang_name')
