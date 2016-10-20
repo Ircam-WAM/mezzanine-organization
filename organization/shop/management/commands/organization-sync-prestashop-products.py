@@ -15,7 +15,7 @@ import cartridge.shop.models as ca_models
 
 class Command(BaseCommand):
     """Synchronize products from PrestaShop to cartridge.shop
-    
+
     ex: python manage.py organization-sync-prestashop-products -c "Forumnet"
     """
 
@@ -78,6 +78,7 @@ class Command(BaseCommand):
 
             ca_product.sku = product.reference
             ca_product.sale_price = product.price
+            ca_product.status = 1
             ca_product.save()
 
             prestashop_product, c = os_models.ProductPrestashopProduct.objects.get_or_create(product=ca_product, external_id=product.id_product)
