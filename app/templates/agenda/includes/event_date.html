@@ -7,7 +7,7 @@
         {{ event.start|date:event.date_format }}
         <!-- Start date with hour  -->
         {% if event.start and event.start|date:"H:i" != "23:59" %}
-            , {{ event.start|date:"H\hi" }}
+            - {{ event.start|date:"H\hi" }}
         {% endif %}
 
     <!-- Start and end date  -->
