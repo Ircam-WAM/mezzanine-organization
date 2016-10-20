@@ -16,6 +16,9 @@
 
 {% block page_sidebar %}
     Filters
+    <a href="{% url 'organization-playlist-list' 'audio' %}">{% trans 'audio' %}</a>
+    <a href="{% url 'organization-playlist-list' 'video' %}">{% trans 'video' %}</a>
+    <!--to cancel : {% url 'organization-playlist-list' %}-->
 {% endblock %}
 
 {% block page_content %}
