@@ -26,3 +26,9 @@ class PageProductListTranslationOptions(TranslationOptions):
 class ProductLinkTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(ProductPrestashopProduct)
+class ProductPrestashopProductTranslationOptions(TranslationOptions):
+
+    pass
