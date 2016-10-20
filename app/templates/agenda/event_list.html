@@ -74,7 +74,11 @@
                             {% if tag and tag|tag_is_excluded %}
                                 {% trans "Tournées" %}
                             {% else %}
-                                {% trans "Rendez-vous" %}
+                                {% if is_archive %}
+                                    {% trans "Archives" %}
+                                {% else %}
+                                    {% trans "Events" %}
+                                {% endif %}
                             {% endif %}
                         {% endif %}
                     </h1>
@@ -88,14 +92,13 @@
                 <div class="col-sm-3 col-lg-2 page__sidebar">
 
                     <div style="position: relative;" >
-
-                        {% if tag and not tag|tag_is_excluded or not tag %}
+                        {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
                         <a class="banner banner--light banner--sidebar" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
 
                             <div class="banner__content">
 
                                 <div class="banner__title fsxxxl">
-                                    Tournées 16.17
+                                    Tournées {{ CURRENT_SEASON_STYLED }}
                                 </div>
                                 <div class="banner__desc fss">
                                     Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de toutes choses...
@@ -108,7 +111,7 @@
 
                         <ul class="nav-tree nav-tree--level-{{ branch_level }}" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
                             <li class="nav-tree__item">
-                                <a class="nav-tree__link active" href="{{ page.get_absolute_url }}">
+                                <a class="nav-tree__link active" href="{% url 'event_list' %}">
                                     {% if tag and tag|tag_is_excluded %}
                                         {% trans "Tournées" %}
                                     {% else %}
@@ -141,7 +144,7 @@
 
                             </li>
 
-                            {% if tag and not tag|tag_is_excluded or not tag %}
+                            {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
 
                                 {% keywords_for mezzanine_agenda.event as tags %}
                                 {# {% all_events as all_events %}#}
@@ -183,8 +186,8 @@
             </div>
 
         </div>
-
-        {% pagination_for events %}
-
+        {% if not is_archive %}
+            <div><a href="{% url "event_list_year" CURRENT_SEASON %}" title="{% trans 'archive' %}">{% trans 'archive' %}</div>
+        {% endif %}
     </div>
 {% endblock %}

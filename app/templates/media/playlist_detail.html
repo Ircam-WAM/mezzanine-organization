@@ -12,12 +12,15 @@
 {% endmetablock %}{% endblock %}
 
 {% block page_class %}
-    person
+    playlist
 {% endblock %}
 
 {% block breadcrumb_menu %}
     {{ block.super }}
-    <li class="breadcrumb__item active">{% trans "Media" %}</li>
+    <li class="breadcrumb__item">
+        <a class="breadcrumb__link" href="{% url 'organization-playlist-list' %}" title="{% trans "Media" %}">{% trans "Media" %}</a>
+    </li>
+    <li class="breadcrumb__item active">{{ playlist.title }}</li>
 {% endblock %}
 
 {% block page_title %}
@@ -26,7 +29,32 @@
     {% endeditable %}
 {% endblock %}
 
+{% block page_sidebar %}
+
+    <div class="page__meta" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
+        {% editable playlist.publish_date %}
+            <div class="page__meta-date">
+                {{ playlist.publish_date|date:"DATE_FORMAT" }}
+            </div>
+        {% endeditable %}
+
+        <div class="page__meta-separator">
+
+        </div>
+
+        <div class="page__meta-text">
+            <strong>{{playlist.type}}</strong>
+        </div>
+
+        {% with playlist as object %}
+            {% include "includes/share_buttons.html" %}
+        {% endwith %}
+    </div>
+
+{% endblock %}
+
 {% block page_content %}
+
     {% with playlist.type as type %}
         {% with "media/inc/playlist_"|add:type|add:"_detail.html" as template %}
             {% include template %}
@@ -36,9 +64,5 @@
     <div class="playslit-html">
         {{ playlist.content|safe }}
     </div>
-
-    {% with playlist as object %}
-      {% include "includes/share_buttons.html" %}
-    {% endwith %}
 
 {% endblock %}
