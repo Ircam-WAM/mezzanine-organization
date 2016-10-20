@@ -38,31 +38,6 @@ db:
   environment:
     - POSTGRES_PASSWORD=hyRob0otlaz4
 
-prestadb:
-  image: mariadb
-  volumes_from:
-    - data
-  volumes:
-    - ./scripts/:/srv/scripts
-    - ./data/external/prestashop/mysql/:/var/lib/mysql
-  environment:
-    - MYSQL_ROOT_PASSWORD=mysecretpassword
-    - MYSQL_DATABASE=ircam_shops
-    - MYSQL_USER=ircam_shops
-    - MYSQL_PASSWORD=pUmt97e4MgR9EP4knyWea0n
-
-evedb:
-  image: postgres:9.5
-  volumes_from:
-    - data
-  volumes:
-    - ./scripts/:/srv/scripts
-    - ./data/external/eve/postgresql/data/:/var/lib/postgresql/data
-  environment:
-    - POSTGRES_USER=eve
-    - POSTGRES_DB=eve
-    - POSTGRES_PASSWORD=q2nqzt0WGnwWé,256
-
 app:
   build: .
   command: /bin/bash scripts/app.sh
@@ -70,7 +45,7 @@ app:
     - ./app/:/srv/app
     - ./lib/grappelli-safe/:/srv/lib/grappelli-safe
     - ./lib/mezzanine-agenda/:/srv/lib/mezzanine-agenda
-    - ./lib/mezzanine/:/srv/lib/mezzanine
+    # - ./lib/mezzanine/:/srv/lib/mezzanine
     - ./lib/django-eve/:/srv/lib/django-eve
     - ./lib/django-prestashop/:/srv/lib/django-prestashop
   volumes_from:
@@ -79,8 +54,6 @@ app:
     - "8000"
   links:
     - db
-    - prestadb
-    - evedb
   environment:
    - DEBUG=False
 

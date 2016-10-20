@@ -19,26 +19,27 @@ DATABASES = {
         'HOST': 'db',
         'PORT': '5432',
     },
-    'eve': {
+}
+
+if os.environ.get('EVEDB_ENV_POSTGRES_PASSWORD'):
+    DATABASES['eve'] = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'eve',
         'USER': 'eve',
-        'PASSWORD': "q2nqzt0WGnwWé,256",
+        'PASSWORD': os.environ.get('EVEDB_ENV_POSTGRES_PASSWORD'),
         'HOST': 'evedb',
         'PORT': '5432',
-    },
-    'prestashop': {
+    }
+
+if os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'):
+    DATABASES['prestashop'] = {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'USER': 'ircam_shops',      # Not used with sqlite3.
-        'PASSWORD': 'pUmt97e4MgR9EP4knyWea0n',  # Not used with sqlite3.
+        'PASSWORD': os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
         'NAME': 'ircam_shops',
         'HOST': 'prestadb',      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
-    }
-
-}
-
-# DATABASE_ROUTERS = ['eve.routers.EveRouter',]
+        }
 
 
 # EXTENSIONS AND FORMATS

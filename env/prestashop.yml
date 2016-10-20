@@ -19,19 +19,20 @@
 # Guillaume Pellerin <guillaume.pellerin@ircam.fr>
 
 
-evedb:
-  image: postgres:9.5
+prestadb:
+  image: mariadb
   volumes_from:
     - data
   volumes:
     - ./scripts/:/srv/scripts
-    - ./data/external/eve/postgresql/data/:/var/lib/postgresql/data
+    - ./data/external/prestashop/mysql/:/var/lib/mysql
   environment:
-    - POSTGRES_USER=eve
-    - POSTGRES_DB=eve
-    - POSTGRES_PASSWORD=q2nqzt0WGnwWé,256
-    
+    - MYSQL_ROOT_PASSWORD=mysecretpassword
+    - MYSQL_DATABASE=ircam_shops
+    - MYSQL_USER=ircam_shops
+    - MYSQL_PASSWORD=pUmt97e4MgR9EP4knyWea0n
+
 app:
   links:
     - db
-    - evedb
+    - prestadb
