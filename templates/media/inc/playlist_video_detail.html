@@ -2,10 +2,6 @@
 
 <div class="embed-responsive">
     <video controls id="video-js-playlist" class="video-js vjs-ircam-skin" data-title="{{ media.title }}" {% if media.poster_url %}poster="{{ media.poster_url }}"{% endif %}>
-        {% for transcoded in media.transcoded.all %}
-           <source src="{{ transcoded.url }}" type="{{ transcoded.mime_type }}" />
-        {% endfor %}
-        Your browser does not support the video tag.
     </video>
 </div>
 {% for media in playlist.medias.all %}
