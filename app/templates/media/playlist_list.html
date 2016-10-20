@@ -28,13 +28,6 @@
                 {% endwith %}
             {% endwith %}
         {% endfor %}
-        {% for playlist in playlists %}
-            {% with playlist.type as type %}
-                {% with "media/inc/playlist_"|add:type|add:"_card.html" as template %}
-                    {% include template %}
-                {% endwith %}
-            {% endwith %}
-        {% endfor %}
     </div>
 
 {% endblock %}
