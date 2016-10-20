@@ -32,10 +32,10 @@
 {% endwith %}
 
 {% if event.brochure %}
-        <div class="page__meta-title page__meta-title--small">{% trans "Room program" %}</div>
+        <div class="page__meta-title page__meta-title--small">{% trans "Downloads" %}</div>
         <p class="page__meta-text">
             <a href='{{ event.brochure.url }}' target="_blank">
-                {% trans "Download" %}
+                {{ event.brochure.filename }}
             </a>
         </p>
 {% endif %}
@@ -65,7 +65,7 @@
             <p>
                 {{ price.unit }}
             </p>
-        {% else %}
+        {% elif event.no_price_comments %}
             <p>
                 {{ event.no_price_comments }}
             </p>
