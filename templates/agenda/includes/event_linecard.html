@@ -1,21 +1,13 @@
 {% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags %}
 
 <div class="row event-line-box">
-
     {% ifchanged event.start.month %}
-
         <div class="col-sm-12 col-md-12 col-lg-12 event-line-box__month">
-
             <h2>{{ event.start|date:'F' }}</h2>
-
         </div>
-
     {% endifchanged %}
-
     <div class="col-sm-12 col-md-12 col-lg-12 event-line-box__content">
-
         <div class="row">
-
             <div class="col-xs-3">
                 {% with True as unit_booking %}
                     {% include 'agenda/includes/event_metainfo_line.html' %}
@@ -59,9 +51,6 @@
                     {% if event.description %}{{ event.description|slice:":100" }}{% else %}{{ event.parent.description|slice:":100" }}{% endif %}
                 </div>
             </div>
-
         </div>
-
     </div>
-
 </div>
