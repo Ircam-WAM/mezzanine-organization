@@ -31,7 +31,7 @@ $module: ".brief-box";
         margin: 0 auto;
         color: $brief-box-color;
 
-        @include margin-top(3);
+        @include margin-top(5);
         @include margin-bottom(1);
 
         @include font-size(xl);
@@ -61,7 +61,7 @@ $module: ".brief-box";
         @extend .button;
         @extend .button--small;
 
-        @include margin-bottom(3);
+        @include margin-bottom(5);
 
     }
 
