@@ -1,7 +1,6 @@
 {% load i18n %}
 {% load event_tags pages_tags mezzanine_tags %}
 
-
     <!-- Start date only  -->
     {% if event.start and not event.end %}
         {{ event.start|date:event.date_format }}

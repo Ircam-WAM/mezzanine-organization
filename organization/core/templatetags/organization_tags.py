@@ -20,7 +20,7 @@ def subtract(value, arg):
 
 @register.as_tag
 def children_pages(page_id):
-    childrens = Page.objects.filter(parent_id=page_id)
+    childrens = Page.objects.filter(parent_id=page_id).order_by('_order')
     if childrens:
         return childrens
     return None

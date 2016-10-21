@@ -174,6 +174,7 @@ class LinkType(models.Model):
 class Link(URL):
     """A person can have many links."""
 
+    title = models.CharField(_('title'), max_length=1024, null=True, blank=True)
     link_type = models.ForeignKey(LinkType, verbose_name=_('link type'))
 
     class Meta:
