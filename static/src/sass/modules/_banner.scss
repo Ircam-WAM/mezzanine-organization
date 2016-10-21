@@ -103,6 +103,7 @@ $module: ".banner";
 
         margin-top: 0;
         @include margin-bottom(2);
+        height: 150px;
 
         #{$module}__title {
 
