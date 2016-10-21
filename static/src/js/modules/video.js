@@ -5,7 +5,9 @@ var Video = function() {
     //
     // Init
     //
-    this.init();
+    if($('#video-js-playlist').length > 0) {
+        this.init();
+    }
 
 };
 

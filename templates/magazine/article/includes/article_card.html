@@ -21,7 +21,11 @@
             </figure>
         {% else %}
             <figure class="article-box__image">
-                
+                {% if article.department %}
+                    <div class="article-box__placeholder {{article.department.name|lower}}"></div>
+                {% else %}
+                    <div class="article-box__placeholder"></div>
+                {% endif %}
             </figure>
         {% endif %}
     {% endwith %}
