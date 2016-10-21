@@ -43,7 +43,7 @@ class PageBlockTranslationOptions(TranslationOptions):
 @register(PageImage)
 class PageImageTranslationOptions(TranslationOptions):
 
-    fields = ('description',)
+    fields = ('title', 'description',)
 
 
 @register(PagePlaylist)
