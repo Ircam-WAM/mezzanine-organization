@@ -24,7 +24,7 @@ class PlaylistListView(ListView):
     context_object_name = 'playlists'
     def get_queryset(self):
         qs = Playlist.objects.all()
-        if self.kwargs['type']:
+        if "type" in self.kwargs:
             qs = qs.filter(type=self.kwargs['type'])
         return qs
     def get_context_data(self, **kwargs):
