@@ -100,9 +100,6 @@
                                 <div class="banner__title fsxxxl">
                                     Tournées {{ CURRENT_SEASON_STYLED }}
                                 </div>
-                                <div class="banner__desc fss">
-                                    Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de toutes choses...
-                                </div>
 
                             </div>
 
@@ -114,6 +111,8 @@
                                 <a class="nav-tree__link active" href="{% url 'event_list' %}">
                                     {% if tag and tag|tag_is_excluded %}
                                         {% trans "Tournées" %}
+                                    {% elif is_archive %}
+                                        {% trans 'Archives' %}
                                     {% else %}
                                         {% trans "Rendez-vous" %}
                                     {% endif %}
@@ -125,6 +124,14 @@
                                     </li>
                                 </ul>
                             </li>
+
+                            {% if is_archive %}
+                                <li class="nav-tree__item">
+                                    <a class="nav-tree__link" href="{% url 'event_list' %}">
+                                        {% trans "Rendez-vous" %}
+                                    </a>
+                                </li>
+                            {% endif %}
 
                             {% if tag and tag|tag_is_excluded %}
                                 <li class="nav-tree__item">
@@ -140,11 +147,17 @@
                                 </li>
                             {% endif %}
 
-                            <li class="nav-tree__separator">
-
-                            </li>
+                            {% if not is_archive %}
+                                <li class="nav-tree__item">
+                                    <a class="nav-tree__link" href="{% url "event_list_year" CURRENT_SEASON %}" title="{% trans 'archive' %}">{% trans 'Archives' %}</a>
+                                </li>
+                            {% endif %}
 
                             {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
+
+                                <li class="nav-tree__separator">
+
+                                </li>
 
                                 {% keywords_for mezzanine_agenda.event as tags %}
                                 {# {% all_events as all_events %}#}
@@ -186,8 +199,6 @@
             </div>
 
         </div>
-        {% if not is_archive %}
-            <div><a href="{% url "event_list_year" CURRENT_SEASON %}" title="{% trans 'archive' %}">{% trans 'archive' %}</div>
-        {% endif %}
+
     </div>
 {% endblock %}
