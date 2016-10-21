@@ -4,6 +4,6 @@
 </p>
 <ul class="unstyled-list fss">
     {% for link in links %}
-      <li><a href="{{ link.url }}" title=""><i class="fa fa-{{ link.link_type.name }}"></i>{% firstof link.title link.url%}</a></li>
+      <li><a href="{{ link.url }}" title=""><i class="fa fa-{{ link.link_type.name }}"></i> {% firstof link.title link.url%}</a></li>
     {% endfor %}
 </ul>

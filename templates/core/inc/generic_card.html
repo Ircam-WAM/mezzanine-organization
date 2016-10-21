@@ -1,6 +1,6 @@
 {% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
 
-<a class="article-box" href="{% block url %}{% endblock %}" title="{% block metatitle %}{% endblock %}">
+<a class="article-box" href="{% block url %}{% endblock %}" {% block target %}{% endblock %} title="{% block metatitle %}{% endblock %}">
     <div class="article-box__header">
 
         {% block image %}
