@@ -17,7 +17,6 @@ $module: ".nav-header";
 
         display: inline-block;
         color: black;
-        text-transform: lowercase;
         vertical-align: top;
         position: relative;
 
@@ -133,6 +132,7 @@ $module: ".nav-header";
 
     &__item-link {
 
+        text-transform: lowercase;
         color: inherit;
         text-decoration: none;
         position: relative;
@@ -215,6 +215,7 @@ $module: ".nav-header";
         @include font-size(s);
         @include typeface(sans-serif);
         font-weight: weight(regular);
+        text-transform: lowercase;
 
         &--first {
 
