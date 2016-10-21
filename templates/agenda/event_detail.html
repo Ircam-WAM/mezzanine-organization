@@ -59,8 +59,6 @@
             {% editable event.content %}
                 {{ event.content|richtext_filters|safe }}
             {% endeditable %}
-        {% else %}
-            {% lorem 3 p %}
         {% endif %}
     {% endblock %}
 {% endblock %}

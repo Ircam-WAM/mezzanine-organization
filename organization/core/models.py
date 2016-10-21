@@ -9,6 +9,8 @@ from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.core.models import Displayable, Slugged, Orderable
 
+from django_countries.fields import CountryField
+
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')))
 ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
@@ -233,6 +235,21 @@ class Dated(models.Model):
 
     date_created = models.DateTimeField(_('creation date'), auto_now_add=True)
     date_modified = models.DateTimeField(_('last modification date'), auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class Address(models.Model):
+    """(Address description)"""
+
+    address = models.TextField(_('address'), blank=True)
+    postal_code = models.CharField(_('postal code'), max_length=16, null=True, blank=True)
+    city = models.CharField(_('city'), max_length=255, null=True, blank=True)
+    country = CountryField(_('country'), null=True, blank=True)
+
+    def __str__(self):
+        return ' '.join((self.address, self.postal_code))
 
     class Meta:
         abstract = True

@@ -33,8 +33,6 @@
      {% editable page.custompage.content %}
         {{ page.custompage.content|richtext_filters|safe }}
      {% endeditable %}
-    {% else %}
-        {% lorem 3 p %}
     {% endif %}
 
     {% if page.get_ascendants|length == 1 %}

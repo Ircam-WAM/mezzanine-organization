@@ -28,7 +28,6 @@ from organization.core.models import *
 from organization.media.models import *
 from organization.pages.models import CustomPage
 
-from django_countries.fields import CountryField
 # from .nationalities.fields import NationalityField
 
 # Hack to have these strings translated
@@ -61,21 +60,6 @@ PATTERN_CHOICES = [
 ALIGNMENT_CHOICES = (('left', _('left')), ('left', _('left')), ('right', _('right')))
 
 
-class Address(models.Model):
-    """(Address description)"""
-
-    address = models.TextField(_('address'))
-    postal_code = models.CharField(_('postal code'), max_length=16)
-    city = models.CharField(_('city'), max_length=255)
-    country = CountryField(_('country'))
-
-    def __str__(self):
-        return ' '.join((self.address, self.postal_code))
-
-    class Meta:
-        abstract = True
-
-
 class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     """(Organization description)"""
 
@@ -83,6 +67,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
     lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
+    initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
     is_on_map = models.BooleanField(_('is on map'), default=False)
 
     admin_thumb_type = 'logo'
@@ -403,24 +388,24 @@ class PersonActivity(Period):
     grade = models.ForeignKey(ActivityGrade, verbose_name=_('grade'), blank=True, null=True, on_delete=models.SET_NULL)
     function = models.ForeignKey(ActivityFunction, verbose_name=_('function'), blank=True, null=True, on_delete=models.SET_NULL)
 
-    employer = models.ForeignKey(Organization, verbose_name=_('employer'), related_name='employer_activity', blank=True, null=True, on_delete=models.SET_NULL)
-    attachment_organization = models.ForeignKey(Organization, verbose_name=_('attachment organization'), related_name='attachment_activity', blank=True, null=True, on_delete=models.SET_NULL)
-    second_employer = models.ForeignKey(Organization, verbose_name=_('second employer'), related_name='second_employer_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    employer = models.ForeignKey(Organization, verbose_name=_('employer'), related_name='employer_activities', blank=True, null=True, on_delete=models.SET_NULL)
+    attachment_organization = models.ForeignKey(Organization, verbose_name=_('attachment organization'), related_name='attachment_activities', blank=True, null=True, on_delete=models.SET_NULL)
+    second_employer = models.ForeignKey(Organization, verbose_name=_('second employer'), related_name='second_employer_activities', blank=True, null=True, on_delete=models.SET_NULL)
+    third_employer = models.ForeignKey(Organization, verbose_name=_('third employer'), related_name='third_employer_activities', blank=True, null=True, on_delete=models.SET_NULL)
     umr = models.ForeignKey(UMR, verbose_name=_('UMR'), blank=True, null=True, on_delete=models.SET_NULL)
-    team = models.ForeignKey('Team', verbose_name=_('team'), related_name='team_activity', blank=True, null=True, on_delete=models.SET_NULL)
-    second_team = models.ForeignKey('Team', verbose_name=_('second team'), related_name='second_team_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    team = models.ForeignKey('Team', verbose_name=_('team'), related_name='team_activities', blank=True, null=True, on_delete=models.SET_NULL)
+    second_team = models.ForeignKey('Team', verbose_name=_('second team'), related_name='second_team_activities', blank=True, null=True, on_delete=models.SET_NULL)
     second_team_text = models.CharField(_('second team text'), blank=True, null=True, max_length=256)
 
-    project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), blank=True, null=True, on_delete=models.SET_NULL)
+    projects = models.ManyToManyField('organization-projects.Project', verbose_name=_('projects'), related_name='activities', blank=True)
     rd_quota_float = models.IntegerField(_('R&D quota (float)'), blank=True, null=True)
     rd_quota_text = models.CharField(_('R&D quota (text)'), blank=True, null=True, max_length=128)
     rd_program = models.TextField(_('R&D program'), blank=True)
     budget_code = models.ForeignKey(BudgetCode, blank=True, null=True, on_delete=models.SET_NULL)
 
     phd_doctoral_school = models.ForeignKey(Organization, verbose_name=_('doctoral school'), blank=True, null=True, on_delete=models.SET_NULL)
-    phd_director = models.ForeignKey('Person', verbose_name=_('PhD director'), related_name='phd_director_activity', blank=True, null=True, on_delete=models.SET_NULL)
-    phd_officer_1 = models.ForeignKey('Person', verbose_name=_('PhD officer 1'), related_name='phd_officer_1_activity', blank=True, null=True, on_delete=models.SET_NULL)
-    phd_officer_2 = models.ForeignKey('Person', verbose_name=_('PhD officer 2'), related_name='phd_officer_2_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    phd_directors = models.ManyToManyField('Person', verbose_name=_('PhD directors'), related_name='phd_director_activities', blank=True)
+    phd_officers = models.ManyToManyField('Person', verbose_name=_('PhD officers'), related_name='phd_officer_activities', blank=True)
     phd_defense_date = models.DateField(_('PhD defense date'), blank=True, null=True)
     phd_title = models.TextField(_('PhD title'), blank=True)
     phd_postdoctoralsituation =  models.CharField(_('post-doctoral situation'), blank=True, max_length=256)

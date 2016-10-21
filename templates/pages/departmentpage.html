@@ -30,8 +30,6 @@
      {% editable page.departmentpage.content %}
         {{ page.departmentpage.content|richtext_filters|safe }}
      {% endeditable %}
-    {% else %}
-        {% lorem 3 p %}
     {% endif %}
 
 {% endblock %}
