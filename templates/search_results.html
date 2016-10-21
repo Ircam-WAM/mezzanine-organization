@@ -21,7 +21,7 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-sm-9 col-sm-push-3 col-lg-9 col-lg-push-2 white-bg">
+                <div class="col-sm-9 col-sm-push-3 col-lg-9 col-lg-push-2 white-bg mb2">
 
                     <form action="{% url "search" %}" role="search" class="search-form">
                         <input class="form-control" placeholder="{% trans "Type something" %}" type="text" name="q" value="{{ request.GET.q }}">
@@ -38,13 +38,10 @@
                 <div class="col-sm-3 col-lg-2 page__sidebar">
                     <div style="position: relative;">
                         <ul class="nav-tree nav-tree--level-0" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
-                            <li class="nav-tree__item">
-                                <a class="nav-tree__link nav-tree__link--filter {% if is_searching_all %} active {% endif %}" href="{{ cancel_filter_url }}" title="">{% trans 'All results' %} ({{ all_results_count }})</a>
-                            </li>
                             {% for key,value in filter_dict.items %}
                                 <li class="nav-tree__item">
-                                    <a class="nav-tree__link nav-tree__link--filter {% if search_model == key %} active {% endif %}" href="{{ value.url }}">
-                                        {{ value.verbose_name }} ({{ value.count }})
+                                    <a class="nav-tree__link nav-tree__link--filter{% if search_model == key %} active{% endif %}" href="{% if search_model == key %}{{ cancel_filter_url }}{% else %}{{ value.url }}{% endif %}">
+                                        {{ value.verbose_name }} ({{ value.count }}){% if search_model == key %}<i class="fa fa-times"></i>{% endif %}
                                     </a>
                                 </li>
                             {% endfor %}
