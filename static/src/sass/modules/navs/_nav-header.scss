@@ -45,8 +45,8 @@ $module: ".nav-header";
 
         &--image {
             vertical-align: top;
-            @include margin(0 0 0 .75);
-            @include padding-right(.75);
+            @include margin(0 0 0 .50);
+            @include padding-right(.50);
 
             @include mq($until: sm) {
                 img {
