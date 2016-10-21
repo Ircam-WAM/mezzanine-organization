@@ -18,6 +18,7 @@
                 {% for product_inline in list.products.all %}
                   {% with product_inline.product as product %}
                     {% with product.links.all|get_type_link:"link" as links %}
+                      {% with product.prestashop_products.all as prestashop_products %}
                         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
                             <div class="product-box" >
                                 {% if product.images.all %}
