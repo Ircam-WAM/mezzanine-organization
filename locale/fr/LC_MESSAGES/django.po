@@ -2367,7 +2367,7 @@ msgid ""
 "Sign up for our monthly newsletter to keep up to date with the institute's "
 "activities every month and be eligible to take advantage of special offers "
 "from our partners."
-msgstr ""
+msgstr "Abonnez-vous à notre newsletter mensuelle pour être tenu au courant de l’actualité de l’Ircam chaque début de mois et bénéficiez des offres réservées à nos abonnés dans différents lieux partenaires de l’Institut."
 
 #: templates/pages/richtextpage.html:17
 msgid "Related events"
