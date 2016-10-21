@@ -16,7 +16,7 @@
 
 {% if unit_booking %}
 
-    {% if event.prices.all.0|floatformat != '0' and event.prices.all|length > 0 %}
+    {% if event.prices.all.0|floatformat != '0' and event.prices.all|length > 0 and not is_archive %}
         <p>
             <a class="button mt1" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
                 {% trans "Reserve" %}
