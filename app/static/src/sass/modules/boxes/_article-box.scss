@@ -51,6 +51,33 @@ $module: ".article-box";
         }
     }
 
+    &__placeholder {
+
+        background: $color-main;
+
+        &.recherche {
+            background-color: white;
+            background-image: url(../img/patterns/squares.png);
+            opacity: 0.4;
+        }
+        &.creation {
+            background-color: white;
+            background-image: url(../img/patterns/circles.png);
+            opacity: 0.2;
+        }
+        &.transmission {
+            background-color: white;
+            background-image: url(../img/patterns/stripes.png);
+            opacity: 0.4;
+        }
+        &.innovation {
+            background-color: white;
+            background-image: url(../img/patterns/triangles.png);
+            opacity: 0.2;
+        }
+
+    }
+
     &__tags {
         position: absolute;
         bottom: 0;
