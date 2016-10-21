@@ -16,6 +16,11 @@ from organization.media.models import *
 from organization.core.models import *
 from organization.magazine.apps import *
 
+BRIEF_STYLE_CHOICES = [
+    ('grey', _('grey')),
+    ('yellow', _('yellow')),
+    ('black', _('black'))
+]
 
 class Article(BlogPost, SubTitled):
 
@@ -47,6 +52,7 @@ class ArticlePlaylist(PlaylistRelated):
 
 class Brief(Displayable, RichText):
 
+    style = models.CharField(_('style'), max_length=16, choices=BRIEF_STYLE_CHOICES)
     text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'))
     external_content = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'))
 
