@@ -21,11 +21,11 @@ $module: ".nav-tree";
     }
 
     opacity: 1;
-    @include transition(opacity 0.25s ease-in-out);
+    @include transition(opacity 0.10s ease-in-out);
 
     &.faded {
         opacity: 0;
-        @include transition(opacity 0.25s ease-in-out);
+        @include transition(opacity 0.10s ease-in-out);
     }
 
     &.is_stuck {
