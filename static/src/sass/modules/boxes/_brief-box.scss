@@ -62,6 +62,36 @@ $module: ".brief-box";
         @extend .button--small;
 
         @include margin-bottom(5);
+        margin-right: 0;
+
+    }
+
+    &--black {
+
+        background: $color-black;
+
+        #{$module}__title {
+            color: white;
+        }
+        #{$module}__desc {
+            color: white;
+        }
+
+    }
+
+    &--yellow {
+
+        background: $color-main;
+
+        #{$module}__title {
+            color: $color-black;
+        }
+        #{$module}__desc {
+            color: $color-black;
+        }
+        #{$module}__button {
+            @extend .button--black;
+        }
 
     }
 
