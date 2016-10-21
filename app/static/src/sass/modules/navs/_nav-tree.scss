@@ -21,11 +21,13 @@ $module: ".nav-tree";
     }
 
     opacity: 1;
-    @include transition(opacity 0.10s ease-in-out);
+    @include transition(opacity 0.10s ease-in-out, transform 0.10s ease-in-out);
+    @include transform(translateX(0));
 
     &.faded {
         opacity: 0;
-        @include transition(opacity 0.10s ease-in-out);
+        @include transition(opacity 0.10s ease-in-out, transform 0.10s ease-in-out);
+        @include transform(translateX(-20px));
     }
 
     &.is_stuck {
@@ -35,6 +37,10 @@ $module: ".nav-tree";
     &--level-0 {
 
         @include margin-bottom(2);
+        box-shadow: 0 0 80px rgba(0, 0, 0, 0.15);
+        border-left: 2px solid white;
+        border-right: 2px solid white;
+        border-bottom: 2px solid white;
 
     }
 
