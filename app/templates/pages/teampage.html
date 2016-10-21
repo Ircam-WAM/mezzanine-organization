@@ -33,8 +33,6 @@
      {% editable page.teampage.content %}
         {{ page.teampage.content|richtext_filters|safe }}
      {% endeditable %}
-    {% else %}
-        {% lorem 3 p %}
     {% endif %}
 
     {% if page.get_ascendants|length == 1 %}
@@ -79,9 +77,9 @@
 {% endblock %}
 
 {% block page_sub_content %}
-  {% with page.teampage.blocks.all as blocks %}
-    {% include "core/inc/block.html" %}
-  {% endwith %}
+    {% with object.blocks.all|slice:'1' as blocks %}
+        {% include "core/inc/block.html" %}
+    {% endwith %}
 {% endblock %}
 
 {% block related_project %}
@@ -109,20 +107,27 @@
                     </div>
                 </div>
             </div>
-
-            {% if page.teampage.product_lists.all %}
-                <h4>{% trans "Products" %}</h4>
-                {% for page_product_list in page.teampage.product_lists.all %}
-                  {% with page_product_list.list as list %}
-                    {% with "shop/includes/product_list_"|add:list.style|add:"_style.html" as template %}
-                      {% include template %}
-                    {% endwith %}
-                  {% endwith %}
-                {% endfor %}
-            {% endif %}
-
         </div>
     {% endif %}
+{% endblock %}
+
+{% block page_sub_content_2 %}
+    {% with object.blocks.all|slice:'2:' as blocks %}
+        {% include "core/inc/block.html" %}
+    {% endwith %}
+{% endblock %}
+
+{% block products %}
+{% if page.teampage.product_lists.all %}
+    <h4>{% trans "Products" %}</h4>
+    {% for page_product_list in page.teampage.product_lists.all %}
+      {% with page_product_list.list as list %}
+        {% with "shop/includes/product_list_"|add:list.style|add:"_style.html" as template %}
+          {% include template %}
+        {% endwith %}
+      {% endwith %}
+    {% endfor %}
+{% endif %}
 {% endblock %}
 
 {% block logo %}

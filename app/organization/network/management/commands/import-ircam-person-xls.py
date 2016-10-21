@@ -64,6 +64,7 @@ class IrcamXLS:
 class IrcamPerson(object):
 
     organization = Organization.objects.get(name='Ircam')
+    spliters = ['/', ',']
 
     def __init__(self, row, datemode):
         self.row = row
@@ -93,6 +94,16 @@ class IrcamPerson(object):
 
     def get_or_create_name(self, model, column_id):
         return model.objects.get_or_create(name=self.row[column_id].value)[0] if self.row[column_id].value else None
+
+    def split_names(self, names):
+        name_list = []
+        for spliter in self.spliters:
+            if spliter in names:
+                name_list = names.split(spliter)
+        if name_list:
+            for map(str.strip, name_list)
+            return name_list
+        return names
 
     def get_person(self, value):
         if value:
