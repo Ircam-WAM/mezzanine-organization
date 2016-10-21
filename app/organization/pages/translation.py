@@ -37,7 +37,7 @@ class CustomPageTranslationOptions(TranslationOptions):
 @register(PageBlock)
 class PageBlockTranslationOptions(TranslationOptions):
 
-    fields = ('title', 'content')
+    fields = ('title', 'description', 'content')
 
 
 @register(PageImage)
