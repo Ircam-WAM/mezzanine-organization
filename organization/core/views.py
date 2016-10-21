@@ -13,6 +13,7 @@ from operator import ior, iand
 from organization.media.models import Playlist
 from mezzanine_agenda.models import Event
 from organization.pages.models import CustomPage
+from organization.projects.models import Project
 
 class SlugMixin(object):
 
@@ -52,6 +53,7 @@ class CustomSearchView(TemplateView):
         results_media_count = len(Playlist.objects.search(query, for_user=request.user))
         results_page_count = len(CustomPage.objects.search(query, for_user=request.user))
         results_event_count = len(Event.objects.search(query, for_user=request.user))
+        results_project_count = len(Project.objects.search(query, for_user=request.user))
 
         # count objects
         filter_dict = dict()
@@ -93,6 +95,11 @@ class CustomSearchView(TemplateView):
                 'count' : results_media_count,
                 'verbose_name' : 'Media',
                 'app_label' : 'organization-media'
+            },
+            'Project': {
+                'count' : results_project_count,
+                'verbose_name' : 'Project',
+                'app_label' : 'organization-projects'
             },
         }
 

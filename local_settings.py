@@ -154,7 +154,6 @@ PAGES_MODELS = ('organization-pages.CustomPage',
                 'organization-network.DepartmentPage',
                 'organization-network.TeamPage',
                 'organization-projects.ProjectTopicPage',
-                'organization-projects.Project',
                 'shop.Product')
 
 SEARCH_PER_PAGE = 10
