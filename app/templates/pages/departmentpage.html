@@ -12,19 +12,19 @@
 {% block page_title %}
 
     {% editable page.departmentpage.title %}
-        <h1 class="dashed">{{ page.departmentpage.title }}</h1>
+        <h1 class="dashed">{{ page.departmentpage.sub_title }}</h1>
     {% endeditable %}
 
 {% endblock %}
 
 {% block page_content %}
-    {% if page.departmentpage.sub_title %}
+    <!--{% if page.departmentpage.sub_title %}
         {% editable page.departmentpage.sub_title %}
             <div class="chapo">
                 {{ page.departmentpage.sub_title }}
             </div>
         {% endeditable %}
-    {% endif %}
+    {% endif %}-->
 
     {% if page.departmentpage.content %}
      {% editable page.departmentpage.content %}
