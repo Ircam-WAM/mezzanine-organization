@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
 {% load i18n pages_tags mezzanine_tags staticfiles keyword_tags event_tags  %}
@@ -47,216 +46,146 @@
     {% spaceless %}
 
     <div class="pushy pushy-left">
-
         {% include "includes/sidebar.html" %}
-
     </div>
 
     <div class="site-overlay">
-
     </div>
 
     <div class="header push">
-
         <div class="header__pre">
-
             <div class="container">
-
                 <div class="row">
-
                     <div class="col-md-10 col-md-push-1 tac">
-
                         {% page_menu "pages/menus/action.html" %}
-
                     </div>
                     <div class="col-md-1 col-md-push-1 tar">
-
                         {% if settings.USE_MODELTRANSLATION and languages|length > 1 %}
                             {% nevercache %}
-                            {% include "includes/language_selector.html" %}
+                                {% include "includes/language_selector.html" %}
                             {% endnevercache %}
                             <ul class="lang-switcher" id="langSelector">
-
                                 {% for language in languages %}
                                     {% if language.code == LANGUAGE_CODE %}
                                         <li class="lang-switcher__item active">
-
                                             <a href="#">
                                               {{ language.code|title }}
                                             </a>
-
                                         </li>
                                     {% endif %}
                                 {% endfor %}
                                 {% for language in languages %}
                                     {% if language.code != LANGUAGE_CODE %}
                                         <li class="lang-switcher__item">
-
                                             <a href="#" data-lang="{{ language.code }}">
                                               {{ language.code|title }}
                                             </a>
-
                                         </li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
                         {% endif %}
                     </div>
-
                 </div>
-
             </div>
-
         </div>
 
         <div class="container">
-
             <div class="row header__nav">
-
                 <div class="col-md-12 tac">
-
                     <div id="navHeader">
                         {% page_menu "pages/menus/header.html" %}
                     </div>
-
                 </div>
-
             </div>
             {% if not on_home %}
                 <div class="row white-bg">
-
                     <div class="col-md-8 col-md-push-2">
-
                         <ul class="breadcrumb">
-
                             {% spaceless %}
-                            {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
+                                {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
                             {% endspaceless %}
-
                         </ul>
-
                     </div>
-
                 </div>
             {% endif %}
         </div>
-
     </div>
 
     <div id="container">
-
         <main class="main" role="main">
-
             {% block content_header %}{% endblock %}
             {% block main %}{% endblock %}
             {% block content_footer %}{% endblock %}
-
         </main>
 
         <footer class="footer" role="footer">
-
             <div class="footer__pre">
-
                 <div class="container">
-
                     <div class="row">
-
                         <div class="col-sm-6 col-sm-push-1 tal-sm tac-sm tal-xs">
-
                             newsletter
-
                         </div>
-
                         <div class="col-sm-3 col-sm-push-1 tac-sm tal-xs">
-
                             <a class="footer__follow-link facebook" href="https://www.facebook.com/iIRCAM/" target="_blank" title="{% trans 'Follow us on Facebook' %}"><i class="fa fa-facebook-square"></i></a>
                             <a class="footer__follow-link twitter" href="https://twitter.com/ircam" target="_blank" title="{% trans 'Follow us on Twitter' %}"><i class="fa fa-twitter-square"></i></a>
                             <a class="footer__follow-link instagram" href="https://www.instagram.com/ircam_paris/" target="_blank" title="{% trans 'Follow us on Instagram' %}"><i class="fa fa-instagram"></i></a>
                             <a class="footer__follow-link youtube" href="https://www.youtube.com/user/Ircam75" target="_blank" title="{% trans 'Follow us on Youtube' %}"><i class="fa fa-youtube-square"></i></a>
                             <a class="footer__follow-link vimeo" href="https://vimeo.com/ircam" target="_blank" title="{% trans 'Follow us on Vimeo' %}"><i class="fa fa-vimeo-square"></i></a>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
 
             <div class="footer__content">
-
                 <div class="container">
-
                     <div class="row">
-
                         <div class="col-xs-3 col-sm-3 col-sm-push-1 tal">
-
                             <a href="{% url "home" %}" title="{% trans 'Home' %}"><img src="{% static "img/logo-ircam-white.png" %}" width="151" /></a>
-
                         </div>
-
                         <div class="col-xs-3 col-sm-2 col-sm-push-1 tar-sm tal">
-
                             <strong>IRCAM</strong><br />
                             <br />
                             1 Place Igor-Stravinsky<br />
                             75004 Paris<br />
                             t. +33 1 44 78 48 43
-
                         </div>
-
                         <div class="col-xs-3 col-sm-2 col-sm-push-1 tar-sm tal">
-
                             <strong>{% trans 'Opening times' %}</strong><br />
                             <br />
                             du lundi au vendredi<br />
                          09:30–19:00<br />
                             fermé le samedi et dimanche
-
                         </div>
-
                         <div class="col-xs-3 col-sm-2 col-sm-push-1 tar-sm tal">
-
                             <strong>{% trans 'Subway access' %}</strong><br />
                             <br />
                             Hôtel de Ville, Rambuteau,<br />
                             Châtelet, Les Halles
-
                         </div>
-
                     </div>
 
                     <div class="row">
-
                         <div class="col-sm-10 col-sm-push-1">
-
                             <div class="footer__separator"></div>
-
                         </div>
-
                     </div>
 
                     <div class="row">
-
                         <div class="col-xs-4 col-sm-3 col-sm-push-1 tal">
-
                             {% page_menu "pages/menus/footer_vertical.html" %}
-
                         </div>
 
                         <div class="col-xs-4 col-sm-5 col-sm-push-1 tal">
-
                             <strong>Institut de Recherche et Coordination Acoustique/Musique</strong> {% trans 'under the tutelage of' %} :<br />
                             <br />
                             <a href="http://www.culturecommunication.gouv.fr/" target="_blank" title="Ministère de la Culture et de la Communication"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-ministere-culture.png" %}" /></a>
                             <a href="http://www.cnrs.fr/" target="_blank" title="Centre National de la Recherche Scientifique"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-cnrs.png" %}" /></a>
                             <a href="http://www.upmc.fr/" target="_blank" title="Université Pierre et Marie Curie"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-upmc.png" %}" /></a>
                             <a href="http://www.inria.fr/" target="_blank" title="Inria"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-inria.png" %}" /></a>
-
                         </div>
 
                         <div class="col-xs-4 col-sm-2 col-sm-push-1 tal">
-
                             {% trans 'go to' %} :
                             <ul class="unstyled-list">
                                 <li>
@@ -266,37 +195,24 @@
                                     <a class="footer__link" href="http://www.bpi.fr/home.html" target="_blank" title="Bibliothèque Public d’Information">Bibliothèque Public d’Information</a>
                                 </li>
                             </ul>
-
                         </div>
-
                     </div>
 
                     <div class="row">
-
                         <div class="col-sm-10 col-sm-push-1">
-
                             <div class="footer__separator footer__seprator--small"></div>
-
                         </div>
-
                     </div>
 
                     <div class="row">
-
                         <div class="col-sm-10 col-sm-push-1">
-
                             {% page_menu "pages/menus/footer_horizontal.html" %}
-
                         </div>
-
                     </div>
 
                 </div>
-
             </div>
-
         </footer>
-
     </div>
     {% search_form %}
     {% include "includes/footer_scripts.html" %}
@@ -308,9 +224,7 @@
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
   ga('create', 'UA-XXXXXX-XX', 'auto');
   ga('send', 'pageview');
-
 </script>
 </html>
