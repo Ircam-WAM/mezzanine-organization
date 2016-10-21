@@ -10,7 +10,15 @@
 {% endblock %}
 
 {% block url %}
+  {% if article.content|removetags:"p"|slice:':4' == 'http' %}
+    {{ article.content|removetags:"p" }}
+  {% else %}
     {% url 'magazine-article-detail' article.slug %}
+  {% endif %}
+{% endblock %}
+
+{% block target %}
+  {% if article.content|removetags:"p"|slice:':4' == 'http' %}target="_blank"{% endif %}
 {% endblock %}
 
 {% block image %}
