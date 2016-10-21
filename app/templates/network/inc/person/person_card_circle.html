@@ -33,7 +33,7 @@
             {% endif %}
             {% for link in person.links.all %}
                 {% if link %}
-                    <a href="{{ link }}" title="Site Web" class="button button--small"><i class="fa fa-{{ link.link_type.name }}"></i>{% firstof link.title link.link_type.name %}</a>
+                    <a href="{{ link }}" title="Site Web" class="button button--small"><i class="fa fa-{{ link.link_type.name }}" target="_blank"></i>{% firstof link.title link.link_type.name %}</a>
                 {% endif %}
             {% endfor %}
 
