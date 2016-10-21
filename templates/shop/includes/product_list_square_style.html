@@ -12,7 +12,6 @@
                 </div>
             </div>
         </div>
-
         <div class="container">
             <div class="row tac">
                 {% for product_inline in list.products.all %}
@@ -38,6 +37,7 @@
                                 </div>
                             </div>
                         </div>
+                      {% endwith %}
                     {% endwith %}
                   {% endwith %}
                 {% endfor %}
