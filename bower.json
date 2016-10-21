@@ -26,7 +26,7 @@
     "imagesloaded": "^4.1.1",
     "pushy": "^1.0.0",
     "audiojs": "^1.0.1",
-    "video.js": "^5.13.0",
+    "video.js": "^5.12.5",
     "videojs-playlist": "^2.4.0",
     "jquery_lazyload": "jquery.lazyload#^1.9.7"
   }
