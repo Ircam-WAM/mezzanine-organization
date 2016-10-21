@@ -8,6 +8,7 @@
 {% block icon %}files-o{% endblock %}
 
 {% block tags %}
+
     {% with page.get_ascendants|last as top_level_parent %}
         {% if top_level_parent.get_content_model.title %}
             <div class="event-line-box__tags">
@@ -24,7 +25,7 @@
         {% else %}
             <div class="event-line-box__tags">
                 <div class="tag tag--small dashed dashed--gray">
-                    {% trans "Link" %}
+                    {% trans 'Page' %}
                 </div>
             </div>
         {% endif %}
