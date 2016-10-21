@@ -1,7 +1,7 @@
 {% load i18n %}
-{% load event_tags %}
+{% load event_tags pages_tags mezzanine_tags %}
 
-{% spaceless %}
+
     <!-- Start date only  -->
     {% if event.start and not event.end %}
         {{ event.start|date:event.date_format }}
@@ -68,7 +68,12 @@
         <!-- Start and end date are completely different  -->
         {% else %}
             {{ event.start|date:"j F" }} {% trans "to" %} {{ event.end|date:"j F" }}
+            <!-- Start date with hour  -->
+            {% if event.end and event.end|date:"H:i" != "23:59" %}
+                , {{ event.start|date:" H\hi" }} - {{ event.end|date:"H\hi" }}
+            {% else %}
+                , {{ event.start|date:" H\hi" }}
+            {% endif %}
         {% endif %}
 
     {% endif %}
-{% endspaceless %}
