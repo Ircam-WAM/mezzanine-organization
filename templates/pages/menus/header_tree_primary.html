@@ -1,4 +1,4 @@
-{% load i18n pages_tags staticfiles %}
+{% load i18n pages_tags mezzanine_tags media_tags organization_tags staticfiles %}
 {% get_language_info_list for LANGUAGES as languages %}
 
 {% spaceless %}
@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    {{ page.departmentpage.description }}
+                    {{ page.departmentpage.description|richtext_filters|safe }}
                 </p>
             </div>
         </div>
