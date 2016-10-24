@@ -198,7 +198,7 @@ msgstr ""
 #: organization/agenda/models.py:106 templates/admin/login.html:42
 #: templates/agenda/includes/event_metainfo.html:49
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 #: organization/agenda/models.py:108
 msgid "level"
@@ -429,8 +429,8 @@ msgid "candidacy"
 msgstr ""
 
 #: organization/job/models.py:66
-msgid "Application"
-msgstr "Appel à candidatures"
+msgid "Applications"
+msgstr "Appel à candidature"
 
 #: organization/job/views.py:53
 msgid "Only .pdf, .odt, .doc, .docx files allowed."
@@ -1905,7 +1905,7 @@ msgstr "Événements du lieu"
 
 #: templates/agenda/includes/event_metainfo.html:27
 msgid "Prices"
-msgstr "Tarifs"
+msgstr "Prix"
 
 #: templates/agenda/includes/event_metainfo.html:37
 #: templates/agenda/includes/event_metainfo_line.html:22
@@ -1926,7 +1926,7 @@ msgstr "type de lien"
 
 #: templates/agenda/includes/event_metainfo.html:55
 msgid "Level"
-msgstr ""
+msgstr "Niveau"
 
 #: templates/agenda/includes/filter_panel.html:6
 msgid "Upcoming Events"
@@ -1951,21 +1951,21 @@ msgstr "Mots clés"
 #, fuzzy
 #| msgid "Share on Facebook"
 msgid "Follow us on Facebook"
-msgstr "Suivez-nous sur Facebook"
+msgstr "Suivez nous sur Facebook"
 
 #: templates/base.html:172
 #, fuzzy
 #| msgid "Share on Twitter"
 msgid "Follow us on Twitter"
-msgstr "Suivez-nous sur Twitter"
+msgstr "Suivez nous sur Twitter"
 
 #: templates/base.html:173
 msgid "Follow us on Instagram"
-msgstr "Suivez-nous sur Instagram"
+msgstr "Suivez nous sur Instagram"
 
 #: templates/base.html:174
 msgid "Follow us on Youtube"
-msgstr "Suivez-nous sur Youtube"
+msgstr "Suivez nous sur Youtube"
 
 #: templates/base.html:175
 msgid "Follow us on Vimeo"
@@ -1977,7 +1977,7 @@ msgstr "Horaires d'ouverture"
 
 #: templates/base.html:219
 msgid "Subway access"
-msgstr "Accès en transports en commun"
+msgstr "Accès en transports"
 
 #: templates/base.html:248
 msgid "under the tutelage of"
