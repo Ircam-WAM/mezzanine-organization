@@ -41,7 +41,7 @@ msgstr "Événements"
 #: templates/magazine/topic/topic_detail.html:5
 #: templates/magazine/topic/topic_detail.html:30
 msgid "Magazine"
-msgstr ""
+msgstr "Magazine"
 
 #: local_settings.py:91 templates/network/organization_list.html:4
 #: templates/network/organization_list.html:15
@@ -2297,19 +2297,19 @@ msgstr ""
 
 #: templates/index.html:26
 msgid "News Headlines"
-msgstr ""
+msgstr "À la une"
 
 #: templates/index.html:39
 #, fuzzy
 #| msgid "brief"
 msgid "Brief"
-msgstr "brève"
+msgstr "Brève"
 
 #: templates/index.html:39
 #, fuzzy
 #| msgid "briefs"
 msgid "Briefs"
-msgstr "brèves"
+msgstr "Brèves"
 
 #: templates/job/candidacy_list.html:4 templates/job/candidacy_list.html:13
 #: templates/job/candidacy_list.html:22
