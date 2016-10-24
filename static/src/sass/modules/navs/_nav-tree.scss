@@ -42,6 +42,10 @@ $module: ".nav-tree";
         border-right: 2px solid white;
         border-bottom: 2px solid white;
 
+        @include mq($until: sm) {
+            border-top: 1px solid white;
+        }
+
     }
 
     &__item {
