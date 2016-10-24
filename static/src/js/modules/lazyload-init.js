@@ -12,7 +12,8 @@ LazyLoadInit.prototype.init = function() {
     var that = this;
 
     $("img.lazyload").lazyload({
-        effect : "fadeIn"
+        effect : "fadeIn",
+        container: $("main")
     });
 
 };
