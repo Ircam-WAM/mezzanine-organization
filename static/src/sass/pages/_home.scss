@@ -133,6 +133,19 @@ $module: ".home";
             text-decoration: underline;
         }
 
+        .sidebar & {
+
+            >h2 {
+                @include font-size(m);
+                @include line-height(1);
+                @include margin(0 0 0 0);
+            }
+            >p {
+                display: none;
+            }
+
+        }
+
     }
 
     &__menu-item {
