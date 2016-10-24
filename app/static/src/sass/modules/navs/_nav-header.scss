@@ -196,6 +196,10 @@ $module: ".nav-header";
             @include typeface(serif);
             font-weight: weight(light);
 
+            @include mq($until: lg) {
+                @include font-size(xs);
+            }
+
             &:after {
                 content: "";
                 display: block;
@@ -217,10 +221,18 @@ $module: ".nav-header";
         font-weight: weight(regular);
         text-transform: lowercase;
 
+        @include mq($until: lg) {
+            @include font-size(xs);
+        }
+
         &--first {
 
             @include font-size(l);
             @include margin-bottom(.5);
+
+            @include mq($until: lg) {
+                @include font-size(m);
+            }
 
         }
 
