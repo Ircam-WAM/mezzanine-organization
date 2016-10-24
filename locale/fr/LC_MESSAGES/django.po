@@ -1951,41 +1951,41 @@ msgstr "Mots clés"
 #, fuzzy
 #| msgid "Share on Facebook"
 msgid "Follow us on Facebook"
-msgstr "Partagez sur Facebook"
+msgstr "Suivez-nous sur Facebook"
 
 #: templates/base.html:172
 #, fuzzy
 #| msgid "Share on Twitter"
 msgid "Follow us on Twitter"
-msgstr "Partagez sur Twitter"
+msgstr "Suivez-nous sur Twitter"
 
 #: templates/base.html:173
 msgid "Follow us on Instagram"
-msgstr ""
+msgstr "Suivez-nous sur Instagram"
 
 #: templates/base.html:174
 msgid "Follow us on Youtube"
-msgstr ""
+msgstr "Suivez-nous sur Youtube"
 
 #: templates/base.html:175
 msgid "Follow us on Vimeo"
-msgstr ""
+msgstr "Suivez-nous sur Vimeo"
 
 #: templates/base.html:209
 msgid "Opening times"
-msgstr ""
+msgstr "Horaires d'ouverture"
 
 #: templates/base.html:219
 msgid "Subway access"
-msgstr ""
+msgstr "Accès en transports en commun"
 
 #: templates/base.html:248
 msgid "under the tutelage of"
-msgstr ""
+msgstr "sous la tutelle de"
 
 #: templates/base.html:259
 msgid "go to"
-msgstr ""
+msgstr "Aller vers"
 
 #: templates/blog/blog_post_detail.html:29
 msgid "published on"
