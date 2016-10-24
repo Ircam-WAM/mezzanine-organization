@@ -106,32 +106,35 @@
             {% endfor %}
         {% endblock %}
 
-        {% block page_person_list %}
-        {% endblock %}
+        <div class="white-bg">
 
-        {% block page_sub_content %}
-            {% with object.blocks.all as blocks %}
-                {% include "core/inc/block.html" %}
-            {% endwith %}
-        {% endblock %}
+            {% block page_person_list %}
+            {% endblock %}
 
-        {% block related_project %}
-        {% endblock %}
+            {% block page_sub_content %}
+                {% with object.blocks.all as blocks %}
+                    {% include "core/inc/block.html" %}
+                {% endwith %}
+            {% endblock %}
 
-        {% block products %}
-        {% endblock %}
+            {% block related_project %}
+            {% endblock %}
 
-        {% block logo %}
-        {% endblock %}
+            {% block products %}
+            {% endblock %}
+
+            {% block logo %}
+            {% endblock %}
+
+            {% block page_related_content %}
+                {% with page.dynamic_content_pages.all as dynamic_content %}
+                    {% include "core/inc/related_content.html" %}
+                {% endwith %}
+            {% endblock %}
+
+        </div>
+
     </div>
 
-    <div>
-
-        {% block page_related_content %}
-            {% with page.dynamic_content_pages.all as dynamic_content %}
-                {% include "core/inc/related_content.html" %}
-            {% endwith %}
-        {% endblock %}
-    </div>
 
 {% endblock %}
