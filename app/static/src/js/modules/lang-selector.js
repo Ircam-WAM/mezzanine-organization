@@ -1,6 +1,7 @@
 var LangSelector = function() {
 
     this.$element = null;
+    this.$elementMobile = null;
 
     //
     // Init
@@ -32,6 +33,15 @@ LangSelector.prototype.init = function() {
     });
 
     that.$element.find('li:not(:first-child) a').click(function(e) {
+
+        e.preventDefault();
+        that.changeLanguage($(this).attr('data-lang'));
+        return false;
+
+    });
+
+    that.$elementMobile = $('#langSelectorMobile');
+    that.$elementMobile.find('a').click(function(e) {
 
         e.preventDefault();
         that.changeLanguage($(this).attr('data-lang'));
