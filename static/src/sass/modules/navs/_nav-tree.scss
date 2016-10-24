@@ -16,8 +16,18 @@ $module: ".nav-tree";
 
     }
 
+    .nav-tree-wrapper & {
+        position: static;
+    }
+
     .nav-tree & {
         position: relative;
+
+        #{$module}__item {
+            &:first-child {
+                margin-top: 2px;
+            }
+        }
     }
 
     opacity: 1;
@@ -41,6 +51,7 @@ $module: ".nav-tree";
         border-left: 2px solid white;
         border-right: 2px solid white;
         border-bottom: 2px solid white;
+        border-top: 2px solid white;
 
         @include mq($until: sm) {
             border-top: 1px solid white;
@@ -51,6 +62,10 @@ $module: ".nav-tree";
     &__item {
 
         margin-top: 2px;
+
+        &:first-child {
+            margin-top: 0;
+        }
 
     }
 
