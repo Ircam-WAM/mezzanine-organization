@@ -2391,11 +2391,11 @@ msgstr ""
 #: templates/job/inc/candidacy_card.html:19
 #: templates/job/inc/candidacy_card.html:21
 msgid "From"
-msgstr ""
+msgstr "Du"
 
 #: templates/job/inc/candidacy_card.html:23
 msgid "until"
-msgstr ""
+msgstr "jusqu'au"
 
 #: templates/job/inc/job_offer_card.html:13
 msgid "View"
@@ -2413,7 +2413,7 @@ msgstr ""
 #, fuzzy
 #| msgid "brief"
 msgid "Brief !"
-msgstr "brève"
+msgstr "Brève"
 
 #: templates/media/audio/inc/audio_search.html:20
 #: templates/media/inc/playlist_search.html:49
@@ -2509,7 +2509,7 @@ msgstr "Articles associés"
 #, fuzzy
 #| msgid "Projects"
 msgid "Project details"
-msgstr "Projets"
+msgstr "Détails du projet"
 
 #: templates/projects/project_detail.html:130
 msgid "Program"
@@ -2519,23 +2519,23 @@ msgstr "Programme"
 #, fuzzy
 #| msgid "Program"
 msgid "Program type"
-msgstr "Programme"
+msgstr "Type de programme"
 
 #: templates/projects/project_detail.html:151
 msgid "Beginning"
-msgstr ""
+msgstr "Début"
 
 #: templates/projects/project_detail.html:160
 msgid "End"
-msgstr ""
+msgstr "Fin"
 
 #: templates/projects/project_detail.html:169
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #: templates/projects/project_detail.html:179
 msgid "Website"
-msgstr ""
+msgstr "Site internet"
 
 #: templates/projects/project_detail.html:198
 #, fuzzy
@@ -2551,11 +2551,11 @@ msgstr ""
 #, fuzzy
 #| msgid "organization"
 msgid "Project lead organization"
-msgstr "organisation"
+msgstr "Coordinateur"
 
 #: templates/projects/project_detail.html:230
 msgid "Partners"
-msgstr ""
+msgstr "Partenaires"
 
 #: templates/search_results.html:5 templates/search_results.html:6
 #: templates/search_results.html:15
