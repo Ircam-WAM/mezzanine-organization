@@ -20,7 +20,7 @@
                           {% with product_inline.product as product %}
                             {% with product.links.all|get_type_link:"link" as links %}
                               {% with product.prestashop_products.all as prestashop_products %}
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
                                     <div class="product-box" >
                                         {% if product.images.all %}
                                             <a href="{{ links.0 }}" target="_blank" title="{{ product.title }}">
