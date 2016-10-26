@@ -11,6 +11,11 @@ $module: ".article-box";
     &:hover {
         box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.17);
         .article-box__image {
+
+            img {
+                @include transform(scale(1.1));
+            }
+
             &:after {
                 border-width: 12px;
             }
@@ -26,6 +31,7 @@ $module: ".article-box";
         padding: 0;
         width: 100%;
         position: relative;
+        overflow: hidden;
 
         @include fluid-aspect(427 286);
 
@@ -34,6 +40,7 @@ $module: ".article-box";
             width: 100%;
             max-width: 100%;
             height: auto;
+            @include transition(all 0.3s ease-in-out);
         }
 
         &:after {
@@ -88,10 +95,10 @@ $module: ".article-box";
 
     &__btn {
         position: absolute;
-        bottom: 0;
+        top: 0;
         right: 0;
 
-        @include margin-bottom(.5);
+        @include margin-top(.5);
         @include margin-right(.5);
     }
 
