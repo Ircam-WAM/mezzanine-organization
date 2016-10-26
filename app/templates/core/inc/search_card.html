@@ -1,23 +1,28 @@
 <div class="search-box">
 
-    {% block tags %}
+    {% block image %}
     {% endblock %}
 
-    <a href="{% block url %}{% endblock %}">
-        <h2 class="search-box__title dotted">
-            {% block title %}
-            {% endblock %}
-            <i class="fa fa-{% block icon %}{% endblock %}"></i>
-        </h2>
-    </a>
-
-    {% block subtitle %}
-    {% endblock %}
-
-    <div class="search-box__content">
-
-        {% block content %}
+    <div class="search-box__right">
+        {% block tags %}
         {% endblock %}
+
+        <a href="{% block url %}{% endblock %}">
+            <h2 class="search-box__title dotted">
+                {% block title %}
+                {% endblock %}
+                <i class="fa fa-{% block icon %}{% endblock %}"></i>
+            </h2>
+        </a>
+
+        {% block subtitle %}
+        {% endblock %}
+
+        <div class="search-box__content">
+
+            {% block content %}
+            {% endblock %}
+        </div>
     </div>
 
 </div>
