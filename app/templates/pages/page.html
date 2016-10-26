@@ -129,13 +129,17 @@
             {% block logo %}
             {% endblock %}
 
-            {% block page_related_content %}
-                {% with page.dynamic_content_pages.all as dynamic_content %}
-                    {% include "core/inc/related_content.html" %}
-                {% endwith %}
-            {% endblock %}
-
         </div>
+
+    </div>
+
+    <div class="white-bg">
+
+        {% block page_related_content %}
+            {% with page.dynamic_content_pages.all as dynamic_content %}
+                {% include "core/inc/related_content.html" %}
+            {% endwith %}
+        {% endblock %}
 
     </div>
 
