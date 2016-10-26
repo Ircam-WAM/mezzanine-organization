@@ -104,12 +104,16 @@ $module: ".nav-tree";
             background: lighten($color_main, 20%);
             color: $color-black-light;
 
-            &.active {
+            @include transition(all 0.25s ease-in-out);
+
+            &.active, &:hover {
+                background: lighten($color_main, 10%);
                 padding: 4px 20px;
                 @include padding-left(2);
                 color: $color-black-light;
-                background: lighten($color_main, 20%);
-                font-weight: weight(bold);
+                font-weight: weight(regular);
+                @include font-size(xs);
+                color: black;
             }
         }
 
