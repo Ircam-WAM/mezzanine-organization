@@ -220,12 +220,63 @@ $module: ".nav-header";
         @include typeface(sans-serif);
         font-weight: weight(regular);
         text-transform: none;
+        position: relative;
 
         @include mq($until: lg) {
             @include font-size(xs);
         }
 
+        /*&:after {
+            position: absolute;
+            height: 8px;
+            margin-top: -4px;
+            width: 100%;
+            display: block;
+            top: 50%;
+            left: 0;
+            content: "";
+            background: $color-main;
+            z-index: -1;
+            @include transform(scaleX(0));
+            @include transition(all 0.25s ease-in-out);
+            transform-origin:left top;
+        }*/
+
+        &:hover {
+
+            >a {
+                border-bottom: 1px solid $color-main;
+            }
+
+            /*>a {
+                color: black;
+            }
+
+            &:after {
+                @include transform(scaleX(1));
+                position: absolute;
+                height: 8px;
+                margin-top: -4px;
+                width: 100%;
+                display: block;
+                top: 50%;
+                left: 0;
+                content: "";
+                background: $color-main;
+                z-index: -1;
+            }*/
+        }
+
         &--first {
+            /*&:after {
+                display: none;
+            }*/
+
+            &:hover {
+                >a {
+                    border-bottom: 0;
+                }
+            }
 
             @include font-size(l);
             @include margin-bottom(.5);
