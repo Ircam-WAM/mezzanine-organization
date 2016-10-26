@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-24 22:38+0200\n"
+"POT-Creation-Date: 2016-10-26 13:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2491,15 +2491,15 @@ msgstr "Événements associés"
 msgid "Related posts"
 msgstr "Articles associés"
 
-#: templates/pages/teampage.html:92
+#: templates/pages/teampage.html:94
 msgid "Research topics and related projects"
 msgstr ""
 
-#: templates/pages/teampage.html:100
+#: templates/pages/teampage.html:105
 msgid "European and national projects"
 msgstr ""
 
-#: templates/pages/teampage.html:122
+#: templates/pages/teampage.html:130
 #, fuzzy
 #| msgid "Related posts"
 msgid "Products"
