@@ -219,7 +219,7 @@ $module: ".nav-header";
         @include font-size(s);
         @include typeface(sans-serif);
         font-weight: weight(regular);
-        text-transform: lowercase;
+        text-transform: none;
 
         @include mq($until: lg) {
             @include font-size(xs);
