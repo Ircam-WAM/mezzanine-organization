@@ -36,7 +36,7 @@ class ProjectBlockTranslationOptions(TranslationOptions):
 @register(ProjectLink)
 class ProjectLinkTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title',)
 
 
 @register(ProjectProgram)

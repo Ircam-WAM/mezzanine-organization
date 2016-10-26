@@ -25,7 +25,7 @@ class PageProductListTranslationOptions(TranslationOptions):
 @register(ProductLink)
 class ProductLinkTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title',)
 
 
 @register(ProductPrestashopProduct)
