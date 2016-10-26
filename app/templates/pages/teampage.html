@@ -112,7 +112,7 @@
 {% endblock %}
 
 {% block page_sub_content_2 %}
-    {% with page.teampage.blocks.all|slice:'2:' as blocks %}
+    {% with page.teampage.blocks.all|slice:'1:' as blocks %}
         {% include "core/inc/block.html" %}
     {% endwith %}
 {% endblock %}
