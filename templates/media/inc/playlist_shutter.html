@@ -2,17 +2,17 @@
 
 <div class="col-xs-3">
     <div class="home__shutter-item">
-        <h2><a href="{% url 'organization-playlist-list' %}" title="">{% trans 'Audios' %}</a></h2>
+        <h2><a href="{% url 'organization-playlist-list' 'audio' %}" title="">{% trans 'Audios' %}</a></h2>
         <p>{% trans 'View all the audio medias' %}</p>
-        <a href="{% url 'organization-playlist-list' %}" title="">{% trans 'See all audios >' %}</a>
+        <a href="{% url 'organization-playlist-list' 'audio' %}" title="">{% trans 'See all audios >' %}</a>
     </div>
 </div>
 
 <div class="col-xs-3">
     <div class="home__shutter-item">
-        <h2><a href="{% url 'organization-playlist-list' %}" title="">{% trans 'Videos' %}</a></h2>
+        <h2><a href="{% url 'organization-playlist-list' 'video' %}" title="">{% trans 'Videos' %}</a></h2>
         <p>{% trans 'View all the video medias' %}</p>
-        <a href="{% url 'organization-playlist-list' %}" title="">{% trans 'See all videos >' %}</a>
+        <a href="{% url 'organization-playlist-list' 'video' %}" title="">{% trans 'See all videos >' %}</a>
     </div>
 </div>
 
