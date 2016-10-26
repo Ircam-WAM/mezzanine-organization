@@ -14,8 +14,8 @@
 {% endblock %}
 
 {% block page_title %}
-    {% editable page.teampage.title %}
-        <h1 class="dotted">{{ page.teampage.title }}</h1>
+    {% editable page.title %}
+        <h1 class="dotted">{{ page.title }}</h1>
     {% endeditable %}
 {% endblock %}
 
@@ -50,34 +50,26 @@
 
 {% endblock %}
 
-{% block page_link %}
-    {% with page.teampage.links.all as links %}
-        {% if links %}
-            {% include 'core/inc/link.html' %}
-        {% endif %}
-    {% endwith %}
-{% endblock %}
-
 {% block page_audio %}
-  {% with page.teampage as object %}
+  {% with page as object %}
       {{ block.super }}
   {% endwith %}
 {% endblock %}
 
 {% block page_slider %}
-    {% with page.teampage as object %}
+    {% with page as object %}
         {{ block.super }}
     {% endwith %}
 {% endblock %}
 
 {% block page_video %}
-  {% with page.teampage as object %}
+  {% with page as object %}
       {{ block.super }}
   {% endwith %}
 {% endblock %}
 
 {% block page_sub_content %}
-    {% with page.teampage.blocks.all|slice:'1' as blocks %}
+    {% with page.blocks.all|slice:'1' as blocks %}
         {% include "core/inc/block.html" %}
     {% endwith %}
 {% endblock %}
@@ -120,40 +112,7 @@
 {% endblock %}
 
 {% block page_sub_content_2 %}
-    {% with page.teampage.blocks.all|slice:'1:' as blocks %}
+    {% with page.blocks.all|slice:'1:' as blocks %}
         {% include "core/inc/block.html" %}
-    {% endwith %}
-{% endblock %}
-
-{% block products %}
-    {% if page.teampage.product_lists.all|length > 0 %}
-        {% for page_product_list in page.teampage.product_lists.all %}
-          {% with page_product_list.list as list %}
-            {% with "shop/includes/product_list_"|add:list.style|add:"_style.html" as template %}
-              {% include template %}
-            {% endwith %}
-          {% endwith %}
-        {% endfor %}
-    {% endif %}
-{% endblock %}
-
-
-{% block logo %}
-    {% with page.teampage.images.all|get_type:'logo' as images %}
-        {% if images %}
-            <div class="page__block{% if block.background_color %} page__block--{{ block.background_color }}{% endif %}">
-                <div class="white-bg pb2">
-                    <div class="container">
-                        <div class="row" data-summary-content>
-                            <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
-                                <ul class="partners-list">
-                                    {% include 'core/inc/logo.html' %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
     {% endwith %}
 {% endblock %}
