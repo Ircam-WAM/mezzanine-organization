@@ -36,7 +36,7 @@ class EventPersonTranslationOptions(TranslationOptions):
 @register(EventLink)
 class EventLinkTranslationOptions(TranslationOptions):
 
-    fields = ()
+    fields = ('title',)
 
 
 @register(EventPeriod)

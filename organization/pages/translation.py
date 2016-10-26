@@ -55,7 +55,7 @@ class PagePlaylistTranslationOptions(TranslationOptions):
 @register(PageLink)
 class PageLinkTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title',)
 
 
 @register(DynamicContentPage)

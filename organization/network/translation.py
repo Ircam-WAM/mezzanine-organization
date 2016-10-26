@@ -54,7 +54,7 @@ class PersonPlaylistTranslationOptions(TranslationOptions):
 @register(PersonLink)
 class PersonLinkTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title',)
 
 
 @register(PersonImage)
@@ -84,7 +84,7 @@ class OrganizationTranslationOptions(TranslationOptions):
 @register(OrganizationLink)
 class OrganizationLinkTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title',)
 
 
 @register(OrganizationImage)
