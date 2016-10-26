@@ -95,10 +95,10 @@ $module: ".article-box";
 
     &__btn {
         position: absolute;
-        top: 0;
+        bottom: 0;
         right: 0;
 
-        @include margin-top(.5);
+        @include margin-bottom(.5);
         @include margin-right(.5);
     }
 
