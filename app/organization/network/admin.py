@@ -10,6 +10,7 @@ from organization.network.forms import *
 from organization.pages.models import *
 from organization.core.admin import *
 from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline
+from organization.shop.models import PageProductList
 
 
 class OrganizationPlaylistInline(TabularDynamicInlineAdmin):
@@ -42,9 +43,14 @@ class OrganizationAdmin(BaseTranslationModelAdmin):
     list_display = ['name', 'admin_thumb']
 
 
+class PageProductListInline(TabularDynamicInlineAdmin):
+
+    model = PageProductList
+
+
 class DepartmentPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, ]
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, PageProductListInline, ]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -60,7 +66,7 @@ class TeamAdmin(BaseTranslationModelAdmin):
 
 class TeamPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, ]
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, PageProductListInline, ]
 
 
 class PersonAdminBase(BaseTranslationModelAdmin):
