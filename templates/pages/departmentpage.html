@@ -88,7 +88,18 @@
             </div>
         </div>
     {% endif %}
+{% endblock %}
 
+{% block products %}
+    {% if page.departmentpage.product_lists.all|length > 0 %}
+        {% for page_product_list in page.departmentpage.product_lists.all %}
+          {% with page_product_list.list as list %}
+            {% with "shop/includes/product_list_"|add:list.style|add:"_style.html" as template %}
+              {% include template %}
+            {% endwith %}
+          {% endwith %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block logo %}
