@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 11:04+0200\n"
+"POT-Creation-Date: 2016-10-26 13:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,7 +71,7 @@ msgstr ""
 #: local_settings.py:131 templates/job/job_offer_list.html:4
 #: templates/job/job_offer_list.html:15
 msgid "Jobs"
-msgstr ""
+msgstr "Offres d'emplois et stages"
 
 #: local_settings.py:132
 msgid "Festival"
@@ -408,12 +408,12 @@ msgid "message"
 msgstr ""
 
 #: organization/job/models.py:16
-msgid "curriculum vitae"
-msgstr ""
+msgid "Curriculum vitae"
+msgstr "Curriculum vitae"
 
 #: organization/job/models.py:17
-msgid "cover letter"
-msgstr ""
+msgid "Cover letter"
+msgstr "Lettre de motivation"
 
 #: organization/job/models.py:18 organization/job/models.py:34
 msgid "job offer"
@@ -818,8 +818,10 @@ msgid "second team text"
 msgstr ""
 
 #: organization/network/models.py:400
+#, fuzzy
+#| msgid "Projects"
 msgid "projects"
-msgstr "projets"
+msgstr "Projets"
 
 #: organization/network/models.py:401
 msgid "R&D quota (float)"
@@ -833,7 +835,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Program"
 msgid "R&D program"
-msgstr "Programme R&D"
+msgstr "Programme"
 
 #: organization/network/models.py:406
 msgid "doctoral school"
@@ -2389,7 +2391,7 @@ msgstr ""
 #: templates/job/inc/candidacy_card.html:19
 #: templates/job/inc/candidacy_card.html:21
 msgid "From"
-msgstr "De"
+msgstr "Du"
 
 #: templates/job/inc/candidacy_card.html:23
 msgid "until"
@@ -2397,7 +2399,7 @@ msgstr "jusqu'au"
 
 #: templates/job/inc/job_offer_card.html:13
 msgid "View"
-msgstr ""
+msgstr "Voir l'offre"
 
 #: templates/job/job_offer_list.html:28
 msgid "Please come back later. There is no job offer at the moment."
@@ -2425,19 +2427,19 @@ msgstr ""
 
 #: templates/media/inc/playlist_shutter.html:6
 msgid "View all the audio medias"
-msgstr "Découvrez tous les médias audios"
+msgstr ""
 
 #: templates/media/inc/playlist_shutter.html:7
 msgid "See all audios >"
-msgstr "À écouter"
+msgstr ""
 
 #: templates/media/inc/playlist_shutter.html:14
 msgid "View all the video medias"
-msgstr "Découvrez toutes les médias vidéos"
+msgstr ""
 
 #: templates/media/inc/playlist_shutter.html:15
 msgid "See all videos >"
-msgstr "À voir"
+msgstr ""
 
 #: templates/media/inc/playlist_shutter.html:37
 #, fuzzy
@@ -2491,11 +2493,11 @@ msgstr "Articles associés"
 
 #: templates/pages/teampage.html:94
 msgid "Research topics and related projects"
-msgstr "Domaines de recherche et projets associés"
+msgstr ""
 
 #: templates/pages/teampage.html:105
 msgid "European and national projects"
-msgstr "Projets nationaux et européens"
+msgstr ""
 
 #: templates/pages/teampage.html:130
 #, fuzzy
@@ -2507,7 +2509,7 @@ msgstr "Articles associés"
 #, fuzzy
 #| msgid "Projects"
 msgid "Project details"
-msgstr "Projets"
+msgstr "Détails du projet"
 
 #: templates/projects/project_detail.html:130
 msgid "Program"
@@ -2517,7 +2519,7 @@ msgstr "Programme"
 #, fuzzy
 #| msgid "Program"
 msgid "Program type"
-msgstr "Programme"
+msgstr "Type de programme"
 
 #: templates/projects/project_detail.html:151
 msgid "Beginning"
@@ -2612,7 +2614,7 @@ msgstr ""
 #: templates/shop/cart.html:29 templates/shop/includes/order_details.html:42
 #: templates/shop/includes/order_details_rtl.html:42
 msgid "Price"
-msgstr "Prix"
+msgstr ""
 
 #: templates/shop/cart.html:30
 msgid "Remove?"
@@ -2872,11 +2874,11 @@ msgstr ""
 msgid "Recent Tweets"
 msgstr "Tweets récents"
 
-#~ msgid "Applications"
-#~ msgstr "Appel à candidatures"
-
 #~ msgid "videos"
 #~ msgstr "vidéos"
+
+#~ msgid "Applications"
+#~ msgstr "Appel à candidature"
 
 #~ msgid "Download"
 #~ msgstr "Télécharger"
