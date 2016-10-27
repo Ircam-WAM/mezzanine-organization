@@ -13,7 +13,9 @@
         </h2>
     </a>
     <div class="job-line-box__desc">
-        <strong>{% trans 'Published on' %} {{ jo.publish_date|date:"DATE_FORMAT" }}</strong><br />
+        {% if jo.type %}
+            <strong>{% trans 'Published on' %} {{ jo.publish_date|date:"DATE_FORMAT" }}</strong><br />
+        {% endif %}
         {% editable jo.description %}
             {{ jo.description|slice:":255" }}
         {% endeditable %}
