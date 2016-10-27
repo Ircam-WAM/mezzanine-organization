@@ -5,7 +5,7 @@
     {% if page %}
         {{ page.richtextpage.meta_title }}
     {% else %}
-        {% trans "Events" %}
+        {% trans "Rendez-vous in Paris" %}
     {% endif %}
 {% endblock %}
 
@@ -33,7 +33,7 @@
     </li>
     {% elif tag or location or month or week or author %}
         <li class="breadcrumb__item">
-            <a href="{% url 'event_list' %}" class="breadcrumb__link">{% trans "Rendez-vous" %}</a>
+            <a href="{% url 'event_list' %}" class="breadcrumb__link">{% trans "Rendez-vous in Paris" %}</a>
         </li>
         <li class="breadcrumb__item active">
             {% if tag %}
@@ -53,7 +53,7 @@
         </li>
     {% else %}
         <li class="breadcrumb__item active">
-            {% trans "Rendez-vous" %}
+            {% trans "Rendez-vous in Paris" %}
         </li>
     {% endif %}
 {% endblock %}
@@ -77,7 +77,7 @@
                                 {% if is_archive %}
                                     {% trans "Archives" %}
                                 {% else %}
-                                    {% trans "Events" %}
+                                    {% trans "Rendez-vous in Paris" %}
                                 {% endif %}
                             {% endif %}
                         {% endif %}
@@ -117,7 +117,7 @@
                                         {% elif is_archive %}
                                             {% trans 'Archives' %}
                                         {% else %}
-                                            {% trans "Rendez-vous" %}
+                                            {% trans "Rendez-vous in Paris" %}
                                         {% endif %}
                                     </a>
 
@@ -131,7 +131,7 @@
                                 {% if is_archive %}
                                     <li class="nav-tree__item">
                                         <a class="nav-tree__link" href="{% url 'event_list' %}">
-                                            {% trans "Rendez-vous" %}
+                                            {% trans "Rendez-vous in Paris" %}
                                         </a>
                                     </li>
                                 {% endif %}
@@ -139,7 +139,7 @@
                                 {% if tag and tag|tag_is_excluded %}
                                     <li class="nav-tree__item">
                                         <a class="nav-tree__link" href="{% url 'event_list' %}">
-                                            {% trans "Rendez-vous" %}
+                                            {% trans "Rendez-vous in Paris" %}
                                         </a>
                                     </li>
                                 {% else %}

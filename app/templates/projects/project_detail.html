@@ -56,11 +56,11 @@
 {% endblock %}
 
 {% block page_content %}
-
     {% if project.content %}
-        {{ project.content|richtext_filters|safe }}
+        {% editable project.content %}
+            {{ project.content|richtext_filters|safe }}
+        {% endeditable %}
     {% endif %}
-
 {% endblock %}
 
 {% block page_sidebar %}
@@ -229,11 +229,6 @@
                                                     {% trans "Partners" %}
                                                 </div>
                                                 <div class="project-details__item-desc">
-                                                    {% for team in project.teams.all %}
-                                                        {% if team.pages.all %}
-                                                            <a href="{% url "page" team.pages.all.0.slug %}">{{ team.short }}</a><br>
-                                                        {% endif %}
-                                                    {% endfor %}
                                                     {% for organization in project.organizations.all %}
                                                         {% if organization.url %}
                                                             <a href="{{ organization.url }}" target="_blank" title="{{ organization }}">
@@ -244,8 +239,18 @@
                                                         {% endif %}
                                                     {% endfor %}
                                                 </div>
-                                            </div>
 
+                                                <div class="project-details__item-title">
+                                                    {% trans "Ircam teams" %}
+                                                </div>
+                                                <div class="project-details__item-desc">
+                                                    {% for team in project.teams.all %}
+                                                        {% if team.pages.all %}
+                                                            <a href="{% url "page" team.pages.all.0.slug %}">{{ team.short }}</a><br>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

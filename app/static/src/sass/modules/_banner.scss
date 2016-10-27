@@ -20,6 +20,12 @@ $module: ".banner";
 
     @include mq($until: sm) {
 
+        height: 250px;
+
+    }
+
+    @include mq($until: xs) {
+
         height: auto;
 
     }
