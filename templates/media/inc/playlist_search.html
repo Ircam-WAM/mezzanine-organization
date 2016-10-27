@@ -50,3 +50,13 @@
     {% endif %}
     <br>
 {% endwith %}
+
+{% block image %}
+    {% if playlist.medias.all.0.media.poster_url %}
+        <a href="{{ playlist.get_absolute_url }}" class="search-box__image-wrapper">
+            <figure class="search-box__image search-box__image--playlist search-box__image--{{playlist.type}}">
+                <img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ playlist.medias.all.0.media.poster_url }}">
+            </figure>
+        </a>
+    {% endif %}
+{% endblock %}

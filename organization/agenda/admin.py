@@ -10,7 +10,7 @@ from mezzanine.pages.admin import PageAdmin
 from mezzanine.conf import settings
 from mezzanine.core.admin import DisplayableAdmin, OwnableAdmin
 
-from mezzanine_agenda.models import Event
+from mezzanine_agenda.models import Event, EventCategory
 from mezzanine_agenda.admin import *
 
 from organization.core.models import *
@@ -79,6 +79,11 @@ class CustomEventAdmin(EventAdmin):
         return DisplayableAdmin.save_form(self, request, form, change)
 
 
+class CustomEventCategoryAdmin(BaseTranslationModelAdmin):
+
+    pass
+
+
 class EventPublicTypeAdmin(BaseTranslationModelAdmin):
 
     model = EventPublicType
@@ -91,6 +96,8 @@ class EventTrainingLevelAdmin(BaseTranslationModelAdmin):
 
 
 admin.site.unregister(Event)
+admin.site.unregister(EventCategory)
 admin.site.register(EventPublicType, EventPublicTypeAdmin)
 admin.site.register(EventTrainingLevel, EventTrainingLevelAdmin)
 admin.site.register(Event, CustomEventAdmin)
+admin.site.register(EventCategory, CustomEventCategoryAdmin)

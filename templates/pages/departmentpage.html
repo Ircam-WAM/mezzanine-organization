@@ -11,7 +11,7 @@
 
 {% block page_title %}
 
-    {% editable page.departmentpage.title %}
+    {% editable page.departmentpage.sub_title %}
         <h1 class="dashed">{{ page.departmentpage.sub_title }}</h1>
     {% endeditable %}
 
@@ -34,34 +34,26 @@
 
 {% endblock %}
 
-{% block page_link %}
-    {% with page.departmentpage.links.all as links %}
-        {% if links %}
-            {% include 'core/inc/link.html' %}
-        {% endif %}
-    {% endwith %}
-{% endblock %}
-
 {% block page_audio %}
-  {% with page.departmentpage as object %}
+  {% with page as object %}
       {{ block.super }}
   {% endwith %}
 {% endblock %}
 
 {% block page_slider %}
-    {% with page.departmentpage as object %}
+    {% with page as object %}
         {{ block.super }}
     {% endwith %}
 {% endblock %}
 
 {% block page_video %}
-  {% with page.departmentpage as object %}
+  {% with page as object %}
       {{ block.super }}
   {% endwith %}
 {% endblock %}
 
 {% block page_sub_content %}
-    {% with page.departmentpage.blocks.all as blocks %}
+    {% with page.blocks.all as blocks %}
       {% include "core/inc/block.html" %}
     {% endwith %}
 {% endblock %}
@@ -70,7 +62,7 @@
     {% if page.departmentpage.department.articles.all %}
         <div class="white-bg pb2">
             <div class="page__block">
-                <hr />
+                <hr class="mt0" />
                 <div class="container">
                     <div class="row tac">
                         <div class="col-xs-12">
@@ -88,25 +80,4 @@
             </div>
         </div>
     {% endif %}
-
-{% endblock %}
-
-{% block logo %}
-    {% with page.departmentpage.images.all|get_type:'logo' as images %}
-        {% if images %}
-            <div class="white-bg">
-                <div class="page__block{% if block.background_color %} page__block--{{ block.background_color }}{% endif %}">
-                    <div class="container">
-                        <div class="row" data-summary-content>
-                            <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
-                                <ul class="partners-list">
-                                    {% include 'core/inc/logo.html' %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-    {% endwith %}
 {% endblock %}

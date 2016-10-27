@@ -41,4 +41,10 @@ $module: ".dashed";
 
     }
 
+    &--small {
+
+        @include padding-right(.5);
+
+    }
+
 }

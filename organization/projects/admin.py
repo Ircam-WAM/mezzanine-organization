@@ -9,6 +9,7 @@ from mezzanine.pages.admin import PageAdmin
 from organization.projects.models import *
 from organization.pages.models import *
 from organization.media.models import Playlist
+from organization.pages.admin import PageImageInline
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
@@ -68,8 +69,14 @@ class ProjectProgramTypeAdmin(BaseTranslationModelAdmin):
     model = ProjectProgramType
 
 
+class ProjectTopicPageAdmin(PageAdmin):
+
+    inlines = [PageImageInline, ]
+
+
+
 admin.site.register(Project, ProjectAdminDisplayable)
 admin.site.register(ProjectProgram, ProjectProgramAdmin)
 admin.site.register(ProjectProgramType, ProjectProgramTypeAdmin)
 admin.site.register(ProjectTopic, ProjectTopicAdmin)
-admin.site.register(ProjectTopicPage, PageAdmin)
+admin.site.register(ProjectTopicPage, ProjectTopicPageAdmin)
