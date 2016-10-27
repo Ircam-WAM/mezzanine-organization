@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-24 22:38+0200\n"
+"POT-Creation-Date: 2016-10-27 11:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -818,10 +818,8 @@ msgid "second team text"
 msgstr ""
 
 #: organization/network/models.py:400
-#, fuzzy
-#| msgid "Projects"
 msgid "projects"
-msgstr "Projets"
+msgstr "projets"
 
 #: organization/network/models.py:401
 msgid "R&D quota (float)"
@@ -835,7 +833,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Program"
 msgid "R&D program"
-msgstr "Programme"
+msgstr "Programme R&D"
 
 #: organization/network/models.py:406
 msgid "doctoral school"
@@ -2381,8 +2379,8 @@ msgstr "Brèves"
 
 #: templates/job/candidacy_list.html:4 templates/job/candidacy_list.html:13
 #: templates/job/candidacy_list.html:22
-msgid "Applications"
-msgstr "Appel à candidatures"
+msgid "Candidacies"
+msgstr ""
 
 #: templates/job/candidacy_list.html:35
 msgid "Please come back later. There is no candidacy at the moment."
@@ -2491,15 +2489,15 @@ msgstr "Événements associés"
 msgid "Related posts"
 msgstr "Articles associés"
 
-#: templates/pages/teampage.html:92
+#: templates/pages/teampage.html:94
 msgid "Research topics and related projects"
 msgstr "Domaines de recherche et projets associés"
 
-#: templates/pages/teampage.html:100
+#: templates/pages/teampage.html:105
 msgid "European and national projects"
 msgstr "Projets nationaux et européens"
 
-#: templates/pages/teampage.html:122
+#: templates/pages/teampage.html:130
 #, fuzzy
 #| msgid "Related posts"
 msgid "Products"
@@ -2874,11 +2872,11 @@ msgstr ""
 msgid "Recent Tweets"
 msgstr "Tweets récents"
 
+#~ msgid "Applications"
+#~ msgstr "Appel à candidatures"
+
 #~ msgid "videos"
 #~ msgstr "vidéos"
-
-#~ msgid "Applications"
-#~ msgstr "Appel à candidature"
 
 #~ msgid "Download"
 #~ msgstr "Télécharger"
