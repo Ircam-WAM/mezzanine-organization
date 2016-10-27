@@ -8,6 +8,10 @@ $module: ".slider-home";
         @include margin-bottom(1);
     }
 
+    @include mq($until: xs) {
+        display: none;
+    }
+
     ul {
         list-style-type: none;
         margin: 0;

@@ -290,6 +290,69 @@ $module: ".nav-header";
     }
 
     //
+    // Home mobile nav overrides
+    //
+    .home-mobile-nav & {
+
+        &__item {
+
+            display: none;
+
+            &:nth-child(3),
+            &:nth-child(4),
+            &:nth-child(5),
+            &:nth-child(6) {
+                display: inline-block;
+            }
+
+        }
+
+        &__item-link {
+
+            padding: 0 5px;
+
+            @include mq($until: sm) {
+                font-size: 18px;
+            }
+
+            @include mq($until: xs) {
+                font-size: 14px;
+            }
+
+        }
+
+    }
+
+    //
+    // Home mobile subnav overrides
+    //
+    .home-mobile-subnav & {
+
+        &__item {
+
+            display: none;
+            margin: 0;
+            padding: 0;
+
+            &:nth-child(7),
+            &:nth-child(8) {
+                display: inline-block;
+            }
+
+            &--image {
+                width: 45%;
+                img {
+                    display: inline-block;
+                    height: auto;
+                    width: 80%;
+                }
+            }
+
+        }
+
+    }
+
+    //
     // Sidenav overrides
     //
     .sidebar & {
