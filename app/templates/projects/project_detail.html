@@ -56,11 +56,11 @@
 {% endblock %}
 
 {% block page_content %}
-
     {% if project.content %}
-        {{ project.content|richtext_filters|safe }}
+        {% editable project.content %}
+            {{ project.content|richtext_filters|safe }}
+        {% endeditable %}
     {% endif %}
-
 {% endblock %}
 
 {% block page_sidebar %}
