@@ -1,7 +1,31 @@
+{% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
 <div class="container">
     <div class="row">
+        {% for slider in home.dynamiccontenthomeslider_set.all %}
+            {% with slider.content_object.images.all|get_type:'slider' as images %}
+                {% if images %}
+                    <div class="col-xs-4 hide-from-xs">
+                        {% if slider.content_type.model == "brief" %}
+                            {% include "magazine/brief/inc/brief_card.html" %}
+                        {% elif slider.content_type.model == "article" %}
+                            {% with slider.content_object as article %}
+                                {% include "magazine/article/includes/article_card.html" %}
+                            {% endwith %}
+                        {% elif slider.content_type.model == "event" %}
+                            {% with slider.content_object as event %}
+                                {% include "agenda/includes/event_card.html" %}
+                            {% endwith %}
+                        {% elif slider.content_type.model == "custompage" %}
+                            {% with slider.content_object as page %}
+                                {% include "pages/includes/page_card.html" %}
+                            {% endwith %}
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
         {% for content in home.dynamiccontenthomebody_set.all %}
-            <div class="col-xs-4">
+            <div class="col-xs-4{% if forloop.counter > 3 %} hide-until-xs{% endif %}">
                 {% if content.content_type.model == "brief" %}
                     {% include "magazine/brief/inc/brief_card.html" %}
                 {% elif content.content_type.model == "article" %}
