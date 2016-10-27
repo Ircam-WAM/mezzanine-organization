@@ -202,3 +202,17 @@
 .white-bg {
     background: white;
 }
+
+//
+// lol helpers
+//
+.hide-from-xs {
+    @include mq($from: xs) {
+        display: none !important;
+    }
+}
+.hide-until-xs {
+    @include mq($until: xs) {
+        display: none !important;
+    }
+}
