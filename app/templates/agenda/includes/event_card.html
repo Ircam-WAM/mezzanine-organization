@@ -37,14 +37,14 @@
     <div class="article-box__tags">
         {% if event.departments.first %}
             {% with event.departments.first as department %}
-                <div class="tag tag--small dashed">
+                <div class="tag tag--small dashed dashed--small">
                   {{ department.department.name }}
                 </div>
             {% endwith %}
         {% endif %}
         {% if event.category %}
             <div class="tag tag--small tag--category">
-                {{ event.category }}
+                {{ event.category|truncatechars:15 }}
             </div>
         {% endif %}
     </div>

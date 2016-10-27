@@ -121,21 +121,51 @@
             {% endblock %}
 
             {% block products %}
+                {% if page.product_lists.all|length > 0 %}
+                    {% for page_product_list in page.product_lists.all %}
+                      {% with page_product_list.list as list %}
+                        {% with "shop/includes/product_list_"|add:list.style|add:"_style.html" as template %}
+                          {% include template %}
+                        {% endwith %}
+                      {% endwith %}
+                    {% endfor %}
+                {% endif %}
             {% endblock %}
 
             {% block page_sub_content_2 %}
             {% endblock %}
 
             {% block logo %}
-            {% endblock %}
-
-            {% block page_related_content %}
-                {% with page.dynamic_content_pages.all as dynamic_content %}
-                    {% include "core/inc/related_content.html" %}
+                {% with page.images.all|get_type:'logo' as images %}
+                    {% if images %}
+                        <div class="page__block{% if block.background_color %} page__block--{{ block.background_color }}{% endif %}">
+                            <div class="white-bg pb2">
+                                <div class="container">
+                                    <div class="row" data-summary-content>
+                                        <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
+                                            <ul class="partners-list">
+                                                {% include 'core/inc/logo.html' %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 {% endwith %}
             {% endblock %}
 
         </div>
+
+    </div>
+
+    <div class="white-bg">
+
+        {% block page_related_content %}
+            {% with page.dynamic_content_pages.all as dynamic_content %}
+                {% include "core/inc/related_content.html" %}
+            {% endwith %}
+        {% endblock %}
 
     </div>
 
