@@ -23,7 +23,7 @@
             <figure class="article-box__image">
                 {% if event.departments.first %}
                     {% with event.departments.first as department %}
-                        <div class="article-box__placeholder {{department.department.name|lower}}"></div>
+                        <div class="article-box__placeholder {{department.department.name|slugify}}"></div>
                     {% endwith %}
                 {% else %}
                     <div class="article-box__placeholder"></div>
