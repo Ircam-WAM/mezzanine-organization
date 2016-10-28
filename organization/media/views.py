@@ -4,6 +4,7 @@ from organization.media.models import *
 from organization.core.views import *
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
+from django.core.exceptions import FieldDoesNotExist
 
 
 class PlaylistDetailView(SlugMixin, DetailView):
@@ -11,9 +12,18 @@ class PlaylistDetailView(SlugMixin, DetailView):
     model = Playlist
     template_name='media/playlist_detail.html'
     context_object_name = 'playlist'
-
+    
     def get_context_data(self, **kwargs):
+        self.related_objects = []
         context = super(PlaylistDetailView, self).get_context_data(**kwargs)
+        related_model = PlaylistRelated._meta.get_fields()
+        related_playlist = self.object.playlist_related.all()
+        for rm in related_model:
+            for rp in related_playlist:
+                if hasattr(rp, rm.name):
+                    self.related_objects.append(getattr(rp, rm.name))
+
+        context['related_objects'] = self.related_objects
         return context
 
 
