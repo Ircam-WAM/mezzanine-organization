@@ -47,3 +47,9 @@ class DynamicContentArticleTranslationOptions(TranslationOptions):
 class ArticlePlaylistTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(ArticleRelatedTitle)
+class ArticleRelatedTitleTranslationOptions(TranslationOptions):
+
+    fields = ('title', )
