@@ -65,4 +65,9 @@
         {{ playlist.content|safe }}
     </div>
 
+    {% for related_object in related_objects %}
+        {{ related_object }}
+        <br>
+    {% endfor %}
+
 {% endblock %}
