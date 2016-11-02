@@ -12,7 +12,6 @@
 {% block url %}
     {{ page.get_absolute_url }}
 {% endblock %}
-
 {% block image %}
     {% with page.images.all|get_type:'card' as images %}
         {% if images %}

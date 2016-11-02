@@ -18,7 +18,7 @@
 <div class="msry__container">
  <div class="msry__sizer"></div>
   {% for event in page.featured.all.0.events.all %}
-   {% include 'agenda/includes/event_card.html' %}
+   {% include 'agenda/event/includes/event_card.html' %}
   {% endfor %}
 </div>
 {% endif %}
