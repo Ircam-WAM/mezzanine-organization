@@ -17,11 +17,11 @@
                             {% endwith %}
                         {% elif content.content_type.model == "event" %}
                             {% with content.content_object as event %}
-                                {% include "agenda/includes/event_card.html" %}
+                                {% include "agenda/event/includes/event_card.html" %}
                             {% endwith %}
                         {% elif content.content_type.model == "custompage" %}
                             {% with content.content_object as page %}
-                                {% include "pages/includes/page_card.html" %}
+                                {% include "pages/page/sincludes/page_card.html" %}
                             {% endwith %}
                         {% endif %}
                     </div>
