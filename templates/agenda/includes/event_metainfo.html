@@ -7,12 +7,10 @@
 <div class="page__meta-separator"></div>
 
 {% if event.location %}
-    <a href="{% url 'location-detail' event.location.slug %}">
-        <div class="page__meta-title">{{ event.location }}</div>
-        {% if event.location.room %}
-            <small><u>{{ event.location.room }}</u></small>
-        {% endif %}
-    </a>
+    <div class="page__meta-title">{{ event.location }}</div>
+    {% if event.location.room %}
+        <small>{{ event.location.room }}</small>
+    {% endif %}
     <a href="{{ event|google_nav_url }}" target="_blank" class="mt1" style="display: block;">
         {% google_static_map event 194 194 15 %}
     </a>
