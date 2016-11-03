@@ -8,17 +8,11 @@
                         {% if slider.content_type.model == "brief" %}
                             {% include "magazine/brief/inc/brief_card.html" %}
                         {% elif slider.content_type.model == "article" %}
-                            {% with slider.content_object as article %}
-                                {% include "magazine/article/includes/article_card.html" %}
-                            {% endwith %}
+                            {% include "magazine/article/includes/article_card.html" with object=slider.content_object %}
                         {% elif slider.content_type.model == "event" %}
-                            {% with slider.content_object as event %}
-                                {% include "agenda/event/includes/event_card.html" %}
-                            {% endwith %}
+                            {% include "agenda/event/includes/event_card.html" with object=slider.content_object %}
                         {% elif slider.content_type.model == "custompage" %}
-                            {% with slider.content_object as page %}
-                                {% include "pages/page/includes/page_card.html" %}
-                            {% endwith %}
+                            {% include "pages/page/includes/page_card.html" with object=slider.content_object %}
                         {% endif %}
                     </div>
                 {% endif %}
@@ -29,17 +23,11 @@
                 {% if content.content_type.model == "brief" %}
                     {% include "magazine/brief/inc/brief_card.html" %}
                 {% elif content.content_type.model == "article" %}
-                    {% with content.content_object as article %}
-                        {% include "magazine/article/includes/article_card.html" %}
-                    {% endwith %}
+                    {% include "magazine/article/includes/article_card.html" with object=content.content_object %}
                 {% elif content.content_type.model == "event" %}
-                    {% with content.content_object as event %}
-                        {% include "agenda/event/includes/event_card.html" %}
-                    {% endwith %}
+                    {% include "agenda/event/includes/event_card.html" with object=content.content_object %}
                 {% elif content.content_type.model == "custompage" %}
-                    {% with content.content_object as page %}
-                        {% include "pages/page/includes/page_card.html" %}
-                    {% endwith %}
+                    {% include "pages/page/includes/page_card.html" with  object=content.content_object %}
                 {% endif %}
             </div>
         {% endfor %}
