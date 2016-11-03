@@ -48,7 +48,7 @@ msgstr "Magazine"
 #: local_settings.py:101 templates/network/organization_list.html:4
 #: templates/network/organization_list.html:18
 msgid "Network"
-msgstr "Travail"
+msgstr "Réseaux"
 
 #: local_settings.py:109
 msgid "Activity"
@@ -64,7 +64,7 @@ msgstr ""
 
 #: local_settings.py:131 templates/job/job_offer_list.html:4
 #: templates/job/job_offer_list.html:15
-msgid "Jobs"
+msgid "Jobs/Internships"
 msgstr "Offres d'emplois et stages"
 
 #: local_settings.py:132
@@ -416,8 +416,8 @@ msgid "candidacy"
 msgstr ""
 
 #: organization/job/models.py:67
-msgid "candidacies"
-msgstr ""
+msgid "Applications"
+msgstr "Appel à candidatures"
 
 #: organization/job/views.py:53
 msgid "Only .pdf, .odt, .doc, .docx files allowed."
@@ -1551,16 +1551,16 @@ msgid "project"
 msgstr "projets"
 
 #: organization/projects/models.py:44
-msgid "in progress"
-msgstr ""
+msgid "In progress"
+msgstr "En cours"
 
 #: organization/projects/models.py:46 organization/projects/models.py:50
 msgid "pending"
 msgstr ""
 
 #: organization/projects/models.py:48
-msgid "completed"
-msgstr ""
+msgid "Completed"
+msgstr "Terminé"
 
 #: organization/projects/models.py:55
 msgid "parent topic"
@@ -2264,8 +2264,8 @@ msgid "until"
 msgstr "jusqu'au"
 
 #: templates/job/inc/job_offer_card.html:13
-msgid "View"
-msgstr "Voir l'offre"
+msgid "Application form"
+msgstr "Formulaire de candidature en ligne"
 
 #: templates/job/job_offer_list.html:28
 msgid "Please come back later. There is no job offer at the moment."
@@ -2421,7 +2421,7 @@ msgid ""
 "                        No results were found matching your query: "
 "%(query)s\n"
 "                        "
-msgstr ""
+msgstr "Votre recherche ne donne aucun résultat. Veuillez réessayer avec d'autres termes."
 
 #: templates/shop/billing_shipping.html:17
 #, python-format
