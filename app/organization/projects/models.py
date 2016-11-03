@@ -1,19 +1,29 @@
 from __future__ import unicode_literals
 import datetime
+import os
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import User
 
 from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
 
 from organization.core.models import *
 from organization.pages.models import *
+from organization.network.models import *
 
 
 PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
     ('external', _('external')),
 ]
+
+ACCESS_CHOICES = [
+    ('public', _('public')),
+    ('shared', _('shared')),
+    ('private', _('private')),
+]
+
 
 class Project(Displayable, Period, RichText):
     """(Project description)"""
@@ -30,6 +40,7 @@ class Project(Displayable, Period, RichText):
 
     class Meta:
         verbose_name = _('project')
+        verbose_name_plural = _("projects")
         ordering = ['-date_from', '-date_to']
 
     def __str__(self):
@@ -56,6 +67,7 @@ class ProjectTopic(Named):
 
     class Meta:
         verbose_name = _('project topic')
+        verbose_name_plural = _("project topics")
         ordering = ['name',]
 
     def __str__(self):
@@ -69,6 +81,7 @@ class ProjectProgram(Named):
 
     class Meta:
         verbose_name = _('program')
+        verbose_name_plural = _("programs")
         ordering = ['name',]
 
 
@@ -76,6 +89,7 @@ class ProjectProgramType(Named):
 
     class Meta:
         verbose_name = _('program type')
+        verbose_name_plural = _("program types")
         ordering = ['name',]
 
 
@@ -101,6 +115,7 @@ class ProjectFile(File):
 
 class ProjectBlock(Block):
 
+
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
 
 
@@ -110,3 +125,74 @@ class ProjectTopicPage(Page, SubTitled):
 
     class Meta:
         verbose_name = _('project topic page')
+        verbose_name_plural = _("project topic pages")
+
+
+class ProjectDemo(Displayable, RichText):
+
+    project = models.ForeignKey('Project', verbose_name=_('project'), related_name='demos', blank=True, null=True, on_delete=models.SET_NULL)
+    authors = models.ManyToManyField(Person, verbose_name=_('authors'), related_name='demos', blank=True)
+    repository = models.ForeignKey('Repository', verbose_name=_('repository'), related_name='demos', blank=True, null=True, on_delete=models.SET_NULL)
+    build_commands = models.TextField(_('build commands'), blank=True)
+
+    class Meta:
+        verbose_name = _('project demo')
+        verbose_name_plural = _("project demos")
+
+    def get_absolute_url(self):
+        return reverse("organization-project-demo-detail", kwargs={"slug": self.slug})
+
+    def build(self):
+        os.chdir(self.repository.directory)
+        for command in self.build_commands.split('\n'):
+            os.system(command)
+
+    def save(self, *args, **kwargs):
+        super(ProjectDemo, self).save(args, kwargs)
+        self.build()
+
+
+class Repository(Named, URL):
+
+    system = models.ForeignKey('RepositorySystem', verbose_name=_('system'), related_name='repositories')
+    access = models.CharField(_('access'), max_length=64, choices=ACCESS_CHOICES, default='private')
+    branch = models.CharField(_('branch'), max_length=32, default='master')
+
+    class Meta:
+        verbose_name = _('repository')
+        verbose_name_plural = _("repositories")
+
+    def save(self, *args, **kwargs):
+        super(Repository, self).save(args, kwargs)
+        if not os.path.exists(self.directory):
+            self.clone()
+        self.checkout()
+
+    @property
+    def directory(self):
+        dir_name = self.url.split('/')[-1].split('.')[0]
+        return settings.PROJECT_DEMOS_DIR + os.sep + dir_name
+
+    def clone(self):
+        os.chdir(settings.PROJECT_DEMOS_DIR)
+        os.system(' '.join((self.system.clone_command, self.url)))
+
+    def pull(self):
+        os.chdir(self.directory)
+        os.system(' '.join((self.system.pull_command, self.branch)))
+
+    def checkout(self):
+        os.chdir(self.directory)
+        os.system(' '.join((self.system.checkout_command, self.branch)))
+
+
+class RepositorySystem(Named):
+
+    clone_command = models.CharField(_('clone command'), max_length=256)
+    pull_command = models.CharField(_('pull command'), max_length=256)
+    checkout_command = models.CharField(_('checkout command'), max_length=256)
+    branch_command = models.CharField(_('branch command'), max_length=256)
+
+    class Meta:
+        verbose_name = _('repository system')
+        verbose_name_plural = _("repository systems")
