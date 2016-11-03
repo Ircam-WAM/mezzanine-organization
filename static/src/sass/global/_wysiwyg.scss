@@ -162,3 +162,12 @@
     @extend .small-text;
 
 }
+
+.wys-unstyled-link {
+
+    border-bottom: 0 !important;
+    &:hover {
+        box-shadow: none !important;
+    }
+
+}
