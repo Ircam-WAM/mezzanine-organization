@@ -1,4 +1,4 @@
-{% load i18n mezzanine_tags event_tags  %}
+{% load i18n mezzanine_tags event_tags organization_tags %}
 
 <div class="page__meta-date">
     {% include 'agenda/includes/event_date.html' %}
@@ -58,9 +58,19 @@
             {% endif %}
         {% endfor %}
         <p>
-            <a class="button button--block" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
-                {% trans "Reserve" %}
-            </a>
+            {% if event.trainings.all|length %}
+                {% with event.links.all as links %}
+                    {% if links %}
+                        <a class="button button--block" href="{{ links|get_type_link:'link'|first }}" class="event__meta__btn">
+                            {% trans "Reserve" %}
+                        </a>
+                    {% else %}
+                        <a class="button button--block" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
+                            {% trans "Reserve" %}
+                        </a>
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
         </p>
     {% else %}
         {% if event.prices.all.0|floatformat != '0' %}
