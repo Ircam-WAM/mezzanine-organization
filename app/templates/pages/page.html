@@ -162,7 +162,7 @@
     <div class="white-bg">
 
         {% block page_related_content %}
-            {% with page.dynamic_content_pages.all as dynamic_content %}
+            {% with dynamic_content=page.dynamic_content_pages.all object=page %}
                 {% include "core/inc/related_content.html" %}
             {% endwith %}
         {% endblock %}

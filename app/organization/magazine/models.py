@@ -45,6 +45,15 @@ class ArticleImage(Image):
         order_with_respect_to = "article"
 
 
+class ArticleRelatedTitle(RelatedTitle):
+
+    article = models.OneToOneField("Article", verbose_name=_('article'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("related title")
+        order_with_respect_to = "article"
+
+
 class ArticlePlaylist(PlaylistRelated):
 
     article = models.ForeignKey(Article, verbose_name=_('article'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)

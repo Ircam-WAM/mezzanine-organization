@@ -4,16 +4,40 @@ from organization.media.models import *
 from organization.core.views import *
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
+from django.core.exceptions import FieldDoesNotExist
 
+# temporarily excluse not ready models
+EXCLUDED_MODELS = ("organizationplaylist", "personplaylist")
 
 class PlaylistDetailView(SlugMixin, DetailView):
 
     model = Playlist
     template_name='media/playlist_detail.html'
     context_object_name = 'playlist'
-
     def get_context_data(self, **kwargs):
         context = super(PlaylistDetailView, self).get_context_data(**kwargs)
+        self.related_objects = []
+        self.concrete_objects = []
+        related_model = PlaylistRelated._meta.get_fields()
+        related_playlist = self.object.playlist_related.all()
+
+        # get dynamically related objects like articleplaylist, projectplaylist, eventplaylist etc....
+        for rm in related_model:
+            if rm.name not in EXCLUDED_MODELS :
+                for rp in related_playlist:
+                    if hasattr(rp, rm.name):
+                        self.related_objects.append(getattr(rp, rm.name))
+
+        # get dynamically related instance of related objects. Example: articleplaylist => article
+        for ro in self.related_objects:
+            if not isinstance(ro, int) and ro != self.object:
+                for c_field in ro._meta.get_fields():
+                    if hasattr(ro, c_field.name):
+                        attr = getattr(ro, c_field.name)
+                        if not isinstance(attr, int) and attr != self.object and not isinstance(attr, PlaylistRelated):
+                            self.concrete_objects.append(attr)
+
+        context['concrete_objects'] = self.concrete_objects
         return context
 
 
