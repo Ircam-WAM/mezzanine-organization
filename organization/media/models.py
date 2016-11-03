@@ -135,7 +135,7 @@ class PlaylistMedia(models.Model):
 class PlaylistRelated(models.Model):
     """Playlist inline"""
 
-    playlist = models.ForeignKey(Playlist, verbose_name=_('playlist'), blank=True, null=True, on_delete=models.SET_NULL)
+    playlist = models.ForeignKey(Playlist, verbose_name=_('playlist'), related_name='playlist_related', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('playlist')

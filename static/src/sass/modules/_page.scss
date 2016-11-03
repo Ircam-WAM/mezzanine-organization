@@ -2,6 +2,12 @@ $module: ".page";
 
 #{$module} {
 
+    min-height: 500px;
+    
+    @include mq($until: sm) {
+        min-height: 0;
+    }
+
     &__sidebar {
 
         @include mq($until: sm) {
