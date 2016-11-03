@@ -88,6 +88,13 @@ jQuery(function($) {
                     { title: 'Small paragraph', selector: 'p', classes: 'wys-small-text'}
                 ]
 
+            },
+            {
+
+                title: 'Links', items: [
+                    { title: 'Unstyled link', selector: 'a', classes: 'wys-unstyled-link'}
+                ]
+
             }
         ],
         style_formats_merge: true
