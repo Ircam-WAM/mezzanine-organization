@@ -9,9 +9,7 @@
 <div class="page__meta-separator page__meta-separator--small"></div>
 
 {% if event.location %}
-    <a href="{% url 'location-detail' event.location.slug %}">
-        <div class="page__meta-title">{{ event.location }}</div>
-    </a>
+    <div class="page__meta-title">{{ event.location }}</div>
 {% endif %}
 
 {% if unit_booking %}
