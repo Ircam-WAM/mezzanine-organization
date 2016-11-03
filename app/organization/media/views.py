@@ -6,6 +6,8 @@ from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.core.exceptions import FieldDoesNotExist
 
+# temporarily excluse not ready models
+EXCLUDED_MODELS = ("organizationplaylist", "personplaylist")
 
 class PlaylistDetailView(SlugMixin, DetailView):
 
@@ -16,22 +18,24 @@ class PlaylistDetailView(SlugMixin, DetailView):
         context = super(PlaylistDetailView, self).get_context_data(**kwargs)
         self.related_objects = []
         self.concrete_objects = []
-
         related_model = PlaylistRelated._meta.get_fields()
         related_playlist = self.object.playlist_related.all()
+
         # get dynamically related objects like articleplaylist, projectplaylist, eventplaylist etc....
         for rm in related_model:
-            for rp in related_playlist:
-                if hasattr(rp, rm.name):
-                    self.related_objects.append(getattr(rp, rm.name))
+            if rm.name not in EXCLUDED_MODELS :
+                for rp in related_playlist:
+                    if hasattr(rp, rm.name):
+                        self.related_objects.append(getattr(rp, rm.name))
 
         # get dynamically related instance of related objects. Example: articleplaylist => article
         for ro in self.related_objects:
             if not isinstance(ro, int) and ro != self.object:
                 for c_field in ro._meta.get_fields():
-                    attr = getattr(ro, c_field.name)
-                    if not isinstance(attr, int) and attr != self.object and not isinstance(attr, PlaylistRelated):
-                        self.concrete_objects.append(attr)
+                    if hasattr(ro, c_field.nam):
+                        attr = getattr(ro, c_field.name)
+                        if not isinstance(attr, int) and attr != self.object and not isinstance(attr, PlaylistRelated):
+                            self.concrete_objects.append(attr)
 
         context['concrete_objects'] = self.concrete_objects
         return context

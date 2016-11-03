@@ -11,10 +11,9 @@
             <div class="row tac">
                 {% for concrete_object in concrete_objects %}
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                        {{ concrete_object|app_label_short }}
-                        {% with app_label=concrete_object|app_label_short classname=concrete_object|classname|lower %}
+                        {% with app_label=concrete_object|app_label_short classname=concrete_object|classname|lower object=concrete_object  %}
                             {% with app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"_card.html" as template %}
-                                {% include template with classname=concrete_object %}
+                                {% include template %}
                             {% endwith %}
                         {% endwith %}
                     </div>
