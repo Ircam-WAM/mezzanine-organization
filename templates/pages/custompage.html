@@ -43,7 +43,7 @@
                     {% for child in childrens %}
                         {% if child.in_menus.0 %}
                           {% with child as object %}
-                            {% include "pages/includes/page_box.html" %}
+                            {% include "pages/page/includes/page_box.html" %}
                           {% endwith %}
                         {% endif %}
                     {% endfor %}
@@ -87,7 +87,4 @@
       {% endwith %}
     {% endblock %}
 
-    {% block page_related_content %}
-        {{ block.super }}
-    {% endblock %}
 {% endwith %}

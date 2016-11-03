@@ -253,3 +253,11 @@ class Address(models.Model):
 
     class Meta:
         abstract = True
+
+
+class RelatedTitle(models.Model):
+
+    title = models.CharField(_('title'), max_length=1024, null=True, blank=True)
+
+    class Meta:
+        abstract = True

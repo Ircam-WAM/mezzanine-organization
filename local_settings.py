@@ -156,6 +156,8 @@ PAGES_MODELS = ('organization-pages.CustomPage',
                 'organization-projects.ProjectTopicPage',
                 'shop.Product')
 
+PAGES_PUBLISHED_INCLUDE_LOGIN_REQUIRED = True
+
 SEARCH_PER_PAGE = 10
 MAX_PAGING_LINKS = 10
 
@@ -170,8 +172,10 @@ EVENT_SLUG = 'agenda'
 EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
-EVENT_SHOP_URL = 'http://eve.ircam.fr/manifeste.php/manifestation/'
-EVENT_PASS_URL = 'http://eve.ircam.fr/manifeste.php/pass/'
+# EVENT_SHOP_URL = 'http://eve-dev2.ircam.fr/pub.php/manifestation/'
+EVENT_SHOP_URL = "http://eve-dev2.ircam.fr/pub.php/event/%d/edit"
+
+EVENT_PASS_URL = 'http://eve-dev2.ircam.fr/pub.php/pass/'
 EVENT_EXCLUDE_TAG_LIST = ['tournees', ]
 
 if DEBUG:
@@ -219,9 +223,5 @@ JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'
 #SHOP_CURRENCY_LOCALE = ''
 SHOP_USE_VARIATIONS = False
 SHOP_USE_RATINGS = False
-
-date_now = datetime.now()
-CURRENT_SEASON = int(date_now.year) - 1 if datetime(date_now.year, 1,1) <= date_now and date_now <= datetime(date_now.year, 7, 31) else date_now.year
-CURRENT_SEASON_STYLED = str(CURRENT_SEASON)[-2:]+"."+str(CURRENT_SEASON+1)[-2:]
 
 PROJECT_DEMOS_DIR = '/srv/media/projects/demos/'
