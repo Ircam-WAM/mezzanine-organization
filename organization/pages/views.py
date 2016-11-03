@@ -102,7 +102,6 @@ class DynamicContentHomeMediaView(Select2QuerySetSequenceView):
             qs = qs.filter(title__icontains=self.q)
 
         qs = self.mixup_querysets(qs)
-
         return qs
 
 

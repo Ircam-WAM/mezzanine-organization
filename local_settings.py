@@ -156,6 +156,8 @@ PAGES_MODELS = ('organization-pages.CustomPage',
                 'organization-projects.ProjectTopicPage',
                 'shop.Product')
 
+PAGES_PUBLISHED_INCLUDE_LOGIN_REQUIRED = True
+
 SEARCH_PER_PAGE = 10
 MAX_PAGING_LINKS = 10
 
