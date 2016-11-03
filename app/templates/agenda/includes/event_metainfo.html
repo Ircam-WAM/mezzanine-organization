@@ -64,12 +64,12 @@
                         <a class="button button--block" href="{{ links|get_type_link:'link'|first }}" class="event__meta__btn">
                             {% trans "Reserve" %}
                         </a>
-                    {% else %}
-                        <a class="button button--block" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
-                            {% trans "Reserve" %}
-                        </a>
                     {% endif %}
                 {% endwith %}
+            {% else %}
+                <a class="button button--block" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
+                    {% trans "Reserve" %}
+                </a>
             {% endif %}
         </p>
     {% else %}
