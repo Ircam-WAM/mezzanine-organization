@@ -2,27 +2,27 @@
 {% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
 
 {% block metatitle %}
-    {{ event.title }}
+    {{ object.title }}
 {% endblock %}
 
 {% block title %}
-    {{ event.title }}
+    {{ object.title }}
 {% endblock %}
 
 {% block url %}
-    {{ event.get_absolute_url }}
+    {{ object.get_absolute_url }}
 {% endblock %}
 
 {% block image %}
-    {% with event.images.all|get_type:'card' as images %}
+    {% with object.images.all|get_type:'card' as images %}
         {% if images %}
             <figure class="article-box__image">
                 <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 top=0.5 left=article.photo_alignment|get_photo_alignment %}" class="lazyload" />
             </figure>
         {% else %}
             <figure class="article-box__image">
-                {% if event.departments.first %}
-                    {% with event.departments.first as department %}
+                {% if object.departments.first %}
+                    {% with object.departments.first as department %}
                         <div class="article-box__placeholder {{department.department.name|slugify}}"></div>
                     {% endwith %}
                 {% else %}
@@ -35,37 +35,37 @@
 
 {% block tags %}
     <div class="article-box__tags">
-        {% if event.departments.first %}
-            {% with event.departments.first as department %}
+        {% if object.departments.first %}
+            {% with object.departments.first as department %}
                 <div class="tag tag--small dashed dashed--small">
                   {{ department.department.name }}
                 </div>
             {% endwith %}
         {% endif %}
-        {% if event.category %}
+        {% if object.category %}
             <div class="tag tag--small tag--category">
-                {{ event.category|truncatechars:15 }}
+                {{ object.category|truncatechars:15 }}
             </div>
         {% endif %}
     </div>
 {% endblock %}
 
 {% block content %}
-    {{ event.description|richtext_filters|safe|truncatechars_html:200 }}
+    {{ object.description|richtext_filters|safe|truncatechars_html:200 }}
 {% endblock %}
 
 {% block subtitle %}
     <strong>
-        {% include 'agenda/includes/event_date_line.html' %}
+        {% include 'agenda/includes/event_date_line.html' with object=event %}
     </strong>
-    {% if event.location %}
-         <br />{{ event.location }}
+    {% if object.location %}
+         <br />{{ object.location }}
     {% endif %}
 {% endblock %}
 
 {% block btn %}
-    {% if event.prices.all.0|floatformat != '0' and event.prices.all|length > 0 %}
-        {% for price in event.prices.all %}
+    {% if object.prices.all.0|floatformat != '0' and object.prices.all|length > 0 %}
+        {% for price in object.prices.all %}
             {% if forloop.first %}
                 <div class="article-box__btn">
                     <object><a href="{% url 'event_booking' content.content_object.slug %}" class="button button--small mr0">{% trans "Reserve" %}</a></object>

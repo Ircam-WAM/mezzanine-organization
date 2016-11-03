@@ -8,6 +8,11 @@ $module: ".page-box";
 
     @include margin-bottom(1);
 
+    @include mq($until: sm) {
+        height: auto;
+        overflow: hidden;
+    }
+
     &:first-of-type {
 
         @include margin-top(3);
@@ -17,6 +22,15 @@ $module: ".page-box";
     &__image {
 
         @include fluid-aspect(9 4, "img");
+
+        @include mq($until: xs) {
+            @include fluid-aspect(4.5 8, "img");
+            >img {
+                width: 310%;
+                left: -50%;
+                max-width: none;
+            }
+        }
 
         &:after {
             content: '';

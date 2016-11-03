@@ -172,7 +172,9 @@ EVENT_SLUG = 'agenda'
 EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
-EVENT_SHOP_URL = 'http://eve-dev2.ircam.fr/pub.php/manifestation/'
+# EVENT_SHOP_URL = 'http://eve-dev2.ircam.fr/pub.php/manifestation/'
+EVENT_SHOP_URL = "http://eve-dev2.ircam.fr/pub.php/event/%d/edit"
+
 EVENT_PASS_URL = 'http://eve-dev2.ircam.fr/pub.php/pass/'
 EVENT_EXCLUDE_TAG_LIST = ['tournees', ]
 
