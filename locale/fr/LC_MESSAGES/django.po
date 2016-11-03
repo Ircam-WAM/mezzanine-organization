@@ -1797,7 +1797,7 @@ msgstr "Personnes"
 #: templates/agenda/event_list.html:32 templates/agenda/event_list.html:75
 #: templates/agenda/event_list.html:116 templates/agenda/event_list.html:148
 msgid "Tournées"
-msgstr ""
+msgstr "On Tour"
 
 #: templates/agenda/event_list.html:36 templates/agenda/event_list.html:56
 #: templates/agenda/event_list.html:120 templates/agenda/event_list.html:134
