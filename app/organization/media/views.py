@@ -32,7 +32,7 @@ class PlaylistDetailView(SlugMixin, DetailView):
         for ro in self.related_objects:
             if not isinstance(ro, int) and ro != self.object:
                 for c_field in ro._meta.get_fields():
-                    if hasattr(ro, c_field.nam):
+                    if hasattr(ro, c_field.name):
                         attr = getattr(ro, c_field.name)
                         if not isinstance(attr, int) and attr != self.object and not isinstance(attr, PlaylistRelated):
                             self.concrete_objects.append(attr)
