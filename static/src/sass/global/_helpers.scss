@@ -216,3 +216,18 @@
         display: none !important;
     }
 }
+.hide-from-sm {
+    @include mq($from: sm) {
+        display: none !important;
+    }
+}
+.hide-until-sm {
+    @include mq($until: sm) {
+        display: none !important;
+    }
+}
+.fsl-until-sm {
+    @include mq($until: sm) {
+        @include font-size(l);
+    }
+}
