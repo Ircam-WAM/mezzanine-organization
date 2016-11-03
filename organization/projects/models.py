@@ -10,6 +10,7 @@ from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
 
 from organization.core.models import *
 from organization.pages.models import *
+from organization.network.models import *
 
 
 PROJECT_TYPE_CHOICES = [
@@ -130,9 +131,8 @@ class ProjectTopicPage(Page, SubTitled):
 class ProjectDemo(Displayable, RichText):
 
     project = models.ForeignKey('Project', verbose_name=_('project'), related_name='demos', blank=True, null=True, on_delete=models.SET_NULL)
-    author = models.ForeignKey(User, verbose_name=_('author'), related_name='demos', blank=True, null=True, on_delete=models.SET_NULL)
+    authors = models.ManyToManyField(Person, verbose_name=_('authors'), related_name='demos', blank=True)
     repository = models.ForeignKey('Repository', verbose_name=_('repository'), related_name='demos', blank=True, null=True, on_delete=models.SET_NULL)
-    directory = models.CharField(_('directory'), max_length=256, blank=True, null=True)
     build_commands = models.TextField(_('build commands'), blank=True)
 
     class Meta:
@@ -143,9 +143,13 @@ class ProjectDemo(Displayable, RichText):
         return reverse("organization-project-demo-detail", kwargs={"slug": self.slug})
 
     def build(self):
-        os.chdir(settings.PROJECT_DEMOS_DIR + os.sep + self.directory)
-        for commands in self.build_commands.split('\n'):
+        os.chdir(self.repository.directory)
+        for command in self.build_commands.split('\n'):
             os.system(command)
+
+    def save(self, *args, **kwargs):
+        super(ProjectDemo, self).save(args, kwargs)
+        self.build()
 
 
 class Repository(Named, URL):
@@ -158,13 +162,32 @@ class Repository(Named, URL):
         verbose_name = _('repository')
         verbose_name_plural = _("repositories")
 
+    def save(self, *args, **kwargs):
+        super(Repository, self).save(args, kwargs)
+        if not os.path.exists(self.directory):
+            self.clone()
+        self.checkout()
+
+    @property
+    def directory(self):
+        dir_name = self.url.split('/')[-1].split('.')[0]
+        return settings.PROJECT_DEMOS_DIR + os.sep + dir_name
+
     def clone(self):
-        os.system(' '.join((self.system.clone_command, self.url, settings.PROJECT_DEMOS_DIR)))
+        os.chdir(settings.PROJECT_DEMOS_DIR)
+        os.system(' '.join((self.system.clone_command, self.url)))
+
+    def pull(self):
+        os.chdir(self.directory)
+        os.system(' '.join((self.system.pull_command, self.branch)))
+
+    def checkout(self):
+        os.chdir(self.directory)
+        os.system(' '.join((self.system.checkout_command, self.branch)))
 
 
 class RepositorySystem(Named):
 
-    type = models.CharField(_('type'), max_length=32)
     clone_command = models.CharField(_('clone command'), max_length=256)
     pull_command = models.CharField(_('pull command'), max_length=256)
     checkout_command = models.CharField(_('checkout command'), max_length=256)

@@ -37,6 +37,17 @@ class ProjectFileInline(TabularDynamicInlineAdmin):
     model = ProjectFile
 
 
+class ProjectDemoInline(TabularDynamicInlineAdmin):
+
+    model = ProjectDemo
+
+
+class ProjectDemoAdmin(BaseTranslationModelAdmin):
+
+    model = ProjectDemo
+    filter_horizontal = ['authors']
+
+
 class ProjectAdmin(admin.ModelAdmin):
 
     model = Project
@@ -49,7 +60,7 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 ProjectImageInline,
                 ProjectPlaylistInline,
                 ProjectLinkInline,
-                ProjectFileInline]
+                ProjectFileInline,]
     filter_horizontal = ['teams', 'organizations']
     list_filter = ['type', 'program', 'program_type', ]
 
@@ -74,12 +85,11 @@ class ProjectTopicPageAdmin(PageAdmin):
     inlines = [PageImageInline, ]
 
 
-
 admin.site.register(Project, ProjectAdminDisplayable)
 admin.site.register(ProjectProgram, ProjectProgramAdmin)
 admin.site.register(ProjectProgramType, ProjectProgramTypeAdmin)
 admin.site.register(ProjectTopic, ProjectTopicAdmin)
 admin.site.register(ProjectTopicPage, ProjectTopicPageAdmin)
-admin.site.register(ProjectDemo)
+admin.site.register(ProjectDemo, ProjectDemoAdmin)
 admin.site.register(Repository)
 admin.site.register(RepositorySystem)
