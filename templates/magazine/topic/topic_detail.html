@@ -48,7 +48,7 @@
                     {% if topic.description %}
                         {% editable topic.description %}
                             <div class="chapo">
-                                {{ topic.description }}
+                                {{ topic.description|safe }}
                             </div>
                         {% endeditable %}
                     {% endif %}
