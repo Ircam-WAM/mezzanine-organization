@@ -56,7 +56,7 @@
 
 {% block subtitle %}
     <strong>
-        {% include 'agenda/includes/event_date_line.html' with object=event %}
+        {% include 'agenda/includes/event_date_line.html' %}
     </strong>
     {% if object.location %}
          <br />{{ object.location }}

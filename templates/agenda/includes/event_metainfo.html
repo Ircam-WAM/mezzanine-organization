@@ -1,4 +1,4 @@
-{% load i18n mezzanine_tags event_tags  %}
+{% load i18n mezzanine_tags event_tags organization_tags %}
 
 <div class="page__meta-date">
     {% include 'agenda/includes/event_date.html' %}
@@ -7,12 +7,10 @@
 <div class="page__meta-separator"></div>
 
 {% if event.location %}
-    <a href="{% url 'location-detail' event.location.slug %}">
-        <div class="page__meta-title">{{ event.location }}</div>
-        {% if event.location.room %}
-            <small><u>{{ event.location.room }}</u></small>
-        {% endif %}
-    </a>
+    <div class="page__meta-title">{{ event.location }}</div>
+    {% if event.location.room %}
+        <small>{{ event.location.room }}</small>
+    {% endif %}
     <a href="{{ event|google_nav_url }}" target="_blank" class="mt1" style="display: block;">
         {% google_static_map event 194 194 15 %}
     </a>
@@ -58,9 +56,19 @@
             {% endif %}
         {% endfor %}
         <p>
-            <a class="button button--block" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
-                {% trans "Reserve" %}
-            </a>
+            {% if event.trainings.all|length %}
+                {% with event.links.all as links %}
+                    {% if links %}
+                        <a class="button button--block" href="{{ links|get_type_link:'link'|first }}" class="event__meta__btn">
+                            {% trans "Reserve" %}
+                        </a>
+                    {% endif %}
+                {% endwith %}
+            {% else %}
+                <a class="button button--block" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
+                    {% trans "Reserve" %}
+                </a>
+            {% endif %}
         </p>
     {% else %}
         {% if event.prices.all.0|floatformat != '0' %}
