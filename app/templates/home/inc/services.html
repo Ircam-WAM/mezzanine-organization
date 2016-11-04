@@ -1,4 +1,4 @@
-{% load staticfiles  %}
+{% load staticfiles i18n %}
 
 <div class="container mb2">
 
@@ -11,10 +11,10 @@
                 <div class="banner__content">
 
                     <div class="banner__title fsxxxl">
-                        Tournées {{ CURRENT_SEASON_STYLED }}
+                        {% trans 'On Tour' %} {{ CURRENT_SEASON_STYLED }}
                     </div>
                     <div class="banner__desc fss">
-                        Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de toutes choses...
+                        {% blocktrans %}Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de toutes choses...{% endblocktrans %}
                     </div>
 
                 </div>
@@ -30,10 +30,10 @@
                 <div class="banner__content">
 
                     <div class="banner__title fsxxl">
-                        Appel à candidatures 2017
+                        {% trans 'Calls for Applications 2017' %}
                     </div>
                     <div class="banner__desc fss">
-                        Cursus de composition et d'informatique musicale, Résidence en recherche artistique, ManiFeste-2017 l'académie
+                        {% blocktrans %}Cursus – Practical Training in Composition and Computer Music, Artistic Research Residence, ManiFeste-2017, the Academy{% endblocktrans %}
                     </div>
 
                 </div>
@@ -53,10 +53,10 @@
                 <div class="banner__content">
 
                     <div class="banner__title fsxxxl">
-                        Les ressources Ircam
+                        {% trans 'IRCAM Archives' %}
                     </div>
                     <div class="banner__desc fss">
-                        Archives audiovisuelles et sonores, base de documentation sur la musique contemporaine (base BRAHMS), catalogue d'œuvres...
+                        {% blocktrans %}Audiovisual and sound archives, a database on contemporary music (BRAHMS), a catalogue of works…{% endblocktrans %}
                     </div>
 
                 </div>
@@ -72,10 +72,10 @@
                 <div class="banner__content">
 
                     <div class="banner__title fsxxl">
-                        Forumnet
+                        {% trans 'Forumnet' %}
                     </div>
                     <div class="banner__desc fss">
-                        Communauté d'utilisateurs des logiciels Ircam
+                        {% blocktrans %}IRCAM software users’ community{% endblocktrans %}
                     </div>
 
                 </div>
@@ -91,10 +91,10 @@
                 <div class="banner__content">
 
                     <div class="banner__title fsxxl">
-                        Ulysses Community
+                        {% trans 'Ulysses Community' %}
                     </div>
                     <div class="banner__desc fss">
-                        Réseau européen pour la promotion et le soutien de la jeune création musicale contemporaine
+                        {% blocktrans %}European network for the promotion and support of young contemporary musical creation{% endblocktrans %}
                     </div>
 
                 </div>
