@@ -73,6 +73,10 @@ $module: ".search";
         @include typeface(serif);
         font-weight: weight(regular);
 
+        @include mq($until: sm) {
+            @include font-size(xl);
+        }
+
     }
 
     button[type="submit"] {
