@@ -72,16 +72,16 @@ $module: ".dashed";
         background-repeat: repeat;
         background-size: 16px 24px;
 
-        &.tag--small {
-            background-image: -webkit-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
-            background-image:    -moz-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
-            background-image:     -ms-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
-            background-image:      -o-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
-            background-image:         linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
-            background-repeat: repeat;
-            background-size: 16px 24px;
-        }
+    }
 
+    &.tag--small {
+        background-image: -webkit-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
+        background-image:    -moz-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
+        background-image:     -ms-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
+        background-image:      -o-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
+        background-image:         linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
+        background-repeat: repeat;
+        background-size: 16px 24px;
     }
 
 }
