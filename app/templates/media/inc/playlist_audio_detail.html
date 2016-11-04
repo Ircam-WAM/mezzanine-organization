@@ -1,8 +1,13 @@
 {% load mezzanine_tags keyword_tags i18n organization_tags %}
 
-<p>
-    {{playlist.description}}
-</p>
+{% if playlist.title %}
+    <h3>{{playlist.title}}</h3>
+{% endif %}
+{% if playlist.description %}
+    <p>
+        {{playlist.description}}
+    </p>
+{% endif %}
 
 <audio preload="true"></audio>
 
