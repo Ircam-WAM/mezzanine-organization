@@ -168,3 +168,9 @@
         {% endwith %}
     </div>
 {% endblock %}
+
+{% block page_related_content %}
+    {% with dynamic_content=event.dynamic_content_event.all object=event %}
+        {% include "core/inc/related_content.html" %}
+    {% endwith %}
+{% endblock %}

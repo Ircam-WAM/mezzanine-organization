@@ -5,11 +5,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
-
+from modeltranslation.admin import TranslationTabularInline
 from organization.projects.models import *
 from organization.pages.models import *
 from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
+from organization.projects.forms import DynamicContentProjectForm
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
@@ -53,6 +54,22 @@ class ProjectAdmin(admin.ModelAdmin):
     model = Project
 
 
+class ProjectRelatedTitleAdmin(TranslationTabularInline):
+
+    model = ProjectRelatedTitle
+
+
+class DynamicContentProjectInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentProject
+    form = DynamicContentProjectForm
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+
 class ProjectAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectAdmin.fieldsets)
@@ -60,7 +77,9 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 ProjectImageInline,
                 ProjectPlaylistInline,
                 ProjectLinkInline,
-                ProjectFileInline,]
+                ProjectFileInline,
+                ProjectRelatedTitleAdmin,
+                DynamicContentProjectInline]
     filter_horizontal = ['teams', 'organizations']
     list_filter = ['type', 'program', 'program_type', ]
 

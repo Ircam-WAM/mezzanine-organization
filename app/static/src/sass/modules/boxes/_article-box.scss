@@ -62,7 +62,7 @@ $module: ".article-box";
 
         background: $color-main;
 
-        &.recherche {
+        &.recherche, &.research {
             background-color: white;
             background-image: url(../img/patterns/squares.png);
             opacity: 0.4;
@@ -77,7 +77,7 @@ $module: ".article-box";
             background-image: url(../img/patterns/stripes.png);
             opacity: 0.4;
         }
-        &.innovation {
+        &.innovation, &.innovations {
             background-color: white;
             background-image: url(../img/patterns/triangles.png);
             opacity: 0.2;

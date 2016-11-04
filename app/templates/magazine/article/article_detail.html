@@ -93,9 +93,7 @@
 {% endblock %}
 
 {% block page_related_content %}
-    {% with dynamic_content=article.dynamic_content_articles.all object=article %}
-        {% include "core/inc/related_content.html" %}
-    {% endwith %}
+    {% include "core/inc/related_content_dynamic.html" with concrete_objects=related_content object=article %}
 {% endblock %}
 
 {% block page_sidebar %}

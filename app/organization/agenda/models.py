@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from future.builtins import str
 
 from django.utils.translation import ugettext_lazy as _
-
+from mezzanine.core.models import Orderable
 from mezzanine.conf import settings
 from mezzanine_agenda.models import *
 from organization.core.models import *
@@ -101,3 +101,20 @@ class EventTraining(models.Model):
     class Meta:
         verbose_name = _("training")
         verbose_name_plural = _("trainings")
+
+
+class EventRelatedTitle(RelatedTitle):
+
+    event = models.OneToOneField(Event, verbose_name=_('event'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("related title")
+        order_with_respect_to = "event"
+
+
+class DynamicContentEvent(DynamicContent, Orderable):
+
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='dynamic_content_event', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Event'
