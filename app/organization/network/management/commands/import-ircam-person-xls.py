@@ -77,7 +77,7 @@ class IrcamPerson(object):
         self.person, c = Person.objects.get_or_create(title=title, first_name=first_name, last_name=last_name)
         self.activity = PersonActivity(person=self.person)
 
-    def get_identity(self, ):
+    def set_identity(self, ):
         gender = self.row[2].value
         if gender == 'H':
             self.person.gender = 'male'
@@ -91,19 +91,6 @@ class IrcamPerson(object):
         # self.person.nationality = self.get_or_create_name(Nationality, self.row[33].value)
 
         self.person.save()
-
-    def get_or_create_name(self, model, column_id):
-        return model.objects.get_or_create(name=self.row[column_id].value)[0] if self.row[column_id].value else None
-
-    def split_names(self, names):
-        name_list = []
-        for spliter in self.spliters:
-            if spliter in names:
-                name_list = names.split(spliter)
-        if name_list:
-            for map(str.strip, name_list)
-            return name_list
-        return names
 
     def get_person(self, value):
         if value:
@@ -133,21 +120,54 @@ class IrcamPerson(object):
             return person
         return None
 
-    def get_team(self, code):
-        code = str(code)
-        qs = Q(code=code) | Q(code=code.lower()) | Q(code=code.upper()) | Q(code=code.capitalize())
-        teams = Team.objects.filter(qs)
-        if teams:
-            return teams[0]
+    def get_or_create_name(self, model, column_id):
+        value = self.row[column_id].value if self.row[column_id].value else None
+        obj = None
+        if value:
+            try:
+                obj, c = model.objects.get_or_create(name=value)
+            except:
+                obj = model(name=value)
+                obj.save()
+        return obj
 
-        qs = Q(title=code) | Q(title=code.lower()) | Q(title=code.upper()) | Q(title=code.capitalize())
-        projects = Project.objects.filter(qs)
-        if projects:
-            self.activity.project = projects[0]
-            return None
-        return None
+    def split_names(self, names):
+        name_list = []
+        for spliter in self.spliters:
+            if spliter in names:
+                name_list = names.split(spliter)
+        if name_list:
+            name_list = map(str.strip, name_list)
+            return name_list
+        return [names,]
 
-    def get_activity(self):
+    def add_many(self, field, model, column_id, type='name'):
+        values = self.row[column_id].value if self.row[column_id].value else None
+        if values:
+            for value in self.split_names(values):
+                if type == 'name':
+                    qs = Q(name=value) | Q(name=value.lower()) | Q(name=value.upper()) | Q(name=value.capitalize())
+                    obj = model(name=value)
+                elif type == 'code':
+                    qs = Q(code=value) | Q(code=value.lower()) | Q(code=value.upper()) | Q(code=value.capitalize())
+                    obj = model(code=value)
+                elif type == 'title':
+                    qs = Q(title=value) | Q(title=value.lower()) | Q(title=value.upper()) | Q(title=value.capitalize())
+                    obj = model(title=value)
+                elif type == 'person':
+                    obj = self.get_person(value)
+                    qs = None
+                if qs:
+                    objects = model.objects.filter(qs)
+                    if objects:
+                        obj = objects[0]
+                    else:
+                        obj.save()
+                else:
+                    obj.save()
+                field.add(obj)
+
+    def set_activity(self):
         self.activity.date_from = datetime.datetime(*xlrd.xldate_as_tuple(self.row[4].value, self.datemode)) if self.row[4].value else None
         self.activity.date_to = datetime.datetime(*xlrd.xldate_as_tuple(self.row[5].value, self.datemode)) if self.row[5].value else None
         try:
@@ -159,18 +179,16 @@ class IrcamPerson(object):
         self.activity.is_permanent = True if self.row[11].value else False
         self.activity.framework = self.get_or_create_name(ActivityFramework, 12)
         self.activity.grade = self.get_or_create_name(ActivityGrade, 13)
+        self.activity.save()
 
-        self.activity.employer = self.get_or_create_name(Organization, 14)
-        self.activity.attachment_organization = self.get_or_create_name(Organization, 15)
-        self.activity.second_employer = self.get_or_create_name(Organization, 16)
+        self.add_many(self.activity.employers, Organization, 14)
+        self.add_many(self.activity.organizations, Organization, 15)
+        self.add_many(self.activity.employers, Organization, 16)
         self.activity.umr = self.get_or_create_name(UMR, 17)
 
-        self.activity.team = self.get_team(self.row[19].value)
-        try:
-            self.activity.second_team = self.get_team(self.row[21].value)
-        except:
-            self.activity.second_team_text =  self.row[21].value
-        self.activity.project, c = Project.objects.get_or_create(title=self.row[22].value) if self.row[22].value else (None, False)
+        self.add_many(self.activity.teams, Team, 19, type='code')
+        self.add_many(self.activity.teams, Team, 21, type='code')
+        self.add_many(self.activity.projects, Project, 22, type='title')
 
         quota = self.row[23].value
         try:
@@ -179,9 +197,12 @@ class IrcamPerson(object):
             self.activity.rd_quota_text = str(quota)
 
         self.activity.phd_doctoral_school = self.get_or_create_name(Organization, 25)
-        self.activity.phd_director = self.get_person(self.row[26].value)
-        self.activity.phd_officer_1 = self.get_person(self.row[27].value)
-        self.activity.phd_officer_2 = self.get_person(self.row[28].value)
+        if self.activity.phd_doctoral_school:
+            self.activity.phd_doctoral_school.type, c = OrganizationType.objects.get_or_create(name='Ecole doctorale')
+            self.activity.phd_doctoral_school.save()
+        self.add_many(self.activity.phd_directors, Person, 26, type='person')
+        self.add_many(self.activity.supervisors, Person, 27, type='person')
+        self.add_many(self.activity.supervisors, Person, 28, type='person')
 
         self.activity.training_type = self.get_or_create_name(TrainingType, 29)
         self.activity.training_level = self.get_or_create_name(TrainingLevel, 30)
@@ -189,13 +210,13 @@ class IrcamPerson(object):
         self.activity.training_speciality = self.get_or_create_name(TrainingSpeciality, 32)
         self.activity.function = self.get_or_create_name(ActivityFunction, 34)
 
-        if self.activity.phd_director:
+        if self.activity.phd_directors:
             self.activity.phd_title = self.row[35].value
             try:
                 self.activity.phd_defense_date = datetime.datetime(*xlrd.xldate_as_tuple(self.row[38].value, self.datemode)) if self.row[38].value else None
             except:
                 pass
-            self.activity.phd_postdoctoralsituation = self.row[39].value
+            self.activity.phd_post_doctoral_situation = self.row[39].value
         elif self.activity.training_type:
             self.activity.training_title = self.row[35].value
 
@@ -213,7 +234,9 @@ class IrcamPerson(object):
 
 
 class Command(BaseCommand):
-    help = """Import Person data from IRCAM's legacy XLS management file"""
+    help = """Import Person data from IRCAM's legacy XLS management file.
+              python manage.py import-ircam-person-xls -s /srv/backup/TB_personnel_GP-GM_4.xls
+    """
 
     option_list = BaseCommand.option_list + (
           make_option('-d', '--dry-run',
@@ -242,5 +265,5 @@ class Command(BaseCommand):
         xls = IrcamXLS(self.source_file)
         for i in range(xls.first_row, xls.size):
             p = IrcamPerson(xls.sheet.row(i), xls.book.datemode)
-            p.get_identity()
-            p.get_activity()
+            p.set_identity()
+            p.set_activity()
