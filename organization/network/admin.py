@@ -40,7 +40,9 @@ class OrganizationAdmin(BaseTranslationModelAdmin):
                 OrganizationImageInline,
                 OrganizationBlockInline,
                 OrganizationLinkInline ]
-    list_display = ['name', 'admin_thumb']
+    list_display = ['name', 'type', 'admin_thumb']
+    list_filter = ['name', 'is_on_map']
+
 
 
 class PageProductListInline(TabularDynamicInlineAdmin):
@@ -61,7 +63,9 @@ class DepartmentAdmin(BaseTranslationModelAdmin):
 class TeamAdmin(BaseTranslationModelAdmin):
 
     model = Team
-    list_filter = ['department',]
+    search_fields = ['name', 'code']
+    list_filter = ['department']
+    list_display = ['name', 'department', 'code']
 
 
 class TeamPageAdmin(PageAdmin):
