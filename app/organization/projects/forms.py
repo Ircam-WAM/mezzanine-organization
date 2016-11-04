@@ -11,8 +11,10 @@ from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
 from organization.agenda.models import Event, DynamicContentEvent
 from organization.media.models import Playlist
+from organization.projects.models import DynamicContentProject
 
-class DynamicContentEventForm(autocomplete.FutureModelForm):
+
+class DynamicContentProjectForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
         queryset=autocomplete.QuerySetSequence(
@@ -21,9 +23,9 @@ class DynamicContentEventForm(autocomplete.FutureModelForm):
             Event.objects.all()
         ),
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-event'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-project'),
     )
 
     class Meta:
-        model = DynamicContentEvent
+        model = DynamicContentProject
         fields = ('content_object',)
