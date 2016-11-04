@@ -121,6 +121,9 @@ ADMIN_MENU_ORDER = (
                     'organization-projects.ProjectProgramType',
                     'organization-projects.ProjectTopic',
                     'organization-projects.ProjectProgramType',
+                    'organization-projects.ProjectDemo',
+                    'organization-projects.Repository',
+                    'organization-projects.RepositorySystem',
                     )),
     (_('Shop'), ('shop.Product',
                     'organization-shop.ProductList',
@@ -156,6 +159,8 @@ PAGES_MODELS = ('organization-pages.CustomPage',
                 'organization-projects.ProjectTopicPage',
                 'shop.Product')
 
+PAGES_PUBLISHED_INCLUDE_LOGIN_REQUIRED = True
+
 SEARCH_PER_PAGE = 10
 MAX_PAGING_LINKS = 10
 
@@ -190,6 +195,9 @@ ARTICLE_PER_PAGE = 4 # just for tests because we haven't got enough content
 # a mode you'd pass directly to os.chmod.
 FILE_UPLOAD_PERMISSIONS = 0o664
 FILE_UPLOAD_TEMP_DIR = '/srv/media/uploads/tmp/'
+if not os.path.exists(FILE_UPLOAD_TEMP_DIR):
+    os.makedirs(FILE_UPLOAD_TEMP_DIR)
+
 MAX_UPLOAD_SIZE = 512000000
 MAX_UPLOAD_SIZE_FRONT = 10485760
 FILEBROWSER_MAX_UPLOAD_SIZE = 512000000
@@ -221,3 +229,7 @@ JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'
 #SHOP_CURRENCY_LOCALE = ''
 SHOP_USE_VARIATIONS = False
 SHOP_USE_RATINGS = False
+
+PROJECT_DEMOS_DIR = '/srv/media/projects/demos/'
+if not os.path.exists(PROJECT_DEMOS_DIR):
+    os.makedirs(PROJECT_DEMOS_DIR)
