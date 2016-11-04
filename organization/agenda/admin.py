@@ -4,17 +4,16 @@ from copy import deepcopy
 
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-
+from modeltranslation.admin import TranslationTabularInline
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from mezzanine.conf import settings
 from mezzanine.core.admin import DisplayableAdmin, OwnableAdmin
-
 from mezzanine_agenda.models import Event, EventCategory
 from mezzanine_agenda.admin import *
-
 from organization.core.models import *
 from organization.agenda.models import *
+from organization.agenda.forms import *
 
 
 class EventBlockInline(StackedDynamicInlineAdmin):
@@ -57,6 +56,21 @@ class EventPeriodInline(TabularDynamicInlineAdmin):
     model = EventPeriod
 
 
+class EventRelatedTitleAdmin(TranslationTabularInline):
+
+    model = EventRelatedTitle
+
+
+class DynamicContentEventInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentEvent
+    form = DynamicContentEventForm
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
 class CustomEventAdmin(EventAdmin):
     """
     Admin class for events.
@@ -69,7 +83,8 @@ class CustomEventAdmin(EventAdmin):
         list_display.insert(0, "admin_thumb")
     list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location", "category")
     inlines = [EventPeriodInline, EventBlockInline, EventImageInline, EventDepartmentInline,
-                EventPersonInline, EventLinkInline, EventPlaylistInline, EventTrainingInline]
+                EventPersonInline, EventLinkInline, EventPlaylistInline, EventTrainingInline,
+                EventRelatedTitleAdmin, DynamicContentEventInline]
 
     def save_form(self, request, form, change):
         """

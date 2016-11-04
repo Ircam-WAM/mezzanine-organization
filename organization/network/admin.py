@@ -9,7 +9,7 @@ from organization.network.models import *
 from organization.network.forms import *
 from organization.pages.models import *
 from organization.core.admin import *
-from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline
+from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline, DynamicContentPageInline, PageRelatedTitleAdmin
 from organization.shop.models import PageProductList
 
 
@@ -70,7 +70,7 @@ class TeamAdmin(BaseTranslationModelAdmin):
 
 class TeamPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, PageProductListInline, ]
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]
 
 
 class PersonAdminBase(BaseTranslationModelAdmin):

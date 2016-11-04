@@ -22,7 +22,7 @@ class BriefTranslationOptions(TranslationOptions):
 @register(Topic)
 class TopicTranslationOptions(TranslationOptions):
 
-    fields = ()
+    fields = ('content',)
 
 
 @register(ArticleImage)

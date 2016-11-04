@@ -67,3 +67,15 @@ class ProjectTopicPageTranslationOptions(TranslationOptions):
 class ProjectDemoTranslationOptions(TranslationOptions):
 
     fields = ('title', 'description',)
+
+
+@register(ProjectRelatedTitle)
+class ProjectRelatedTitleranslationOptions(TranslationOptions):
+
+    fields = ('title',)
+
+
+@register(DynamicContentProject)
+class DynamicContentProjectTranslationOptions(TranslationOptions):
+
+    fields = ()

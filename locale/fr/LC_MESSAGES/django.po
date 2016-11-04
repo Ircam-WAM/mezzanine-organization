@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-03 23:09+0100\n"
+"POT-Creation-Date: 2016-11-04 12:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -368,16 +368,12 @@ msgid "message"
 msgstr ""
 
 #: organization/job/models.py:16
-#, fuzzy
-#| msgid "Curriculum vitae"
 msgid "curriculum vitae"
-msgstr "Curriculum vitae"
+msgstr "curriculum vitae"
 
 #: organization/job/models.py:17
-#, fuzzy
-#| msgid "Cover letter"
 msgid "cover letter"
-msgstr "Lettre de motivation"
+msgstr "lettre de motivation"
 
 #: organization/job/models.py:18 organization/job/models.py:34
 msgid "job offer"
@@ -450,10 +446,8 @@ msgid "article"
 msgstr "article"
 
 #: organization/magazine/models.py:53 organization/pages/models.py:64
-#, fuzzy
-#| msgid "related object"
 msgid "related title"
-msgstr "contenu lié"
+msgstr "titre de contenu lié"
 
 #: organization/magazine/models.py:64 organization/network/models.py:295
 #: organization/shop/models.py:20
@@ -753,10 +747,8 @@ msgid "second team text"
 msgstr ""
 
 #: organization/network/models.py:400 organization/projects/models.py:43
-#, fuzzy
-#| msgid "Projects"
 msgid "projects"
-msgstr "Projets"
+msgstr "projets"
 
 #: organization/network/models.py:401
 msgid "R&D quota (float)"
@@ -1529,10 +1521,8 @@ msgid "external"
 msgstr ""
 
 #: organization/projects/models.py:22
-#, fuzzy
-#| msgid "public type"
 msgid "public"
-msgstr "type public"
+msgstr "public"
 
 #: organization/projects/models.py:23
 msgid "shared"
@@ -1578,20 +1568,16 @@ msgid "project"
 msgstr "projets"
 
 #: organization/projects/models.py:55
-#, fuzzy
-#| msgid "In progress"
 msgid "in progress"
-msgstr "En cours"
+msgstr "en cours"
 
 #: organization/projects/models.py:57 organization/projects/models.py:61
 msgid "pending"
 msgstr ""
 
 #: organization/projects/models.py:59
-#, fuzzy
-#| msgid "Completed"
 msgid "completed"
-msgstr "Terminé"
+msgstr "terminé"
 
 #: organization/projects/models.py:66
 msgid "parent topic"
@@ -1602,46 +1588,36 @@ msgid "project topic"
 msgstr ""
 
 #: organization/projects/models.py:70
-#, fuzzy
-#| msgid "project topic page"
 msgid "project topics"
-msgstr "page rubrique d'un projet"
+msgstr "rubrique d'un projet"
 
 #: organization/projects/models.py:83
 msgid "program"
 msgstr "programme"
 
 #: organization/projects/models.py:84
-#, fuzzy
-#| msgid "program"
 msgid "programs"
-msgstr "programme"
+msgstr "programmes"
 
 #: organization/projects/models.py:91
 msgid "program type"
 msgstr "Type de programme"
 
 #: organization/projects/models.py:92
-#, fuzzy
-#| msgid "program type"
 msgid "program types"
-msgstr "Type de programme"
+msgstr "Types de programme"
 
 #: organization/projects/models.py:127
 msgid "project topic page"
 msgstr "page rubrique d'un projet"
 
 #: organization/projects/models.py:128
-#, fuzzy
-#| msgid "project topic page"
 msgid "project topic pages"
-msgstr "page rubrique d'un projet"
+msgstr "pages de rubrique d'un projet"
 
 #: organization/projects/models.py:134
-#, fuzzy
-#| msgid "Authors"
 msgid "authors"
-msgstr "Auteurs"
+msgstr "auteurs"
 
 #: organization/projects/models.py:135 organization/projects/models.py:162
 msgid "repository"
@@ -1652,26 +1628,20 @@ msgid "build commands"
 msgstr ""
 
 #: organization/projects/models.py:139
-#, fuzzy
-#| msgid "project"
 msgid "project demo"
-msgstr "projets"
+msgstr "projet demo"
 
 #: organization/projects/models.py:140
-#, fuzzy
-#| msgid "Projects"
 msgid "project demos"
-msgstr "Projets"
+msgstr "projets demo"
 
 #: organization/projects/models.py:157
 msgid "system"
 msgstr ""
 
 #: organization/projects/models.py:158
-#, fuzzy
-#| msgid "Subway access"
 msgid "access"
-msgstr "Accès en transports"
+msgstr "accès en transports"
 
 #: organization/projects/models.py:159
 msgid "branch"
@@ -1906,10 +1876,8 @@ msgid "Forgot password?"
 msgstr ""
 
 #: templates/agenda/confirmation.html:5 templates/agenda/confirmation.html:13
-#, fuzzy
-#| msgid "organization"
 msgid "Confirmation"
-msgstr "organisation"
+msgstr "Confirmation"
 
 #: templates/agenda/event/includes/event_card.html:71
 #: templates/agenda/includes/event_metainfo.html:64
@@ -1938,12 +1906,11 @@ msgstr "Personnes"
 #: templates/agenda/event_list.html:120 templates/agenda/event_list.html:134
 #: templates/agenda/event_list.html:142
 msgid "Rendez-vous in Paris"
-msgstr ""
+msgstr "Rendez-vous à Paris"
 
-#: templates/agenda/event_list.html:32 templates/agenda/event_list.html:75
-#: templates/agenda/event_list.html:116 templates/agenda/event_list.html:148
-msgid "Tournées"
-msgstr "On Tour"
+#: templates/agenda/event_list.html:32 templates/home/inc/services.html:14
+msgid "On Tour"
+msgstr "Tournées"
 
 #: templates/agenda/event_list.html:40 templates/blog/blog_post_list.html:31
 #: templates/magazine/article/article_list.html:31
@@ -1958,6 +1925,11 @@ msgstr "Lieu :"
 #: templates/magazine/article/article_list.html:37
 msgid "Author:"
 msgstr "Auteur :"
+
+#: templates/agenda/event_list.html:75 templates/agenda/event_list.html:116
+#: templates/agenda/event_list.html:148
+msgid "Tournées"
+msgstr ""
 
 #: templates/agenda/event_list.html:78 templates/agenda/event_list.html:118
 #: templates/agenda/event_list.html:155
@@ -2300,6 +2272,77 @@ msgstr ""
 msgid "Rate"
 msgstr ""
 
+#: templates/home/inc/bio.html:6
+msgid ""
+"<strong>IRCAM, the Institute for Research and Coordination in Acoustics/"
+"Music</strong> is one of the world’s largest public research centers "
+"dedicated to musical creation and scientific research. A unique venue where "
+"artistic vision converges with scientific and technological innovation, the "
+"institute directed by Frank Madlener brings together over 160 collaborators. "
+"IRCAM hosts the UMR9912 STMS Ircam-CNRS-UPMC science and technologies "
+"research lab."
+msgstr ""
+"<strong>L'Ircam, Institut de Recherche et Coordination Acoustique/Musique</"
+"strong> est aujourd’hui l’un des plus grands centres de recherche publique "
+"au monde se consacrant à la création musicale et à la recherche "
+"scientifique. Lieu unique où convergent la prospective artistique et "
+"l’innovation scientifique et technologique, l’institut est dirigé par Frank "
+"Madlener, et réunit plus de cent soixante collaborateurs. Il héberge l'Unité "
+"mixte de recherche Sciences et technologies de la musique et du son "
+"(UMR9912 STMS Ircam-CNRS-UPMC)."
+
+#: templates/home/inc/services.html:17
+msgid ""
+"Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de "
+"toutes choses..."
+msgstr ""
+"Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de "
+"toutes choses..."
+
+#: templates/home/inc/services.html:33
+msgid "Calls for Applications 2017"
+msgstr "Appel à candidatures 2017"
+
+#: templates/home/inc/services.html:36
+msgid ""
+"Cursus – Practical Training in Composition and Computer Music, Artistic "
+"Research Residence, ManiFeste-2017, the Academy"
+msgstr ""
+"Cursus de composition et d'informatique musicale, Résidence en recherche "
+"artistique, ManiFeste-2017 l'académie"
+
+#: templates/home/inc/services.html:56
+msgid "IRCAM Archives"
+msgstr "Les ressources Ircam"
+
+#: templates/home/inc/services.html:59
+msgid ""
+"Audiovisual and sound archives, a database on contemporary music (BRAHMS), a "
+"catalogue of works…"
+msgstr ""
+"Archives audiovisuelles et sonores, base de documentation sur la musique "
+"contemporaine (base BRAHMS), catalogue d'œuvres..."
+
+#: templates/home/inc/services.html:75
+msgid "Forumnet"
+msgstr "Forumnet"
+
+#: templates/home/inc/services.html:78
+msgid "IRCAM software users’ community"
+msgstr "Communauté d'utilisateurs des logiciels Ircam"
+
+#: templates/home/inc/services.html:94
+msgid "Ulysses Community"
+msgstr "Ulysses Community"
+
+#: templates/home/inc/services.html:97
+msgid ""
+"European network for the promotion and support of young contemporary musical "
+"creation"
+msgstr ""
+"Réseau européen pour la promotion et le soutien de la jeune création "
+"musicale contemporaine"
+
 #: templates/home/inc/slider.html:20
 #: templates/magazine/article/article_detail.html:38
 #: templates/magazine/article/includes/article_card.html:45
@@ -2394,10 +2437,8 @@ msgid "until"
 msgstr "jusqu'au"
 
 #: templates/job/inc/job_offer_card.html:17
-#, fuzzy
-#| msgid "published on"
 msgid "Published on"
-msgstr "publié le"
+msgstr "Publié le"
 
 #: templates/job/inc/job_offer_card.html:23
 msgid "View"
@@ -2538,10 +2579,8 @@ msgid "Partners"
 msgstr "Partenaires"
 
 #: templates/projects/project_detail.html:245
-#, fuzzy
-#| msgid "teams"
 msgid "Ircam teams"
-msgstr "équipes"
+msgstr "Équipes Ircam"
 
 #: templates/search_results.html:5 templates/search_results.html:6
 #: templates/search_results.html:15
@@ -2549,12 +2588,6 @@ msgid "Search Results"
 msgstr "Resultats de recherche"
 
 #: templates/search_results.html:72
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                        No results were found matching your query: "
-#| "%(query)s\n"
-#| "                        "
 msgid "No results were found matching your query: %(query)s"
 msgstr ""
 "Votre recherche ne donne aucun résultat. Veuillez réessayer avec d'autres "
