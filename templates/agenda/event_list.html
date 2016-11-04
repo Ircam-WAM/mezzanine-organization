@@ -29,7 +29,7 @@
     {{ block.super }}
     {% if tag and tag|tag_is_excluded %}
     <li class="breadcrumb__item">
-        <a href="{% url 'event_list' %}" class="breadcrumb__link">{% trans "Tournées" %}</a>
+        <a href="{% url 'event_list' %}" class="breadcrumb__link">{% trans "On Tour" %}</a>
     </li>
     {% elif tag or location or month or week or author %}
         <li class="breadcrumb__item">
