@@ -78,6 +78,7 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
 
     model = PersonActivity
     fk_name = 'person'
+    filter_horizontal = ['organizations', 'employers', 'teams', 'projects', 'supervisors', 'phd_directors', ]
 
 
 class PersonPlaylistInline(TabularDynamicInlineAdmin):
@@ -108,24 +109,32 @@ class PersonBlockInline(StackedDynamicInlineAdmin):
 class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Person
-    inlines = [PersonActivityInline,
-               PersonImageInline,
+    inlines = [PersonImageInline,
                PersonBlockInline,
                PersonPlaylistInline,
                PersonLinkInline,
-               PersonFileInline ]
+               PersonFileInline,
+               PersonActivityInline,]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
     search_fields = ['last_name', 'first_name']
     list_display = ['last_name', 'first_name', 'description', 'email', 'gender']
     list_filter = ['person_title', 'activities__date_from', 'activities__date_to',
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
-                    'activities__function', 'activities__team',]
+                    'activities__function', 'activities__teams',]
 
 
-class PersonActivityAdmin(admin.ModelAdmin):
+class PersonActivityAdmin(BaseTranslationModelAdmin):
 
     model = PersonActivity
-    list_display = ['person', 'team', 'status', 'date_from', 'date_to']
+    list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to']
+    filter_horizontal = ['organizations', 'employers', 'teams', 'projects', 'supervisors', 'phd_directors', ]
+
+    def get_teams(self, instance):
+        values = []
+        for team in instance.teams.all():
+            print(team.code)
+            values.append(team.code)
+        return ' - '.join(values)
 
 
 class PersonListBlockInlineAdmin(TabularDynamicInlineAdmin):
