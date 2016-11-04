@@ -25,7 +25,7 @@ $module: ".page-box";
 
         @include mq($until: xs) {
             @include fluid-aspect(4.5 8);
-            >img {
+            >img:first-child {
                 width: 310%;
                 left: -50%;
                 max-width: none;
