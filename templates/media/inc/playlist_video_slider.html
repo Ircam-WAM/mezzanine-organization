@@ -1,5 +1,24 @@
 {% load mezzanine_tags %}
+
 <div class="page__slider">
+
+    {% if playlist.title or playlist.description %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
+                    {% if playlist.title %}
+                        <h3 class="mt0">{{playlist.title}}</h3>
+                    {% endif %}
+                    {% if playlist.description %}
+                        <p>
+                            {{playlist.description}}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     <ul class="slider-page" data-slider-page>
         {% for media in playlist.medias.all %}
           {% with media.media as media %}
