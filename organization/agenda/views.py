@@ -2,8 +2,6 @@ from django.views.generic.base import TemplateView
 from mezzanine.conf import settings
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
-from organization.network.models import TeamPage
-from organization.projects.models import Project
 from organization.magazine.models import Article
 from organization.pages.models import CustomPage
 from mezzanine_agenda.models import Event
@@ -34,11 +32,8 @@ class DynamicContentEventView(Select2QuerySetSequenceView):
         qs = autocomplete.QuerySetSequence(articles, custompage, events,)
 
         if self.q:
-            # This would apply the filter on all the querysets
             qs = qs.filter(title__icontains=self.q)
 
-        # This will limit each queryset so that they show an equal number
-        # of results.
         qs = self.mixup_querysets(qs)
 
         return qs

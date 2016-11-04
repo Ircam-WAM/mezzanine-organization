@@ -196,3 +196,20 @@ class RepositorySystem(Named):
     class Meta:
         verbose_name = _('repository system')
         verbose_name_plural = _("repository systems")
+
+
+class ProjectRelatedTitle(RelatedTitle):
+
+    project = models.OneToOneField(Project, verbose_name=_('project'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("related title")
+        order_with_respect_to = "project"
+
+
+class DynamicContentProject(DynamicContent, Orderable):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='dynamic_content_project', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Project'
