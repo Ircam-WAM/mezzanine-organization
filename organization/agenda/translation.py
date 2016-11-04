@@ -61,3 +61,15 @@ class EventTrainingLevelTranslationOptions(TranslationOptions):
 class EventPublicTypeTranslationOptions(TranslationOptions):
 
     fields = ('name',)
+
+
+@register(EventRelatedTitle)
+class EventRelatedTitleTranslationOptions(TranslationOptions):
+
+    fields = ('title',)
+
+
+@register(DynamicContentEvent)
+class DynamicContentEventTranslationOptions(TranslationOptions):
+
+    fields = ()
