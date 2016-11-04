@@ -12,7 +12,7 @@ $module: ".dashed";
         content: '.';
     }
 
-    &:after {
+    /*&:after {
         position: absolute;
         height: 40%;
         width: 100%;
@@ -22,7 +22,14 @@ $module: ".dashed";
         content: "";
         background: $color-main;
         z-index: -1;
-    }
+    }*/
+    background-image: -webkit-linear-gradient(transparent 14px,$color-main 14px,$color-main 34px,transparent 34px);
+    background-image:    -moz-linear-gradient(transparent 14px,$color-main 14px,$color-main 34px,transparent 34px);
+    background-image:     -ms-linear-gradient(transparent 14px,$color-main 14px,$color-main 34px,transparent 34px);
+    background-image:      -o-linear-gradient(transparent 14px,$color-main 14px,$color-main 34px,transparent 34px);
+    background-image:         linear-gradient(transparent 14px,$color-main 14px,$color-main 34px,transparent 34px);
+    background-repeat: repeat;
+    background-size: 16px 48px;
 
     &--gray {
 
@@ -44,6 +51,14 @@ $module: ".dashed";
     &--small {
 
         @include padding-right(.5);
+
+        background-image: -webkit-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
+        background-image:    -moz-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
+        background-image:     -ms-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
+        background-image:      -o-linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
+        background-image:         linear-gradient(transparent 7px,$color-main 7px,$color-main 16px,transparent 16px);
+        background-repeat: repeat;
+        background-size: 16px 24px;
 
     }
 
