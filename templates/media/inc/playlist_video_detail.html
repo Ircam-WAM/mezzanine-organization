@@ -1,5 +1,14 @@
 {% load mezzanine_tags keyword_tags i18n organization_tags %}
 
+{% if playlist.title %}
+    <h3>{{playlist.title}}</h3>
+{% endif %}
+{% if playlist.description %}
+    <p>
+        {{playlist.description}}
+    </p>
+{% endif %}
+
 <div class="embed-responsive">
     <video controls id="video-js-playlist" class="video-js vjs-ircam-skin" data-title="{{ media.title }}" {% if media.poster_url %}poster="{{ media.poster_url }}"{% endif %}>
     </video>
