@@ -57,3 +57,34 @@ class DynamicContentProjectView(Select2QuerySetSequenceView):
         qs = self.mixup_querysets(qs)
 
         return qs
+
+
+class ProjectDemoDetailView(SlugMixin, DetailView):
+
+    model = ProjectDemo
+    template_name='projects/project_demo_detail.html'
+    context_object_name = 'demo'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectDemoDetailView, self).get_context_data(**kwargs)
+        demo = self.get_object()
+        project = demo.project
+        department = None
+
+        if project:
+            if project.lead_team:
+                if project.lead_team.department:
+                    department = project.lead_team.department
+            else:
+                for team in project.teams.all():
+                    if team.department:
+                        department = team.department
+                        break
+
+            context['department'] = department
+            if project.topic and project.topic.parent:
+                context['page'] = project.topic.parent.pages.all().first()
+            elif project.topic:
+                context['page'] = project.topic.pages.all().first()
+
+        return context
