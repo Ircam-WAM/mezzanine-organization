@@ -44,7 +44,6 @@ class OrganizationAdmin(BaseTranslationModelAdmin):
     list_filter = ['name', 'is_on_map']
 
 
-
 class PageProductListInline(TabularDynamicInlineAdmin):
 
     model = PageProductList
@@ -70,7 +69,8 @@ class TeamAdmin(BaseTranslationModelAdmin):
 
 class TeamPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline,
+                PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]
 
 
 class PersonAdminBase(BaseTranslationModelAdmin):
@@ -82,7 +82,8 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
 
     model = PersonActivity
     fk_name = 'person'
-    filter_horizontal = ['organizations', 'employers', 'teams', 'projects', 'supervisors', 'phd_directors', ]
+    filter_horizontal = ['organizations', 'employers', 'teams',
+                         'projects', 'supervisors', 'phd_directors', ]
 
 
 class PersonPlaylistInline(TabularDynamicInlineAdmin):
@@ -121,17 +122,18 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
                PersonActivityInline,]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
     search_fields = ['last_name', 'first_name']
-    list_display = ['last_name', 'first_name', 'description', 'email', 'gender']
+    list_display = ['last_name', 'first_name', 'description', 'email', 'gender', 'created']
     list_filter = ['person_title', 'activities__date_from', 'activities__date_to',
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
-                    'activities__function', 'activities__teams',]
+                    'activities__status', 'activities__teams', 'activities__projects',]
 
 
 class PersonActivityAdmin(BaseTranslationModelAdmin):
 
     model = PersonActivity
     list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to']
-    filter_horizontal = ['organizations', 'employers', 'teams', 'projects', 'supervisors', 'phd_directors', ]
+    filter_horizontal = ['organizations', 'employers', 'teams', 'projects',
+                         'supervisors', 'phd_directors', ]
 
     def get_teams(self, instance):
         values = []

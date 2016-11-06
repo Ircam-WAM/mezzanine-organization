@@ -173,6 +173,11 @@ class Repository(Named, URL):
         dir_name = self.url.split('/')[-1].split('.')[0]
         return settings.PROJECT_DEMOS_DIR + os.sep + dir_name
 
+    @property
+    def relative_url(self):
+        path = self.directory.replace(settings.MEDIA_ROOT, '')
+        return settings.MEDIA_URL + path + '/index.html'
+
     def clone(self):
         os.chdir(settings.PROJECT_DEMOS_DIR)
         os.system(' '.join((self.system.clone_command, self.url)))
