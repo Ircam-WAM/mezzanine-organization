@@ -181,8 +181,10 @@ EVENT_PASS_URL = EVENT_DOMAIN+"/pub.php/pass/"
 EVENT_CONFIRMATION_URL = EVENT_DOMAIN+"/pub.php/cart/done?transaction_id=%s"
 EVENT_EXCLUDE_TAG_LIST = ['tournees', ]
 
-TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
-# TINYMCE_SETUP_JS = "/srv/app/organization/core/static/js/tinymce_setup.js"
+if DEBUG:
+    TINYMCE_SETUP_JS = "/srv/app/organization/core/static/js/tinymce_setup.js"
+else:
+    TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
 
 SLUGIFY = 'django.template.defaultfilters.slugify'
 
