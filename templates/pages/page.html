@@ -106,6 +106,9 @@
 
         <div class="white-bg">
 
+            {% block page_person_list %}
+            {% endblock %}
+
             {% block page_sub_content %}
                 {% with object.blocks.all as blocks %}
                     {% include "core/inc/block.html" %}
@@ -130,7 +133,7 @@
             {% block page_sub_content_2 %}
             {% endblock %}
 
-            {% block page_person_list %}
+            {% block page_person_list_team %}
             {% endblock %}
 
             {% block logo %}

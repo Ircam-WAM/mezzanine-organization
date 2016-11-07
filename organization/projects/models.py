@@ -128,12 +128,13 @@ class ProjectTopicPage(Page, SubTitled):
         verbose_name_plural = _("project topic pages")
 
 
-class ProjectDemo(Displayable, RichText):
+class ProjectDemo(Displayable, RichText, URL):
 
     project = models.ForeignKey('Project', verbose_name=_('project'), related_name='demos', blank=True, null=True, on_delete=models.SET_NULL)
     authors = models.ManyToManyField(Person, verbose_name=_('authors'), related_name='demos', blank=True)
     repository = models.ForeignKey('Repository', verbose_name=_('repository'), related_name='demos', blank=True, null=True, on_delete=models.SET_NULL)
     build_commands = models.TextField(_('build commands'), blank=True)
+    directory = models.CharField(_('directory'), max_length=256, blank=True, null=True, help_text='Relative directory in repository')
 
     class Meta:
         verbose_name = _('project demo')
@@ -142,6 +143,11 @@ class ProjectDemo(Displayable, RichText):
     def get_absolute_url(self):
         return reverse("organization-project-demo-detail", kwargs={"slug": self.slug})
 
+    @property
+    def relative_url(self):
+        path = self.repository.directory.replace(settings.MEDIA_ROOT, '')
+        return settings.MEDIA_URL + path + os.sep + self.directory + '/index.html'
+
     def build(self):
         os.chdir(self.repository.directory)
         for command in self.build_commands.split('\n'):
@@ -149,14 +155,16 @@ class ProjectDemo(Displayable, RichText):
 
     def save(self, *args, **kwargs):
         super(ProjectDemo, self).save(args, kwargs)
-        self.build()
+        if self.repository:
+            self.build()
 
 
-class Repository(Named, URL):
+class Repository(Named):
 
     system = models.ForeignKey('RepositorySystem', verbose_name=_('system'), related_name='repositories')
     access = models.CharField(_('access'), max_length=64, choices=ACCESS_CHOICES, default='private')
     branch = models.CharField(_('branch'), max_length=32, default='master')
+    url = models.CharField(_('URL'), max_length=256, help_text='http(s) or ssh')
 
     class Meta:
         verbose_name = _('repository')
@@ -164,6 +172,7 @@ class Repository(Named, URL):
 
     def save(self, *args, **kwargs):
         super(Repository, self).save(args, kwargs)
+        os.path.exists(self.directory)
         if not os.path.exists(self.directory):
             self.clone()
         self.checkout()
@@ -171,12 +180,7 @@ class Repository(Named, URL):
     @property
     def directory(self):
         dir_name = self.url.split('/')[-1].split('.')[0]
-        return settings.PROJECT_DEMOS_DIR + os.sep + dir_name
-
-    @property
-    def relative_url(self):
-        path = self.directory.replace(settings.MEDIA_ROOT, '')
-        return settings.MEDIA_URL + path + '/index.html'
+        return settings.PROJECT_DEMOS_DIR + dir_name
 
     def clone(self):
         os.chdir(settings.PROJECT_DEMOS_DIR)
