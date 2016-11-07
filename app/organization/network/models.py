@@ -228,7 +228,7 @@ class Person(Displayable, AdminThumbMixin):
         ordering = ['last_name',]
 
     def __str__(self):
-        return ' '.join((self.last_name, self.first_name))
+        return self.title
 
     def get_absolute_url(self):
         return reverse("organization-network-person-detail", kwargs={'slug': self.slug})
@@ -245,13 +245,13 @@ class Person(Displayable, AdminThumbMixin):
             self.first_name = names[0]
             self.last_name = ' '.join(names[1:])
 
-    def clean(self):
-        super(Person, self).clean()
-        self.set_names()
-
-    def save(self, *args, **kwargs):
-        self.set_names()
-        super(Person, self).save(*args, **kwargs)
+    # def clean(self):
+    #     super(Person, self).clean()
+    #     self.set_names()
+    #
+    # def save(self, *args, **kwargs):
+    #     self.set_names()
+    #     super(Person, self).save(*args, **kwargs)
 
 
 class PersonPlaylist(PlaylistRelated):
