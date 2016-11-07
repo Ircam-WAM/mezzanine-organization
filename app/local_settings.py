@@ -2,7 +2,7 @@ import os
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime, date
 
-DEBUG = True if os.environ.get('DEBUG', 'True') else False
+DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
 # Make these unique, and don't share it with anybody.
 SECRET_KEY = "j1qa@u$5ktqr^0_kwh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
@@ -182,9 +182,9 @@ EVENT_CONFIRMATION_URL = EVENT_DOMAIN+"/pub.php/cart/done?transaction_id=%s"
 EVENT_EXCLUDE_TAG_LIST = ['tournees', ]
 
 if DEBUG:
-    TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
-else:
     TINYMCE_SETUP_JS = "/srv/app/organization/core/static/js/tinymce_setup.js"
+else:
+    TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
 
 SLUGIFY = 'django.template.defaultfilters.slugify'
 
