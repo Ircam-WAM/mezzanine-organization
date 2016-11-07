@@ -17,6 +17,11 @@ class PersonDetailView(SlugMixin, DetailView):
     template_name='network/person_detail.html'
     context_object_name = 'person'
 
+    def get_context_data(self, **kwargs):
+        context = super(PersonDetailView, self).get_context_data(**kwargs)
+        context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" @ ircam.fr"
+        return context
+
 
 class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):
 
