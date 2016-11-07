@@ -30,6 +30,37 @@
     {% editable person.bio %}
         {{ person.bio|richtext_filters|safe }}
     {% endeditable %}
+
+    <p>{% trans 'Email' %} : {{ person_email }}</p>
+    <br>
+    <p>
+        {% trans 'Activities' %}:
+        <ul>
+            {% for activity in person.activities.all %}
+            <li>
+                {% if activity.function %}
+                    {% trans 'Functions'%} : {{ activity.function }}<br>
+                {% endif %}
+                {% with activity.teams.all as actvities %}
+                    {% if actvities %}
+                        {% trans 'Teams' %} :<br>
+                        {% for team in actvities %}
+                            {{ team.name }}<br>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% with activity.organizations.all as organizations %}
+                    {% if organizations %}
+                        {% trans 'Organization' %} :<br>
+                        {% for organization in organizations %}
+                        {{ organization.name }}<br>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </li>
+            {% endfor %}
+        </ul>
+    </p>
 {% endblock %}
 
 {% block page_sidebar %}
