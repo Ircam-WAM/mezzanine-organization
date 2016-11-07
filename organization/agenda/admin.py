@@ -61,6 +61,16 @@ class EventRelatedTitleAdmin(TranslationTabularInline):
     model = EventRelatedTitle
 
 
+class EventPriceDescriptionAdmin(TranslationTabularInline):
+
+    model = EventPriceDescription
+
+
+class CustomEventPriceAdmin(BaseTranslationModelAdmin):
+
+    inlines = [EventPriceDescriptionAdmin,]
+
+
 class DynamicContentEventInline(TabularDynamicInlineAdmin):
 
     model = DynamicContentEvent
@@ -111,8 +121,10 @@ class EventTrainingLevelAdmin(BaseTranslationModelAdmin):
 
 
 admin.site.unregister(Event)
+admin.site.unregister(EventPrice)
 admin.site.unregister(EventCategory)
 admin.site.register(EventPublicType, EventPublicTypeAdmin)
 admin.site.register(EventTrainingLevel, EventTrainingLevelAdmin)
 admin.site.register(Event, CustomEventAdmin)
 admin.site.register(EventCategory, CustomEventCategoryAdmin)
+admin.site.register(EventPrice, CustomEventPriceAdmin)
