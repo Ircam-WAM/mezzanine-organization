@@ -33,7 +33,7 @@
     {% endif %}
 
     <b>{% trans "Project" %}</b> : <a href="{% url 'organization-project-detail' demo.project.slug %}">{{ demo.project.title }}</a><br>
-    <b>{% trans "Authorss" %}</b> : {% for author in demo.authors.all %}<a href="{% url 'organization-project-detail' demo.project.slug %}">{{ author }}</a>{% endfor %}
+    <b>{% trans "Authors" %}</b> : {% for author in demo.authors.all %}<a href="{% url 'organization-project-detail' demo.project.slug %}">{{ author }}</a>{% endfor %}
 
 {% endblock %}
 
