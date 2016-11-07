@@ -1,9 +1,9 @@
 {% extends "pages/page.html" %}
-{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags staticfiles %}
+{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags staticfiles pages_tags %}
 
 {% block meta_title %}
     {% if page %}
-        {{ page.richtextpage.meta_title }}
+        {{ page.title }}
     {% else %}
         {% trans "Rendez-vous in Paris" %}
     {% endif %}
@@ -27,35 +27,7 @@
 
 {% block breadcrumb_menu %}
     {{ block.super }}
-    {% if tag and tag|tag_is_excluded %}
-    <li class="breadcrumb__item">
-        <a href="{% url 'event_list' %}" class="breadcrumb__link">{% trans "On Tour" %}</a>
-    </li>
-    {% elif tag or location or month or week or author %}
-        <li class="breadcrumb__item">
-            <a href="{% url 'event_list' %}" class="breadcrumb__link">{% trans "Rendez-vous in Paris" %}</a>
-        </li>
-        <li class="breadcrumb__item active">
-            {% if tag %}
-                {% trans "Tag:" %} {{ tag }}
-            {% elif location %}
-                {% trans "Location:" %} {{ location }}
-            {% elif month %}
-                {% if month %}{{ month }}, {% endif %}{{ year }}
-            {% elif week %}
-                {% for d in week|week_range:year %}
-                    {{ d|date:"d M" }}{% if forloop.first %} - {% endif %}
-                {% endfor %}
-                , {{ year }}
-            {% elif author %}
-                {% trans "Author:" %} {{ author.get_full_name|default:author.username }}
-            {% endif %}
-        </li>
-    {% else %}
-        <li class="breadcrumb__item active">
-            {% trans "Rendez-vous in Paris" %}
-        </li>
-    {% endif %}
+    
 {% endblock %}
 
 {% block main %}
@@ -68,19 +40,7 @@
                 <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
 
                     <h1 class="dotted">
-                        {% if page %}
-                            {{ page.richtextpage.meta_title }}
-                        {% else %}
-                            {% if tag and tag|tag_is_excluded %}
-                                {% trans "Tournées" %}
-                            {% else %}
-                                {% if is_archive %}
-                                    {% trans "Archives" %}
-                                {% else %}
-                                    {% trans "Rendez-vous in Paris" %}
-                                {% endif %}
-                            {% endif %}
-                        {% endif %}
+                        {{ page.title }}
                     </h1>
 
                 </div>
@@ -109,6 +69,9 @@
 
                         <div class="nav-tree-wrapper" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
 
+                            {% page_menu "pages/menus/current_tree_event.html" %}
+
+                            {% comment %}
                             <ul class="nav-tree nav-tree--level-{{ branch_level }}">
                                 <li class="nav-tree__item">
                                     <a class="nav-tree__link active" href="{% url 'event_list' %}">
@@ -156,7 +119,9 @@
                                     </li>
                                 {% endif %}
 
-                                </ul>
+                            </ul>
+
+                        {% endcomment %}
 
                                 {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
 
