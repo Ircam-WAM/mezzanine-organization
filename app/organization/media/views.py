@@ -47,14 +47,19 @@ class PlaylistListView(ListView):
     template_name='media/playlist_list.html'
     context_object_name = 'playlists'
     def get_queryset(self):
-        qs = Playlist.objects.all()
+        self.qs = Playlist.objects.all()
         self.current_type = None
         if "type" in self.kwargs:
-            qs = qs.filter(type=self.kwargs['type'])
+            self.qs = self.qs.filter(type=self.kwargs['type'])
             self.current_type = self.kwargs['type']
-        return qs
+        return self.qs
     def get_context_data(self, **kwargs):
         context = super(PlaylistListView, self).get_context_data(**kwargs)
+
+        context['playlists'] = paginate(self.qs, self.request.GET.get("page", 1),
+                          settings.MEDIA_PER_PAGE,
+                          settings.MAX_PAGING_LINKS)
+
         context['current_type'] = self.current_type
         return context
 
