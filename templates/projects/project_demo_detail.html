@@ -31,6 +31,10 @@
             </div>
         {% endeditable %}
     {% endif %}
+
+    <b>{% trans "Project" %}</b> : <a href="{% url 'organization-project-detail' demo.project.slug %}">{{ demo.project.title }}</a><br>
+    <b>{% trans "Authors" %}</b> : {% for author in demo.authors.all %}<a href="{% url 'organization-project-detail' demo.project.slug %}">{{ author }}</a>{% endfor %}
+
 {% endblock %}
 
 {% block page_sidebar %}
@@ -38,6 +42,6 @@
 
 {% block page_slider %}
 <div style="position: relative;">
-    <iframe width="100%" height="960px" scrolling="auto" src="{{ demo.repository.relative_url }}" frameborder="0" allowfullscreen=""></iframe>
+    <iframe width="100%" height="1080px" scrolling="auto" src="{% if demo.url %}{{ demo.url }}{% else %}{{ demo.relative_url }}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
 </div>
 {% endblock %}
