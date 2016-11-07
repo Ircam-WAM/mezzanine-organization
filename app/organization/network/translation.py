@@ -72,7 +72,7 @@ class PersonFileTranslationOptions(TranslationOptions):
 @register(PersonBlock)
 class PersonBlockTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title', 'description', 'content')
 
 
 @register(OrganizationPlaylist)
