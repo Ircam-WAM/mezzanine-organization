@@ -16,6 +16,7 @@ autoreload=3
 uid='www-data'
 gid='www-data'
 patterns='*.js;*.css;*.jpg;*.jpeg;*.gif;*.png;*.svg;*.ttf;*.eot;*.woff;*.woff2'
+log='/var/log/uwsgi/app.log'
 
 # Staging
 # pip install xlrd
@@ -52,6 +53,6 @@ else
 
     uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \
     --processes $processes --threads $threads \
-    --uid $uid --gid $gid \
+    --uid $uid --gid $gid --logto $log \
     --py-autoreload $autoreload
 fi

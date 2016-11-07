@@ -43,6 +43,7 @@ app:
   command: /bin/bash scripts/app.sh
   volumes:
     - ./app/:/srv/app
+    - ./data/var/log/uwsgi/:/var/log/uwsgi
     - ./lib/grappelli-safe/:/srv/lib/grappelli-safe
     - ./lib/mezzanine-agenda/:/srv/lib/mezzanine-agenda
     # - ./lib/mezzanine/:/srv/lib/mezzanine
@@ -60,7 +61,7 @@ app:
 nginx:
   image: nginx
   ports:
-    - "8020:80"
+    - "8040:80"
   volumes:
     - ./etc/nginx.conf:/etc/nginx/conf.d/default.conf
     - ./data/var/log/nginx/:/var/log/nginx
