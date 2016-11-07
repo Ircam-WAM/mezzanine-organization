@@ -313,8 +313,12 @@ class PersonListBlockInline(models.Model):
 
 class ActivityStatus(Named):
 
+    order = models.IntegerField(_('order number'), default=100)
+    display = models.BooleanField(_('display on team page'), blank=True, default=False)
+
     class Meta:
         verbose_name = _('activity status')
+        ordering = ['order']
 
 
 class ActivityGrade(Named):
@@ -383,7 +387,7 @@ class PersonActivity(Period):
     person = models.ForeignKey('Person', verbose_name=_('person'), related_name='activities')
 
     weeks = models.IntegerField(_('number of weeks'), blank=True, null=True)
-    status = models.ForeignKey(ActivityStatus, verbose_name=_('status'), blank=True, null=True, on_delete=models.SET_NULL)
+    status = models.ForeignKey(ActivityStatus, verbose_name=_('status'), blank=True, null=True, related_name='activities', on_delete=models.SET_NULL)
     is_permanent = models.BooleanField(_('permanent'), default=False)
     framework = models.ForeignKey(ActivityFramework, verbose_name=_('framework'), blank=True, null=True, on_delete=models.SET_NULL)
     grade = models.ForeignKey(ActivityGrade, verbose_name=_('grade'), blank=True, null=True, on_delete=models.SET_NULL)

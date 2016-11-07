@@ -668,7 +668,7 @@ msgstr "grade de l'activité"
 
 #: organization/network/models.py:328
 msgid "activity framework"
-msgstr " cadre de l'activité"
+msgstr "corps de l'activité"
 
 #: organization/network/models.py:334
 msgid "activity function"
