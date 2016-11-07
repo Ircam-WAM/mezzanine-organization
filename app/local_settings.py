@@ -2,7 +2,7 @@ import os
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime, date
 
-DEBUG = True if os.environ.get('DEBUG', 'True') else False
+DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
 # Make these unique, and don't share it with anybody.
 SECRET_KEY = "j1qa@u$5ktqr^0_kwh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
