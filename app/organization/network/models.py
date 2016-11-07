@@ -314,7 +314,7 @@ class PersonListBlockInline(models.Model):
 class ActivityStatus(Named):
 
     order = models.IntegerField(_('order number'), default=100)
-    display = models.BooleanField(_('display on team page'), blank=True, default=False)
+    display = models.BooleanField(_('display on team page'), blank=True, default=True)
 
     class Meta:
         verbose_name = _('activity status')

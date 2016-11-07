@@ -96,11 +96,11 @@
 
 
 {% block related_project %}
-    {% if page.teampage.team.leader_projects.all or page.teampage.team.partner_projects.all %}
+    {% if page.teampage.team.leader_projects.published or page.teampage.team.partner_projects.published %}
         <div class="white-bg pb2">
             <hr class="mt0" />
             <div class="container">
-                {% with page.teampage.team.partner_projects.all|get_type:"internal" as projects %}
+                {% with page.teampage.team.partner_projects.published|get_type:"internal" as projects %}
                     {% if projects %}
                         <div class="row">
                             <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg" data-summary-content>
@@ -110,8 +110,8 @@
                         </div>
                     {% endif %}
                 {% endwith %}
-                {% with page.teampage.team.leader_projects.all|get_type:"external" as leader_projects %}
-                {% with page.teampage.team.partner_projects.all|get_type:"external" as partner_projects %}
+                {% with page.teampage.team.leader_projects.published|get_type:"external" as leader_projects %}
+                {% with page.teampage.team.partner_projects.published|get_type:"external" as partner_projects %}
                 {% if leader_projects or partner_projects %}
                 <div class="row">
                     <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg" data-summary-content>

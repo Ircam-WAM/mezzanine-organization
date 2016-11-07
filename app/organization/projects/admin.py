@@ -82,6 +82,7 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 DynamicContentProjectInline]
     filter_horizontal = ['teams', 'organizations']
     list_filter = ['type', 'program', 'program_type', ]
+    list_display = ['title', 'date_from', 'date_to', 'status', 'admin_link']
 
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
