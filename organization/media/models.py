@@ -47,7 +47,6 @@ class Media(Displayable):
         return MEDIA_BASE_URL + self.external_id
 
     def get_html(self):
-        print(self.uri)
         r = requests.get(self.uri)
         return r.content
 

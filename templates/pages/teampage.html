@@ -77,16 +77,16 @@
 {% block page_person_list %}
     {% activity_statuses as statuses %}
     {% if statuses|length > 0 %}
-        <div class="white-bg">
-        <hr class="mt0" />
+        <div class="page__block page__block--yellow">
+        {# <hr class="mt0" />#}
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg" data-summary-content>
-                        <h2 class="dotted">{% trans 'Team' %}</h2>
+                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2" data-summary-content>
+                        <h2 class="dotted">{% trans 'Team' %}</h2><br>
                         {% for status in statuses %}
                             {% with page.teampage.team|get_team_persons:status as persons %}
                                 {% if persons %}
-                                    <strong>{{ status.name }} :</strong>
+                                    <strong>{{ status.name }} : </strong>
                                     {% for person in persons %}
                                         <a href="{% url 'organization-network-person-detail' person.slug %}">{{ person.title }}</a>{% if not forloop.last %}, {% endif %}
                                     {% endfor %}
@@ -105,7 +105,7 @@
 {% block related_project %}
     {% if page.teampage.team.leader_projects.published or page.teampage.team.partner_projects.published %}
         <div class="white-bg pb2">
-            <hr class="mt0" />
+            {# <hr class="mt0" />#}
             <div class="container">
                 {% with page.teampage.team.partner_projects.published|get_type:"internal" as projects %}
                     {% if projects %}
