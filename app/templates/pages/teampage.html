@@ -74,6 +74,23 @@
     {% endwith %}
 {% endblock %}
 
+{% block page_person_list %}
+<div class="white-bg pb2">
+  <hr class="mt0" />
+    <div class="container">
+      {% activity_statuses as statuses %}
+        {% for status in statuses %}
+            {{ status.name }} :
+            {% for person in status|get_team_persons:page.teampage.team %}
+                {{ person.title }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+            <br/>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+
 {% block related_project %}
     {% if page.teampage.team.leader_projects.all or page.teampage.team.partner_projects.all %}
         <div class="white-bg pb2">

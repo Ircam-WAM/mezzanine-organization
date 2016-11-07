@@ -63,12 +63,12 @@ ALIGNMENT_CHOICES = (('left', _('left')), ('left', _('left')), ('right', _('righ
 class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     """(Organization description)"""
 
-    mappable_location = models.CharField(max_length=128, blank=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
+    mappable_location = models.CharField(max_length=128, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
     lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
     lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
     initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
-    is_on_map = models.BooleanField(_('is on map'), default=False)
+    is_on_map = models.BooleanField(_('is on map'), default=False, blank=True)
 
     admin_thumb_type = 'logo'
 
@@ -89,7 +89,8 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
             raise ValidationError("Latitude required if specifying longitude.")
 
         if not (self.lat and self.lon) and not self.mappable_location:
-            self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
+            if self.address:
+                self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
 
         if self.mappable_location and not (self.lat and self.lon): #location should always override lat/long if set
             g = GoogleMaps(domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
@@ -312,8 +313,12 @@ class PersonListBlockInline(models.Model):
 
 class ActivityStatus(Named):
 
+    order = models.IntegerField(_('order number'), default=100)
+    display = models.BooleanField(_('display on team page'), blank=True, default=False)
+
     class Meta:
         verbose_name = _('activity status')
+        ordering = ['order']
 
 
 class ActivityGrade(Named):
@@ -382,33 +387,31 @@ class PersonActivity(Period):
     person = models.ForeignKey('Person', verbose_name=_('person'), related_name='activities')
 
     weeks = models.IntegerField(_('number of weeks'), blank=True, null=True)
-    status = models.ForeignKey(ActivityStatus, verbose_name=_('status'), blank=True, null=True, on_delete=models.SET_NULL)
+    status = models.ForeignKey(ActivityStatus, verbose_name=_('status'), blank=True, null=True, related_name='activities', on_delete=models.SET_NULL)
     is_permanent = models.BooleanField(_('permanent'), default=False)
     framework = models.ForeignKey(ActivityFramework, verbose_name=_('framework'), blank=True, null=True, on_delete=models.SET_NULL)
     grade = models.ForeignKey(ActivityGrade, verbose_name=_('grade'), blank=True, null=True, on_delete=models.SET_NULL)
     function = models.ForeignKey(ActivityFunction, verbose_name=_('function'), blank=True, null=True, on_delete=models.SET_NULL)
 
-    employer = models.ForeignKey(Organization, verbose_name=_('employer'), related_name='employer_activities', blank=True, null=True, on_delete=models.SET_NULL)
-    attachment_organization = models.ForeignKey(Organization, verbose_name=_('attachment organization'), related_name='attachment_activities', blank=True, null=True, on_delete=models.SET_NULL)
-    second_employer = models.ForeignKey(Organization, verbose_name=_('second employer'), related_name='second_employer_activities', blank=True, null=True, on_delete=models.SET_NULL)
-    third_employer = models.ForeignKey(Organization, verbose_name=_('third employer'), related_name='third_employer_activities', blank=True, null=True, on_delete=models.SET_NULL)
+    organizations = models.ManyToManyField(Organization, verbose_name=_('organizations (attachment or subscribed)'), related_name='project_activities', blank=True)
+    employers = models.ManyToManyField(Organization, verbose_name=_('employers'), related_name='employer_project_activities', blank=True)
     umr = models.ForeignKey(UMR, verbose_name=_('UMR'), blank=True, null=True, on_delete=models.SET_NULL)
-    team = models.ForeignKey('Team', verbose_name=_('team'), related_name='team_activities', blank=True, null=True, on_delete=models.SET_NULL)
-    second_team = models.ForeignKey('Team', verbose_name=_('second team'), related_name='second_team_activities', blank=True, null=True, on_delete=models.SET_NULL)
-    second_team_text = models.CharField(_('second team text'), blank=True, null=True, max_length=256)
+    teams = models.ManyToManyField('Team', verbose_name=_('teams'), related_name='team_activities', blank=True)
+    team_text = models.CharField(_('other team text'), blank=True, null=True, max_length=256)
 
     projects = models.ManyToManyField('organization-projects.Project', verbose_name=_('projects'), related_name='activities', blank=True)
-    rd_quota_float = models.IntegerField(_('R&D quota (float)'), blank=True, null=True)
+    rd_quota_float = models.FloatField(_('R&D quota (float)'), blank=True, null=True)
     rd_quota_text = models.CharField(_('R&D quota (text)'), blank=True, null=True, max_length=128)
     rd_program = models.TextField(_('R&D program'), blank=True)
     budget_code = models.ForeignKey(BudgetCode, blank=True, null=True, on_delete=models.SET_NULL)
 
+    supervisors = models.ManyToManyField('Person', verbose_name=_('supervisors'), related_name='supervisor_activities', blank=True)
+
     phd_doctoral_school = models.ForeignKey(Organization, verbose_name=_('doctoral school'), blank=True, null=True, on_delete=models.SET_NULL)
     phd_directors = models.ManyToManyField('Person', verbose_name=_('PhD directors'), related_name='phd_director_activities', blank=True)
-    phd_officers = models.ManyToManyField('Person', verbose_name=_('PhD officers'), related_name='phd_officer_activities', blank=True)
     phd_defense_date = models.DateField(_('PhD defense date'), blank=True, null=True)
     phd_title = models.TextField(_('PhD title'), blank=True)
-    phd_postdoctoralsituation =  models.CharField(_('post-doctoral situation'), blank=True, max_length=256)
+    phd_post_doctoral_situation =  models.CharField(_('post-doctoral situation'), blank=True, max_length=256)
     hdr = models.BooleanField(_('HDR'), default=False)
 
     training_type = models.ForeignKey(TrainingType, verbose_name=_('training type'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -430,6 +433,7 @@ class PersonActivity(Period):
     class Meta:
         verbose_name = _('activity')
         verbose_name_plural = _('activities')
+        ordering = ['person__last_name',]
 
     def __str__(self):
         if self.status:

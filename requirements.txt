@@ -5,7 +5,7 @@ mysqlclient
 psycopg2
 pyquery
 humanize
-Django==1.9.10
+Django==1.9.11
 mezzanine==4.2.2
 django-modeltranslation
 django-meta
