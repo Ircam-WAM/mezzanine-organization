@@ -138,7 +138,6 @@ class PersonActivityAdmin(BaseTranslationModelAdmin):
     def get_teams(self, instance):
         values = []
         for team in instance.teams.all():
-            print(team.code)
             values.append(team.code)
         return ' - '.join(values)
 
