@@ -25,9 +25,9 @@ class ArticleDetailView(SlugMixin, DetailView):
     template_name='magazine/article/article_detail.html'
     context_object_name = 'article'
 
-    def get_object(self, **kwargs):
+    def get_object(self):
         articles = self.model.objects.published(for_user=self.request.user).select_related()
-        return get_object_or_404(articles, slug=kwargs['slug'])
+        return get_object_or_404(articles, slug=self.kwargs['slug'])
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)

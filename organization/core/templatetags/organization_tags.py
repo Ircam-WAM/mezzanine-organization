@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 from django.http import QueryDict
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
@@ -135,9 +136,9 @@ def activity_statuses(*args):
     return ActivityStatus.objects.filter(display=True)
 
 @register.filter
-def get_team_persons(status, team):
+def get_team_persons(team, status):
     persons = []
-    for activity in status.activities.filter(teams__in=[team]):
+    for activity in status.activities.filter(teams__in=[team], date_to__gte=datetime.date.today()):
         if not activity.person in persons:
             persons.append(activity.person)
     return persons
