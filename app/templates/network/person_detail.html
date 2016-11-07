@@ -43,3 +43,11 @@
         {% endwith %}
     {% endif%}
 {% endblock %}
+
+{% block page_link %}
+    {% with person.links.all as links %}
+        {% if links %}
+            {% include 'core/inc/link.html' %}
+        {% endif %}
+    {% endwith %}
+{% endblock %}

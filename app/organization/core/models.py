@@ -9,6 +9,8 @@ from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.core.models import Displayable, Slugged, Orderable
 
+from django_countries.fields import CountryField
+
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')))
 ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
@@ -24,10 +26,11 @@ class Description(models.Model):
         abstract = True
 
 
-class Named(Description):
+class Named(models.Model):
     """Abstract model providing a name field"""
 
     name = models.CharField(_('name'), max_length=512)
+    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True
@@ -41,10 +44,11 @@ class Named(Description):
         return slugify(self.__unicode__())
 
 
-class Titled(Description):
+class Titled(models.Model):
     """Abstract model providing a title field"""
 
     title = models.CharField(_('title'), max_length=1024)
+    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True
@@ -174,6 +178,7 @@ class LinkType(models.Model):
 class Link(URL):
     """A person can have many links."""
 
+    title = models.CharField(_('title'), max_length=1024, null=True, blank=True)
     link_type = models.ForeignKey(LinkType, verbose_name=_('link type'))
 
     class Meta:
@@ -226,3 +231,35 @@ class AdminThumbRelatedMixin(object):
         return "<img src='%s%s'>" % (settings.MEDIA_URL, thumb_url)
     admin_thumb.allow_tags = True
     admin_thumb.short_description = ""
+
+
+class Dated(models.Model):
+
+    date_created = models.DateTimeField(_('creation date'), auto_now_add=True)
+    date_modified = models.DateTimeField(_('last modification date'), auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class Address(models.Model):
+    """(Address description)"""
+
+    address = models.TextField(_('address'), blank=True)
+    postal_code = models.CharField(_('postal code'), max_length=16, null=True, blank=True)
+    city = models.CharField(_('city'), max_length=255, null=True, blank=True)
+    country = CountryField(_('country'), null=True, blank=True)
+
+    def __str__(self):
+        return ' '.join((self.address, self.postal_code))
+
+    class Meta:
+        abstract = True
+
+
+class RelatedTitle(models.Model):
+
+    title = models.CharField(_('title'), max_length=1024, null=True, blank=True)
+
+    class Meta:
+        abstract = True

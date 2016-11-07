@@ -37,7 +37,6 @@ class ProductListProduct(Orderable):
         verbose_name_plural = _("products")
 
 
-
 class PageProductList(models.Model):
 
     page = models.ForeignKey('pages.Page', verbose_name=_('page'), related_name='product_lists', blank=True, null=True, on_delete=models.SET_NULL)
@@ -51,3 +50,18 @@ class PageProductList(models.Model):
 class ProductLink(Link):
 
     product = models.ForeignKey(Product, verbose_name=_('product'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProductPrestashopProduct(models.Model):
+
+    product = models.OneToOneField(Product, verbose_name=_('product'), related_name='prestashop_products')
+    external_id = models.IntegerField(verbose_name=_('external id'), null=True, blank=True)
+    slug = models.CharField(max_length=255, verbose_name=_('slug'), null=True, blank=True)
+    url = models.CharField(max_length=512, verbose_name=_('url'), null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("prestashop product")
+        verbose_name_plural = _("prestashop products")
+
+    def __str__(self):
+        return ' - '.join((self.product.title, str(self.external_id)))

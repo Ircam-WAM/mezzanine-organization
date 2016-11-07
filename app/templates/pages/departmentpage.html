@@ -11,102 +11,49 @@
 
 {% block page_title %}
 
-    {% editable page.departmentpage.title %}
-        <h1 class="dashed">{{ page.departmentpage.title }}</h1>
+    {% editable page.departmentpage.sub_title %}
+        <h1 class="dashed">{{ page.departmentpage.sub_title }}</h1>
     {% endeditable %}
 
 {% endblock %}
 
 {% block page_content %}
-    {% if page.departmentpage.sub_title %}
+    <!--{% if page.departmentpage.sub_title %}
         {% editable page.departmentpage.sub_title %}
             <div class="chapo">
                 {{ page.departmentpage.sub_title }}
             </div>
         {% endeditable %}
-    {% endif %}
+    {% endif %}-->
 
     {% if page.departmentpage.content %}
      {% editable page.departmentpage.content %}
         {{ page.departmentpage.content|richtext_filters|safe }}
      {% endeditable %}
-    {% else %}
-        {% lorem 3 p %}
     {% endif %}
 
 {% endblock %}
 
-{% block page_link %}
-    {% with page.departmentpage.links.all as links %}
-        {% if links %}
-            {% include 'core/inc/link.html' %}
-        {% endif %}
-    {% endwith %}
-{% endblock %}
-
 {% block page_audio %}
-  {% with page.departmentpage as object %}
+  {% with page as object %}
       {{ block.super }}
   {% endwith %}
 {% endblock %}
 
 {% block page_slider %}
-    {% with page.departmentpage as object %}
+    {% with page as object %}
         {{ block.super }}
     {% endwith %}
 {% endblock %}
 
 {% block page_video %}
-  {% with page.departmentpage as object %}
+  {% with page as object %}
       {{ block.super }}
   {% endwith %}
 {% endblock %}
 
 {% block page_sub_content %}
-    {% with page.departmentpage.blocks.all as blocks %}
+    {% with page.blocks.all as blocks %}
       {% include "core/inc/block.html" %}
-    {% endwith %}
-{% endblock %}
-
-{% block page_related_content %}
-    {% if page.departmentpage.department.articles.all %}
-        <div class="white-bg pb2">
-            <div class="container">
-                <div class="row tac">
-                    <div class="col-xs-12">
-                        <h2 class="dashed dashed--center">{% trans "Also discover" %}</h2>
-                    </div>
-                </div>
-                <div class="row tac">
-                    {% for article in page.departmentpage.department.articles.all %}
-                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            {% include 'magazine/article/includes/article_card.html' %}
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-    {% endif %}
-
-{% endblock %}
-
-{% block logo %}
-    {% with page.departmentpage.images.all|get_type:'logo' as images %}
-        {% if images %}
-            <div class="page__block{% if block.background_color %} page__block--{{ block.background_color }}{% endif %}">
-                <div class="white-bg pb2">
-                    <div class="container">
-                        <div class="row" data-summary-content>
-                            <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
-                                <ul class="partners-list">
-                                    {% include 'core/inc/logo.html' %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
     {% endwith %}
 {% endblock %}

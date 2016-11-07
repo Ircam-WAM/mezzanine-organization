@@ -1,4 +1,4 @@
 #!/bin/bash
 
-gunzip < /srv/backup/ircam-www.sql.gz | mysql -hdb -uroot -phyRob0otlaz4 ircam-www
+gunzip < /srv/backup/ircam_shops.sql.gz | mysql -hprestadb -uroot -pmysecretpassword ircam_shops
 echo "Restore done!"

@@ -28,7 +28,7 @@ $module: ".event-line-box";
         @include line-height(1);
         @include typeface(serif);
         font-weight: weight(heavy);
-        
+
         visibility: hidden;
         height: 0;
 
@@ -36,8 +36,7 @@ $module: ".event-line-box";
 
     &__image {
 
-        width: 100%;
-        height: auto;
+        @include fluid-aspect(200 140);
 
     }
 

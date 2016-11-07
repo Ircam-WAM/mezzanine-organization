@@ -1,12 +1,12 @@
 {% load i18n %}
 {% load event_tags %}
 
-{% if event.start and not event.end %}
-    {{ event.start|date:"l j F" }}
+{% if object.start and not object.end %}
+    {{ object.start|date:"l j F" }}
 {% else %}
-    {% if event.start|date:"d.m.y" == event.end|date:"d.m.y" %}
-        {{ event.start|date:"l j F" }}
+    {% if object.start|date:"d.m.y" == object.end|date:"d.m.y" %}
+        {{ object.start|date:"l j F" }}
     {% else %}
-        {{ event.start|date:"j F" }} {% trans "to" %} {{ event.end|date:"j F" }}
+        {{ object.start|date:"j F" }} {% trans "to" %} {{ object.end|date:"j F" }}
     {% endif %}
 {% endif %}

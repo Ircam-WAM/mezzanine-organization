@@ -1,38 +1,66 @@
+{% extends "core/inc/generic_card.html" %}
 {% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
 
-<a class="article-box" href="{% url 'magazine-article-detail' article.slug %}">
-    <div class="article-box__header">
-        <figure class="article-box__image">
-            {% with article.images.all|get_type:'card' as images %}
-                {% if images %}
-                    <img src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 top=0.5 left=article.photo_alignment|get_photo_alignment %}" data-src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 %}" class="lazyload" />
-                {% endif %}
-            {% endwith %}
-        </figure>
-        <div class="article-box__tags">
-            <div class="tag tag--small tag--category">
-                {% trans 'News' %}
-            </div>
-            {% if article.department %}
-                <div class="tag tag--small dashed dashed--gray">
-                  {{ article.department.name }}
-                </div>
-            {% endif %}
-        </div>
-    </div>
+{% block metatitle %}
+    {{ object.title }}
+{% endblock %}
 
-    <div class="article-box__content tal">
-        <h3 class="article-box__title">{{ article.title }}</h3>
-        <div class="article-box__subtitle">
-            {{ article.publish_date|date:"DATE_FORMAT" }}
-            {% for category in article.categories.all %}
-                {% if forloop.first %} | {% endif %}
-                {% if not forloop.first %}, {% endif %}
-                <strong>{{ category }}</strong>
-            {% endfor %}
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block url %}
+  {% if object.content|removetags:"p"|slice:':4' == 'http' %}
+    {{ object.content|removetags:"p" }}
+  {% else %}
+    {% url 'magazine-article-detail' object.slug %}
+  {% endif %}
+{% endblock %}
+
+{% block target %}
+  {% if object.content|removetags:"p"|slice:':4' == 'http' %}target="_blank"{% endif %}
+{% endblock %}
+
+{% block image %}
+    {% with object.images.all|get_type:'card' as images %}
+        {% if images %}
+            <figure class="article-box__image">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 top=0.5 left=object.photo_alignment|get_photo_alignment %}" class="lazyload" />
+            </figure>
+        {% else %}
+            <figure class="article-box__image">
+                {% if object.department %}
+                    <div class="article-box__placeholder {{object.department.name|slugify}}"></div>
+                {% else %}
+                    <div class="article-box__placeholder"></div>
+                {% endif %}
+            </figure>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block tags %}
+    <div class="article-box__tags">
+        <div class="tag tag--small tag--category">
+            {% trans 'News' %}
         </div>
-        <div class="article-box__desc">
-             {{ article.content|richtext_filters|safe|truncatechars_html:200 }}
-        </div>
+        {% if object.department %}
+            <div class="tag tag--small dashed dashed--gray dashed--small">
+              {{ object.department.name }}
+            </div>
+        {% endif %}
     </div>
-</a>
+{% endblock %}
+
+{% block content %}
+    {{ object.description|richtext_filters|safe|truncatechars_html:200 }}
+{% endblock %}
+
+{% block subtitle %}
+    {{ object.publish_date|date:"DATE_FORMAT" }}
+    {% for category in object.categories.all %}
+        {% if forloop.first %} | {% endif %}
+        {% if not forloop.first %}, {% endif %}
+        <strong>{{ category }}</strong>
+    {% endfor %}
+{% endblock %}

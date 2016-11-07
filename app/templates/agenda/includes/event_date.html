@@ -1,71 +1,78 @@
 {% load i18n %}
-{% load event_tags %}
+{% load event_tags pages_tags mezzanine_tags %}
 
-<!-- Start date only  -->
-{% if event.start and not event.end %}
-    {{ event.start|date:"l j F" }}<br>
-    <!-- Start date with hour  -->
-    {% if event.start and event.start|date:"H:i" != "23:59" %}
-        {{ event.start|date:"H\hi" }}
-    {% endif %}
-
-<!-- Start and end date  -->
-{% else %}
-    <!-- Start and end date is the same day  -->
-    {% if event.start|date:"d.m.y" == event.end|date:"d.m.y" %}
-        {% if not event.periods.all %}
-            {{ event.start|date:"l j F" }}<br>
-            <!-- Start date with hour  -->
-            {% if event.end and event.end|date:"H:i" != "23:59" %}
-                {{ event.start|date:"H\hi" }} - {{ event.end|date:"H\hi" }}
-            {% else %}
-                {{ event.start|date:"H\hi" }}
-            {% endif %}
-        {% else %}
-            {{ event.start|date:"l j F" }}<br>
-            {% for period in event.periods.all %}
-                {% if period.date_to and period.date_to|date:"H:i" != "23:59" %}
-                    {{ period.date_from|date:"H\hi" }} - {{ period.date_to|date:"H\hi" }}<br>
-                {% else %}
-                    {% if forloop.last or event.periods.all|length == 2 %} {% trans "and"%} {% elif not forloop.first %}, {% endif %}
-                        {{ period.date_from|date:"H\hi" }}
-                {% endif %}
-            {% endfor %}
+    <!-- Start date only  -->
+    {% if event.start and not event.end %}
+        {{ event.start|date:event.date_format }}
+        <!-- Start date with hour  -->
+        {% if event.start and event.start|date:"H:i" != "23:59" %}
+            - {{ event.start|date:"H\hi" }}
         {% endif %}
 
-    <!-- Start and end date are the same month  -->
-    {% elif event.start|date:"m.y" == event.end|date:"m.y" %}
-      {% if event.periods.all %}
-        {% with event.periods.all|same_time_in_periods as same_time_in_periods %}
-        {% for period in event.periods.all %}
-            {% if period.date_to and period.date_to|date:"H:i" != "23:59" %}
-                {{ period.date_from|date:"l j F" }}
-                {% if period|period_is_more_than_hours:4 %}
-                    {{ period.date_from|date:"H\hi" }} {% trans "to" %} {{ period.date_to|date:"H\hi" }}<br>
+    <!-- Start and end date  -->
+    {% else %}
+        <!-- Start and end date is the same day  -->
+        {% if event.start|date:"d.m.y" == event.end|date:"d.m.y" %}
+            {% if not event.periods.all %}
+                {{ event.start|date:event.date_format }}
+                <!-- Start date with hour  -->
+                {% if event.end and event.end|date:"H:i" != "23:59" %}
+                    , {{ event.start|date:" H\hi" }} - {{ event.end|date:"H\hi" }}
                 {% else %}
-                    {{ period.date_from|date:"H\hi" }}<br>
+                    , {{ event.start|date:" H\hi" }}
                 {% endif %}
             {% else %}
-                {% if event.periods.all|length > 1 and not forloop.last %}
-                    {{ period.date_from|date:"l j F" }}{% if event.periods.all|length == 2 %} {% trans "and" %} {% else %}, {% endif %}
-                {% else %}
-                    {{ period.date_from|date:"l j F" }}
-                    {% if event.periods.all|length > 1 and forloop.first %} {% trans "and" %}{% endif %}
-                {% endif %}
-                {% if same_time_in_periods and forloop.last %}
-                    {{ period.date_from|date:"H\hi" }}
-                {% elif not same_time_in_periods %}
-                    {{ period.date_from|date:"H\hi" }}<br>
-                {% endif %}
+                {{ event.start|date:event.date_format }}
+                {% for period in event.periods.all %}
+                    {% if period.date_to and period.date_to|date:"H:i" != "23:59" %}
+                        ,{{ period.date_from|date:"H\hi" }} - {{ period.date_to|date:"H\hi" }}
+                    {% else %}
+                        {% if forloop.last or event.periods.all|length == 2 %} {% trans "and"%} {% elif not forloop.first %}, {% endif %}
+                            {{ period.date_from|date:"H\hi" }}
+                    {% endif %}
+                {% endfor %}
             {% endif %}
-        {% endfor %}
-        {% endwith %}
-      {% else %}
-        {{ event.start|date:"l j F" }} {% trans "to" %} {{ event.end|date:"l j F" }}<br>{{ event.start|date:"H\hi" }} - {{ event.end|date:"H\hi" }}
-      {% endif %}
-    <!-- Start and end date are completely different  -->
-    {% else %}
-        {{ event.start|date:"j F" }} {% trans "to" %} {{ event.end|date:"j F" }}
-    {% endif %}
 
-{% endif %}
+        <!-- Start and end date are the same month  -->
+        {% elif event.start|date:"m.y" == event.end|date:"m.y" %}
+          {% if event.periods.all %}
+            {% with event.periods.all|same_time_in_periods as same_time_in_periods %}
+            {% for period in event.periods.all %}
+                {% if period.date_to and period.date_to|date:"H:i" != "23:59" %}
+                    {{ period.date_from|date:event.date_format }}
+                    {% if period|period_is_more_than_hours:4 %}
+                        , {{ period.date_from|date:"H\hi" }} {% trans "to" %} {{ period.date_to|date:"H\hi" }}
+                    {% else %}
+                        , {{ period.date_from|date:"H\hi" }}
+                    {% endif %}
+                {% else %}
+                    {% if event.periods.all|length > 1 and not forloop.last %}
+                        {{ period.date_from|date:event.date_format }}{% if event.periods.all|length == 2 %} {% trans "and" %} {% else %}{% endif %}
+                    {% else %}
+                        {{ period.date_from|date:event.date_format }}
+                        {% if event.periods.all|length > 1 and forloop.first %} {% trans "and" %}{% endif %}
+                    {% endif %}
+                    {% if same_time_in_periods and forloop.last %}
+                        {{ period.date_from|date:"H\hi" }}
+                    {% elif not same_time_in_periods %}
+                        , {{ period.date_from|date:"H\hi" }}
+                    {% endif %}
+                {% endif %}
+                <br />
+            {% endfor %}
+            {% endwith %}
+          {% else %}
+            {{ event.start|date:event.date_format }} {% trans "to" %} {{ event.end|date:event.date_format }} - {{ event.start|date:"H\hi" }} - {{ event.end|date:"H\hi" }}
+          {% endif %}
+        <!-- Start and end date are completely different  -->
+        {% else %}
+            {{ event.start|date:"j F" }} {% trans "to" %} {{ event.end|date:"j F" }}
+            <!-- Start date with hour  -->
+            {% if event.end and event.end|date:"H:i" != "23:59" %}
+                , {{ event.start|date:" H\hi" }} - {{ event.end|date:"H\hi" }}
+            {% else %}
+                , {{ event.start|date:" H\hi" }}
+            {% endif %}
+        {% endif %}
+
+    {% endif %}

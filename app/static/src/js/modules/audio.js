@@ -59,7 +59,7 @@ Audio.prototype.init = function() {
             //
             var first = playlist.find('li a').attr('data-src');
             playlist.find('li').first().addClass('playing');
-            that.setTitle(as[i], playlist.find('li a').text());
+            that.setTitle(as[i], playlist.find('li:first-child a').text());
             as[i].load(first);
 
             playlist.find('li').bind('click', function(e) {

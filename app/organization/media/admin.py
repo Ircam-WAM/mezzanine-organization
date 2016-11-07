@@ -14,11 +14,7 @@ class MediaAdmin(BaseTranslationModelAdmin):
 
     model = Media
     inlines = (MediaTranscodedAdmin,)
-
-
-class PlaylistMediaInline(TabularDynamicInlineAdmin):
-
-    model = PlaylistMedia
+    list_display = ['title',]
 
 
 class PlaylistMediaInline(TabularDynamicInlineAdmin):

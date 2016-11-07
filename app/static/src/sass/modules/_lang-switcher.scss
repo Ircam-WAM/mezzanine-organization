@@ -66,4 +66,23 @@ $module: ".lang-switcher";
         @include transition(all 0.2s ease-in-out);
     }
 
+    .sidebar & {
+
+        top: 15px;
+
+        #{$module}__item {
+
+            display: inline-block;
+            @include padding(0 .25);
+
+            >a {
+
+                color: black;
+
+            }
+
+        }
+
+    }
+
 }

@@ -11,6 +11,11 @@ $module: ".article-box";
     &:hover {
         box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.17);
         .article-box__image {
+
+            img {
+                @include transform(scale(1.1));
+            }
+
             &:after {
                 border-width: 12px;
             }
@@ -26,12 +31,16 @@ $module: ".article-box";
         padding: 0;
         width: 100%;
         position: relative;
+        overflow: hidden;
+
+        @include fluid-aspect(427 286);
 
         img {
             display: block;
             width: 100%;
             max-width: 100%;
             height: auto;
+            @include transition(all 0.3s ease-in-out);
         }
 
         &:after {
@@ -47,6 +56,33 @@ $module: ".article-box";
             border-style: solid;
             @include transition(all 0.25s ease-in-out);
         }
+    }
+
+    &__placeholder {
+
+        background: $color-main;
+
+        &.recherche, &.research {
+            background-color: white;
+            background-image: url(../img/patterns/squares.png);
+            opacity: 0.4;
+        }
+        &.creation {
+            background-color: white;
+            background-image: url(../img/patterns/circles.png);
+            opacity: 0.2;
+        }
+        &.transmission {
+            background-color: white;
+            background-image: url(../img/patterns/stripes.png);
+            opacity: 0.4;
+        }
+        &.innovation, &.innovations {
+            background-color: white;
+            background-image: url(../img/patterns/triangles.png);
+            opacity: 0.2;
+        }
+
     }
 
     &__tags {
@@ -160,6 +196,8 @@ $module: ".article-box";
         @include margin-top(2);
         position: relative;
 
+
+
         &:after {
 
             content: "";
@@ -181,6 +219,12 @@ $module: ".article-box";
             @include typeface(sans-serif);
             @include margin(.25 0 .25 0);
             font-weight: weight(heavy);
+
+        }
+
+        #{$module}__image {
+
+            @include fluid-aspect(427 500);
 
         }
 

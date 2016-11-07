@@ -1,76 +1,31 @@
 {% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
 
-<a class="article-box" href="{{ content.content_object.get_absolute_url }}" title="{{ content.content_object.title }}">
+<a class="article-box" href="{% block url %}{% endblock %}" {% block target %}{% endblock %} title="{% block metatitle %}{% endblock %}">
     <div class="article-box__header">
-        <figure class="article-box__image">
-            {% with content.content_object.images.all|get_type:'card' as images %}
-                {% if images %}
-                    <img src="{{ MEDIA_URL }}{% thumbnail images.first.file 427 286 %}" data-src="{{ MEDIA_URL }}{% thumbnail images.0.file 427 286 %}" class="lazyload" alt="" />
-                {% endif %}
-            {% endwith %}
-        </figure>
-        {% if content.content_type.model == 'article' %}
-            <div class="article-box__tags">
-                <div class="tag tag--small tag--category">
-                    {% trans 'News' %}
-                </div>
-                {% if content.content_object.department %}
-                    <div class="tag tag--small dashed dashed--gray">
-                      {{ content.content_object.department.name }}
-                    </div>
-                {% endif %}
-            </div>
-        {% elif content.content_type.model == 'event' %}
-        <div class="article-box__tags">
 
-            {% if content.content_object.departments.first %}
-                {% with content.content_object.departments.first as department %}
-                    <div class="tag tag--small dashed">
-                      {{ department.department.name }}
-                    </div>
-                {% endwith %}
-            {% endif %}
-            {% if content.content_object.category %}
-                <div class="tag tag--small tag--category">
-                    {{ content.content_object.category }}
-                </div>
-            {% endif %}
-        </div>
-            {% if content.content_object.prices.all.0|floatformat != '0' and content.content_object.prices.all|length > 0 %}
-                {% for price in content.content_object.prices.all %}
-                    {% if forloop.first %}
-                        <div class="article-box__btn">
-                            <object><a href="{% url 'event_booking' content.content_object.slug %}" class="button button--small mr0">{% trans "Reserve" %}</a></object>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endif %}
+        {% block image %}
+        {% endblock %}
+
+        {% block tags %}
+        {% endblock %}
+
+        {% block btn %}
+        {% endblock %}
+
     </div>
 
     <div class="article-box__content tal">
-        <h3 class="article-box__title">{{ content.content_object.title }}</h3>
+        <h3 class="article-box__title">
+            {% block title %}
+            {% endblock %}
+        </h3>
         <div class="article-box__subtitle">
-            {% if content.content_type.model == 'article' %}
-                {{ content.content_object.publish_date|date:"d.m.y" }}
-                {% for category in content.content_object.categories.all %}
-                    {% if forloop.first %} | {% endif %}
-                    {% if not forloop.first %}, {% endif %}
-                    <strong>{{ category }}</strong>
-                {% endfor %}
-            {% elif content.content_type.model == 'event' %}
-                {% with content.content_object as event %}
-                    <strong>
-                        {% include 'agenda/includes/event_date.html' %}
-                    </strong>
-                {% endwith %}
-                {% if content.content_object.location %}
-                     <br />{{ content.content_object.location }}
-                {% endif %}
-            {% endif %}
+            {% block subtitle %}
+            {% endblock %}
         </div>
         <div class="article-box__desc">
-             {{ content.content_object.description|richtext_filters|safe|truncatechars_html:200 }}
+             {% block content %}
+             {% endblock %}
         </div>
     </div>
 </a>
