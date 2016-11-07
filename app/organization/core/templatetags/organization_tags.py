@@ -79,7 +79,6 @@ def unique_posts(events):
     post_list = []
     for event in events:
         for post in event.blog_posts.all():
-            print(post)
             if not post in post_list:
                 post_list.append(post)
     return post_list

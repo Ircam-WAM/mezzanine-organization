@@ -175,16 +175,13 @@ EVENT_SLUG = 'agenda'
 EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
-EVENT_DOMAIN = "http://eve-dev2.ircam.fr"
+EVENT_DOMAIN = "http://eve.ircam.fr"
 EVENT_SHOP_URL = EVENT_DOMAIN+"/pub.php/event/%d/edit"
 EVENT_PASS_URL = EVENT_DOMAIN+"/pub.php/pass/"
 EVENT_CONFIRMATION_URL = EVENT_DOMAIN+"/pub.php/cart/done?transaction_id=%s"
 EVENT_EXCLUDE_TAG_LIST = ['tournees', ]
 
-if DEBUG:
-    TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
-else:
-    TINYMCE_SETUP_JS = "/srv/app/organization/core/static/js/tinymce_setup.js"
+TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
 
 SLUGIFY = 'django.template.defaultfilters.slugify'
 
