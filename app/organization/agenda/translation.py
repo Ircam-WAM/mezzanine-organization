@@ -73,3 +73,15 @@ class EventRelatedTitleTranslationOptions(TranslationOptions):
 class DynamicContentEventTranslationOptions(TranslationOptions):
 
     fields = ()
+
+
+@register(EventPriceDescription)
+class EventPriceDescriptionTranslationOptions(TranslationOptions):
+
+    fields = ('description', )
+
+
+@register(EventPrice)
+class EventPriceTranslationOptions(TranslationOptions):
+
+    fields = ()

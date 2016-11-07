@@ -118,3 +118,12 @@ class DynamicContentEvent(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Dynamic Content Event'
+
+
+class EventPriceDescription(models.Model):
+
+    event_price = models.OneToOneField(EventPrice, verbose_name=_('event_price_description'), related_name='event_price_description', blank=True, null=True, on_delete=models.SET_NULL)
+    description = models.TextField(_('description'), blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Additionnal description'

@@ -47,10 +47,10 @@
                 <div class="page__meta-title page__meta-title--small">{% trans "Prices" %}</div>
                 <p class="page__meta-text">
             {% endif %}
-            {% if price.unit %}
-                {{ price.unit }}:
+            {% if price.event_price_description.description %}
+                {{ price.event_price_description.description }} :
             {% endif %}
-            {{ price.value|floatformat:"-2" }} €{% if not forloop.last %} <br /> {% endif %}
+            {{ price.value|floatformat:"-2" }} {{ price.unit }} {% if not forloop.last %} <br /> {% endif %}
             {% if forloop.last %}
                 </p>
             {% endif %}
