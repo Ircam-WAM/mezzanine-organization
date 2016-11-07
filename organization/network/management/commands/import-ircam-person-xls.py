@@ -115,7 +115,8 @@ class IrcamPerson(object):
             last_name = ' '.join(last_name)
 
             title = ' '.join((first_name, last_name))
-            person, c = Person.objects.get_or_create(title=title)
+            print('----'  + title)
+            person, c = Person.objects.get_or_create(title=title, first_name=first_name, last_name=last_name)
 
             return person
         return None
