@@ -1,14 +1,15 @@
 import os
 from django.utils.translation import ugettext_lazy as _
+from datetime import datetime, date
 
-DEBUG = True if os.environ.get('DEBUG', 'True') else False
+DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
 # Make these unique, and don't share it with anybody.
 SECRET_KEY = "j1qa@u$5ktqr^0_kwh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
 NEVERCACHE_KEY = "m)u^%r@uh#r3wu0&$=#$1ogx)uy4hv93^2lt%c3@xi=^gifoj8paozijdihazefd"
 
 # DATABASE_ROUTERS = ['eve.routers.EveRouter', 'festival.routers.FestivalRouter',]
-# DATABASE_ROUTERS = ['eve.routers.EveRouter',]
+DATABASE_ROUTERS = ['eve.routers.EveRouter', 'prestashop.routers.PrestaRouter']
 
 DATABASES = {
     'default': {
@@ -19,17 +20,27 @@ DATABASES = {
         'HOST': 'db',
         'PORT': '5432',
     },
-    'eve': {
+}
+
+if os.environ.get('EVEDB_ENV_POSTGRES_PASSWORD'):
+    DATABASES['eve'] = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'eve',
         'USER': 'eve',
-        'PASSWORD': 'HmazS2frT',
-        'HOST': 'pgdb',
+        'PASSWORD': os.environ.get('EVEDB_ENV_POSTGRES_PASSWORD'),
+        'HOST': 'evedb',
         'PORT': '5432',
-    },
-}
+    }
 
-# DATABASE_ROUTERS = ['eve.routers.EveRouter',]
+if os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'):
+    DATABASES['prestashop'] = {
+        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'USER': 'ircam_shops',      # Not used with sqlite3.
+        'PASSWORD': os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
+        'NAME': 'ircam_shops',
+        'HOST': 'prestadb',      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
+        }
 
 
 # EXTENSIONS AND FORMATS
@@ -110,6 +121,9 @@ ADMIN_MENU_ORDER = (
                     'organization-projects.ProjectProgramType',
                     'organization-projects.ProjectTopic',
                     'organization-projects.ProjectProgramType',
+                    'organization-projects.ProjectDemo',
+                    'organization-projects.Repository',
+                    'organization-projects.RepositorySystem',
                     )),
     (_('Shop'), ('shop.Product',
                     'organization-shop.ProductList',
@@ -133,7 +147,9 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'organization-projects.ProjectTopicPage',
                         'pages.Page',
                         'organization-media.Playlist',
-                        'mezzanine_agenda.Event')
+                        'mezzanine_agenda.Event',
+                        'organization-projects.Project',
+                        'shop.Product')
 
 
 PAGES_MODELS = ('organization-pages.CustomPage',
@@ -141,7 +157,9 @@ PAGES_MODELS = ('organization-pages.CustomPage',
                 'organization-network.DepartmentPage',
                 'organization-network.TeamPage',
                 'organization-projects.ProjectTopicPage',
-                )
+                'shop.Product')
+
+PAGES_PUBLISHED_INCLUDE_LOGIN_REQUIRED = True
 
 SEARCH_PER_PAGE = 10
 MAX_PAGING_LINKS = 10
@@ -157,8 +175,10 @@ EVENT_SLUG = 'agenda'
 EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
-EVENT_SHOP_URL = 'http://eve.ircam.fr/manifeste.php/manifestation/'
-EVENT_PASS_URL = 'http://eve.ircam.fr/manifeste.php/pass/'
+EVENT_DOMAIN = "http://eve-dev2.ircam.fr"
+EVENT_SHOP_URL = EVENT_DOMAIN+"/pub.php/event/%d/edit"
+EVENT_PASS_URL = EVENT_DOMAIN+"/pub.php/pass/"
+EVENT_CONFIRMATION_URL = EVENT_DOMAIN+"/pub.php/cart/done?transaction_id=%s"
 EVENT_EXCLUDE_TAG_LIST = ['tournees', ]
 
 if DEBUG:
@@ -169,12 +189,16 @@ else:
 SLUGIFY = 'django.template.defaultfilters.slugify'
 
 BLOG_POST_PER_PAGE = 200
-ARTICLE_PER_PAGE = 4 # just for tests because we haven't got enough content
+ARTICLE_PER_PAGE = 10
+MEDIA_PER_PAGE = 9
 
 # The numeric mode to set newly-uploaded files to. The value should be
 # a mode you'd pass directly to os.chmod.
 FILE_UPLOAD_PERMISSIONS = 0o664
 FILE_UPLOAD_TEMP_DIR = '/srv/media/uploads/tmp/'
+if not os.path.exists(FILE_UPLOAD_TEMP_DIR):
+    os.makedirs(FILE_UPLOAD_TEMP_DIR)
+
 MAX_UPLOAD_SIZE = 512000000
 MAX_UPLOAD_SIZE_FRONT = 10485760
 FILEBROWSER_MAX_UPLOAD_SIZE = 512000000
@@ -204,5 +228,9 @@ GRAPPELLI_INSTALLED = True
 JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'
 
 #SHOP_CURRENCY_LOCALE = ''
-SHOP_USE_VARIATIONS = True
+SHOP_USE_VARIATIONS = False
 SHOP_USE_RATINGS = False
+
+PROJECT_DEMOS_DIR = '/srv/media/projects/demos/'
+if not os.path.exists(PROJECT_DEMOS_DIR):
+    os.makedirs(PROJECT_DEMOS_DIR)

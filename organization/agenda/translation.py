@@ -6,7 +6,7 @@ from organization.agenda.models import *
 @register(EventBlock)
 class EventBlockTranslationOptions(TranslationOptions):
 
-    fields = ()
+    fields = ('title', 'description', 'content')
 
 
 @register(EventImage)
@@ -36,7 +36,7 @@ class EventPersonTranslationOptions(TranslationOptions):
 @register(EventLink)
 class EventLinkTranslationOptions(TranslationOptions):
 
-    fields = ()
+    fields = ('title',)
 
 
 @register(EventPeriod)
@@ -61,3 +61,27 @@ class EventTrainingLevelTranslationOptions(TranslationOptions):
 class EventPublicTypeTranslationOptions(TranslationOptions):
 
     fields = ('name',)
+
+
+@register(EventRelatedTitle)
+class EventRelatedTitleTranslationOptions(TranslationOptions):
+
+    fields = ('title',)
+
+
+@register(DynamicContentEvent)
+class DynamicContentEventTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(EventPriceDescription)
+class EventPriceDescriptionTranslationOptions(TranslationOptions):
+
+    fields = ('description', )
+
+
+@register(EventPrice)
+class EventPriceTranslationOptions(TranslationOptions):
+
+    fields = ()

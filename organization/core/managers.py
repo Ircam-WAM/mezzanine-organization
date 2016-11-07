@@ -19,9 +19,10 @@ from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from mezzanine.utils.sites import current_site_id
 from mezzanine.utils.urls import home_slug
-from mezzanine.core.managers import search_fields_to_dict, SearchableQuerySet, SearchableManager
+from mezzanine.core.managers import search_fields_to_dict, SearchableQuerySet, SearchableManager, DisplayableManager
 
-class CustomSearchableManager(SearchableManager):
+
+class CustomSearchableManager(DisplayableManager):
 
     def search(self, *args, **kwargs):
         """

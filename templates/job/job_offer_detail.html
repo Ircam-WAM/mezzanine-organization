@@ -10,7 +10,7 @@
 
 {% block page_title %}
 
-    {% editable project.title %}
+    {% editable job_offer.title %}
         <h1 class="dotted">{{ job_offer.title }}</h1>
     {% endeditable %}
 
@@ -23,9 +23,9 @@
     {% comment %}
         <p>{% trans "Category" %} : {{ job_offer.type }}</p>
     {% endcomment %}
-
-    {{ job_offer.content|richtext_filters|safe }}
-
+    {% editable job_offer.content %}
+        {{ job_offer.content|richtext_filters|safe }}
+    {% endeditable %}
 
 
     {% with form as job_offer.job_response %}

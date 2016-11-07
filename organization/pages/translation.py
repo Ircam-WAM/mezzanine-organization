@@ -37,13 +37,13 @@ class CustomPageTranslationOptions(TranslationOptions):
 @register(PageBlock)
 class PageBlockTranslationOptions(TranslationOptions):
 
-    fields = ('title', 'content')
+    fields = ('title', 'description', 'content')
 
 
 @register(PageImage)
 class PageImageTranslationOptions(TranslationOptions):
 
-    fields = ('description',)
+    fields = ('title', 'description',)
 
 
 @register(PagePlaylist)
@@ -55,7 +55,7 @@ class PagePlaylistTranslationOptions(TranslationOptions):
 @register(PageLink)
 class PageLinkTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title',)
 
 
 @register(DynamicContentPage)
@@ -68,3 +68,9 @@ class DynamicContentPageTranslationOptions(TranslationOptions):
 class LinkImageTranslationOptions(TranslationOptions):
 
     pass
+    
+
+@register(PageRelatedTitle)
+class PageRelatedTitleTranslationOptions(TranslationOptions):
+
+    fields = ('title',)

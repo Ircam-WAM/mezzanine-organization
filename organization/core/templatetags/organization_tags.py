@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 from django.http import QueryDict
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
@@ -20,7 +21,7 @@ def subtract(value, arg):
 
 @register.as_tag
 def children_pages(page_id):
-    childrens = Page.objects.filter(parent_id=page_id)
+    childrens = Page.objects.filter(parent_id=page_id).order_by('_order')
     if childrens:
         return childrens
     return None
@@ -115,7 +116,29 @@ def in_category(objects, category):
 def sub_topics(topic):
     return ProjectTopic.objects.filter(parent=topic)
 
-
 @register.filter
 def classname(obj):
     return obj.__class__.__name__
+
+@register.filter
+def app_label_short(obj):
+    app_label = obj._meta.app_config.label
+    if app_label.find("_") > 0:
+        app_label_short = app_label.split("_")[1]
+    elif app_label.find("-") > 0:
+        app_label_short = app_label.split("-")[1]
+    else :
+        app_label_short = app_label
+    return app_label_short
+
+@register.as_tag
+def activity_statuses(*args):
+    return ActivityStatus.objects.filter(display=True)
+
+@register.filter
+def get_team_persons(team, status):
+    persons = []
+    for activity in status.activities.filter(teams__in=[team], date_to__gte=datetime.date.today()):
+        if not activity.person in persons:
+            persons.append(activity.person)
+    return persons

@@ -16,10 +16,12 @@ autoreload=3
 uid='www-data'
 gid='www-data'
 patterns='*.js;*.css;*.jpg;*.jpeg;*.gif;*.png;*.svg;*.ttf;*.eot;*.woff;*.woff2'
+log='/var/log/uwsgi/app.log'
 
 # Staging
-pip install xlrd
+# pip install xlrd
 # pip install -U https://forge.ircam.fr/p/django-eve/source/download/dev/
+# pip install https://forge.ircam.fr/p/django-prestashop/source/download/master/ --src /srv/lib
 # pip install -U https://github.com/stephenmcd/grappelli-safe/archive/dynamic_stacked.zip
 # pip install django-querysetsequence
 #pip install django-autocomplete-light django-querysetsequence
@@ -37,6 +39,7 @@ python $manage migrate --noinput
 python $manage create-admin-user
 # @todo searching every fixtures file in each folder
 python $manage loaddata $app/organization/job/fixtures/organization-job.json
+python $manage loaddata $app/organization/projects/fixtures/organization-projects-repositorysystems.json
 
 # app start
 if [ "$1" = "--runserver" ]; then
@@ -50,6 +53,6 @@ else
 
     uwsgi --socket :$port --wsgi-file $wsgi --chdir $app --master \
     --processes $processes --threads $threads \
-    --uid $uid --gid $gid \
+    --uid $uid --gid $gid --logto $log \
     --py-autoreload $autoreload
 fi

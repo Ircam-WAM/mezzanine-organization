@@ -55,6 +55,10 @@ $module: ".search";
 
     }
 
+}
+
+.search-form {
+
     input[type="text"] {
 
         border: 0;
@@ -68,6 +72,10 @@ $module: ".search";
         @include font-size(xxl);
         @include typeface(serif);
         font-weight: weight(regular);
+
+        @include mq($until: sm) {
+            @include font-size(xl);
+        }
 
     }
 

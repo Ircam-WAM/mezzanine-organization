@@ -2,11 +2,12 @@ from __future__ import unicode_literals
 from future.builtins import str
 
 from django.utils.translation import ugettext_lazy as _
-
+from mezzanine.core.models import Orderable
 from mezzanine.conf import settings
 from mezzanine_agenda.models import *
 from organization.core.models import *
 from organization.network.models import *
+
 
 
 class EventBlock(Block):
@@ -93,10 +94,36 @@ class EventTrainingLevel(Named):
 class EventTraining(models.Model):
 
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
-    language = models.CharField(_('Language'), max_length=64, blank=True, null=True, choices=settings.LANGUAGES)
+    language = models.CharField(_('language'), max_length=64, blank=True, null=True, choices=settings.LANGUAGES)
     public_type = models.ForeignKey(EventPublicType, verbose_name=_('public type'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
     level = models.ForeignKey(EventTrainingLevel, verbose_name=_('level'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _("training")
         verbose_name_plural = _("trainings")
+
+
+class EventRelatedTitle(RelatedTitle):
+
+    event = models.OneToOneField(Event, verbose_name=_('event'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("related title")
+        order_with_respect_to = "event"
+
+
+class DynamicContentEvent(DynamicContent, Orderable):
+
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='dynamic_content_event', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Event'
+
+
+class EventPriceDescription(models.Model):
+
+    event_price = models.OneToOneField(EventPrice, verbose_name=_('event_price_description'), related_name='event_price_description', blank=True, null=True, on_delete=models.SET_NULL)
+    description = models.TextField(_('description'), blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Additionnal description'

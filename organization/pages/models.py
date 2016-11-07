@@ -56,6 +56,15 @@ class PageLink(Link):
         order_with_respect_to = "page"
 
 
+class PageRelatedTitle(RelatedTitle):
+
+    page = models.OneToOneField(Page, verbose_name=_('page'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("related title")
+        order_with_respect_to = "page"
+
+
 class DynamicContentPage(DynamicContent, Orderable):
 
     page = models.ForeignKey(Page, verbose_name=_('page'), related_name='dynamic_content_pages', blank=True, null=True, on_delete=models.SET_NULL)
