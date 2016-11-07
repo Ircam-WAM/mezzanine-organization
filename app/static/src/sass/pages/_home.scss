@@ -150,6 +150,22 @@ $module: ".home";
 
         }
 
+        &--button {
+
+            border: 2px solid black;
+            text-align: center;
+            @include padding(2);
+
+            >h2 {
+                margin: 0;
+                @include font-size(xl);
+                @include line-height(1.2);
+                font-weight: weight(bold);
+                text-transform: uppercase;
+            }
+
+        }
+
     }
 
     &__menu-item {
