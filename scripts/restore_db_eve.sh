@@ -1,14 +1,14 @@
 #!/bin/bash
 
-export PGPASSWORD="HmazS2frT"
+export PGPASSWORD="q2nqzt0WGnwWé,256"
 
-db_exists=`psql -hpgdb -Ueve -lqt  | cut -d \| -f 1 | grep -w eve | wc -l`
+db_exists=`psql -hevedb -Ueve -lqt  | cut -d \| -f 1 | grep -w eve | wc -l`
 
 #if [ ! $db_exists == 0 ]; then
 #    psql -hpgdb -Ueve  -c 'drop database eve'
 #fi
 
-psql -hpgdb -Ueve -c 'create role eve'
-psql -hpgdb -Ueve -c 'create role django'
-#psql -hpgdb -Ueve -c 'create database eve'
-gunzip -c /srv/backup/eve.sql.gz | psql -hpgdb -Ueve -q eve
+psql -hevedb -Ueve -c 'create role eve'
+psql -hevedb -Ueve -c 'create role django'
+#psql -hevedb -Ueve -c 'create database eve'
+gunzip -c /srv/backup/eve.sql.gz | psql -hevedb -Ueve -q eve

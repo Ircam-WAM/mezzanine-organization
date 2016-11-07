@@ -1,4 +1,5 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationTabularInline
 from mezzanine.utils.static import static_lazy as static
 from copy import deepcopy
 from mezzanine.core.admin import *
@@ -68,6 +69,11 @@ class DynamicContentPageInline(TabularDynamicInlineAdmin):
         )
 
 
+class PageRelatedTitleAdmin(TranslationTabularInline):
+
+    model = PageRelatedTitle
+
+
 class CustomPageAdmin(PageAdmin):
 
     inlines = [PageBlockInline,
@@ -76,6 +82,7 @@ class CustomPageAdmin(PageAdmin):
             PageLinkInline,
             PersonListBlockAutocompleteInlineAdmin,
             PageProductListInline,
+            PageRelatedTitleAdmin,
             DynamicContentPageInline
             ]
 

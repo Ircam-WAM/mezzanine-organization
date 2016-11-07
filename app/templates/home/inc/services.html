@@ -1,20 +1,20 @@
-{% load staticfiles  %}
+{% load staticfiles i18n %}
 
 <div class="container mb2">
 
     <div class="row">
 
-        <div class="col-sm-6">
+        <div class="col-sm-6 col-xs-6">
 
-            <a class="banner banner--light" href="#" style="background-image:url({% static 'img/services/tours.jpg' %});">
+            <a class="banner banner--light" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
 
                 <div class="banner__content">
 
                     <div class="banner__title fsxxxl">
-                        Tournées 16.17
+                        {% trans 'On Tour' %} {{ CURRENT_SEASON_STYLED }}
                     </div>
                     <div class="banner__desc fss">
-                        Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de toutes choses...
+                        {% blocktrans %}Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de toutes choses...{% endblocktrans %}
                     </div>
 
                 </div>
@@ -23,17 +23,17 @@
 
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-6 col-xs-6">
 
             <a class="banner banner--light" href="http://ulysses-network.eu/web/home/" target="_blank" style="background-image:url({% static 'img/services/applications.jpg' %});">
 
                 <div class="banner__content">
 
                     <div class="banner__title fsxxl">
-                        Appel à candidatures 2017
+                        {% trans 'Calls for Applications 2017' %}
                     </div>
                     <div class="banner__desc fss">
-                        Cursus de composition et d'informatique musicale, Résidence en recherche artistique, ManiFeste-2017 l'académie
+                        {% blocktrans %}Cursus – Practical Training in Composition and Computer Music, Artistic Research Residence, ManiFeste-2017, the Academy{% endblocktrans %}
                     </div>
 
                 </div>
@@ -46,17 +46,17 @@
 
     <div class="row">
 
-        <div class="col-sm-6">
+        <div class="col-sm-6 col-xs-12">
 
             <a class="banner banner--colored banner--orange banner--dark" href="http://medias.ircam.fr/" target="_blank" style="background-image:url({% static 'img/services/resources.jpg' %});">
 
                 <div class="banner__content">
 
                     <div class="banner__title fsxxxl">
-                        Les ressources Ircam
+                        {% trans 'IRCAM Archives' %}
                     </div>
                     <div class="banner__desc fss">
-                        Archives audiovisuelles et sonores, base de documentation sur la musique contemporaine (base BRAHMS), catalogue d'œuvres...
+                        {% blocktrans %}Audiovisual and sound archives, a database on contemporary music (BRAHMS), a catalogue of works…{% endblocktrans %}
                     </div>
 
                 </div>
@@ -65,17 +65,17 @@
 
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-3 col-xs-6">
 
             <a class="banner banner--colored banner--blue banner--light" href="http://forumnet.ircam.fr/fr/" target="_blank" style="background-image:url({% static 'img/services/forumnet.jpg' %});">
 
                 <div class="banner__content">
 
                     <div class="banner__title fsxxl">
-                        Forumnet
+                        {% trans 'Forumnet' %}
                     </div>
                     <div class="banner__desc fss">
-                        Communauté d'utilisateurs des logiciels Ircam
+                        {% blocktrans %}IRCAM software users’ community{% endblocktrans %}
                     </div>
 
                 </div>
@@ -84,17 +84,17 @@
 
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-3 col-xs-6">
 
             <a class="banner banner--colored banner--green banner--light" href="http://community.ulysses-network.eu/" target="_blank" style="background-image:url({% static 'img/services/ulysses.jpg' %});">
 
                 <div class="banner__content">
 
                     <div class="banner__title fsxxl">
-                        Ulysses Community
+                        {% trans 'Ulysses Community' %}
                     </div>
                     <div class="banner__desc fss">
-                        Réseau européen pour la promotion et le soutien de la jeune création musicale contemporaine
+                        {% blocktrans %}European network for the promotion and support of young contemporary musical creation{% endblocktrans %}
                     </div>
 
                 </div>

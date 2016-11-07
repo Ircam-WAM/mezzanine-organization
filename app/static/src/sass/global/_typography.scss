@@ -67,6 +67,10 @@ main p, main ul.unstyled-list, main ul:not([class]), main td {
     @include typey-debug-grid;
 	font-weight: weight(light);
 
+	strong {
+		font-weight: bold;
+	}
+
 	a:not(.button) {
 
 		position: relative;

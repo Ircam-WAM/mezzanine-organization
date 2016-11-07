@@ -37,6 +37,27 @@ Summary.prototype.init = function() {
                 $element.attr('id', "section-" + sectionCount);
                 sectionCount++;
 
+                $element.waypoint(function(direction) {
+                    that.$links.forEach(function (elem) {
+                        elem.removeClass('active');
+                    });
+                    $('[href="#' + $(this.element).attr('id') + '"]').addClass('active');
+                }, {
+                    offset: '200'
+                });
+
+                $element.waypoint(function(direction) {
+                    that.$links.forEach(function (elem) {
+                        elem.removeClass('active');
+                    });
+                    var sectionNumber = parseInt($(this.element).attr('id').substr(8));
+                    sectionNumber--;
+                    console.log(sectionNumber);
+                    $('[href="#section-' + sectionNumber + '"]').addClass('active');
+                }, {
+                    offset: '50%'
+                });
+
             });
 
         });
@@ -44,7 +65,7 @@ Summary.prototype.init = function() {
         $template.remove();
 
         // Scrollspy
-        $(document).on("scroll", that.onScroll.bind(that));
+        //$(document).on("scroll", that.onScroll.bind(that));
 
         // Row height
         if($('.page__sidebar .nav-tree--level-0').height() > $('.page__content').height()) {
@@ -63,13 +84,13 @@ Summary.prototype.onScroll = function(e) {
 
     var scrollPos = $(document).scrollTop(),
         that = this,
-        currentTitle, minDiff = 9999999999999;
+        currentTitle, minDiff = 200;
 
     that.$links.forEach(function (elem) {
         var currLink = elem;
         var refElement = $(elem.attr("href"));
         var diff = refElement.offset().top - scrollPos;
-        if(diff < minDiff && diff > 0) {
+        if(diff < minDiff && diff < 200) {
             minDiff = diff;
             currentTitle = refElement;
         }

@@ -31,7 +31,7 @@
 
             <div class="row">
 
-                <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
+                <div class="col-sm-9 col-sm-push-3 col-lg-9 col-lg-push-2 white-bg">
                     {% block page_title %}
                         {{ page.title }}
                     {% endblock %}
@@ -43,19 +43,17 @@
 
                 <div class="col-sm-3 col-lg-2 page__sidebar">
                     <div style="position: relative;">
-
-
-                    {% block page_sidebar %}
-                        {% if page.get_ascendants|length < 2 %}
-                            {% page_menu "pages/menus/current_tree_primary.html" %}
-                        {% endif %}
-                        {% if page.get_ascendants|length == 2 %}
-                            {% page_menu "pages/menus/current_tree_secondary.html" %}
-                        {% endif %}
-                    {% endblock %}
+                        {% block page_sidebar %}
+                            {% if page.get_ascendants|length < 2 %}
+                                {% page_menu "pages/menus/current_tree_primary.html" %}
+                            {% endif %}
+                            {% if page.get_ascendants|length == 2 %}
+                                {% page_menu "pages/menus/current_tree_secondary.html" %}
+                            {% endif %}
+                        {% endblock %}
                     </div>
                 </div>
-                <div class="mb2 col-sm-9 col-lg-8 white-bg page__content" data-summary-content>
+                <div class="mb2 col-sm-9 col-lg-9 white-bg page__content" data-summary-content>
                     {% block page_content %}
                         {{ page.content }}
                     {% endblock %}
@@ -106,24 +104,71 @@
             {% endfor %}
         {% endblock %}
 
+        <div class="white-bg">
 
-        {% block page_person_list %}
-        {% endblock %}
-        {% block products %}
-        {% endblock %}
-        {% block page_sub_content %}
-            {% with object.blocks.all as blocks %}
-                {% include "core/inc/block.html" %}
-            {% endwith %}
-        {% endblock %}
+            {% block page_person_list %}
+            {% endblock %}
+
+            {% block page_sub_content %}
+                {% with object.blocks.all as blocks %}
+                    {% include "core/inc/block.html" %}
+                {% endwith %}
+            {% endblock %}
+
+            {% block related_project %}
+            {% endblock %}
+
+            {% block products %}
+                {% if page.product_lists.all|length > 0 %}
+                    {% for page_product_list in page.product_lists.all %}
+                      {% with page_product_list.list as list %}
+                        {% with "shop/includes/product_list_"|add:list.style|add:"_style.html" as template %}
+                          {% include template %}
+                        {% endwith %}
+                      {% endwith %}
+                    {% endfor %}
+                {% endif %}
+            {% endblock %}
+
+            {% block page_person_list_team %}
+            {% endblock %}
+
+            {% block page_sub_content_2 %}
+            {% endblock %}
+
+            {% block logo %}
+                {% with page.images.all|get_type:'logo' as images %}
+                    {% if images %}
+                        <div class="page__block{% if block.background_color %} page__block--{{ block.background_color }}{% endif %}">
+                            <div class="white-bg pb2">
+                                <div class="container">
+                                    <div class="row" data-summary-content>
+                                        <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
+                                            <ul class="partners-list">
+                                                {% include 'core/inc/logo.html' %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            {% endblock %}
+
+        </div>
+
+    </div>
+
+    <div class="white-bg">
+
         {% block page_related_content %}
-            {% with page.dynamic_content_pages.all as dynamic_content %}
+            {% with dynamic_content=page.dynamic_content_pages.all object=page %}
                 {% include "core/inc/related_content.html" %}
             {% endwith %}
         {% endblock %}
-        {% block related_project %}
-        {% endblock %}
-        {% block logo %}
-        {% endblock %}
+
     </div>
+
+
 {% endblock %}

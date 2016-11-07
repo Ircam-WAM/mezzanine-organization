@@ -28,10 +28,15 @@ class ProductLinkInline(TabularDynamicInlineAdmin):
 
     model = ProductLink
 
+class ProductPrestashopProductInline(TabularDynamicInlineAdmin):
+
+    model = ProductPrestashopProduct
+
 
 class CustomProductAdmin(ProductAdmin):
 
-    inlines = [ProductImageAdmin, ProductVariationAdmin, ProductLinkInline]
+    inlines = [ProductImageAdmin, ProductVariationAdmin, ProductLinkInline,
+                ProductPrestashopProductInline]
 
 
 admin.site.register(ProductList, ProductListAdmin)

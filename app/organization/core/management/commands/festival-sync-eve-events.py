@@ -23,6 +23,7 @@ class Command(BaseCommand):
           )
 
     default_user = User.objects.get(username='admin')
+    
 
     def cleanup(self):
         # for event in ma_models.Event.objects.all():

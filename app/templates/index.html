@@ -19,6 +19,10 @@
 
 {% block main %}
 
+    <div class="home-mobile-nav">
+        {% page_menu "pages/menus/header.html" %}
+    </div>
+
     {% include "home/inc/slider.html" %}
 
     <ul class="home__menu">
@@ -46,19 +50,22 @@
           </div>
       </li>
       <li class="home__menu-item">
-          <a href="#" title="{% trans "Media" %}">{% trans "Medias" %}</a>
+          <a href="{% url 'organization-playlist-list' %}" title="{% trans "Media" %}">{% trans "Medias" %}</a>
           <div class="home__shutter">
               <div class="home__shutter-content">
                   <div class="container-fluid tal">
                       {% include "media/inc/playlist_shutter.html" %}
                   </div>
-                  <div><a href="{% url 'organization-playlist-list' %}" title="">{% trans 'See more media >' %}</a></div>
               </div>
           </div>
       </li>
     </ul>
 
     {% include "home/inc/body.html" %}
+
+    <div class="home-mobile-subnav">
+        {% page_menu "pages/menus/header.html" %}
+    </div>
 
     {% include "home/inc/bio.html" %}
 

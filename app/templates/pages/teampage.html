@@ -14,8 +14,8 @@
 {% endblock %}
 
 {% block page_title %}
-    {% editable page.teampage.title %}
-        <h1 class="dotted">{{ page.teampage.title }}</h1>
+    {% editable page.title %}
+        <h1 class="dotted">{{ page.title }}</h1>
     {% endeditable %}
 {% endblock %}
 
@@ -33,8 +33,6 @@
      {% editable page.teampage.content %}
         {{ page.teampage.content|richtext_filters|safe }}
      {% endeditable %}
-    {% else %}
-        {% lorem 3 p %}
     {% endif %}
 
     {% if page.get_ascendants|length == 1 %}
@@ -43,7 +41,7 @@
             <div class="page__childrens">
                 {% for children in childrens %}
                     {% with children as object %}
-                        {% include "pages/includes/page_card.html" %}
+                        {% include "pages/page/includes/page_box.html" %}
                     {% endwith %}
                 {% endfor %}
             </div>
@@ -52,95 +50,97 @@
 
 {% endblock %}
 
-{% block page_link %}
-    {% with page.teampage.links.all as links %}
-        {% if links %}
-            {% include 'core/inc/link.html' %}
-        {% endif %}
-    {% endwith %}
-{% endblock %}
-
 {% block page_audio %}
-  {% with page.teampage as object %}
+  {% with page as object %}
       {{ block.super }}
   {% endwith %}
 {% endblock %}
 
 {% block page_slider %}
-    {% with page.teampage as object %}
+    {% with page as object %}
         {{ block.super }}
     {% endwith %}
 {% endblock %}
 
 {% block page_video %}
-  {% with page.teampage as object %}
+  {% with page as object %}
       {{ block.super }}
   {% endwith %}
 {% endblock %}
 
 {% block page_sub_content %}
-  {% with page.teampage.blocks.all as blocks %}
-    {% include "core/inc/block.html" %}
-  {% endwith %}
+    {% with page.blocks.all|slice:'1' as blocks %}
+        {% include "core/inc/block.html" %}
+    {% endwith %}
 {% endblock %}
 
-{% block related_project %}
-    {% if page.teampage.team.leader_projects.all or page.teampage.team.partner_projects.all %}
-        <div class="white-bg pb2">
-            <hr class="mt0" />
+{% block page_person_list %}
+    {% activity_statuses as statuses %}
+    {% if statuses|length > 0 %}
+        <div class="page__block page__block--yellow">
+        {# <hr class="mt0" />#}
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg" data-summary-content>
-                        <h2>{% trans "Research topics and related projects" %}</h2>
-                        {% with page.teampage.team.partner_projects.all|get_type:"internal" as projects %}
-                            {% include 'projects/inc/project_list.html' %}
-                        {% endwith %}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg" data-summary-content>
-                        <h2>{% trans "European and national projects" %}</h2>
-                        {% with page.teampage.team.leader_projects.all|get_type:"external" as projects %}
-                            {% include 'projects/inc/project_list.html' %}
-                        {% endwith %}
-                        {% with page.teampage.team.partner_projects.all|get_type:"external" as projects %}
-                            {% include 'projects/inc/project_list.html' %}
-                        {% endwith %}
+                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2" data-summary-content>
+                        <h2 class="dotted">{% trans 'Team' %}</h2><br>
+                        {% for status in statuses %}
+                            {% with page.teampage.team|get_team_persons:status as persons %}
+                                {% if persons %}
+                                    <strong>{{ status.name }} : </strong>
+                                    {% for person in persons %}
+                                        <a href="{% url 'organization-network-person-detail' person.slug %}">{{ person.title }}</a>{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                    <br/>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
-
-            {% if page.teampage.product_lists.all %}
-                <h4>{% trans "Products" %}</h4>
-                {% for page_product_list in page.teampage.product_lists.all %}
-                  {% with page_product_list.list as list %}
-                    {% with "shop/includes/product_list_"|add:list.style|add:"_style.html" as template %}
-                      {% include template %}
-                    {% endwith %}
-                  {% endwith %}
-                {% endfor %}
-            {% endif %}
-
         </div>
     {% endif %}
 {% endblock %}
 
-{% block logo %}
-    {% with page.teampage.images.all|get_type:'logo' as images %}
-        {% if images %}
-            <div class="page__block{% if block.background_color %} page__block--{{ block.background_color }}{% endif %}">
-                <div class="white-bg pb2">
-                    <div class="container">
-                        <div class="row" data-summary-content>
-                            <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
-                                <ul class="partners-list">
-                                    {% include 'core/inc/logo.html' %}
-                                </ul>
+
+{% block related_project %}
+    {% if page.teampage.team.leader_projects.published or page.teampage.team.partner_projects.published %}
+        <div class="white-bg pb2">
+            {# <hr class="mt0" />#}
+            <div class="container">
+                {% with page.teampage.team.partner_projects.published|get_type:"internal" as projects %}
+                    {% if projects %}
+                        <div class="row">
+                            <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg" data-summary-content>
+                                <h2 class="dotted">{% trans "Research topics and related projects" %}</h2>
+                                    {% include 'projects/inc/project_list.html' %}
                             </div>
                         </div>
+                    {% endif %}
+                {% endwith %}
+                {% with page.teampage.team.leader_projects.published|get_type:"external" as leader_projects %}
+                {% with page.teampage.team.partner_projects.published|get_type:"external" as partner_projects %}
+                {% if leader_projects or partner_projects %}
+                <div class="row">
+                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg" data-summary-content>
+                        <h2 class="dotted">{% trans "European and national projects" %}</h2>
+                        {% with leader_projects as projects %}
+                            {% include 'projects/inc/project_list.html' %}
+                        {% endwith %}
+                        {% with partner_projects as projects %}
+                            {% include 'projects/inc/project_list.html' %}
+                        {% endwith %}
                     </div>
                 </div>
+                {% endif %}
+                {% endwith %}
+                {% endwith %}
             </div>
-        {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block page_sub_content_2 %}
+    {% with page.blocks.all|slice:'1:' as blocks %}
+        {% include "core/inc/block.html" %}
     {% endwith %}
 {% endblock %}

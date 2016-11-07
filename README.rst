@@ -104,6 +104,21 @@ Static files are not included in Git. You need to compile them locally.
 
     gulp build
 
+Work on static files (CSS/JS)
+==================
+
+If you want to modify CSS or JS
+
+1. Installing gulp dependencies::
+
+  See previous section.
+
+2. Run gulp::
+
+    gulp
+
+Gulp will launch BrowserSync. BrowserSync is a middleware that expose the website on port 3000.
+Any change on CSS or JS files will trigger the build system and reload the browser. 
 
 Paths
 ======

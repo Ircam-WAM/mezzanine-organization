@@ -5,9 +5,12 @@ from mezzanine.core.models import Displayable, Slugged, Orderable
 from mezzanine.pages.models import Link as MezzanineLink
 from organization.core.models import *
 from organization.media.models import *
+from organization.core.managers import *
 
 
 class CustomPage(Page, SubTitled, RichText):
+
+    objects = CustomSearchableManager()
 
     class Meta:
         verbose_name = 'custom page'
@@ -50,6 +53,15 @@ class PageLink(Link):
     class Meta:
         verbose_name = _("link")
         verbose_name_plural = _("links")
+        order_with_respect_to = "page"
+
+
+class PageRelatedTitle(RelatedTitle):
+
+    page = models.OneToOneField(Page, verbose_name=_('page'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("related title")
         order_with_respect_to = "page"
 
 
