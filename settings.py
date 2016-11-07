@@ -274,11 +274,11 @@ TEMPLATES = [{'APP_DIRS': False,
                                                   'mezzanine.pages.context_processors.page',
                                                   'organization.core.context_processors.static',
                                                   ),
-                            # 'loaders': [
-                            #     ('django.template.loaders.cached.Loader', [
-                            #         'django.template.loaders.filesystem.Loader',
-                            #         'django.template.loaders.app_directories.Loader',
-                            #     ]),],
+                            'loaders': [
+                                ('django.template.loaders.cached.Loader', [
+                                    'django.template.loaders.filesystem.Loader',
+                                    'django.template.loaders.app_directories.Loader',
+                                ]),],
                           },
             }]
 
