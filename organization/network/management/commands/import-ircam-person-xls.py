@@ -154,6 +154,7 @@ class IrcamPerson(object):
                 elif type == 'title':
                     qs = Q(title=value) | Q(title=value.lower()) | Q(title=value.upper()) | Q(title=value.capitalize())
                     obj = model(title=value)
+                    obj.status = 1
                 elif type == 'person':
                     obj = self.get_person(value)
                     qs = None
