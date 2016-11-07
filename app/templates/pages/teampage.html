@@ -80,11 +80,15 @@
     <div class="container">
       {% activity_statuses as statuses %}
         {% for status in statuses %}
-            {{ status.name }} :
-            {% for person in status|get_team_persons:page.teampage.team %}
-                {{ person.title }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-            <br/>
+          {% with page.teampage.team|get_team_persons:status as persons %}
+            {% if persons %}
+                {{ status.name }} :
+                {% for person in persons %}
+                    <a href="{% url 'organization-network-person-detail' person.slug %}">{{ person.title }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                <br/>
+            {% endif %}
+          {% endwith %}
         {% endfor %}
     </div>
 </div>
