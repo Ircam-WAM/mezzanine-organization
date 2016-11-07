@@ -29,7 +29,7 @@
     {% endif %}
     {% if branch_level == 1 %}
         {% for page in page_branch %}
-            {% if page.in_menu %}
+            {% if page.in_menu and page.in_menus|first %}
                 <li class="nav-tree__item">
                     <a class="nav-tree__link{% if page.is_current or page.is_current_or_ascendant %} active{% endif %}" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
                     {% if page.is_current_or_ascendant and page.has_children_in_menu %}
