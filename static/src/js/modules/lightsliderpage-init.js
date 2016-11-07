@@ -39,6 +39,20 @@ LightSliderPageInit.prototype.init = function() {
                     $(el).find('video').each(function(i) {
                         this.pause();
                     });
+                },
+                onSliderLoad: function (el) {
+
+                    var maxHeight = 0,
+                    container = $(el),
+                    children = container.children();
+
+                    children.each(function () {
+                        var childHeight = $(this).height();
+                        if (childHeight > maxHeight) {
+                            maxHeight = childHeight;
+                        }
+                    });
+                    container.height(maxHeight);
                 }
             }
         };

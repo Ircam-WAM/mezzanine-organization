@@ -1,24 +1,24 @@
 {% load i18n mezzanine_tags keyword_tags organization_tags pages_tags %}
-{% if dynamic_content.all %}
+{% if dynamic_content.first.content_object %}
     <hr class="mt0 mb0" />
     <div class="white-bg pb2">
         <div class="container">
             <div class="row tac">
                 <div class="col-xs-12">
-                    <h2 class="dashed dashed--center mt2">{% trans "Also discover" %}</h2>
+                    <h2 class="dashed dashed--center mt2">{% if object.related_title.title %}{{ object.related_title.title }}{% else %}{% trans "Also discover" %}{% endif %}</h2>
                 </div>
             </div>
             <div class="row tac">
                 {% for content in dynamic_content %}
-                    {% if content.content_model == "article" %}
-                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                            {% include 'magazine/article/includes/article_card.html' %}
-                        </div>
-                    {% else %}
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-                        {% include "core/inc/generic_card.html" %}
+                        {% if content.content_type.model == "article" %}
+                            {% include "magazine/article/includes/article_card.html" with object=content.content_object  %}
+                        {% elif content.content_type.model == "event" %}
+                            {% include "agenda/event/includes/event_card.html" with object=content.content_object %}
+                        {% elif content.content_type.model == "custompage" %}
+                            {% include "pages/page/includes/page_card.html" with object=content.content_object %}
+                        {% endif %}
                     </div>
-                    {%endif%}
                 {% endfor %}
             </div>
         </div>

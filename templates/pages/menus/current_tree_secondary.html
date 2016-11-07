@@ -6,15 +6,21 @@
         {% for page in page_branch %}
             {% if page.in_menu and page.has_children_in_menu %}
                 {% if page.is_primary and page.is_current_or_ascendant %}
-                <ul class="nav-tree nav-tree--level-{{ branch_level }}" data-sticky data-sticky-parent="page" data-sticky-offset="100" data-sticky-detach-at="971">
-                {% endif %}
-                {% if page.is_current_or_ascendant %}
-                    {% if page.has_children_in_menu %}
-                        {% page_menu page %}
+                {% if page.has_children_in_menu %}
+                    <ul class="nav-tree nav-tree--level-{{ branch_level }}" data-sticky data-sticky-parent="page" data-sticky-offset="100" data-sticky-detach-at="971">
                     {% endif %}
+                    {% if page.is_current_or_ascendant %}
+                        {% if page.has_children_in_menu %}
+                            {% page_menu page %}
+                        {% endif %}
+                    {% endif %}
+                    {% if page.is_primary and page.is_current_or_ascendant %}
+                    </ul>
+                {% else %}
+                    <ul class="nav-tree" data-summary>
+                        {% include "pages/menus/current_tree_summary.html" %}
+                    </ul>
                 {% endif %}
-                {% if page.is_primary and page.is_current_or_ascendant %}
-                </ul>
                 {% endif %}
             {% endif %}
         {% endfor %}

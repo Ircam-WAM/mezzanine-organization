@@ -57,6 +57,10 @@ LightSliderNetworkInit.prototype.init = function() {
             that.initMarkers();
         });
 
+        google.maps.event.addListener(that.map, 'zoom_changed', function() {
+            if (that.map.getZoom() < 3) that.map.setZoom(3);
+        });
+
     }
 
 };

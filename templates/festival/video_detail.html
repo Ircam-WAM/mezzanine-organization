@@ -29,20 +29,20 @@
   <div class="msry__container">
    <div class="msry__sizer"></div>
     {% with video.event as event %}
-        {% include 'agenda/includes/event_card.html' %}
-    {% for artist in video.artists.all %}
-        {% include "festival/inc/artist_card.html" %}
-    {% endfor %}
-    {% for v in event.videos.all %}
-      {% if v != video %}
-       {% with v as video %}
-        {% include 'festival/inc/video_card.html' %}
-       {% endwith %}
-      {% endif %}
-    {% endfor %}
-    {% for post in event.blog_posts.all %}
-        {% include 'blog/includes/post_card.html' %}
-    {% endfor %}
+        {% include 'agenda/event/includes/event_card.html' with object=event %}
+        {% for artist in video.artists.all %}
+            {% include "festival/inc/artist_card.html" %}
+        {% endfor %}
+        {% for v in event.videos.all %}
+          {% if v != video %}
+           {% with v as video %}
+            {% include 'festival/inc/video_card.html' %}
+           {% endwith %}
+          {% endif %}
+        {% endfor %}
+        {% for post in event.blog_posts.all %}
+            {% include 'blog/includes/post_card.html' %}
+        {% endfor %}
     {% endwith %}
 
 </div>

@@ -36,7 +36,7 @@ class TeamTranslationOptions(TranslationOptions):
 @register(Person)
 class PersonTranslationOptions(TranslationOptions):
 
-    fields = ('bio',)
+    fields = ('description','bio',)
 
 
 @register(PersonActivity)
@@ -54,7 +54,7 @@ class PersonPlaylistTranslationOptions(TranslationOptions):
 @register(PersonLink)
 class PersonLinkTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title',)
 
 
 @register(PersonImage)
@@ -72,7 +72,7 @@ class PersonFileTranslationOptions(TranslationOptions):
 @register(PersonBlock)
 class PersonBlockTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title', 'description', 'content')
 
 
 @register(OrganizationPlaylist)
@@ -84,7 +84,7 @@ class OrganizationTranslationOptions(TranslationOptions):
 @register(OrganizationLink)
 class OrganizationLinkTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title',)
 
 
 @register(OrganizationImage)
@@ -102,7 +102,7 @@ class OrganizationBlockTranslationOptions(TranslationOptions):
 @register(PersonListBlock)
 class PersonListBlockTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('title', 'description')
 
 
 @register(PersonListBlockInline)

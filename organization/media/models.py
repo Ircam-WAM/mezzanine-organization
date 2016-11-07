@@ -29,7 +29,7 @@ class Media(Displayable):
     category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='medias', blank=True, null=True, on_delete=models.SET_NULL)
 
     # objects = SearchableManager()
-    search_fields = ("title",)
+    # search_fields = ("title",)
 
     class Meta:
         verbose_name = "media"
@@ -47,7 +47,6 @@ class Media(Displayable):
         return MEDIA_BASE_URL + self.external_id
 
     def get_html(self):
-        print(self.uri)
         r = requests.get(self.uri)
         return r.content
 
@@ -135,7 +134,7 @@ class PlaylistMedia(models.Model):
 class PlaylistRelated(models.Model):
     """Playlist inline"""
 
-    playlist = models.ForeignKey(Playlist, verbose_name=_('playlist'), blank=True, null=True, on_delete=models.SET_NULL)
+    playlist = models.ForeignKey(Playlist, verbose_name=_('playlist'), related_name='playlist_related', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('playlist')

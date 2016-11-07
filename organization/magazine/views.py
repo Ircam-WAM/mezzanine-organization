@@ -12,9 +12,9 @@ from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
 from mezzanine.utils.views import paginate
 from mezzanine.conf import settings
-from organization.magazine.models import Article, Topic, Brief
+from organization.magazine.models import *
 from organization.network.models import DepartmentPage
-from organization.pages.models import CustomPage
+from organization.pages.models import CustomPage, DynamicContentPage
 from organization.core.views import SlugMixin
 from django.template.defaultfilters import slugify
 
@@ -25,12 +25,34 @@ class ArticleDetailView(SlugMixin, DetailView):
     template_name='magazine/article/article_detail.html'
     context_object_name = 'article'
 
+    def get_object(self):
+        articles = self.model.objects.published(for_user=self.request.user).select_related()
+        return get_object_or_404(articles, slug=self.kwargs['slug'])
+
     def get_context_data(self, **kwargs):
-        article = self.get_object()
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
-        if article.department:
-            context['department_weaving_css_class'] = article.department.pages.first().weaving_css_class
-            context['department_name'] = article.department.name
+
+        # automatic relation : dynamic content page
+        pages = DynamicContentPage.objects.filter(object_id=self.object.id).all()
+        pages = [p.content_object for p in pages]
+
+        # automatic relation : dynamic content article
+        articles = DynamicContentArticle.objects.filter(object_id=self.object.id).all()
+        articles = [a.content_object for a in articles]
+
+        # manual relation : get dynamic contents of current article
+        dynamic_content = [dca.content_object for dca in self.object.dynamic_content_articles.all()]
+
+        # gather all and order by creation date
+        related_content = pages
+        related_content = articles
+        related_content += dynamic_content
+        related_content.sort(key=lambda x: x.created, reverse=True)
+        context['related_content'] = related_content
+
+        if self.object.department:
+            context['department_weaving_css_class'] = self.object.department.pages.first().weaving_css_class
+            context['department_name'] = self.object.department.name
         return context
 
 
@@ -39,6 +61,9 @@ class ArticleListView(SlugMixin, ListView):
     model = Article
     template_name='magazine/article/article_list.html'
     context_object_name = 'article'
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.published(for_user=self.request.user).select_related()
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)

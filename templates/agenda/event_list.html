@@ -1,11 +1,11 @@
 {% extends "pages/page.html" %}
-{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags %}
+{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags staticfiles pages_tags %}
 
 {% block meta_title %}
     {% if page %}
-        {{ page.richtextpage.meta_title }}
+        {{ page.title }}
     {% else %}
-        {% trans "Events" %}
+        {% trans "Rendez-vous in Paris" %}
     {% endif %}
 {% endblock %}
 
@@ -27,31 +27,7 @@
 
 {% block breadcrumb_menu %}
     {{ block.super }}
-    {% if tag or location or month or week or author %}
-        <li class="breadcrumb__item">
-            <a href="{% url 'event_list' %}" class="breadcrumb__link">{% trans "Agenda" %}</a>
-        </li>
-        <li class="breadcrumb__item active">
-            {% if tag %}
-                {% trans "Tag:" %} {{ tag }}
-            {% elif location %}
-                {% trans "Location:" %} {{ location }}
-            {% elif month %}
-                {% if month %}{{ month }}, {% endif %}{{ year }}
-            {% elif week %}
-                {% for d in week|week_range:year %}
-                    {{ d|date:"d M" }}{% if forloop.first %} - {% endif %}
-                {% endfor %}
-                , {{ year }}
-            {% elif author %}
-                {% trans "Author:" %} {{ author.get_full_name|default:author.username }}
-            {% endif %}
-        </li>
-    {% else %}
-        <li class="breadcrumb__item active">
-            {% trans "Agenda" %}
-        </li>
-    {% endif %}
+    
 {% endblock %}
 
 {% block main %}
@@ -61,14 +37,10 @@
 
             <div class="row">
 
-                <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2 white-bg">
+                <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
 
                     <h1 class="dotted">
-                        {% if page %}
-                            {{ page.richtextpage.meta_title }}
-                        {% else %}
-                            {% trans "Agenda" %}
-                        {% endif %}
+                        {{ page.title }}
                     </h1>
 
                 </div>
@@ -79,48 +51,131 @@
 
                 <div class="col-sm-3 col-lg-2 page__sidebar">
 
-                    <ul class="nav-tree nav-tree--level-{{ branch_level }}" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
-                        <li class="nav-tree__item">
-                            <a class="nav-tree__link active" href="{{ page.get_absolute_url }}">{% trans 'Agenda' %}</a>
+                    <div style="position: relative;" >
 
-                            <ul class="nav-tree" data-summary>
-                                <li class="nav-tree__item nav-tree__item--sub hide">
-                                    <a class="nav-tree__link nav-tree__link--sub" href="#"></a>
-                                </li>
-                            </ul>
-                        </li>
+                        {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
+                        <a class="banner banner--light banner--sidebar hide-until-sm" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
 
-                        <li class="nav-tree__separator">
+                            <div class="banner__content">
 
-                        </li>
+                                <div class="banner__title fsxxxl">
+                                    Tournées {{ CURRENT_SEASON_STYLED }}
+                                </div>
 
-                        {% keywords_for mezzanine_agenda.event as tags %}
-                        {# {% all_events as all_events %}#}
-                        {% if tags %}
+                            </div>
+
+                        </a>
+                        {% endif %}
+
+                        <div class="nav-tree-wrapper" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
+
+                            {% page_menu "pages/menus/current_tree_event.html" %}
+
                             {% comment %}
-                                <a href="{% url 'event_list' %}" class="button{% if not tag %} button--black{% else %} button--white{% endif %}">{% trans "All events" %}</a>
-                            {% endcomment %}
-                            {% for t in tags %}
-                                {% if not t|tag_is_excluded %}
+                            <ul class="nav-tree nav-tree--level-{{ branch_level }}">
+                                <li class="nav-tree__item">
+                                    <a class="nav-tree__link active" href="{% url 'event_list' %}">
+                                        {% if tag and tag|tag_is_excluded %}
+                                            {% trans "Tournées" %}
+                                        {% elif is_archive %}
+                                            {% trans 'Archives' %}
+                                        {% else %}
+                                            {% trans "Rendez-vous in Paris" %}
+                                        {% endif %}
+                                    </a>
+
+                                    <ul class="nav-tree" data-summary>
+                                        <li class="nav-tree__item nav-tree__item--sub hide">
+                                            <a class="nav-tree__link nav-tree__link--sub" href="#"></a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                {% if is_archive %}
                                     <li class="nav-tree__item">
-                                        <a class="nav-tree__link--filter nav-tree__link{% if tag == t %} active{% endif %}" href="{% if tag == t %}{% url 'event_list' %}{% else %}{% url "event_list_tag" t.slug %}{% endif %}">
-                                            {{ t }} {% if tag == t %}<i class="fa fa-times"></i>{% endif %}
+                                        <a class="nav-tree__link" href="{% url 'event_list' %}">
+                                            {% trans "Rendez-vous in Paris" %}
                                         </a>
                                     </li>
                                 {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </ul>
 
+                                {% if tag and tag|tag_is_excluded %}
+                                    <li class="nav-tree__item">
+                                        <a class="nav-tree__link" href="{% url 'event_list' %}">
+                                            {% trans "Rendez-vous in Paris" %}
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="nav-tree__item">
+                                        <a class="nav-tree__link" href="{% url 'event_list_tag' 'tournees' %}">
+                                            {% trans "Tournées" %}
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% if not is_archive %}
+                                    <li class="nav-tree__item">
+                                        <a class="nav-tree__link" href="{% url "event_list_year" CURRENT_SEASON %}" title="{% trans 'archive' %}">{% trans 'Archives' %}</a>
+                                    </li>
+                                {% endif %}
+
+                            </ul>
+
+                        {% endcomment %}
+
+                                {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
+
+                                    <ul class="nav-tree nav-tree--level-{{ branch_level }}">
+
+                                    {% keywords_for mezzanine_agenda.event as tags %}
+                                    {# {% all_events as all_events %}#}
+                                    {% if tags %}
+                                        {% comment %}
+                                            <a href="{% url 'event_list' %}" class="button{% if not tag %} button--black{% else %} button--white{% endif %}">{% trans "All events" %}</a>
+                                        {% endcomment %}
+                                        {% for t in tags %}
+                                            {% if not t|tag_is_excluded %}
+                                                <li class="nav-tree__item">
+                                                    <a class="nav-tree__link--filter nav-tree__link{% if tag == t %} active{% endif %}" href="{% if tag == t %}{% url 'event_list' %}{% else %}{% url "event_list_tag" t.slug %}{% endif %}">
+                                                        {{ t }} {% if tag == t %}<i class="fa fa-times"></i>{% endif %}
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    </ul>
+
+                                {% endif %}
+
+                        </div>
+
+                    </div>
                 </div>
 
-                <div class="mb2 col-sm-9 col-lg-8 white-bg page__content" data-summary-content>
+                <div class="mb2 col-sm-9 col-lg-10 page__content" data-summary-content>
 
-                    <div class="white-bg page__content">
+                    <div class="page__content">
                         <div class="container">
+
                             {% for event in events.object_list %}
                                 {% include 'agenda/includes/event_linecard.html' %}
                             {% endfor %}
+
+                            {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
+                            <a class="banner banner--light banner--sidebar hide-from-sm" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
+
+                                <div class="banner__content">
+
+                                    <div class="banner__title fsxxxl">
+                                        Tournées {{ CURRENT_SEASON_STYLED }}
+                                    </div>
+
+                                </div>
+
+                            </a>
+                            {% endif %}
+
                         </div>
                     </div>
 
@@ -129,8 +184,6 @@
             </div>
 
         </div>
-
-        {% pagination_for events %}
 
     </div>
 {% endblock %}

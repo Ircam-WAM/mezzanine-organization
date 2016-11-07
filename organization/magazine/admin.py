@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django import forms
 from copy import deepcopy
+from modeltranslation.admin import TranslationTabularInline
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from organization.magazine.models import *
@@ -39,6 +40,11 @@ class DynamicContentArticleInline(TabularDynamicInlineAdmin):
         )
 
 
+class ArticleRelatedTitleAdmin(TranslationTabularInline):
+
+    model = ArticleRelatedTitle
+
+
 class ArticleAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
@@ -46,6 +52,7 @@ class ArticleAdminDisplayable(DisplayableAdmin):
     filter_horizontal = ['categories',]
     inlines = [ArticleImageInline,
               ArticlePersonAutocompleteInlineAdmin,
+              ArticleRelatedTitleAdmin,
               DynamicContentArticleInline,
               ArticlePlaylistInline]
 

@@ -1,11 +1,10 @@
 {% load i18n mezzanine_tags %}
 
-<div class="brief-box">
+<div class="brief-box brief-box--{{ content.content_object.style }}">
     
     <div class="brief-box__head">
         {% trans 'Brief !' %}
     </div>
-
     <h3 class="brief-box__title">{{content.content_object.title }}</h3>
     <div class="brief-box__desc">
         {{content.content_object.content|richtext_filters|safe|truncatechars_html:150 }}

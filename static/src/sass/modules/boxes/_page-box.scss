@@ -8,6 +8,11 @@ $module: ".page-box";
 
     @include margin-bottom(1);
 
+    @include mq($until: sm) {
+        height: auto;
+        overflow: hidden;
+    }
+
     &:first-of-type {
 
         @include margin-top(3);
@@ -16,7 +21,16 @@ $module: ".page-box";
 
     &__image {
 
-        @include fluid-aspect(9 4, "img");
+        @include fluid-aspect(9 4);
+
+        @include mq($until: xs) {
+            @include fluid-aspect(4.5 8);
+            >img:first-child {
+                width: 310%;
+                left: -50%;
+                max-width: none;
+            }
+        }
 
         &:after {
             content: '';
@@ -29,6 +43,33 @@ $module: ".page-box";
 
             background: rgba(0, 0, 0, 0.4);
             @include transition(all 0.25s ease-in-out);
+        }
+
+    }
+
+    &__placeholder {
+
+        background: $color-main;
+
+        &.pattern-bg--squares {
+            background-color: white;
+            background-image: url(../img/patterns/squares.png);
+            opacity: 0.4;
+        }
+        &.pattern-bg--circles {
+            background-color: white;
+            background-image: url(../img/patterns/circles.png);
+            opacity: 0.2;
+        }
+        &.pattern-bg--stripes {
+            background-color: white;
+            background-image: url(../img/patterns/stripes.png);
+            opacity: 0.4;
+        }
+        &.pattern-bg--triangles {
+            background-color: white;
+            background-image: url(../img/patterns/triangles.png);
+            opacity: 0.2;
         }
 
     }
