@@ -25,6 +25,10 @@ class ArticleDetailView(SlugMixin, DetailView):
     template_name='magazine/article/article_detail.html'
     context_object_name = 'article'
 
+    def get_object(self, **kwargs):
+        articles = self.model.objects.published(for_user=self.request.user).select_related()
+        return get_object_or_404(articles, slug=kwargs['slug'])
+
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
 
@@ -57,6 +61,9 @@ class ArticleListView(SlugMixin, ListView):
     model = Article
     template_name='magazine/article/article_list.html'
     context_object_name = 'article'
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.published(for_user=self.request.user).select_related()
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)

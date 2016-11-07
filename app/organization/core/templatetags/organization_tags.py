@@ -115,12 +115,6 @@ def in_category(objects, category):
 def sub_topics(topic):
     return ProjectTopic.objects.filter(parent=topic)
 
-
-@register.filter
-def classname(obj):
-    return obj.__class__.__name__
-
-
 @register.filter
 def classname(obj):
     return obj.__class__.__name__
@@ -135,3 +129,15 @@ def app_label_short(obj):
     else :
         app_label_short = app_label
     return app_label_short
+
+@register.as_tag
+def activity_statuses(*args):
+    return ActivityStatus.objects.filter(display=True)
+
+@register.filter
+def get_team_persons(status, team):
+    persons = []
+    for activity in status.activities.filter(teams__in=[team]):
+        if not activity.person in persons:
+            persons.append(activity.person)
+    return persons
