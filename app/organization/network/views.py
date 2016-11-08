@@ -19,7 +19,7 @@ class PersonDetailView(SlugMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
-        context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" @ ircam.fr"
+        context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
         return context
 
 

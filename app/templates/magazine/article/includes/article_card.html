@@ -57,9 +57,11 @@
 {% endblock %}
 
 {% block subtitle %}
-    {{ object.publish_date|date:"DATE_FORMAT" }}
+    {% comment %}
+        {{ object.publish_date|date:"DATE_FORMAT" }}
+    {% endcomment %}
     {% for category in object.categories.all %}
-        {% if forloop.first %} | {% endif %}
+        {% comment %}{% if forloop.first %} | {% endif %}{% endcomment %}
         {% if not forloop.first %}, {% endif %}
         <strong>{{ category }}</strong>
     {% endfor %}
