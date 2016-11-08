@@ -23,10 +23,9 @@ log='/var/log/uwsgi/app.log'
 # pip install -U https://forge.ircam.fr/p/django-eve/source/download/dev/
 # pip install https://forge.ircam.fr/p/django-prestashop/source/download/master/ --src /srv/lib
 # pip install -U https://github.com/stephenmcd/grappelli-safe/archive/dynamic_stacked.zip
-# pip install django-querysetsequence
+pip install django-querysetsequence==0.6.1 django==1.9.11
 #pip install django-autocomplete-light django-querysetsequence
 #/usr/bin/yes | pip uninstall django-orderable
-pip install -U django-querysetsequence==0.6.1
 
 chown -R $uid:$gid $media
 
