@@ -26,6 +26,7 @@ log='/var/log/uwsgi/app.log'
 # pip install django-querysetsequence
 #pip install django-autocomplete-light django-querysetsequence
 #/usr/bin/yes | pip uninstall django-orderable
+pip install -U django-querysetsequence==0.6.1
 
 chown -R $uid:$gid $media
 
