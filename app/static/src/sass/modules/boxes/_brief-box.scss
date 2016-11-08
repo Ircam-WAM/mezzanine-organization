@@ -31,13 +31,17 @@ $module: ".brief-box";
         margin: 0 auto;
         color: $brief-box-color;
 
-        @include margin-top(5);
+        @include margin-top(4);
         @include margin-bottom(1);
 
-        @include font-size(xl);
+        @include font-size(l);
         @include line-height(1.25);
         @include typeface(serif);
         font-weight: weight(heavy);
+
+        @include mq($until: lg) {
+            @include margin-top(2);
+        }
 
     }
 
@@ -49,7 +53,7 @@ $module: ".brief-box";
 
         @include margin-bottom(1);
 
-        @include font-size(xl);
+        @include font-size(l);
         @include line-height(1.25);
         @include typeface(serif);
         font-weight: weight(light);
@@ -61,8 +65,12 @@ $module: ".brief-box";
         @extend .button;
         @extend .button--small;
 
-        @include margin-bottom(5);
+        @include margin-bottom(4);
         margin-right: 0;
+
+        @include mq($until: lg) {
+            @include margin-bottom(2);
+        }
 
     }
 
