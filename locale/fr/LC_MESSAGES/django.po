@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 11:20+0100\n"
+"POT-Creation-Date: 2016-11-08 11:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1998,10 +1998,14 @@ msgid "Follow us on Vimeo"
 msgstr "Suivez-nous sur Vimeo"
 
 #: templates/base.html:154
+#, fuzzy
+#| msgid "Opening Times"
 msgid "Opening times"
 msgstr "Horaires d'ouverture"
 
 #: templates/base.html:161
+#, fuzzy
+#| msgid "Subway Access"
 msgid "Subway access"
 msgstr "Accès en transports"
 
@@ -2331,7 +2335,7 @@ msgstr ""
 #: templates/magazine/article/article_detail.html:38
 #: templates/magazine/article/includes/article_card.html:45
 msgid "News"
-msgstr ""
+msgstr "À la une"
 
 #: templates/includes/calendar.html:3
 msgid "Festival calendar"
@@ -2392,7 +2396,7 @@ msgstr ""
 
 #: templates/index.html:30
 msgid "News Headlines"
-msgstr "À la une"
+msgstr ""
 
 #: templates/index.html:43
 msgid "Brief"
@@ -2452,17 +2456,14 @@ msgid "resume"
 msgstr "résumé"
 
 #: templates/network/person_detail.html:37
-#| msgid "activities"
 msgid "Activities"
 msgstr "Activités"
 
 #: templates/network/person_detail.html:42
-#| msgid "function"
 msgid "Functions"
 msgstr "Fonctions"
 
 #: templates/network/person_detail.html:46
-#| msgid "teams"
 msgid "Teams"
 msgstr "Équipes"
 
@@ -2477,7 +2478,7 @@ msgstr "Soumettre"
 #: templates/pages/menus/current_tree_primary.html:12
 #: templates/pages/menus/current_tree_secondary.html:31
 msgid "Accueil"
-msgstr ""
+msgstr "Back"
 
 #: templates/pages/menus/vous_etes.html:6
 #: templates/pages/menus/vous_etes.html:15
@@ -2508,15 +2509,17 @@ msgstr "Articles associés"
 
 #: templates/pages/teampage.html:86
 msgid "Research topics and related projects"
-msgstr "Sujets de recherche et projets associés"
+msgstr "Domaines de recherche et projets associés"
 
 #: templates/pages/teampage.html:97
 msgid "European and national projects"
-msgstr "Projets européens et nationaux"
+msgstr "Projets nationaux et européens"
 
 #: templates/pages/teampage.html:128
+#, fuzzy
+#| msgid "Teams"
 msgid "Team"
-msgstr "Équipe"
+msgstr "Équipes"
 
 #: templates/projects/project_demo_detail.html:4
 msgid "Demo"
@@ -2527,7 +2530,6 @@ msgid "Demos"
 msgstr ""
 
 #: templates/projects/project_demo_detail.html:35
-#| msgid "Projects"
 msgid "Project"
 msgstr "Projet"
 
@@ -2568,8 +2570,10 @@ msgid "Project lead team"
 msgstr ""
 
 #: templates/projects/project_detail.html:213
+#, fuzzy
+#| msgid "lead organization"
 msgid "Project lead organization"
-msgstr "Projet de l'organisation principale"
+msgstr "organisation principale"
 
 #: templates/projects/project_detail.html:230
 msgid "Partners"
@@ -2884,6 +2888,9 @@ msgstr ""
 #: templates/twitter/tweets.html:7
 msgid "Recent Tweets"
 msgstr "Tweets récents"
+
+#~ msgid "Coordinator"
+#~ msgstr "Coordinateur"
 
 #~ msgid "attachment organization"
 #~ msgstr "organisation rattachée"
