@@ -1,4 +1,4 @@
-{% load i18n pages_tags staticfiles %}
+{% load i18n pages_tags staticfiles organization_tags %}
 {% get_language_info_list for LANGUAGES as languages %}
 
 {% spaceless %}
@@ -22,4 +22,6 @@
         {% endif %}
     {% endfor %}
 {% endif %}
+
+Copyright &copy; {% current_year %} IRCAM
 {% endspaceless %}
