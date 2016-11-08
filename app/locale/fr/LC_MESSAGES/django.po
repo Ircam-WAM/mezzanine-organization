@@ -64,7 +64,7 @@ msgstr ""
 #: local_settings.py:134 templates/job/job_offer_list.html:4
 #: templates/job/job_offer_list.html:15
 msgid "Jobs"
-msgstr ""
+msgstr "Offres d'emplois et stages"
 
 #: local_settings.py:135
 msgid "Festival"
