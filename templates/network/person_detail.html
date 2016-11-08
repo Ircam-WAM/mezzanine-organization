@@ -32,35 +32,37 @@
     {% endeditable %}
 
     <p>{% trans 'Email' %} : {{ person_email }}</p>
-    <br>
-    <p>
-        {% trans 'Activities' %}:
-        <ul>
+
+    {% if person.activities.all|length > 0 %}
+        <h2 class="dotted">{% trans 'Activities' %}</h2>
+        <ul class="unstyled-list">
             {% for activity in person.activities.all %}
-            <li>
+            <li class="mb1">
                 {% if activity.function %}
-                    {% trans 'Functions'%} : {{ activity.function }}<br>
+                    <strong>{% trans 'Functions'%}:</strong> {{ activity.function }}<br>
                 {% endif %}
                 {% with activity.teams.all as actvities %}
                     {% if actvities %}
-                        {% trans 'Teams' %} :<br>
+                        <strong>{% trans 'Teams' %}:</strong>
                         {% for team in actvities %}
-                            {{ team.name }}<br>
+                            {{ team.name }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
+                        <br />
                     {% endif %}
                 {% endwith %}
                 {% with activity.organizations.all as organizations %}
                     {% if organizations %}
-                        {% trans 'Organization' %} :<br>
+                        <strong>{% trans 'Organization' %}:</strong>
                         {% for organization in organizations %}
-                        {{ organization.name }}<br>
+                            {{ organization.name }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
+                        <br />
                     {% endif %}
                 {% endwith %}
             </li>
             {% endfor %}
         </ul>
-    </p>
+    {% endif %}
 {% endblock %}
 
 {% block page_sidebar %}
@@ -77,7 +79,8 @@
 
 {% block page_link %}
     {% with person.links.all as links %}
-        {% if links %}
+        {% if links or person_email %}
+            <h2 class="dotted">{% trans 'Links' %}</h2>
             {% include 'core/inc/link.html' %}
         {% endif %}
     {% endwith %}
