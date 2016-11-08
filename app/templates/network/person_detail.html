@@ -31,7 +31,7 @@
         {{ person.bio|richtext_filters|safe }}
     {% endeditable %}
 
-    <p>{% trans 'Email' %} : {{ person_email }}</p>
+    <p><strong>{% trans 'Email' %} :</strong> {{ person_email }}</p>
 
     {% if person.activities.all|length > 0 %}
         <h2 class="dotted">{% trans 'Activities' %}</h2>
