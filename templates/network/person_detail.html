@@ -31,34 +31,56 @@
         {{ person.bio|richtext_filters|safe }}
     {% endeditable %}
 
-    <p>{% trans 'Email' %} : {{ person_email }}</p>
+    <p><strong>{% trans 'Email' %} :</strong> {{ person_email }}</p>
 
     {% if person.activities.all|length > 0 %}
         <h2 class="dotted">{% trans 'Activities' %}</h2>
         <ul class="unstyled-list">
             {% for activity in person.activities.all %}
             <li class="mb1">
+                {% comment %}
                 {% if activity.function %}
-                    <strong>{% trans 'Functions'%}:</strong> {{ activity.function }}<br>
+                    <strong>{% trans 'Function'%} : </strong>{{ activity.function }}<br>
                 {% endif %}
-                {% with activity.teams.all as actvities %}
-                    {% if actvities %}
-                        <strong>{% trans 'Teams' %}:</strong>
-                        {% for team in actvities %}
-                            {{ team.name }}{% if not forloop.last %}, {% endif %}
+                {% if activity.status %}
+                    <strong>{% trans 'Status'%} : </strong>{{ activity.status }}<br>
+                {% endif %}
+                {% endcomment %}
+                {% with activity.teams.all as teams %}
+                    {% if teams %}
+                        <strong>{% trans 'Team' %} : </strong>
+                        {% for team in teams %}
+                            <a href="{% url "page" team.pages.all.0 %}">{{ team.name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                         <br />
                     {% endif %}
                 {% endwith %}
                 {% with activity.organizations.all as organizations %}
+                  {% with activity.employers.all as employers %}
                     {% if organizations %}
-                        <strong>{% trans 'Organization' %}:</strong>
+                        <strong>{% trans 'Organization' %} : </strong>
                         {% for organization in organizations %}
                             {{ organization.name }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                         <br />
+                    {% elif employers %}
+                        <strong>{% trans 'Organization' %} : </strong>
+                        {% for employer in employers %}
+                            {{ employer.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    <br />
                     {% endif %}
+                  {% endwith %}
                 {% endwith %}
+                {% if activity.date_from or activity.date_to %}
+                  {% if not activity.date_from and not activity.date_to|date_year_higher_than:10 %}
+                    <strong>{% trans 'Period' %}</strong> : {% trans 'to' %} {{ activity.date_to }}<br>
+                  {% elif not activity.date_to %}
+                    <strong>{% trans 'Period'%}</strong> : {% trans 'from' %} {{ activity.date_from }}<br>
+                  {% else %}
+                    <strong>{% trans 'Period'%}</strong> : {% trans 'from' %} {{ activity.date_from }} {% if not activity.date_to|date_year_higher_than:10 %}{% trans 'to' %} {{ activity.date_to }}{% endif %}<br>
+                  {% endif %}
+                {% endif %}
             </li>
             {% endfor %}
         </ul>
