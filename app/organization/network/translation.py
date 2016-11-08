@@ -138,7 +138,7 @@ class ActivityFrameworkTranslationOptions(TranslationOptions):
 @register(ActivityStatus)
 class ActivityGradeTranslationOptions(TranslationOptions):
 
-    fields = ['name', 'description']
+    fields = ['name', 'description', 'display_text']
 
 
 @register(TrainingTopic)
