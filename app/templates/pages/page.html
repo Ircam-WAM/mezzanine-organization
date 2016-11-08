@@ -130,12 +130,15 @@
                 {% endif %}
             {% endblock %}
 
-            {% block page_person_list_team %}
-            {% endblock %}
-
             {% block page_sub_content_2 %}
             {% endblock %}
 
+            {% block page_person_list_team %}
+            {% endblock %}
+
+            {% block page_sub_content_3 %}
+            {% endblock %}
+            
             {% block logo %}
                 {% with page.images.all|get_type:'logo' as images %}
                     {% if images %}
