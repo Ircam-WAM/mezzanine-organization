@@ -123,8 +123,10 @@
             <div class="footer__pre">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-6 col-sm-push-1 tal-sm tac-sm tal-xs">
-                            <!--newsletter-->
+                        <div class="col-sm-6 col-sm-push-1 tal">
+                            <a class="button button--small" href="{{ NEWSLETTER_SUBSCRIBING_URL }}">
+                                {% trans "Subscribe to our newsletter" %}
+                            </a>
                         </div>
                         <div class="col-sm-3 col-sm-push-1 tac-sm tal-xs">
                             <a class="footer__follow-link facebook" href="https://www.facebook.com/iIRCAM/" target="_blank" title="{% trans 'Follow us on Facebook' %}"><i class="fa fa-facebook-square"></i></a>
