@@ -32,35 +32,49 @@
     {% endeditable %}
 
     <p>{% trans 'Email' %} : {{ person_email }}</p>
-    <br>
-    <p>
-        {% trans 'Activities' %}:
-        <ul>
+
+    {% if person.activities.all|length > 0 %}
+        <h2 class="dotted">{% trans 'Activities' %}</h2>
+        <ul class="unstyled-list">
             {% for activity in person.activities.all %}
-            <li>
+            <li class="mb1">
                 {% if activity.function %}
-                    {% trans 'Functions'%} : {{ activity.function }}<br>
+                    <strong>{% trans 'Function'%} :</strong> {{ activity.function }}<br>
                 {% endif %}
-                {% with activity.teams.all as actvities %}
-                    {% if actvities %}
-                        {% trans 'Teams' %} :<br>
-                        {% for team in actvities %}
-                            {{ team.name }}<br>
+                {% if activity.status %}
+                    <strong>{% trans 'Status'%} :</strong> {{ activity.status }}<br>
+                {% endif %}
+                {% with activity.teams.all as teams %}
+                    {% if teams %}
+                        <strong>{% trans 'Team' %} :</strong>
+                        {% for team in teams %}
+                            {{ team.name }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
+                        <br />
                     {% endif %}
                 {% endwith %}
                 {% with activity.organizations.all as organizations %}
                     {% if organizations %}
-                        {% trans 'Organization' %} :<br>
+                        <strong>{% trans 'Organization' %}:</strong>
                         {% for organization in organizations %}
-                        {{ organization.name }}<br>
+                            {{ organization.name }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
+                        <br />
                     {% endif %}
                 {% endwith %}
+                {% if activity.date_from or activity.date_to %}
+                  {% if not activity.date_from and not activity.date_to|date_year_higher_than:10 %}
+                    <strong>{% trans 'Period' %}</strong> : {% trans 'to' %} {{ activity.date_to }}<br>
+                  {% elif not activity.date_to %}
+                    <strong>{% trans 'Period'%}</strong> : {% trans 'from' %} {{ activity.date_from }}<br>
+                  {% else %}
+                    <strong>{% trans 'Period'%}</strong> : {% trans 'from' %} {{ activity.date_from }} {% if not activity.date_to|date_year_higher_than:10 %}{% trans 'to' %} {{ activity.date_to }}{% endif %}<br>
+                  {% endif %}
+                {% endif %}
             </li>
             {% endfor %}
         </ul>
-    </p>
+    {% endif %}
 {% endblock %}
 
 {% block page_sidebar %}
@@ -77,7 +91,8 @@
 
 {% block page_link %}
     {% with person.links.all as links %}
-        {% if links %}
+        {% if links or person_email %}
+            <h2 class="dotted">{% trans 'Links' %}</h2>
             {% include 'core/inc/link.html' %}
         {% endif %}
     {% endwith %}

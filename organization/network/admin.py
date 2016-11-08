@@ -134,6 +134,10 @@ class PersonActivityAdmin(BaseTranslationModelAdmin):
     list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to']
     filter_horizontal = ['organizations', 'employers', 'teams', 'projects',
                          'supervisors', 'phd_directors', ]
+    search_fields = ['person__title',]
+    list_filter = [ 'date_from', 'date_to',
+                    'is_permanent', 'framework', 'grade',
+                    'status', 'teams', 'projects',]
 
     def get_teams(self, instance):
         values = []
