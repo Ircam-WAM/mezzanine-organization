@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 11:32+0100\n"
+"POT-Creation-Date: 2016-11-08 17:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,11 +27,11 @@ msgstr "Pages"
 #: templates/media/playlist_detail.html:21 templates/media/playlist_list.html:6
 #: templates/media/playlist_list.html:11 templates/media/playlist_list.html:15
 msgid "Media"
-msgstr ""
+msgstr "Media"
 
 #: local_settings.py:94
 msgid "Media Library"
-msgstr ""
+msgstr "Librairie media"
 
 #: local_settings.py:96
 msgid "Events"
@@ -63,7 +63,7 @@ msgstr ""
 #: local_settings.py:139 templates/job/job_offer_list.html:4
 #: templates/job/job_offer_list.html:15
 msgid "Jobs"
-msgstr ""
+msgstr "Offres d'emploi"
 
 #: local_settings.py:140
 msgid "Festival"
@@ -117,7 +117,7 @@ msgstr "départements"
 #: organization/network/models.py:227 organization/network/models.py:259
 #: organization/network/models.py:264 organization/network/models.py:269
 #: organization/network/models.py:274 organization/network/models.py:279
-#: organization/network/models.py:387
+#: organization/network/models.py:388
 msgid "person"
 msgstr "personne"
 
@@ -148,11 +148,11 @@ msgstr "playlists"
 
 #: organization/agenda/models.py:76
 msgid "period"
-msgstr ""
+msgstr "période"
 
 #: organization/agenda/models.py:77
 msgid "periods"
-msgstr ""
+msgstr "périodes"
 
 #: organization/agenda/models.py:83 organization/agenda/models.py:98
 msgid "public type"
@@ -162,8 +162,8 @@ msgstr "type public"
 msgid "public types"
 msgstr "types publics"
 
-#: organization/agenda/models.py:90 organization/network/models.py:363
-#: organization/network/models.py:418
+#: organization/agenda/models.py:90 organization/network/models.py:364
+#: organization/network/models.py:419
 msgid "training level"
 msgstr ""
 
@@ -177,7 +177,7 @@ msgstr "langue"
 
 #: organization/agenda/models.py:99
 msgid "level"
-msgstr ""
+msgstr "niveau"
 
 #: organization/agenda/models.py:102
 msgid "training"
@@ -199,7 +199,7 @@ msgstr ""
 #: organization/agenda/models.py:126 organization/core/models.py:23
 #: organization/core/models.py:33 organization/core/models.py:51
 msgid "description"
-msgstr ""
+msgstr "description"
 
 #: organization/core/models.py:15 organization/magazine/models.py:22
 msgid "black"
@@ -646,7 +646,7 @@ msgstr "genre"
 msgid "birthday"
 msgstr "déte de naissance"
 
-#: organization/network/models.py:224 organization/network/models.py:431
+#: organization/network/models.py:224 organization/network/models.py:432
 msgid "external ID"
 msgstr ""
 
@@ -668,160 +668,162 @@ msgid "order number"
 msgstr ""
 
 #: organization/network/models.py:317
-#, fuzzy
-#| msgid "team page"
 msgid "display on team page"
-msgstr "page d'équipe"
+msgstr "afficher sur la page d'équipe"
 
-#: organization/network/models.py:320
+#: organization/network/models.py:318
+msgid "display text"
+msgstr "afficher le text"
+
+#: organization/network/models.py:321
 msgid "activity status"
 msgstr "status de l'activité"
 
-#: organization/network/models.py:327
+#: organization/network/models.py:328
 msgid "activity grade"
 msgstr "grade de l'activité"
 
-#: organization/network/models.py:333
+#: organization/network/models.py:334
 msgid "activity framework"
 msgstr "corps de l'activité"
 
-#: organization/network/models.py:339
+#: organization/network/models.py:340
 msgid "activity function"
 msgstr "fonction de l'activité"
 
-#: organization/network/models.py:345
+#: organization/network/models.py:346
 msgid "budget code"
 msgstr ""
 
-#: organization/network/models.py:351
+#: organization/network/models.py:352
 msgid "record piece"
 msgstr ""
 
-#: organization/network/models.py:357 organization/network/models.py:417
+#: organization/network/models.py:358 organization/network/models.py:418
 msgid "training type"
 msgstr "type de formation"
 
-#: organization/network/models.py:369 organization/network/models.py:419
+#: organization/network/models.py:370 organization/network/models.py:420
 msgid "training topic"
 msgstr ""
 
-#: organization/network/models.py:375 organization/network/models.py:420
+#: organization/network/models.py:376 organization/network/models.py:421
 msgid "training speciality"
 msgstr ""
 
-#: organization/network/models.py:381 organization/network/models.py:398
+#: organization/network/models.py:382 organization/network/models.py:399
 msgid "UMR"
 msgstr ""
 
-#: organization/network/models.py:389
+#: organization/network/models.py:390
 msgid "number of weeks"
 msgstr ""
 
-#: organization/network/models.py:390
+#: organization/network/models.py:391
 msgid "status"
 msgstr ""
 
-#: organization/network/models.py:391
+#: organization/network/models.py:392
 msgid "permanent"
 msgstr ""
 
-#: organization/network/models.py:392
+#: organization/network/models.py:393
 msgid "framework"
 msgstr "cadre"
 
-#: organization/network/models.py:393
+#: organization/network/models.py:394
 msgid "grade"
 msgstr ""
 
-#: organization/network/models.py:394
+#: organization/network/models.py:395
 msgid "function"
 msgstr "fonction"
 
-#: organization/network/models.py:396
+#: organization/network/models.py:397
 msgid "organizations (attachment or subscribed)"
 msgstr ""
 
-#: organization/network/models.py:397
+#: organization/network/models.py:398
 msgid "employers"
 msgstr ""
 
-#: organization/network/models.py:399 organization/projects/models.py:36
+#: organization/network/models.py:400 organization/projects/models.py:36
 msgid "teams"
 msgstr "équipes"
 
-#: organization/network/models.py:400
+#: organization/network/models.py:401
 msgid "other team text"
 msgstr ""
 
-#: organization/network/models.py:402 organization/projects/models.py:43
+#: organization/network/models.py:403 organization/projects/models.py:43
 msgid "projects"
 msgstr "projets"
 
-#: organization/network/models.py:403
+#: organization/network/models.py:404
 msgid "R&D quota (float)"
 msgstr ""
 
-#: organization/network/models.py:404
+#: organization/network/models.py:405
 msgid "R&D quota (text)"
 msgstr ""
 
-#: organization/network/models.py:405
+#: organization/network/models.py:406
 msgid "R&D program"
 msgstr "Programme"
 
-#: organization/network/models.py:408
+#: organization/network/models.py:409
 msgid "supervisors"
 msgstr ""
 
-#: organization/network/models.py:410
+#: organization/network/models.py:411
 msgid "doctoral school"
 msgstr ""
 
-#: organization/network/models.py:411
+#: organization/network/models.py:412
 msgid "PhD directors"
 msgstr ""
 
-#: organization/network/models.py:412
+#: organization/network/models.py:413
 msgid "PhD defense date"
 msgstr ""
 
-#: organization/network/models.py:413
+#: organization/network/models.py:414
 msgid "PhD title"
 msgstr "titre de docteur"
 
-#: organization/network/models.py:414
+#: organization/network/models.py:415
 msgid "post-doctoral situation"
 msgstr ""
 
-#: organization/network/models.py:415
+#: organization/network/models.py:416
 msgid "HDR"
 msgstr ""
 
-#: organization/network/models.py:421
+#: organization/network/models.py:422
 msgid "Training title"
 msgstr ""
 
-#: organization/network/models.py:425
+#: organization/network/models.py:426
 msgid "add date"
 msgstr "ajouter une date"
 
-#: organization/network/models.py:426
+#: organization/network/models.py:427
 msgid "modification date"
 msgstr ""
 
-#: organization/network/models.py:427
+#: organization/network/models.py:428
 msgid "manual modification date"
 msgstr ""
 
-#: organization/network/models.py:429
+#: organization/network/models.py:430
 msgid "comments"
 msgstr "commentaires"
 
-#: organization/network/models.py:434
+#: organization/network/models.py:435
 msgid "activity"
 msgstr "activité"
 
-#: organization/network/models.py:435
+#: organization/network/models.py:436
 msgid "activities"
 msgstr "activités"
 
@@ -1838,9 +1840,11 @@ msgstr "Mes Actions"
 msgid "None available"
 msgstr ""
 
-#: templates/admin/index.html:15 templates/base.html:144 templates/index.html:5
+#: templates/admin/index.html:15 templates/base.html:146 templates/index.html:5
 #: templates/index.html:15 templates/pages/menus/breadcrumb.html:4
 #: templates/pages/menus/breadcrumb.html:10
+#: templates/pages/menus/current_tree_primary.html:14
+#: templates/pages/menus/current_tree_secondary.html:31
 #: templates/pages/menus/dropdown.html:11
 #: templates/pages/menus/footer_tree.html:11
 #: templates/pages/menus/header.html:15 templates/pages/menus/mobile.html:10
@@ -1934,6 +1938,8 @@ msgstr ""
 #: templates/agenda/includes/event_date.html:69
 #: templates/agenda/includes/event_date_line.html:10
 #: templates/job/inc/candidacy_card.html:22
+#: templates/network/person_detail.html:78
+#: templates/network/person_detail.html:82
 msgid "to"
 msgstr "au"
 
@@ -1977,43 +1983,43 @@ msgstr "Archive"
 msgid "Tags"
 msgstr "Mots clés"
 
-#: templates/base.html:130
+#: templates/base.html:128
+msgid "Subscribe to our newsletter"
+msgstr "Inscription à la newsletter"
+
+#: templates/base.html:132
 msgid "Follow us on Facebook"
 msgstr "Suivez nous sur Facebook"
 
-#: templates/base.html:131
+#: templates/base.html:133
 msgid "Follow us on Twitter"
 msgstr "Suivez nous sur Twitter"
 
-#: templates/base.html:132
+#: templates/base.html:134
 msgid "Follow us on Instagram"
 msgstr "Suivez nous sur Instagram"
 
-#: templates/base.html:133
+#: templates/base.html:135
 msgid "Follow us on Youtube"
 msgstr "Suivez nous sur Youtube"
 
-#: templates/base.html:134
+#: templates/base.html:136
 msgid "Follow us on Vimeo"
 msgstr "Suivez-nous sur Vimeo"
 
-#: templates/base.html:154
-#, fuzzy
-#| msgid "Opening Times"
+#: templates/base.html:156
 msgid "Opening times"
 msgstr "Horaires d'ouverture"
 
-#: templates/base.html:161
-#, fuzzy
-#| msgid "Subway Access"
+#: templates/base.html:163
 msgid "Subway access"
 msgstr "Accès en transports"
 
-#: templates/base.html:180
+#: templates/base.html:182
 msgid "under the tutelage of"
 msgstr "sous la tutelle de"
 
-#: templates/base.html:189
+#: templates/base.html:191
 msgid "go to"
 msgstr "Aller vers"
 
@@ -2179,21 +2185,21 @@ msgstr ""
 msgid "Activate your account"
 msgstr ""
 
-#: templates/errors/404.html:6 templates/errors/404.html:10
-#: templates/errors/404.html:15
+#: templates/errors/404.html:6 templates/errors/404.html:14
 msgid "Page not found"
 msgstr ""
 
-#: templates/errors/404.html:16
+#: templates/errors/404.html:19
 msgid "The page you requested does not exist."
 msgstr ""
 
 #: templates/errors/500.html:6 templates/errors/500.html:10
-#: templates/errors/500.html:15
+#: templates/errors/500.html:15 templates/errors/500.html:25
+#: templates/errors/500.html:33
 msgid "Error"
 msgstr ""
 
-#: templates/errors/500.html:16
+#: templates/errors/500.html:16 templates/errors/500.html:38
 msgid "Sorry, an error occurred."
 msgstr ""
 
@@ -2300,8 +2306,8 @@ msgstr ""
 "artistique, ManiFeste-2017 l'académie"
 
 #: templates/home/inc/services.html:56
-msgid "IRCAM Archives"
-msgstr "Les ressources Ircam"
+msgid "IRCAM Library Center"
+msgstr "Centre de Ressources IRCAM"
 
 #: templates/home/inc/services.html:59
 msgid ""
@@ -2392,11 +2398,11 @@ msgstr "Ajouter à"
 
 #: templates/includes/sidebar.html:14 templates/index.html:53
 msgid "Medias"
-msgstr ""
+msgstr "Medias"
 
 #: templates/index.html:30
 msgid "News Headlines"
-msgstr ""
+msgstr "À la une"
 
 #: templates/index.html:43
 msgid "Brief"
@@ -2414,6 +2420,7 @@ msgstr "Candidatures"
 #: templates/job/candidacy_list.html:35
 msgid "Please come back later. There is no candidacy at the moment."
 msgstr ""
+"Merci de revenir plus tard. Il n'y a pas de candidature pour le moment."
 
 #: templates/job/inc/candidacy_card.html:22
 #: templates/job/inc/candidacy_card.html:24
@@ -2435,6 +2442,11 @@ msgstr "Vue"
 #: templates/job/job_offer_list.html:28
 msgid "Please come back later. There is no job offer at the moment."
 msgstr ""
+"Merci de revenir plus tard. Il n'y a pas d'offre d'emploi pour le moment."
+
+#: templates/magazine/article/article_detail.html:103
+msgid "Publish date"
+msgstr "Date de publication"
 
 #: templates/magazine/brief/inc/brief_card.html:6
 msgid "Brief !"
@@ -2449,7 +2461,7 @@ msgstr "lire la suite"
 #: templates/media/inc/playlist_shutter.html:35
 #: templates/media/inc/playlist_shutter.html:36
 msgid "View all medias"
-msgstr ""
+msgstr "Voir tous les medias"
 
 #: templates/network/inc/person/person_card_circle.html:32
 msgid "resume"
@@ -2459,35 +2471,42 @@ msgstr "résumé"
 msgid "Activities"
 msgstr "Activités"
 
-#: templates/network/person_detail.html:42
-msgid "Functions"
-msgstr "Fonctions"
+#: templates/network/person_detail.html:52 templates/pages/teampage.html:128
+msgid "Team"
+msgstr "Équipe"
 
-#: templates/network/person_detail.html:46
-msgid "Teams"
-msgstr "Équipes"
-
-#: templates/network/person_detail.html:54
+#: templates/network/person_detail.html:62
+#: templates/network/person_detail.html:68
 msgid "Organization"
 msgstr "Organisation"
+
+#: templates/network/person_detail.html:78
+#: templates/network/person_detail.html:80
+#: templates/network/person_detail.html:82
+msgid "Period"
+msgstr "Période"
+
+#: templates/network/person_detail.html:80
+#: templates/network/person_detail.html:82
+msgid "from"
+msgstr "du"
+
+#: templates/network/person_detail.html:106
+msgid "Links"
+msgstr "Liens"
 
 #: templates/pages/form.html:24
 msgid "Submit"
 msgstr "Soumettre"
 
-#: templates/pages/menus/current_tree_primary.html:12
-#: templates/pages/menus/current_tree_secondary.html:31
-msgid "Accueil"
-msgstr "Back"
-
 #: templates/pages/menus/vous_etes.html:6
 #: templates/pages/menus/vous_etes.html:15
 msgid "You are"
-msgstr ""
+msgstr "Vous êtes"
 
 #: templates/pages/newsletter.html:4 templates/pages/newsletter.html:15
 msgid "Newsletter"
-msgstr ""
+msgstr "Newsletter"
 
 #: templates/pages/newsletter.html:20
 msgid ""
@@ -2498,6 +2517,11 @@ msgstr ""
 "Abonnez-vous à notre newsletter mensuelle pour être tenu au courant de "
 "l’actualité de l’Ircam chaque début de mois et bénéficiez des offres "
 "réservées à nos abonnés dans différents lieux partenaires de l’Institut."
+
+#: templates/pages/page/includes/page_search.html:27
+#: templates/projects/project_demo_detail.html:35
+msgid "Project"
+msgstr "Projet"
 
 #: templates/pages/richtextpage.html:17
 msgid "Related events"
@@ -2515,21 +2539,14 @@ msgstr "Domaines de recherche et projets associés"
 msgid "European and national projects"
 msgstr "Projets nationaux et européens"
 
-#: templates/pages/teampage.html:128
-msgid "Team"
-msgstr "Équipe"
-
 #: templates/projects/project_demo_detail.html:4
 msgid "Demo"
-msgstr ""
+msgstr "Demo"
 
 #: templates/projects/project_demo_detail.html:18
+#: templates/projects/project_detail.html:280
 msgid "Demos"
-msgstr ""
-
-#: templates/projects/project_demo_detail.html:35
-msgid "Project"
-msgstr "Projet"
+msgstr "Demos"
 
 #: templates/projects/project_detail.html:124
 msgid "Project details"
@@ -2568,10 +2585,8 @@ msgid "Project lead team"
 msgstr ""
 
 #: templates/projects/project_detail.html:213
-#, fuzzy
-#| msgid "lead organization"
 msgid "Project lead organization"
-msgstr "organisation principale"
+msgstr "Organisation principale du projet"
 
 #: templates/projects/project_detail.html:230
 msgid "Partners"
@@ -2586,7 +2601,7 @@ msgstr "Équipes Ircam"
 msgid "Search Results"
 msgstr "Resultats de recherche"
 
-#: templates/search_results.html:72
+#: templates/search_results.html:76
 #, fuzzy, python-format
 #| msgid "No results were found matching your query: %(query)s"
 msgid "No results were found matching your query: %(query)s"
@@ -2866,6 +2881,10 @@ msgstr ""
 msgid "Related Products"
 msgstr "Produits liés"
 
+#: templates/shop/product/includes/product_search.html:13
+msgid "Software"
+msgstr ""
+
 #: templates/shop/wishlist.html:4 templates/shop/wishlist.html:5
 #: templates/shop/wishlist.html:9
 msgid "Your Wishlist"
@@ -2886,6 +2905,18 @@ msgstr ""
 #: templates/twitter/tweets.html:7
 msgid "Recent Tweets"
 msgstr "Tweets récents"
+
+#~ msgid "IRCAM Archives"
+#~ msgstr "Les ressources Ircam"
+
+#~ msgid "Functions"
+#~ msgstr "Fonctions"
+
+#~ msgid "Teams"
+#~ msgstr "Équipes"
+
+#~ msgid "Accueil"
+#~ msgstr "Back"
 
 #~ msgid "Coordinator"
 #~ msgstr "Coordinateur"
@@ -2925,9 +2956,6 @@ msgstr "Tweets récents"
 
 #~ msgid "the room program"
 #~ msgstr "le programme de salle"
-
-#~ msgid "from"
-#~ msgstr "du"
 
 #~ msgid "Free entry. Limited seats available"
 #~ msgstr ""
@@ -2971,9 +2999,6 @@ msgstr "Tweets récents"
 
 #~ msgid "blog posts"
 #~ msgstr "articles"
-
-#~ msgid "Subscribe to newsletter"
-#~ msgstr "Inscription à la newsletter"
 
 #~ msgid "Read the edito"
 #~ msgstr "Lire l'édito"
