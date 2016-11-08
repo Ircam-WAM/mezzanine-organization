@@ -36,15 +36,25 @@
         left: 116px;
         top: 30px;
 
+        /*@include font-size(m);
+        @include typeface(serif);
+        font-weight: weight(bold);*/
+
         @include font-size(m);
         @include typeface(serif);
         font-weight: weight(bold);
+        font-style: italic;
 
         span {
-            @include font-size(m);
+            /*@include font-size(m);
             @include typeface(serif);
             font-weight: weight(regular);
-            font-style: italic;
+            font-style: italic;*/
+
+            @include font-size(s);
+            @include typeface(serif);
+            font-weight: weight(light);
+            font-style: normal;
         }
 
     }
