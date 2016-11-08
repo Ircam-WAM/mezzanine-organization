@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 16:31+0100\n"
+"POT-Creation-Date: 2016-11-08 17:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,9 +24,8 @@ msgstr "Pages"
 
 #: local_settings.py:91 templates/index.html:53
 #: templates/media/playlist_detail.html:4
-#: templates/media/playlist_detail.html:21
-#: templates/media/playlist_list.html:6 templates/media/playlist_list.html:11
-#: templates/media/playlist_list.html:15
+#: templates/media/playlist_detail.html:21 templates/media/playlist_list.html:6
+#: templates/media/playlist_list.html:11 templates/media/playlist_list.html:15
 msgid "Media"
 msgstr "Media"
 
@@ -1841,9 +1840,8 @@ msgstr "Mes Actions"
 msgid "None available"
 msgstr ""
 
-#: templates/admin/index.html:15 templates/base.html:146
-#: templates/index.html:5 templates/index.html:15
-#: templates/pages/menus/breadcrumb.html:4
+#: templates/admin/index.html:15 templates/base.html:146 templates/index.html:5
+#: templates/index.html:15 templates/pages/menus/breadcrumb.html:4
 #: templates/pages/menus/breadcrumb.html:10
 #: templates/pages/menus/current_tree_primary.html:14
 #: templates/pages/menus/current_tree_secondary.html:31
@@ -2102,18 +2100,15 @@ msgstr ""
 msgid "Atom"
 msgstr ""
 
-#: templates/email/account_approve.html:3
-#: templates/email/account_approve.txt:3
+#: templates/email/account_approve.html:3 templates/email/account_approve.txt:3
 msgid "Hey there, a new account has been created and requires activation."
 msgstr ""
 
-#: templates/email/account_approve.html:5
-#: templates/email/account_approve.txt:5
+#: templates/email/account_approve.html:5 templates/email/account_approve.txt:5
 msgid "Name"
 msgstr "Nom"
 
-#: templates/email/account_approve.html:6
-#: templates/email/account_approve.txt:6
+#: templates/email/account_approve.html:6 templates/email/account_approve.txt:6
 #: templates/network/person_detail.html:34
 msgid "Email"
 msgstr ""
@@ -2311,8 +2306,8 @@ msgstr ""
 "artistique, ManiFeste-2017 l'académie"
 
 #: templates/home/inc/services.html:56
-msgid "IRCAM multimedia library"
-msgstr ""
+msgid "IRCAM Library Center"
+msgstr "Centre de Ressources IRCAM"
 
 #: templates/home/inc/services.html:59
 msgid ""
@@ -2489,7 +2484,7 @@ msgstr "Organisation"
 #: templates/network/person_detail.html:80
 #: templates/network/person_detail.html:82
 msgid "Period"
-msgstr ""
+msgstr "Période"
 
 #: templates/network/person_detail.html:80
 #: templates/network/person_detail.html:82
@@ -2607,6 +2602,8 @@ msgid "Search Results"
 msgstr "Resultats de recherche"
 
 #: templates/search_results.html:76
+#, fuzzy, python-format
+#| msgid "No results were found matching your query: %(query)s"
 msgid "No results were found matching your query: %(query)s"
 msgstr ""
 "Votre recherche ne donne aucun résultat. Veuillez réessayer avec d'autres "

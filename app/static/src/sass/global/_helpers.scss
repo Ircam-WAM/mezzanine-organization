@@ -160,6 +160,7 @@
 }
 .fsxxxl {
     @include font-size(xxxl);
+    line-height: 3rem !important;
 }
 .fsxxl {
     @include font-size(xxl);
