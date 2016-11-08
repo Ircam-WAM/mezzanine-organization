@@ -1,18 +1,21 @@
-{% extends "base.html" %}
+{% extends "pages/page.html" %}
 
 {% load i18n %}
 
 {% block meta_title %}
-{% trans "Page not found" %}
+	{% trans "Page not found" %}
 {% endblock %}
 
-{% block title %}
-{% trans "Page not found" %}
+{% block page_class %}
+	custompage
 {% endblock %}
 
-{% block main %}
-<div class="panel panel-danger">
-	<div class="panel-heading"><h3 class="panel-title">{% trans "Page not found" %}</h3></div>
-	<div class="panel-body">{% trans "The page you requested does not exist." %}</div>
-</div>
+{% block page_title %}
+	<h1 class="dotted">{% trans "Page not found" %}</h1>
+{% endblock %}
+
+{% block page_content %}
+	<p>
+		{% trans "The page you requested does not exist." %}
+	</p>
 {% endblock %}
