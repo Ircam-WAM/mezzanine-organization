@@ -315,6 +315,7 @@ class ActivityStatus(Named):
 
     order = models.IntegerField(_('order number'), default=100)
     display = models.BooleanField(_('display on team page'), blank=True, default=True)
+    display_text = models.CharField(_('display text'), max_length=128, blank=True, default=True)
 
     class Meta:
         verbose_name = _('activity status')
