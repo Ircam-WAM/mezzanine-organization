@@ -420,8 +420,8 @@ msgid "candidacy"
 msgstr ""
 
 #: organization/job/models.py:67
-msgid "candidacies"
-msgstr ""
+msgid "Applications"
+msgstr "Appels à candidature"
 
 #: organization/job/views.py:53
 msgid "Only .pdf, .odt, .doc, .docx files allowed."
