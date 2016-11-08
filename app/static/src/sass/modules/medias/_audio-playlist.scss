@@ -13,6 +13,14 @@ $module: ".audio-playlist";
         @include font-size(xs);
         @include typeface(sans-serif);
         @include transition(all 0.25s ease-in-out);
+        font-style: italic;
+
+        small {
+            font-style: normal;
+            display: inline-block;
+            margin-left: 5px;
+        }
+
         color: white;
 
         &.playing {

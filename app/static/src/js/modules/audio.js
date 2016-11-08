@@ -59,7 +59,7 @@ Audio.prototype.init = function() {
             //
             var first = playlist.find('li a').attr('data-src');
             playlist.find('li').first().addClass('playing');
-            that.setTitle(as[i], playlist.find('li:first-child a').text());
+            that.setTitle(as[i], playlist.find('li:first-child a span').text(), playlist.find('li:first-child a small').text());
             as[i].load(first);
 
             playlist.find('li').bind('click', function(e) {
@@ -70,7 +70,7 @@ Audio.prototype.init = function() {
                 $(this).addClass('playing').siblings().removeClass('playing');
                 that.audios[idx].load($('a', this).attr('data-src'));
                 that.audios[idx].play();
-                that.setTitle(that.audios[idx], $('a', this).text());
+                that.setTitle(that.audios[idx], $('a span', this).text(), $('a small', this).text());
 
             });
 
@@ -95,16 +95,22 @@ Audio.prototype.pauseAllExcept = function(audio) {
 
 };
 
-Audio.prototype.setTitle = function(audio, title) {
+Audio.prototype.setTitle = function(audio, title, subtitle) {
 
     var split = title.split(",");
     var html = '';
 
-    if(split[0]) {
+    /*if(split[0]) {
         html += split[0];
     }
     if(split[1]) {
         html += '<br/><span>'+split[1]+'</span>'
+    }*/
+
+    html += title;
+
+    if(subtitle) {
+        html += '<br/><span>'+subtitle+'</span>';
     }
 
     audio.title.html(html);
