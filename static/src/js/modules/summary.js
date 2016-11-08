@@ -30,6 +30,17 @@ Summary.prototype.init = function() {
                 $template_clone.find('a').attr('href', '#section-' + sectionCount);
                 $template_clone.removeClass('hide');
 
+                $template_clone.find('a').bind('click', function(e) {
+
+                    e.preventDefault();
+                    var self = $(this);
+                    $('html, body').animate({
+                		scrollTop:$(self.attr('href')).offset().top
+                	}, 'slow');
+                    return false;
+
+                });
+
                 that.$links.push($template_clone.find('a'));
 
                 that.$summary.append($template_clone);
