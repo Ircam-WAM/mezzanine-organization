@@ -5,12 +5,36 @@ $module: ".media-box";
     position: relative;
     display: block;
     @include margin-bottom(2);
+    @include padding-bottom(.5);
+    @include transition(all 0.25s ease-in-out);
+
+    &:hover {
+        box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.17);
+        .media-box__image {
+
+            img {
+                @include transform(scale(1.1));
+            }
+
+            &:after {
+                background: $color-black;
+                color: white;
+            }
+        }
+    }
 
     &__image {
 
         @include fluid-aspect(320 190);
+        overflow: hidden;
+
+        img {
+            @include transition(all 0.3s ease-in-out);
+        }
 
         &:after {
+            @include transition(all 0.5s ease-in-out);
+
             font-family: FontAwesome;
             display: block;
             content: "\f04b";
@@ -49,6 +73,8 @@ $module: ".media-box";
         @include typeface(sans-serif);
         @include margin(.25 0 0 0);
 
+        @include padding(0 .25);
+
     }
 
     &__title {
@@ -57,6 +83,8 @@ $module: ".media-box";
         @include line-height(1.25);
         @include typeface(sans-serif);
         @include margin(0 0 .25 0);
+
+        @include padding(0 .25);
 
     }
 
@@ -67,6 +95,8 @@ $module: ".media-box";
         @include typeface(serif);
         @include margin(1 0 .25 0);
         font-weight: weight(light);
+
+        @include padding(0 .25);
 
     }
 

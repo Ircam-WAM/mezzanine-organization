@@ -28,7 +28,7 @@
         {% for page in page_branch %}
             {% if page.is_current_or_ascendant and page.has_children_in_menu %}
                 <li class="nav-tree__item">
-                    <a class="nav-tree__link" href="{{ page.get_absolute_url }}">{% trans 'Accueil' %}</a>
+                    <a class="nav-tree__link" href="{{ page.get_absolute_url }}">{% trans 'Home' %}</a>
                 </li>
                 {% page_menu page %}
             {% endif %}

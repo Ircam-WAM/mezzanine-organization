@@ -74,33 +74,6 @@
     {% endwith %}
 {% endblock %}
 
-{% block page_person_list %}
-    {% activity_statuses as statuses %}
-    {% if statuses|length > 0 %}
-        <div class="page__block page__block--yellow">
-        {# <hr class="mt0" />#}
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2" data-summary-content>
-                        <h2 class="dotted">{% trans 'Team' %}</h2><br>
-                        {% for status in statuses %}
-                            {% with page.teampage.team|get_team_persons:status as persons %}
-                                {% if persons %}
-                                    <strong>{{ status.name }} : </strong>
-                                    {% for person in persons %}
-                                        <a href="{% url 'organization-network-person-detail' person.slug %}">{{ person.title }}</a>{% if not forloop.last %}, {% endif %}
-                                    {% endfor %}
-                                    <br/>
-                                {% endif %}
-                            {% endwith %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-{% endblock %}
-
 {% block related_project %}
     {% if page.teampage.team.leader_projects.published or page.teampage.team.partner_projects.published %}
         <div class="white-bg pb2">
@@ -138,8 +111,41 @@
     {% endif %}
 {% endblock %}
 
+
 {% block page_sub_content_2 %}
-    {% with page.blocks.all|slice:'1:' as blocks %}
+    {% with page.blocks.all|slice_ng:'1:-2' as blocks %}
+        {% include "core/inc/block.html" %}
+    {% endwith %}
+{% endblock %}
+
+{% block page_person_list_team %}
+    {% activity_statuses as statuses %}
+    {% if statuses|length > 0 %}
+        <div class="page__block page__block--yellow">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2" data-summary-content>
+                        <h2 class="dotted">{% trans 'Team' %}</h2><br>
+                        {% for status in statuses %}
+                            {% with page.teampage.team|get_team_persons:status as persons %}
+                                {% if persons %}
+                                    <strong>{{ status.name }} : </strong>
+                                    {% for person in persons %}
+                                        <a href="{% url 'organization-network-person-detail' person.slug %}">{{ person.title }}</a>{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                    <br/>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block page_sub_content_3 %}
+    {% with page.blocks.all|slice_ng:'-1' as blocks %}
         {% include "core/inc/block.html" %}
     {% endwith %}
 {% endblock %}
