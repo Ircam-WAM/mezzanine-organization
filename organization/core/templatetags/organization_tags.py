@@ -141,3 +141,18 @@ def get_team_persons(team, status):
         if not activity.person in persons:
             persons.append(activity.person)
     return persons
+
+@register.filter
+def slice_ng(qs, indexes):
+    list = []
+    for obj in qs:
+        list.append(obj)
+    index_split = indexes.split(':')
+    index_1 = int(index_split[0])
+    index_2 = 0
+    if len(index_split) > 1:
+        index_2 = int(index_split[1])
+    if index_1 > 0 and index_2:
+        return list[index_1:index_2]
+    else:
+        return [list[index_1]]
