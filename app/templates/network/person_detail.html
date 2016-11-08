@@ -39,24 +39,37 @@
             {% for activity in person.activities.all %}
             <li>
                 {% if activity.function %}
-                    {% trans 'Functions'%} : {{ activity.function }}<br>
+                    {% trans 'Function'%} : {{ activity.function }}<br>
                 {% endif %}
-                {% with activity.teams.all as actvities %}
-                    {% if actvities %}
-                        {% trans 'Teams' %} :<br>
-                        {% for team in actvities %}
+                {% if activity.status %}
+                    {% trans 'Status'%} : {{ activity.status }}<br>
+                {% endif %}
+                {% with activity.teams.all as teams %}
+                    {% if teams %}
+                        {% trans 'Team' %} :
+                        {% for team in teams %}
                             {{ team.name }}<br>
                         {% endfor %}
                     {% endif %}
                 {% endwith %}
                 {% with activity.organizations.all as organizations %}
                     {% if organizations %}
-                        {% trans 'Organization' %} :<br>
+                        {% trans 'Organization' %} :
                         {% for organization in organizations %}
                         {{ organization.name }}<br>
                         {% endfor %}
                     {% endif %}
                 {% endwith %}
+                {% if activity.date_from or activity.date_to %}
+                  {% if not activity.date_from and not activity.date_to|date_year_higher_than:10 %}
+                    {% trans 'Period' %} : {% trans 'to' %} {{ activity.date_to }}<br>
+                  {% elif not activity.date_to %}
+                    {% trans 'Period'%} : {% trans 'from' %} {{ activity.date_from }}<br>
+                  {% else %}
+                    {% trans 'Period'%} : {% trans 'from' %} {{ activity.date_from }} {% if not activity.date_to|date_year_higher_than:10 %}{% trans 'to' %} {{ activity.date_to }}{% endif %}<br>
+                  {% endif %}
+                {% endif %}
+
             </li>
             {% endfor %}
         </ul>
