@@ -34,7 +34,7 @@ sh $app/scripts/wait.sh
 
 # django setup
 python $manage wait-for-db
-python $manage migrate --noinput
+# python $manage migrate --noinput
 # python $manage bower_install -- --allow-root
 python $manage create-admin-user
 # @todo searching every fixtures file in each folder
