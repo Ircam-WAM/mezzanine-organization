@@ -16,3 +16,25 @@
 	<div class="panel-body">{% trans "Sorry, an error occurred." %}</div>
 </div>
 {% endblock %}
+
+{% extends "pages/page.html" %}
+
+{% load i18n %}
+
+{% block meta_title %}
+	{% trans "Error" %}
+{% endblock %}
+
+{% block page_class %}
+	custompage
+{% endblock %}
+
+{% block page_title %}
+	<h1 class="dotted">{% trans "Error" %}</h1>
+{% endblock %}
+
+{% block page_content %}
+	<p>
+		{% trans "Sorry, an error occurred." %}
+	</p>
+{% endblock %}
