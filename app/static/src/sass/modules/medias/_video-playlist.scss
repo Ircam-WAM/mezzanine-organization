@@ -14,6 +14,13 @@ $module: ".video-playlist";
         @include typeface(sans-serif);
         @include transition(all 0.25s ease-in-out);
         color: white;
+        font-style: italic;
+
+        small {
+            font-style: normal;
+            display: inline-block;
+            margin-left: 5px;
+        }
 
         &.playing {
 
