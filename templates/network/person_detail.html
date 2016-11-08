@@ -39,23 +39,23 @@
             {% for activity in person.activities.all %}
             <li class="mb1">
                 {% if activity.function %}
-                    <strong>{% trans 'Function'%} :</strong> {{ activity.function }}<br>
+                    <strong>{% trans 'Function'%} : </strong>{{ activity.function }}<br>
                 {% endif %}
                 {% if activity.status %}
-                    <strong>{% trans 'Status'%} :</strong> {{ activity.status }}<br>
+                    <strong>{% trans 'Status'%} : </strong>{{ activity.status }}<br>
                 {% endif %}
                 {% with activity.teams.all as teams %}
                     {% if teams %}
-                        <strong>{% trans 'Team' %} :</strong>
+                        <strong>{% trans 'Team' %} : </strong>
                         {% for team in teams %}
-                            {{ team.name }}{% if not forloop.last %}, {% endif %}
+                            <a href="{% url "page" team.pages.all.0 %}">{{ team.name }}</a>{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                         <br />
                     {% endif %}
                 {% endwith %}
                 {% with activity.organizations.all as organizations %}
                     {% if organizations %}
-                        <strong>{% trans 'Organization' %}:</strong>
+                        <strong>{% trans 'Organization' %} : </strong>
                         {% for organization in organizations %}
                             {{ organization.name }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
