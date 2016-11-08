@@ -162,3 +162,7 @@ def date_year_higher_than(date, years):
     diff = date - datetime.date.today()
     print(diff.days)
     return diff.days > years*365
+
+@register.simple_tag
+def current_year():
+    return datetime.datetime.now().strftime("%Y")
