@@ -166,3 +166,7 @@ def date_year_higher_than(date, years):
 @register.simple_tag
 def current_year():
     return datetime.datetime.now().strftime("%Y")
+
+@register.filter
+def is_not_host(organizations):
+    return organizations.exclude(is_host=True)
