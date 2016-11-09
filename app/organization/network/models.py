@@ -69,6 +69,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
     initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
     is_on_map = models.BooleanField(_('is on map'), default=False, blank=True)
+    is_host = models.BooleanField(_('is host'), default=False, blank=True)
 
     admin_thumb_type = 'logo'
 
@@ -208,6 +209,11 @@ class TeamPage(Page, SubTitled, RichText):
 
     class Meta:
         verbose_name = _('team page')
+
+
+class TeamLink(Link):
+
+    team = models.ForeignKey(Team, verbose_name=_('team'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class Person(Displayable, AdminThumbMixin):

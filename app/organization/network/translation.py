@@ -28,9 +28,15 @@ class TeamTranslationOptions(TranslationOptions):
 
 
 @register(TeamPage)
-class TeamTranslationOptions(TranslationOptions):
+class TeamPageTranslationOptions(TranslationOptions):
 
     fields = ('sub_title', 'content',)
+
+
+@register(TeamLink)
+class TeamLinkTranslationOptions(TranslationOptions):
+
+    fields = ()
 
 
 @register(Person)
