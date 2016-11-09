@@ -77,7 +77,7 @@
 {% block related_project %}
     {% if page.teampage.team.leader_projects.published or page.teampage.team.partner_projects.published %}
         <div class="white-bg pb2">
-            {# <hr class="mt0" />#}
+            <hr class="mt0" />
             <div class="container">
                 {% with page.teampage.team.partner_projects.published|get_type:"internal" as projects %}
                     {% if projects %}
