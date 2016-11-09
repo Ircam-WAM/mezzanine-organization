@@ -170,3 +170,7 @@ def current_year():
 @register.filter
 def is_not_host(organizations):
     return organizations.exclude(is_host=True)
+
+@register.filter
+def unspam(email):
+    return email.replace('@', ' (at) ')
