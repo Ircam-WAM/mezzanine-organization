@@ -285,10 +285,6 @@ $module: ".nav-header";
                 @include font-size(m);
             }
 
-            @include mq($until: md) {
-                margin-top: 10px;
-            }
-
         }
 
     }
