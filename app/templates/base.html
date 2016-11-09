@@ -12,16 +12,16 @@
     <meta name="description" content="{% block meta_description %}{% endblock %}">
     <title>{% spaceless %}{% block meta_title %}{% endblock %}{% endspaceless %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
 
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{% static "/img/favicons/apple-touch-icon-152x152-precomposed.png" %}">
-	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="{% static "/img/favicons/apple-touch-icon-120x120-precomposed.png" %}">
-	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="{% static "/img/favicons/apple-touch-icon-76x76-precomposed.png" %}">
-	<link rel="apple-touch-icon-precomposed" sizes="60x60" href="{% static "/img/favicons/apple-touch-icon-60x60-precomposed.png" %}">
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static "/img/favicons/apple-touch-icon-144x144-precomposed.png" %}">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static "/img/favicons/apple-touch-icon-114x114-precomposed.png" %}">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static "/img/favicons/apple-touch-icon-72x72-precomposed.png" %}">
-	<link rel="apple-touch-icon" sizes="57x57" href="{% static "/img/favicons/apple-touch-icon.png" %}">
-	<link rel="shortcut icon" href="{% static "/img/favicons/favicon.ico" %}">
-	<link rel="icon" type="image/png" sizes="64x64" href="{% static "/img/favicons/favicon.png" %}">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{% static "img/favicons/apple-touch-icon-152x152-precomposed.png" %}">
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="{% static "img/favicons/apple-touch-icon-120x120-precomposed.png" %}">
+	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="{% static "img/favicons/apple-touch-icon-76x76-precomposed.png" %}">
+	<link rel="apple-touch-icon-precomposed" sizes="60x60" href="{% static "img/favicons/apple-touch-icon-60x60-precomposed.png" %}">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static "img/favicons/apple-touch-icon-144x144-precomposed.png" %}">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static "img/favicons/apple-touch-icon-114x114-precomposed.png" %}">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static "img/favicons/apple-touch-icon-72x72-precomposed.png" %}">
+	<link rel="apple-touch-icon" sizes="57x57" href="{% static "img/favicons/apple-touch-icon.png" %}">
+	<link rel="shortcut icon" href="{% static "img/favicons/favicon.ico" %}">
+	<link rel="icon" type="image/png" sizes="64x64" href="{% static "img/favicons/favicon.png" %}">
 
     {% ifinstalled mezzanine.blog %}
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
