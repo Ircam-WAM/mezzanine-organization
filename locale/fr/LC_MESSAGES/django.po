@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-09 15:26+0100\n"
+"POT-Creation-Date: 2016-11-10 13:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1917,9 +1917,24 @@ msgstr ""
 msgid "Persons"
 msgstr "Personnes"
 
-#: templates/agenda/event_list.html:8
+#: templates/agenda/event_list.html:8 templates/agenda/event_list.html:75
+#: templates/agenda/event_list.html:89 templates/agenda/event_list.html:97
 msgid "Rendez-vous in Paris"
 msgstr "Rendez-vous à Paris"
+
+#: templates/agenda/event_list.html:40 templates/agenda/event_list.html:71
+#: templates/agenda/event_list.html:103
+msgid "Tournées"
+msgstr ""
+
+#: templates/agenda/event_list.html:42 templates/agenda/event_list.html:73
+#: templates/agenda/event_list.html:110
+msgid "Archives"
+msgstr "Archives"
+
+#: templates/agenda/event_list.html:110
+msgid "archive"
+msgstr "archive"
 
 #: templates/agenda/event_location_detail.html:40
 #: templates/agenda/includes/event_location.html:15
@@ -1943,8 +1958,8 @@ msgstr ""
 #: templates/agenda/includes/event_date.html:69
 #: templates/agenda/includes/event_date_line.html:10
 #: templates/job/inc/candidacy_card.html:22
-#: templates/network/person_detail.html:78
-#: templates/network/person_detail.html:82
+#: templates/network/person_detail_multiple_activities.html:78
+#: templates/network/person_detail_multiple_activities.html:82
 msgid "to"
 msgstr "au"
 
@@ -2075,6 +2090,7 @@ msgstr "Nom"
 
 #: templates/email/account_approve.html:6 templates/email/account_approve.txt:6
 #: templates/network/person_detail.html:34
+#: templates/network/person_detail_multiple_activities.html:34
 msgid "Email"
 msgstr ""
 
@@ -2275,7 +2291,6 @@ msgstr ""
 "artistique, ManiFeste-2017 l'académie"
 
 #: templates/home/inc/services.html:37
-#| msgid "IRCAM Library Center"
 msgid "IRCAM Library Center"
 msgstr "Centre de Ressources Ircam"
 
@@ -2292,13 +2307,14 @@ msgid "Forumnet"
 msgstr "Forumnet"
 
 #: templates/home/inc/services.html:53
-#| msgid "IRCAM software users’ community"
 msgid "IRCAM software users’ community"
 msgstr "Communauté d'utilisateurs des logiciels Ircam"
 
 #: templates/home/inc/services.html:63
-msgid "Ulysses Community"
-msgstr "Ulysses Community"
+#, fuzzy
+#| msgid "Network"
+msgid "ULYSSES Network"
+msgstr "Réseaux"
 
 #: templates/home/inc/services.html:66
 msgid ""
@@ -2456,33 +2472,36 @@ msgstr "Voir tous les medias"
 msgid "resume"
 msgstr "résumé"
 
-#: templates/network/person_detail.html:37
-msgid "Activities"
-msgstr "Activités"
-
-#: templates/network/person_detail.html:52 templates/pages/teampage.html:128
+#: templates/network/person_detail.html:46
+#: templates/network/person_detail_multiple_activities.html:52
+#: templates/pages/teampage.html:128
 msgid "Team"
 msgstr "Équipe"
 
-#: templates/network/person_detail.html:62
-#: templates/network/person_detail.html:68
+#: templates/network/person_detail.html:79
+#: templates/network/person_detail_multiple_activities.html:106
+msgid "Links"
+msgstr "Liens"
+
+#: templates/network/person_detail_multiple_activities.html:37
+msgid "Activities"
+msgstr "Activités"
+
+#: templates/network/person_detail_multiple_activities.html:62
+#: templates/network/person_detail_multiple_activities.html:68
 msgid "Organization"
 msgstr "Organisation"
 
-#: templates/network/person_detail.html:78
-#: templates/network/person_detail.html:80
-#: templates/network/person_detail.html:82
+#: templates/network/person_detail_multiple_activities.html:78
+#: templates/network/person_detail_multiple_activities.html:80
+#: templates/network/person_detail_multiple_activities.html:82
 msgid "Period"
 msgstr "Période"
 
-#: templates/network/person_detail.html:80
-#: templates/network/person_detail.html:82
+#: templates/network/person_detail_multiple_activities.html:80
+#: templates/network/person_detail_multiple_activities.html:82
 msgid "from"
 msgstr "du"
-
-#: templates/network/person_detail.html:106
-msgid "Links"
-msgstr "Liens"
 
 #: templates/pages/form.html:24
 msgid "Submit"
@@ -2895,6 +2914,9 @@ msgstr ""
 msgid "Recent Tweets"
 msgstr "Tweets récents"
 
+#~ msgid "Ulysses Community"
+#~ msgstr "Ulysses Community"
+
 #~ msgid "published on"
 #~ msgstr "publié le"
 
@@ -2918,12 +2940,6 @@ msgstr "Tweets récents"
 
 #~ msgid "Location:"
 #~ msgstr "Lieu :"
-
-#~ msgid "Archives"
-#~ msgstr "Archives"
-
-#~ msgid "archive"
-#~ msgstr "archive"
 
 #~ msgid "See the video"
 #~ msgstr "Voir la vidéo"
