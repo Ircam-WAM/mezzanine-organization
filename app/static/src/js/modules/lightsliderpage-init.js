@@ -46,6 +46,11 @@ LightSliderPageInit.prototype.init = function() {
                     container = $(el),
                     children = container.children();
 
+                    el.lightGallery({
+                        selector: '.slider-page .lslide',
+                        download: false
+                    });
+
                     children.each(function () {
                         var childHeight = $(this).height();
                         if (childHeight > maxHeight) {
