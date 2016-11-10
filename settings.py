@@ -3,6 +3,8 @@ from __future__ import absolute_import, unicode_literals
 import os
 from django.utils.translation import ugettext_lazy as _
 
+DEBUG = True if os.environ.get('DEBUG') == 'True' else False
+
 ######################
 # MEZZANINE SETTINGS #
 ######################
@@ -110,11 +112,6 @@ LANGUAGES = (
 )
 
 LOCALE_PATHS = ['locale',]
-
-# A boolean that turns on/off debug mode. When set to ``True``, stack traces
-# are displayed for error pages. Should always be set to ``False`` in
-# production. Best set to ``True`` in local_settings.py
-DEBUG = False
 
 # Whether a user's session cookie expires when the Web browser is closed.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -257,7 +254,6 @@ MIGRATION_MODULES = {
     "generic": "migrations.generic",
 }
 
-
 TEMPLATES = [{'APP_DIRS': True,
                'BACKEND': 'django.template.backends.django.DjangoTemplates',
                'DIRS': ('/srv/app/templates',),
@@ -273,7 +269,20 @@ TEMPLATES = [{'APP_DIRS': True,
                                                   'mezzanine.conf.context_processors.settings',
                                                   'mezzanine.pages.context_processors.page',
                                                   'organization.core.context_processors.static',
-                                                  'organization.pages.context_processors.page_static')}}]
+                                                  'organization.pages.context_processors.page_static',
+                                                  )
+                        }
+            }]
+
+
+TEMPLATE_LOADERS_OPTIONS = [('django.template.loaders.cached.Loader', [
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    ])]
+
+if not DEBUG:
+    TEMPLATES[0]['OPTIONS']['loaders'] = TEMPLATE_LOADERS_OPTIONS
+    TEMPLATES[0]['APP_DIRS'] = False
 
 # List of middleware classes to use. Order is important; in the request phase,
 # these middleware classes will be applied in the order given, and in the
