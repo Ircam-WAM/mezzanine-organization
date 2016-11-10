@@ -18,7 +18,7 @@ LightSliderHomeInit.prototype.init = function() {
         loop: true,
         auto: true,
         pauseOnHover: true,
-        pause: 3000,
+        pause: 5000,
         onAfterSlide: function(slider) {
             var $pages = slider.parents('.slider-home').find('.slider-home__pager li');
             $pages.removeClass('active');
