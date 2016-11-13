@@ -70,7 +70,10 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
     is_on_map = models.BooleanField(_('is on map'), default=False, blank=True)
     is_host = models.BooleanField(_('is host'), default=False, blank=True)
-
+    telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
+    opening_times = models.TextField(_('opening times'), blank=True)
+    subway_access = models.TextField(_('subway access'), blank=True)
+    
     admin_thumb_type = 'logo'
 
     class Meta:
@@ -225,6 +228,7 @@ class Person(Displayable, AdminThumbMixin):
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     email = models.EmailField(_('email'), blank=True, null=True)
+    telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
@@ -317,70 +321,81 @@ class PersonListBlockInline(models.Model):
         verbose_name = _('Person autocomplete')
 
 
+class ActivityStatusFamily(Named):
+
+    order = models.IntegerField(_('order number'), default=100)
+    display = models.BooleanField(_('display on team page'), blank=True, default=True)
+
+    class Meta:
+        verbose_name = _('Status family')
+        ordering = ['order']
+
+
 class ActivityStatus(Named):
 
     order = models.IntegerField(_('order number'), default=100)
     display = models.BooleanField(_('display on team page'), blank=True, default=True)
-    display_text = models.CharField(_('display text'), max_length=128, blank=True, null=True)
+    family = models.ForeignKey(ActivityStatusFamily, verbose_name=_('family'), related_name='activity_statuses', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = _('activity status')
+        verbose_name = _('status')
         ordering = ['order']
 
 
 class ActivityGrade(Named):
 
     class Meta:
-        verbose_name = _('activity grade')
+        verbose_name = _('grade')
+        verbose_name_plural = _('grades')
 
 
 class ActivityFramework(Named):
 
     class Meta:
-        verbose_name = _('activity framework')
-
+        verbose_name = _('framework')
+        verbose_name_plural = _('frameworks')
 
 class ActivityFunction(Named):
 
     class Meta:
-        verbose_name = _('activity function')
-
+        verbose_name = _('function')
+        verbose_name_plural = _('functions')
 
 class BudgetCode(Named):
 
     class Meta:
         verbose_name = _('budget code')
-
+        verbose_name_plural = _('budget codes')
 
 class RecordPiece(Named):
 
     class Meta:
         verbose_name = _('record piece')
-
+        verbose_name_plural = _('record pieces')
 
 class TrainingType(Named):
 
     class Meta:
         verbose_name = _('training type')
-
+        verbose_name_plural = _('training types')
 
 class TrainingLevel(Named):
 
     class Meta:
         verbose_name = _('training level')
-
+        verbose_name_plural = _('training levels')
 
 class TrainingTopic(Named):
 
     class Meta:
         verbose_name = _('training topic')
-
+        verbose_name_plural = _('training topics')
 
 class TrainingSpeciality(Named):
 
     class Meta:
         verbose_name = _('training speciality')
-
+        verbose_name_plural = _('training specialities')
 
 class UMR(Named):
 
