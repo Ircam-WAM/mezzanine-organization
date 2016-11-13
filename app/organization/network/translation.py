@@ -6,7 +6,7 @@ from organization.network.models import *
 @register(Organization)
 class OrganizationTranslationOptions(TranslationOptions):
 
-    fields = ('description',)
+    fields = ('description', 'opening_times', 'subway_access')
 
 
 @register(Department)
