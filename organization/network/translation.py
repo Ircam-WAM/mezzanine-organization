@@ -141,10 +141,16 @@ class ActivityFrameworkTranslationOptions(TranslationOptions):
     fields = ['name', 'description']
 
 
-@register(ActivityStatus)
-class ActivityGradeTranslationOptions(TranslationOptions):
+@register(ActivityStatusFamily)
+class ActivityStatusFamilyTranslationOptions(TranslationOptions):
 
-    fields = ['name', 'description', 'display_text']
+    fields = ['name', 'description',]
+
+
+@register(ActivityStatus)
+class ActivityStatusTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description',]
 
 
 @register(TrainingTopic)
