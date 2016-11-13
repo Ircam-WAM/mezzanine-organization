@@ -185,6 +185,11 @@ class ActivityStatusAdmin(BaseTranslationModelAdmin):
     model = ActivityStatus
 
 
+class ActivityStatusFamilyAdmin(BaseTranslationModelAdmin):
+
+    model = ActivityStatusFamily
+
+
 class TrainingTypeAdmin(BaseTranslationModelAdmin):
 
     model = TrainingType
@@ -215,6 +220,7 @@ admin.site.register(Person, PersonAdmin)
 admin.site.register(PersonListBlock, PersonListBlockAdmin)
 admin.site.register(PersonActivity, PersonActivityAdmin)
 admin.site.register(ActivityStatus, ActivityStatusAdmin)
+admin.site.register(ActivityStatusFamily, ActivityStatusFamilyAdmin)
 admin.site.register(ActivityGrade, ActivityGradeAdmin)
 admin.site.register(ActivityFramework, ActivityFrameworkAdmin)
 admin.site.register(ActivityFunction, ActivityFunctionAdmin)
