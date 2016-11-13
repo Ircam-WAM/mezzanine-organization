@@ -111,6 +111,7 @@ ADMIN_MENU_ORDER = (
                     'organization-network.PersonListBlock',
                     )),
     (_('Activity'), ('organization-network.PersonActivity',
+                    'organization-network.ActivityStatusFamily',
                     'organization-network.ActivityStatus',
                     'organization-network.ActivityGrade',
                     'organization-network.ActivityFramework',
