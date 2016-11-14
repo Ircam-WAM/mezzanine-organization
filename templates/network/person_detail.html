@@ -31,7 +31,7 @@
         {{ person.bio|richtext_filters|safe }}
     {% endeditable %}
 
-    {% if not person.email and person.activities.all and person.teams %}<p><strong>{% trans 'Email' %} :</strong> {{ person_email }}</p>{% elif person.email %}<p><strong>{% trans 'Email' %} :</strong> {{ person.email|unspam }}</p>{% endif %}
+    {% if not person.email and person.activities.all and person.activities.all.0.teams.all %}<p><strong>{% trans 'Email' %} :</strong> {{ person_email }}</p>{% elif person.email %}<p><strong>{% trans 'Email' %} :</strong> {{ person.email|unspam }}</p>{% endif %}
 
     {% with person.activities.all as activities %}
       {% if activities %}
