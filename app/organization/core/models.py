@@ -167,6 +167,7 @@ class LinkType(models.Model):
         blank=True,
     )
     ordering = models.PositiveIntegerField(verbose_name=_('ordering'), null=True, blank=True)
+    fa_option = models.CharField(max_length=64, verbose_name=_('fontawesome icon name option'), null=True, blank=True, help_text="will be added to fa-<slug>")
 
     class Meta:
         ordering = ['ordering', ]

@@ -1,10 +1,22 @@
 from django.conf import settings # import the settings file
 from datetime import datetime, date
+from organization.pages.models import Page
+from organization.network.models import Organization
 
-def static(request):
+def settings(request):
     date_now = datetime.now()
     CURRENT_SEASON = int(date_now.year) - 1 if datetime(date_now.year, 1,1) <= date_now and date_now <= datetime(date_now.year, 7, 31) else date_now.year
     CURRENT_SEASON_STYLED = str(CURRENT_SEASON)[-2:]+"."+str(CURRENT_SEASON+1)[-2:]
 
+    newsletter_page = Page.objects.filter(slug="newsletter")
+    NEWSLETTER_SUBSCRIBING_URL = ""
+    if newsletter_page:
+        NEWSLETTER_SUBSCRIBING_URL = newsletter_page.first().get_absolute_url()
+
+    host_organization = Organization.objects.get(is_host=True)
+
     return {'CURRENT_SEASON': CURRENT_SEASON,
-            'CURRENT_SEASON_STYLED': CURRENT_SEASON_STYLED}
+            'CURRENT_SEASON_STYLED': CURRENT_SEASON_STYLED,
+            'NEWSLETTER_SUBSCRIBING_URL': NEWSLETTER_SUBSCRIBING_URL,
+            'host_organization': host_organization,
+            }

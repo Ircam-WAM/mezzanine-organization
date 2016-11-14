@@ -268,8 +268,7 @@ TEMPLATES = [{'APP_DIRS': True,
                                                   'django.core.context_processors.tz',
                                                   'mezzanine.conf.context_processors.settings',
                                                   'mezzanine.pages.context_processors.page',
-                                                  'organization.core.context_processors.static',
-                                                  'organization.pages.context_processors.page_static',
+                                                  'organization.core.context_processors.settings',
                                                   )
                         }
             }]
