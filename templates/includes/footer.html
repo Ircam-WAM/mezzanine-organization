@@ -1,0 +1,91 @@
+{% load i18n pages_tags mezzanine_tags staticfiles keyword_tags event_tags organization_tags %}
+<div class="footer__pre">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-11 tar-sm tal-xs">
+                <a class="button button--small button--white mr3" href="{{ NEWSLETTER_SUBSCRIBING_URL }}">
+                    {% trans "Subscribe to our newsletter" %}
+                </a>
+                {% for link in host_organization.links.all %}
+                    <a class="footer__follow-link {{ link.link_type }}" href="{{ link.url }}" target="_blank" title="{% trans 'Follow us on' %} {{ link.title }}"><i class="fa fa-{{ link.link_type }}{% if link.fa_option %}-{{ link.fa_option }}{% endif %}"></i></a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer__content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3 col-sm-4 col-sm-push-1 tal">
+                <a href="{% url "home" %}" title="{% trans 'Home' %}"><img src="{% static "img/logo-ircam-white.png" %}" width="151" /></a>
+            </div>
+            <div class="col-xs-3 col-sm-2 col-sm-push-1 tar-sm tal fsm">
+                <strong>{{ host_organization.name }}</strong><br />
+                <br />
+                {{ host_organization.address }}<br />
+                {{ host_organization.postal_code }} {{ host_organization.city }}<br />
+                {% if host_organization.telephone %}T. {{ host_organization.telephone }}{% endif %}
+            </div>
+            <div class="col-xs-3 col-sm-2 col-sm-push-1 tar-sm tal fsm">
+                <strong>{% trans 'Opening times' %}</strong><br />
+                <br />
+                {{ host_organization.opening_times|safe }}
+            </div>
+            <div class="col-xs-3 col-sm-2 col-sm-push-1 tar-sm tal fsm">
+                <strong>{% trans 'Subway access' %}</strong><br />
+                <br />
+                {{ host_organization.subway_access|safe }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-10 col-sm-push-1">
+                <div class="footer__separator"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4 col-sm-3 col-sm-push-1 tal">
+                {% page_menu "pages/menus/footer_vertical.html" %}
+            </div>
+
+            <div class="col-xs-4 col-sm-5 col-sm-push-1 tal">
+                <strong>{{ host_organization.description }}</strong> {% trans 'under the tutelage of' %} :<br />
+                <br />
+                <a href="http://www.culturecommunication.gouv.fr/" target="_blank" title="Ministère de la Culture et de la Communication"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-ministere-culture.png" %}" /></a>
+                <a href="http://www.cnrs.fr/" target="_blank" title="Centre National de la Recherche Scientifique"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-cnrs.png" %}" /></a>
+                <a href="http://www.upmc.fr/" target="_blank" title="Université Pierre et Marie Curie"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-upmc.png" %}" /></a>
+                <a href="http://www.inria.fr/" target="_blank" title="Inria"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-inria.png" %}" /></a>
+            </div>
+
+            <div class="col-xs-4 col-sm-2 col-sm-push-1 tal">
+                {% trans 'go to' %} :
+                <ul class="unstyled-list">
+                    <li>
+                        <a class="footer__link" href="https://www.centrepompidou.fr/" target="_blank" title="Centre Pompidou">Centre Pompidou</a>
+                    </li>
+                    <li>
+                        <a class="footer__link" href="http://www.bpi.fr/home.html" target="_blank" title="Bibliothèque Publique d’Information">Bibliothèque Publique d’Information</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-10 col-sm-push-1">
+                <div class="footer__separator footer__seprator--small"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xxs-12 col-xs-8 col-sm-7 col-sm-push-1">
+                {% page_menu "pages/menus/footer_horizontal.html" %}
+            </div>
+            <div class="col-xxs-12 col-xs-4 col-sm-3 col-sm-push-1 tar-xs tal-xxs">
+                Copyright &copy; {% current_year %} {{ host_organization.name }}. {% trans "All rights reserved" %}.
+            </div>
+        </div>
+
+    </div>
+</div>
