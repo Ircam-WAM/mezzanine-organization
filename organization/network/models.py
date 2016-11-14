@@ -445,7 +445,7 @@ class PersonActivity(Period):
     class Meta:
         verbose_name = _('activity')
         verbose_name_plural = _('activities')
-        ordering = ['person__last_name',]
+        ordering = ['-date_from',]
 
     def __str__(self):
         if self.status:
