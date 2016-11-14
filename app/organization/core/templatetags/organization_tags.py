@@ -133,14 +133,19 @@ def app_label_short(obj):
 
 @register.as_tag
 def activity_statuses(*args):
-    return ActivityStatus.objects.filter(display=True)
+    return ActivityStatus.objects.filter(display=True).exclude(parent__isnull=False)
 
 @register.filter
 def get_team_persons(team, status):
     persons = []
-    for activity in status.activities.filter(teams__in=[team], date_to__gte=datetime.date.today()):
-        if not activity.person in persons:
-            persons.append(activity.person)
+    statuses = status.children.all()
+    if not statuses:
+        statuses = [status,]
+    for status in statuses:
+        activities = status.activities.filter(teams__in=[team], date_to__gte=datetime.date.today())
+        for activity in activities:
+            if not activity.person in persons:
+                persons.append(activity.person)
     return persons
 
 @register.filter
