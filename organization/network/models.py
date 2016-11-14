@@ -73,7 +73,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
     opening_times = models.TextField(_('opening times'), blank=True)
     subway_access = models.TextField(_('subway access'), blank=True)
-    
+
     admin_thumb_type = 'logo'
 
     class Meta:
@@ -321,21 +321,11 @@ class PersonListBlockInline(models.Model):
         verbose_name = _('Person autocomplete')
 
 
-class ActivityStatusFamily(Named):
-
-    order = models.IntegerField(_('order number'), default=100)
-    display = models.BooleanField(_('display on team page'), blank=True, default=True)
-
-    class Meta:
-        verbose_name = _('Status family')
-        ordering = ['order']
-
-
 class ActivityStatus(Named):
 
     order = models.IntegerField(_('order number'), default=100)
     display = models.BooleanField(_('display on team page'), blank=True, default=True)
-    family = models.ForeignKey(ActivityStatusFamily, verbose_name=_('family'), related_name='activity_statuses', blank=True, null=True, on_delete=models.SET_NULL)
+    parent = models.ForeignKey('ActivityStatus', verbose_name=_('parent'), related_name='children', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('status')

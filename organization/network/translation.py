@@ -141,12 +141,6 @@ class ActivityFrameworkTranslationOptions(TranslationOptions):
     fields = ['name', 'description']
 
 
-@register(ActivityStatusFamily)
-class ActivityStatusFamilyTranslationOptions(TranslationOptions):
-
-    fields = ['name', 'description',]
-
-
 @register(ActivityStatus)
 class ActivityStatusTranslationOptions(TranslationOptions):
 
