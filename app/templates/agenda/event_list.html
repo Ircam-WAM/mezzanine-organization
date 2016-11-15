@@ -52,8 +52,7 @@
                         {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
                         <a class="banner banner--light banner--sidebar hide-until-sm" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
                             <div class="banner__content">
-                                <div class="banner__title fsxxxl">
-                                    Tournées {{ CURRENT_SEASON_STYLED }}
+                                <div class="banner__title fsxxxl">{% trans "Tournées" %} {{ CURRENT_SEASON_STYLED }}
                                 </div>
                             </div>
                         </a>
@@ -145,8 +144,7 @@
                             {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
                             <a class="banner banner--light banner--sidebar hide-from-sm" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
                                 <div class="banner__content">
-                                    <div class="banner__title fsxxxl">
-                                        Tournées {{ CURRENT_SEASON_STYLED }}
+                                    <div class="banner__title fsxxxl">{% trans "Tournées" %} {{ CURRENT_SEASON_STYLED }}
                                     </div>
                                 </div>
                             </a>
