@@ -28,7 +28,7 @@
                 {% endeditable %}
                 <br />
                 {% editable content.description %}
-                    {{ content.description }}
+                    {{ content.description|safe }}
                 {% endeditable %}
             </div>
             {% if content.external_content and content.text_button_external %}
