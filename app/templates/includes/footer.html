@@ -7,7 +7,7 @@
                     {% trans "Subscribe to our newsletter" %}
                 </a>
                 {% for link in host_organization.links.all %}
-                    <a class="footer__follow-link {{ link.link_type }}" href="{{ link.url }}" target="_blank" title="{% trans 'Follow us on' %} {{ link.title }}"><i class="fa fa-{{ link.link_type }}{% if link.fa_option %}-{{ link.fa_option }}{% endif %}"></i></a>
+                    <a class="footer__follow-link {{ link.link_type.slug }}" href="{{ link.url }}" target="_blank" title="{% trans 'Follow us on' %} {{ link.title }}"><i class="fa fa-{{ link.link_type.slug }}{% if link.fa_option %}-{{ link.fa_option }}{% endif %}"></i></a>
                 {% endfor %}
             </div>
         </div>
