@@ -63,7 +63,7 @@ msgstr ""
 #: local_settings.py:138 templates/job/job_offer_list.html:4
 #: templates/job/job_offer_list.html:15
 msgid "Jobs"
-msgstr "Offres d'emploi"
+msgstr "Offres d'emplois et stages"
 
 #: local_settings.py:139
 msgid "Festival"
@@ -426,8 +426,8 @@ msgid "candidacy"
 msgstr ""
 
 #: organization/job/models.py:67
-msgid "candidacies"
-msgstr ""
+msgid "Applications"
+msgstr "Appels à candidature"
 
 #: organization/job/views.py:53
 msgid "Only .pdf, .odt, .doc, .docx files allowed."
