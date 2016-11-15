@@ -102,8 +102,8 @@ def get_type(objects, type):
     return None
 
 @register.filter
-def get_type_link(objects, name):
-    objs = objects.filter(link_type__name=name)
+def get_type_link(objects, slug):
+    objs = objects.filter(link_type__slug=slug)
     if objs:
         return objs
     return None
