@@ -36,7 +36,7 @@
                 <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2">
                     <h1 class="dotted">
                         {% if tag and tag|tag_is_excluded %}
-                            {% trans "Tournées" %}
+                            {% trans "On tour" %}
                         {% elif is_archive %}
                             {% trans 'Archives' %}
                         {% else %}
@@ -52,7 +52,7 @@
                         {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
                         <a class="banner banner--light banner--sidebar hide-until-sm" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
                             <div class="banner__content">
-                                <div class="banner__title fsxxxl">{% trans "Tournées" %} {{ CURRENT_SEASON_STYLED }}
+                                <div class="banner__title fsxxxl">{% trans "On tour" %} {{ CURRENT_SEASON_STYLED }}
                                 </div>
                             </div>
                         </a>
@@ -66,7 +66,7 @@
                                     <li class="nav-tree__item">
                                         <a class="nav-tree__link active" href="{% url 'event_list' %}">
                                             {% if tag and tag|tag_is_excluded %}
-                                                {% trans "Tournées" %}
+                                                {% trans "On tour" %}
                                             {% elif is_archive %}
                                                 {% trans 'Archives' %}
                                             {% else %}
@@ -98,7 +98,7 @@
                                     {% else %}
                                         <li class="nav-tree__item">
                                             <a class="nav-tree__link" href="{% url 'event_list_tag' 'tournees' %}">
-                                                {% trans "Tournées" %}
+                                                {% trans "On tour" %}
                                             </a>
                                         </li>
                                     {% endif %}
@@ -144,7 +144,7 @@
                             {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
                             <a class="banner banner--light banner--sidebar hide-from-sm" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
                                 <div class="banner__content">
-                                    <div class="banner__title fsxxxl">{% trans "Tournées" %} {{ CURRENT_SEASON_STYLED }}
+                                    <div class="banner__title fsxxxl">{% trans "On tour" %} {{ CURRENT_SEASON_STYLED }}
                                     </div>
                                 </div>
                             </a>

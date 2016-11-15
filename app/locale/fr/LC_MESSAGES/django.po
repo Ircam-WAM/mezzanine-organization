@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-15 13:04+0100\n"
+"POT-Creation-Date: 2016-11-15 13:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1950,22 +1950,23 @@ msgstr "Encadrants"
 msgid "Persons"
 msgstr "Personnes"
 
-#: templates/agenda/event_list.html:8 templates/agenda/event_list.html:74
-#: templates/agenda/event_list.html:88 templates/agenda/event_list.html:96
+#: templates/agenda/event_list.html:8 templates/agenda/event_list.html:73
+#: templates/agenda/event_list.html:87 templates/agenda/event_list.html:95
 msgid "Rendez-vous in Paris"
 msgstr "Rendez-vous à Paris"
 
-#: templates/agenda/event_list.html:39 templates/agenda/event_list.html:70
-#: templates/agenda/event_list.html:102
-msgid "Tournées"
-msgstr "On tour"
+#: templates/agenda/event_list.html:39 templates/agenda/event_list.html:55
+#: templates/agenda/event_list.html:69 templates/agenda/event_list.html:101
+#: templates/agenda/event_list.html:148
+msgid "On tour"
+msgstr "Tournées"
 
-#: templates/agenda/event_list.html:41 templates/agenda/event_list.html:72
-#: templates/agenda/event_list.html:109
+#: templates/agenda/event_list.html:41 templates/agenda/event_list.html:71
+#: templates/agenda/event_list.html:108
 msgid "Archives"
 msgstr "Archives"
 
-#: templates/agenda/event_list.html:109
+#: templates/agenda/event_list.html:108
 msgid "archive"
 msgstr "archive"
 
@@ -2932,6 +2933,9 @@ msgstr ""
 #: templates/twitter/tweets.html:7
 msgid "Recent Tweets"
 msgstr "Tweets récents"
+
+#~ msgid "Tournées"
+#~ msgstr "On tour"
 
 #~ msgid "Applications"
 #~ msgstr "Appels à candidature"
