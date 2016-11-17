@@ -236,3 +236,7 @@ SHOP_USE_RATINGS = False
 PROJECT_DEMOS_DIR = '/srv/media/projects/demos/'
 if not os.path.exists(PROJECT_DEMOS_DIR):
     os.makedirs(PROJECT_DEMOS_DIR)
+
+FORMAT_MODULE_PATH = [
+    'organization.formats',
+]

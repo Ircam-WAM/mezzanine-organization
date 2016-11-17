@@ -180,3 +180,7 @@ def is_not_host(organizations):
 @register.filter
 def unspam(email):
     return email.replace('@', ' (at) ')
+
+@register.filter
+def get_attr(obj, attr):
+    return getattr(obj, attr)  
