@@ -7,7 +7,7 @@ from __future__ import unicode_literals
 # see http://docs.djangoproject.com/en/dev/ref/templates/builtins/#date
 DATE_FORMAT = 'N j, Y'
 DATE_EVENT_FORMAT = 'F j'
-WEEK_DAY_FORMAT = 'D, jS'
+WEEK_DAY_FORMAT = 'F j'
 TIME_FORMAT = 'P'
 DATETIME_FORMAT = 'N j, Y, P'
 YEAR_MONTH_FORMAT = 'F Y'
