@@ -1,34 +1,31 @@
-{% load i18n %}
-{% load event_tags pages_tags mezzanine_tags %}
-
+{% load event_tags pages_tags mezzanine_tags organization_tags i18n  %}
     <!-- Start date only  -->
     {% if event.start and not event.end %}
-        {{ event.start|date:event.date_format }}
+        {{ event.start|date:"DATE_EVENT_FORMAT" }},<br>
         <!-- Start date with hour  -->
         {% if event.start and event.start|date:"H:i" != "23:59" %}
-            - {{ event.start|date:"H\hi" }}
+            {{ event.start|time:"TIME_FORMAT" }}
         {% endif %}
-
     <!-- Start and end date  -->
     {% else %}
         <!-- Start and end date is the same day  -->
         {% if event.start|date:"d.m.y" == event.end|date:"d.m.y" %}
             {% if not event.periods.all %}
-                {{ event.start|date:event.date_format }}
+                {{ event.start|date:"DATE_EVENT_FORMAT" }},<br>
                 <!-- Start date with hour  -->
                 {% if event.end and event.end|date:"H:i" != "23:59" %}
-                    , {{ event.start|date:" H\hi" }} - {{ event.end|date:"H\hi" }}
+                    {{ event.start|time:"TIME_FORMAT" }} - {{ event.end|time:"TIME_FORMAT" }}
                 {% else %}
-                    , {{ event.start|date:" H\hi" }}
+                    {{ event.start|time:"TIME_FORMAT" }}
                 {% endif %}
             {% else %}
-                {{ event.start|date:event.date_format }}
+                {{ event.start|date:"DATE_EVENT_FORMAT" }},<br>
                 {% for period in event.periods.all %}
                     {% if period.date_to and period.date_to|date:"H:i" != "23:59" %}
-                        ,{{ period.date_from|date:"H\hi" }} - {{ period.date_to|date:"H\hi" }}
+                        {{ period.date_from|time:"TIME_FORMAT" }} - {{ period.date_to|time:"TIME_FORMAT" }}
                     {% else %}
                         {% if forloop.last or event.periods.all|length == 2 %} {% trans "and"%} {% elif not forloop.first %}, {% endif %}
-                            {{ period.date_from|date:"H\hi" }}
+                        {{ period.date_from|time:"TIME_FORMAT" }}
                     {% endif %}
                 {% endfor %}
             {% endif %}
@@ -39,39 +36,45 @@
             {% with event.periods.all|same_time_in_periods as same_time_in_periods %}
             {% for period in event.periods.all %}
                 {% if period.date_to and period.date_to|date:"H:i" != "23:59" %}
-                    {{ period.date_from|date:event.date_format }}
+                    {{ period.date_from|date:"DATE_EVENT_FORMAT" }},<br>
                     {% if period|period_is_more_than_hours:4 %}
-                        , {{ period.date_from|date:"H\hi" }} {% trans "to" %} {{ period.date_to|date:"H\hi" }}
+                        {{ period.date_from|time:"WEEK_DAY_FORMAT" }} {% trans "to" %} {{ period.date_to|time:"TIME_FORMAT" }}
                     {% else %}
-                        , {{ period.date_from|date:"H\hi" }}
+                        {{ period.date_from|time:"TIME_FORMAT" }}
                     {% endif %}
                 {% else %}
                     {% if event.periods.all|length > 1 and not forloop.last %}
-                        {{ period.date_from|date:event.date_format }}{% if event.periods.all|length == 2 %} {% trans "and" %} {% else %}{% endif %}
+                        {{ period.date_from|date:"DATE_EVENT_FORMAT" }}{% if event.periods.all|length == 2 %} {% trans "and" %} {% else %}{% endif %}
                     {% else %}
-                        {{ period.date_from|date:event.date_format }}
-                        {% if event.periods.all|length > 1 and forloop.first %} {% trans "and" %}{% endif %}
+                        {{ period.date_from|date:"DATE_EVENT_FORMAT" }},<br>
+                        {% if event.periods.all|length > 1 and forloop.first %}{% trans "and" %}{% endif %}
                     {% endif %}
                     {% if same_time_in_periods and forloop.last %}
-                        {{ period.date_from|date:"H\hi" }}
+                        {{ period.date_from|time:"TIME_FORMAT" }}
                     {% elif not same_time_in_periods %}
-                        , {{ period.date_from|date:"H\hi" }}
+                        <br>, {{ period.date_from|time:"TIME_FORMAT" }}
                     {% endif %}
                 {% endif %}
                 <br />
             {% endfor %}
             {% endwith %}
           {% else %}
-            {{ event.start|date:event.date_format }} {% trans "to" %} {{ event.end|date:event.date_format }} - {{ event.start|date:"H\hi" }} - {{ event.end|date:"H\hi" }}
+            {{ event.start|date:"WEEK_DAY_FORMAT" }}
+            {% if event.end|subtract:event.start|get_attr:"days" > 1 %}
+                {% trans "to" %}
+            {% else %}
+                {% trans "and" %}
+            {% endif %}
+            {{ event.end|date:"DATE_EVENT_FORMAT" }},<br> {{ event.start|time:"TIME_FORMAT" }} - {{ event.end|time:"TIME_FORMAT" }}
           {% endif %}
         <!-- Start and end date are completely different  -->
         {% else %}
-            {{ event.start|date:"j F" }} {% trans "to" %} {{ event.end|date:"j F" }}
+            {{ event.start|date:"WEEK_DAY_FORMAT" }} {% trans "to" %} {{ event.end|date:"DATE_EVENT_FORMAT" }},<br>
             <!-- Start date with hour  -->
             {% if event.end and event.end|date:"H:i" != "23:59" %}
-                , {{ event.start|date:" H\hi" }} - {{ event.end|date:"H\hi" }}
+                {{ event.start|time:"TIME_FORMAT" }} - {{ event.end|time:"TIME_FORMAT" }}
             {% else %}
-                , {{ event.start|date:" H\hi" }}
+                {{ event.start|time:"TIME_FORMAT" }}
             {% endif %}
         {% endif %}
 
