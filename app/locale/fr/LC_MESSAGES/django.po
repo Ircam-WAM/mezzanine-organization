@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-15 13:11+0100\n"
+"POT-Creation-Date: 2016-11-17 15:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,8 +24,9 @@ msgstr "Pages"
 
 #: local_settings.py:90 templates/index.html:53
 #: templates/media/playlist_detail.html:4
-#: templates/media/playlist_detail.html:21 templates/media/playlist_list.html:6
-#: templates/media/playlist_list.html:11 templates/media/playlist_list.html:15
+#: templates/media/playlist_detail.html:21
+#: templates/media/playlist_list.html:6 templates/media/playlist_list.html:11
+#: templates/media/playlist_list.html:15
 msgid "Media"
 msgstr "Media"
 
@@ -1981,15 +1982,19 @@ msgstr "Événements du lieu"
 msgid "Locations"
 msgstr "Lieux"
 
-#: templates/agenda/includes/event_date.html:30
+#: templates/agenda/includes/event_date.html:27
+#: templates/agenda/includes/event_date.html:47
 #: templates/agenda/includes/event_date.html:50
-#: templates/agenda/includes/event_date.html:53
+#: templates/agenda/includes/event_date.html:66
 msgid "and"
 msgstr ""
 
-#: templates/agenda/includes/event_date.html:44
-#: templates/agenda/includes/event_date.html:65
-#: templates/agenda/includes/event_date.html:69
+#: templates/agenda/includes/event_date.html:41
+#: templates/agenda/includes/event_date.html:64
+#: templates/agenda/includes/event_date.html:72
+msgid "through"
+msgstr "au"
+
 #: templates/agenda/includes/event_date_line.html:10
 #: templates/job/inc/candidacy_card.html:22
 #: templates/network/person_detail_multiple_activities.html:78
@@ -2074,15 +2079,18 @@ msgstr ""
 msgid "Also discover"
 msgstr "À découvrir aussi"
 
-#: templates/email/account_approve.html:3 templates/email/account_approve.txt:3
+#: templates/email/account_approve.html:3
+#: templates/email/account_approve.txt:3
 msgid "Hey there, a new account has been created and requires activation."
 msgstr ""
 
-#: templates/email/account_approve.html:5 templates/email/account_approve.txt:5
+#: templates/email/account_approve.html:5
+#: templates/email/account_approve.txt:5
 msgid "Name"
 msgstr "Nom"
 
-#: templates/email/account_approve.html:6 templates/email/account_approve.txt:6
+#: templates/email/account_approve.html:6
+#: templates/email/account_approve.txt:6
 #: templates/network/person_detail.html:34
 #: templates/network/person_detail_multiple_activities.html:34
 msgid "Email"
@@ -2494,7 +2502,7 @@ msgstr "résumé"
 
 #: templates/network/person_detail.html:46
 #: templates/network/person_detail_multiple_activities.html:52
-#: templates/pages/teampage.html:128
+#: templates/pages/teampage.html:129
 msgid "Team"
 msgstr "Équipe"
 
