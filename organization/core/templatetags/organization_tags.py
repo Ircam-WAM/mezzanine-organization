@@ -8,7 +8,6 @@ from mezzanine_agenda.models import Event
 from mezzanine.conf import settings
 from random import shuffle
 
-from organization.festival.models import *
 from organization.magazine.models import *
 from organization.projects.models import *
 
@@ -51,8 +50,6 @@ def featured(*args):
             featured_list.append(post)
         for video in featured.videos.all():
             featured_list.append(video)
-        for artist in featured.artists.all():
-            featured_list.append(artist)
         for playlist in featured.playlists.all():
             featured_list.append(playlist)
         shuffle(featured_list)
@@ -183,4 +180,4 @@ def unspam(email):
 
 @register.filter
 def get_attr(obj, attr):
-    return getattr(obj, attr)  
+    return getattr(obj, attr)

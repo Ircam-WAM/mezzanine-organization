@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-17 15:57+0100\n"
+"POT-Creation-Date: 2016-11-18 12:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,14 +67,10 @@ msgid "Jobs"
 msgstr "Offres d'emplois et stages"
 
 #: local_settings.py:140
-msgid "Festival"
-msgstr ""
-
-#: local_settings.py:141
 msgid "Users"
 msgstr ""
 
-#: local_settings.py:142 templates/admin/login.html:59
+#: local_settings.py:141 templates/admin/login.html:59
 msgid "Site"
 msgstr ""
 
@@ -356,23 +352,13 @@ msgstr "pays"
 msgid "Everything"
 msgstr "Tout"
 
-#: organization/festival/models.py:21 organization/job/models.py:11
-#: organization/network/models.py:228
+#: organization/job/models.py:11 organization/network/models.py:228
 msgid "first name"
 msgstr ""
 
-#: organization/festival/models.py:22 organization/job/models.py:12
-#: organization/network/models.py:229
+#: organization/job/models.py:12 organization/network/models.py:229
 msgid "last name"
 msgstr ""
-
-#: organization/festival/models.py:23 organization/network/models.py:233
-msgid "biography"
-msgstr "biographie"
-
-#: organization/festival/models.py:27
-msgid "artist"
-msgstr "artiste"
 
 #: organization/job/models.py:13 organization/network/models.py:230
 msgid "email"
@@ -667,6 +653,10 @@ msgstr "genre"
 #: organization/network/models.py:232
 msgid "birthday"
 msgstr "déte de naissance"
+
+#: organization/network/models.py:233
+msgid "biography"
+msgstr "biographie"
 
 #: organization/network/models.py:234 organization/network/models.py:443
 msgid "external ID"
@@ -1982,16 +1972,20 @@ msgstr "Événements du lieu"
 msgid "Locations"
 msgstr "Lieux"
 
-#: templates/agenda/includes/event_date.html:27
-#: templates/agenda/includes/event_date.html:47
-#: templates/agenda/includes/event_date.html:50
-#: templates/agenda/includes/event_date.html:66
+#: templates/agenda/includes/event_date.html:28
+#: templates/agenda/includes/event_date.html:48
+#: templates/agenda/includes/event_date.html:51
+#: templates/agenda/includes/event_date.html:67
+#: templates/agenda/includes/event_date_slider.html:28
+#: templates/agenda/includes/event_date_slider.html:39
 msgid "and"
 msgstr "et"
 
-#: templates/agenda/includes/event_date.html:41
-#: templates/agenda/includes/event_date.html:64
-#: templates/agenda/includes/event_date.html:72
+#: templates/agenda/includes/event_date.html:42
+#: templates/agenda/includes/event_date.html:65
+#: templates/agenda/includes/event_date.html:73
+#: templates/agenda/includes/event_date_slider.html:37
+#: templates/agenda/includes/event_date_slider.html:44
 msgid "through"
 msgstr "au"
 
@@ -2032,50 +2026,15 @@ msgid "Recent Events"
 msgstr "Événements récents"
 
 #: templates/agenda/includes/filter_panel.html:38
-#: templates/blog/includes/filter_panel.html:27
 msgid "Archive"
 msgstr "Archive"
 
 #: templates/agenda/includes/filter_panel.html:74
-#: templates/blog/includes/filter_panel.html:56
 msgid "Tags"
 msgstr "Mots clés"
 
-#: templates/blog/includes/filter_panel.html:6
-msgid "Recent Posts"
-msgstr "Articles récents"
-
-#: templates/blog/includes/filter_panel.html:43
-msgid "Categories"
-msgstr "Catégories"
-
-#: templates/blog/includes/filter_panel.html:72
-#: templates/projects/project_demo_detail.html:36
-msgid "Authors"
-msgstr "Auteurs"
-
-#: templates/blog/includes/filter_panel.html:84
-msgid "Feeds"
-msgstr "Fils"
-
-#: templates/blog/includes/filter_panel.html:86
-#: templates/blog/includes/filter_panel.html:90
-#: templates/blog/includes/filter_panel.html:94
-#: templates/blog/includes/filter_panel.html:98
-msgid "RSS"
-msgstr ""
-
-#: templates/blog/includes/filter_panel.html:87
-#: templates/blog/includes/filter_panel.html:91
-#: templates/blog/includes/filter_panel.html:95
-#: templates/blog/includes/filter_panel.html:99
-msgid "Atom"
-msgstr ""
-
 #: templates/core/inc/related_content.html:8
 #: templates/core/inc/related_content_dynamic.html:8
-#: templates/festival/artist_detail.html:27
-#: templates/festival/video_detail.html:28
 msgid "Also discover"
 msgstr "À découvrir aussi"
 
@@ -2185,18 +2144,6 @@ msgstr ""
 #: templates/errors/500.html:16 templates/errors/500.html:38
 msgid "Sorry, an error occurred."
 msgstr "Une erreur s'est produite."
-
-#: templates/festival/artist_list.html:6
-msgid "Artists"
-msgstr "Artistes"
-
-#: templates/festival/inc/video_card.html:10
-msgid "Play the video"
-msgstr "Jouer la vidéo"
-
-#: templates/festival/video_list.html:6
-msgid "Videos"
-msgstr "Vidéos"
 
 #: templates/generic/includes/comment.html:22
 #: templates/generic/includes/comment.html:59 templates/twitter/tweets.html:19
@@ -2330,10 +2277,6 @@ msgstr ""
 msgid "News"
 msgstr "Actualité"
 
-#: templates/includes/calendar.html:3
-msgid "Festival calendar"
-msgstr "Calendrier du festival"
-
 #: templates/includes/editable_form.html:16
 msgid "Save"
 msgstr ""
@@ -2463,27 +2406,13 @@ msgstr ""
 msgid "Publish date"
 msgstr "Date de publication"
 
-#: templates/magazine/article/article_list.html:4
-#: templates/magazine/article/article_list.html:22
-#: templates/magazine/topic/topic_detail.html:24
-msgid "Articles"
-msgstr "Articles"
-
-#: templates/magazine/article/article_list.html:31
-msgid "Tag:"
-msgstr "Mot clé :"
-
-#: templates/magazine/article/article_list.html:33
-msgid "Category:"
-msgstr "Catégorie :"
-
-#: templates/magazine/article/article_list.html:37
-msgid "Author:"
-msgstr "Auteur :"
-
 #: templates/magazine/brief/inc/brief_card.html:6
 msgid "Brief !"
 msgstr "Brève !"
+
+#: templates/magazine/topic/topic_detail.html:24
+msgid "Articles"
+msgstr "Articles"
 
 #: templates/media/audio/inc/audio_search.html:20
 #: templates/media/inc/playlist_search.html:49
@@ -2559,14 +2488,6 @@ msgstr ""
 msgid "Project"
 msgstr "Projet"
 
-#: templates/pages/richtextpage.html:17
-msgid "Related events"
-msgstr "Événements associés"
-
-#: templates/pages/richtextpage.html:27
-msgid "Related posts"
-msgstr "Articles associés"
-
 #: templates/pages/teampage.html:86
 msgid "Research topics and related projects"
 msgstr "Domaines de recherche et projets associés"
@@ -2583,6 +2504,10 @@ msgstr "Demo"
 #: templates/projects/project_detail.html:280
 msgid "Demos"
 msgstr "Demos"
+
+#: templates/projects/project_demo_detail.html:36
+msgid "Authors"
+msgstr "Auteurs"
 
 #: templates/projects/project_detail.html:124
 msgid "Project details"
@@ -2941,6 +2866,42 @@ msgstr ""
 #: templates/twitter/tweets.html:7
 msgid "Recent Tweets"
 msgstr "Tweets récents"
+
+#~ msgid "artist"
+#~ msgstr "artiste"
+
+#~ msgid "Recent Posts"
+#~ msgstr "Articles récents"
+
+#~ msgid "Categories"
+#~ msgstr "Catégories"
+
+#~ msgid "Feeds"
+#~ msgstr "Fils"
+
+#~ msgid "Artists"
+#~ msgstr "Artistes"
+
+#~ msgid "Play the video"
+#~ msgstr "Jouer la vidéo"
+
+#~ msgid "Videos"
+#~ msgstr "Vidéos"
+
+#~ msgid "Tag:"
+#~ msgstr "Mot clé :"
+
+#~ msgid "Category:"
+#~ msgstr "Catégorie :"
+
+#~ msgid "Author:"
+#~ msgstr "Auteur :"
+
+#~ msgid "Related events"
+#~ msgstr "Événements associés"
+
+#~ msgid "Related posts"
+#~ msgstr "Articles associés"
 
 #~ msgid "Tournées"
 #~ msgstr "On tour"

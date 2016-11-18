@@ -74,10 +74,3 @@ class PlayListMediaView(autocomplete.Select2QuerySetView):
         if self.q:
             qs = qs.filter(title__istartswith=self.q)
         return qs
-
-
-class MediaDetailView(SlugMixin, DetailView):
-
-    model = Media
-    template_name='media/media_detail.html'
-    context_object_name = 'media'

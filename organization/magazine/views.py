@@ -56,20 +56,6 @@ class ArticleDetailView(SlugMixin, DetailView):
         return context
 
 
-class ArticleListView(SlugMixin, ListView):
-
-    model = Article
-    template_name='magazine/article/article_list.html'
-    context_object_name = 'article'
-
-    def get_queryset(self, **kwargs):
-        return self.model.objects.published(for_user=self.request.user).select_related()
-
-    def get_context_data(self, **kwargs):
-        context = super(ArticleListView, self).get_context_data(**kwargs)
-        return context
-
-
 class BriefDetailView(SlugMixin, DetailView):
 
     model = Brief

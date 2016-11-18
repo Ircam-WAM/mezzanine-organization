@@ -227,7 +227,6 @@ INSTALLED_APPS = [
     "organization.media",
     "organization.pages",
     "organization.network",
-    "organization.festival",
     "organization.magazine",
     "organization.projects",
     "organization.agenda",
