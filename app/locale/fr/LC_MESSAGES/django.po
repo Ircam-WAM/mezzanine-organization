@@ -1987,7 +1987,7 @@ msgstr "Lieux"
 #: templates/agenda/includes/event_date.html:50
 #: templates/agenda/includes/event_date.html:66
 msgid "and"
-msgstr ""
+msgstr "et"
 
 #: templates/agenda/includes/event_date.html:41
 #: templates/agenda/includes/event_date.html:64
@@ -2184,7 +2184,7 @@ msgstr ""
 
 #: templates/errors/500.html:16 templates/errors/500.html:38
 msgid "Sorry, an error occurred."
-msgstr ""
+msgstr "Une erreur s'est produite."
 
 #: templates/festival/artist_list.html:6
 msgid "Artists"
