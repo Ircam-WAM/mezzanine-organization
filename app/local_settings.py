@@ -189,6 +189,7 @@ TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
 
 SLUGIFY = 'django.template.defaultfilters.slugify'
 
+BLOG_SLUG = 'article'
 BLOG_POST_PER_PAGE = 200
 ARTICLE_PER_PAGE = 10
 MEDIA_PER_PAGE = 9

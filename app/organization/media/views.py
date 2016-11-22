@@ -9,6 +9,13 @@ from django.core.exceptions import FieldDoesNotExist
 # temporarily excluse not ready models
 EXCLUDED_MODELS = ("organizationplaylist", "personplaylist")
 
+
+class MediaDetailView(SlugMixin, DetailView):
+
+    model = Media
+    template_name='media/media_detail.html'
+
+
 class PlaylistDetailView(SlugMixin, DetailView):
 
     model = Playlist
