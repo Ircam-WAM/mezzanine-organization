@@ -94,7 +94,7 @@ class DynamicContentHomeMediaView(Select2QuerySetSequenceView):
         playlists = Playlist.objects.all()
 
         if self.q:
-            playlists = videos.filter(title__icontains=self.q)
+            playlists = playlists.filter(title__icontains=self.q)
 
         qs = autocomplete.QuerySetSequence(playlists,)
 
