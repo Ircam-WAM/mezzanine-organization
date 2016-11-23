@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
+from mezzanine_agenda.models import Event
+from mezzanine.conf import settings
 from organization.projects.models import *
 from organization.core.views import *
 from organization.magazine.views import Article
-from mezzanine_agenda.models import Event
 from organization.pages.models import CustomPage
-
 
 class ProjectDetailView(SlugMixin, DetailView):
 
@@ -38,6 +38,8 @@ class ProjectDetailView(SlugMixin, DetailView):
 
 class DynamicContentProjectView(Select2QuerySetSequenceView):
 
+    paginate_by = settings.DAL_MAX_RESULTS
+
     def get_queryset(self):
 
         articles = Article.objects.all()
@@ -57,6 +59,10 @@ class DynamicContentProjectView(Select2QuerySetSequenceView):
         qs = self.mixup_querysets(qs)
 
         return qs
+
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results
 
 
 class ProjectDemoDetailView(SlugMixin, DetailView):

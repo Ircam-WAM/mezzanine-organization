@@ -5,6 +5,7 @@ from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from organization.magazine.models import Article
 from organization.pages.models import CustomPage
 from mezzanine_agenda.models import Event
+from organization.core.views import autocomplete_result_formatting
 
 class ConfirmationView(TemplateView):
 
@@ -17,6 +18,8 @@ class ConfirmationView(TemplateView):
 
 
 class DynamicContentEventView(Select2QuerySetSequenceView):
+
+    paginate_by = settings.DAL_MAX_RESULTS
 
     def get_queryset(self):
 
@@ -37,3 +40,7 @@ class DynamicContentEventView(Select2QuerySetSequenceView):
         qs = self.mixup_querysets(qs)
 
         return qs
+
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results

@@ -15,7 +15,7 @@ from mezzanine.conf import settings
 from organization.magazine.models import *
 from organization.network.models import DepartmentPage
 from organization.pages.models import CustomPage, DynamicContentPage
-from organization.core.views import SlugMixin
+from organization.core.views import SlugMixin, autocomplete_result_formatting
 from django.template.defaultfilters import slugify
 
 
@@ -95,6 +95,9 @@ class TopicDetailView(SlugMixin, DetailView):
 
 
 class ObjectAutocomplete(Select2QuerySetSequenceView):
+
+    paginate_by = settings.DAL_MAX_RESULTS
+
     def get_queryset(self):
 
         articles = Article.objects.all()
@@ -118,8 +121,15 @@ class ObjectAutocomplete(Select2QuerySetSequenceView):
 
         return qs
 
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results
+
 
 class DynamicContentArticleView(Select2QuerySetSequenceView):
+
+    paginate_by = settings.DAL_MAX_RESULTS
+
     def get_queryset(self):
 
         articles = Article.objects.all()
@@ -142,3 +152,7 @@ class DynamicContentArticleView(Select2QuerySetSequenceView):
         qs = self.mixup_querysets(qs)
 
         return qs
+
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results

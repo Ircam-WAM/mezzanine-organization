@@ -6,13 +6,13 @@ from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
+from mezzanine.conf import settings
 from organization.pages.models import CustomPage
-from organization.core.views import SlugMixin
+from organization.core.views import SlugMixin, autocomplete_result_formatting
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import Home
 from organization.agenda.models import Event
 from organization.media.models import Playlist
-
 
 class HomeView(SlugMixin, ListView):
 
@@ -58,8 +58,14 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
 
         return qs
 
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results
+
 
 class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
+
+    paginate_by = settings.DAL_MAX_RESULTS
 
     def get_queryset(self):
 
@@ -85,6 +91,11 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
         qs = self.mixup_querysets(qs)
 
         return qs
+
+
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results
 
 
 class DynamicContentHomeMediaView(Select2QuerySetSequenceView):
@@ -131,3 +142,7 @@ class DynamicContentPageView(Select2QuerySetSequenceView):
         qs = self.mixup_querysets(qs)
 
         return qs
+
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results    
