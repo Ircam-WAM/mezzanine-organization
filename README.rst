@@ -28,7 +28,7 @@ Start
 
 For a production environment setup::
 
-     docker-compose up
+     docker-compose up (it will builds, (re)creates, starts, and attaches to containers for a service.)
 
 Then browse the app at http://localhost:8020/ (replacing 'localhost' by the IP given by the docker terminal on OSX or Windows)
 
@@ -118,16 +118,41 @@ If you want to modify CSS or JS
     gulp
 
 Gulp will launch BrowserSync. BrowserSync is a middleware that expose the website on port 3000.
-Any change on CSS or JS files will trigger the build system and reload the browser. 
+Any change on CSS or JS files will trigger the build system and reload the browser.
 
 Paths
 ======
 
 - `app/templates` : Main templates
-- `app/festival/templates` : Personal templates
-- `app/festival/static` : Static files
+- `app/data/var/log/nginx` : nginx logs
+- `app/data/var/log/postgresql` : postgresql logs
+- `app/data/var/log/uwsgi` : uwsgi logs
 
 .. _Git: http://git-scm.com/downloads
+
+Prod
+======
+
+Update prod on master branch :
+./scripts/upgrade.sh
+
+Backup manually database :
+./scripts/push.sh (only prod !)
+
+Docker
+======
+
+Restart service docker :
+sudo /etc/init.d/docker restart
+
+List containers :
+docker-compose ps
+
+Inspect a container :
+(usefully to know IP of a container)
+docker inspect [CONTAINER_ID]
+
 .. _Docker-engine: https://docs.docker.com/installation/
 .. _docker-compose: https://docs.docker.com/compose/install/
+.. _docker-compose reference: https://docs.docker.com/compose/reference/
 .. _Docker-Toolbox: https://www.docker.com/products/docker-toolbox
