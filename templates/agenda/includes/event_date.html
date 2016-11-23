@@ -30,7 +30,6 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
-
         <!-- Start and end date are the same month  -->
         {% elif event.start|date:"m.y" == event.end|date:"m.y" %}
           {% if periods %}
@@ -45,9 +44,9 @@
                     {% endif %}
                 {% else %}
                     {% if periods|length > 1 and not forloop.last %}
-                        {{ period.date_from|date:"WEEK_DAY_FORMAT" }}{% if periods|length == 2 %} {% trans "and" %} {% else %},{% endif %}
+                        {{ period.date_from|date:"DATE_EVENT_FORMAT" }}{% if periods|length == 2 %} {% trans "and" %} {% else %},{% endif %}
                     {% else %}
-                        {{ period.date_from|date:"WEEK_DAY_FORMAT" }},
+                        {{ period.date_from|date:"DATE_EVENT_FORMAT" }},
                         {% if periods|length > 1 and forloop.first %}{% trans "and" %}{% endif %}
                     {% endif %}
                     {% if same_time_in_periods and forloop.last %}
