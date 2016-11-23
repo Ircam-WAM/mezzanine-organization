@@ -71,7 +71,7 @@
             {% endif %}
         </p>
     {% else %}
-        {% if event.prices.all.0|floatformat != '0' %}
+        {% if event.prices.all.0 and event.prices.all.0|floatformat != '0' %}
             <p>
                 {{ price.unit }}
             </p>
