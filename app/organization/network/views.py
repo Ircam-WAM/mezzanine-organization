@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from dal import autocomplete
-from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from organization.network.models import *
 from organization.core.views import *
 

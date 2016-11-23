@@ -3,7 +3,6 @@ from collections import defaultdict
 from organization.media.models import *
 from organization.core.views import *
 from dal import autocomplete
-from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.core.exceptions import FieldDoesNotExist
 
 # temporarily excluse not ready models

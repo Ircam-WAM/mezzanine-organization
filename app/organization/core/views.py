@@ -3,8 +3,10 @@ from django.http import Http404
 from django.views.generic.base import View
 from django.views.generic import DetailView, ListView, TemplateView
 from django.apps import apps
+from django.utils import six, timezone, formats
 from django.utils.translation import ugettext_lazy as _
 from django.http import QueryDict
+from django.template.defaultfilters import capfirst
 from mezzanine.conf import settings
 from mezzanine.utils.views import paginate
 from organization.core.models import *
@@ -133,3 +135,42 @@ class CustomSearchView(TemplateView):
         context['filter_dict'] = filter_dict
         # context.update(extra_context or {})
         return self.render_to_response(context)
+
+
+def autocomplete_result_formatting(self, context):
+    """
+    Return a list of results usable by Select2.
+    It will render as a list of one <optgroup> per different content type
+    containing a list of one <option> per model.
+    """
+    groups = {}
+
+    for result in context['object_list']:
+        groups.setdefault(type(result), [])
+        groups[type(result)].append(result)
+
+    all_results = []
+    for model, results in groups.items():
+        children = []
+        for result in results:
+            text = six.text_type(result)
+            if model._meta.verbose_name == "Event":
+                event_date = timezone.localtime(result.start)
+                is_parent = ""
+                if not result.parent:
+                    is_parent =  " ♦ -"
+                text = "%s -%s%s" % (six.text_type(result), is_parent, formats.date_format(event_date, "d-m-y H:i"))
+
+            children.append({
+                'id': self.get_result_value(result),
+                'text': text,
+            })
+
+        curr_model_result = {
+             'id': None,
+             'text': capfirst(model._meta.verbose_name),
+             'children': children
+        }
+        all_results.append(curr_model_result)
+
+    return all_results
