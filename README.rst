@@ -20,8 +20,12 @@ Paths
 
 - `app` : django application
 
+ - `app/locale` : locales for translations
+ - `app/migrations` : mezzanine migrations
+ - `app/organization` : organization app
+ - `app/scripts` : command to run app with docker
+ - `app/static` : all assets, js, css files
  - `app/templates` : main templates
- - `app/locale` : locales
 
 - `data` : all application data versioned on a separated repository
 
@@ -35,6 +39,17 @@ Paths
 - `etc` : custom config files
 - `lib` : custom libraries added as git submodules
 - `scripts` : maintenance scripts
+- `bower.json` : javascript dependencies (cf `Front`_ section)
+- `debian-requirements.txt` : used by docker to install debian packages (cf `in case of broken app`_ section)
+- `docker-compose.yml` : description of all docker containers. This file is used by command "docker-compose" (cf `in case of broken app`_ section)
+- `Dockerfile` : instructions to build app image (cf `Docker`_ section)
+- `Gemfile` : gem dependecies for ruby. For our case, it will install _Sass and _Compass. (cf `Front`_ section)
+- `gulpfile.js` : script to compile all css, js files (cf `Front`_ section)
+- `install.py` : cf section 'Install as a daemon' (cf `Install as a daemon`_ section)
+- `package.json` : gulp dependencies when running "gulp install" (cf `Front`_ section)
+- `requirements-dev.txt` : application package in dev version (cf `in case of broken app`_ section)
+- `requirements.txt` : application package (cf `in case of broken app`_ section)
+
 
 
 Models
@@ -42,10 +57,16 @@ Models
 
 app/organization
 
-- agenda
-- core
-...
-
+- `agenda` : manage events, using _Mezzanine-Agenda
+- `core` : commons or abstract functionnality
+- `formats` : manage date format
+- `job` : jobs and candidacies for residency
+- `magazine` : all news are managed by topics, articles and briefs
+- `media` : audio and video gathered in playlist
+- `network` : create a tree of Organizations > Departments > Teams > Persons
+- `pages` : managing diffent type of pages (admin/pages/page/) and home
+- `projects` : represent projects related to a team or a person
+- `shop` : manage product from prestashop (softwares and subscriptions), using _Cartridge
 
 
 Install
@@ -119,6 +140,20 @@ Install as a daemon
 Run daemon install script::
 
     sudo ./install.py
+
+Run daemon and install cron::
+
+    sudo ./install.py --user=$USER --cron
+
+    You can find logs at /var/log/mezzanine-organization
+
+options::
+
+    --uninstall : uninstall the daemon
+    --cron : install cron backup rule (every 6 hours)
+    --user : specify user
+    --systemd : use systemd
+    --composition_file : the path of the YAML composition file to use (optional)
 
 This will install a init script in /etc/init.d. For example, if your app directory is named `mezzanine-organization`, `/etc/init.d/mezzanine-organization` becomes the init script for the OS booting procedure and for you if you need to start the daemon by hand::
 
@@ -207,8 +242,8 @@ To restore the backuped database, in another terminal (or a Docker Quickstart Te
     scripts/pull.sh
 
 
-In case of broken app
-++++++++++++++++++++++
+in case of broken app
++++++++++++++++++++++
 
 For all commands run un this section, you need to be in the app directory::
 
@@ -276,3 +311,7 @@ Read the LICENSE.txt file for more details.
 .. _Git: http://git-scm.com/downloads
 .. _NodeJS: https://nodejs.org
 .. _Gulp: http://gulpjs.com/
+.. _Mezzanine-Agenda : https://github.com/jpells/mezzanine-agenda
+.. _Cartridge : https://github.com/stephenmcd/cartridge/
+.. _Sass: http://sass-lang.com/
+.. _Compass : http://compass-style.org/
