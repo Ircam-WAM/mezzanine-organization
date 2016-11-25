@@ -8,7 +8,9 @@ Overview
 This application is a CMS dedicated to organizations which is based on Mezzanine and Django.
 
 Usecases
+========
 
+[à compléter]
 
 Architecture
 ============
@@ -40,15 +42,15 @@ Paths
 - `lib` : custom libraries added as git submodules
 - `scripts` : maintenance scripts
 - `bower.json` : javascript dependencies (cf `Front`_ section)
-- `debian-requirements.txt` : used by docker to install debian packages (cf `in case of broken app`_ section)
-- `docker-compose.yml` : description of all docker containers. This file is used by command "docker-compose" (cf `in case of broken app`_ section)
-- `Dockerfile` : instructions to build app image (cf `Docker`_ section)
+- `debian-requirements.txt` : used by docker to install debian packages (cf `In case of broken app`_ section)
+- `docker-compose.yml` : description of all docker containers. This file is used by command "docker-compose" (cf `In case of broken app`_ section)
+- `Dockerfile` : instructions to build app image (cf `In case of broken app`_ section)
 - `Gemfile` : gem dependecies for ruby. For our case, it will install _Sass and _Compass. (cf `Front`_ section)
 - `gulpfile.js` : script to compile all css, js files (cf `Front`_ section)
 - `install.py` : cf section 'Install as a daemon' (cf `Install as a daemon`_ section)
 - `package.json` : gulp dependencies when running "gulp install" (cf `Front`_ section)
-- `requirements-dev.txt` : application package in dev version (cf `in case of broken app`_ section)
-- `requirements.txt` : application package (cf `in case of broken app`_ section)
+- `requirements-dev.txt` : application package in dev version (cf `In case of broken app`_ section)
+- `requirements.txt` : application package (cf `In case of broken app`_ section)
 
 
 
@@ -159,6 +161,30 @@ This will install a init script in /etc/init.d. For example, if your app directo
 
     sudo /etc/init.d/mezzanine-organization start
 
+Environment
+============
+
+
+Local
++++++++++++++++++
+- front : localhost:9020
+- admin: localhost:9020/admin
+
+
+Dev
++++++++++++++++++
+- front : http://ouaibe.ircam.fr/
+- admin : http://ouaibe.ircam.fr/admin
+- ssh : ssh cri@web5.ircam.fr
+    - cd /srv/ircam-www
+
+
+Prod
++++++++++++++++++
+- front : http://www.ircam.fr
+- admin : http://www.ircam.fr/admin
+- ssh : ssh cri@web5.ircam.fr
+    - cd /home/cri/dev/ircam-www-dev
 
 Development
 ============
@@ -242,7 +268,7 @@ To restore the backuped database, in another terminal (or a Docker Quickstart Te
     scripts/pull.sh
 
 
-in case of broken app
+In case of broken app
 +++++++++++++++++++++
 
 For all commands run un this section, you need to be in the app directory::
