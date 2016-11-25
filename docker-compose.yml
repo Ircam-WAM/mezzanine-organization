@@ -47,9 +47,10 @@ app:
     - ./data/var/log/uwsgi/:/var/log/uwsgi
     - ./lib/grappelli-safe/:/srv/lib/grappelli-safe
     - ./lib/mezzanine-agenda/:/srv/lib/mezzanine-agenda
-    # - ./lib/mezzanine/:/srv/lib/mezzanine
     - ./lib/django-eve/:/srv/lib/django-eve
     - ./lib/django-prestashop/:/srv/lib/django-prestashop
+    # - ./lib/mezzanine/:/srv/lib/mezzanine
+    # - ./lib/cartridge/:/srv/lib/cartridge
   volumes_from:
     - data
   expose:
