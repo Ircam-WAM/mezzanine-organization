@@ -120,6 +120,9 @@ $module: ".home";
             font-weight: weight(regular);
 
             @include margin(0 0 1 0);
+
+            position: relative;
+            z-index: 3;
         }
         >p {
             @include font-size(s);
@@ -180,6 +183,10 @@ $module: ".home";
             border: 2px solid black;
             text-align: center;
             @include padding(2);
+
+            &:before {
+                display: none;
+            }
 
             >h2 {
                 margin: 0;
