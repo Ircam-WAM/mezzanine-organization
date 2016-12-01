@@ -53,10 +53,9 @@
             <div class="col-xs-4 col-sm-5 col-sm-push-1 tal">
                 <strong>{{ host_organization.description }}</strong><br/ >{% trans 'under the tutelage of' %} :<br />
                 <br />
-                <a href="http://www.culturecommunication.gouv.fr/" target="_blank" title="Ministère de la Culture et de la Communication"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-ministere-culture.png" %}" /></a>
-                <a href="http://www.cnrs.fr/" target="_blank" title="Centre National de la Recherche Scientifique"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-cnrs.png" %}" /></a>
-                <a href="http://www.upmc.fr/" target="_blank" title="Université Pierre et Marie Curie"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-upmc.png" %}" /></a>
-                <a href="http://www.inria.fr/" target="_blank" title="Inria"><img class="footer__partner" width="120" height="66" src="{% static "img/partners/logo-inria.png" %}" /></a>
+                {% if LINKED_ORGA_FOOTER %}
+                    {% include 'core/inc/linked_organization_footer.html' %}
+                {% endif %}
             </div>
 
             <div class="col-xs-4 col-sm-2 col-sm-push-1 tal">

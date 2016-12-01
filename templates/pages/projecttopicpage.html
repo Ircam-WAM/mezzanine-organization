@@ -34,7 +34,10 @@
 {% endblock %}
 
 {% block page_content %}
-
+    {% if LINKED_ORGA_CONTENT %}
+        {% include 'core/inc/linked_organization_content.html' %}
+    {% endif %}
+    
     {% if page.projecttopicpage.sub_title %}
         {% editable page.projecttopicpage.sub_title %}
             <div class="chapo">

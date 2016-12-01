@@ -40,6 +40,7 @@ class OrganizationAdmin(BaseTranslationModelAdmin):
                 OrganizationImageInline,
                 OrganizationBlockInline,
                 OrganizationLinkInline ]
+    filter_horizontal = ['organizations_content', 'organizations_footer']
     list_display = ['name', 'type', 'admin_thumb']
     list_filter = ['is_on_map',]
     search_fields = ['name',]
