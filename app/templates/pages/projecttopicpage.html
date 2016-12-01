@@ -34,10 +34,12 @@
 {% endblock %}
 
 {% block page_content %}
-    {% if LINKED_ORGA_CONTENT %}
-        {% include 'core/inc/linked_organization_content.html' %}
-    {% endif %}
-    
+    {% with page.get_ascendants|last as top_level_parent %}
+        {% if LINKED_ORGA_CONTENT and RESEARCH_SLUG == top_level_parent.slug %}
+            {% include 'core/inc/linked_organization_content.html' %}
+        {% endif %}
+    {% endwith %}
+
     {% if page.projecttopicpage.sub_title %}
         {% editable page.projecttopicpage.sub_title %}
             <div class="chapo">
