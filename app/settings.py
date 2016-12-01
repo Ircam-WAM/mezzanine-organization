@@ -114,7 +114,8 @@ LANGUAGES = (
 LOCALE_PATHS = ['locale',]
 
 # Whether a user's session cookie expires when the Web browser is closed.
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 SITE_ID = 1
 
@@ -205,6 +206,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.staticfiles",
+    'django_extensions',
     "mezzanine.boot",
     "mezzanine.conf",
     "django.contrib.sitemaps",
@@ -322,6 +324,11 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'djangobower.finders.BowerFinder',
 )
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
 
 #########################
 # OPTIONAL APPLICATIONS #
