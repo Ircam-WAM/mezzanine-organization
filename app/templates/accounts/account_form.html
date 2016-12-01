@@ -1,20 +1,7 @@
-{% extends "base.html" %}
 {% load i18n mezzanine_tags %}
-
-{% block meta_title %}{{ title }}{% endblock %}
-{% block title %}{{ title }}{% endblock %}
-{% block body_id %}account{% endblock %}
-
-{% block breadcrumb_menu %}
-{{ block.super }}
-<li>{{ title }}</li>
-{% endblock %}
-
-{% block main %}
-
 {% errors_for form %}
 
-<form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+<form class="form" method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
     <fieldset>
     <legend>{{ title }}</legend>
     {% fields_for form %}
@@ -25,4 +12,3 @@
     </div>
     </fieldset>
 </form>
-{% endblock %}

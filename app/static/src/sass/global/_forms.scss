@@ -44,7 +44,7 @@ $module: ".form";
         }
     }
 
-    input[type="text"], input[type="email"], textarea {
+    input[type="text"], input[type="email"], input[type="password"], textarea {
 
         @include font-size(m);
         @include line-height(1);
