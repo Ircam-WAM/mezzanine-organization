@@ -45,6 +45,10 @@
         <h1 class="dotted">{{ project.title }}</h1>
     {% endeditable %}
 
+    {% if LINKED_ORGA_CONTENT %}
+        {% include 'core/inc/linked_organization_content.html' %}
+    {% endif %}
+
     {% if project.description %}
         {% editable project.description %}
             <div class="chapo">

@@ -21,6 +21,10 @@
 
 {% block page_content %}
 
+    {% if LINKED_ORGA_CONTENT %}
+        {% include 'core/inc/linked_organization_content.html' %}
+    {% endif %}
+
     {% if page.teampage.sub_title %}
         {% editable page.teampage.sub_title %}
             <div class="chapo">
