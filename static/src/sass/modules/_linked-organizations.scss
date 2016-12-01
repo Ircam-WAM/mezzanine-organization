@@ -1,0 +1,27 @@
+$module: ".linked-organizations";
+
+#{$module} {
+
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    &__item {
+
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+
+        @include margin(1 1 0 0);
+        
+        a {
+            width : 30px;
+            height : 30px;
+        }
+
+    }
+
+}

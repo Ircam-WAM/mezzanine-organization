@@ -25,6 +25,9 @@
             </div>
         {% endeditable %}
     {% endif %}-->
+    {% if LINKED_ORGA_CONTENT and RESEARCH_SLUG == page.departmentpage.slug %}
+        {% include 'core/inc/linked_organization_content.html' %}
+    {% endif %}
 
     {% if page.departmentpage.content %}
      {% editable page.departmentpage.content %}
