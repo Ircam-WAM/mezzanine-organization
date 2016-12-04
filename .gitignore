@@ -8,19 +8,15 @@
 build
 eggs
 parts
-bin
 sdist
 develop-eggs
 .installed.cfg
 *.directory
 var
-data/static
-data/mysql
-data/postgresql
-data/var
 .thumbnails
 .tmp
 doc
+*.lock
 
 # Installer logs
 pip-log.txt
