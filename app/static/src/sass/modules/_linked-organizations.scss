@@ -15,8 +15,8 @@ $module: ".linked-organizations";
         background-position: center center;
         background-repeat: no-repeat;
 
-        @include margin(1 1 0 0);
-        
+        @include margin(0 1 0 0);
+
         a {
             width : 30px;
             height : 30px;
