@@ -5,7 +5,9 @@ Mezzanine-organization
 Overview
 =========
 
-This application is a CMS dedicated to organizations which is based on Mezzanine and Django.
+This application is a CMS for organizations with workflows
+
+It is based on Mezzanine and Django.
 
 Usecases
 ========
@@ -25,22 +27,22 @@ Paths
  - `app/locale` : locales for translations
  - `app/migrations` : mezzanine migrations
  - `app/organization` : organization app
- - `app/scripts` : command to run app with docker
+ - `app/bin` : commands to run app with docker
  - `app/static` : all assets, js, css files
  - `app/templates` : main templates
 
-- `data` : all application data versioned on a separated repository
+- `var` : all application data versioned on a separated repository
 
-    - `data/backup` : database backup directory
-    - `data/media` : all media uploaded through the app
-    - `data/var/lib/postgresql` : postgresql DB (not versioned)
-    - `data/var/log/nginx` : nginx logs (not versioned)
-    - `data/var/log/uwsgi` : uwsgi logs (not versioned)
+    - `var/backup` : database backup directory
+    - `var/media` : all media uploaded through the app
+    - `var/lib/postgresql` : postgresql DB (not versioned)
+    - `var/log/nginx` : nginx logs (not versioned)
+    - `var/log/uwsgi` : uwsgi logs (not versioned)
 
 - `env` : docker-compose environment files
 - `etc` : custom config files
 - `lib` : custom libraries added as git submodules
-- `scripts` : maintenance scripts
+- `bin` : maintenance bin
 - `bower.json` : javascript dependencies (cf `Front`_ section)
 - `debian-requirements.txt` : used by docker to install debian packages (cf `In case of broken app`_ section)
 - `docker-compose.yml` : description of all docker containers. This file is used by command "docker-compose" (cf `In case of broken app`_ section)
@@ -51,7 +53,6 @@ Paths
 - `package.json` : gulp dependencies when running "gulp install" (cf `Front`_ section)
 - `requirements-dev.txt` : application package in dev version (cf `In case of broken app`_ section)
 - `requirements.txt` : application package (cf `In case of broken app`_ section)
-
 
 
 Models
@@ -161,22 +162,22 @@ This will install a init script in /etc/init.d. For example, if your app directo
 
     sudo /etc/init.d/mezzanine-organization start
 
+
 Environment
 ============
 
-
 Local
 +++++++++++++++++
-- front : localhost:9020
-- admin: localhost:9020/admin
+- front : http://localhost:9020
+- admin: http://localhost:9020/admin
 
 
 Dev
 +++++++++++++++++
-- front : http://ouaibe.ircam.fr/
-- admin : http://ouaibe.ircam.fr/admin
-- ssh : ssh cri@web5.ircam.fr
-    - cd /srv/ircam-www
+- front : http://cri-dev01.ircam.fr/
+- admin : http://cri-dev01.ircam.fr/admin
+- ssh : ssh cri@cri-dev01.ircam.fr
+- cd /srv/ircam-www
 
 
 Prod
@@ -185,6 +186,7 @@ Prod
 - admin : http://www.ircam.fr/admin
 - ssh : ssh cri@web5.ircam.fr
     - cd /home/cri/dev/ircam-www-dev
+
 
 Development
 ============
@@ -209,11 +211,11 @@ Back
 
 If you modify or add django models, you can produce migration files with::
 
-    ./scripts/makemigrations.sh
+    bin/makemigrations.sh
 
 To apply new migrations::
 
-    ./scripts/migrate.sh
+    bin/migrate.sh
 
 Accessing the app container shell::
 
@@ -241,9 +243,9 @@ Maintenance
 Find logs
 +++++++++
 
-- `data/var/log/nginx/app-access.log` : nginx access log of the app
-- `data/var/log/nginx/app-error.log` : nginx error log of the app
-- `data/var/log/uwsgi/app.log` : uwsgi log of the app
+- `var/log/nginx/app-access.log` : nginx access log of the app
+- `var/log/nginx/app-error.log` : nginx error log of the app
+- `var/log/uwsgi/app.log` : uwsgi log of the app
 
 
 Upgrade
@@ -251,7 +253,7 @@ Upgrade
 
 Upgrade application, all dependencies, data from master branch and also recompile assets::
 
-    scripts/upgrade.sh
+    bin/upgrade.sh
 
 
 Backup / Restore database
@@ -259,13 +261,13 @@ Backup / Restore database
 
 To backup the database, in **another** terminal (or a Docker Quickstart Terminal)::
 
-    scripts/push.sh #(only prod !)
+    bin/push.sh #(only prod !)
 
 giving your user password if asked...
 
 To restore the backuped database, in another terminal (or a Docker Quickstart Terminal)::
 
-    scripts/pull.sh
+    bin/pull.sh
 
 
 In case of broken app
