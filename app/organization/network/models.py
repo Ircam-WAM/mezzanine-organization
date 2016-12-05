@@ -75,6 +75,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     subway_access = models.TextField(_('subway access'), blank=True)
     organizations_content = models.ManyToManyField('self', verbose_name=_('Linked organizations (in content)'), related_name='organization_main', blank=True, help_text="Usefull for host organization")
     organizations_footer = models.ManyToManyField('self', verbose_name=_('Linked organizations (in footer)'), related_name='organization_main', blank=True, help_text="Usefull for host organization")
+    order = models.IntegerField(_('order number'), default=10)
 
     admin_thumb_type = 'logo'
 
