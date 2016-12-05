@@ -20,12 +20,6 @@ ENV LANG fr_FR.UTF-8
 ENV LANGUAGE fr_FR:fr
 ENV LC_ALL fr_FR.UTF-8
 
-COPY requirements.txt /srv
-RUN pip install -r requirements.txt
-
-COPY requirements-dev.txt /srv
-RUN pip install -r requirements-dev.txt --src /srv/lib
-
 COPY package.json /srv
 RUN npm install
 
@@ -40,5 +34,11 @@ RUN bower --allow-root install
 COPY gulpfile.js /srv
 RUN npm install -g gulp
 RUN gulp build
+
+COPY requirements.txt /srv
+RUN pip install -r requirements.txt
+
+COPY requirements-dev.txt /srv
+RUN pip install -r requirements-dev.txt --src /srv/lib
 
 WORKDIR /srv/app
