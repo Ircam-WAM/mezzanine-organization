@@ -6,7 +6,7 @@
             <a class="banner banner--light" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
                 <div class="banner__content">
                     <div class="banner__title fsxxxl">
-                        {% trans 'On Tour' %} {{ CURRENT_SEASON_STYLED }}
+                        {% trans 'On Tour' %} {{ current_season_styled }}
                     </div>
                     <div class="banner__desc fss">
                         {% blocktrans %}Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de toutes choses...{% endblocktrans %}

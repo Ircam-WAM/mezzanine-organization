@@ -5,4 +5,4 @@ sudo chown -R $USER var/backup
 git pull
 git submodule foreach git pull
 docker-compose run db /srv/bin/db/restore.sh
-gulp build
+docker-compose run app bash -c "cd /srv && bower --allow-root install && gulp build"

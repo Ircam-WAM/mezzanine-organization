@@ -1,5 +1,5 @@
 {% load organization_tags %}
-{% for lof in LINKED_ORGA_FOOTER %}
+{% for lof in linked_organization_footer %}
     <a href="{{ lof.url }}" target="_blank" title="{{ lof.name }}">
         {% with lof.images|get_type:"logo_white"|first as img %}
             <img class="footer__partner" src="{{ MEDIA_URL }}{{ img }}" title="{{ img.title }}" width="120" height="66" />
