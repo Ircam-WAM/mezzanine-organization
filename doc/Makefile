@@ -166,6 +166,6 @@ publish:
 	true
 
 install_deps:
-	pip install $(DEPENDENCIES)
+	pip install -U $(DEPENDENCIES)
 	@echo
 	@echo "All dependencies installed."
