@@ -158,7 +158,7 @@ doctest:
 
 readme:
 	sed '/doctest/d' src/overview.rst | sed '/testcleanup/d' > ../README.rst
-	cat src/architecture.rst src/install.rst src/development.rst src/related.rst src/maintenance.rst src/copyright.rst src/license.rst >> ../README.rst
+	cat src/architecture.rst src/install.rst src/development.rst src/maintenance.rst src/copyright.rst src/license.rst >> ../README.rst
 	@echo
 	@echo "Build finished. The README.rst file is up to date."
 

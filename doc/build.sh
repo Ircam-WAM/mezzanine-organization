@@ -1,5 +1,7 @@
 #!/bin/sh
 
 cd /srv/doc
+# make install_deps
 make html
-make readme
+# make publish
+# make readme

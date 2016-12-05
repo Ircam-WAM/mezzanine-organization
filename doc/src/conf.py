@@ -20,8 +20,8 @@ import sys, os
 sys.path.insert(0, os.path.abspath('../../'))
 
 sys.path.insert(0, os.path.abspath('../../app/'))
-from django.conf import settings
-settings.configure()
+# from django.conf import settings
+# settings.configure()
 
 # -- General configuration -----------------------------------------------------
 

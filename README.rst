@@ -4,30 +4,16 @@ Mezzanine-organization
 
 This application is a CMS for organizations with workflows
 
-It is based on Mezzanine and Django.
+It is based on Mezzanine_ and Django_.
 
 Use cases
 ==========
 
-* Scaled audio computing (filtering, machine learning, etc)
-* Web audio visualization
-* Audio process prototyping
-* Realtime and on-demand transcoding and streaming over the web
-* Automatic segmentation and labelling synchronized with audio events
+...
 
 
-Goals
-=====
-
-* **Do** asynchronous and fast audio processing with Python,
-* **Decode** audio frames from **any** audio or video media format into numpy arrays,
-* **Analyze** audio content with some state-of-the-art audio feature extraction libraries like Aubio, Yaafe and VAMP as well as some pure python processors
-* **Visualize** sounds with various fancy waveforms, spectrograms and other cool graphers,
-* **Transcode** audio data in various media formats and stream them through web apps,
-* **Serialize** feature analysis data through various portable formats,
-* **Playback** and **interact** **on demand** through a smart high-level HTML5 extensible player,
-* **Index**, **tag** and **annotate** audio archives with semantic metadata (see `Telemeta <http://telemeta.org>`__ which embed TimeSide).
-* **Deploy** and **scale** your own audio processing engine through any infrastructure
+.. _Django : https://www.djangoproject.com/
+.. _Mezzanine : http://mezzanine.jupo.org/
 
 Architecture
 ============
@@ -37,54 +23,96 @@ For easier development and production workflow, this application has been docker
 Paths
 ++++++
 
-- `app` : django application
+- app \
+    django application
 
- - `app/locale` : locales for translations
- - `app/migrations` : mezzanine migrations
- - `app/organization` : organization app
- - `app/bin` : commands to run app with docker
- - `app/static` : all assets, js, css files
- - `app/templates` : main templates
+  - app/locale \
+        locales for translations
+  - app/migrations \
+        mezzanine migrations
+  - app/organization \
+        organization app
+  - app/bin \
+        commands to run app with docker
+  - app/static \
+        all assets, js, css files
+  - app/templates \
+        main templates
 
-- `var` : all application data versioned on a separated repository
+- bin \
+    maintenance bin
+- env \
+    docker-compose environment files
+- etc \
+    custom config files
+- lib \
+    custom libraries added as git submodules
+- var \
+    all application data versioned on a separated repository
 
-    - `var/backup` : database backup directory
-    - `var/media` : all media uploaded through the app
-    - `var/lib/postgresql` : postgresql DB (not versioned)
-    - `var/log/nginx` : nginx logs (not versioned)
-    - `var/log/uwsgi` : uwsgi logs (not versioned)
+  - var/backup \
+        database backup directory
+  - var/media \
+        all media uploaded through the app
+  - var/lib/postgresql \
+        postgresql DB (not versioned)
+  - var/log/nginx \
+        nginx logs (not versioned)
+  - var/log/uwsgi \
+        uwsgi logs (not versioned)
 
-- `env` : docker-compose environment files
-- `etc` : custom config files
-- `lib` : custom libraries added as git submodules
-- `bin` : maintenance bin
-- `bower.json` : javascript dependencies (cf `Front`_ section)
-- `debian-requirements.txt` : used by docker to install debian packages (cf `In case of broken app`_ section)
-- `docker-compose.yml` : description of all docker containers. This file is used by command "docker-compose" (cf `In case of broken app`_ section)
-- `Dockerfile` : instructions to build app image (cf `In case of broken app`_ section)
-- `Gemfile` : gem dependecies for ruby. For our case, it will install _Sass and _Compass. (cf `Front`_ section)
-- `gulpfile.js` : script to compile all css, js files (cf `Front`_ section)
-- `install.py` : cf section 'Install as a daemon' (cf `Install as a daemon`_ section)
-- `package.json` : gulp dependencies when running "gulp install" (cf `Front`_ section)
-- `requirements-dev.txt` : application package in dev version (cf `In case of broken app`_ section)
-- `requirements.txt` : application package (cf `In case of broken app`_ section)
+- bower.json \
+    javascript dependencies
+- debian-requirements.txt \
+    used by docker to install debian packages
+- docker-compose.yml \
+    configuration file for docker containers used by docker-compose
+- Dockerfile \
+    instructions to build the app image
+- Gemfile \
+    gem dependecies for ruby. For our case, it will install _Sass and _Compass.
+- gulpfile.js \
+    script to compile all CSS and JS files
+- install.py \
+    daemon and init boot script installer (Linux only)
+- package.json \
+    gulp dependencies when running "gulp install"
+- requirements-dev.txt \
+    application package in dev version
+- requirements.txt \
+    application package
+
 
 
 Models
 ++++++
 
-app/organization
+Main modules embed in app/organization
 
-- `agenda` : manage events, using _Mezzanine-Agenda
-- `core` : commons or abstract functionnality
-- `formats` : manage date format
-- `job` : jobs and candidacies for residency
-- `magazine` : all news are managed by topics, articles and briefs
-- `media` : audio and video gathered in playlist
-- `network` : create a tree of Organizations > Departments > Teams > Persons
-- `pages` : managing diffent type of pages (admin/pages/page/) and home
-- `projects` : represent projects related to a team or a person
-- `shop` : manage product from prestashop (softwares and subscriptions), using _Cartridge
+- agenda \
+    manage events, using _Mezzanine-Agenda
+- core \
+    commons or abstract functionnality
+- formats \
+    manage date format
+- job \
+    jobs and candidacies for residency
+- magazine \
+    all news are managed by topics, articles and briefs
+- media \
+    audio and video gathered in playlist
+- network \
+    create a tree of Organizations > Departments > Teams > Persons
+- pages \
+    managing diffent type of pages (admin/pages/page/) and home
+- projects \
+    represent projects related to a team or a person
+- shop \
+    manage product from prestashop (softwares and subscriptions), using _Cartridge
+
+
+.. _Compass : http://compass-style.org/
+.. _Sass: http://sass-lang.com/
 
 Install
 =======
@@ -101,78 +129,41 @@ Then run these commands::
     git clone --recursive https://github.com/Ircam-RnD/mezzanine-organization.git
 
 
-Compile static files
-+++++++++++++++++++++
-
-Gulp_ allow to compile scss to css, concatenate js files and has a watcher, who do this tasks on file change.
-Gulp_ require NodeJS_ installed on your computer to work.
-
-1. Install gulp globally::
-
-    sudo npm install --g gulp
-
-2. Install bower globally::
-
-    sudo npm install -g bower
-
-3. Install gulp dependencies::
-
-    npm install
-
-4. Install ruby dependencies::
-
-    sudo apt install ruby
-    sudo gem install bundler
-    bundle install
-
-5. Build::
-
-    bower install
-    gulp build
-
-
-/!\ If you have an issue with ffi module, try to install dev package from ruby::
-
-    apt-get install ruby-dev
-
-
 Start
 +++++
+
+Our docker composition already bundles some powerful containers and bleeding edge frameworks like: Nginx, MySQL, Redis, Celery, Django and Python. It thus provides a safe and continuous way to deploy your project from an early development stage to a massive production environment.
 
 For a production environment setup::
 
     cd mezzanine-organization
     docker-compose up
 
-which builds, (re)creates, starts, and attaches to containers.
+which builds, (re)creates, starts, and attaches all containers.
 
 Then browse the app at http://localhost:8020/
 
 On MacOS or Windows, we need to replace 'localhost' by the IP given by the docker terminal.
 
+.. warning :: Before any serious production usecase, you *must* modify all the passwords and secret keys in the configuration files of the sandbox.
 
-Install as a daemon
-+++++++++++++++++++++
 
-Run daemon install script::
+Daemonize
++++++++++++
 
-    sudo ./install.py
+The install the entire composition so that it will be automatically run at boot and in the background::
 
-Run daemon and install cron::
-
-    sudo ./install.py --user=$USER --cron
-
-    You can find logs at /var/log/mezzanine-organization
+    sudo bin/install.py
 
 options::
 
     --uninstall : uninstall the daemon
     --cron : install cron backup rule (every 6 hours)
-    --user : specify user
+    --user : specify user for cron rule
     --systemd : use systemd
     --composition_file : the path of the YAML composition file to use (optional)
 
-This will install a init script in /etc/init.d. For example, if your app directory is named `mezzanine-organization`, `/etc/init.d/mezzanine-organization` becomes the init script for the OS booting procedure and for you if you need to start the daemon by hand::
+This will install a init script in /etc/init.d. For example, if your app directory is named `mezzanine-organization` then `/etc/init.d/mezzanine-organization` becomes the init script for the OS booting procedure and for you if you need to start the daemon by hand::
 
     sudo /etc/init.d/mezzanine-organization start
 
@@ -199,6 +190,17 @@ Prod
 - ssh : ssh cri@www.ircam.fr
 - cd /srv/ircam-www
 
+
+.. _Docker-engine: https://docs.docker.com/installation/
+.. _docker-compose: https://docs.docker.com/compose/install/
+.. _docker-compose reference: https://docs.docker.com/compose/reference/
+.. _Docker-Toolbox: https://www.docker.com/products/docker-toolbox
+.. _Git: http://git-scm.com/downloads
+.. _NodeJS: https://nodejs.org
+.. _Gulp: http://gulpjs.com/
+.. _Mezzanine-Agenda : https://github.com/jpells/mezzanine-agenda
+.. _Cartridge : https://github.com/stephenmcd/cartridge/
+
 Development
 ===========
 
@@ -213,7 +215,7 @@ Then browse the app at http://localhost:9020/
 
 On MacOS or Windows, we need to replace 'localhost' by the IP given by the docker terminal.
 
-In this mode, Django is run with the `runserver` tool in DEBUG mode. NEVER use this in production!
+.. warning :: In this mode, Django is run with the `runserver` tool in DEBUG mode. NEVER use this in production!
 
 
 Back
@@ -245,34 +247,34 @@ Front
 
 Gulp will launch BrowserSync. BrowserSync is a middleware that expose the website on port 3000.
 Any change on CSS or JS files will trigger the build system and reload the browser.
-
-Sponsors and Partners
-=====================
-
-* `Parisson <http://parisson.com>`_
-* `CNRS <http://www.cnrs.fr>`_ (National Center of Science Research, France)
-* `Huma-Num <http://www.huma-num.fr/>`_ (big data equipment for digital humanities, ex TGE Adonis)
-* `CREM <http://www.crem-cnrs.fr>`_ (french National Center of Ethomusicology Research, France)
-* `Université Pierre et Marie Curie <http://www.upmc.fr>`_ (UPMC Paris, France)
-* `ANR <http://www.agence-nationale-recherche.fr/>`_ (CONTINT 2012 project : DIADEMS)
-* `MNHN <http://www.mnhn.fr>`_ : Museum National d'Histoire Naturelle (Paris, France)
-
-
-Related projects
-=================
-
-* `Telemeta <http://telemeta.org>`__ : open web audio platform
-* `Sound archives <http://archives.crem-cnrs.fr/>`_ of the CNRS, CREM and the "Musée de l'Homme" in Paris, France.
-* The `DIADEMS project <http://www.irit.fr/recherches/SAMOVA/DIADEMS/en/welcome/>`_ sponsored by the ANR.
 Maintenance
 ============
 
-Find logs
-+++++++++
+Log
+++++
 
-- `var/log/nginx/app-access.log` : nginx access log of the app
-- `var/log/nginx/app-error.log` : nginx error log of the app
-- `var/log/uwsgi/app.log` : uwsgi log of the app
+- var/log/nginx/app-access.log \
+    nginx access log of the app
+- var/log/nginx/app-error.log \
+    nginx error log of the app
+- var/log/uwsgi/app.log \
+    uwsgi log of the app
+
+
+Backup & restore
++++++++++++++++++
+
+To backup the database and all the media, this will push all of them to the var submodule own repository::
+
+    bin/push.sh
+
+.. warning :: use this ONLY from the **production** environment!
+
+To restore the backuped the database, all the media and rebuild front ()::
+
+    bin/pull.sh
+
+.. warning :: use this ONLY from the **development** environment!
 
 
 Upgrade
@@ -283,26 +285,8 @@ Upgrade application, all dependencies, data from master branch and also recompil
     bin/upgrade.sh
 
 
-Backup / Restore database
-++++++++++++++++++++++++++
-
-To backup the database, in **another** terminal (or a Docker Quickstart Terminal)::
-
-    bin/push.sh #(only prod !)
-
-giving your user password if asked...
-
-To restore the backuped database, in another terminal (or a Docker Quickstart Terminal)::
-
-    bin/pull.sh
-
-
-In case of broken app
-+++++++++++++++++++++
-
-For all commands run un this section, you need to be in the app directory::
-
-    cd mezzanine-organization
+Repair
++++++++
 
 If the app is not accessible, first try to restart the composition with::
 
@@ -320,7 +304,7 @@ If the containers are still broken, try to delete exisiting containers (this wil
     docker-compose rm
     docker-compose up
 
-In case you have installed the init script to run the app as a daemon (cf. section "Install as a daemon"), you can use it to restart the app:
+In case you have installed the init script to run the app as a daemon (cf. section "Daemonize"), you can use it to restart the app:
 
     /etc/init.d/mezzanine-organization restart
 
