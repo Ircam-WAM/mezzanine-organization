@@ -3,9 +3,10 @@ wget
 bzip2
 build-essential
 netcat
-npm
+nodejs
 locales
 pandoc
-nodejs-legacy
 vim
 python-sphinx
+ruby
+ruby-dev

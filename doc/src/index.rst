@@ -16,10 +16,9 @@ Contents:
    architecture
    install
    development
-   production
    maintenance
    copyright
-   licence
+   license
 
 Indices and tables
 ==================

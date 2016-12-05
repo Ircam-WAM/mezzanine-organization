@@ -11,24 +11,29 @@ Log
 - var/log/uwsgi/app.log \
     uwsgi log of the app
 
+
+Backup & restore
++++++++++++++++++
+
+To backup the database and all the media, this will push all of them to the var submodule own repository::
+
+    bin/push.sh
+
+.. warning :: use this ONLY from the **production** environment!
+
+To restore the backuped the database, all the media and rebuild front ()::
+
+    bin/pull.sh
+
+.. warning :: use this ONLY from the **development** environment!
+
+
 Upgrade
 +++++++++
 
 Upgrade application, all dependencies, data from master branch and also recompile assets::
 
     bin/upgrade.sh
-
-
-Backup & restore DB
-++++++++++++++++++++
-
-To backup the database and push it to the var (data) own repository (**only** prod!)::
-
-    bin/push.sh
-
-To restore the backuped database and rebuild front::
-
-    bin/pull.sh
 
 
 Repair
@@ -50,7 +55,7 @@ If the containers are still broken, try to delete exisiting containers (this wil
     docker-compose rm
     docker-compose up
 
-In case you have installed the init script to run the app as a daemon (cf. section "Install as a daemon"), you can use it to restart the app:
+In case you have installed the init script to run the app as a daemon (cf. section "Daemonize"), you can use it to restart the app:
 
     /etc/init.d/mezzanine-organization restart
 

@@ -46,25 +46,25 @@ Paths
         uwsgi logs (not versioned)
 
 - bower.json \
-    javascript dependencies (cf `Front`_ section)
+    javascript dependencies
 - debian-requirements.txt \
-    used by docker to install debian packages (cf `In case of broken app`_ section)
+    used by docker to install debian packages
 - docker-compose.yml \
-    description of all docker containers. This file is used by command "docker-compose" (cf `In case of broken app`_ section)
+    configuration file for docker containers used by docker-compose
 - Dockerfile \
-    instructions to build app image (cf `In case of broken app`_ section)
+    instructions to build the app image
 - Gemfile \
-    gem dependecies for ruby. For our case, it will install _Sass and _Compass. (cf `Front`_ section)
+    gem dependecies for ruby. For our case, it will install _Sass and _Compass.
 - gulpfile.js \
-    script to compile all css, js files (cf `Front`_ section)
+    script to compile all CSS and JS files
 - install.py \
-    cf section 'Install as a daemon' (cf `Install as a daemon`_ section)
+    daemon and init boot script installer (Linux only)
 - package.json \
-    gulp dependencies when running "gulp install" (cf `Front`_ section)
+    gulp dependencies when running "gulp install"
 - requirements-dev.txt \
-    application package in dev version (cf `In case of broken app`_ section)
+    application package in dev version
 - requirements.txt \
-    application package (cf `In case of broken app`_ section)
+    application package
 
 
 
@@ -93,3 +93,7 @@ Main modules embed in app/organization
     represent projects related to a team or a person
 - shop \
     manage product from prestashop (softwares and subscriptions), using _Cartridge
+
+
+.. _Compass : http://compass-style.org/
+.. _Sass: http://sass-lang.com/

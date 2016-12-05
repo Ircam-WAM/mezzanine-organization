@@ -4,7 +4,7 @@ Mezzanine-organization
 
 This application is a CMS for organizations with workflows
 
-It is based on Mezzanine and Django.
+It is based on Mezzanine_ and Django_.
 
 Use cases
 ==========
