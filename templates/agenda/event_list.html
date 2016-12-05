@@ -52,7 +52,7 @@
                         {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
                         <a class="banner banner--light banner--sidebar hide-until-sm" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
                             <div class="banner__content">
-                                <div class="banner__title fsxxxl">{% trans "On tour" %} {{ CURRENT_SEASON_STYLED }}
+                                <div class="banner__title fsxxxl">{% trans "On tour" %} {{ current_season_styled }}
                                 </div>
                             </div>
                         </a>
@@ -105,7 +105,7 @@
 
                                     {% if not is_archive %}
                                         <li class="nav-tree__item">
-                                            <a class="nav-tree__link" href="{% url "event_list_year" CURRENT_SEASON %}" title="{% trans 'archive' %}">{% trans 'Archives' %}</a>
+                                            <a class="nav-tree__link" href="{% url "event_list_year" current_season %}" title="{% trans 'archive' %}">{% trans 'Archives' %}</a>
                                         </li>
                                     {% endif %}
                                 </ul>
@@ -144,7 +144,7 @@
                             {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
                             <a class="banner banner--light banner--sidebar hide-from-sm" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
                                 <div class="banner__content">
-                                    <div class="banner__title fsxxxl">{% trans "On tour" %} {{ CURRENT_SEASON_STYLED }}
+                                    <div class="banner__title fsxxxl">{% trans "On tour" %} {{ current_season_styled }}
                                     </div>
                                 </div>
                             </a>

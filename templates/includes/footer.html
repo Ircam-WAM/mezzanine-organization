@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-11 tar-sm tal-xs">
-                <a class="button button--small button--white mr3" href="{{ NEWSLETTER_SUBSCRIBING_URL }}">
+                <a class="button button--small button--white mr3" href="{{ newsletter_subscribing_url }}">
                     {% trans "Subscribe to our newsletter" %}
                 </a>
                 {% for link in host_organization.links.all %}
@@ -53,7 +53,7 @@
             <div class="col-xs-4 col-sm-5 col-sm-push-1 tal">
                 <strong>{{ host_organization.description }}</strong><br/ >{% trans 'under the tutelage of' %} :<br />
                 <br />
-                {% if LINKED_ORGA_FOOTER %}
+                {% if linked_organization_footer %}
                     {% include 'core/inc/linked_organization_footer.html' %}
                 {% endif %}
             </div>

@@ -46,7 +46,7 @@
     {% endeditable %}
 
     {% with page.get_ascendants|last as top_level_parent %}
-        {% if LINKED_ORGA_CONTENT and RESEARCH_SLUG == top_level_parent.slug %}
+        {% if linked_organization_content and research_slug == top_level_parent.slug %}
             {% include 'core/inc/linked_organization_content.html' %}
         {% endif %}
     {% endwith %}
