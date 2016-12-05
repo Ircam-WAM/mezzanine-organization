@@ -23,9 +23,13 @@ var:
   volumes:
     - ./var/media:/srv/media
     - ./var/backup:/srv/backup
-    - /srv/static
-    - /srv/bower
+    - ./var/log/uwsgi:/var/log/uwsgi
+    - ./var/log/nginx:/var/log/nginx
+    - ./var/log/app:/var/log/app
+    - ./bin:/srv/bin
     - ./doc:/srv/doc
+    - /srv/bower
+    - /srv/static
   command: "true"
 
 db:
@@ -33,24 +37,21 @@ db:
   volumes_from:
     - var
   volumes:
-    - ./scripts:/srv/scripts
     - ./var/lib/postgresql/data:/var/lib/postgresql/data
   environment:
     - POSTGRES_PASSWORD=hyRob0otlaz4
 
 app:
   build: .
-  command: /bin/bash scripts/app.sh
+  command: /bin/bash bin/app.sh
   volumes:
     - ./app:/srv/app
-    - ./var/log/uwsgi:/var/log/uwsgi
     - ./lib/grappelli-safe:/srv/lib/grappelli-safe
     - ./lib/mezzanine-agenda:/srv/lib/mezzanine-agenda
     - ./lib/django-eve:/srv/lib/django-eve
     - ./lib/django-prestashop:/srv/lib/django-prestashop
     # - ./lib/mezzanine/:/srv/lib/mezzanine
     # - ./lib/cartridge/:/srv/lib/cartridge
-    - ./doc:/srv/doc
   volumes_from:
     - var
   expose:
@@ -66,7 +67,6 @@ nginx:
     - "8020:80"
   volumes:
     - ./etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
-    - ./var/log/nginx/:/var/log/nginx
   volumes_from:
     - var
   links:

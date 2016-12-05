@@ -64,24 +64,18 @@ Then browse the app at http://localhost:8020/
 On MacOS or Windows, we need to replace 'localhost' by the IP given by the docker terminal.
 
 
-Install as a daemon
-+++++++++++++++++++++
+Daemonize
++++++++++++
 
-Run daemon install script::
+The install the entire composition so that it will be automatically run at boot and in the background::
 
-    sudo ./install.py
-
-Run daemon and install cron::
-
-    sudo ./install.py --user=$USER --cron
-
-    You can find logs at /var/log/mezzanine-organization
+    sudo bin/install.py
 
 options::
 
     --uninstall : uninstall the daemon
     --cron : install cron backup rule (every 6 hours)
-    --user : specify user
+    --user : specify user for cron rule
     --systemd : use systemd
     --composition_file : the path of the YAML composition file to use (optional)
 

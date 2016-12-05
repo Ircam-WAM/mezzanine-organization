@@ -22,13 +22,11 @@ Upgrade application, all dependencies, data from master branch and also recompil
 Backup & restore DB
 ++++++++++++++++++++
 
-To backup the database, in **another** terminal (or a Docker Quickstart Terminal)::
+To backup the database and push it to the var (data) own repository (**only** prod!)::
 
-    bin/push.sh #(only prod !)
+    bin/push.sh
 
-giving your user password if asked...
-
-To restore the backuped database, in another terminal (or a Docker Quickstart Terminal)::
+To restore the backuped database and rebuild front::
 
     bin/pull.sh
 

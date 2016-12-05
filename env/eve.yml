@@ -22,15 +22,14 @@
 evedb:
   image: postgres:9.5
   volumes_from:
-    - data
+    - var
   volumes:
-    - ./scripts/:/srv/scripts
     - ./data/external/eve/postgresql/data/:/var/lib/postgresql/data
   environment:
     - POSTGRES_USER=eve
     - POSTGRES_DB=eve
     - POSTGRES_PASSWORD=q2nqzt0WGnwWé,256
-    
+
 app:
   links:
     - db
