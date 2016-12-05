@@ -22,9 +22,8 @@
 prestadb:
   image: mariadb
   volumes_from:
-    - data
+    - var
   volumes:
-    - ./scripts/:/srv/scripts
     - ./data/external/prestashop/mysql/:/var/lib/mysql
   environment:
     - MYSQL_ROOT_PASSWORD=mysecretpassword

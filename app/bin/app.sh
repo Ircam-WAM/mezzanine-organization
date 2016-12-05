@@ -7,6 +7,7 @@ wsgi=$app'/wsgi.py'
 static='/srv/static/'
 media='/srv/media/'
 src='/srv/src/'
+log='/var/log/uwsgi/app.log'
 
 # uwsgi params
 port=8000
@@ -15,8 +16,7 @@ threads=16
 autoreload=3
 uid='www-data'
 gid='www-data'
-patterns='*.js;*.css;*.jpg;*.jpeg;*.gif;*.png;*.svg;*.ttf;*.eot;*.woff;*.woff2'
-log='/var/log/uwsgi/app.log'
+# patterns='*.js;*.css;*.jpg;*.jpeg;*.gif;*.png;*.svg;*.ttf;*.eot;*.woff;*.woff2'
 
 # Staging
 # pip install xlrd
@@ -30,7 +30,7 @@ pip install django-querysetsequence==0.6.1 django==1.9.11
 chown -R $uid:$gid $media
 
 # waiting for other services
-sh $app/scripts/wait.sh
+sh $app/bin/wait.sh
 
 # django setup
 python $manage wait-for-db

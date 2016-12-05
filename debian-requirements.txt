@@ -8,3 +8,4 @@ locales
 pandoc
 nodejs-legacy
 vim
+python-sphinx
