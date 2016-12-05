@@ -20,4 +20,4 @@ xlrd==1.0.0
 ipython
 gitpython
 pygraphviz
-sphinx
+sphinx_rtd_theme

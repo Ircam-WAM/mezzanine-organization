@@ -20,7 +20,6 @@ data/postgresql
 data/var
 .thumbnails
 .tmp
-doc
 
 # Installer logs
 pip-log.txt

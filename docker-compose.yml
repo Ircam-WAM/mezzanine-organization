@@ -26,6 +26,7 @@ data:
     - ./data/backup/:/srv/backup
     - /srv/static
     - /srv/bower
+    - ./doc:/srv/doc
   command: "true"
 
 db:
@@ -51,6 +52,7 @@ app:
     - ./lib/django-prestashop/:/srv/lib/django-prestashop
     # - ./lib/mezzanine/:/srv/lib/mezzanine
     # - ./lib/cartridge/:/srv/lib/cartridge
+    - ./doc:/srv/doc
   volumes_from:
     - data
   expose:

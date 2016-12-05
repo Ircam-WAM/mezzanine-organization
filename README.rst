@@ -2,17 +2,32 @@
 Mezzanine-organization
 ======================
 
-Overview
-=========
-
 This application is a CMS for organizations with workflows
 
 It is based on Mezzanine and Django.
 
-Usecases
-========
+Use cases
+==========
 
-[à compléter]
+* Scaled audio computing (filtering, machine learning, etc)
+* Web audio visualization
+* Audio process prototyping
+* Realtime and on-demand transcoding and streaming over the web
+* Automatic segmentation and labelling synchronized with audio events
+
+
+Goals
+=====
+
+* **Do** asynchronous and fast audio processing with Python,
+* **Decode** audio frames from **any** audio or video media format into numpy arrays,
+* **Analyze** audio content with some state-of-the-art audio feature extraction libraries like Aubio, Yaafe and VAMP as well as some pure python processors
+* **Visualize** sounds with various fancy waveforms, spectrograms and other cool graphers,
+* **Transcode** audio data in various media formats and stream them through web apps,
+* **Serialize** feature analysis data through various portable formats,
+* **Playback** and **interact** **on demand** through a smart high-level HTML5 extensible player,
+* **Index**, **tag** and **annotate** audio archives with semantic metadata (see `Telemeta <http://telemeta.org>`__ which embed TimeSide).
+* **Deploy** and **scale** your own audio processing engine through any infrastructure
 
 Architecture
 ============
@@ -70,7 +85,6 @@ app/organization
 - `pages` : managing diffent type of pages (admin/pages/page/) and home
 - `projects` : represent projects related to a team or a person
 - `shop` : manage product from prestashop (softwares and subscriptions), using _Cartridge
-
 
 Install
 =======
@@ -163,34 +177,30 @@ This will install a init script in /etc/init.d. For example, if your app directo
     sudo /etc/init.d/mezzanine-organization start
 
 
-Environment
-============
+Browsing
++++++++++
 
 Local
-+++++++++++++++++
+-------
 - front : http://localhost:9020
 - admin: http://localhost:9020/admin
 
-
 Dev
-+++++++++++++++++
+----
 - front : http://cri-dev01.ircam.fr/
 - admin : http://cri-dev01.ircam.fr/admin
 - ssh : ssh cri@cri-dev01.ircam.fr
 - cd /srv/ircam-www
 
-
 Prod
-+++++++++++++++++
+-----
 - front : http://www.ircam.fr
 - admin : http://www.ircam.fr/admin
-- ssh : ssh cri@web5.ircam.fr
-    - cd /home/cri/dev/ircam-www-dev
-
+- ssh : ssh cri@www.ircam.fr
+- cd /srv/ircam-www
 
 Development
-============
-
+===========
 
 Start in dev mode
 +++++++++++++++++
@@ -236,7 +246,24 @@ Front
 Gulp will launch BrowserSync. BrowserSync is a middleware that expose the website on port 3000.
 Any change on CSS or JS files will trigger the build system and reload the browser.
 
+Sponsors and Partners
+=====================
 
+* `Parisson <http://parisson.com>`_
+* `CNRS <http://www.cnrs.fr>`_ (National Center of Science Research, France)
+* `Huma-Num <http://www.huma-num.fr/>`_ (big data equipment for digital humanities, ex TGE Adonis)
+* `CREM <http://www.crem-cnrs.fr>`_ (french National Center of Ethomusicology Research, France)
+* `Université Pierre et Marie Curie <http://www.upmc.fr>`_ (UPMC Paris, France)
+* `ANR <http://www.agence-nationale-recherche.fr/>`_ (CONTINT 2012 project : DIADEMS)
+* `MNHN <http://www.mnhn.fr>`_ : Museum National d'Histoire Naturelle (Paris, France)
+
+
+Related projects
+=================
+
+* `Telemeta <http://telemeta.org>`__ : open web audio platform
+* `Sound archives <http://archives.crem-cnrs.fr/>`_ of the CNRS, CREM and the "Musée de l'Homme" in Paris, France.
+* The `DIADEMS project <http://www.irit.fr/recherches/SAMOVA/DIADEMS/en/welcome/>`_ sponsored by the ANR.
 Maintenance
 ============
 
@@ -305,7 +332,6 @@ Or more, inspecting any container of the composition (usefully to know IP of a c
 
     docker inspect [CONTAINER_ID]
 
-
 Copyrights
 ==========
 
@@ -313,7 +339,6 @@ Copyrights
 * Copyright (c) 2016 Guillaume Pellerin
 * Copyright (c) 2016 Emilie Zawadzki
 * Copyright (c) 2016 Jérémy Fabre
-
 
 License
 ========
@@ -329,17 +354,3 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
 
 Read the LICENSE.txt file for more details.
-
-
-
-.. _Docker-engine: https://docs.docker.com/installation/
-.. _docker-compose: https://docs.docker.com/compose/install/
-.. _docker-compose reference: https://docs.docker.com/compose/reference/
-.. _Docker-Toolbox: https://www.docker.com/products/docker-toolbox
-.. _Git: http://git-scm.com/downloads
-.. _NodeJS: https://nodejs.org
-.. _Gulp: http://gulpjs.com/
-.. _Mezzanine-Agenda : https://github.com/jpells/mezzanine-agenda
-.. _Cartridge : https://github.com/stephenmcd/cartridge/
-.. _Sass: http://sass-lang.com/
-.. _Compass : http://compass-style.org/
