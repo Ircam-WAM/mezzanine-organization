@@ -2,6 +2,6 @@
 
 export PGPASSWORD=$POSTGRES_PASSWORD
 
-pg_dump -Fc -hdb -Upostgres -dpostgres > /srv/backup/ircam-www.dump
+pg_dump -Fc -hdb -Upostgres -dpostgres > /srv/backup/postgres.dump
 
 echo "Backup done!"
