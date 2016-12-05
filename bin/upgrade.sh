@@ -9,4 +9,4 @@ docker-compose run app python /srv/app/manage.py migrate
 bower install
 gulp build
 docker-compose run app python /srv/app/manage.py collectstatic --noinput
-docker-compose run app bash /srv/app/doc/build.sh
+docker-compose run app bash /srv/doc/build.sh
