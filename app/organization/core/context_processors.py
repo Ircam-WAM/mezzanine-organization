@@ -17,8 +17,8 @@ def settings(request):
 
     # HOST ORGANIZATION
     host_org = Organization.objects.get(is_host=True)
-    linked_org_content = host_org.organizations_content.filter(organizations_content__id=host_org.id).order_by('organizations_content__order')
-    linked_org_footer = host_org.organizations_footer.filter(organizations_footer__id=host_org.id).order_by('organizations_footer__order')
+    linked_org_content = host_org.organizations_content.filter(organizations_content__id=host_org.id).order_by('order')
+    linked_org_footer = host_org.organizations_footer.filter(organizations_footer__id=host_org.id).order_by('order')
     research_slug = "recherche"
 
     return {'current_season': current_season,
