@@ -12,7 +12,6 @@ sdist
 develop-eggs
 .installed.cfg
 *.directory
-var
 .thumbnails
 .tmp
 *.lock
