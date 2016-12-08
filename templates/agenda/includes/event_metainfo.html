@@ -41,7 +41,7 @@
 {% endif %}
 
 {% if unit_booking %}
-    {% if event.prices.all.0|floatformat != '0' and event.prices.all|length > 0 %}
+    {% if event.prices.all|length > 0 %}
         {% for price in event.prices.all %}
             {% if forloop.first %}
                 <div class="page__meta-title page__meta-title--small">{% trans "Prices" %}</div>
