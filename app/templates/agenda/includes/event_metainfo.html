@@ -41,20 +41,26 @@
 {% endif %}
 
 {% if unit_booking %}
-    {% if event.prices.all|length > 0 %}
-        {% for price in event.prices.all %}
-            {% if forloop.first %}
-                <div class="page__meta-title page__meta-title--small">{% trans "Prices" %}</div>
-                <p class="page__meta-text">
-            {% endif %}
-            {% if price.event_price_description.description %}
-                {{ price.event_price_description.description }} :
-            {% endif %}
-            {{ price.value|floatformat:"-2" }} {{ price.unit }} {% if not forloop.last %} <br /> {% endif %}
-            {% if forloop.last %}
-                </p>
-            {% endif %}
-        {% endfor %}
+    {% if event.prices.all %}
+        {% if event.prices.all.0|floatformat != '0' %}
+            {% for price in event.prices.all %}
+                {% if forloop.first %}
+                    <div class="page__meta-title page__meta-title--small">{% trans "Prices" %}</div>
+                    <p class="page__meta-text">
+                {% endif %}
+                {% if price.event_price_description.description %}
+                    {{ price.event_price_description.description }} :
+                {% endif %}
+                {{ price.value|floatformat:"-2" }} {{ price.unit }} {% if not forloop.last %} <br /> {% endif %}
+                {% if forloop.last %}
+                    </p>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>
+                {{ event.no_price_comments }}
+            </p>
+        {% endif %}
         <p>
             {% if event.trainings.all|length %}
                 {% with event.links.all as links %}
@@ -70,15 +76,5 @@
                 </a>
             {% endif %}
         </p>
-    {% else %}
-        {% if event.prices.all.0 and event.prices.all.0|floatformat != '0' %}
-            <p>
-                {{ price.unit }}
-            </p>
-        {% elif event.no_price_comments %}
-            <p>
-                {{ event.no_price_comments }}
-            </p>
-        {% endif %}
     {% endif %}
 {% endif %}
