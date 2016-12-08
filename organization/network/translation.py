@@ -169,3 +169,21 @@ class TrainingLevelTranslationOptions(TranslationOptions):
 class TrainingSpecialityTranslationOptions(TranslationOptions):
 
     fields = ['name', 'description']
+
+
+@register(OrganizationLinked)
+class OrganizationLinkedTranslationOptions(TranslationOptions):
+
+    fields = []
+
+
+@register(OrganizationLinkedInline)
+class OrganizationLinkedInlineTranslationOptions(TranslationOptions):
+
+    fields = []
+
+
+@register(OrganizationLinkedBlockInline)
+class OrganizationLinkedBlockInlineTranslationOptions(TranslationOptions):
+
+    fields = []

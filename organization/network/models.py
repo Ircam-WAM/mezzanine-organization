@@ -60,7 +60,7 @@ PATTERN_CHOICES = [
 ALIGNMENT_CHOICES = (('left', _('left')), ('left', _('left')), ('right', _('right')))
 
 
-class Organization(Named, Address, URL, AdminThumbRelatedMixin):
+class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
     """(Organization description)"""
 
     mappable_location = models.CharField(max_length=128, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
@@ -73,10 +73,6 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
     opening_times = models.TextField(_('opening times'), blank=True)
     subway_access = models.TextField(_('subway access'), blank=True)
-    organizations_content = models.ManyToManyField('self', verbose_name=_('Linked organizations (in content)'), related_name='organizations_content', blank=True, help_text="Usefull for host organization")
-    organizations_footer = models.ManyToManyField('self', verbose_name=_('Linked organizations (in footer)'), related_name='organizations_footer', blank=True, help_text="Usefull for host organization")
-    order = models.IntegerField(_('order number'), default=10)
-
     admin_thumb_type = 'logo'
 
     class Meta:
@@ -116,6 +112,26 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin):
     def save(self):
         self.clean()
         super(Organization, self).save()
+
+
+class OrganizationLinkedBlockInline(Titled, Orderable):
+    organization_linked = models.ForeignKey('OrganizationLinked', verbose_name=_('organization list'), related_name='organization_linked_block_inline_list', blank=True, null=True)
+    organization_main = models.ForeignKey('Organization', verbose_name=_('organization'), related_name='organization_linked_block', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class OrganizationLinked(Titled):
+
+    class Meta:
+        verbose_name = _('Organization Linked')
+
+    def __str__(self):
+        return self.title
+
+
+class OrganizationLinkedInline(Titled, Orderable):
+
+    organization_list = models.ForeignKey('OrganizationLinked', verbose_name=_('organization linked'), related_name='organization_linked_inline_linked', blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name='organization_linked_inline_from', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class OrganizationPlaylist(PlaylistRelated):

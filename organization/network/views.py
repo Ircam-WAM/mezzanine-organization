@@ -70,3 +70,27 @@ class OrganizationListView(ListView):
         context = super(OrganizationListView, self).get_context_data(**kwargs)
         context['organization_types'] = self.get_queryset().values_list('type__name', 'type__css_class').order_by('type__name').distinct('type__name')
         return context
+
+
+class OrganizationLinkedListView(autocomplete.Select2QuerySetView):
+
+    def get_queryset(self):
+        qs = OrganizationLinked.objects.all()
+        orga_linked_title = self.forwarded.get('title', None)
+        if orga_linked_title:
+            qs = qs.filter(title=orga_linked_title)
+        if self.q:
+            qs = qs.filter(title__istartswith=self.q)
+        return qs
+
+
+class OrganizationLinkedView(autocomplete.Select2QuerySetView):
+
+    def get_queryset(self):
+        qs = Organization.objects.all()
+        orga_name= self.forwarded.get('name', None)
+        if orga_name:
+            qs = qs.filter(name=orga_name)
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+        return qs

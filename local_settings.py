@@ -103,6 +103,7 @@ ADMIN_MENU_ORDER = (
     (_('Magazine'), ('organization-magazine.Article',
                     'organization-magazine.Brief',)),
     (_('Network'), ('organization-network.Organization',
+                    'organization-network.OrganizationLinked',
                     'organization-network.Department',
                     'organization-network.Team',
                     'organization-network.Person',
