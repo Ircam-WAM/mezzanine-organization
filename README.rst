@@ -2,15 +2,25 @@
 Mezzanine-organization
 ======================
 
-This application is a CMS for organizations with workflows
+Mezzanine-organization is a complete CMS for organizations with complex workflows
 
 It is based on Mezzanine_ and Django_.
 
 Use cases
 ==========
 
-...
+In fact any organization web site that needs a dedicated customable backend...
 
+Features
+========
+
+- Page, news and event management
+- Smart media management (video, audio, etc..)
+- Project data management including demo repositories
+- Activity management of person per department
+- Job candidancy forms
+- Full translation models
+- Fully dockerized for easy setup
 
 .. _Django : https://www.djangoproject.com/
 .. _Mezzanine : http://mezzanine.jupo.org/
@@ -204,14 +214,14 @@ Prod
 Development
 ===========
 
-Start in dev mode
-+++++++++++++++++
+Dev mode
++++++++++
 
 For a development environment setup::
 
     docker-compose -f docker-compose.yml -f env/dev.yml up
 
-Then browse the app at http://localhost:9020/
+This will launch the django development server. Then browse the app at http://localhost:9020/
 
 On MacOS or Windows, we need to replace 'localhost' by the IP given by the docker terminal.
 
@@ -237,13 +247,14 @@ Accessing the app container shell::
 Front
 +++++
 
-1. Installing gulp dependencies::
+The styles are written in SASS in app/static and the builder uses Gulp.
+All the builing tools are included in the app container so that you can build the front in one command::
 
-    See previous section: "Compile static files".
+    bin/build_font.sh
 
-2. Run gulp::
+To start the gulp server to get dynamic builing::
 
-    gulp
+    docker-compose run app gulp serve
 
 Gulp will launch BrowserSync. BrowserSync is a middleware that expose the website on port 3000.
 Any change on CSS or JS files will trigger the build system and reload the browser.
