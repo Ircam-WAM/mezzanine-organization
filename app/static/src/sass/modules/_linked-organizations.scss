@@ -10,8 +10,6 @@ $module: ".linked-organizations";
     &__item {
 
         display: inline-block;
-        width: 40px;
-        height: 40px;
         background-size: contain;
         background-position: center center;
         background-repeat: no-repeat;
@@ -19,8 +17,7 @@ $module: ".linked-organizations";
         @include margin(0 1 0 0);
 
         a {
-            width : 40px;
-            height : 40px;
+            display: inline-block;
         }
 
     }

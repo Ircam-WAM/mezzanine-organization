@@ -13,6 +13,29 @@ from organization.pages.admin import PageImageInline, PageBlockInline, PagePlayl
 from organization.shop.models import PageProductList
 
 
+class OrganizationAdminInline(StackedDynamicInlineAdmin):
+
+    model = OrganizationLinkedInline
+    form = OrganizationLinkedForm
+
+
+class OrganizationLinkedAdmin(BaseTranslationOrderedModelAdmin):
+
+    inlines = (OrganizationAdminInline,)
+    first_fields = ['name',]
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+
+class OrganizationLinkedBlockInlineAdmin(StackedDynamicInlineAdmin):
+
+    model = OrganizationLinkedBlockInline
+    form = OrganizationLinkedListForm
+
+
 class OrganizationPlaylistInline(TabularDynamicInlineAdmin):
 
     model = OrganizationPlaylist
@@ -33,17 +56,20 @@ class OrganizationBlockInline(StackedDynamicInlineAdmin):
     model = OrganizationBlock
 
 
-class OrganizationAdmin(BaseTranslationModelAdmin):
+class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Organization
     inlines = [ OrganizationPlaylistInline,
                 OrganizationImageInline,
                 OrganizationBlockInline,
-                OrganizationLinkInline ]
-    filter_horizontal = ['organizations_content', 'organizations_footer']
+                OrganizationLinkInline,
+                OrganizationLinkedBlockInlineAdmin
+                 ]
     list_display = ['name', 'type', 'admin_thumb']
     list_filter = ['is_on_map',]
     search_fields = ['name',]
+    first_fields = ['name',]
+
 
 
 class PageProductListInline(TabularDynamicInlineAdmin):
@@ -206,6 +232,7 @@ class TrainingTopicAdmin(BaseTranslationModelAdmin):
     model = TrainingTopic
 
 
+admin.site.register(OrganizationLinked, OrganizationLinkedAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationType)
 admin.site.register(Department, DepartmentAdmin)

@@ -14,4 +14,7 @@ urlpatterns = [
     url("^person-list-block-autocomplete/$", permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view()), name='person-list-block-autocomplete'),
     url("^person-autocomplete/$", permission_required('person.can_edit')(PersonListView.as_view()), name='person-autocomplete'),
     url("^network/$", OrganizationListView.as_view(), name='network'),
+    url("^organization-linked-list-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
+    url("^organization-linked-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
+
     ]
