@@ -176,7 +176,7 @@ def slice_ng(qs, indexes):
     index_2 = 0
     if len(index_split) > 1:
         index_2 = int(index_split[1])
-    if index_1 > 0 and index_2:
+    if index_1 >= 0 and index_2:
         return list[index_1:index_2]
     else:
         return [list[index_1]]

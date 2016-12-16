@@ -1,72 +1,15 @@
-{% load staticfiles i18n %}
+{% load staticfiles i18n organization_tags %}
 
 <div class="container mb2">
     <div class="row">
-        <div class="col-sm-6 col-xs-6">
-            <a class="banner banner--light" href="{% url 'event_list_tag' 'tournees' %}" style="background-image:url({% static 'img/services/tours.jpg' %});">
-                <div class="banner__content">
-                    <div class="banner__title fsxxxl">
-                        {% trans 'On Tour' %} {{ current_season_styled }}
-                    </div>
-                    <div class="banner__desc fss">
-                        {% blocktrans %}Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de toutes choses...{% endblocktrans %}
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-sm-6 col-xs-6">
-            <a class="banner banner--light" href="http://ulysses-network.eu/web/home/" target="_blank" style="background-image:url({% static 'img/services/applications.jpg' %});">
-                <div class="banner__content">
-                    <div class="banner__title fsxxl">
-                        {% trans 'Calls for Applications 2017' %}
-                    </div>
-                    <div class="banner__desc fss">
-                        {% blocktrans %}Cursus – Practical Training in Composition and Computer Music, Artistic Research Residence, ManiFeste-2017, the Academy{% endblocktrans %}
-                    </div>
-                </div>
-            </a>
-        </div>
+        {% for service in host_organization.services.all|slice_ng:"0:2" %}
+            {% include "home/inc/service.html" %}
+        {% endfor %}
     </div>
 
     <div class="row">
-        <div class="col-sm-6 col-xs-12">
-            <a class="banner banner--colored banner--orange banner--light" href="http://ressources.ircam.fr/" target="_blank" style="background-image:url({% static 'img/services/resources.jpg' %});">
-                <div class="banner__content">
-                    <div class="banner__title fsxxxl">
-                        {% trans 'IRCAM Library Center' %}
-                    </div>
-                    <div class="banner__desc fss">
-                        {% blocktrans %}Audiovisual and sound archives, a database on contemporary music (BRAHMS), a catalogue of works…{% endblocktrans %}
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-sm-3 col-xs-6">
-            <a class="banner banner--colored banner--blue banner--light" href="http://forumnet.ircam.fr/fr/" target="_blank" style="background-image:url({% static 'img/services/forumnet.jpg' %});">
-                <div class="banner__content">
-                    <div class="banner__title fsxxl">
-                        {% trans 'Forumnet' %}
-                    </div>
-                    <div class="banner__desc fss">
-                        {% blocktrans %}IRCAM software users’ community{% endblocktrans %}
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-sm-3 col-xs-6">
-            <a class="banner banner--colored banner--green banner--light" href="http://project.ulysses-network.eu/" target="_blank" style="background-image:url({% static 'img/services/ulysses.jpg' %});">
-                <div class="banner__content">
-                    <div class="banner__title fsxxl">
-                        {% trans 'ULYSSES Network' %}
-                    </div>
-                    <div class="banner__desc fss">
-                        {% blocktrans %}European network for the promotion and support of young contemporary musical creation{% endblocktrans %}
-                    </div>
-                </div>
-            </a>
-        </div>
+        {% for service in host_organization.services.all|slice_ng:"2:5" %}
+            {% include "home/inc/service.html" %}
+        {% endfor %}
     </div>
 </div>
