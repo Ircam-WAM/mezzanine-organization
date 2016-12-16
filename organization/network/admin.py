@@ -77,10 +77,16 @@ class OrganizationBlockInline(StackedDynamicInlineAdmin):
     model = OrganizationBlock
 
 
+class OrganizationServiceInline(StackedDynamicInlineAdmin):
+
+    model = OrganizationService
+
+
 class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Organization
-    inlines = [ OrganizationPlaylistInline,
+    inlines = [ OrganizationServiceInline,
+                OrganizationPlaylistInline,
                 OrganizationImageInline,
                 OrganizationBlockInline,
                 OrganizationLinkInline,

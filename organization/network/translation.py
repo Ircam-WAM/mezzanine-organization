@@ -27,7 +27,7 @@ from organization.network.models import *
 @register(Organization)
 class OrganizationTranslationOptions(TranslationOptions):
 
-    fields = ('description', 'opening_times', 'subway_access')
+    fields = ('description', 'opening_times', 'subway_access', 'bio')
 
 
 @register(Department)
@@ -124,6 +124,12 @@ class OrganizationImageTranslationOptions(TranslationOptions):
 class OrganizationBlockTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(OrganizationService)
+class OrganizationServiceTranslationOptions(TranslationOptions):
+
+    fields = ('name', 'description')
 
 
 @register(PersonListBlock)
