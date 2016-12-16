@@ -178,29 +178,6 @@ This will install a init script in /etc/init.d. For example, if your app directo
     sudo /etc/init.d/mezzanine-organization start
 
 
-Browsing
-+++++++++
-
-Local
--------
-- front : http://localhost:9020
-- admin: http://localhost:9020/admin
-
-Dev
-----
-- front : http://cri-dev01.ircam.fr/
-- admin : http://cri-dev01.ircam.fr/admin
-- ssh : ssh cri@cri-dev01.ircam.fr
-- cd /srv/ircam-www
-
-Prod
------
-- front : http://www.ircam.fr
-- admin : http://www.ircam.fr/admin
-- ssh : ssh cri@www.ircam.fr
-- cd /srv/ircam-www
-
-
 .. _Docker-engine: https://docs.docker.com/installation/
 .. _docker-compose: https://docs.docker.com/compose/install/
 .. _docker-compose reference: https://docs.docker.com/compose/reference/
