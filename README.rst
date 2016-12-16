@@ -2,7 +2,7 @@
 Mezzanine-organization
 ======================
 
-Mezzanine-organization is a complete CMS for organizations with complex workflows
+Mezzanine-organization is a complete CMS for organizations with complex activities
 
 It is based on Mezzanine_ and Django_.
 

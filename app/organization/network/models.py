@@ -94,6 +94,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
     telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
     opening_times = models.TextField(_('opening times'), blank=True)
     subway_access = models.TextField(_('subway access'), blank=True)
+    bio = models.TextField(_('bio'), blank=True)
     admin_thumb_type = 'logo'
 
     class Meta:
@@ -173,6 +174,12 @@ class OrganizationImage(Image):
 class OrganizationBlock(Block):
 
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class OrganizationService(Named, URL, Orderable):
+
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='services', blank=True, null=True, on_delete=models.SET_NULL)
+    image = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
 
 
 class OrganizationType(Named):
