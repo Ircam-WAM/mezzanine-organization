@@ -255,6 +255,7 @@ INSTALLED_APPS = [
     "organization.agenda",
     "organization.shop",
     "organization.job",
+    'guardian',
 ]
 
 

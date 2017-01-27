@@ -271,3 +271,9 @@ FORMAT_MODULE_PATH = [
 # FIGGO API - Lucca
 FIGGO_API_URL_PROD='https://ircam.ilucca.net/'
 FIGGO_API_HEADER_AUTH='Lucca application=bd6d5481-40eb-414b-9135-434e12749223'
+
+AUTHENTICATION_BACKENDS = (
+    "mezzanine.core.auth_backends.MezzanineBackend",
+    'backends.IMAPBackend',
+    'guardian.backends.ObjectPermissionBackend',
+)
