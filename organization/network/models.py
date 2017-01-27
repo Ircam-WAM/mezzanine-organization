@@ -38,7 +38,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
+from django import forms
 from mezzanine.pages.models import Page
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.core.fields import RichTextField, OrderField, FileField
@@ -508,8 +508,6 @@ class PersonActivity(Period):
     umr = models.ForeignKey(UMR, verbose_name=_('UMR'), blank=True, null=True, on_delete=models.SET_NULL)
     teams = models.ManyToManyField('Team', verbose_name=_('teams'), related_name='team_activities', blank=True)
     team_text = models.CharField(_('other team text'), blank=True, null=True, max_length=256)
-
-    projects = models.ManyToManyField('organization-projects.Project', verbose_name=_('projects'), related_name='activities', blank=True)
     rd_quota_float = models.FloatField(_('R&D quota (float)'), blank=True, null=True)
     rd_quota_text = models.CharField(_('R&D quota (text)'), blank=True, null=True, max_length=128)
     rd_program = models.TextField(_('R&D program'), blank=True)
@@ -568,7 +566,6 @@ class PersonActivity(Period):
         update_activity(self)
 
 
-
 class PersonActivityTimeSheet(models.Model):
 
     activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='timesheets')
@@ -587,8 +584,27 @@ class PersonActivityTimeSheet(models.Model):
     class Meta:
         verbose_name = _('activity timesheet')
         verbose_name_plural = _('activity timesheets')
-        ordering = ['month',]
+        ordering = ['month','-year']
         unique_together = (("activity", "project", "month", "year"),)
+
+
+class ProjectActivity(Titled, Orderable):
+
+    activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='project_activity')
+    project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='project_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    default_percentage = models.FloatField(_('default %'), validators=[validate_positive], blank=True, null=True)
+    work_packages = models.ManyToManyField('organization-projects.ProjectWorkPackage', verbose_name=_('work package'), related_name='project_activity', blank=True)
+    work_packages.widget = forms.CheckboxSelectMultiple()
+
+    class Meta:
+        verbose_name = _('project activity')
+        verbose_name_plural = _('project activities')
+        unique_together = (("project", "default_percentage",),)
+
+
+    def save(self, **kwargs):
+        self.title = self.activity.person.title
+        super(ProjectActivity, self).save()
 
 
 class PersonActivityVacation(Period):

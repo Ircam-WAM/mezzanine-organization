@@ -15,11 +15,21 @@
 
     <a class="pull-right button button--black" href="{% url 'organization-network-timesheet-list-view' slug %}" title="">Back to dashboard</a>
 
-    <form class="form" action="" method="post">
+    <form class="form" method="post" action="">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% for dict in errors %}
+            {% for error in dict.values %}
+                {{ error }}
+            {% endfor %}
+        {% endfor %}
+        {{ formset.management_form }}
+        {% for form in formset %}
+            {% include "core/inc/messages.html" %}
+            {{ form.as_p }}
+            {% if not forloop.last %}
+                <hr class="form-separator">
+            {% endif %}
+        {% endfor %}
         <input type="submit" value="Submit" />
     </form>
-
-
 {% endblock %}

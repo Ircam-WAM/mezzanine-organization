@@ -24,6 +24,8 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView
 from django.views.generic import View
+from django.forms import formset_factory
+from django.http import HttpResponse
 from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
 from dal import autocomplete
@@ -32,8 +34,9 @@ from organization.core.views import *
 from datetime import date
 from organization.network.forms import *
 from organization.network.utils import TimesheetXLS
+from organization.projects.models import ProjectWorkPackage
 from collections import OrderedDict
-
+from django.http.response import HttpResponseRedirect
 
 
 class PersonListView(ListView):
@@ -140,24 +143,55 @@ class TimeSheetCreateView(TimesheetAbstractView, CreateView):
     model = PersonActivityTimeSheet
     template_name='network/person_activity_timesheet/person_activity_timesheet_create.html'
     context_object_name = 'timesheet'
-    form_class = PersonActivityTimeSheetForm
+    fields = '__all__'
+    formset = ""
+    PersonActivityTimeSheetFormSet = formset_factory(PersonActivityTimeSheetForm, extra=0)
+
+    def get_activity_by_project(self, slug, year, month):
+        project_list = []
+        activity = PersonActivity.objects.filter(person__slug=slug).first()
+        for project_activity in activity.project_activity.all() :
+            project_list.append({
+                'activity' : activity,
+                'project' : project_activity.project,
+                'work_packages' : project_activity.work_packages.all(),
+                'year' : year,
+                'month' : month,
+                'percentage' : project_activity.default_percentage
+            })
+        return project_list
+
+    def get(self, request, *args, **kwargs):
+        project_list = self.get_activity_by_project(self.kwargs['slug'], self.kwargs['year'], self.kwargs['month'])
+        self.formset = self.PersonActivityTimeSheetFormSet(initial=project_list)
+        return render(request, 'network/person_activity_timesheet/person_activity_timesheet_create.html', {'formset': self.formset})
+
+    def post(self, request, *args, **kwargs):
+        self.formset = self.PersonActivityTimeSheetFormSet(request.POST)
+        errors = []
+        if self.formset.is_valid():
+            for form in self.formset:
+                form.save()
+            return HttpResponseRedirect(reverse('organization-network-timesheet-list-view', kwargs={'slug': self.kwargs['slug']}))
+        else :
+            errors = self.formset.errors
+            project_list = self.get_activity_by_project(self.kwargs['slug'], self.kwargs['year'], self.kwargs['month'])
+            self.formset = self.PersonActivityTimeSheetFormSet(initial=project_list)
+
+        return render(request, 'network/person_activity_timesheet/person_activity_timesheet_create.html', {'formset': self.formset, 'errors' : errors, 'slug': self.kwargs['slug']})
 
     def get_success_url(self):
-        print(" self.kwargs['slug']",  self.kwargs['slug'])
         return reverse('organization-network-timesheet-list-view', kwargs={'slug': self.kwargs['slug']})
-
-    def get_initial(self):
-        initial = super(TimeSheetCreateView, self).get_initial()
-        # get the more recent activity
-        initial['activity'] = PersonActivity.objects.filter(person__slug=self.kwargs['slug']).first()
-        initial['month'] = self.kwargs['month']
-        initial['year'] = self.kwargs['year']
-        return initial
 
     def get_context_data(self, **kwargs):
         context = super(TimeSheetCreateView, self).get_context_data(**kwargs)
-        context.update(self.kwargs)
+        context.push(self.formset)
+        context.push(self.kwargs)
         return context
+
+    def form_valid(self, form):
+        messages.info(self.request, _("You have successfully submitted your timsheet."))
+        return super(TimeSheetCreateView, self).form_valid(form)
 
 
 class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
@@ -194,3 +228,8 @@ class PersonActivityTimeSheetExportView(TimesheetAbstractView, View):
         timesheets = PersonActivityTimeSheet.objects.filter(activity__person__slug__exact=kwargs['slug'], year=kwargs['year'])
         xls = TimesheetXLS(timesheets)
         return xls.write()
+
+
+def fetch_work_packages(request, **kwargs):
+    work_packages = ProjectWorkPackage.objects.filter(project_id=kwargs['project_id'])
+    return HttpResponse(work_packages)
