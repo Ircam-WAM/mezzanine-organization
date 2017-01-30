@@ -226,3 +226,9 @@ class ActivityWeeklyHourVolumeTranslationOptions(TranslationOptions):
 class PersonActivityTimeSheetTranslationOptions(TranslationOptions):
 
     fields = []
+
+
+@register(ProjectActivity)
+class ProjectActivityTranslationOptions(TranslationOptions):
+
+    fields = []

@@ -86,4 +86,17 @@ $module: ".form";
 
     }
 
+    hr.form-separator {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    select[multiple=multiple] {
+        width: 20%;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
 }
