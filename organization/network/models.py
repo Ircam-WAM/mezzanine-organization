@@ -512,7 +512,6 @@ class PersonActivity(Period):
     rd_quota_text = models.CharField(_('R&D quota (text)'), blank=True, null=True, max_length=128)
     rd_program = models.TextField(_('R&D program'), blank=True)
     budget_code = models.ForeignKey(BudgetCode, blank=True, null=True, on_delete=models.SET_NULL)
-    projects = models.ManyToManyField('organization-projects.Project', verbose_name=_('projects'), related_name='activities', blank=True)
 
     supervisors = models.ManyToManyField('Person', verbose_name=_('supervisors'), related_name='supervisor_activities', blank=True)
 
