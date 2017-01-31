@@ -571,7 +571,7 @@ class PersonActivityTimeSheet(models.Model):
     activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='timesheets')
     project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='timesheets')
     work_packages = models.ManyToManyField('organization-projects.ProjectWorkPackage', verbose_name=_('work package'), related_name='timesheets', blank=True)
-    percentage = models.FloatField(_('% of work time on the project'), validators=[validate_positive])
+    percentage = models.IntegerField(_('% of work time on the project'), validators=[is_percent], help_text="Percentage has to be an integer between 0 and 100")
     month = models.IntegerField(_('month'), choices=MONTH_CHOICES)
     year = models.IntegerField(_('year'))
     accounting = models.DateField(blank=True, null=True)
@@ -592,7 +592,7 @@ class ProjectActivity(Titled, Orderable):
 
     activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='project_activity')
     project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='project_activity', blank=True, null=True, on_delete=models.SET_NULL)
-    default_percentage = models.FloatField(_('default %'), validators=[validate_positive], blank=True, null=True)
+    default_percentage = models.IntegerField(_('default %'), validators=[is_percent], blank=True, null=True, help_text="Percentage has to be an integer between 0 and 100")
     work_packages = models.ManyToManyField('organization-projects.ProjectWorkPackage', verbose_name=_('work package'), related_name='project_activity', blank=True)
     work_packages.widget = forms.CheckboxSelectMultiple()
 

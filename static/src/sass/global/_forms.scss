@@ -48,6 +48,25 @@ $module: ".form";
         }
     }
 
+    .helptext {
+        width: 44%;
+        text-align: right;
+        vertical-align: top;
+        display: block;
+        color : grey;
+
+        @include padding(0.25 1 0.25 0);
+        @include font-size(xs);
+        @include line-height(1);
+        @include typeface(sans-serif);
+
+        @include mq($until: xs) {
+            width: 100%;
+            display: block;
+            text-align: left;
+        }
+    }
+
     .errorlist {
         list-style-type: none;
         padding: 0;
