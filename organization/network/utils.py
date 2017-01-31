@@ -219,7 +219,7 @@ class TimesheetXLS(object):
                 self.t_dict[person_slug][project_slug] = []
             # ...calculate nb of worked hours proportionally
             # the property 'worked_hours' does not exists in the model, it just calculated on the fly
-            timesheet.worked_hours = worked_hours_by_month[timesheet.month] * timesheet.percentage
+            timesheet.worked_hours = worked_hours_by_month[timesheet.month] * (timesheet.percentage / 100)
             self.t_dict[person_slug][project_slug].append(timesheet)
         return self.t_dict
 

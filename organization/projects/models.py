@@ -66,7 +66,8 @@ class Project(Displayable, Period, RichText):
     class Meta:
         verbose_name = _('project')
         verbose_name_plural = _("projects")
-        ordering = ['-date_from', '-date_to']
+        # ordering = ['-date_from', '-date_to']
+        ordering = ['title', ]
 
     def __str__(self):
         return self.title
