@@ -216,3 +216,11 @@ def format_wp(work_packages):
 @register.filter
 def format_percent(percent):
     return str(percent * 100) + ' %'
+
+@register.filter
+def get_vars(object):
+    return vars(object)
+
+@register.filter
+def has_alinea(page):
+    return page._custompage_cache.menu_alinea
