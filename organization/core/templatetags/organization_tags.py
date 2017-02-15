@@ -238,3 +238,10 @@ def filter_content(dynamic_contents):
         else :
             dict["other"].append(dc)
     return dict
+
+def get_vars(object):
+    return vars(object)
+
+@register.filter
+def has_alinea(page):
+    return page._custompage_cache.menu_alinea
