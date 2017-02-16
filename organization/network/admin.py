@@ -18,9 +18,9 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-
 from django.contrib import admin
 from django import forms
+from django.http import HttpResponse
 from copy import deepcopy
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
@@ -32,7 +32,7 @@ from organization.pages.models import *
 from organization.core.admin import *
 from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline, DynamicContentPageInline, PageRelatedTitleAdmin
 from organization.shop.models import PageProductList
-
+from organization.network.utils import TimesheetXLS, set_timesheets_validation_date
 
 class OrganizationAdminInline(StackedDynamicInlineAdmin):
 
@@ -149,17 +149,8 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
     model = PersonActivity
     fk_name = 'person'
     filter_horizontal = ['organizations', 'employers', 'teams',
-                         'projects', 'supervisors', 'phd_directors', ]
-    # fields = ()
-    #
-    # fields = (('monday_am','monday_pm'), 'weekly_hour_volume')
+                          'supervisors', 'phd_directors', ] #'projects',
 
-    # def __init__(self, *args, **kwargs):
-    #     super(PersonActivityInline, self).__init__(*args, **kwargs)
-    #     # print(self.model._meta.get_fields())
-    #     self.fields = self.model._meta.get_fields()
-    #     print(self.fields)
-    #     # self.fields.append(('monday_am', 'monday_pm'))
 
 class PersonPlaylistInline(TabularDynamicInlineAdmin):
 
@@ -200,8 +191,8 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
     list_display = [ 'last_name', 'first_name', 'register_id', 'external_id', 'email', 'last_weekly_hour_volume', 'gender', 'created']
     list_filter = ['person_title', 'activities__date_from', 'activities__date_to',
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
-                    'activities__status', 'activities__teams', 'activities__projects',
-                    'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
+                    'activities__status', 'activities__teams',
+                    'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')] # 'project_activities__project',
 
     def last_weekly_hour_volume(self, instance):
         last_activity = instance.activities.first()
@@ -212,16 +203,37 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
         return weekly_hour_volume
 
 
+class ProjectActivityAdmin(BaseTranslationModelAdmin):
+
+    model = ProjectActivity
+    form = ProjectActivityForm
+    list_display = [ 'title', 'project', 'default_percentage', 'work_package', ]
+    search_fields = ['activity__person__title', 'project__title']
+    exclude = ("title", "description")
+
+    def work_package(self, instance):
+        wk_list = [str(wk.number) for wk in instance.work_packages.all()]
+        return ",".join(wk_list)
+
+
+class ProjectActivityInline(TabularDynamicInlineAdmin):
+
+    model = ProjectActivity
+    form = ProjectActivityForm
+    exclude = ("title", "description")
+
+
 class PersonActivityAdmin(BaseTranslationModelAdmin):
 
     model = PersonActivity
     list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to']
-    filter_horizontal = ['organizations', 'employers', 'teams', 'projects',
-                         'supervisors', 'phd_directors', ]
+    filter_horizontal = ['organizations', 'employers', 'teams',
+                         'supervisors', 'phd_directors', ] #project_activity__project
     search_fields = ['person__title',]
     list_filter = [ 'date_from', 'date_to',
                     'is_permanent', 'framework', 'grade',
-                    'status', 'teams', 'projects']
+                    'status', 'teams']
+    inlines = [ProjectActivityInline,]
 
     def get_teams(self, instance):
         values = []
@@ -272,6 +284,7 @@ class TrainingLevelAdmin(BaseTranslationModelAdmin):
     model = TrainingLevel
 
 
+
 class TrainingSpecialityAdmin(BaseTranslationModelAdmin):
 
     model = TrainingSpeciality
@@ -281,12 +294,33 @@ class TrainingTopicAdmin(BaseTranslationModelAdmin):
 
     model = TrainingTopic
 
-class PersonActivityTimeSheetAdmin(BaseTranslationModelAdmin):
+
+class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
     model = PersonActivityTimeSheet
-    list_display = ['person', 'activity', 'year', 'month', 'project', 'percentage']
-    list_filter = ['activity__person', 'year', 'project']
+    search_fields = ['year', 'month', 'activity__person__last_name', "project__title"]
+    list_display = ['person', 'activity', 'year', 'month', 'project', 'work_package', 'percentage',  'accounting', 'validation']
+    list_filter = ['activity__person', 'year', 'month', 'project']
+    actions = ['export_xls', 'validate_timesheets']
+    first_fields = ['title',]
+
     def person(self, instance):
         return instance.activity.person
+
+    def work_package(self, instance):
+        wk_list = [str(wk.number) for wk in instance.work_packages.all()]
+        return ",".join(wk_list)
+
+    def export_xls(self, request, queryset):
+        if request.GET.get('year') :
+            xls = TimesheetXLS(queryset, request.GET.get('year'))
+        else :
+            xls = TimesheetXLS(queryset)
+        return xls.write()
+
+    def validate_timesheets(self, request, queryset):
+        set_timesheets_validation_date(queryset)
+
+    export_xls.short_description = "Export person timesheets"
 
 
 admin.site.register(OrganizationLinked, OrganizationLinkedAdmin)
@@ -309,3 +343,4 @@ admin.site.register(TrainingLevel, TrainingLevelAdmin)
 admin.site.register(TrainingTopic, TrainingTopicAdmin)
 admin.site.register(TrainingSpeciality, TrainingSpecialityAdmin)
 admin.site.register(PersonActivityTimeSheet, PersonActivityTimeSheetAdmin)
+admin.site.register(ProjectActivity, ProjectActivityAdmin)

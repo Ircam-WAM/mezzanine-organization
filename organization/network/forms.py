@@ -19,6 +19,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from django.utils import timezone
 from dal import autocomplete
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
@@ -26,6 +27,7 @@ from django import forms
 from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
 from mezzanine.core.models import Orderable
+from organization.projects.models import ProjectWorkPackage
 from organization.network.models import (Person,
                                 PersonListBlock,
                                 PersonListBlockInline,
@@ -34,7 +36,8 @@ from organization.network.models import (Person,
                                 OrganizationLinkedInline,
                                 OrganizationLinkedBlockInline,
                                 Organization,
-                                PersonActivityTimeSheet)
+                                PersonActivityTimeSheet,
+                                ProjectActivity)
 from organization.pages.models import Page, CustomPage
 
 
@@ -88,7 +91,32 @@ class OrganizationLinkedForm(forms.ModelForm):
 
 class PersonActivityTimeSheetForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(PersonActivityTimeSheetForm, self).__init__(*args, **kwargs)
+        if 'initial' in kwargs :
+            self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(project=kwargs['initial']['project'])
+            self.fields['project'].choices = ((kwargs['initial']['project'].id, kwargs['initial']['project']),)
+            self.fields['activity'].choices = ((kwargs['initial']['activity'].id, kwargs['initial']['activity']),)
+        self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(choices=self.fields['work_packages'].choices)
+
+    def save(self):
+        self.instance.accounting = timezone.now()
+        super(PersonActivityTimeSheetForm, self).save()
+
     class Meta:
         model = PersonActivityTimeSheet
         fields = ('__all__')
-        # PersonActivityTimeSheetviewfields = ['pub_date', 'headline', 'content', 'reporter']
+        exclude = ['accounting', 'validation']
+
+
+class ProjectActivityForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectActivityForm, self).__init__(*args, **kwargs)
+        self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(project=self.instance.project)
+        self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(choices=self.fields['work_packages'].choices)
+
+    class Meta:
+        model = ProjectActivity
+        fields = ('__all__')
+        exclude = ['accounting', 'validation']

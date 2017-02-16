@@ -29,7 +29,6 @@ import urllib
 import string
 import datetime
 import mimetypes
-
 from geopy.geocoders import GoogleV3 as GoogleMaps
 from geopy.exc import GeocoderQueryError
 
@@ -39,7 +38,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
+from django import forms
 from mezzanine.pages.models import Page
 from mezzanine.core.models import RichText, Displayable, Slugged
 from mezzanine.core.fields import RichTextField, OrderField, FileField
@@ -78,6 +77,21 @@ PATTERN_CHOICES = [
     ('pattern-bg--squares', _('squares')),
     ('pattern-bg--stripes', _('stripes')),
     ('pattern-bg--triangles', _('triangles')),
+]
+
+MONTH_CHOICES = [
+    (1, _('January')),
+    (2, _('February')),
+    (3, _('March')),
+    (4, _('April')),
+    (5, _('May')),
+    (6, _('June')),
+    (7, _('July')),
+    (8, _('August')),
+    (9, _('September')),
+    (10, _('October')),
+    (11, _('November')),
+    (12, _('December')),
 ]
 
 ALIGNMENT_CHOICES = (('left', _('left')), ('left', _('left')), ('right', _('right')))
@@ -149,7 +163,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
             self.lat = lat
             self.lon = lon
 
-    def save(self):
+    def save(self, **kwargs):
         self.clean()
         super(Organization, self).save()
 
@@ -494,8 +508,6 @@ class PersonActivity(Period):
     umr = models.ForeignKey(UMR, verbose_name=_('UMR'), blank=True, null=True, on_delete=models.SET_NULL)
     teams = models.ManyToManyField('Team', verbose_name=_('teams'), related_name='team_activities', blank=True)
     team_text = models.CharField(_('other team text'), blank=True, null=True, max_length=256)
-
-    projects = models.ManyToManyField('organization-projects.Project', verbose_name=_('projects'), related_name='activities', blank=True)
     rd_quota_float = models.FloatField(_('R&D quota (float)'), blank=True, null=True)
     rd_quota_text = models.CharField(_('R&D quota (text)'), blank=True, null=True, max_length=128)
     rd_program = models.TextField(_('R&D program'), blank=True)
@@ -554,15 +566,16 @@ class PersonActivity(Period):
         update_activity(self)
 
 
-
 class PersonActivityTimeSheet(models.Model):
 
     activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='timesheets')
     project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='timesheets')
     work_packages = models.ManyToManyField('organization-projects.ProjectWorkPackage', verbose_name=_('work package'), related_name='timesheets', blank=True)
-    percentage = models.FloatField(_('% of work time on the project'), validators=[validate_positive])
-    month = models.IntegerField(_('month'))
+    percentage = models.IntegerField(_('% of work time on the project'), validators=[is_percent], help_text="Percentage has to be an integer between 0 and 100")
+    month = models.IntegerField(_('month'), choices=MONTH_CHOICES)
     year = models.IntegerField(_('year'))
+    accounting = models.DateField(blank=True, null=True)
+    validation = models.DateField(blank=True, null=True)
 
     @property
     def date(self):
@@ -571,7 +584,27 @@ class PersonActivityTimeSheet(models.Model):
     class Meta:
         verbose_name = _('activity timesheet')
         verbose_name_plural = _('activity timesheets')
-        ordering = ['month',]
+        ordering = ['month','-year']
+        unique_together = (("activity", "project", "month", "year"),)
+
+
+class ProjectActivity(Titled, Orderable):
+
+    activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='project_activity')
+    project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='project_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    default_percentage = models.IntegerField(_('default %'), validators=[is_percent], blank=True, null=True, help_text="Percentage has to be an integer between 0 and 100")
+    work_packages = models.ManyToManyField('organization-projects.ProjectWorkPackage', verbose_name=_('work package'), related_name='project_activity', blank=True)
+    work_packages.widget = forms.CheckboxSelectMultiple()
+
+    class Meta:
+        verbose_name = _('project activity')
+        verbose_name_plural = _('project activities')
+        unique_together = (("project", "default_percentage",),)
+
+
+    def save(self, **kwargs):
+        self.title = self.activity.person.title
+        super(ProjectActivity, self).save()
 
 
 class PersonActivityVacation(Period):

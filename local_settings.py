@@ -144,7 +144,8 @@ ADMIN_MENU_ORDER = (
                     'organization-network.TrainingSpeciality',
                     )),
     (_('Timesheet'), ('organization-network.ActivityWeeklyHourVolume',
-                     'organization-network.PersonActivityTimeSheet'
+                     'organization-network.PersonActivityTimeSheet',
+                      'organization-network.ProjectActivity'
                     )),
     (_('Projects'), ('organization-projects.Project',
                     'organization-projects.ProjectProgram',
@@ -154,6 +155,7 @@ ADMIN_MENU_ORDER = (
                     'organization-projects.ProjectDemo',
                     'organization-projects.Repository',
                     'organization-projects.RepositorySystem',
+                    'organization-projects.ProjectWorkPackage'
                     )),
     (_('Shop'), ('shop.Product',
                     'organization-shop.ProductList',
@@ -205,7 +207,7 @@ EVENT_SLUG = 'agenda'
 EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
-EVENT_DOMAIN = "http://eve.ircam.fr"
+EVENT_DOMAIN = "//eve.ircam.fr"
 EVENT_SHOP_URL = EVENT_DOMAIN+"/pub.php/event/%d/edit"
 EVENT_PASS_URL = EVENT_DOMAIN+"/pub.php/pass/"
 EVENT_CONFIRMATION_URL = EVENT_DOMAIN+"/pub.php/cart/done?transaction_id=%s"
@@ -270,3 +272,9 @@ FORMAT_MODULE_PATH = [
 # FIGGO API - Lucca
 FIGGO_API_URL_PROD='https://ircam.ilucca.net/'
 FIGGO_API_HEADER_AUTH='Lucca application=bd6d5481-40eb-414b-9135-434e12749223'
+
+AUTHENTICATION_BACKENDS = (
+    "mezzanine.core.auth_backends.MezzanineBackend",
+    'backends.IMAPBackend',
+    'guardian.backends.ObjectPermissionBackend',
+)
