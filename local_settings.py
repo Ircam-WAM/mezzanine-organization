@@ -285,7 +285,7 @@ if DEBUG:
     logger.setLevel(logging.DEBUG)
 
 # Baseline configuration.
-AUTH_LDAP_SERVER_URI = "ldap://nsldap.ircam.fr"
+AUTH_LDAP_SERVER_URI = "ldap://clusterldap1.ircam.fr"
 # AUTH_LDAP_BIND_DN = "dc=ircam,dc=fr"
 # AUTH_LDAP_BIND_PASSWORD = ""
 # AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=People,dc=ircam,dc=fr", ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
@@ -310,19 +310,6 @@ AUTH_LDAP_USER_ATTR_MAP = {
     "email": "mail"
 }
 
-# AUTH_LDAP_PROFILE_ATTR_MAP = {
-#     "employee_number": "employeeNumber"
-# }
-#
-# AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-#     "is_active": "cn=active,ou=django,ou=groups,dc=example,dc=com",
-#     "is_staff": "cn=staff,ou=django,ou=groups,dc=example,dc=com",
-#     "is_superuser": "cn=superuser,ou=django,ou=groups,dc=example,dc=com"
-# }
-#
-# AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
-#     "is_awesome": "cn=awesome,ou=django,ou=groups,dc=example,dc=com",
-# }
 
 # This is the default, but I like to be explicit.
 AUTH_LDAP_ALWAYS_UPDATE_USER = True
@@ -339,6 +326,5 @@ AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 AUTHENTICATION_BACKENDS = (
     'django_auth_ldap.backend.LDAPBackend',
     "mezzanine.core.auth_backends.MezzanineBackend",
-    # 'backends.IMAPBackend',
     'guardian.backends.ObjectPermissionBackend',
 )
