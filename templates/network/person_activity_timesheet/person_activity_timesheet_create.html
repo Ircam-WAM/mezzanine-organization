@@ -12,16 +12,19 @@
 {% endblock %}
 
 {% block page_content %}
-
-    <a class="pull-right button button--black" href="{% url 'organization-network-timesheet-list-view' slug %}" title="">Back to dashboard</a>
-
     <form class="form" method="post" action="">
         {% csrf_token %}
-        {% for dict in errors %}
-            {% for error in dict.values %}
-                {{ error }}
+        {% if formset.errors %}
+            <ul class="messages">
+            {% for dict in formset.errors %}
+                {% for messages in dict.values %}
+                    {% for message in messages %}
+                        <li class="messages__item">{{ message }}</li>
+                    {% endfor %}
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+            </ul>
+        {% endif %}
         {{ formset.management_form }}
         {% for form in formset %}
             {% include "core/inc/messages.html" %}

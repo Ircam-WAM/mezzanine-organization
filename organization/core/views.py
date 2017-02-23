@@ -21,13 +21,14 @@
 
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
-from django.views.generic.base import View
+from django.views.generic.base import View, RedirectView
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView
 from django.apps import apps
 from django.utils import six, timezone, formats
 from django.utils.translation import ugettext_lazy as _
 from django.http import QueryDict
 from django.template.defaultfilters import capfirst
+from django.core.urlresolvers import reverse
 from mezzanine.conf import settings
 from mezzanine.utils.views import paginate
 from organization.core.models import *
@@ -37,6 +38,9 @@ from organization.media.models import Playlist
 from mezzanine_agenda.models import Event
 from organization.pages.models import CustomPage
 from organization.projects.models import Project
+from organization.network.models import Person
+from pprint import pprint
+
 
 class SlugMixin(object):
 
@@ -195,3 +199,17 @@ def autocomplete_result_formatting(self, context):
         all_results.append(curr_model_result)
 
     return all_results
+
+
+class AccountProfilView(RedirectView):
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        redirect_url = reverse('home')
+        try :
+            person = Person.objects.get(email=self.request.user._wrapped.email)
+            if not person.register_id is None :
+                redirect_url = reverse("organization-network-person-detail", kwargs={"slug": person.slug})
+        except :
+            pass
+        return redirect_url

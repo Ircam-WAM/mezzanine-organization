@@ -18,13 +18,15 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-
+from pprint import pprint
+from re import match
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import View
-from django.forms import formset_factory
+from django.forms import formset_factory, BaseFormSet
+from extra_views import FormSetView
 from django.http import HttpResponse
 from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
@@ -37,6 +39,7 @@ from organization.network.utils import TimesheetXLS
 from organization.projects.models import ProjectWorkPackage
 from collections import OrderedDict
 from django.http.response import HttpResponseRedirect
+from django.views.generic.base import RedirectView
 
 
 class PersonListView(ListView):
@@ -139,17 +142,19 @@ class TimesheetAbstractView(LoginRequiredMixin):
         abstract = True
 
 
-class TimeSheetCreateView(TimesheetAbstractView, CreateView):
+class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
     model = PersonActivityTimeSheet
     template_name='network/person_activity_timesheet/person_activity_timesheet_create.html'
     context_object_name = 'timesheet'
     fields = '__all__'
+    form_class = PersonActivityTimeSheetForm
     formset = ""
-    PersonActivityTimeSheetFormSet = formset_factory(PersonActivityTimeSheetForm, extra=0)
+    extra = 0
+    success_url = reverse_lazy("organization-network-timesheet-list-view")
 
-    def get_activity_by_project(self, slug, year, month):
+    def get_activity_by_project(self, email, year, month):
         project_list = []
-        activity = PersonActivity.objects.filter(person__slug=slug).first()
+        activity = PersonActivity.objects.filter(person__email=email).first()
         for project_activity in activity.project_activity.all() :
             project_list.append({
                 'activity' : activity,
@@ -161,37 +166,37 @@ class TimeSheetCreateView(TimesheetAbstractView, CreateView):
             })
         return project_list
 
-    def get(self, request, *args, **kwargs):
-        project_list = self.get_activity_by_project(self.kwargs['slug'], self.kwargs['year'], self.kwargs['month'])
-        self.formset = self.PersonActivityTimeSheetFormSet(initial=project_list)
-        return render(request, 'network/person_activity_timesheet/person_activity_timesheet_create.html', {'formset': self.formset})
-
-    def post(self, request, *args, **kwargs):
-        self.formset = self.PersonActivityTimeSheetFormSet(request.POST)
-        errors = []
-        if self.formset.is_valid():
-            for form in self.formset:
-                form.save()
-            return HttpResponseRedirect(reverse('organization-network-timesheet-list-view', kwargs={'slug': self.kwargs['slug']}))
-        else :
-            errors = self.formset.errors
-            project_list = self.get_activity_by_project(self.kwargs['slug'], self.kwargs['year'], self.kwargs['month'])
-            self.formset = self.PersonActivityTimeSheetFormSet(initial=project_list)
-
-        return render(request, 'network/person_activity_timesheet/person_activity_timesheet_create.html', {'formset': self.formset, 'errors' : errors, 'slug': self.kwargs['slug']})
-
-    def get_success_url(self):
-        return reverse('organization-network-timesheet-list-view', kwargs={'slug': self.kwargs['slug']})
 
     def get_context_data(self, **kwargs):
         context = super(TimeSheetCreateView, self).get_context_data(**kwargs)
-        context.push(self.formset)
-        context.push(self.kwargs)
+        context.update(self.kwargs)
         return context
 
-    def form_valid(self, form):
-        messages.info(self.request, _("You have successfully submitted your timsheet."))
-        return super(TimeSheetCreateView, self).form_valid(form)
+    def get_initial(self):
+        return self.get_activity_by_project(self.request.user.email, self.kwargs['year'], self.kwargs['month'])
+
+    def formset_valid(self, formset):
+        is_valid = formset.is_valid()
+
+        # check if TOTAL percentages do not exceed 100%
+        percent = 0
+        for data_k, data_v in formset.data.items():
+            if match('form-\d+-percentage', data_k):
+                percent += int(data_v)
+
+        if percent > 100 :
+            formset.errors.append( {'percentage': ['The total percentage worked do not have to exceed 100 %']})
+            redirect = super(TimeSheetCreateView, self).formset_invalid(formset)
+            is_valid = False
+
+        if is_valid:
+            for form in formset:
+                form.save()
+            redirect = super(TimeSheetCreateView, self).formset_valid(formset)
+        else :
+            redirect = super(TimeSheetCreateView, self).formset_invalid(formset)
+
+        return redirect
 
 
 class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
@@ -200,19 +205,19 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
     context_object_name = 'timesheets_by_year'
 
     def get_queryset(self):
-        if 'slug' in self.kwargs:
-            timesheets = PersonActivityTimeSheet.objects.filter(activity__person__slug__exact=self.kwargs['slug'])
-            t_dict = OrderedDict()
-            for timesheet in timesheets:
-                year = timesheet.year
-                if not year in t_dict:
-                    t_dict[year] = {}
-                project_slug = timesheet.project.title
-                # if new person
-                if not project_slug in t_dict[year]:
-                    t_dict[year][project_slug] = []
-                t_dict[year][project_slug].append(timesheet)
-            return t_dict
+        timesheets = PersonActivityTimeSheet.objects.filter(activity__person__email__exact=self.request.user.email)
+        t_dict = OrderedDict()
+        for timesheet in timesheets:
+            year = timesheet.year
+            month = timesheet.month
+            if not year in t_dict:
+                t_dict[year] = {}
+
+            # if new person
+            if not month in t_dict[year]:
+                t_dict[year][month] = []
+            t_dict[year][month].append(timesheet)
+        return t_dict
 
     def get_context_data(self, **kwargs):
         context = super(PersonActivityTimeSheetListView, self).get_context_data(**kwargs)
@@ -228,6 +233,18 @@ class PersonActivityTimeSheetExportView(TimesheetAbstractView, View):
         timesheets = PersonActivityTimeSheet.objects.filter(activity__person__slug__exact=kwargs['slug'], year=kwargs['year'])
         xls = TimesheetXLS(timesheets)
         return xls.write()
+
+
+class TimeSheetCreateCurrMonthView(RedirectView):
+
+    permanent = False
+    query_string = True
+    pattern_name = 'organization-network-timesheet-create-view'
+
+    def get_redirect_url(self, *args, **kwargs):
+        kwargs['month'] = date.today().month
+        kwargs['year'] = date.today().year
+        return super(TimeSheetCreateCurrMonthView, self).get_redirect_url(*args, **kwargs)
 
 
 def fetch_work_packages(request, **kwargs):

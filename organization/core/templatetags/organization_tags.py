@@ -223,4 +223,5 @@ def get_vars(object):
 
 @register.filter
 def has_alinea(page):
-    return page._custompage_cache.menu_alinea
+    if hasattr(page._custompage_cache, 'menu_alinea'):
+        return page._custompage_cache.menu_alinea

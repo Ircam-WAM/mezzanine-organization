@@ -120,3 +120,6 @@ class ProjectActivityForm(forms.ModelForm):
         model = ProjectActivity
         fields = ('__all__')
         exclude = ['accounting', 'validation']
+        help_texts = {
+            'work_packages': 'Set percentage between 0 and 100',
+        }
