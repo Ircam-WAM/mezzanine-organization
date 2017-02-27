@@ -294,10 +294,10 @@ AUTH_LDAP_SERVER_URI = "ldap://clusterldap1.ircam.fr"
 AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=People,dc=ircam,dc=fr"
 
 # Set up the basic group parameters.
-# AUTH_LDAP_GROUP_SEARCH = LDAPSearch("ou=django,ou=groups,dc=example,dc=com",
-#     ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)"
-# )
-# AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("ou=People,dc=ircam,dc=fr",
+    ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)"
+)
+AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
 
 # Simple group restrictions
 # AUTH_LDAP_REQUIRE_GROUP = "cn=enabled,ou=django,ou=groups,dc=example,dc=com"
