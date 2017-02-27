@@ -155,15 +155,16 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
     def get_activity_by_project(self, email, year, month):
         project_list = []
         activity = PersonActivity.objects.filter(person__email=email).first()
-        for project_activity in activity.project_activity.all() :
-            project_list.append({
-                'activity' : activity,
-                'project' : project_activity.project,
-                'work_packages' : project_activity.work_packages.all(),
-                'year' : year,
-                'month' : month,
-                'percentage' : project_activity.default_percentage
-            })
+        if activity:
+            for project_activity in activity.project_activity.all() :
+                project_list.append({
+                    'activity' : activity,
+                    'project' : project_activity.project,
+                    'work_packages' : project_activity.work_packages.all(),
+                    'year' : year,
+                    'month' : month,
+                    'percentage' : project_activity.default_percentage
+                })
         return project_list
 
 

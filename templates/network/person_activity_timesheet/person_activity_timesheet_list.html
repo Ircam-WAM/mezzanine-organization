@@ -14,7 +14,7 @@
 {% block page_content %}
 
     <a class="pull-right button button--black" href="{% url 'organization-network-timesheet-create-view' current_year current_month %}" title="">Declare this month</a>
-    {{ timesheets_by_project }}
+
     {% if timesheets_by_year %}
         {% for year_k, year_v in timesheets_by_year.items %}
             <h2>{{ year_k }}</h2>

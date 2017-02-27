@@ -70,9 +70,11 @@
                 </figure>
             {% endif %}
         {% endwith %}
-    {% endif%}
+    {% endif %}
 
-    {% page_menu "pages/menus/person.html" %}
+    {% if user.email == person.email %}
+        {% page_menu "pages/menus/tree.html" %}
+    {% endif %}
 
 {% endblock %}
 

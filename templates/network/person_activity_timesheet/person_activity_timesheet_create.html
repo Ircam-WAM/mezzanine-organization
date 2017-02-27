@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block page_content %}
+    {% if formset.initial %}
     <form class="form" method="post" action="">
         {% csrf_token %}
         {% if formset.errors %}
@@ -35,4 +36,7 @@
         {% endfor %}
         <input type="submit" value="Submit" />
     </form>
+    {% else %}
+        <p>You're not assigned to a project for the moment.</p>
+    {% endif %}
 {% endblock %}
