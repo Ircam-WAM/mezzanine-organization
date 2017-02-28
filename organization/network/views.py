@@ -133,7 +133,6 @@ class OrganizationLinkedView(autocomplete.Select2QuerySetView):
         return qs
 
 
-
 class TimesheetAbstractView(LoginRequiredMixin):
     login_url = settings.LOGIN_URL
 
@@ -153,11 +152,10 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
 
     def get_activity_by_project(self, email, year, month):
         project_list = []
-        try :
-            # backdoor to delete
-            activities = PersonActivity.objects.filter(person__slug=email).filter(date_to__gt=date.today())
-        except :
-            activities = PersonActivity.objects.filter(person__email=email).filter(date_to__gt=date.today())
+        # backdoor to delete
+        # activities = PersonActivity.objects.filter(person__slug=email).filter(date_to__gt=date.today())
+        # if not activities :
+        activities = PersonActivity.objects.filter(person__email=email).filter(date_to__gt=date.today())
 
         # gather projects of all current activities
         for activity in activities:
@@ -178,11 +176,11 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
         return context
 
     def get_initial(self):
-        if "slug" in self.kwargs:
-            # backdoor to delete
-            initial = self.get_activity_by_project(self.kwargs['slug'], self.kwargs['year'], self.kwargs['month'])
-        else :
-            initial = self.get_activity_by_project(self.request.user.email, self.kwargs['year'], self.kwargs['month'])
+        # if "slug" in self.kwargs:
+        #     # backdoor to delete
+        #     initial = self.get_activity_by_project(self.kwargs['slug'], self.kwargs['year'], self.kwargs['month'])
+        # else :
+        initial = self.get_activity_by_project(self.request.user.email, self.kwargs['year'], self.kwargs['month'])
         return initial
 
     def formset_valid(self, formset):
@@ -215,12 +213,11 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
     context_object_name = 'timesheets_by_year'
 
     def get_queryset(self):
-        if 'slug' in self.kwargs:
-            # backdoor to delete
-            timesheets = PersonActivityTimeSheet.objects.filter(activity__person__slug__exact=self.kwargs['slug']).order_by('-year', 'month', 'project')
-        else:
-            timesheets = PersonActivityTimeSheet.objects.filter(activity__person__email__exact=self.request.user.email).order_by('-year', 'month', 'project')
-        #t_dict = OrderedDict()
+        # if 'slug' in self.kwargs:
+        #     # backdoor to delete
+        #     timesheets = PersonActivityTimeSheet.objects.filter(activity__person__slug__exact=self.kwargs['slug']).order_by('-year', 'month', 'project')
+        # else:
+        timesheets = PersonActivityTimeSheet.objects.filter(activity__person__email__exact=self.request.user.email).order_by('-year', 'month', 'project')
         t_dict = {}
         for timesheet in timesheets:
             year = timesheet.year

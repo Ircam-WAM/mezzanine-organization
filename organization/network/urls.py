@@ -35,13 +35,13 @@ urlpatterns = [
     url(r'^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
 
     # deactivate this url :
-    url(r'^person/(?P<slug>.*)/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name="organization-network-timesheet-create-view"),
+    # url(r'^person/(?P<slug>.*)/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name="organization-network-timesheet-create-view"),
 
     url(r'^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name="organization-network-timesheet-create-view"),
     url(r'^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name="organization-network-timesheet-list-view" ),
 
     # deactivate this url :
-    url(r'^person/(?P<slug>.*)/timesheet/$', PersonActivityTimeSheetListView.as_view(), name="organization-network-timesheet-list-view" ),
+    # url(r'^person/(?P<slug>.*)/timesheet/$', PersonActivityTimeSheetListView.as_view(), name="organization-network-timesheet-list-view" ),
 
     url(r'^person/(?P<slug>.*)/$', PersonDetailView.as_view(), name="organization-network-person-detail"),
     url("^person-list-block-autocomplete/$", permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
