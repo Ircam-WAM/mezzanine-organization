@@ -18,7 +18,6 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-from pprint import pprint
 from re import match
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
@@ -154,9 +153,15 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
 
     def get_activity_by_project(self, email, year, month):
         project_list = []
-        activity = PersonActivity.objects.filter(person__email=email).first()
-        if activity:
-            for project_activity in activity.project_activity.all() :
+        try :
+            # backdoor to delete
+            activities = PersonActivity.objects.filter(person__slug=email).filter(date_to__gt=date.today())
+        except :
+            activities = PersonActivity.objects.filter(person__email=email).filter(date_to__gt=date.today())
+
+        # gather projects of all current activities
+        for activity in activities:
+            for project_activity in activity.project_activity.filter(project__date_to__gt=date.today()) :
                 project_list.append({
                     'activity' : activity,
                     'project' : project_activity.project,
@@ -167,14 +172,18 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
                 })
         return project_list
 
-
     def get_context_data(self, **kwargs):
         context = super(TimeSheetCreateView, self).get_context_data(**kwargs)
         context.update(self.kwargs)
         return context
 
     def get_initial(self):
-        return self.get_activity_by_project(self.request.user.email, self.kwargs['year'], self.kwargs['month'])
+        if "slug" in self.kwargs:
+            # backdoor to delete
+            initial = self.get_activity_by_project(self.kwargs['slug'], self.kwargs['year'], self.kwargs['month'])
+        else :
+            initial = self.get_activity_by_project(self.request.user.email, self.kwargs['year'], self.kwargs['month'])
+        return initial
 
     def formset_valid(self, formset):
         is_valid = formset.is_valid()
@@ -206,8 +215,13 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
     context_object_name = 'timesheets_by_year'
 
     def get_queryset(self):
-        timesheets = PersonActivityTimeSheet.objects.filter(activity__person__email__exact=self.request.user.email)
-        t_dict = OrderedDict()
+        if 'slug' in self.kwargs:
+            # backdoor to delete
+            timesheets = PersonActivityTimeSheet.objects.filter(activity__person__slug__exact=self.kwargs['slug']).order_by('-year', 'month', 'project')
+        else:
+            timesheets = PersonActivityTimeSheet.objects.filter(activity__person__email__exact=self.request.user.email).order_by('-year', 'month', 'project')
+        #t_dict = OrderedDict()
+        t_dict = {}
         for timesheet in timesheets:
             year = timesheet.year
             month = timesheet.month
@@ -218,12 +232,19 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
             if not month in t_dict[year]:
                 t_dict[year][month] = []
             t_dict[year][month].append(timesheet)
-        return t_dict
+
+        # add manually current year if not exists
+        curr_year = date.today().year
+        if not curr_year in t_dict.keys():
+            t_dict[curr_year] = {}
+
+        return OrderedDict(sorted(t_dict.items(), key=lambda t: -t[0]))
 
     def get_context_data(self, **kwargs):
         context = super(PersonActivityTimeSheetListView, self).get_context_data(**kwargs)
         context['current_month'] = date.today().month
         context['current_year'] = date.today().year
+        context['months'] = list(range(1, date.today().month + 1))
         context.update(self.kwargs)
         return context
 

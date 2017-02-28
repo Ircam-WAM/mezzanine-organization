@@ -225,3 +225,7 @@ def get_vars(object):
 def has_alinea(page):
     if hasattr(page._custompage_cache, 'menu_alinea'):
         return page._custompage_cache.menu_alinea
+
+@register.filter
+def get_value(dict, value):
+    return dict[value]

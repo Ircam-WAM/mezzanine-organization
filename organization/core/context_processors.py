@@ -54,8 +54,11 @@ def settings(request):
 
     if not request.session.__contains__("person_slug"):
         if hasattr(request.user, 'email'):
-            person = Person.objects.get(email=request.user.email)
-            request.session.__setitem__("person_slug", person.slug)
+            try :
+                person = Person.objects.get(email=request.user.email)
+                request.session.__setitem__("person_slug", person.slug)
+            except:
+                pass
 
     return {'current_season': current_season,
             'current_season_styled': current_season_styled,
