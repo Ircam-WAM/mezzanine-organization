@@ -599,7 +599,7 @@ class ProjectActivity(Titled, Orderable):
     class Meta:
         verbose_name = _('project activity')
         verbose_name_plural = _('project activities')
-        unique_together = (("project", "default_percentage",),)
+        unique_together = (("activity", "project", "default_percentage",),)
 
 
     def save(self, **kwargs):
