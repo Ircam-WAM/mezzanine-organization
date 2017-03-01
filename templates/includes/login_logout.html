@@ -1,0 +1,20 @@
+{% load i18n pages_tags mezzanine_tags staticfiles keyword_tags event_tags organization_tags %}
+<ul class="profil-menu" id="ProfilSelector">
+    {% if request.user.is_authenticated %}
+        <li class="profil-menu__item active">
+            <a href="#" class="unclickable"><i class="fa fa-user-circle"></i></a>
+        </li>
+        {% if request.session.person_slug %}
+        <li class="profil-menu__item">
+            <a href="{% url 'organization-network-person-detail' request.session.person_slug %}">Profil</a>
+        </li>
+        {% endif %}
+        <li class="profil-menu__item">
+            <a href="{% url 'logout' %}">logout</a>
+        </li>
+    {% else %}
+        <li class="profil-menu__item active">
+            <a href="{% url 'login' %}">login</a>
+        </li>
+    {% endif %}
+</ul>

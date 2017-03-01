@@ -2,6 +2,7 @@
 // Require all the modules
 //
 var LangSelector = require('./modules/lang-selector');
+var ProfilSelector = require('./modules/profil-selector');
 var RoleSelector = require('./modules/role-selector');
 var NavHeader = require('./modules/nav-header');
 var OpenButton = require('./modules/open-button');
@@ -23,6 +24,7 @@ var Video = require('./modules/video');
 // Init all the modules
 //
 window[LangSelector] = new LangSelector();
+window[ProfilSelector] = new ProfilSelector();
 window[RoleSelector] = new RoleSelector();
 window[NavHeader] = new NavHeader();
 window[OpenButton] = new OpenButton();

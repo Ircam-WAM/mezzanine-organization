@@ -9,4 +9,6 @@ python $manage create-admin-user
 
 # @todo searching every fixtures file in each folder
 python $manage loaddata $app/organization/job/fixtures/organization-job.json
+python $manage loaddata $app/organization/pages/fixtures/pages.json
+python $manage loaddata $app/organization/pages/fixtures/links.json
 python $manage loaddata $app/organization/projects/fixtures/organization-projects-repositorysystems.json

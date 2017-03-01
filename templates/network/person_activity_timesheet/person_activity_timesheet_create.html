@@ -4,7 +4,7 @@
 {% block meta_title %}{% trans "Timesheet" %}{% endblock %}
 
 {% block page_class %}
-    time_sheet
+    timesheet
 {% endblock %}
 
 {% block page_title %}
@@ -12,16 +12,20 @@
 {% endblock %}
 
 {% block page_content %}
-
-    <a class="pull-right button button--black" href="{% url 'organization-network-timesheet-list-view' slug %}" title="">Back to dashboard</a>
-
+    {% if formset.initial %}
     <form class="form" method="post" action="">
         {% csrf_token %}
-        {% for dict in errors %}
-            {% for error in dict.values %}
-                {{ error }}
+        {% if formset.errors %}
+            <ul class="messages">
+            {% for dict in formset.errors %}
+                {% for messages in dict.values %}
+                    {% for message in messages %}
+                        <li class="messages__item">{{ message }}</li>
+                    {% endfor %}
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+            </ul>
+        {% endif %}
         {{ formset.management_form }}
         {% for form in formset %}
             {% include "core/inc/messages.html" %}
@@ -32,4 +36,25 @@
         {% endfor %}
         <input type="submit" value="Submit" />
     </form>
+    {% else %}
+        <p>You're not assigned to a project for the moment.</p>
+    {% endif %}
+{% endblock %}
+
+{% block page_sidebar %}
+    {% with user.person as person %}
+        {% if person.images.all %}
+            {% with person.images.all|get_type:'page_featured' as images %}
+                {% if images.first %}
+                    <figure class="person-list-box__image">
+                        <img src="{{ MEDIA_URL }}{% thumbnail images.first 135 135 top=0.5 %}" alt="person"/>
+                    </figure>
+                {% endif %}
+            {% endwith %}
+        {% endif %}
+
+        {% if user.email == person.email %}
+            {{ block.super }}
+        {% endif %}
+    {% endwith %}
 {% endblock %}
