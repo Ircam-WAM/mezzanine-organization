@@ -584,7 +584,7 @@ class PersonActivityTimeSheet(models.Model):
     class Meta:
         verbose_name = _('activity timesheet')
         verbose_name_plural = _('activity timesheets')
-        ordering = ['month','-year']
+        ordering = ['-year', 'month', 'project']
         unique_together = (("activity", "project", "month", "year"),)
 
 

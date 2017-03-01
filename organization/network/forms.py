@@ -106,7 +106,7 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
     class Meta:
         model = PersonActivityTimeSheet
         fields = ('__all__')
-        exclude = ['accounting', 'validation']
+        exclude = ['accounting', 'validation', 'month', 'year']
 
 
 class ProjectActivityForm(forms.ModelForm):

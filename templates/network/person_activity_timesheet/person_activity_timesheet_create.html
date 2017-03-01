@@ -4,7 +4,7 @@
 {% block meta_title %}{% trans "Timesheet" %}{% endblock %}
 
 {% block page_class %}
-    time_sheet
+    timesheet
 {% endblock %}
 
 {% block page_title %}
@@ -39,4 +39,22 @@
     {% else %}
         <p>You're not assigned to a project for the moment.</p>
     {% endif %}
+{% endblock %}
+
+{% block page_sidebar %}
+    {% with user.person as person %}
+        {% if person.images.all %}
+            {% with person.images.all|get_type:'page_featured' as images %}
+                {% if images.first %}
+                    <figure class="person-list-box__image">
+                        <img src="{{ MEDIA_URL }}{% thumbnail images.first 135 135 top=0.5 %}" alt="person"/>
+                    </figure>
+                {% endif %}
+            {% endwith %}
+        {% endif %}
+
+        {% if user.email == person.email %}
+            {{ block.super }}
+        {% endif %}
+    {% endwith %}
 {% endblock %}

@@ -13,14 +13,17 @@
 
 {% block page_content %}
 
-    <a class="pull-right button button--black" href="{% url 'organization-network-timesheet-create-view' current_year current_month %}" title="">Declare this month</a>
-
     {% if timesheets_by_year %}
         {% for year_k, year_v in timesheets_by_year.items %}
             <h2>{{ year_k }}</h2>
             {% if year_k == current_year %}
                 <table class="timesheet-table">
                     <tr>
+                        <td class="timesheet-table-legend">
+                            {% for i in year_v.project_count|times %}
+                                {% include "network/person_activity_timesheet/includes/person_activity_timesheet_header.html" %}
+                            {% endfor %}
+                        </td>
                         {% for month in months %}
                             <td>
                                 <table>
@@ -31,10 +34,12 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            {% if month in year_v.keys %}
-                                                {% for timesheet in year_v|get_value:month %}
-                                                    {% include "network/person_activity_timesheet/includes/person_activity_timesheet_inline.html" %}
-                                                {% endfor %}
+                                            {% if month in year_v.timesheets.keys %}
+                                                {% with year_v.timesheets|get_value:month as t_month %}
+                                                    {% for timesheet in t_month %}
+                                                        {% include "network/person_activity_timesheet/includes/person_activity_timesheet_inline.html" %}
+                                                    {% endfor %}
+                                                {% endwith %}
                                             {% else %}
                                                 <a class="pull-right button wys-button-yellow" href="{% url 'organization-network-timesheet-create-view' current_year month %}" title="">Declare</a>
                                             {% endif %}
@@ -49,7 +54,12 @@
             {% else %}
                 <table class="timesheet-table">
                     <tr>
-                    {% for month_k, month_v in year_v.items %}
+                        <td class="timesheet-table-legend">
+                            {% for i in year_v.project_count|times %}
+                                {% include "network/person_activity_timesheet/includes/person_activity_timesheet_header.html" %}
+                            {% endfor %}
+                        </td>
+                    {% for month_k, month_v in year_v.timesheets.items %}
                         <td>
                             <table>
                                 <tr>
@@ -63,7 +73,6 @@
                                         {% include "network/person_activity_timesheet/includes/person_activity_timesheet_inline.html" %}
                                     {% endfor %}
                                     </td>
-
                                 </tr>
                             </table>
                         </td>
@@ -77,6 +86,9 @@
         <h2>{{ current_year }}</h2>
         <table class="timesheet-table">
             <tr>
+                <td class="timesheet-table-legend">
+
+                </td>
                 {% for month in months %}
                     <td>
                         <table>
@@ -98,4 +110,24 @@
         </table>
     {% endif %}
 
+{% endblock %}
+
+{% block page_sidebar %}
+    {% with user.person as person %}
+        {% if person.images.all %}
+            {% with person.images.all|get_type:'page_featured' as images %}
+                {% if images.first %}
+                    <figure class="person-list-box__image">
+                        <img src="{{ MEDIA_URL }}{% thumbnail images.first 135 135 top=0.5 %}" alt="person"/>
+                    </figure>
+                {% endif %}
+            {% endwith %}
+        {% endif %}
+
+        {% if user.email == person.email %}
+
+            {{ block.super }}
+
+        {% endif %}
+    {% endwith %}
 {% endblock %}

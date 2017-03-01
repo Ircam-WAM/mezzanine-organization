@@ -229,3 +229,7 @@ def has_alinea(page):
 @register.filter
 def get_value(dict, value):
     return dict[value]
+
+@register.filter(name='times')
+def times(number):
+    return range(number)

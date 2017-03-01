@@ -208,8 +208,11 @@ class AccountProfilView(RedirectView):
         redirect_url = reverse('home')
         try :
             person = Person.objects.get(email=self.request.user._wrapped.email)
-            if not person.register_id is None :
-                redirect_url = reverse("organization-network-person-detail", kwargs={"slug": person.slug})
+            if person:
+                person.user = self.request.user
+                person.save()
+                if person.register_id :
+                    redirect_url = reverse("organization-network-person-detail", kwargs={"slug": person.slug})
         except :
             pass
         return redirect_url
