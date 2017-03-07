@@ -37,6 +37,7 @@ from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.utils.text import slugify
 from organization.network.models import Person
 
 class Logger:
@@ -122,8 +123,9 @@ class Command(BaseCommand):
             if 'sn' in user and 'givenName' in user:
                 lastname = user['sn'][0].decode("utf-8")
                 firstname = user['givenName'][0].decode("utf-8")
+                slug = slugify(firstname+'-'+lastname)
                 try :
-                    p = Person.objects.get(first_name=firstname, last_name=lastname)
+                    p = Person.objects.get(slug=slug)
                     if 'mail' in user:
                         email = user['mail'][0].decode("utf-8")
                         p.email = email

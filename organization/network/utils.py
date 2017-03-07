@@ -201,7 +201,7 @@ class TimesheetXLS(object):
                             # is the person has been present during current m_key month ?
                             if m_key in leave_days :
                                 if nhd_k in leave_days[m_key]:
-                                    # is the person has been present during current half day nhd_d ?
+                                    # has the person been present during current half day nhd_d ?
                                     worked_hours_by_month[m_key] += (nb_half_days[m_key][nhd_k] - leave_days[m_key][nhd_k]) * half_day_nb_hours
                                 else :
                                     # if not, count theorical nb oh hours for this half day
