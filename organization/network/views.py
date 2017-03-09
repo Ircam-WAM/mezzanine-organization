@@ -166,7 +166,7 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
         activities = PersonActivity.objects.filter(person__email=email).filter(date_to__gt=date.today())
         first_day_in_month = ''
         last_day_in_month = ''
-        
+
         try :
             first_day_in_month = date(int(year), int(month), 1)
             last_day_in_month = date(int(year), int(month),  monthrange(int(year), int(month))[1])

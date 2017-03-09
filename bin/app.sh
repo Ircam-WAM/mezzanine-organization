@@ -42,6 +42,9 @@ if [ ! -f .init ]; then
     touch .init
 fi
 
+# if not DEBUG :
+python manage.py crontab add
+
 # app start
 if [ "$1" = "--runserver" ]; then
     python $manage runserver 0.0.0.0:8000
