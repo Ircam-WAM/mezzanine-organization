@@ -26,6 +26,7 @@ import os
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
 
 from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
 
@@ -340,9 +341,10 @@ class ProjectPublicData(models.Model):
     technology_description = models.TextField(_('technology description'), help_text="Must include the elements to be made available to the artist with sufficient functional and implementation details for enabling him/her to elaborate his/her technical approach (100-200 words).")
     objectives_description = models.TextField(_('objectives description'), help_text="What the project is looking to gain from the collaboration and what kind of artist would be suitable (100 – 150 words).")
     resources_description = models.TextField(_('resource description'), help_text="Resources available to the artist -- e.g. office facility, studio facility, technical equipment, internet connection, laboratory, and periods of availability for artistic production, staff possibly allocated to the project, available budget for travel, consumables and equipment, etc... (50 – 100 words).")
-    period = models.CharField(_('period of implementation'), max_length=128, help_text="Possible period of implementation (must be part of the project implementation workplan)")
+    implementation_start_date = models.DateField(_('residency start date'), help_text="Possible start date of residency (must be part of the project implementation workplan) (DD/MM/YYYY)")
+    implementation_duration = models.CharField(_('residency duration'), max_length=128, help_text="Possible duration of residency in months (must be part of the project implementation workplan) (months)", default='1')
     image = models.FileField(_("Image"), max_length=1024, upload_to="user/images/%Y/%m/%d/", help_text="Representing the project")
-    image_credits = models.CharField(_('Image credits'), max_length=256, blank=True, null=True)
+    image_credits = models.CharField(_('Image credits'), max_length=256, null=True)
 
     class Meta:
         verbose_name = 'Project public data'
@@ -355,7 +357,7 @@ class ProjectPrivateData(models.Model):
 
     description = models.TextField(_('project description'), help_text="(500 - 1000 words)")
     affiliation = models.CharField(_('affiliation'), max_length=512)
-    commitment_letter = models.FileField(_("letter of commitment by the project coordinator"), max_length=1024, upload_to="user/documents/%Y/%m/%d/", help_text="Written on behalf of the whole project consortium, this letter will commit in implementing the collaboration of a residency application selected by the VERTIGO jury, on the conditions set by the project (in annex of letter: synthesis of all related information entered by project).")
+    commitment_letter = models.FileField(_("letter of commitment by the project coordinator"), max_length=1024, upload_to="user/documents/%Y/%m/%d/", help_text=mark_safe('Written on behalf of the whole project consortium, this letter will commit in implementing the collaboration of a residency application selected by the VERTIGO jury, on the conditions set by the project (in annex of letter: synthesis of all related information entered by project).<br>Please <a href="http://vertigo.starts.eu/media/uploads/vertigo%20starts/CALL/vertigo_loc_v3.rtf">download and use the template letter.</a>'))
     persons = models.CharField(_('persons'), max_length=512, help_text="First name and last name of the persons from organization / project who will be part preliminary of the project team (separated by a comma)")
 
     class Meta:
@@ -366,6 +368,8 @@ class ProjectPrivateData(models.Model):
 class ProjectContact(Person):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='contacts', blank=True, null=True, on_delete=models.SET_NULL)
+    organization_name = models.CharField(_('organization name'), blank=True, null=True, max_length=128)
+    position = models.CharField(_('position'), blank=True, null=True, max_length=128)
 
     class Meta:
         verbose_name = 'Project contact'
