@@ -29,6 +29,8 @@ from mezzanine.template import Library
 from mezzanine_agenda.models import Event
 from mezzanine.conf import settings
 from random import shuffle
+from django.utils.translation import ugettext_lazy as _
+
 
 from organization.magazine.models import *
 from organization.projects.models import *
@@ -206,7 +208,9 @@ def get_attr(obj, attr):
 
 @register.filter
 def month_name(month_number):
-    return calendar.month_name[month_number]
+    if isinstance(month_number, str):
+        month_number = int(month_number)
+    return _(calendar.month_name[month_number])
 
 @register.filter
 def format_wp(work_packages):
