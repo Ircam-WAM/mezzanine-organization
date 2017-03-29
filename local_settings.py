@@ -329,6 +329,11 @@ AUTHENTICATION_BACKENDS = (
     'guardian.backends.ObjectPermissionBackend',
 )
 
+# guardian
+ANONYMOUS_USER_NAME = None
+
+
+
 LOGIN_REDIRECT_URL = "/profile"
 
 
