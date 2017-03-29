@@ -335,19 +335,3 @@ ANONYMOUS_USER_NAME = None
 
 
 LOGIN_REDIRECT_URL = "/profile"
-
-
-# CRON JOB
-CRONJOBS = [
-    #('*/1 * * * *', 'organization.network.management.timesheet-mail', ['r'], {'l': '/var/log/cron/timesheet'}),
-    ('*/1 * * * *', 'organization.network.management.timesheet-mail', ['r']),
-]
-
-# prevent starting a job if an old instance of the same job is still running
-#CRONTAB_LOCK_JOBS = True
-
-# he name of your django project, used for comments
-CRONTAB_DJANGO_PROJECT_NAME = 'mezzanine-organization'
-
-# path to manage.py file
-CRONTAB_DJANGO_MANAGE_PATH = "/srv/app/manage.py"
