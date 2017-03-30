@@ -332,8 +332,6 @@ AUTHENTICATION_BACKENDS = (
 # guardian
 ANONYMOUS_USER_NAME = None
 
-
-
 LOGIN_REDIRECT_URL = "/profile"
 
 if DEBUG == True:
