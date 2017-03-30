@@ -135,16 +135,17 @@ class Command(BaseCommand):
         #     if person_v.email:
         #         pass
         person = Person.objects.get(id=849) # test
-        print("reminder", self.reminder)
         send_mail(person.first_name, person.last_name, person.email, first_day_in_month, last_day_in_month, current_site.domain, self.reminder)
 
 
 def send_mail(first_name, last_name, email, date_from, date_to, domain, is_reminder=False):
     subject = "[WWW] Veuillez saisir vos timesheets"
-    if is_reminder:
-        subject = "[Rappel] " + subject
     to = (email,)
     from_email = settings.DEFAULT_FROM_EMAIL
+
+    if is_reminder:
+        subject = "[Rappel] " + subject
+        to = to + (settings.TIMESHEET_MASTER_MAIL, )
 
     ctx = {
         'first_name': first_name,
