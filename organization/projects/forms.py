@@ -59,8 +59,8 @@ class ProjectForm(ModelForm):
         super(ProjectForm, self).__init__(*args, **kwargs)
         self.fields['title'].label = "Project name"
         self.fields['keywords'].help_text = "5 comma separated keywords"
-        self.fields['date_from'].help_text = "Project start date (DD/MM/YYYY)"
-        self.fields['date_to'].help_text = "Project end date (DD/MM/YYYY)"
+        self.fields['date_from'].help_text = "Project start date (MM/DD/YYYY)"
+        self.fields['date_to'].help_text = "Project end date (MM/DD/YYYY)"
 
     class Meta:
         model = Project
