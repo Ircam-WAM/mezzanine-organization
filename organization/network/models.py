@@ -303,6 +303,16 @@ class OrganizationType(Named):
         ordering = ['name',]
 
 
+class OrganizationRole(Named):
+    """(OrganizationType description)"""
+
+    css_class = models.CharField(_('class css'), max_length=64, blank=True, null=True,  help_text="Determine color on map.")
+
+    class Meta:
+        verbose_name = _('organization type')
+        ordering = ['name',]
+
+
 class OrganizationContact(Person):
 
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='contacts', blank=True, null=True, on_delete=models.SET_NULL)
