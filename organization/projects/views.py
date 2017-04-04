@@ -125,12 +125,6 @@ class ProjectBlogPageView(SlugMixin, ProjectMixin, DetailView):
     template_name='projects/project_blogpage_detail.html'
 
 
-class ProjectICTDetailView(SlugMixin,DetailView):
-
-    model = Project
-    template_name='projects/project_ict_detail.html'
-
-
 class ProjectCallMixin(object):
 
     def get_context_data(self, **kwargs):
@@ -200,6 +194,12 @@ class ProjectICTListView(ListView):
 
     model = Project
     template_name='projects/project_ict_list.html'
+
+    def get_queryset(self):
+        topic, c = ProjectTopic.objects.get_or_create(name='ICT')
+        #TODO: Filter by Call, filter by Validated
+        qs = Project.objects.filter(topic=topic).select_related().order_by('title')
+        return qs
 
 
 class ProjectCallDetailView(SlugMixin, DetailView):
