@@ -256,7 +256,8 @@ INSTALLED_APPS = [
     "organization.shop",
     "organization.job",
     'guardian',
-    'extra_views'
+    'extra_views',
+    'django_crontab',
 ]
 
 

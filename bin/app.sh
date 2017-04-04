@@ -19,7 +19,8 @@ gid='www-data'
 # patterns='*.js;*.css;*.jpg;*.jpeg;*.gif;*.png;*.svg;*.ttf;*.eot;*.woff;*.woff2'
 
 # Staging
-pip install pandas xlwt
+# pip install django-auth-ldap -U
+# pip install xlrd
 # pip install -U https://forge.ircam.fr/p/django-eve/source/download/dev/
 # pip install https://forge.ircam.fr/p/django-prestashop/source/download/master/ --src /srv/lib
 # pip install -U https://github.com/stephenmcd/grappelli-safe/archive/dynamic_stacked.zip
@@ -40,6 +41,9 @@ if [ ! -f .init ]; then
     bash $app/bin/init.sh
     touch .init
 fi
+
+# if not DEBUG :
+python manage.py crontab add
 
 # app start
 if [ "$1" = "--runserver" ]; then
