@@ -133,7 +133,7 @@ class Command(BaseCommand):
         # send mail
         for person_k, person_v in person_dict.items():
             if person_v.email:
-                send_mail(person.first_name, person.last_name, person.email, first_day_in_month, last_day_in_month, current_site.domain, self.reminder)
+                send_mail(person_v.first_name, person_v.last_name, person_v.email, first_day_in_month, last_day_in_month, current_site.domain, self.reminder)
         #person = Person.objects.get(id=849) # test
 
 
