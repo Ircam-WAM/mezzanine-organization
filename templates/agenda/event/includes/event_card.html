@@ -65,12 +65,14 @@
 
 {% block btn %}
     {% if object.prices.all.0|floatformat != '0' and object.prices.all|length > 0 %}
-        {% for price in object.prices.all %}
-            {% if forloop.first %}
-                <div class="article-box__btn">
-                    <object><a href="{% url 'event_booking' content.content_object.slug %}" class="button button--small mr0">{% trans "Reserve" %}</a></object>
-                </div>
-            {% endif %}
-        {% endfor %}
+        {% if not object.is_full %}
+            {% for price in object.prices.all %}
+                {% if forloop.first %}
+                    <div class="article-box__btn">
+                        <object><a href="{% url 'event_booking' content.content_object.slug %}" class="button button--small mr0">{% trans "Reserve" %}</a></object>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     {% endif %}
 {% endblock %}

@@ -223,7 +223,13 @@ def get_vars(object):
 
 @register.filter
 def has_alinea(page):
-    if page._custompage_cache:
+    if hasattr(page._custompage_cache, 'menu_alinea'):
         return page._custompage_cache.menu_alinea
-    else:
-        return False
+
+@register.filter
+def get_value(dict, value):
+    return dict[value]
+
+@register.filter(name='times')
+def times(number):
+    return range(number)

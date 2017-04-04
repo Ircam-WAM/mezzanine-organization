@@ -208,7 +208,7 @@ class ProjectActivityAdmin(BaseTranslationModelAdmin):
     model = ProjectActivity
     form = ProjectActivityForm
     list_display = [ 'title', 'project', 'default_percentage', 'work_package', ]
-    search_fields = ['activity__person__title', 'project__title']
+    search_fields = ['activity__person__title', 'project__title',]
     exclude = ("title", "description")
 
     def work_package(self, instance):

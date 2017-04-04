@@ -11,7 +11,7 @@
                 {% if page.in_menu and page.has_children_in_menu %}
                     {% if page.is_primary and page.is_current_or_ascendant %}
                         <li class="nav-tree__item">
-                            <a class="nav-tree__link{% if page.is_current %} active{% endif %}" href="{{ page.get_absolute_url }}">{% trans 'Home' %}</a>
+                            <a class="nav-tree__link{% if page.is_current %} active{% endif %}" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
                         </li>
                     {% endif %}
                     {% if page.is_current_or_ascendant %}
@@ -34,9 +34,7 @@
         {% if branch_level == 1 %}
             {% for page in page_branch %}
                 <li class="nav-tree__item">
-                    {% with page|has_alinea as has_alinea %}
-                        <a class="nav-tree__link{% if page.is_current or page.is_current_or_ascendant %} active{% endif %} {% if has_alinea %}alinea{% endif %}" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
-                    {% endwith %}
+                    <a class="nav-tree__link{% if page.is_current or page.is_current_or_ascendant %} active{% endif %} {% if page|has_alinea %}alinea{% endif %}" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
                     {% if page.is_current_or_ascendant and page.has_children_in_menu %}
                         <ul class="nav-tree nav-tree--level-{{ branch_level }}">
                             {% page_menu page %}

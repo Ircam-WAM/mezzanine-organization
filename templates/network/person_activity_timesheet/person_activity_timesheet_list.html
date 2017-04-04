@@ -4,7 +4,7 @@
 {% block meta_title %}{% trans "Timesheet" %}{% endblock %}
 
 {% block page_class %}
-    time_sheet
+    timesheet
 {% endblock %}
 
 {% block page_title %}
@@ -13,29 +13,121 @@
 
 {% block page_content %}
 
-    <a class="pull-right button button--black" href="{% url 'organization-network-timesheet-create-view' slug current_year current_month %}" title="">Declare this month</a>
-    {{ timesheets_by_project }}
     {% if timesheets_by_year %}
         {% for year_k, year_v in timesheets_by_year.items %}
             <h2>{{ year_k }}</h2>
-            {% for project_k, project_v in year_v.items %}
-                <h3>{{ project_k }}</h3>
-                <table>
+            {% if year_k == current_year %}
+                <table class="timesheet-table">
                     <tr>
-                        {% for timesheet in project_v %}
+                        <td class="timesheet-table-legend">
+                            {% for i in year_v.project_count|times %}
+                                {% include "network/person_activity_timesheet/includes/person_activity_timesheet_header.html" %}
+                            {% endfor %}
+                        </td>
+                        {% for month in months %}
                             <td>
-                                {% include "network/person_activity_timesheet/includes/person_activity_timesheet_inline.html" %}
+                                <table>
+                                    <tr>
+                                        <th class="timesheet-table-header">
+                                            <h3>{{ month|month_name }}</h3>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {% if month in year_v.timesheets.keys %}
+                                                {% with year_v.timesheets|get_value:month as t_month %}
+                                                    {% for timesheet in t_month %}
+                                                        {% include "network/person_activity_timesheet/includes/person_activity_timesheet_inline.html" %}
+                                                    {% endfor %}
+                                                {% endwith %}
+                                            {% else %}
+                                                <a class="pull-right button wys-button-yellow" href="{% url 'organization-network-timesheet-create-view' current_year month %}" title="">Declare</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
+
                         {% endfor %}
                     </tr>
                 </table>
-            {% endfor %}
+            {% else %}
+                <table class="timesheet-table">
+                    <tr>
+                        <td class="timesheet-table-legend">
+                            {% for i in year_v.project_count|times %}
+                                {% include "network/person_activity_timesheet/includes/person_activity_timesheet_header.html" %}
+                            {% endfor %}
+                        </td>
+                    {% for month_k, month_v in year_v.timesheets.items %}
+                        <td>
+                            <table>
+                                <tr>
+                                    <th class="timesheet-table-header">
+                                        <h3>{{ month_k|month_name }}</h3>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    {% for timesheet in month_v %}
+                                        {% include "network/person_activity_timesheet/includes/person_activity_timesheet_inline.html" %}
+                                    {% endfor %}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    {% endfor %}
+                    </tr>
+                </table>
+
+            {% endif %}
         {% endfor %}
-
     {% else %}
+        <h2>{{ current_year }}</h2>
+        <table class="timesheet-table">
+            <tr>
+                <td class="timesheet-table-legend">
 
-        <p>{% trans "No timesheet." %}</p>
+                </td>
+                {% for month in months %}
+                    <td>
+                        <table>
+                            <tr>
+                                <th class="timesheet-table-header">
+                                    <h3>{{ month|month_name }}</h3>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a class="pull-right button wys-button-yellow" href="{% url 'organization-network-timesheet-create-view' current_year month %}" title="">Declare</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
 
+                {% endfor %}
+            </tr>
+        </table>
     {% endif %}
 
+{% endblock %}
+
+{% block page_sidebar %}
+    {% with user.person as person %}
+        {% if person.images.all %}
+            {% with person.images.all|get_type:'page_featured' as images %}
+                {% if images.first %}
+                    <figure class="person-list-box__image">
+                        <img src="{{ MEDIA_URL }}{% thumbnail images.first 135 135 top=0.5 %}" alt="person"/>
+                    </figure>
+                {% endif %}
+            {% endwith %}
+        {% endif %}
+
+        {% if user.email == person.email %}
+
+            {{ block.super }}
+
+        {% endif %}
+    {% endwith %}
 {% endblock %}
