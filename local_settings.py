@@ -335,7 +335,6 @@ ANONYMOUS_USER_NAME = None
 LOGIN_REDIRECT_URL = "/profile"
 
 if DEBUG == True:
-    TIMESHEET_MASTER_MAIL = "emi.zawa@gmail.com"
+    TIMESHEET_MASTER_MAIL = "zawadzki@ircam.fr"
 else:
-    TIMESHEET_MASTER_MAIL = "emi.zawa@gmail.com"
-#TIMESHEET_MASTER_MAIL = "Hugues.Vinet@ircam.fr"
+    TIMESHEET_MASTER_MAIL = "Hugues.Vinet@ircam.fr"
