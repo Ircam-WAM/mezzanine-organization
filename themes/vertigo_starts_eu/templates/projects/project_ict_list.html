@@ -92,7 +92,9 @@
                 <p><img src="{{ MEDIA_URL }}{{ project.public_data.all.0.image }}" /></p>
             </div>
         {% empty %}
-            <p><b>{% trans "No projects yet" %}.</b></p>
+            <div class="chapo">
+                <p><b>{% trans "No projects yet" %}.</b></p>
+            </div>
         {% endfor %}
     </div>
 
