@@ -1,0 +1,31 @@
+{% load event_tags pages_tags mezzanine_tags organization_tags i18n  %}
+
+{% with event.periods.all as periods %}
+  {# if periods, display periods #}
+  {% if periods %}
+    {# bool describing whether we found the same time in periods #}
+    {% with periods|same_time_in_periods as same_time_in_periods %}
+        {% for period in periods %}
+            {% include 'agenda/includes/event_date.html' with date_begin=period.date_from date_end=period.date_to %}
+            {# display only one time a the last loop if same time  #}
+            {% if same_time_in_periods and forloop.last %}
+                {% include 'agenda/includes/event_time.html' with date_obj=period date_begin=period.date_from date_end=period.date_to %}
+            {# not same time, display all differents times #}
+            {% elif not same_time_in_periods %}
+                {% include 'agenda/includes/event_time.html' with date_obj=period date_begin=period.date_from date_end=period.date_to %}
+                <br>
+            {% endif %}
+            {% if not forloop.last and periods|length == 2 %}
+                {{ separator|default:"and" }}<br>
+            {% endif %}
+        {% endfor %}
+    {% endwith %}
+
+  {# else, display event.start and event.end #}
+  {% else %}
+
+    {% include 'agenda/includes/event_date.html' with date_begin=event.start date_end=event.end %}
+    {% include 'agenda/includes/event_time.html' with date_obj=event date_begin=event.start date_end=event.end %}
+
+  {% endif %}
+{% endwith %}
