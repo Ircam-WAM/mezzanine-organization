@@ -215,8 +215,8 @@ ROOT_URLCONF = "urls"
 
 INSTALLED_APPS = [
     "themes.base",
-    # "themes.starts_eu",
-    # 'themes.vertigo_starts_eu',
+    "themes.starts_eu",
+    'themes.vertigo_starts_eu',
 
     "modeltranslation",
     "dal",
