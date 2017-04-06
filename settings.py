@@ -146,7 +146,7 @@ LOCALE_PATHS = ['locale',]
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
-SITE_ID = 3
+SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -215,8 +215,8 @@ ROOT_URLCONF = "urls"
 
 INSTALLED_APPS = [
     "themes.base",
-    'themes.vertigo_starts_eu',
-    "themes.starts_eu",
+    # "themes.starts_eu",
+    # 'themes.vertigo_starts_eu',
 
     "modeltranslation",
     "dal",
@@ -307,9 +307,7 @@ if not DEBUG:
     TEMPLATES[0]['APP_DIRS'] = False
 
 HOST_THEMES = [
-    ('www.starts.eu', 'themes.starts_eu'),
-    ('vertigo.starts.eu', 'themes.vertigo_starts_eu'),
-    ('vertigo.ircam.fr', 'themes.base'),
+    ('example.com', 'themes.base'),
 ]
 
 # List of middleware classes to use. Order is important; in the request phase,

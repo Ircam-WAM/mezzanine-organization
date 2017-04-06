@@ -31,17 +31,17 @@ ADMINS = (
 )
 
 # Make these unique, and don't share it with anybody.
-SECRET_KEY = "j1qa@u$5kzeofiheoppoh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
-NEVERCACHE_KEY = "m)u^%r@uez$ze##$1ogx)uy4hv93dbzt%c3@xi=^gifoj8paozijdihazefd"
+SECRET_KEY = "j1qa@u$5ktqr^0_kwh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
+NEVERCACHE_KEY = "m)u^%r@uh#r3wu0&$=#$1ogx)uy4hv93^2lt%c3@xi=^gifoj8paozijdihazefd"
 
 EMAIL_HOST = 'smtp.ircam.fr'
 EMAIL_PORT = '25'
-DEFAULT_FROM_EMAIL = 'vertigo@iuk.fraunhofer.de'
-DEFAULT_TO_EMAIL = 'vertigo@iuk.fraunhofer.de'
-EMAIL_SUBJECT_PREFIX = '[VERTIGO]'
+DEFAULT_FROM_EMAIL = 'cri-dev@ircam.fr'
+DEFAULT_TO_EMAIL = 'cri-dev@ircam.fr'
+EMAIL_SUBJECT_PREFIX = "[IRCAM]"
 
-SITE_TITLE = 'VERTIGO'
-SITE_TAGLINE = 'VERTIGO / STARTS'
+SITE_TITLE = 'IRCAM'
+SITE_TAGLINE = 'IRCAM'
 
 EVENT_DOMAIN = "//eve.ircam.fr"
 EVENT_SHOP_URL = EVENT_DOMAIN+"/pub.php/event/%d/edit"
@@ -51,3 +51,9 @@ EVENT_CONFIRMATION_URL = EVENT_DOMAIN+"/pub.php/cart/done?transaction_id=%s"
 # FIGGO API - Lucca
 FIGGO_API_URL_PROD='https://ircam.ilucca.net/'
 FIGGO_API_HEADER_AUTH='Lucca application=bd6d5481-40eb-414b-9135-434e12749223'
+
+HOST_THEMES = [
+    #('www.starts.eu', 'themes.starts_eu'),
+    #('vertigo.starts.eu', 'themes.vertigo_starts_eu'),
+    ('manifeste.ircam.fr', 'themes.base'),
+]
