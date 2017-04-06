@@ -16,7 +16,7 @@
                 <br>
             {% endif %}
             {% if not forloop.last and periods|length == 2 %}
-                {{ separator|default:"and" }}<br>
+                {% trans 'and' %}<br>
             {% endif %}
         {% endfor %}
     {% endwith %}

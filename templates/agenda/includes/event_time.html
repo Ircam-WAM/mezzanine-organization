@@ -2,6 +2,7 @@
 
 {# display begin time only if != 23:59, because this field is required #}
 {% if date_begin|date:"H:i" != "23:59" %}
+    <span class="inline-date">,</span><br>
     {# Event during MORE than 4 hours, display time period #}
     {% if date_obj|period_is_more_than_hours:4 %}
         {{ date_begin|time:"TIME_FORMAT" }}

@@ -245,12 +245,12 @@ def get_separator_with(date_start, date_end):
     # several days between two dates
     if date_end:
         diff = date_end - date_start
-        if diff.days > 1 :
+        diff = diff.days * 24 + diff.seconds/3600
+        if diff > 24 :
             separator = _("through")
         # less than 24 hours between two dates
         else :
             separator = _("and")
-
     return separator
 
 
@@ -274,7 +274,6 @@ def period_is_more_than_hours(date_obj, hours):
         is_more = is_more_then_hours(date_obj.date_from, date_obj.date_to, hours)
     if isinstance(date_obj, Event):
         is_more = is_more_then_hours(date_obj.start, date_obj.end, hours)
-    print(is_more)
     return is_more
 
 def is_more_then_hours(date_begin, date_end, hours):
