@@ -62,7 +62,7 @@ class HomeView(SlugMixin, DetailView):
             if page:
                 return redirect(reverse_lazy('page', kwargs={'slug': page.slug}))
             else:
-                return super(HomeView, self).dispatch(request, *args, **kwargs)m
+                return super(HomeView, self).dispatch(request, *args, **kwargs)
         else:
             return super(HomeView, self).dispatch(request, *args, **kwargs)
 
