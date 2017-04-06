@@ -120,6 +120,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
     lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
     lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
+    role = models.ForeignKey('OrganizationRole', verbose_name=_('organization role'), blank=True, null=True, on_delete=models.SET_NULL)
     initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
     is_on_map = models.BooleanField(_('is on map'), default=False, blank=True)
     is_host = models.BooleanField(_('is host'), default=False, blank=True)
@@ -294,7 +295,7 @@ class OrganizationService(Named, URL, Orderable):
 
 
 class OrganizationType(Named):
-    """(OrganizationType description)"""
+    """Type of Organizations"""
 
     css_class = models.CharField(_('class css'), max_length=64, blank=True, null=True,  help_text="Determine color on map.")
 
@@ -304,12 +305,10 @@ class OrganizationType(Named):
 
 
 class OrganizationRole(Named):
-    """(OrganizationType description)"""
-
-    css_class = models.CharField(_('class css'), max_length=64, blank=True, null=True,  help_text="Determine color on map.")
+    """Roles of Organizations"""
 
     class Meta:
-        verbose_name = _('organization type')
+        verbose_name = _('organization role')
         ordering = ['name',]
 
 
