@@ -112,10 +112,6 @@ BOX_SIZE_CHOICES = [
     (6, 6),
 ]
 
-ROLE_CHOICES = [
-    ('producer', _('producer')),
-]
-
 
 class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
     """(Organization description)"""
@@ -367,6 +363,19 @@ class TeamPage(Page, SubTitled, RichText):
 class TeamLink(Link):
 
     team = models.ForeignKey(Team, verbose_name=_('team'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProducerData(models.Model):
+    """(ProducerData description)"""
+
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='producer_data', blank=True, null=True, on_delete=models.SET_NULL)
+
+    experience_description = models.CharField(_('experience description'), max_length=60, help_text="Do you have prior experience with working in organizations in a co-creation process? If so, please describe it. (40 to 60 words)")
+    producer_description = models.TextField(_('producer description'), help_text="**Description of the producer organization and the resources they bring for the proposal (100 to 150 words).")
+
+    class Meta:
+        verbose_name = 'Producer data'
+        verbose_name_plural = 'Producer data'
 
 
 class PersonPlaylist(PlaylistRelated):
