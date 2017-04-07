@@ -30,15 +30,19 @@
 }
 
 #container {
-    margin-top: 57px;
+    padding-top: 57px;
+    position: relative;
+    z-index: 2;
+    background: white;
+    
     @include mq($until: lg) {
-        margin-top: 48px;
+        padding-top: 48px;
     }
     @include mq($until: sm) {
-        margin-top: $header-height-tablet;
+        padding-top: $header-height-tablet;
     }
     @include mq($until: xs) {
-        margin-top: $header-height-mobile;
+        padding-top: $header-height-mobile;
     }
 }
 
@@ -50,7 +54,6 @@ html, body {
     @include mq($until: sm) {
 
         overflow-x: hidden;
-        height: 100%;
         -webkit-overflow-scrolling: touch;
 
     }

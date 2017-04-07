@@ -51,7 +51,7 @@
     {% endblock %}
 
     {% block header %}
-        <div class="header push">
+        <div class="header push" data-sticky data-sticky-detach-at="0">
             <div class="container">
                 <div class="row header__nav">
                     <div class="col-md-16 tal">
@@ -62,6 +62,9 @@
                 </div>
             </div>
         </div>
+    {% endblock %}
+
+    {% block hero %}
     {% endblock %}
 
     {% block container %}

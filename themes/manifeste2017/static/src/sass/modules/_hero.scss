@@ -5,11 +5,14 @@ $module: ".hero";
 
     background-image: url(../img/manifeste2017/hero.jpg);
     background-repeat: no-repeat;
-    background-position: center top;
+    background-position: center center;
     background-size: cover;
-    height: 560px;
+    height: 838px;
     margin-bottom: 350px;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
 
     &.large-title {
         margin-bottom: 500px;
@@ -64,32 +67,15 @@ $module: ".hero";
         }
     }
 
-    &:after {
-
-        content: '';
-        height: 1px;
-        width: 30px;
-        background: #F2EDDC;
-        position: absolute;
-        top: 825px;
-        left: 50%;
-        margin-left: -15px;
-
-        @include mq($until: xs) {
-            top: 440px;
-        }
-
-    }
-
     &__title {
 
         position: absolute;
-        bottom: 0;
+        top: 40%;
         left: 0;
-        width: 100%;
+        width: 50%;
         text-align: center;
 
-        @include transform(translateY(80%));
+        @include transform(translateY(-50%));
 
         @include mq($until: sm) {
             img {
@@ -98,21 +84,11 @@ $module: ".hero";
         }
 
         @include mq($until: xs) {
+            width: 100%;
+            @include transform(translateY(0%));
+            top: 30px;
             img {
-                width: 231px;
-            }
-        }
-
-    }
-
-    &__logo {
-
-        @include margin-top(2);
-        text-align: center;
-        @include mq($until: xs) {
-            @include margin-top(0);
-            img {
-                width: 159px;
+                width: 90%;
             }
         }
 
@@ -120,14 +96,18 @@ $module: ".hero";
 
     &__left {
 
-        @include margin-top(4);
-        text-align: left;
+        text-align: center;
+
+        position: absolute;
+        bottom: 50px;
+        left: 0;
+        width: 50%;
 
         @include mq($until: xs) {
-            @include margin-top(1);
-            text-align: center;
+            width: 100%;
+            top: 50%;
             img {
-                width: 190px;
+                width: 90%;
             }
         }
 
@@ -135,15 +115,21 @@ $module: ".hero";
 
     &__right {
 
-        @include margin-top(4);
-        text-align: right;
+        text-align: center;
+
+        position: absolute;
+        top: 50px;
+        right: 0;
+        width: 50%;
 
         @include mq($until: xs) {
-            @include margin-top(.5);
-            text-align: center;
-
+            width: 100%;
+            top: auto;
+            bottom: 30px;
+            right: 30px;
+            text-align: right;
             img {
-                width: 50px;
+                width: 100px;
             }
         }
 
