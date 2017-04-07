@@ -334,6 +334,10 @@ ANONYMOUS_USER_NAME = None
 
 LOGIN_REDIRECT_URL = "/profile"
 
+# TIMESHEET
+
+TIMESHEET_USER_TEST = 849  # Emilie Zawadzki
+
 if DEBUG == True:
     TIMESHEET_MASTER_MAIL = "zawadzki@ircam.fr"
 else:
