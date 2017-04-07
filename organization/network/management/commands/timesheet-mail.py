@@ -33,7 +33,7 @@ from itertools import takewhile
 from re import findall
 import dateutil.parser
 import sys,ldap,ldap.async
-from datetime import date
+from datetime import date, timedelta
 # from string import split
 from django.contrib.sites.models import Site
 from django.http import HttpResponse
@@ -109,10 +109,13 @@ class Command(BaseCommand):
         self.reminder = kwargs.get('reminder')
 
         current_site = Site.objects.get_current()
-        curr_month = date.today().month
-        curr_year = date.today().year
-        first_day_in_month = date(int(curr_year), int(curr_month), 1)
-        last_day_in_month = date(int(curr_year), int(curr_month),  monthrange(int(curr_year), int(curr_month))[1])
+
+        # get previous month
+        last_day_in_month = date.today().replace(day=1) - timedelta(days=1)
+        first_day_in_month = last_day_in_month.replace(day=1)
+        curr_month = first_day_in_month.month
+        curr_year =  first_day_in_month.year
+
         work_packages = ProjectWorkPackage.objects.filter(
             Q(date_from__lte=first_day_in_month) & Q(date_to__gte=first_day_in_month)
             | Q(date_from__gte=first_day_in_month) & Q(date_to__lte=last_day_in_month)
@@ -131,10 +134,13 @@ class Command(BaseCommand):
                         person_dict[project_activitie.activity.person.slug] = project_activitie.activity.person
 
         # send mail
-        for person_k, person_v in person_dict.items():
-            if person_v.email:
-                send_mail(person_v.first_name, person_v.last_name, person_v.email, first_day_in_month, last_day_in_month, current_site.domain, self.reminder)
-        #person = Person.objects.get(id=849) # test
+        if settings.DEBUG :
+            person = Person.objects.get(id=settings.TIMESHEET_USER_TEST) # test
+            send_mail(person.first_name, person.last_name, person.email, first_day_in_month, last_day_in_month, current_site.domain, self.reminder)
+        else :
+            for person_k, person_v in person_dict.items():
+                if person_v.email:
+                    send_mail(person_v.first_name, person_v.last_name, person_v.email, first_day_in_month, last_day_in_month, current_site.domain, self.reminder)
 
 
 def send_mail(first_name, last_name, email, date_from, date_to, domain, is_reminder=False):
@@ -151,10 +157,10 @@ def send_mail(first_name, last_name, email, date_from, date_to, domain, is_remin
         'last_name': last_name,
         'date_from': date_from,
         'date_to': date_to,
-        'timesheet_url' : "https://"+ domain + reverse('organization-network-timesheet-create-curr-month-view')
+        'timesheet_url' : "https://"+ domain + reverse('organization-network-timesheet-create-view', args=(date_from.year, date_from.month))
     }
 
-    message = get_template('email/timesheet.html').render(Context(ctx))
+    message = get_template('email/timesheet.html').render(ctx)
     msg = EmailMessage(subject, message, to=to, from_email=from_email)
     msg.content_subtype = 'html'
     msg.send()
