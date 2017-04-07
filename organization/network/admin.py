@@ -89,15 +89,22 @@ class OrganizationServiceInline(StackedDynamicInlineAdmin):
     model = OrganizationService
 
 
+class ProducerDataInline(StackedDynamicInlineAdmin):
+
+    model = ProducerData
+
+
 class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Organization
+    #TODO: ProducerDataInline only if (role == "Producer")?
     inlines = [ OrganizationServiceInline,
                 OrganizationPlaylistInline,
                 OrganizationImageInline,
                 OrganizationBlockInline,
                 OrganizationLinkInline,
-                OrganizationLinkedBlockInlineAdmin
+                OrganizationLinkedBlockInlineAdmin,
+                ProducerDataInline,
                  ]
     list_display = ['name', 'type', 'admin_thumb']
     list_filter = ['is_on_map', 'type']

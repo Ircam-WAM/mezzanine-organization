@@ -30,6 +30,12 @@ class OrganizationTranslationOptions(TranslationOptions):
     fields = ('description', 'opening_times', 'subway_access', 'bio')
 
 
+@register(ProducerData)
+class ProducerDataTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(Department)
 class DepartmentTranslationOptions(TranslationOptions):
 
