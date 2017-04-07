@@ -52,10 +52,6 @@ urlpatterns = [
     url("^calls/(?P<call_slug>.*)/projects/detail/(?P<slug>.*)/$", ProjectICTDetailView.as_view(), name='organization-project-detail'),
     url("^calls/(?P<call_slug>.*)/projects/list/$", ProjectICTListView.as_view(), name='organization-project-list'),
 
-    url("^producers/submission/$", ProducerCreateView.as_view(), name='organization-producer-create'),
-    url("^producers/(?P<slug>.*)/detail/$", ProducerDetailView.as_view(), name='organization-producer-detail'),
-    url("^producers/list/$", ProducerListView.as_view(), name='organization-producer-list'),
-
     url("^calls/(?P<slug>.*)/residencies/submission/$", ProjectResidencyCreateView.as_view(), name='organization-residency-create'),
     url("^calls/(?P<call_slug>.*)/residencies/(?P<slug>.*)/detail/$", ProjectResidencyDetailView.as_view(), name='organization-residency-detail'),
     url("^calls/(?P<call_slug>.*)/residencies/list/$", ProjectResidencyListView.as_view(), name='organization-residency-list'),

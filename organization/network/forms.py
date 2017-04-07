@@ -27,16 +27,9 @@ from django import forms
 from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
 from mezzanine.core.models import Orderable
-from organization.network.models import (Person,
-                                PersonListBlock,
-                                PersonListBlockInline,
-                                PageCustomPersonListBlockInline,
-                                OrganizationLinked,
-                                OrganizationLinkedInline,
-                                OrganizationLinkedBlockInline,
-                                Organization,
-                                PersonActivityTimeSheet)
+from organization.network.models import *
 from organization.pages.models import Page, CustomPage
+from extra_views import InlineFormSet
 
 
 class PageCustomPersonListForm(forms.ModelForm):
@@ -97,3 +90,29 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
         model = PersonActivityTimeSheet
         fields = ('__all__')
         exclude = ['accounting', 'validation']
+
+
+class OrganizationContactInline(InlineFormSet):
+
+    max_num = 1
+    model = OrganizationContact
+    prefix = 'Contact'
+    can_delete = False
+    fields = ['person_title', 'first_name', 'last_name', 'email', 'telephone', 'role']
+
+
+class OrganizationUserImageInline(InlineFormSet):
+
+    max_num = 4
+    model = OrganizationUserImage
+    prefix = 'Images'
+    can_delete = False
+    fields = ['file', 'credits']
+
+
+class OrganizationForm(ModelForm):
+
+    class Meta:
+        model = Organization
+        fields = ['name', 'description', 'url', 'address',
+                  'address', 'postal_code', 'city', 'country',]

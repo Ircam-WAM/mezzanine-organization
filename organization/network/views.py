@@ -157,6 +157,45 @@ class OrganizationLinkedView(autocomplete.Select2QuerySetView):
         return qs
 
 
+class ProducerDetailView(SlugMixin, DetailView):
+
+    model = Organization
+    template_name='network/organization_producer_detail.html'
+
+
+class ProducerListView(ListView):
+
+    model = Organization
+    template_name='network/organization_producer_list.html'
+
+    def get_queryset(self):
+        role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        qs = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
+        return qs
+
+
+class ProducerCreateView(CreateWithInlinesView):
+
+    model = Organization
+    form_class = OrganizationForm
+    template_name='network/organization_producer_create.html'
+    inlines = [OrganizationContactInline, OrganizationUserImageInline]
+
+    def forms_valid(self, form, inlines):
+        self.object = form.save()
+        self.object.role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        self.object.save()
+        return super(ProducerCreateView, self).forms_valid(form, inlines)
+
+    def get_success_url(self):
+        return reverse_lazy('organization-producer-detail', kwargs={'slug':self.slug})
+
+
+class ProducerValidationView(ProducerMixin, TemplateView):
+
+    model = Organization
+    template_name='network/organization_producer_validation.html'
+
 
 class TimesheetAbstractView(LoginRequiredMixin):
     login_url = settings.LOGIN_URL

@@ -214,40 +214,6 @@ class ProjectCallListView(ListView):
     template_name='projects/project_call_list.html'
 
 
-class ProducerDetailView(SlugMixin, DetailView):
-
-    model = Organization
-    template_name='projects/project_producer_detail.html'
-
-
-class ProducerListView(ListView):
-
-    model = Organization
-    template_name='projects/project_producer_list.html'
-
-    def get_queryset(self):
-        type, c = OrganizationType.objects.get_or_create(name='Producer')
-        qs = Organization.objects.filter(type=type)
-        return qs
-
-
-class ProducerCreateView(CreateWithInlinesView):
-
-    model = Organization
-    form_class = OrganizationForm
-    template_name='projects/project_producer_create.html'
-    inlines = [OrganizationContactInline, OrganizationUserImageInline]
-
-    def forms_valid(self, form, inlines):
-        self.object = form.save()
-        self.object.type, c = OrganizationType.objects.get_or_create(name='Producer')
-        self.object.save()
-        return super(ProducerCreateView, self).forms_valid(form, inlines)
-
-    def get_success_url(self):
-        return reverse_lazy('organization-producer-detail', kwargs={'slug':self.slug})
-
-
 class ProjectResidencyDetailView(SlugMixin, DetailView):
 
     model = ProjectResidency

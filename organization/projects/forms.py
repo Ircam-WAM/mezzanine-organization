@@ -131,32 +131,6 @@ class ProjectContactInline(InlineFormSet):
     can_delete = False
 
 
-class OrganizationContactInline(InlineFormSet):
-
-    max_num = 1
-    model = OrganizationContact
-    prefix = 'Contact'
-    can_delete = False
-    fields = ['person_title', 'first_name', 'last_name', 'email', 'telephone', 'role']
-
-
-class OrganizationUserImageInline(InlineFormSet):
-
-    max_num = 4
-    model = OrganizationUserImage
-    prefix = 'Images'
-    can_delete = False
-    fields = ['file', 'credits']
-
-
-class OrganizationForm(ModelForm):
-
-    class Meta:
-        model = Organization
-        fields = ['name', 'description', 'url', 'address',
-                  'address', 'postal_code', 'city', 'country',]
-
-
 class ProjectResidencyForm(ModelForm):
 
     class Meta:
