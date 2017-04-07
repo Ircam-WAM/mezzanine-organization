@@ -112,8 +112,15 @@ BOX_SIZE_CHOICES = [
     (6, 6),
 ]
 
+ORGANIZATION_STATUS_CHOICES = (
+    (0, _('rejected')),
+    (1, _('pending')),
+    (2, _('in process')),
+    (3, _('accepted')),
+)
 
-class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
+
+class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable):
     """(Organization description)"""
 
     mappable_location = models.CharField(max_length=128, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
@@ -130,6 +137,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
     bio = models.TextField(_('bio'), blank=True)
     site = models.ForeignKey("sites.Site", blank=True, null=True, on_delete=models.SET_NULL)
     admin_thumb_type = 'logo'
+    validation_status = models.IntegerField(_('validation status'), choices=ORGANIZATION_STATUS_CHOICES, default=1)
 
     class Meta:
         verbose_name = _('organization')
@@ -164,6 +172,13 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
             self.mappable_location = mappable_location
             self.lat = lat
             self.lon = lon
+
+    def get_absolute_url(self):
+        role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        if self.role == role:
+            return reverse("organization-producer-detail", kwargs={"slug": self.slug})
+        # TODO: Default organization view?
+        return reverse("network")
 
 
 class Team(Named, URL):
@@ -376,6 +391,15 @@ class ProducerData(models.Model):
     class Meta:
         verbose_name = 'Producer data'
         verbose_name_plural = 'Producer data'
+
+
+class ProducerMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super(ProducerMixin, self).get_context_data(**kwargs)
+        self.producer = Organization.objects.get(slug=self.kwargs['slug'])
+        context['producer'] = self.producer
+        return context
 
 
 class PersonPlaylist(PlaylistRelated):
