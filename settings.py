@@ -146,7 +146,7 @@ LOCALE_PATHS = ['locale',]
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
-SITE_ID = 1
+SITE_ID = 2
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -436,6 +436,7 @@ ADMIN_MENU_ORDER = (
                     'organization-network.Person',
                     'organization-network.Activity',
                     'organization-network.OrganizationType',
+                    'organization-network.OrganizationRole',
                     'organization-network.PersonListBlock',
                     )),
     (_('Activity'), ('organization-network.PersonActivity',

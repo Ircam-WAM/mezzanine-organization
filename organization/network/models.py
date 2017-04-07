@@ -112,6 +112,10 @@ BOX_SIZE_CHOICES = [
     (6, 6),
 ]
 
+ROLE_CHOICES = [
+    ('producer', _('producer')),
+]
+
 
 class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
     """(Organization description)"""

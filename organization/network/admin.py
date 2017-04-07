@@ -312,6 +312,7 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
 admin.site.register(OrganizationLinked, OrganizationLinkedAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationType)
+admin.site.register(OrganizationRole)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(DepartmentPage, DepartmentPageAdmin)
 admin.site.register(Team, TeamAdmin)
