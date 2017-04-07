@@ -1,0 +1,21 @@
+{
+  "name": "overflow.js",
+  "authors": [
+    "Adrien Glitchbone <adrien@glitchbone.com>"
+  ],
+  "description": "Make elements wider than their parents",
+  "main": "js/overflow.js",
+  "keywords": [
+    "overflow",
+    "full-width"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Glitchbone/Overflow.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

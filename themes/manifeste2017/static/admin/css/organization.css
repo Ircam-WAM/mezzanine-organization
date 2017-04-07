@@ -1,0 +1,16 @@
+/* Custom admin styles for mezzanine-organization */
+
+#tree {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.yellow_button {
+    display: inline-block;
+    padding: 20px;
+    background: yellow;
+}
+
+.select2-container {
+    min-width: 70em;
+}

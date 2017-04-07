@@ -212,9 +212,10 @@ ROOT_URLCONF = "urls"
 ################
 
 INSTALLED_APPS = [
-    "themes.base",
+    # "themes.base",
     # "themes.starts_eu",
     # 'themes.vertigo_starts_eu',
+    "themes.manifeste2017",
 
     "modeltranslation",
     "dal",
@@ -307,7 +308,7 @@ if not DEBUG:
 HOST_THEMES = [
     #('www.starts.eu', 'themes.starts_eu'),
     #('vertigo.starts.eu', 'themes.vertigo_starts_eu'),
-    ('manifeste.ircam.fr', 'themes.base'),
+    ('manifeste.ircam.fr', 'themes.manifeste2017'),
 ]
 
 # List of middleware classes to use. Order is important; in the request phase,

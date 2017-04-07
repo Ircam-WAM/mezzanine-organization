@@ -1,0 +1,30 @@
+{
+  "name": "overflow.js",
+  "authors": [
+    "Adrien Glitchbone <adrien@glitchbone.com>"
+  ],
+  "description": "Make elements wider than their parents",
+  "main": "js/overflow.js",
+  "keywords": [
+    "overflow",
+    "full-width"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Glitchbone/Overflow.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "a5657e7664",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "a5657e7664e6a1c3edaac0c4b0cc52de02b824c9"
+  },
+  "_source": "https://github.com/Glitchbone/Overflow.js.git",
+  "_target": "*",
+  "_originalSource": "overflow.js"
+}
