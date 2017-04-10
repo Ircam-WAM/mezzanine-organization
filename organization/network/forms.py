@@ -116,3 +116,29 @@ class OrganizationForm(ModelForm):
         model = Organization
         fields = ['name', 'description', 'url', 'address',
                   'address', 'postal_code', 'city', 'country',]
+
+
+class ProducerDataInline(InlineFormSet):
+
+    max_num = 1
+    model = ProducerData
+    prefix = "Descriptions"
+    can_delete = False
+    fields = ['producer_description', 'experience_description']
+
+    def get_factory_kwargs(self):
+        kwargs = super().get_factory_kwargs()
+        kwargs.update({"min_num": 1})
+        return kwargs
+
+
+class ProducerForm(ModelForm):
+
+    class Meta:
+        model = Organization
+        fields = ['name', 'url', 'email', 'telephone', 'address', 'postal_code', 'city', 'country',]
+
+    def __init__(self, *args, **kwargs):
+        super(ProducerForm, self).__init__(*args, **kwargs)
+        for key in self.fields:
+            self.fields[key].required = True

@@ -1,7 +1,9 @@
 {% extends "vertigo_starts_eu/pages/page.html" %}
 {% load mezzanine_tags keyword_tags i18n organization_tags pages_tags %}
 
-{% block meta_title %}{% endblock %}
+{% block meta_title %}
+    {% trans "Producer submission" %}
+{% endblock %}
 
 {% block meta_keywords %}{% endblock %}
 
@@ -18,9 +20,7 @@
 {% endblock %}
 
 {% block page_title %}
-    {% editable object.title %}
-        <h1 class="dotted">{% trans "Framework and submission process for producers" %}</h1>
-    {% endeditable %}
+    <h1 class="dotted">{% trans "Framework and submission process for producers" %}</h1>
 {% endblock %}
 
 {% block page_content %}
