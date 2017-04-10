@@ -40,4 +40,8 @@ urlpatterns = [
     url("^network/$", OrganizationListView.as_view(), name='network'),
     url("^organization-linked-list-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
     url("^organization-linked-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
+    url("^producers/submission/$", ProducerCreateView.as_view(), name='organization-producer-create'),
+    url("^producers/(?P<slug>.*)/detail/$", ProducerDetailView.as_view(), name='organization-producer-detail'),
+    url("^producers/list/$", ProducerListView.as_view(), name='organization-producer-list'),
+    url("^producers/(?P<slug>.*)/detail/producer/validation/$", ProducerValidationView.as_view(), name='organization-producer-validation'),
     ]

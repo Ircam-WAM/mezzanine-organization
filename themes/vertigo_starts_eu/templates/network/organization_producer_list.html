@@ -23,7 +23,7 @@
 
 
 {% block meta_title %}
-    {% trans "R&amp;D Project List" %}
+    {% trans "Producer List" %}
 {% endblock %}
 
 
@@ -50,7 +50,7 @@
 
 {% block breadcrumb_menu %}
     {{ block.super }}
-    <li class="breadcrumb__item active">{{ object.title }}</li>
+    <li class="breadcrumb__item active">{{ object.name }}</li>
 {% endblock %}
 
 
@@ -73,7 +73,7 @@
 {% block page_title %}
 
     <h1 class="dotted">
-        {% trans "R&amp;D Project List" %}
+        {% trans "Producer List" %}
     </h1>
 
 {% endblock %}
@@ -82,18 +82,17 @@
 {% block page_content %}
 
     <div class="row">
-        {% for project in object_list %}
+        {% for producer in object_list %}
             <div class="list_header">
-                {{ project }}
+                {{ producer.name }}
             </div>
             <div class="list_content">
-                <p><b>{% trans "Full details" %}: </b><a href="{% url 'organization-ict-project-detail' project.slug %}">{{ project }}</a></p>
-                <p><b>{% trans "Brief description" %}: </b>{{ project.public_data.all.0.brief_description }}<p>
-                <p><img src="{{ MEDIA_URL }}{{ project.public_data.all.0.image }}" /></p>
+                <p><b>{% trans "Full details" %}: </b><a href="{% url 'organization-producer-detail' producer.slug %}">{{ producer.name }}</a></p>
+                <p><b>{% trans "Producer description" %}: </b>{{ producer.producer_data.all.0.producer_description }}<p>
             </div>
         {% empty %}
             <div class="chapo">
-                <p><b>{% trans "No projects yet" %}.</b></p>
+                <p><b>{% trans "No producers yet" %}.</b></p>
             </div>
         {% endfor %}
     </div>

@@ -77,6 +77,16 @@ class ProjectICTDetailView(SlugMixin, ProjectMixin, DetailView):
     model = Project
     template_name='projects/project_ict_detail.html'
 
+    def get_object(self, queryset=None):
+        topic, c = ProjectTopic.objects.get_or_create(name='ICT')
+        project = super(ProjectICTDetailView, self).get_object()
+        if project.topic != topic:
+            raise Http404()
+        #TODO: Check if user is registered and admin or creator to allow other status values
+        if project.validation_status != 3:
+            raise Http404()
+        return project
+
 
 class ProjectListView(ListView):
 
@@ -123,12 +133,6 @@ class ProjectBlogPageView(SlugMixin, ProjectMixin, DetailView):
 
     model = ProjectBlogPage
     template_name='projects/project_blogpage_detail.html'
-
-
-class ProjectICTDetailView(SlugMixin,DetailView):
-
-    model = Project
-    template_name='projects/project_ict_detail.html'
 
 
 class ProjectCallMixin(object):
@@ -201,6 +205,12 @@ class ProjectICTListView(ListView):
     model = Project
     template_name='projects/project_ict_list.html'
 
+    def get_queryset(self):
+        topic, c = ProjectTopic.objects.get_or_create(name='ICT')
+        #TODO: Filter by Call
+        qs = Project.objects.filter(topic=topic).filter(validation_status=3).select_related().order_by('title')
+        return qs
+
 
 class ProjectCallDetailView(SlugMixin, DetailView):
 
@@ -212,40 +222,6 @@ class ProjectCallListView(ListView):
 
     model = ProjectCall
     template_name='projects/project_call_list.html'
-
-
-class ProducerDetailView(SlugMixin, DetailView):
-
-    model = Organization
-    template_name='projects/project_producer_detail.html'
-
-
-class ProducerListView(ListView):
-
-    model = Organization
-    template_name='projects/project_producer_list.html'
-
-    def get_queryset(self):
-        type, c = OrganizationType.objects.get_or_create(name='Producer')
-        qs = Organization.objects.filter(type=type)
-        return qs
-
-
-class ProducerCreateView(CreateWithInlinesView):
-
-    model = Organization
-    form_class = OrganizationForm
-    template_name='projects/project_producer_create.html'
-    inlines = [OrganizationContactInline, OrganizationUserImageInline]
-
-    def forms_valid(self, form, inlines):
-        self.object = form.save()
-        self.object.type, c = OrganizationType.objects.get_or_create(name='Producer')
-        self.object.save()
-        return super(ProducerCreateView, self).forms_valid(form, inlines)
-
-    def get_success_url(self):
-        return reverse_lazy('organization-producer-detail', kwargs={'slug':self.slug})
 
 
 class ProjectResidencyDetailView(SlugMixin, DetailView):

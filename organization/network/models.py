@@ -112,14 +112,23 @@ BOX_SIZE_CHOICES = [
     (6, 6),
 ]
 
+ORGANIZATION_STATUS_CHOICES = (
+    (0, _('rejected')),
+    (1, _('pending')),
+    (2, _('in process')),
+    (3, _('accepted')),
+)
 
-class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
+
+class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable):
     """(Organization description)"""
 
     mappable_location = models.CharField(max_length=128, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
     lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
     lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
+    role = models.ForeignKey('OrganizationRole', verbose_name=_('organization role'), blank=True, null=True, on_delete=models.SET_NULL)
+    email = models.EmailField(_('email'), blank=True, null=True)
     initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
     is_on_map = models.BooleanField(_('is on map'), default=False, blank=True)
     is_host = models.BooleanField(_('is host'), default=False, blank=True)
@@ -129,6 +138,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
     bio = models.TextField(_('bio'), blank=True)
     site = models.ForeignKey("sites.Site", blank=True, null=True, on_delete=models.SET_NULL)
     admin_thumb_type = 'logo'
+    validation_status = models.IntegerField(_('validation status'), choices=ORGANIZATION_STATUS_CHOICES, default=1)
 
     class Meta:
         verbose_name = _('organization')
@@ -163,6 +173,13 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
             self.mappable_location = mappable_location
             self.lat = lat
             self.lon = lon
+
+    def get_absolute_url(self):
+        role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        if self.role == role:
+            return reverse("organization-producer-detail", kwargs={"slug": self.slug})
+        # TODO: Default organization view?
+        return reverse("network")
 
 
 class Team(Named, URL):
@@ -294,7 +311,7 @@ class OrganizationService(Named, URL, Orderable):
 
 
 class OrganizationType(Named):
-    """(OrganizationType description)"""
+    """Type of Organizations"""
 
     css_class = models.CharField(_('class css'), max_length=64, blank=True, null=True,  help_text="Determine color on map.")
 
@@ -304,12 +321,10 @@ class OrganizationType(Named):
 
 
 class OrganizationRole(Named):
-    """(OrganizationType description)"""
-
-    css_class = models.CharField(_('class css'), max_length=64, blank=True, null=True,  help_text="Determine color on map.")
+    """Roles of Organizations"""
 
     class Meta:
-        verbose_name = _('organization type')
+        verbose_name = _('organization role')
         ordering = ['name',]
 
 
@@ -364,6 +379,28 @@ class TeamPage(Page, SubTitled, RichText):
 class TeamLink(Link):
 
     team = models.ForeignKey(Team, verbose_name=_('team'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProducerData(models.Model):
+    """(ProducerData description)"""
+
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='producer_data', blank=True, null=True, on_delete=models.SET_NULL)
+
+    experience_description = models.CharField(_('experience description'), max_length=60, help_text="Do you have prior experience with working in organizations in a co-creation process? If so, please describe it. (40 to 60 words)")
+    producer_description = models.TextField(_('producer description'), help_text="**Description of the producer organization and the resources they bring for the proposal (100 to 150 words).")
+
+    class Meta:
+        verbose_name = 'Producer data'
+        verbose_name_plural = 'Producer data'
+
+
+class ProducerMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super(ProducerMixin, self).get_context_data(**kwargs)
+        self.producer = Organization.objects.get(slug=self.kwargs['slug'])
+        context['producer'] = self.producer
+        return context
 
 
 class PersonPlaylist(PlaylistRelated):
