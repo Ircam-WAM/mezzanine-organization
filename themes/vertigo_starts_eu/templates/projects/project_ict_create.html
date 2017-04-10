@@ -34,9 +34,9 @@
                 <hr>
                 <h2>{{ formset.prefix }}</h2>
                 {% if "Private data" in formset.prefix %}
-                    <h5>To be available only to Vertigo partners and artists upon successfully obtaining the residency (except letter reserved to VERTIGO)</h5>
+                    <h5>The data you are entering in the Private Data section will be made available only to VERTIGO partners and artists (except letter reserved to VERTIGO) in case your R&amp;I project will be selected by the consortium.</h5>
                 {% elif "Public data" in formset.prefix %}
-                    <h5>To be published only for ICT-Projects selected by the consortium</h5>
+                    <h5>The data you are entering in the Public Data section will be published only in case your R&amp;I project will be selected by the consortium.</h5>
                 {% elif "Private images" in formset.prefix %}
                     <h5>3 key images for inspiring artist</h5>
                 {% endif %}

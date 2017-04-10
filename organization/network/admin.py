@@ -107,7 +107,7 @@ class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
                 ProducerDataInline,
                  ]
     list_display = ['name', 'type', 'admin_thumb']
-    list_filter = ['is_on_map', 'type']
+    list_filter = ['is_on_map', 'type', 'role', 'validation_status']
     search_fields = ['name',]
     first_fields = ['name',]
 

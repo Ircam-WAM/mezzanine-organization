@@ -187,9 +187,9 @@ class ProducerListView(ListView):
 class ProducerCreateView(CreateWithInlinesView):
 
     model = Organization
-    form_class = OrganizationForm
+    form_class = ProducerForm
     template_name='network/organization_producer_create.html'
-    inlines = [OrganizationContactInline, OrganizationUserImageInline]
+    inlines = [ProducerDataInline]
 
     def forms_valid(self, form, inlines):
         self.object = form.save()
@@ -198,7 +198,9 @@ class ProducerCreateView(CreateWithInlinesView):
         return super(ProducerCreateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('organization-producer-detail', kwargs={'slug':self.slug})
+        #TODO: When logging system is implemented, maybe use this instead
+        # return reverse_lazy('organization-producer-detail', kwargs={'slug':self.object.slug})
+        return reverse_lazy('organization-producer-validation', kwargs={'slug':self.object.slug})
 
 
 class ProducerValidationView(ProducerMixin, TemplateView):
