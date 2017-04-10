@@ -4526,9 +4526,8 @@ html, body {
   margin-bottom: 1.5rem;
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
-  border: 1px solid rgba(0, 179, 213, 0.35);
-  padding: 12px;
-  padding: 0.75rem;
+  border: 10px solid white;
+  box-shadow: 0 0 1px #00B3D5;
   height: 380px;
 }
 @media (max-width: 46.99em) {
@@ -4549,8 +4548,6 @@ html, body {
   height: auto;
 }
 .article-box:hover {
-  border: 10px solid white;
-  box-shadow: 0 0 1px #00B3D5;
   background: #00B3D5;
 }
 .article-box:hover .article-box__image-container {
@@ -5102,7 +5099,7 @@ html, body {
   position: relative;
   display: block;
   border: 1px solid rgba(0, 179, 213, 0.35);
-  background: #000F24;
+  background: #00B3D5;
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
   margin-bottom: 120px;

@@ -27,8 +27,8 @@ $module: ".article-box";
     @include margin-bottom(1);
     @include transition(all 0.5s ease-in-out);
 
-    border: 1px solid rgba($color-main, 0.35);
-    @include padding(.5);
+    border: 10px solid white;
+    box-shadow: 0 0 1px $color-main;
 
     height: 380px;
 
@@ -48,8 +48,6 @@ $module: ".article-box";
 
     &:hover {
 
-        border: 10px solid white;
-        box-shadow: 0 0 1px $color-main;
         background: $color-main;
 
         .article-box__image-container {
