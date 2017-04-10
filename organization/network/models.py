@@ -128,6 +128,7 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
     lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
     role = models.ForeignKey('OrganizationRole', verbose_name=_('organization role'), blank=True, null=True, on_delete=models.SET_NULL)
+    email = models.EmailField(_('email'), blank=True, null=True)
     initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
     is_on_map = models.BooleanField(_('is on map'), default=False, blank=True)
     is_host = models.BooleanField(_('is host'), default=False, blank=True)
