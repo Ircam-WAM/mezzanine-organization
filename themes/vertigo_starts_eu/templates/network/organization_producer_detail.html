@@ -12,17 +12,12 @@
 
 
 {% block meta_title %}
-    {{ object.meta_title }}
+    {{ object.name }}
 {% endblock %}
 
 
 {% block meta_keywords %}
     {% metablock %}
-    {% keywords_for object as keywords %}
-    {% for keyword in keywords %}
-        {% if not forloop.first %}, {% endif %}
-        {{ keyword }}
-    {% endfor %}
     {% endmetablock %}
 {% endblock %}
 
@@ -39,7 +34,7 @@
 
 {% block breadcrumb_menu %}
     {{ block.super }}
-    <li class="breadcrumb__item active">{{ object.title }}</li>
+    <li class="breadcrumb__item active">{{ object.name }}</li>
 {% endblock %}
 
 
@@ -48,7 +43,7 @@
     {% comment %}
         {% if department %}
             <div class="tag dashed dashed--yellow">
-              {{ department.pages.all.0.title }}
+              {{ department.pages.all.0.name }}
             </div>
         {% endif %}
         <div class="tag tag--category">
@@ -61,11 +56,11 @@
 
 {% block page_title %}
 
-    <h1 class="dotted">{{ object.title }}</h1>
+    <h1 class="dotted">{{ object.name }}</h1>
 
-    {% if object.website %}
+    {% if object.url %}
         <div class="chapo">
-            <p><a href="{{ object.website }}">{{ object.website }}</a></p>
+            <p><a href="{{ object.website }}">{{ object.url }}</a></p>
         </div>
     {% endif %}
 
@@ -75,82 +70,14 @@
 {% block page_content %}
 
     <div class="detail_section">
-        <div class="detail_img">
-            {% if object.public_data.all.0.image %}
-                <img id="detail_img" src="{{ MEDIA_URL }}{{ object.public_data.all.0.image }}" />
-                {% if object.public_data.all.0.image_credits %}
-                    <span>{% trans "Credits" %}: {{ object.public_data.all.0.image_credits }}</span>
-                {% endif %}
-            {% endif %}
-        </div>
-        <div class="detail_info">
-            {% if object.public_data.all.0.brief_description %}
-                <h2>{{ object.public_data.all.0.brief_description }}</h2>
-            {% endif %}
-            {% if object.date_from and object.date_to %}
-                <p>{% trans "From" %} {{ object.date_from }} {% trans "to" %} {{ object.date_to }}</p>
-            {% endif %}
-            {% if object.keywords_string %}
-                <p>{% trans "Keywords" %}: {{ object.keywords_string }}</p>
-            {% endif %}
-        </div>
+        {% if object.producer_data.all.0.producer_description %}
+            <h2>{{ object.producer_data.all.0.producer_description }}</h2>
+        {% endif %}
+        {% if object.email %}
+            <p><b>{% trans "Contact"%}: </b><a href="mailto:{{ object.email }}">{{ object.email }}</a></p>
+        {% endif %}
     </div>
 
-    <div class="detail_separator"></div>
-
-    <div class="detail_section">
-        <div class="detail_subsection_left">
-            {% if object.public_data.all.0.challenges_description %}
-                <h3>{% trans "Description of the challenges faced by the ICT-Project" %}</h3>
-                <p>{{ object.public_data.all.0.challenges_description }}<p>
-            {% endif %}
-            {% if object.public_data.all.0.challenges_description and object.public_data.all.0.technology_description %}
-                <div class="detail_separator"></div>
-            {% endif %}
-            {% if object.public_data.all.0.technology_description %}
-                <h3>{% trans "Brief description of technology" %}</h3>
-                <p>{{ object.public_data.all.0.technology_description }}</p>
-            {% endif %}
-        </div>
-        <div class="detail_subsection_right">
-            {% if object.public_data.all.0.objectives_description %}
-                <h3>{% trans "What the project is looking to gain from the collaboration and what kind of artist would be suitable" %}</h3>
-                <p>{{ object.public_data.all.0.objectives_description }}</p>
-            {% endif %}
-            {% if object.public_data.all.0.objectives_description and object.public_data.all.0.resources_description %}
-                <div class="detail_separator"></div>
-            {% endif %}
-            {% if object.public_data.all.0.resources_description %}
-                <h3>{% trans "Resources available to the artist" %}</h3>
-                <p>{{ object.public_data.all.0.resources_description }}</p>
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="detail_separator"></div>
-
-    <div class="detail_section">
-        <div class="page__slider">
-            <ul class="slider-page" data-slider-page>
-                {% for image in object.user_images.all %}
-                    <li class="slider-page__slide" data-src="{{ MEDIA_URL }}{{ image.file }}">
-                        <div class="slider-page__wrapper">
-                            <img title="{{ image.title }}" alt="{{ image.title }} {{ image.description }} {{ image.credits }}" class="slider-page__img" src="{{ MEDIA_URL}}{% thumbnail image.file 0 520 %}" alt="" />
-                            <div class="slider-page__caption">
-                                {{ image.title }}
-                                {% if image.description %}
-                                    {{ image.description }}
-                                {% endif %}
-                                {% if image.credits %}
-                                    {{ image.credits }}
-                                {% endif %}
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
 
 {% endblock %}
 

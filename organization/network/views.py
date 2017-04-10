@@ -162,6 +162,16 @@ class ProducerDetailView(SlugMixin, DetailView):
     model = Organization
     template_name='network/organization_producer_detail.html'
 
+    def get_object(self, queryset=None):
+        role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        producer = super(ProducerDetailView, self).get_object()
+        if producer.role != role:
+            raise Http404()
+        #TODO: Check if user is registered and admin or creator to allow other status values
+        if producer.validation_status != 3:
+            raise Http404()
+        return producer
+
 
 class ProducerListView(ListView):
 
