@@ -77,6 +77,16 @@ class ProjectICTDetailView(SlugMixin, ProjectMixin, DetailView):
     model = Project
     template_name='projects/project_ict_detail.html'
 
+    def get_object(self, queryset=None):
+        topic, c = ProjectTopic.objects.get_or_create(name='ICT')
+        project = super(ProjectICTDetailView, self).get_object()
+        if project.topic != topic:
+            raise Http404()
+        #TODO: Check if user is registered and admin or creator to allow other status values
+        if project.validation_status != 3:
+            raise Http404()
+        return project
+
 
 class ProjectListView(ListView):
 
