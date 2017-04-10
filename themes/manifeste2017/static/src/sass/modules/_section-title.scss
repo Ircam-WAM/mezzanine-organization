@@ -78,10 +78,10 @@ $module: ".section-title";
 
     &--big {
 
-        color: $color-main;
+        color: $color-black;
         @include font-size(xxxl);
-        text-transform: none;
-        @include margin-bottom(1);
+        font-weight: weight(bold);
+        @include margin-bottom(3);
 
         &:before {
             display: none;

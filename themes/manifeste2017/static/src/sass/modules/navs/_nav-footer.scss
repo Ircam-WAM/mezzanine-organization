@@ -45,9 +45,9 @@ $module: ".nav-footer";
 
     &__item-link {
         @include font-size(m);
-        @include typeface(sans-serif);
-        font-weight: weight(regular);
-        color: white;
+        @include typeface(serif);
+        font-weight: weight(bold);
+        color: $color-black;
     }
 
 }

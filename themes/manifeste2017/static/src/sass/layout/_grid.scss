@@ -148,23 +148,39 @@
 
 			    .#{$col-class}#{$i} {
 			        width: $value;
+
+					.row-12 & {
+						width: percentage($i / 12);
+					}
 			    }
 
 				@if $use-grid-push {
 				    .#{$col-class}push-#{$i} {
 				        left: $value;
+
+						.row-12 & {
+							left: percentage($i / 12);
+						}
 				    }
 				}
 
 				@if $use-grid-pull {
 				    .#{$col-class}pull-#{$i} {
 				        right: $value;
+
+						.row-12 & {
+							right: percentage($i / 12);
+						}
 				    }
 				}
 
 				@if $use-grid-offset {
 				    .#{$col-class}offset-#{$i} {
 				        margin-left: $value;
+
+						.row-12 & {
+							margin-left: percentage($i / 12);
+						}
 				    }
 				}
 

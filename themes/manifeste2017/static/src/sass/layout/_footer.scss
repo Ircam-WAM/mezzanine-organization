@@ -39,8 +39,8 @@ $module: ".footer";
 
     &__pre {
 
-        border-bottom: 3px solid white;
-        color: white;
+        border-bottom: 3px solid $color-black;
+        color: $color-black;
 
         @include padding(1 0);
 
@@ -56,10 +56,10 @@ $module: ".footer";
         @include padding(1 0 .5 0);
 
         @include font-size(s);
-        @include typeface(sans-serif);
+        @include typeface(serif);
         font-weight: weight(light);
 
-        color: white;
+        color: $color-black;
 
         @include mq($until: xs) {
             @include padding(0);
@@ -69,7 +69,7 @@ $module: ".footer";
 
     &__follow-link {
 
-        color: white;
+        color: $color-black;
         @include font-size(xxl);
         display: inline-block;
 
@@ -98,7 +98,7 @@ $module: ".footer";
 
     &__link {
 
-        color: white;
+        color: $color-black;
         border-bottom: 1px solid $color-main;
         font-weight: weight(regular);
 
@@ -107,7 +107,7 @@ $module: ".footer";
     &__separator {
 
         width: 100%;
-        background: white;
+        background: $color-black;
         height: 3px;
 
         @include margin(1 0);
@@ -147,13 +147,13 @@ $module: ".footer";
         position: relative;
         top: -30px;
         @include mq($until: xs) {
-            color: white;
+            color: $color-black;
         }
     }
 
     .section-title {
         @include mq($until: xs) {
-            color: white;
+            color: $color-black;
         }
     }
 
