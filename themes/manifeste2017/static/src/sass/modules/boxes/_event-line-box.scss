@@ -225,26 +225,29 @@ $module: ".event-line-box";
 
         @include font-size(s);
         @include line-height(1.25);
-        @include typeface(sans-serif);
+        @include typeface(serif);
         font-weight: weight(regular);
         color: $color-main;
+        text-transform: uppercase;
 
     }
 
     &__date {
 
+        border-bottom: 1px solid $color-main;
         @include font-size(l);
         @include line-height(1.25);
-        @include typeface(sans-serif);
-        font-weight: weight(regular);
+        @include typeface(serif);
+        font-weight: weight(heavy);
         color: white;
+        text-transform: uppercase;
+        display: inline-block;
         @include transition(all 0.5s ease-in-out);
 
         @include margin-top(1);
 
         span {
-            display: block;
-            @include font-size(m);
+
         }
 
     }

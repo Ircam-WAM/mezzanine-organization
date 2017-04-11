@@ -316,13 +316,13 @@ h1 + .chapo {
   font-size: 0.75rem;
 }
 .has-error .form .help-block {
-  color: #00B3D5;
+  color: #48068B;
 }
 .form .has-error .help-block, .form .has-error label {
-  color: #00B3D5;
+  color: #48068B;
 }
 .form .has-error input[type="text"], .form .has-error input[type="email"], .form .has-error input[type="password"], .form .has-error input[type="url"], .form .has-error textarea, .form .has-error select {
-  border-color: #00B3D5;
+  border-color: #48068B;
 }
 .form .form-actions {
   margin-top: 96px;
@@ -456,13 +456,13 @@ h1 + .chapo {
   color: white;
 }
 .button--accent {
-  background-color: #00B3D5;
+  background-color: #48068B;
   color: white;
-  border: 1px solid #00B3D5;
+  border: 1px solid #48068B;
 }
 .button--accent:hover {
   background-color: white;
-  color: #00B3D5;
+  color: #48068B;
   border: 1px solid white;
 }
 .button--small, .wys-button-small, .wys-button-black-small, .wys-button-white-small, .brief-box__button {
@@ -4685,7 +4685,7 @@ html, body {
 }
 @media (max-width: 89.99em) {
   .article-box__content {
-    top: 165px;
+    top: 200px;
   }
 }
 @media (max-width: 73.24em) {
@@ -5276,27 +5276,26 @@ html, body {
   font-size: 0.875rem;
   line-height: 30px;
   line-height: 1.875rem;
-  font-family: "Roboto Slab", serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
   color: #00B3D5;
+  text-transform: uppercase;
 }
 .event-line-box__date {
+  border-bottom: 1px solid #00B3D5;
   font-size: 20px;
   font-size: 1.25rem;
   line-height: 30px;
   line-height: 1.875rem;
-  font-family: "Roboto Slab", serif;
-  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
   color: white;
+  text-transform: uppercase;
+  display: inline-block;
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
   margin-top: 24px;
   margin-top: 1.5rem;
-}
-.event-line-box__date span {
-  display: block;
-  font-size: 16px;
-  font-size: 1rem;
 }
 .event-line-box__desc {
   font-size: 16px;
@@ -6352,7 +6351,7 @@ html, body {
 }
 .page__block--accent {
   background-color: #00B3D5;
-  color: #000F24;
+  color: #48068B;
   text-align: center;
   font-family: "Roboto", sans-serif;
   padding: 48px 0px;
@@ -7715,6 +7714,34 @@ html, body {
   color: white;
 }
 
+.calendar {
+  color: #000F24;
+  text-align: center;
+  margin: 48px 0px;
+  margin: 3rem 0;
+  font-weight: 300;
+  font-family: "Roboto Slab", serif;
+  font-size: 16px;
+}
+.calendar td {
+  width: 2.9%;
+}
+.calendar td span {
+  font-size: 14px;
+  opacity: 0.3;
+}
+.calendar td span.calendar__weekend {
+  opacity: 1;
+  font-weight: 400;
+}
+.calendar td:first-child,
+.calendar td:last-child {
+  width: 5%;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+}
+
 .dashed {
   position: relative;
   display: inline-block;
@@ -7910,10 +7937,10 @@ blockquote--small {
   color: #000F24;
 }
 .section-title--accent {
-  border-color: #00B3D5;
+  border-color: #48068B;
 }
 .section-title--accent:before {
-  color: #00B3D5;
+  color: #48068B;
 }
 .section-title--main {
   border-color: #00B3D5;
