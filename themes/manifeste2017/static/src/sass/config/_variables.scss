@@ -54,8 +54,9 @@ $headings-font-family: $primary-font-family;
 
 // Typey
 
-$sans-serif: 'Oswald', sans-serif;
-$serif: 'Merriweather', serif;
+$sans-serif: 'Roboto Slab', serif;
+$serif: 'Roboto', sans-serif;
+$serif-condensed: 'Roboto Condensed', sans-serif;
 
 $base-font-size: 16px;
 $base-line-height: 24px;
@@ -84,6 +85,9 @@ $typefaces: (
 	),
 	serif: (
 		font-family: $serif,
+	),
+	serif-condensed: (
+		font-family: $serif-condensed,
 	)
 );
 

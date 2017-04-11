@@ -27,7 +27,7 @@ $module: ".event-line-box";
 
     border: 1px solid rgba($color-main, 0.35);
 
-    background: $color-background;
+    background: $color-main;
     @include transition(all 0.5s ease-in-out);
     @include margin-bottom(5);
 

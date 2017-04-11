@@ -12,8 +12,9 @@ $module: ".newsletter";
 
     &__text {
 
-        @include font-size(m);
-        @include typeface(sans-serif);
+        @include font-size(s);
+        @include typeface(serif);
+        @include line-height(1);
         font-weight: weight(regular);
 
     }
@@ -21,28 +22,30 @@ $module: ".newsletter";
     &__input {
 
         @include font-size(m);
-        @include typeface(sans-serif);
+        @include typeface(serif);
         font-weight: weight(regular);
 
         width: 100%;
         outline: 0;
         background: transparent;
         border: 0;
-        color: white;
-        border-bottom: 1px solid white;
+        color: black;
+        border-bottom: 1px solid black;
+
+        margin-top: 20px;
 
     }
 
     &__button {
 
-        color: white;
+        color: black;
         outline: 0;
         background: transparent;
         border: 0;
         position: absolute;
-        top: 0px;
-        right: 7px;
-        @include font-size(l);
+        top: 20px;
+        right: 0px;
+        font-size: 1rem;
 
     }
 

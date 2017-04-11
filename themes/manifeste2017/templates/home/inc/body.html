@@ -3,11 +3,11 @@
     <div class="row">
         <div class="col-sm-12 col-sm-push-2 tac">
             <div class="section-title section-title--uppercase section-title--accent">
-                Autres articles
+                à la une
             </div>
-            <div class="row">
+            <div class="row-12">
                 {% for content in home.dynamiccontenthomebody_set.all %}
-                    <div class="col-xs-8{% if forloop.counter > 3 %} hide-until-xs{% endif %}">
+                    <div class="col-xs-4{% if forloop.counter > 3 %} hide-until-xs{% endif %}">
                         {% if content.content_type.model == "brief" %}
                             {% include "magazine/brief/inc/brief_card.html" %}
                         {% elif content.content_type.model == "article" %}

@@ -178,6 +178,9 @@
 .ffs {
     @include typeface(serif);
 }
+.ffsc {
+    @include typeface(serif-condensed);
+}
 .fsxxxl {
     @include font-size(xxxl);
     line-height: 3rem !important;
