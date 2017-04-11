@@ -195,7 +195,7 @@ $module: ".article-box";
         width: 100%;
 
         @include mq($until: lg) {
-            top: 165px;
+            top: 200px;
         }
 
         @include mq($until: md) {
