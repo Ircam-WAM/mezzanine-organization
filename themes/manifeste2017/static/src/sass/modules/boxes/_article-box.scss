@@ -26,6 +26,7 @@ $module: ".article-box";
     display: block;
     @include margin-bottom(1);
     @include transition(all 0.5s ease-in-out);
+    background: white;
 
     border: 10px solid white;
     box-shadow: 0 0 1px $color-main;
@@ -169,6 +170,7 @@ $module: ".article-box";
         font-weight: weight(regular);
         color: $color-main;
         @include transition(color 0.5s ease-in-out);
+
     }
 
     &__btn {
@@ -232,7 +234,7 @@ $module: ".article-box";
         @include typeface(sans-serif);
         @include margin-top(.25);
         font-weight: weight(bold);
-        color: white;
+        color: $color-main;
         text-transform: uppercase;
         @include transition(color 0.5s ease-in-out);
 
@@ -252,6 +254,7 @@ $module: ".article-box";
     }
 
     &__desc {
+
         @include font-size(s);
         @include line-height(.75);
         @include typeface(serif);

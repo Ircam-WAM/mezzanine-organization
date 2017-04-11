@@ -15,10 +15,10 @@
             </figure>
         </a>
         <a class="media-box__content" href="{% url 'organization-media-detail' object|get_media_type|lower object.slug %}">
-            <h2 class="media-box__title">{{ object.title }}</h2>
             <div class="media-box__type">
                 {{ object|get_media_type }}
             </div>
+            <h2 class="media-box__title">{{ object.title }}</h2>
             {% if object.description %}
                 <div class="media-box__desc">
                     {{ object.description|richtext_filters|safe|truncatechars_html:200 }}

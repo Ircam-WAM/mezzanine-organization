@@ -22,7 +22,7 @@ body {
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-    color: $main-text-color;
+    color: $color-black;
     @include typeface(serif);
 }
 
@@ -121,7 +121,7 @@ main p, main ul.unstyled-list, main ul:not([class]), main td {
 		z-index: 1;
 		text-decoration: none;
 		border-bottom: 1px solid $color-main;
-		color: white;
+		color: $color-black;
 		@include transition(all 0.15s ease-in-out);
 
 		&:hover {

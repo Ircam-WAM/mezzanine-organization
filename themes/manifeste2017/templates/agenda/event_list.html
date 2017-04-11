@@ -33,6 +33,20 @@
                     <h1 class="section-title section-title--uppercase section-title--main">{% trans "Events" %}</h1>
                 </div>
             </div>
+
+            {% keywords_for mezzanine_agenda.event as tags %}
+            {% if tags %}
+                {% for t in tags %}
+                    {% if not t|tag_is_excluded %}
+                        <li class="nav-tree__item">
+                            <a class="nav-tree__link--filter nav-tree__link{% if tag == t %} active{% endif %}" href="{% if tag == t %}{% url 'event_list' %}{% else %}{% url "event_list_tag" t.slug %}{% endif %}">
+                                {{ t }} {% if tag == t %}<i class="fa fa-times"></i>{% endif %}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
             <div class="row">
                 <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
                     <div class="page__content">

@@ -82,11 +82,22 @@ $module: ".section-title";
         @include font-size(xxxl);
         font-weight: weight(bold);
         @include margin-bottom(3);
+        @include line-height(1.75);
+        display: block;
 
         &:before {
             display: none;
         }
 
+    }
+
+    &--no-margin {
+        @include margin-bottom(2);
+        @include margin-top(3);
+    }
+
+    & + .section-title {
+        margin-top: 0;
     }
 
 }

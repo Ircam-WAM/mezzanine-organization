@@ -25,7 +25,11 @@
 {% block page_title %}
 
     {% editable article.title %}
-        <h1 class="section-title section-title--uppercase section-title--main">{{ article.title }}</h1>
+        <div class="section-title section-title--uppercase section-title--underline section-title--main section-title--no-margin"><a href="{% url 'magazine-article-list' %}"><i class="fsl fa fa-angle-left"></i>{% trans "Back to news" %}</a></div>
+        <h1 class="section-title section-title--uppercase section-title--big">{{ article.title }}</h1>
+        <div class="page__date">
+            {% trans 'Published on' %} {{ article.publish_date|date:"DATE_FORMAT" }}
+        </div>
     {% endeditable %}
 
     {% if article.sub_title %}
@@ -81,33 +85,11 @@
 {% block page_sidebar %}
 
     <div class="page__meta" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="1171">
-        <div class="page__meta-title">
-            {% trans 'Publish date' %}
-        </div>
-        {% editable article.publish_date %}
-            <div class="page__meta-text">
-                {{ article.publish_date|date:"DATE_FORMAT" }}
-            </div>
-        {% endeditable %}
-
-        <div class="page__meta-separator">
-
-        </div>
-
-        {% if article.categories.all|length > 0 %}
-            <div class="page__meta-title">
-                {% for category in article.categories.all %}
-                    {% if not forloop.first %}, {% endif %}
-                    <strong>{{ category }}</strong>
-                {% endfor %}
-            </div>
-        {% endif %}
 
         {% with article as object %}
-            <div class="mt2">
-                {% include "includes/share_buttons.html" %}
-            </div>
+            {% include "includes/share_buttons.html" %}
         {% endwith %}
+
     </div>
 
 {% endblock %}

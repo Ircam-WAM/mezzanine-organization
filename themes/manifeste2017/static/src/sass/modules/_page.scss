@@ -28,6 +28,17 @@ $module: ".page";
         min-height: 0;
     }
 
+    &__date {
+
+        @include margin-top(-2.75);
+        @include margin-bottom(2);
+
+        text-transform: uppercase;
+        font-family: $serif;
+        font-weight: weight(bold);
+
+    }
+
     &__sidebar {
 
         @include mq($until: sm) {
