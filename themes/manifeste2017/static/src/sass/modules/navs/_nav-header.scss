@@ -278,7 +278,7 @@ $module: ".nav-header";
 
         @include font-size(l);
         @include line-height($header-pre-height);
-        @include typeface(sans-serif);
+        font-family: 'Oswald', sans-serif;
 
         @include padding-right(1);
 
