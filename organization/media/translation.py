@@ -64,3 +64,4 @@ class MediaImageTranslationOptions(TranslationOptions):
 class LiveStreamingTranslationOptions(TranslationOptions):
 
     fields = ('title', 'description', 'html5_url')
+

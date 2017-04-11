@@ -119,6 +119,14 @@ class CustomEventAdmin(EventAdmin):
                 EventRelatedTitleAdmin, DynamicContentEventInline]
 
 
+    def save_form(self, request, form, change):
+        """
+        Super class ordering is important here - user must get saved first.
+        """
+        OwnableAdmin.save_form(self, request, form, change)
+        return DisplayableAdmin.save_form(self, request, form, change)
+
+
 class CustomEventCategoryAdmin(BaseTranslationModelAdmin):
 
     pass

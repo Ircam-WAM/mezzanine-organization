@@ -70,3 +70,4 @@ admin.site.register(Media, MediaAdmin)
 admin.site.register(Playlist, PlaylistAdmin)
 admin.site.register(MediaCategory, MediaCategoryAdmin)
 admin.site.register(LiveStreaming, LiveStreamingAdmin)
+

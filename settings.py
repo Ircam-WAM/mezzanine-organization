@@ -66,11 +66,11 @@ DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
 PAGE_MENU_TEMPLATES = (
     (1, _("Action"), "pages/menus/action.html"),
-    (2, _("Header"), "pages/menus/header.html"),
+    (2, _("Departement"), "pages/menus/header.html"),
     (3, _("Footer vertical"), "pages/menus/footer_vertical.html"),
     (4, _("Footer horizontal"), "pages/menus/footer_horizontal.html"),
     (5, _("Magazine"), "pages/menus/magazine.html"),
-    (6, _("You are"), "pages/menus/vous_etes.html"),
+    (6, _("Vous êtes"), "pages/menus/vous_etes.html"),
     (7, _("Personnes"), "pages/menus/tree.html"),
 )
 
@@ -124,7 +124,7 @@ USE_TZ = True
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = "en"
+LANGUAGE_CODE = "fr"
 
 # Supported languages
 LANGUAGES = (
@@ -193,6 +193,10 @@ STATIC_URL = "/static/"
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, STATIC_URL.strip("/"))
 STATIC_ROOT = '/srv/static/'
 
+STATICFILES_DIRS = [
+    '/srv/app/static',
+]
+
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
@@ -212,12 +216,8 @@ ROOT_URLCONF = "urls"
 ################
 
 INSTALLED_APPS = [
-    # "themes.base",
-    # "themes.starts_eu",
-    # 'themes.vertigo_starts_eu',
-    "themes.manifeste2017",
-
-    "modeltranslation",
+   "themes.manifeste2017",
+   "modeltranslation",
     "dal",
     "dal_select2",
     "dal_queryset_sequence",
@@ -242,6 +242,8 @@ INSTALLED_APPS = [
     "mezzanine.twitter",
     "mezzanine.accounts",
     "cartridge.shop",
+    "eve",
+    "prestashop",
     'djangobower',
     "meta",
     "mezzanine_agenda",
@@ -256,6 +258,8 @@ INSTALLED_APPS = [
     "organization.job",
     "sorl.thumbnail", # required for thumbnail support
     "django_instagram",
+    'guardian',
+    'extra_views',
 ]
 
 
@@ -304,11 +308,8 @@ TEMPLATE_LOADERS_OPTIONS = [('django.template.loaders.cached.Loader', [
 if not DEBUG:
     TEMPLATES[0]['OPTIONS']['loaders'] = TEMPLATE_LOADERS_OPTIONS
     TEMPLATES[0]['APP_DIRS'] = False
-
 HOST_THEMES = [
-    #('www.starts.eu', 'themes.starts_eu'),
-    #('vertigo.starts.eu', 'themes.vertigo_starts_eu'),
-    ('manifeste.ircam.fr', 'themes.manifeste2017'),
+   ('manifeste.ircam.fr', 'themes.manifeste2017'),
 ]
 
 # List of middleware classes to use. Order is important; in the request phase,

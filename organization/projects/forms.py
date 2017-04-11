@@ -35,7 +35,6 @@ from organization.media.models import Playlist
 from organization.projects.models import *
 from extra_views import InlineFormSet
 
-
 class DynamicContentProjectForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
@@ -135,3 +134,4 @@ class ProjectResidencyForm(ModelForm):
     class Meta:
         model = ProjectResidency
         fields = '__all__'
+

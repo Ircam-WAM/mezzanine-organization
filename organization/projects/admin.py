@@ -23,7 +23,7 @@ from copy import deepcopy
 
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-
+from pprint import pprint
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from modeltranslation.admin import TranslationTabularInline
@@ -170,7 +170,6 @@ class ProjectWorkPackageAdmin(BaseTranslationModelAdmin):
     list_display = ['title', 'project', 'date_from', 'date_to', 'number', 'lead_organization' ]
     list_filter = ['project', 'date_from', 'date_to', 'lead_organization' ]
 
-
 class ProjectCallAdmin(admin.ModelAdmin):
 
     model = ProjectCall
@@ -207,6 +206,8 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
     # list_filter = ['type', 'program', 'program_type', null_filter('external_id')]
     # list_display = ['title', 'date_from', 'date_to', 'status', 'admin_link']
 
+   search_fields = ['title', 'project__title',]
+
 
 admin.site.register(Project, ProjectAdminDisplayable)
 admin.site.register(ProjectProgram, ProjectProgramAdmin)
@@ -218,3 +219,4 @@ admin.site.register(Repository)
 admin.site.register(RepositorySystem)
 admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
 admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
+

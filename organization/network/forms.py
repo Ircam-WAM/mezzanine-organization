@@ -27,6 +27,7 @@ from django import forms
 from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
 from mezzanine.core.models import Orderable
+from organization.projects.models import ProjectWorkPackage
 from organization.network.models import (Person,
                                 PersonListBlock,
                                 PersonListBlockInline,
@@ -35,7 +36,8 @@ from organization.network.models import (Person,
                                 OrganizationLinkedInline,
                                 OrganizationLinkedBlockInline,
                                 Organization,
-                                PersonActivityTimeSheet)
+                                PersonActivityTimeSheet,
+                                ProjectActivity)
 from organization.pages.models import Page, CustomPage
 
 
@@ -89,6 +91,14 @@ class OrganizationLinkedForm(forms.ModelForm):
 
 class PersonActivityTimeSheetForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(PersonActivityTimeSheetForm, self).__init__(*args, **kwargs)
+        if 'initial' in kwargs :
+            self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(project=kwargs['initial']['project'])
+            self.fields['project'].choices = ((kwargs['initial']['project'].id, kwargs['initial']['project']),)
+            self.fields['activity'].choices = ((kwargs['initial']['activity'].id, kwargs['initial']['activity']),)
+        self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(choices=self.fields['work_packages'].choices)
+
     def save(self):
         self.instance.accounting = timezone.now()
         super(PersonActivityTimeSheetForm, self).save()
@@ -96,4 +106,20 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
     class Meta:
         model = PersonActivityTimeSheet
         fields = ('__all__')
+        exclude = ['accounting', 'validation', 'month', 'year']
+
+
+class ProjectActivityForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectActivityForm, self).__init__(*args, **kwargs)
+        self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(project=self.instance.project)
+        self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(choices=self.fields['work_packages'].choices)
+
+    class Meta:
+        model = ProjectActivity
+        fields = ('__all__')
         exclude = ['accounting', 'validation']
+        help_texts = {
+            'work_packages': 'Set percentage between 0 and 100',
+        }

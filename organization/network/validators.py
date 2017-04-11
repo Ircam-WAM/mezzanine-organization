@@ -7,3 +7,12 @@ def validate_positive(value):
             _('%(value)s must be positive'),
             params={'value': value},
         )
+
+
+def is_percent(value):
+    if value < 0 and value > 100:
+        raise ValidationError(
+            _('%(value)s must be an integer between 0 and 100'),
+            params={'value': value},
+        )
+

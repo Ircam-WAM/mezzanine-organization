@@ -18,6 +18,7 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+
 import json
 from django.shortcuts import render
 from collections import defaultdict
@@ -166,3 +167,4 @@ class LiveStreamingDetailView(SlugMixin, DetailView):
 
         context['json_event'] = json.dumps(events_data)
         return context
+

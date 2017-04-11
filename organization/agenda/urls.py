@@ -23,7 +23,7 @@ from __future__ import unicode_literals
 
 import django.views.i18n
 from django.contrib.auth.decorators import permission_required
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 
 from mezzanine.core.views import direct_to_template

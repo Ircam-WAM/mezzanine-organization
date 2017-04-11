@@ -72,8 +72,7 @@ class PersonListBlockAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
 
     model = PageCustomPersonListBlockInline
     exclude = ("title", "description")
-    # form = PageCustomPersonListForm
-
+    form = PageCustomPersonListForm
 
 class PageProductListInline(TabularDynamicInlineAdmin):
 

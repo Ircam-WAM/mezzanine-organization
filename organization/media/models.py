@@ -194,3 +194,4 @@ class LiveStreaming(Displayable):
 
     def get_absolute_url(self):
         return reverse("organization-streaming-detail", kwargs={"slug": self.slug, "type" : self.type})
+

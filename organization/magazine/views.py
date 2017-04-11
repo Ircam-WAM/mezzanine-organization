@@ -203,3 +203,4 @@ class ArticleListView(SlugMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
         return context
+

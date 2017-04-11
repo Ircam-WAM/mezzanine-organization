@@ -22,7 +22,7 @@
 from django.conf import settings # import the settings file
 from datetime import datetime, date
 from organization.pages.models import Page
-from organization.network.models import Organization, OrganizationLinkedInline
+from organization.network.models import Organization, OrganizationLinkedInline, Person
 from mezzanine.utils.sites import current_site_id
 from django.contrib.sites.models import Site
 
@@ -62,6 +62,14 @@ def settings(request):
     linked_org_footer_2 = organization_lists[2] if len(organization_lists) > 2 else None
 
     research_slug = "recherche"
+
+    if not request.session.__contains__("person_slug"):
+        if hasattr(request.user, 'email'):
+            try :
+                person = Person.objects.get(email=request.user.email)
+                request.session.__setitem__("person_slug", person.slug)
+            except:
+                pass
 
     return {'current_season': current_season,
             'current_season_styled': current_season_styled,

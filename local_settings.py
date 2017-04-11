@@ -22,6 +22,8 @@
 import os
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime, date
+import ldap, logging
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
@@ -33,7 +35,7 @@ ADMINS = (
 # Make these unique, and don't share it with anybody.
 SECRET_KEY = "j1qa@u$5kzeofiheoppoh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
 NEVERCACHE_KEY = "m)u^%r@uez$ze##$1ogx)uy4hv93dbzt%c3@xi=^gifoj8paozijdihazefd"
-
+DATABASE_ROUTERS = ['eve.routers.EveRouter', 'prestashop.routers.PrestaRouter']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -44,6 +46,26 @@ DATABASES = {
         'PORT': '5432',
     },
 }
+
+if os.environ.get('EVEDB_ENV_POSTGRES_PASSWORD'):
+    DATABASES['eve'] = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'eve',
+        'USER': 'eve',
+        'PASSWORD': os.environ.get('EVEDB_ENV_POSTGRES_PASSWORD'),
+        'HOST': 'evedb',
+        'PORT': '5432',
+    }
+
+if os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'):
+    DATABASES['prestashop'] = {
+        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'USER': 'ircam_shops',      # Not used with sqlite3.
+        'PASSWORD': os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
+        'NAME': 'ircam_shops',
+        'HOST': 'prestadb',      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
+        }
 
 # EXTENSIONS AND FORMATS
 # Allowed Extensions for File Upload. Lower case is important.
@@ -88,7 +110,7 @@ ADMIN_MENU_ORDER = (
     (_('Media'), ('organization-media.Media',
                   'organization-media.Playlist',
                   'organization-media.LiveStreaming',
-                 'organization-media.MediaCategory',
+                  'organization-media.MediaCategory',
                  (_('Media Library'), 'fb_browse'),
                  )),
     (_('Events'), ('mezzanine_agenda.Event',
@@ -122,7 +144,8 @@ ADMIN_MENU_ORDER = (
                     'organization-network.TrainingSpeciality',
                     )),
     (_('Timesheet'), ('organization-network.ActivityWeeklyHourVolume',
-                     'organization-network.PersonActivityTimeSheet'
+                    'organization-network.PersonActivityTimeSheet',
+                    'organization-network.ProjectActivity',
                     )),
     (_('Projects'), ('organization-projects.Project',
                     'organization-projects.ProjectCall',
@@ -192,7 +215,6 @@ EVENT_PASS_URL = EVENT_DOMAIN+"/pub.php/pass/"
 EVENT_CONFIRMATION_URL = EVENT_DOMAIN+"/pub.php/cart/done?transaction_id=%s"
 EVENT_EXCLUDE_TAG_LIST = [ ]
 PAST_EVENTS = True
-
 TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
 
 SLUGIFY = 'django.template.defaultfilters.slugify'
@@ -252,3 +274,72 @@ FORMAT_MODULE_PATH = [
 # FIGGO API - Lucca
 FIGGO_API_URL_PROD='https://ircam.ilucca.net/'
 FIGGO_API_HEADER_AUTH='Lucca application=bd6d5481-40eb-414b-9135-434e12749223'
+
+##############################################
+##########  AUTHENTIFICATION LDAP  ###########
+##############################################
+# logging
+if DEBUG:
+    logger = logging.getLogger('django_auth_ldap')
+    logger.addHandler(logging.StreamHandler())
+    logger.setLevel(logging.DEBUG)
+
+# Baseline configuration.
+AUTH_LDAP_SERVER_URI = "ldap://clusterldap1.ircam.fr"
+# AUTH_LDAP_BIND_DN = "dc=ircam,dc=fr"
+# AUTH_LDAP_BIND_PASSWORD = ""
+# AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=People,dc=ircam,dc=fr", ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+
+# or perhaps:
+AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=People,dc=ircam,dc=fr"
+
+# Set up the basic group parameters.
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("ou=People,dc=ircam,dc=fr",
+    ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)"
+)
+AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
+
+# Simple group restrictions
+# AUTH_LDAP_REQUIRE_GROUP = "cn=enabled,ou=django,ou=groups,dc=example,dc=com"
+# AUTH_LDAP_DENY_GROUP = "cn=disabled,ou=django,ou=groups,dc=example,dc=com"
+
+# Populate the Django user from the LDAP directory.
+AUTH_LDAP_USER_ATTR_MAP = {
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail"
+}
+
+
+# This is the default, but I like to be explicit.
+AUTH_LDAP_ALWAYS_UPDATE_USER = True
+
+# Use LDAP group membership to calculate group permissions.
+AUTH_LDAP_FIND_GROUP_PERMS = True
+
+# Cache group memberships for an hour to minimize LDAP traffic
+AUTH_LDAP_CACHE_GROUPS = True
+AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
+
+
+
+AUTHENTICATION_BACKENDS = (
+    'django_auth_ldap.backend.LDAPBackend',
+    "mezzanine.core.auth_backends.MezzanineBackend",
+    'guardian.backends.ObjectPermissionBackend',
+)
+
+# guardian
+ANONYMOUS_USER_NAME = None
+
+LOGIN_REDIRECT_URL = "/profile"
+
+# TIMESHEET
+
+TIMESHEET_USER_TEST = 849  # Emilie Zawadzki
+
+if DEBUG == True:
+    TIMESHEET_MASTER_MAIL = "zawadzki@ircam.fr"
+else:
+    TIMESHEET_MASTER_MAIL = "Hugues.Vinet@ircam.fr"
+

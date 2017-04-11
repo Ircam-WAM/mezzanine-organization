@@ -18,7 +18,6 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-
 from django.contrib import admin
 from django import forms
 from django.http import HttpResponse
@@ -101,6 +100,7 @@ class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
                  ]
     list_display = ['name', 'type', 'admin_thumb']
     list_filter = ['is_on_map', 'type']
+    list_filter = ['is_on_map',]
     search_fields = ['name',]
     first_fields = ['name',]
 
@@ -210,16 +210,37 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
         return weekly_hour_volume
 
 
+class ProjectActivityAdmin(BaseTranslationModelAdmin):
+
+    model = ProjectActivity
+    form = ProjectActivityForm
+    list_display = [ 'title', 'project', 'default_percentage', 'work_package', ]
+    search_fields = ['activity__person__title', 'project__title',]
+    exclude = ("title", "description")
+
+    def work_package(self, instance):
+        wk_list = [str(wk.number) for wk in instance.work_packages.all()]
+        return ",".join(wk_list)
+
+
+class ProjectActivityInline(TabularDynamicInlineAdmin):
+
+    model = ProjectActivity
+    form = ProjectActivityForm
+    exclude = ("title", "description")
+
+
 class PersonActivityAdmin(BaseTranslationModelAdmin):
 
     model = PersonActivity
     list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to']
-    filter_horizontal = ['organizations', 'employers', 'teams', 'projects',
-                         'supervisors', 'phd_directors', ]
+    filter_horizontal = ['organizations', 'employers', 'teams',
+                         'supervisors', 'phd_directors', ] #project_activity__project
     search_fields = ['person__title',]
     list_filter = [ 'date_from', 'date_to',
                     'is_permanent', 'framework', 'grade',
-                    'status', 'teams', 'projects']
+                    'status', 'teams']
+    inlines = [ProjectActivityInline,]
 
     def get_teams(self, instance):
         values = []
@@ -287,7 +308,7 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
     list_display = ['person', 'activity', 'year', 'month', 'project', 'work_package', 'percentage',  'accounting', 'validation']
     list_filter = ['activity__person', 'year', 'month', 'project']
     actions = ['export_xls', 'validate_timesheets']
-
+    first_fields = ['title',]
 
     def person(self, instance):
         return instance.activity.person
@@ -329,3 +350,5 @@ admin.site.register(TrainingLevel, TrainingLevelAdmin)
 admin.site.register(TrainingTopic, TrainingTopicAdmin)
 admin.site.register(TrainingSpeciality, TrainingSpecialityAdmin)
 admin.site.register(PersonActivityTimeSheet, PersonActivityTimeSheetAdmin)
+admin.site.register(ProjectActivity, ProjectActivityAdmin)
+

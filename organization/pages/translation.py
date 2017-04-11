@@ -101,3 +101,4 @@ class PageRelatedTitleTranslationOptions(TranslationOptions):
 class HomeImageTranslationOptions(TranslationOptions):
 
     fields = ()
+

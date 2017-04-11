@@ -165,3 +165,4 @@ class ProjectCallFileTranslationOptions(TranslationOptions):
 class ProjectContactTranslationOptions(TranslationOptions):
 
     pass
+
