@@ -71,7 +71,7 @@ PAGE_MENU_TEMPLATES = (
     (4, _("Footer horizontal"), "pages/menus/footer_horizontal.html"),
     (5, _("Magazine"), "pages/menus/magazine.html"),
     (6, _("You are"), "pages/menus/vous_etes.html"),
-
+    (7, _("Personnes"), "pages/menus/tree.html"),
 )
 
 # A sequence of fields that will be injected into Mezzanine's (or any
@@ -128,8 +128,8 @@ LANGUAGE_CODE = "en"
 
 # Supported languages
 LANGUAGES = (
-    ('en', _('English')),
     ('fr', _('French')),
+    ('en', _('English')),
 )
 
 LOCALE_PATHS = ['locale',]
