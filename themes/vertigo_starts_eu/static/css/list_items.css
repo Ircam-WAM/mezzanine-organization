@@ -9,7 +9,14 @@
 }
 .list_content {
     display: none;
-    padding : 5px;
+    padding: 5px;
     border-style: solid;
     border-color: #50E3C2;
+}
+.list_image_credits {
+    text-align: center;
+    padding: 0;
+    margin: 0 auto;
+    border-style: solid;
+    border-color: #FF0000;
 }
