@@ -24,6 +24,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.template import Context
+from django.utils.translation import ugettext_lazy as _
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event

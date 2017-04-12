@@ -84,12 +84,6 @@ class ProjectProgramTypeTranslationOptions(TranslationOptions):
     fields = ('name', 'description')
 
 
-@register(ProjectTopic)
-class ProjectTopicTranslationOptions(TranslationOptions):
-
-    fields = ('name', 'description')
-
-
 @register(ProjectTopicPage)
 class ProjectTopicPageTranslationOptions(TranslationOptions):
 

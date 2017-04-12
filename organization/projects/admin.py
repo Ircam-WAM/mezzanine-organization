@@ -141,11 +141,11 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 ]
     filter_horizontal = ['teams', 'organizations']
     list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status']
-    list_display = ['title', 'created', 'validation_status',
+    list_display = ['title', 'created', 'topic', 'validation_status',
                     'date_from', 'date_to', 'status', 'external_id', 'admin_link']
 
 
-class ProjectTopicAdmin(BaseTranslationModelAdmin):
+class ProjectTopicAdmin(admin.ModelAdmin):
 
     model = ProjectTopic
 
