@@ -25,6 +25,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView
 from django.views.generic import View
 from django.db.models.fields.related import ForeignKey
+from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
 from dal import autocomplete
