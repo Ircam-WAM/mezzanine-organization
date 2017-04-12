@@ -1,0 +1,15 @@
+.list_header {
+    padding: 0.5em;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.list_header:hover {
+    background: #50E3C2;
+}
+.list_content {
+    display: none;
+    padding : 5px;
+    border-style: solid;
+    border-color: #50E3C2;
+}

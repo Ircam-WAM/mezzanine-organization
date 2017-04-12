@@ -157,6 +157,57 @@ class OrganizationLinkedView(autocomplete.Select2QuerySetView):
         return qs
 
 
+class ProducerDetailView(SlugMixin, DetailView):
+
+    model = Organization
+    template_name='network/organization_producer_detail.html'
+
+    def get_object(self, queryset=None):
+        role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        producer = super(ProducerDetailView, self).get_object()
+        if producer.role != role:
+            raise Http404()
+        #TODO: Check if user is registered and admin or creator to allow other status values
+        if producer.validation_status != 3:
+            raise Http404()
+        return producer
+
+
+class ProducerListView(ListView):
+
+    model = Organization
+    template_name='network/organization_producer_list.html'
+
+    def get_queryset(self):
+        role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        qs = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
+        return qs
+
+
+class ProducerCreateView(CreateWithInlinesView):
+
+    model = Organization
+    form_class = ProducerForm
+    template_name='network/organization_producer_create.html'
+    inlines = [ProducerDataInline]
+
+    def forms_valid(self, form, inlines):
+        self.object = form.save()
+        self.object.role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        self.object.save()
+        return super(ProducerCreateView, self).forms_valid(form, inlines)
+
+    def get_success_url(self):
+        #TODO: When logging system is implemented, maybe use this instead
+        # return reverse_lazy('organization-producer-detail', kwargs={'slug':self.object.slug})
+        return reverse_lazy('organization-producer-validation', kwargs={'slug':self.object.slug})
+
+
+class ProducerValidationView(ProducerMixin, TemplateView):
+
+    model = Organization
+    template_name='network/organization_producer_validation.html'
+
 
 class TimesheetAbstractView(LoginRequiredMixin):
     login_url = settings.LOGIN_URL

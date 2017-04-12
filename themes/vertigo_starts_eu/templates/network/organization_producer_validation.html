@@ -1,0 +1,50 @@
+{% extends "vertigo_starts_eu/pages/page.html" %}
+{% load mezzanine_tags keyword_tags i18n organization_tags pages_tags %}
+
+{% block meta_title %}
+    {% trans "Producer validation" %}
+{% endblock %}
+
+{% block meta_keywords %}{% endblock %}
+
+{% block body_class %}
+    pattern pattern-bg {{ department.pages.all.0.weaving_css_class }}
+{% endblock %}
+
+{% block breadcrumb_menu %}
+    {{ block.super }}
+    <li class="breadcrumb__item active">{{ object.name }}</li>
+{% endblock %}
+
+{% block page_tags %}
+{% endblock %}
+
+{% block page_title %}
+    <h1 class="dotted">{% trans "Producer submission validation" %}</h1>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <p>Dear Submitter,</p>
+        <p>Thank you for applying as Producer to the Vertigo Project.</p>
+        <p>We will keep you informed about the status of your appliance.</p>
+
+        {# TODO #}
+        {# You submitted the following data:#}
+
+        <p>If you wish to change the information, please send an email containing the new information to <a href="mailto:vertigo@iuk.fraunhofer.de">vertigo@iuk.fraunhofer.de</a>.</p>
+
+        <p>Best regards,<br>
+        The VERTIGO team
+        </p>
+
+        <p>http://vertigo.starts.eu</p>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+$(function() {$('.mezzanine-form :input:visible:enabled:first').focus();});
+</script>
+{% endblock %}
