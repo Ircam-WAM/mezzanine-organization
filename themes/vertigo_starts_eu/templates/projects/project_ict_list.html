@@ -23,7 +23,7 @@
 
 
 {% block meta_title %}
-    {% trans "R&amp;D Project List" %}
+    {% trans "Available Projects" %}
 {% endblock %}
 
 
@@ -73,7 +73,7 @@
 {% block page_title %}
 
     <h1 class="dotted">
-        {% trans "R&amp;D Project List" %}
+        {% trans "Available Projects" %}
     </h1>
 
 {% endblock %}
@@ -89,11 +89,12 @@
             <div class="list_content">
                 <p><b>{% trans "Full details" %}: </b><a href="{% url 'organization-ict-project-detail' project.slug %}">{{ project }}</a></p>
                 <p><b>{% trans "Brief description" %}: </b>{{ project.public_data.all.0.brief_description }}<p>
-                <p><img src="{{ MEDIA_URL }}{{ project.public_data.all.0.image }}" /></p>
+                <img src="{{ MEDIA_URL }}{{ project.public_data.all.0.image }}" />
+                <div class=list_image_credits>{% trans "Credits"%}: {{ project.public_data.all.0.image_credits }}</div>
             </div>
         {% empty %}
             <div class="chapo">
-                <p><b>{% trans "No projects yet" %}.</b></p>
+                <p><b>{% trans "No available projects yet" %}.</b></p>
             </div>
         {% endfor %}
     </div>
