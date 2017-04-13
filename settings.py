@@ -193,9 +193,9 @@ STATIC_URL = "/static/"
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, STATIC_URL.strip("/"))
 STATIC_ROOT = '/srv/static/'
 
-STATICFILES_DIRS = [
-    '/srv/app/static',
-]
+# STATICFILES_DIRS = [
+#     '/srv/app/static',
+# ]
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -242,8 +242,6 @@ INSTALLED_APPS = [
     "mezzanine.twitter",
     "mezzanine.accounts",
     "cartridge.shop",
-    "eve",
-    "prestashop",
     'djangobower',
     "meta",
     "mezzanine_agenda",

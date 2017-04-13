@@ -206,7 +206,7 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
     # list_filter = ['type', 'program', 'program_type', null_filter('external_id')]
     # list_display = ['title', 'date_from', 'date_to', 'status', 'admin_link']
 
-   search_fields = ['title', 'project__title',]
+    search_fields = ['title', 'project__title',]
 
 
 admin.site.register(Project, ProjectAdminDisplayable)
@@ -219,4 +219,3 @@ admin.site.register(Repository)
 admin.site.register(RepositorySystem)
 admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
 admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
-

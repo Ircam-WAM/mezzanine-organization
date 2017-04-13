@@ -156,7 +156,7 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
     model = PersonActivity
     fk_name = 'person'
     filter_horizontal = ['organizations', 'employers', 'teams',
-                         'projects', 'supervisors', 'phd_directors', ]
+                         'supervisors', 'phd_directors', ]
 
 
 class PersonPlaylistInline(TabularDynamicInlineAdmin):
@@ -198,7 +198,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
     list_display = [ 'last_name', 'first_name', 'register_id', 'external_id', 'email', 'last_weekly_hour_volume', 'gender', 'created']
     list_filter = ['person_title', 'activities__date_from', 'activities__date_to',
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
-                    'activities__status', 'activities__teams', 'activities__projects',
+                    'activities__status', 'activities__teams',
                     'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
 
     def last_weekly_hour_volume(self, instance):
@@ -351,4 +351,3 @@ admin.site.register(TrainingTopic, TrainingTopicAdmin)
 admin.site.register(TrainingSpeciality, TrainingSpecialityAdmin)
 admin.site.register(PersonActivityTimeSheet, PersonActivityTimeSheetAdmin)
 admin.site.register(ProjectActivity, ProjectActivityAdmin)
-

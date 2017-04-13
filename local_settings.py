@@ -35,17 +35,17 @@ ADMINS = (
 # Make these unique, and don't share it with anybody.
 SECRET_KEY = "j1qa@u$5kzeofiheoppoh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
 NEVERCACHE_KEY = "m)u^%r@uez$ze##$1ogx)uy4hv93dbzt%c3@xi=^gifoj8paozijdihazefd"
-DATABASE_ROUTERS = ['eve.routers.EveRouter', 'prestashop.routers.PrestaRouter']
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': os.environ.get('DB_ENV_POSTGRES_PASSWORD'),
-        'HOST': 'db',
-        'PORT': '5432',
-    },
-}
+# DATABASE_ROUTERS = ['eve.routers.EveRouter', 'prestashop.routers.PrestaRouter']
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': os.environ.get('DB_ENV_POSTGRES_PASSWORD'),
+#         'HOST': 'db',
+#         'PORT': '5432',
+#     },
+# }
 
 if os.environ.get('EVEDB_ENV_POSTGRES_PASSWORD'):
     DATABASES['eve'] = {
@@ -57,15 +57,15 @@ if os.environ.get('EVEDB_ENV_POSTGRES_PASSWORD'):
         'PORT': '5432',
     }
 
-if os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'):
-    DATABASES['prestashop'] = {
-        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'USER': 'ircam_shops',      # Not used with sqlite3.
-        'PASSWORD': os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
-        'NAME': 'ircam_shops',
-        'HOST': 'prestadb',      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
-        }
+# if os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'):
+#     DATABASES['prestashop'] = {
+#         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#         'USER': 'ircam_shops',      # Not used with sqlite3.
+#         'PASSWORD': os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
+#         'NAME': 'ircam_shops',
+#         'HOST': 'prestadb',      # Set to empty string for localhost. Not used with sqlite3.
+#         'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
+#         }
 
 # EXTENSIONS AND FORMATS
 # Allowed Extensions for File Upload. Lower case is important.
@@ -342,4 +342,3 @@ if DEBUG == True:
     TIMESHEET_MASTER_MAIL = "zawadzki@ircam.fr"
 else:
     TIMESHEET_MASTER_MAIL = "Hugues.Vinet@ircam.fr"
-
