@@ -145,7 +145,7 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                     'date_from', 'date_to', 'status', 'external_id', 'admin_link']
 
 
-class ProjectTopicAdmin(admin.ModelAdmin):
+class ProjectTopicAdmin(BaseTranslationModelAdmin):
 
     model = ProjectTopic
 

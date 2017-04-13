@@ -159,3 +159,8 @@ class ProjectCallFileTranslationOptions(TranslationOptions):
 class ProjectContactTranslationOptions(TranslationOptions):
 
     pass
+
+@register(ProjectTopic)
+class ProjectTopicTranslationOptions(TranslationOptions):
+
+    fields = ('name', 'description')

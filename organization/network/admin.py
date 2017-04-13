@@ -111,7 +111,7 @@ class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
     first_fields = ['name',]
 
 
-class OrganizationRoleAdmin(admin.ModelAdmin):
+class OrganizationRoleAdmin(BaseTranslationModelAdmin):
 
     model = OrganizationRole
 
