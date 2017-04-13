@@ -60,7 +60,7 @@ class Project(Displayable, Period, RichText):
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     program = models.ForeignKey('ProjectProgram', verbose_name=_('project program'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
     program_type = models.ForeignKey('ProjectProgramType', verbose_name=_('project program type'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
+    # call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
     lead_team = models.ForeignKey('organization-network.Team', verbose_name=_('lead team'), related_name='leader_projects', blank=True, null=True)
     lead_organization = models.ForeignKey('organization-network.Organization', verbose_name=_('lead organization'), related_name='leader_projects', blank=True, null=True)
     teams = models.ManyToManyField('organization-network.Team', verbose_name=_('teams'), related_name='partner_projects', blank=True)
@@ -124,14 +124,6 @@ class ProjectProgramType(Named):
     class Meta:
         verbose_name = _('program type')
         verbose_name_plural = _("program types")
-        ordering = ['name',]
-
-
-class ProjectCall(Named):
-
-    class Meta:
-        verbose_name = _('project call')
-        verbose_name_plural = _("project calls")
         ordering = ['name',]
 
 
@@ -208,27 +200,27 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
             self.name = self.title
         if not self.title and self.name:
             self.title = self.name
-        super(ProjectCall, self).save(args, kwargs)
+        super('ProjectCall', self).save(args, kwargs)
 
 
 class ProjectCallBlock(Block):
 
-    call = models.ForeignKey(ProjectCall, verbose_name=_('project call blocks'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call blocks'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallImage(Image):
 
-    call = models.ForeignKey(ProjectCall, verbose_name=_('project call image'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call image'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallFile(File):
 
-    call = models.ForeignKey(ProjectCall, verbose_name=_('project call file'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call file'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallLink(Link):
 
-    call = models.ForeignKey(ProjectCall, verbose_name=_('project call link'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call link'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectDemo(Displayable, RichText, URL):
@@ -400,4 +392,3 @@ class ProjectResidency(Displayable, Period, RichText):
 class ProjectResidencyFile(File):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('project residency file'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
-

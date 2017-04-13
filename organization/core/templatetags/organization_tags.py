@@ -236,10 +236,11 @@ def filter_content(dynamic_contents):
     dict["event"] = []
     dict["other"] = []
     for dc in dynamic_contents:
-        if dc.content_object._meta.model_name== "event":
-            dict["event"].append(dc)
-        else :
-            dict["other"].append(dc)
+        if dc.content_object:
+            if dc.content_object._meta.model_name== "event":
+                dict["event"].append(dc)
+            else :
+                dict["other"].append(dc)
     return dict
 
 def get_vars(object):
@@ -257,4 +258,3 @@ def get_value(dict, value):
 @register.filter(name='times')
 def times(number):
     return range(number)
-
