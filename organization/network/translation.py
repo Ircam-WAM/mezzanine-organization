@@ -243,4 +243,4 @@ class PersonActivityTimeSheetTranslationOptions(TranslationOptions):
 @register(OrganizationRole)
 class OrganizationRoleTranslationOptions(TranslationOptions):
 
-    fields = []
+    fields = ['name', 'description']
