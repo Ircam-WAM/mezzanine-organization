@@ -175,7 +175,7 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
             self.lon = lon
 
     def get_absolute_url(self):
-        role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        role, c = OrganizationRole.objects.get_or_create(key='Producer')
         if self.role == role:
             return reverse("organization-producer-detail", kwargs={"slug": self.slug})
         # TODO: Default organization view?
@@ -323,9 +323,14 @@ class OrganizationType(Named):
 class OrganizationRole(Named):
     """Roles of Organizations"""
 
+    key = models.CharField(_('key'), blank=False, null=False, unique= True, max_length=128, default="unknown")
+
     class Meta:
         verbose_name = _('organization role')
-        ordering = ['name',]
+        ordering = ['key',]
+
+    def __str__(self):
+        return self.key
 
 
 class OrganizationContact(Person):
