@@ -38,9 +38,7 @@
 {% endblock %}
 
 
-{% block page_class %}
-    object
-{% endblock %}
+
 
 
 {% block body_class %}
@@ -79,6 +77,43 @@
 {% endblock %}
 
 
+{% block main %}
+<div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-16 col-md-10 col-md-push-3 tac">
+                <h1 class="section-title section-title--uppercase section-title--main section-title--underline">{% trans "Available Projects" %}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
+                <div class="page__content">
+                    <div class="container">
+                        <div class="row">
+                            {% for object in object_list %}
+                                <div class="col-xs-8">
+                                    {% with app_label=object|app_label_short classname=object|classname|lower  %}
+                                        {% with app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"_ict_card.html" as template %}
+                                            {% include template %}
+                                        {% endwith %}
+                                    {% endwith %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% pagination_for object_list %}
+</div>
+
+{% endblock %}
+
+
+{% comment %}
 {% block page_content %}
 
     <div class="row">
@@ -104,3 +139,4 @@
     </div>
 
 {% endblock %}
+{% endcomment %}
