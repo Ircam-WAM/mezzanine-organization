@@ -89,8 +89,12 @@
             <div class="list_content">
                 <p><b>{% trans "Full details" %}: </b><a href="{% url 'organization-ict-project-detail' project.slug %}">{{ project }}</a></p>
                 <p><b>{% trans "Brief description" %}: </b>{{ project.public_data.all.0.brief_description }}<p>
-                <img src="{{ MEDIA_URL }}{{ project.public_data.all.0.image }}" />
-                <div class=list_image_credits>{% trans "Credits"%}: {{ project.public_data.all.0.image_credits }}</div>
+                <div class="list_img">
+                    <img src="{{ MEDIA_URL }}{{ project.public_data.all.0.image }}" />
+                    {% if project.public_data.all.0.image_credits %}
+                        <p>{% trans "Credits"%}: {{ project.public_data.all.0.image_credits }}</p>
+                    {% endif %}
+                </div>
             </div>
         {% empty %}
             <div class="chapo">
