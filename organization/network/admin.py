@@ -97,7 +97,6 @@ class ProducerDataInline(StackedDynamicInlineAdmin):
 class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Organization
-    #TODO: ProducerDataInline only if (role == "Producer")?
     inlines = [ OrganizationServiceInline,
                 OrganizationPlaylistInline,
                 OrganizationImageInline,
@@ -106,11 +105,15 @@ class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
                 OrganizationLinkedBlockInlineAdmin,
                 ProducerDataInline,
                  ]
-    list_display = ['name', 'type', 'admin_thumb']
+    list_display = ['name', 'type', 'role', 'admin_thumb']
     list_filter = ['is_on_map', 'type', 'role', 'validation_status']
     search_fields = ['name',]
     first_fields = ['name',]
 
+
+class OrganizationRoleAdmin(BaseTranslationModelAdmin):
+
+    model = OrganizationRole
 
 
 class PageProductListInline(TabularDynamicInlineAdmin):
@@ -319,7 +322,7 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
 admin.site.register(OrganizationLinked, OrganizationLinkedAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(OrganizationType)
-admin.site.register(OrganizationRole)
+admin.site.register(OrganizationRole, OrganizationRoleAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(DepartmentPage, DepartmentPageAdmin)
 admin.site.register(Team, TeamAdmin)

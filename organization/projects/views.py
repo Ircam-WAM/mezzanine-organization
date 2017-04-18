@@ -24,6 +24,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.template import Context
+from django.utils.translation import ugettext_lazy as _
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
@@ -78,7 +79,7 @@ class ProjectICTDetailView(SlugMixin, ProjectMixin, DetailView):
     template_name='projects/project_ict_detail.html'
 
     def get_object(self, queryset=None):
-        topic, c = ProjectTopic.objects.get_or_create(name='ICT')
+        topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         project = super(ProjectICTDetailView, self).get_object()
         if project.topic != topic:
             raise Http404()
@@ -163,7 +164,7 @@ class ProjectICTCreateView(ProjectCallMixin, CreateWithInlinesView):
         self.object = form.save()
         self.call = ProjectCall.objects.get(slug=self.kwargs['slug'])
         self.object.call = self.call
-        self.object.topic, c = ProjectTopic.objects.get_or_create(name='ICT')
+        self.object.topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         self.status = 1
         self.object.save()
 
@@ -206,7 +207,7 @@ class ProjectICTListView(ListView):
     template_name='projects/project_ict_list.html'
 
     def get_queryset(self):
-        topic, c = ProjectTopic.objects.get_or_create(name='ICT')
+        topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         #TODO: Filter by Call
         qs = Project.objects.filter(topic=topic).filter(validation_status=3).select_related().order_by('title')
         return qs

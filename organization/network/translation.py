@@ -238,3 +238,9 @@ class ActivityWeeklyHourVolumeTranslationOptions(TranslationOptions):
 class PersonActivityTimeSheetTranslationOptions(TranslationOptions):
 
     fields = []
+
+
+@register(OrganizationRole)
+class OrganizationRoleTranslationOptions(TranslationOptions):
+
+    fields = ['name', 'description']

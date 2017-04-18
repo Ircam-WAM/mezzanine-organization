@@ -25,6 +25,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView
 from django.views.generic import View
 from django.db.models.fields.related import ForeignKey
+from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
 from dal import autocomplete
@@ -163,7 +164,7 @@ class ProducerDetailView(SlugMixin, DetailView):
     template_name='network/organization_producer_detail.html'
 
     def get_object(self, queryset=None):
-        role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        role, c = OrganizationRole.objects.get_or_create(key='Producer')
         producer = super(ProducerDetailView, self).get_object()
         if producer.role != role:
             raise Http404()
@@ -179,7 +180,7 @@ class ProducerListView(ListView):
     template_name='network/organization_producer_list.html'
 
     def get_queryset(self):
-        role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        role, c = OrganizationRole.objects.get_or_create(key='Producer')
         qs = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
         return qs
 
@@ -193,7 +194,7 @@ class ProducerCreateView(CreateWithInlinesView):
 
     def forms_valid(self, form, inlines):
         self.object = form.save()
-        self.object.role, c = OrganizationRole.objects.get_or_create(name='Producer')
+        self.object.role, c = OrganizationRole.objects.get_or_create(key='Producer')
         self.object.save()
         return super(ProducerCreateView, self).forms_valid(form, inlines)
 

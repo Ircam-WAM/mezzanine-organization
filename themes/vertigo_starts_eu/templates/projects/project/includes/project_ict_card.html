@@ -1,0 +1,29 @@
+{% extends "core/inc/generic_card.html" %}
+{% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
+
+{% block metatitle %}
+    {{ object.title }}
+{% endblock %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block url %}
+    {{ object.get_absolute_url }}
+{% endblock %}
+{% block image %}
+    {% if object.public_data.all.0.image %}
+        <figure class="article-box__image">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ MEDIA_URL }}{% thumbnail object.public_data.all.0.image 427 286 top=0.5 left=article.photo_alignment|get_photo_alignment %}" class="lazyload" />
+        </figure>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {{ object.public_data.all.0.brief_description|richtext_filters|safe|truncatechars_html:200 }}
+{% endblock %}
+
+{% block subtitle %}
+    {{ object.sub_title }}
+{% endblock %}

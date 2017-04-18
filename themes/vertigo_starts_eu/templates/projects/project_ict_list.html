@@ -23,7 +23,7 @@
 
 
 {% block meta_title %}
-    {% trans "R&amp;D Project List" %}
+    {% trans "Available Projects" %}
 {% endblock %}
 
 
@@ -38,9 +38,7 @@
 {% endblock %}
 
 
-{% block page_class %}
-    object
-{% endblock %}
+
 
 
 {% block body_class %}
@@ -73,12 +71,49 @@
 {% block page_title %}
 
     <h1 class="dotted">
-        {% trans "R&amp;D Project List" %}
+        {% trans "Available Projects" %}
     </h1>
 
 {% endblock %}
 
 
+{% block main %}
+<div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-16 col-md-10 col-md-push-3 tac">
+                <h1 class="section-title section-title--uppercase section-title--main section-title--underline">{% trans "Available Projects" %}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
+                <div class="page__content">
+                    <div class="container">
+                        <div class="row">
+                            {% for object in object_list %}
+                                <div class="col-xs-8">
+                                    {% with app_label=object|app_label_short classname=object|classname|lower  %}
+                                        {% with app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"_ict_card.html" as template %}
+                                            {% include template %}
+                                        {% endwith %}
+                                    {% endwith %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% pagination_for object_list %}
+</div>
+
+{% endblock %}
+
+
+{% comment %}
 {% block page_content %}
 
     <div class="row">
@@ -89,13 +124,19 @@
             <div class="list_content">
                 <p><b>{% trans "Full details" %}: </b><a href="{% url 'organization-ict-project-detail' project.slug %}">{{ project }}</a></p>
                 <p><b>{% trans "Brief description" %}: </b>{{ project.public_data.all.0.brief_description }}<p>
-                <p><img src="{{ MEDIA_URL }}{{ project.public_data.all.0.image }}" /></p>
+                <div class="list_img">
+                    <img src="{{ MEDIA_URL }}{{ project.public_data.all.0.image }}" />
+                    {% if project.public_data.all.0.image_credits %}
+                        <p>{% trans "Credits"%}: {{ project.public_data.all.0.image_credits }}</p>
+                    {% endif %}
+                </div>
             </div>
         {% empty %}
             <div class="chapo">
-                <p><b>{% trans "No projects yet" %}.</b></p>
+                <p><b>{% trans "No available projects yet" %}.</b></p>
             </div>
         {% endfor %}
     </div>
 
 {% endblock %}
+{% endcomment %}

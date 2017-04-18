@@ -9,7 +9,11 @@
 }
 .list_content {
     display: none;
-    padding : 5px;
+    padding: 5px;
     border-style: solid;
     border-color: #50E3C2;
+}
+.list_img {
+    position: relative;
+    text-align: center;
 }

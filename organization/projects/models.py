@@ -67,7 +67,7 @@ class Project(Displayable, Period, RichText):
     teams = models.ManyToManyField('organization-network.Team', verbose_name=_('teams'), related_name='partner_projects', blank=True)
     organizations = models.ManyToManyField('organization-network.Organization', verbose_name=_('organizations'), blank=True)
     website = models.URLField(_('website'), max_length=512, blank=True)
-    topic = models.ForeignKey('ProjectTopic', verbose_name=_('topic'), related_name='projects', blank=True, null=True)
+    topic = models.ForeignKey('ProjectTopic', verbose_name=_('topic'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
     referring_person = models.ManyToManyField('organization-network.Person', verbose_name=_('Referring Person'), related_name='projects_referring_person', blank=True)
     manager =  models.ManyToManyField('organization-network.Person', verbose_name=_('Manager'), related_name='projects_manager', blank=True)
     validation_status = models.IntegerField(_('validation status'), choices=PROJECT_STATUS_CHOICES, default=1)
@@ -81,7 +81,7 @@ class Project(Displayable, Period, RichText):
         return self.title
 
     def get_absolute_url(self):
-        ict_topic, c = ProjectTopic.objects.get_or_create(name='ICT')
+        ict_topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         if self.topic == ict_topic:
             return reverse("organization-ict-project-detail", kwargs={"slug": self.slug})
         return reverse("organization-project-detail", kwargs={"slug": self.slug})
@@ -100,18 +100,19 @@ class Project(Displayable, Period, RichText):
 
 class ProjectTopic(Named):
 
+    key = models.CharField(_('key'), blank=False, null=False, unique= True, max_length=128, default="unknown")
     parent = models.ForeignKey('ProjectTopic', verbose_name=_('parent topic'), related_name='topics', blank=True, null=True)
 
     class Meta:
         verbose_name = _('project topic')
         verbose_name_plural = _("project topics")
-        ordering = ['name',]
+        ordering = ['key',]
 
     def __str__(self):
         if self.parent:
-            return ' - '.join((self.parent.name, self.name))
+            return ' - '.join((self.parent.name, self.key))
         else:
-            return self.name
+            return self.key
 
 
 class ProjectProgram(Named):
