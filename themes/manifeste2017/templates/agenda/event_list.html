@@ -33,6 +33,10 @@
                     <h1 class="section-title section-title--uppercase section-title--main">{% trans "Events" %}</h1>
                 </div>
             </div>
+            <form action="" method="GET">
+                {{ filter_form }}
+                <input type="submit" value="Submit" />
+            </form>
 
             {% keywords_for mezzanine_agenda.event as tags %}
             {% if tags %}
