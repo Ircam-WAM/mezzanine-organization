@@ -38,6 +38,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
 
 from mezzanine.pages.models import Page
 from mezzanine.core.models import RichText, Displayable, Slugged
@@ -256,6 +257,8 @@ class Person(Displayable, AdminThumbMixin, Address):
             self.last_name = ' '.join(names[1:])
 
     def save(self, *args, **kwargs):
+        if not self.title or self.title == '-':
+            self.title = self.first_name + ' ' + self.last_name
         super(Person, self).save(args, kwargs)
         for activity in self.activities.all():
             update_activity(activity)
