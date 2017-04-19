@@ -23,6 +23,7 @@ from django import forms
 from django.http import HttpResponse
 from copy import deepcopy
 from dal import autocomplete
+from modeltranslation.admin import TranslationTabularInline
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
@@ -88,10 +89,17 @@ class OrganizationServiceInline(StackedDynamicInlineAdmin):
     model = OrganizationService
 
 
+class OrganizationEventLocationInline(TranslationTabularInline):
+
+    extra = 1
+    model = OrganizationEventLocation
+
+
 class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Organization
-    inlines = [ OrganizationServiceInline,
+    inlines = [ OrganizationEventLocationInline,
+                OrganizationServiceInline,
                 OrganizationPlaylistInline,
                 OrganizationImageInline,
                 OrganizationBlockInline,
@@ -103,7 +111,6 @@ class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
     list_filter = ['is_on_map',]
     search_fields = ['name',]
     first_fields = ['name',]
-
 
 
 class PageProductListInline(TabularDynamicInlineAdmin):

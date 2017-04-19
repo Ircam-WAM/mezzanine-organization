@@ -306,6 +306,15 @@ class OrganizationType(Named):
         ordering = ['name',]
 
 
+class OrganizationEventLocation(models.Model):
+
+    organization = models.ForeignKey('organization-network.Organization', verbose_name=_('Organization'), related_name='event_locations', blank=True, null=True, on_delete=models.SET_NULL)
+    event_location = models.ForeignKey('mezzanine_agenda.EventLocation', verbose_name=_('Event location'), related_name='organizations', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Organization'
+
+
 class OrganizationContact(Person):
 
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='contacts', blank=True, null=True, on_delete=models.SET_NULL)

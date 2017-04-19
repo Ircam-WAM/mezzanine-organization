@@ -238,3 +238,9 @@ class PersonActivityTimeSheetTranslationOptions(TranslationOptions):
 class ProjectActivityTranslationOptions(TranslationOptions):
 
     fields = []
+
+
+@register(OrganizationEventLocation)
+class OrganizationEventLocationTranslationOptions(TranslationOptions):
+
+    fields = []
