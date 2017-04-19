@@ -61,18 +61,20 @@
 
 {% block page_title %}
 
-    <h1 class="dotted">{{ object.title }}</h1>
-
-    {% if object.website %}
-        <div class="chapo">
-            <p><a href="{{ object.website }}">{{ object.website }}</a></p>
-        </div>
-    {% endif %}
-
 {% endblock %}
 
 
 {% block page_content %}
+
+    <div class="row">
+        <div class="col-sm-16 col-md-10 col-md-push-3 tac">
+            <h1 class="section-title section-title--uppercase section-title--main section-title--underline">{% trans "ICT Project" %}</h1>
+        </div>
+    </div>
+
+    <div class="detail_title">
+        <h1 class="dotted">{{ object.title }}</h1>
+    </div>
 
     <div class="detail_section">
         <div class="detail_img">
@@ -86,6 +88,9 @@
         <div class="detail_info">
             {% if object.public_data.all.0.brief_description %}
                 <h2>{{ object.public_data.all.0.brief_description }}</h2>
+            {% endif %}
+            {% if object.website %}
+                <p><a href="{{ object.website }}">{{ object.website }}</a></p>
             {% endif %}
             {% if object.date_from and object.date_to %}
                 <p>{% trans "From" %} {{ object.date_from }} {% trans "to" %} {{ object.date_to }}</p>
@@ -130,7 +135,7 @@
     <div class="detail_separator"></div>
 
     <div class="detail_section">
-        <div class="page__slider">
+        <div class="page__slider detail_slider">
             <ul class="slider-page" data-slider-page>
                 {% for image in object.user_images.all %}
                     <li class="slider-page__slide" data-src="{{ MEDIA_URL }}{{ image.file }}">
