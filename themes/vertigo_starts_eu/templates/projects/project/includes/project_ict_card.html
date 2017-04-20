@@ -1,5 +1,13 @@
 {% extends "core/inc/generic_card.html" %}
-{% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
+{% load mezzanine_tags staticfiles keyword_tags i18n organization_tags pages_tags %}
+
+{% block extra_head %}
+
+    {% compress css %}
+    <link rel="stylesheet" href="{% static "css/list_items.css" %}">
+    {% endcompress %}
+
+{% endblock %}
 
 {% block metatitle %}
     {{ object.title }}
@@ -14,8 +22,12 @@
 {% endblock %}
 {% block image %}
     {% if object.public_data.all.0.image %}
-        <figure class="article-box__image">
-            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ MEDIA_URL }}{% thumbnail object.public_data.all.0.image 427 286 top=0.5 left=article.photo_alignment|get_photo_alignment %}" class="lazyload" />
+        <figure class="list_image">
+            {% if object.public_data.all.0.imageIsPanoramic %}
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ MEDIA_URL }}{% thumbnail object.public_data.all.0.image 427 0 padding=true %}" class="lazyload" />
+            {% else %}
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-original="{{ MEDIA_URL }}{% thumbnail object.public_data.all.0.image 0 286 padding=true %}" class="lazyload" />
+            {% endif %}
         </figure>
     {% endif %}
 {% endblock %}

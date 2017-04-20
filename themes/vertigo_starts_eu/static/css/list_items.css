@@ -1,19 +1,23 @@
-.list_header {
-    padding: 0.5em;
-    cursor: pointer;
-    font-weight: bold;
-    text-transform: uppercase;
+.list_image {
+    display: block;
+    margin: auto;
+    width: 427px;
+    max-width: 100%;
+    height: 286px;
+    max-height: 100%;
+    -webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
 }
-.list_header:hover {
-    background: #50E3C2;
-}
-.list_content {
-    display: none;
-    padding: 5px;
-    border-style: solid;
-    border-color: #50E3C2;
-}
-.list_img {
-    position: relative;
-    text-align: center;
+
+.list_image img {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
 }

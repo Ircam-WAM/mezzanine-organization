@@ -29,6 +29,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
 from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
+from django.core.files.images import get_image_dimensions
 
 from organization.core.models import *
 from organization.pages.models import *
@@ -353,6 +354,19 @@ class ProjectPublicData(models.Model):
     class Meta:
         verbose_name = 'Project public data'
         verbose_name_plural = 'Project public data'
+
+    @property
+    def imageIsPanoramic(self):
+        try:
+            img_width, img_height = get_image_dimensions(self.image.file)
+            # Images go in a 427x286 box -> 3:2 ratio
+            if (img_width / img_height) >= 1.5:
+                panoramic = True
+            else:
+                panoramic = False
+        except:
+            panoramic = True
+        return panoramic
 
 
 class ProjectPrivateData(models.Model):
