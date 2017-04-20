@@ -18,40 +18,49 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-$module: ".person-list-box";
+$module: ".timesheet";
 
 #{$module} {
 
-    position: relative;
-    @include margin-top(2);
-    @include margin-bottom(1);
 
-    &__image {
+    &-table {
 
-        @include mq($until: xs) {
+        font-size: 15px;
 
-            margin: 0;
-            @include margin-bottom(1);
-
+        &-header {
+            background-color : $color-black;
+            color : $color-white;
+            h3 {
+                font-size : 1.25em
+            }
+        }
+        &-cell {
+            width: 100%;
+            border: solid 1px $color-gray;
+            td {
+                text-align: center;
+            }
         }
 
-        margin:-150px auto 20px auto;
-        width: 135px;
-        height: 135px;
-        border-radius: 135px;
+        &-legend {
+            padding-top : 89px;
+            width: 108px;
 
-        img {
-            border-radius: 135px;
+            table {
+                width: 108px;
+                border: solid 1px $color-gray;
+            }
+        }
+
+        td {
+            vertical-align: top;
+            min-width: 88px;
+        }
+        .wys-button-yellow {
+            font-size: 0.9rem;
+            margin-left: auto;
+            margin-right: auto;
         }
 
     }
-
-    &__desc {
-        @include font-size(s);
-        @include line-height(.75);
-        @include typeface(serif);
-        @include margin(1 0 2 0);
-        font-weight: weight(light);
-    }
-
 }

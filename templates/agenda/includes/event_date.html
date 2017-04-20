@@ -1,4 +1,5 @@
 {% load event_tags pages_tags mezzanine_tags organization_tags i18n  %}
+
 {% with event.periods.all as periods %}
     <!-- Start date only  -->
     {% if event.start and not event.end %}

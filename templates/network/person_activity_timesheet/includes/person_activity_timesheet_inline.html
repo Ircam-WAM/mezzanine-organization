@@ -1,7 +1,9 @@
 {% load organization_tags %}
-<table>
+<table class="timesheet-table-cell">
     <tr>
-        <th>{{ timesheet.month|month_name }}</th>
+        <th>
+            <small>{{ timesheet.project.title }}</small>
+        </th>
     </tr>
     <tr>
         <td>

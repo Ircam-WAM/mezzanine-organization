@@ -584,7 +584,7 @@ class PersonActivityTimeSheet(models.Model):
     class Meta:
         verbose_name = _('activity timesheet')
         verbose_name_plural = _('activity timesheets')
-        ordering = ['month','-year']
+        ordering = ['-year', 'month', 'project']
         unique_together = (("activity", "project", "month", "year"),)
 
 
@@ -599,7 +599,7 @@ class ProjectActivity(Titled, Orderable):
     class Meta:
         verbose_name = _('project activity')
         verbose_name_plural = _('project activities')
-        unique_together = (("project", "default_percentage",),)
+        unique_together = (("activity", "project", "default_percentage",),)
 
 
     def save(self, **kwargs):
