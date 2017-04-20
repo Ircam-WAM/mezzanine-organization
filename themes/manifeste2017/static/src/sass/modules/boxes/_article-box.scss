@@ -51,33 +51,44 @@ $module: ".article-box";
 
         background: $color-main;
 
-        .article-box__image-container {
-            //background: $color-main;
-            background-image: -webkit-linear-gradient($color-main 0%, $color-main 100%);
-            background-image: -o-linear-gradient($color-main 0%, $color-main 100%);
-            background-image: linear-gradient($color-main 0%, $color-main 100%);
+        @include mq($until: sm) {
+            background: white;
+        }
+
+        @include mq($from: sm) {
+            .article-box__image-container {
+                //background: $color-main;
+                background-image: -webkit-linear-gradient($color-main 0%, $color-main 100%);
+                background-image: -o-linear-gradient($color-main 0%, $color-main 100%);
+                background-image: linear-gradient($color-main 0%, $color-main 100%);
+            }
         }
 
         .article-box__image {
 
             img {
                 opacity: 0;
+                @include mq($until: sm) {
+                    opacity: 1;
+                }
             }
 
         }
 
-        .article-box__title {
-            color: white;
-        }
-        .article-box__tags {
-            color: white;
-        }
-        .article-box__subtitle {
-            color: white;
-        }
-        .article-box__desc {
-            color: white;
-            height: auto;
+        @include mq($from: sm) {
+            .article-box__title {
+                color: white;
+            }
+            .article-box__tags {
+                color: white;
+            }
+            .article-box__subtitle {
+                color: white;
+            }
+            .article-box__desc {
+                color: white;
+                height: auto;
+            }
         }
 
         .article-box__content {
@@ -90,6 +101,10 @@ $module: ".article-box";
             width: 100%;
             height: 100%;
             @include padding(.25 .50 .25 .50);
+
+            @include mq($until: sm) {
+                position: relative;
+            }
 
         }
 
@@ -200,7 +215,7 @@ $module: ".article-box";
         width: 100%;
 
         @include mq($until: lg) {
-            top: 200px;
+            top: 215px;
         }
 
         @include mq($until: md) {
@@ -210,6 +225,7 @@ $module: ".article-box";
         @include mq($until: sm) {
             position: relative;
             top: 0px;
+            display: block;
         }
 
         .slider-home & {
