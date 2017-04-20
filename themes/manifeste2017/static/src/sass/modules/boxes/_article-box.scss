@@ -323,7 +323,7 @@ $module: ".article-box";
 
         height: auto;
 
-        &:after {
+        /*&:after {
 
             content: "";
             display: block;
@@ -335,15 +335,19 @@ $module: ".article-box";
             left: 0;
             right: 0;
 
-        }
+        }*/
 
         #{$module}__title {
 
-            @include font-size(xl);
+            @include font-size(l);
             @include line-height(1.25);
             @include typeface(sans-serif);
             @include margin(.25 0 .25 0);
             font-weight: weight(heavy);
+
+            text-align: center;
+            color: $color-black;
+            text-transform: uppercase;
 
         }
 
@@ -355,42 +359,64 @@ $module: ".article-box";
 
         #{$module}__desc {
             @include line-height(1);
+
+            display: none !important;
         }
 
         #{$module}__content {
+
+            position: absolute;
+            top: auto;
+            bottom: 0;
+
+            @include padding-bottom(3);
 
             @include mq($until: xs) {
                 height: auto;
             }
 
-            /*&:after {
+        }
 
-                @include mq($until: xs) {
-                    display: none;
-                }
+        #{$module}__image-container {
+            //background: $color-background;
+            @include transition(all 0.5s ease-in-out);
 
-                content: "";
-                display: block;
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 100px;
-                background-color: rgba($color-background, 0);
-                @include filter-gradient(rgba($color-background, 1), rgba($color-background, 1), vertical);
-                @include background-image(linear-gradient(top, rgba($color-background, 0) 0%, rgba($color-background, 1) 50%));
-            }*/
-
+            /* Rectangle 9: */
+            background: $color-main;
         }
 
         &:hover {
             border: 0;
             background-color: $color-background;
+            box-shadow: 0 5px 20px rgba($color-main, 0.5);
+
+            #{$module}__image-container {
+                background: black;
+            }
+
+            #{$module}__image {
+                opacity: 1;
+
+                img {
+                    -webkit-filter: grayscale(0);
+                    filter: grayscale(0);
+                    opacity: 1;
+                }
+            }
+
             #{$module}__title {
                 color: $color-main;
             }
             #{$module}__desc {
                 color: white;
+            }
+
+            #{$module}__content {
+
+                top: auto;
+                height: auto;
+                @include padding-bottom(3);
+
             }
         }
 
