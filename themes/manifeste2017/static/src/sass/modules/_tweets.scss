@@ -9,6 +9,13 @@ $module: ".tweets";
     &__tweet {
 
         @include margin-bottom(1);
+        width: 50%;
+        display: inline-block;
+        font-size: 0;
+
+        @include mq($until: sm) {
+            width: 100%;
+        }
 
     }
 
@@ -29,15 +36,15 @@ $module: ".tweets";
 
         margin: 0;
         @include margin-bottom(.5);
-        color: white;
-        @include typeface(sans-serif);
+        color: $color-black;
+        @include typeface(serif);
         @include font-size(m);
-        font-weight: weight(regular);
+        font-weight: weight(bold);
 
         a {
             display: inline-block;
             @include margin-left(.5);
-            color: white;
+            color: $color-black;
 
             &:hover {
                 color: $color-main;
@@ -54,13 +61,14 @@ $module: ".tweets";
 
     &__tweet-body {
 
-        @include typeface(sans-serif);
+        @include padding-left(.5);
+        @include typeface(serif);
         @include font-size(m);
         font-weight: weight(light);
         a {
             display: inline-block;
             @include margin-right(.25);
-            color: white;
+            color: $color-black;
             font-weight: weight(regular);
 
             &:hover {
