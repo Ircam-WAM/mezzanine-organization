@@ -47,7 +47,7 @@
                     {% if teams %}
                         <strong>{% trans 'Team' %} : </strong>
                         {% for team in teams %}
-                            <a href="{% url "page" team.pages.all.0 %}">{{ team.name }}</a>
+                            <a href="{% url "page" team.pages.all.0.slug %}">{{ team.name }}</a>
                             {% if organizations %}({% for organization in organizations %}{{ organization.name }}{% if not forloop.last %}, {% endif %}{% endfor %})
                             {% elif employers %}({% for employer in employers %}{{ employer.name }}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}
                             <br />
