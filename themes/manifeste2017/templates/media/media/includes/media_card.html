@@ -7,7 +7,7 @@
                     {% if object.poster_url %}
                         <img src="{{ object.poster_url }}">
                     {% elif images %}
-                        <img class="lazyload" src="{{ MEDIA_URL }}{% thumbnail images.0.file 720 435 %}" data-original="">
+                        <img class="lazyload" src="{{ MEDIA_URL }}{% thumbnail images.0.file 814 600 %}" data-original="">
                     {% else %}
                         <div class="media-box__placeholder"></div>
                     {% endif %}

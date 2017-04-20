@@ -25,6 +25,7 @@ $module: ".media-box";
     position: relative;
     display: block;
     text-align: left;
+    background: white;
 
     @include margin-bottom(1);
     @include transition(all 0.5s ease-in-out);
@@ -55,7 +56,9 @@ $module: ".media-box";
         background: $color-main;
 
         .media-box__image-container {
-            background: $color-main;
+            background-image: -webkit-linear-gradient($color-main 0%, $color-main 100%);
+            background-image: -o-linear-gradient($color-main 0%, $color-main 100%);
+            background-image: linear-gradient($color-main 0%, $color-main 100%);
         }
 
         .media-box__image {
@@ -64,12 +67,16 @@ $module: ".media-box";
                 opacity: 0;
             }
 
+            &:after {
+                opacity: 0;
+            }
+
         }
 
         .media-box__title {
             color: white;
         }
-        .media-box__tags {
+        .media-box__type {
             color: white;
         }
         .media-box__subtitle {
@@ -89,7 +96,7 @@ $module: ".media-box";
             left: 0;
             width: 100%;
             height: 100%;
-            @include padding(.25 .75 .25 .75);
+            @include padding(.25 .50 .25 .50);
 
         }
 
@@ -98,6 +105,7 @@ $module: ".media-box";
     &__image-container {
         //background: $color-background;
         @include transition(all 0.5s ease-in-out);
+        display: block;
 
         /* Rectangle 9: */
         background-image: -webkit-linear-gradient(#6B00D5 0%, #00B3D5 100%);
@@ -114,7 +122,7 @@ $module: ".media-box";
     }
 
     &__content {
-        @include padding(.25 .75 .25 .75);
+        @include padding(.25 .50 .25 .50);
 
         @include transition(all 0.5s ease-in-out);
 
@@ -122,7 +130,7 @@ $module: ".media-box";
         overflow: hidden;
 
         position: absolute;
-        top: 215px;
+        top: 230px;
         left: 0;
         width: 100%;
 
@@ -151,7 +159,7 @@ $module: ".media-box";
         position: relative;
         overflow: hidden;
 
-        @include fluid-aspect(427 300);
+        @include fluid-aspect(814 600);
 
         img {
             display: block;
@@ -177,6 +185,7 @@ $module: ".media-box";
             left: 50%;
 
             @include transform(translateX(-50%) translateY(-50%));
+            @include transition(all 0.5s ease-in-out);
 
         }
 
@@ -206,7 +215,7 @@ $module: ".media-box";
         @include font-size(xl);
         @include line-height(1.25);
         @include typeface(sans-serif);
-        @include margin(.5 0 0 0);
+        @include margin(0 0 0 0);
         font-weight: weight(bold);
         color: $color-main;
         @include transition(color 0.5s ease-in-out);
