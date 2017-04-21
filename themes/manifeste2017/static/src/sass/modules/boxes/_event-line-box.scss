@@ -207,6 +207,7 @@ $module: ".event-line-box";
         color: $color-main;
 
         margin: 0 !important;
+        padding-right: 200px;
 
         a:not(.button) {
 
@@ -219,6 +220,11 @@ $module: ".event-line-box";
 
         }
 
+        @include mq($until: sm) {
+            color: white;
+            padding-right: 0px;
+        }
+
     }
 
     &__location {
@@ -229,6 +235,10 @@ $module: ".event-line-box";
         font-weight: weight(regular);
         color: $color-main;
         text-transform: uppercase;
+
+        @include mq($until: sm) {
+            color: white;
+        }
 
     }
 
@@ -248,6 +258,10 @@ $module: ".event-line-box";
 
         span {
 
+        }
+
+        @include mq($until: sm) {
+            color: white;
         }
 
     }

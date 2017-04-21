@@ -5,9 +5,11 @@
         {% if card_images %}
             <div class="article-box__header">
                 <a href="{{ person.get_absolute_url }}" title="{{ person.first_name }}&nbsp;{{ person.last_name }}">
-                    <figure class="article-box__image">
-                        <img class="lazyload" src="{{ MEDIA_URL }}{% thumbnail card_images.first 427 500 top=0.5 %}" alt="person"/>
-                    </figure>
+                    <div class="article-box__image-container">
+                        <figure class="article-box__image">
+                            <img class="lazyload" src="{{ MEDIA_URL }}{% thumbnail card_images.first 427 500 top=0.5 %}" alt="person"/>
+                        </figure>
+                    </div>
                 </a>
             </div>
         {% endif %}
