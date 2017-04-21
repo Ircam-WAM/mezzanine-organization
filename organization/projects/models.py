@@ -206,6 +206,17 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
             self.title = self.name
         super(ProjectCall, self).save(args, kwargs)
 
+    @property
+    def is_closed(self):
+        """Return if the current date between 'from' and 'to' dates."""
+        try:
+            current_date = datetime.date.today()
+            if current_date >= self.date_from and current_date <= self.date_to:
+                return False
+        except:
+            pass
+        return True
+
 
 class ProjectCallBlock(Block):
 
@@ -355,7 +366,8 @@ class ProjectPublicData(models.Model):
         verbose_name_plural = 'Project public data'
 
     @property
-    def imageIsPanoramic(self):
+    def image_is_panoramic(self):
+        """Return True if the image has a 3:2 ratio or bigger."""
         try:
             img_width, img_height = get_image_dimensions(self.image.file)
             # Images go in a 427x286 box -> 3:2 ratio
