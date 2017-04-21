@@ -87,6 +87,28 @@ LightSliderNetworkInit.prototype.initMarkers = function() {
             content: '<div class="map-infowindow"><div class="map-infowindow__image"><a href="' + $(this).attr('data-marker-url') + '" target="_blank"><img src="' + $(this).attr('data-marker-image') + '" /></a></div><div class="map-infowindow__content"><div class="map-infowindow__title">' + $(this).find('[data-marker-title]').text() + '</div><div class="map-infowindow__subtitle">' + $(this).find('[data-marker-subtitle]').text() + '</div><p>' + $(this).find('[data-marker-description]').text() + '</p></div></div>'
         });
 
+        google.maps.event.addListener(info, 'domready', function() {
+
+            // Reference to the DIV which receives the contents of the infowindow using jQuery
+            var iwOuter = $('.gm-style-iw');
+
+            /* The DIV we want to change is above the .gm-style-iw DIV.
+            * So, we use jQuery and create a iwBackground variable,
+            * and took advantage of the existing reference to .gm-style-iw for the previous DIV with .prev().
+            */
+            var iwBackground = iwOuter.prev();
+
+            iwOuter.prev().css({'display' : 'none'});
+            iwOuter.next().css({'top' : '100px'});
+
+            // Remove the background shadow DIV
+            iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+            // Remove the white background DIV
+            iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+        });
+
         obj.info = info;
 
         obj.marker.addListener('click', function() {

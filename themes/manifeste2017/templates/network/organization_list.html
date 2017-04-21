@@ -23,11 +23,6 @@
     <div style="position: relative;">
         <div class="map" id="network-map">
         </div>
-        <div class="map-legend">
-            {% for type in organization_types %}
-                <div class="map-legend__item map-legend__item--{{ type.1 }}">{{ type.0 }}</div>
-            {% endfor %}
-        </div>
     </div>
     <div class="container hide">
         <div class="row">
@@ -35,9 +30,9 @@
                 <div class="slider-network">
                     <ul class="slider-network__slider" data-slider-network>
                         {% for organization in organizations %}
-                            <li class="slider-network__slide" data-marker-url="{{organization.url}}" data-marker-color="{{ organization.type.css_class }}" {% with organization.images.all|get_type:'logo' as images %}{% if images %}data-marker-image="{{ MEDIA_URL }}{{images.first.file}}"{% endif %}{% endwith %} data-marker-idx="{{forloop.counter0}}" data-marker-lat="{{ organization.lat }}" data-marker-lng="{{ organization.lon }}">
+                            <li class="slider-network__slide" data-marker-url="{{organization.url}}" data-marker-color="green" {% with organization.images.all|get_type:'card' as images %}{% if images %}data-marker-image="{{ MEDIA_URL }}{{images.first.file}}"{% endif %}{% endwith %} data-marker-idx="{{forloop.counter0}}" data-marker-lat="{{ organization.lat }}" data-marker-lng="{{ organization.lon }}">
                                 <div class="slider-network__slide-image"
-                                    {% with organization.images.all|get_type:'logo' as images %}
+                                    {% with organization.images.all|get_type:'card' as images %}
                                         {% if images %}
                                             style="background-image: url('{{ MEDIA_URL }}{{images.first.file}}');"
                                         {% endif %}
