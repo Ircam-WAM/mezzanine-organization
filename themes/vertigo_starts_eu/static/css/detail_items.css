@@ -56,3 +56,14 @@
     background-color: rgba(79,227,194,1);
     background-blend-mode: multiply;
 }
+.detail_button {
+    text-align: center;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 150%;
+    padding: 20px 50px;
+    display: block;
+    width: 150px;
+    margin: auto;
+    margin-top: 50px;
+}
