@@ -96,6 +96,24 @@ class ProjectAdmin(admin.ModelAdmin):
     model = Project
 
 
+class ProjectPublicDataAdmin(admin.ModelAdmin):
+
+    model = ProjectPublicData
+    list_display = ['project',]
+
+
+class ProjectPrivateDataAdmin(admin.ModelAdmin):
+
+    model = ProjectPrivateData
+    list_display = ['project',]
+
+
+class ProjectContactAdmin(admin.ModelAdmin):
+
+    model = ProjectContact
+    list_display = ['project',]
+
+
 class ProjectPublicDataInline(StackedDynamicInlineAdmin):
 
     model = ProjectPublicData
@@ -210,6 +228,9 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
 
 
 admin.site.register(Project, ProjectAdminDisplayable)
+admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)
+admin.site.register(ProjectPrivateData, ProjectPrivateDataAdmin)
+admin.site.register(ProjectContact, ProjectContactAdmin)
 admin.site.register(ProjectProgram, ProjectProgramAdmin)
 admin.site.register(ProjectProgramType, ProjectProgramTypeAdmin)
 admin.site.register(ProjectTopic, ProjectTopicAdmin)
