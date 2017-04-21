@@ -22,6 +22,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 import calendar
+import ast
 from re import match
 from django.http import QueryDict
 from mezzanine.pages.models import Page
@@ -253,6 +254,8 @@ def has_alinea(page):
 
 @register.filter
 def get_value(dict, value):
+    if dict.__class__.__name__ == "str":
+        dict = ast.literal_eval(dict)
     return dict[value]
 
 @register.filter(name='times')

@@ -27,7 +27,6 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import *
 from django.shortcuts import get_object_or_404
-from itertools import chain
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
@@ -203,4 +202,3 @@ class ArticleListView(SlugMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
         return context
-
