@@ -146,7 +146,7 @@ LOCALE_PATHS = ['locale',]
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
-SITE_ID = 1
+SITE_ID = 2
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -315,6 +315,7 @@ HOST_THEMES = [
 # response phase the middleware will be applied in reverse order.
 MIDDLEWARE_CLASSES = (
     # 'sandbox.middleware.StartupMiddleware',
+    "organization.core.middleware.ForceDefaultLanguageMiddleware",
     "mezzanine.core.middleware.UpdateCacheMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     # Uncomment if using internationalisation or localisation

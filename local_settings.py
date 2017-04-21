@@ -27,7 +27,7 @@ DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
 ADMINS = (
     ('Guillaume Pellerin', 'guillaume.pellerin@ircam.fr'),
-    ('Emilie Zawadzki', 'emilie.zawadzki@ircam.fr'),
+    ('David Palomares', 'd.palomares@libelium.com'),
 )
 
 # Make these unique, and don't share it with anybody.
@@ -36,12 +36,12 @@ NEVERCACHE_KEY = "m)u^%r@uh#r3wu0&$=#$1ogx)uy4hv93^2lt%c3@xi=^gifoj8paozijdihaze
 
 EMAIL_HOST = 'smtp.ircam.fr'
 EMAIL_PORT = '25'
-DEFAULT_FROM_EMAIL = 'cri-dev@ircam.fr'
-DEFAULT_TO_EMAIL = 'cri-dev@ircam.fr'
-EMAIL_SUBJECT_PREFIX = "[IRCAM]"
+DEFAULT_FROM_EMAIL = 'Vertigo@iuk.fraunhofer.de'
+DEFAULT_TO_EMAIL = 'Vertigo@iuk.fraunhofer.de'
+EMAIL_SUBJECT_PREFIX = "[VERTIGO]"
 
-SITE_TITLE = 'IRCAM'
-SITE_TAGLINE = 'IRCAM'
+SITE_TITLE = 'VERTIGO'
+SITE_TAGLINE = 'VERTIGO'
 
 EVENT_DOMAIN = "//eve.ircam.fr"
 EVENT_SHOP_URL = EVENT_DOMAIN+"/pub.php/event/%d/edit"
