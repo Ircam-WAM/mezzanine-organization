@@ -315,6 +315,7 @@ HOST_THEMES = [
 # response phase the middleware will be applied in reverse order.
 MIDDLEWARE_CLASSES = (
     # 'sandbox.middleware.StartupMiddleware',
+    "organization.core.middleware.ForceDefaultLanguageMiddleware",
     "mezzanine.core.middleware.UpdateCacheMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     # Uncomment if using internationalisation or localisation
