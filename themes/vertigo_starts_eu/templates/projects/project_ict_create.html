@@ -21,38 +21,44 @@
     {% editable object.title %}
         <h1 class="dotted">{% trans "Project submission form" %}</h1>
     {% endeditable %}
+    {% if not call.is_closed %}
         <h3>All fields are mandatory / required</h3>
+    {% endif %}
 {% endblock %}
 
 {% block page_content %}
-    <div class="row">
-        {% errors_for form %}
-        <form class="mezzanine-form form" method="post" enctype="multipart/form-data">
-            {% fields_for form %}
-            {% for formset in inlines %}
-                {{ formset.management_form }}
-                <hr>
-                <h2>{{ formset.prefix }}</h2>
-                {% if "Private data" in formset.prefix %}
-                    <h5>The data you are entering in the Private Data section will be made available only to VERTIGO partners and artists (except letter reserved to VERTIGO) in case your R&amp;I project will be selected by the consortium.</h5>
-                {% elif "Public data" in formset.prefix %}
-                    <h5>The data you are entering in the Public Data section will be published only in case your R&amp;I project will be selected by the consortium.</h5>
-                {% elif "Private images" in formset.prefix %}
-                    <h5>3 key images for inspiring artist</h5>
-                {% endif %}
-                {% for form in formset %}
-                   {% fields_for form %}
+    {% if call.is_closed %}
+        {% include 'projects/inc/project_call_closed.html' %}
+    {% else %}
+        <div class="row">
+            {% errors_for form %}
+            <form class="mezzanine-form form" method="post" enctype="multipart/form-data">
+                {% fields_for form %}
+                {% for formset in inlines %}
+                    {{ formset.management_form }}
+                    <hr>
+                    <h2>{{ formset.prefix }}</h2>
+                    {% if "Private data" in formset.prefix %}
+                        <h5>The data you are entering in the Private Data section will be made available only to VERTIGO partners and artists (except letter reserved to VERTIGO) in case your R&amp;I project will be selected by the consortium.</h5>
+                    {% elif "Public data" in formset.prefix %}
+                        <h5>The data you are entering in the Public Data section will be published only in case your R&amp;I project will be selected by the consortium.</h5>
+                    {% elif "Private images" in formset.prefix %}
+                        <h5>3 key images for inspiring artist</h5>
+                    {% endif %}
+                    {% for form in formset %}
+                       {% fields_for form %}
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-          <div class="form-actions">
-              <h3>All fields are mandatory / required</h3>
-              <p>With the submission of data and documents about your project, you declare, that you are allowed to establish a cooperation with an artist funded by the Vertigo project.</p>
-              <br>
-              <input class="btn btn-primary btn-lg" type="submit"
-                  value="{% if page.form.button_text %}{{ page.form.button_text }}{% else %}{% trans "Submit" %}{% endif %}">
-          </div>
-        </form>
-    </div>
+              <div class="form-actions">
+                  <h3>All fields are mandatory / required</h3>
+                  <p>With the submission of data and documents about your project, you declare, that you are allowed to establish a cooperation with an artist funded by the Vertigo project.</p>
+                  <br>
+                  <input class="btn btn-primary btn-lg" type="submit"
+                      value="{% if page.form.button_text %}{{ page.form.button_text }}{% else %}{% trans "Submit" %}{% endif %}">
+              </div>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block extra_js %}
