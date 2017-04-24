@@ -61,7 +61,6 @@ $module: ".nav-header";
         vertical-align: top;
         position: relative;
 
-
         &:before {
             content: "";
             display: block;
@@ -152,7 +151,8 @@ $module: ".nav-header";
             @include mq($until: md) {
                 height: $header-height - 10px;
                 img {
-                    width: 160px;
+                    width: 100px;
+                    height: auto;
                 }
             }
 
@@ -168,6 +168,8 @@ $module: ".nav-header";
                 img {
                     // width: auto;
                     // height: 70px;
+                    width: 160px;
+                    height: auto;
                     display: block;
                     margin: 0 auto;
                 }
@@ -284,12 +286,12 @@ $module: ".nav-header";
 
         @include mq($until: lg) {
             @include font-size(m);
-            @include padding-right(.75);
+            @include padding-right(.35);
         }
 
         @include mq($until: md) {
             @include font-size(s);
-            @include padding-right(.5);
+            @include padding-right(.35);
         }
 
 
