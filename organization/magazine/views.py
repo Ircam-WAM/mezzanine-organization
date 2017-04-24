@@ -70,7 +70,15 @@ class ArticleDetailView(SlugMixin, DetailView):
         related_content += dynamic_content
         related_content.sort(key=lambda x: x.created, reverse=True)
         context['related_content'] = related_content
-
+        context["related"] = {}
+        context["related"]["other"] = []
+        context["related"]["event"] = []
+        # for some theme, we need to distinct the event from other related content
+        for rc in related_content:
+            if rc.__class__.__name__ == "Event":
+                context["related"]["event"].append(rc)
+            else :
+                context["related"]["other"].append(rc)
         if self.object.department:
             context['department_weaving_css_class'] = self.object.department.pages.first().weaving_css_class
             context['department_name'] = self.object.department.name
