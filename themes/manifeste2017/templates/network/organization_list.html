@@ -30,6 +30,7 @@
                 <div class="slider-network">
                     <ul class="slider-network__slider" data-slider-network>
                         {% for organization in organizations %}
+
                             <li class="slider-network__slide" data-marker-url="{{organization.url}}" data-marker-color="green" {% with organization.images.all|get_type:'card' as images %}{% if images %}data-marker-image="{{ MEDIA_URL }}{{images.first.file}}"{% endif %}{% endwith %} data-marker-idx="{{forloop.counter0}}" data-marker-lat="{{ organization.lat }}" data-marker-lng="{{ organization.lon }}">
                                 <div class="slider-network__slide-image"
                                     {% with organization.images.all|get_type:'card' as images %}
@@ -44,37 +45,19 @@
                                 </div>
                                 <div class="slider-network__slide-subtitle" data-marker-subtitle>
                                     {{ organization.city }}, {{ organization.country.name }}
+                                    {% with event_location=organization.event_locations.first.event_location %}
+                                        {% url 'event_list' %}?event_locations_filter[]={{ event_location.title|urlencode }}
+                                    {% endwith %}
                                 </div>
+
                                 <div class="">
                                     {{ organization.type }}, {{ organization.type.css_class }}
                                 </div>
                                 <div class="slider-network__slide-description" data-marker-description>
                                     {{ organization.description }}
                                 </div>
+
                             </li>
-
-                            {% comment %}
-                                {{ organization.name }}<br>
-                                {{ organization.lat }}<br>
-                                {{ organization.lon }}<br>
-                                {{ organization.city }}<br>
-                                {{ organization.country.name }}<br>
-
-                                <!-- optional -->
-                                {% with organization.links|get_type_link:'link' as links %}
-                                    {% if links %}
-                                        {{ links.first }}
-                                    {% endif %}
-                                {% endwith %}
-                                <br>
-                                <!-- optional -->
-                                {% with organization.images.all|get_type:'logo' as images %}
-                                    {% if images %}
-                                        <img src="{{ MEDIA_URL }}{% thumbnail images.first.file 100 0 left=0 top=0 %}" alt="logo {{ organization.name }}" />
-                                    {% endif %}
-                                {% endwith %}
-                                <br><br>
-                            {% endcomment %}
 
                         {% endfor %}
                     </ul>
