@@ -38,7 +38,7 @@ $module: ".home";
         }
     }
 
-    .calendar {
+    #jsEventsHomeForm {
         @include margin-top(7);
 
         @include mq($until: sm) {

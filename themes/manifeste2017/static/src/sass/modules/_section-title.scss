@@ -10,9 +10,10 @@ $module: ".section-title";
     color: $color-black;
     display: inline-block;
     line-height: 1.5em;
+    letter-spacing: 1px;
 
-    @include margin-bottom(4);
-    @include margin-top(5);
+    @include margin-bottom(2);
+    @include margin-top(3);
 
     @include mq($until: md) {
 

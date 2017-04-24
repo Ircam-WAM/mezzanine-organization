@@ -30,19 +30,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-16 col-md-12 col-md-push-2 tac">
-                    <h1 class="section-title section-title--uppercase section-title--main">{% trans "Events" %}</h1>
+                    <h1 class="section-title section-title--uppercase section-title--main">{% trans "Events to come" %}</h1>
                 </div>
             </div>
 
             <div class="row">
                 <div class="mb2 col-md-12 col-md-push-2">
-                    <form action="" method="GET">
+                    <form action="{% url 'event_list' %}" method="GET" id="jsEventsForm">
                         {{ filter_form }}
-                        <input type="submit" value="Submit" />
                     </form>
                 </div>
             </div>
-            {% include 'agenda/includes/event_list.html' %}
+            <div id="jsEventsContainer">
+                {% include 'agenda/includes/event_list.html' %}
+            </div>
         </div>
     </div>
 {% endblock %}

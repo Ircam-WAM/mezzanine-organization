@@ -22,6 +22,7 @@ var Audio = require('./modules/audio');
 var Video = require('./modules/video');
 var VideoOverlay = require('./modules/video-overlay');
 var Instagram = require('./modules/instagram');
+var EventForm = require('./modules/event-form');
 
 //
 // Init all the modules
@@ -41,9 +42,10 @@ window[LightSliderHomeInit] = new LightSliderHomeInit();
 window[LightSliderNetworkInit] = new LightSliderNetworkInit();
 window[LightSliderPersonsInit] = new LightSliderPersonsInit();
 window[LightSliderRelatedInit] = new LightSliderRelatedInit();
-window[LazyLoadInit] = new LazyLoadInit();
+window['LazyLoadInit'] = new LazyLoadInit();
 window[HomeMenu] = new HomeMenu();
 window['Audio'] = new Audio();
 window['Video'] = new Video();
 window[VideoOverlay] = new VideoOverlay();
 window[Instagram] = new Instagram();
+window[EventForm] = new EventForm();
