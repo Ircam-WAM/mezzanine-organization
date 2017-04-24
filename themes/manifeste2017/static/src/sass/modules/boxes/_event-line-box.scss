@@ -148,6 +148,24 @@ $module: ".event-line-box";
 
     }
 
+    &.we40 {
+
+        &:before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 16px;
+            right: 16px;
+
+            width: 97px;
+            height: 84px;
+            background: url(../img/we40.png) no-repeat center center;
+
+            z-index: 2;
+        }
+
+    }
+
     &__tags {
 
         margin-bottom: 5px;
