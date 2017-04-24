@@ -24,9 +24,13 @@ $module: ".audio-playlist";
 
     margin-top: 0;
     padding: 0;
-    background: $color-black-light;
+    background: white;
     list-style-type: none;
     color: $color-background;
+
+    border-left: 1px solid $color-main;
+    border-bottom: 1px solid $color-main;
+    border-right: 1px solid $color-main;
 
     &__item {
 
@@ -42,7 +46,7 @@ $module: ".audio-playlist";
             margin-left: 5px;
         }
 
-        color: white;
+        color: $color-black;
 
         &.playing {
 
@@ -58,7 +62,7 @@ $module: ".audio-playlist";
         >a  {
 
             @include transition(all 0.25s ease-in-out);
-            color: white;
+            color: $color-black;
 
         }
 
