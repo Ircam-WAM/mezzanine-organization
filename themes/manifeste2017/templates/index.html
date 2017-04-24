@@ -5,6 +5,16 @@
     {% trans "Home" %}
 {% endblock %}
 
+{% block breaking_news %}
+    {% for content in home.dynamiccontenthomebody_set.all %}
+        {% if content.content_type.model == "brief" %}
+            <div>
+                Breaking News ! {{ content.content_object.title }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
 {% spaceless %}
 {% block body_class %}
     home
@@ -12,9 +22,7 @@
 {% endspaceless %}
 
 {% block hero %}
-
     {% include "home/inc/hero.html" %}
-
 {% endblock %}
 
 {% block main %}
