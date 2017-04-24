@@ -157,4 +157,26 @@ $module: ".footer";
         }
     }
 
+    &__program {
+
+        display: block;
+        line-height: 109px;
+
+        img {
+            float: left;
+            margin-right: 16px;
+        }
+
+        span {
+            @include font-size(s);
+            @include typeface(serif);
+            @include line-height(1);
+            font-weight: weight(regular);
+        }
+
+        @include mq($until: md) {
+            @include margin-top(2);
+        }
+    }
+
 }

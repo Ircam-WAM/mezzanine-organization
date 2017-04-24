@@ -20,7 +20,6 @@
                 {% if linked_organization_footer %}
                     <div class="tac">
                         <div class="section-title section-title--dark">
-                            {% trans "Porté par" %}
                         </div>
                     </div>
                     {% include 'pages/page/includes/linked_organization_footer.html' %}
@@ -53,7 +52,10 @@
 
                                 <div class="col-xxs-16 col-md-7 col-md-push-1">
 
-                                    BROCHURE
+                                    <a class="footer__program" title="{% trans 'Download the program' %}" href="/media/uploads/documents/agenda.pdf" target="_blank">
+                                        <img src="{% static "img/manifeste2017/program.png" %}" />
+                                        <span>{% trans 'Download the program' %}</span>
+                                    </a>
 
                                 </div>
 
