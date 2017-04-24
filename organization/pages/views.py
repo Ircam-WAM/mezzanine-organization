@@ -28,6 +28,7 @@ from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
+from mezzanine_agenda.forms import EventCalendarForm
 from organization.pages.models import CustomPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting
 from organization.magazine.models import Article, Topic, Brief
@@ -54,6 +55,7 @@ class HomeView(SlugMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['briefs'] = self.briefs
+        context['event_calendar_form'] = EventCalendarForm()
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -183,4 +185,3 @@ class DynamicContentPageView(Select2QuerySetSequenceView):
     def get_results(self, context):
         results = autocomplete_result_formatting(self, context)
         return results
-

@@ -1,6 +1,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-16">
+            <form action="{% url 'event_list' %}" method="GET">
+                {{ event_calendar_form }}
+                <input type="submit" value="Submit" />
+            </form>
             <table class="calendar">
                 <tr>
                     <td>
