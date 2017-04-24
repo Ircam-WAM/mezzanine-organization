@@ -8,6 +8,10 @@ $module: ".instagram";
         float: left;
         width: 33.33%;
 
+        img {
+            width: 100%;
+        }
+
         span {
 
             display: none;
