@@ -52,7 +52,8 @@ from django.views.generic.base import RedirectView
 class PersonListView(ListView):
 
     model = Person
-    template_name='team/person_list.html'
+    template_name='network/person_list.html'
+    context_object_name = 'persons'
 
 
 class PersonDetailView(SlugMixin, DetailView):
@@ -114,7 +115,7 @@ class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):
         return qs
 
 
-class PersonListView(autocomplete.Select2QuerySetView):
+class PersonAutocompleteView(autocomplete.Select2QuerySetView):
 
     def get_queryset(self):
 

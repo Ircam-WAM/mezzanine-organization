@@ -1,0 +1,18 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags keyword_tags i18n organization_tags pages_tags %}
+
+{% block page_content %}
+
+    {% for person in persons %}
+        {{ person.first_name }}<br>
+        {{ person.last_name }}<br>
+        {% url 'organization-network-person-detail' person.slug %}
+        {% with person.images.all|get_type:'page_featured' as card_images %}
+            {% if card_images %}
+                <div class="page__image-container">
+                    <img style="width:100%;" class="lazyload" src="{{ MEDIA_URL }}{% thumbnail card_images.first 1030 400 top=0.5 %}" alt="person"/>
+                </div>
+            {% endif %}
+        {% endwith %}
+    {% endfor %}
+{% endblock %}
