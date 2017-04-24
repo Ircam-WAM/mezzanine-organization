@@ -17,6 +17,12 @@
 
     <div class="article-box__content tal">
 
+        <div class="article-box__tags">
+            {% with person.activities.first as activity %}
+                {{ activity.status }}
+            {% endwith%}
+        </div>
+
         <a href="{{ person.get_absolute_url }}" title="{{ person.first_name }}&nbsp;{{ person.last_name }}"><h3 class="article-box__title">{{ person.first_name }}&nbsp;{{ person.last_name }}</h3></a>
 
         {% if person.description %}

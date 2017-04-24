@@ -337,12 +337,26 @@ $module: ".article-box";
 
         }*/
 
+        #{$module}__tags {
+
+            text-align: center;
+            text-transform: uppercase;
+            @include font-size(xs);
+            @include line-height(1);
+            @include typeface(serif-condensed);
+            @include margin(0 0 0 0);
+            font-weight: weight(regular);
+            color: $color-black;
+            @include transition(color 0.5s ease-in-out);
+
+        }
+
         #{$module}__title {
 
             @include font-size(l);
             @include line-height(1.25);
             @include typeface(sans-serif);
-            @include margin(.25 0 .25 0);
+            @include margin(0 0 .25 0);
             font-weight: weight(heavy);
 
             text-align: center;
