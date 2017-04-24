@@ -39,7 +39,11 @@ $module: ".home";
     }
 
     .calendar {
-        @include margin-top(5);
+        @include margin-top(7);
+
+        @include mq($until: sm) {
+            display: none;
+        }
     }
 
 }

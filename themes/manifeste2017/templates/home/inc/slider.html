@@ -24,3 +24,24 @@
         </div>
     </div>
 {% endif %}
+
+{% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
+<div class="container hide-from-sm mt2">
+    <div class="row">
+        <div class="col-sm-12 col-sm-push-2 tac">
+            <div class="row-12">
+                {% for slider in home.dynamiccontenthomeslider_set.all %}
+                    {% with slider.content_object.images.all|get_type:'slider' as images %}
+                        {% if images %}
+                            <div class="col-xs-4">
+                                {% if slider.content_type.model == "event" %}
+                                    {% include "agenda/event/includes/event_card.html" with object=slider.content_object %}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

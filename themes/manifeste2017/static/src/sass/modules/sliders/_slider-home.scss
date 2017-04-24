@@ -23,7 +23,7 @@ $module: ".slider-home";
 #{$module} {
 
     position: relative;
-    @include margin-bottom(4);
+    @include margin-bottom(0);
 
     @include mq($until: sm) {
         display: none;
