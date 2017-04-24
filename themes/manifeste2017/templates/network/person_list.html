@@ -6,7 +6,10 @@
     {% for person in persons %}
         {{ person.first_name }}<br>
         {{ person.last_name }}<br>
-        {% url 'organization-network-person-detail' person.slug %}
+        {% url 'organization-network-person-detail' person.slug %}<br>
+        {% with person.activities.first as activity %}
+            {{ activity.status }}
+        {% endwith%}
         {% with person.images.all|get_type:'page_featured' as card_images %}
             {% if card_images %}
                 <div class="page__image-container">
