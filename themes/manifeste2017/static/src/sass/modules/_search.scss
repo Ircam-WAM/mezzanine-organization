@@ -28,7 +28,7 @@ $module: ".search";
     width: 100%;
     z-index: 100;
 
-    background: rgba($color-background, .95);
+    background: rgba(#FFF, .75);
 
     display: block;
     height: 0;
@@ -127,7 +127,7 @@ $module: ".search";
 
         padding: 1rem 3rem 1rem 0;
         width: 100%;
-        color: white;
+        color: $color-black;
 
         @include font-size(xxl);
         @include typeface(serif);
@@ -150,7 +150,7 @@ $module: ".search";
         outline: 0;
         cursor: pointer;
 
-        color: white;
+        color: $color-black;
 
         @include font-size(xxl);
 

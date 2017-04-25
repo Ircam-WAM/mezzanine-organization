@@ -2,7 +2,7 @@
 {% with event.periods.all as periods %}
     <!-- Start date only  -->
     {% if event.start and not event.end %}
-        {{ event.start|date:"DATE_EVENT_FORMAT" }},<br>
+        {{ event.start|date:"DATE_EVENT_FORMAT" }},
         <!-- Start date with hour  -->
         {% if event.start and event.start|date:"H:i" != "23:59" %}
             {{ event.start|time:"TIME_FORMAT" }}
@@ -12,7 +12,7 @@
         <!-- Start and end date is the same day  -->
         {% if event.start|date:"d.m.y" == event.end|date:"d.m.y" %}
             {% if not periods %}
-                {{ event.start|date:"DATE_EVENT_FORMAT" }},<br>
+                {{ event.start|date:"DATE_EVENT_FORMAT" }},
                 <!-- Start date with hour  -->
                 {% if event.end and event.end|date:"H:i" != "23:59" %}
                     {{ event.start|time:"TIME_FORMAT" }} - {{ event.end|time:"TIME_FORMAT" }}
@@ -20,7 +20,7 @@
                     {{ event.start|time:"TIME_FORMAT" }}
                 {% endif %}
             {% else %}
-                {{ event.start|date:"DATE_EVENT_FORMAT" }},<br>
+                {{ event.start|date:"DATE_EVENT_FORMAT" }},
                 {% for period in periods %}
                     {% if period.date_to and period.date_to|date:"H:i" != "23:59" %}
                         {{ period.date_from|time:"TIME_FORMAT" }} - {{ period.date_to|time:"TIME_FORMAT" }}
@@ -36,7 +36,7 @@
             {% with periods|same_time_in_periods as same_time_in_periods %}
             {% for period in periods %}
                 {% if period.date_to and period.date_to|date:"H:i" != "23:59" %}
-                    {{ period.date_from|date:"WEEK_DAY_FORMAT" }},<br>
+                    {{ period.date_from|date:"WEEK_DAY_FORMAT" }},
                     {% if period|period_is_more_than_hours:4 %}
                         {{ period.date_from|time:"DATE_EVENT_FORMAT" }} {% trans "through" %} {{ period.date_to|time:"TIME_FORMAT" }}
                     {% else %}
@@ -52,7 +52,7 @@
                     {% if same_time_in_periods and forloop.last %}
                         {{ period.date_from|time:"TIME_FORMAT" }}
                     {% elif not same_time_in_periods %}
-                        <br> {{ period.date_from|time:"TIME_FORMAT" }}
+                        {{ period.date_from|time:"TIME_FORMAT" }}
                     {% endif %}
                 {% endif %}
                 <br />

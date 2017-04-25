@@ -30,15 +30,22 @@ var w=window,
     d=document,
     e=d.documentElement,
     g=d.getElementsByTagName('body')[0],
+    top=0,
     x=w.innerWidth||e.clientWidth||g.clientWidth,
     y=w.innerHeight||e.clientHeight||g.clientHeight;
 
     var hero = document.getElementById('jsHero'),
-        body = document.getElementsByTagName("body")[0];
+        body = document.getElementsByTagName("body")[0],
+        breaking = document.getElementById('jsBreakingNews');
 
     hero.style.height = y + "px";
     body.style.position = "relative";
     body.style.top = y + "px";
+
+    if(breaking) {
+        hero.style.height = y-40 + "px";
+        hero.style.top = "40px";
+    }
 
     window.onresize = function() {
 
@@ -46,12 +53,18 @@ var w=window,
             d=document,
             e=d.documentElement,
             g=d.getElementsByTagName('body')[0],
+            top= 0,
             x=w.innerWidth||e.clientWidth||g.clientWidth,
             y=w.innerHeight||e.clientHeight||g.clientHeight;
 
         hero.style.height = y + "px";
         body.style.position = "relative";
         body.style.top = y + "px";
+
+        if(breaking) {
+            hero.style.height = y-40 + "px";
+            hero.style.top = "40px";
+        }
 
     };
 

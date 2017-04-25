@@ -48,6 +48,15 @@ $module: ".nav-footer";
         @include typeface(serif);
         font-weight: weight(bold);
         color: $color-black;
+
+        &--small {
+            font-weight: weight(regular)
+        }
+
+        &:hover {
+            text-decoration: underline;
+        }
+
     }
 
 }

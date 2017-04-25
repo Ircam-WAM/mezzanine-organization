@@ -33,6 +33,8 @@
 {% endblock %}
 
 {% block page_content %}
+    {% include 'agenda/includes/event_metainfo.html' %}
+
     {% block event_detail_content %}
         {% if event.content %}
             {% editable event.content %}

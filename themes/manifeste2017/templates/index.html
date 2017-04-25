@@ -11,17 +11,22 @@
     {% endwith %}
     {% for content in home.dynamiccontenthomebody_set.all %}
         {% if content.content_type.model == "brief" %}
-            <div>
-                Breaking News ! {{ content.content_object.title }}
+            <div class="breaking-news" id="jsBreakingNews">
+                <div class="breaking-news__title">
+                    {% trans "Breaking News" %}
+                </div>
+                <div class="breaking-news__content marquee" >
+                    {{ content.content_object.title }}
+                </div>
             </div>
         {% endif %}
     {% endfor %}
 {% endblock %}
 
 {% spaceless %}
-{% block body_class %}
-    home
-{% endblock %}
+    {% block body_class %}
+        home
+    {% endblock %}
 {% endspaceless %}
 
 {% block hero %}

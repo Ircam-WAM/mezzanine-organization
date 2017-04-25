@@ -38,6 +38,15 @@ $module: ".map-infowindow";
         p {
             @include margin(0);
             line-height: 1.1rem;
+            margin-bottom: 8px;
+
+            a {
+                text-decoration: underline;
+                @include font-size(xs);
+                @include line-height(.5);
+                @include typeface(serif);
+                font-weight: weight(regular);
+            }
         }
 
     }

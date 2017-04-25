@@ -80,7 +80,7 @@
                         <ul class="nav-footer" role="navigation">
                             {% for link in host_organization.links.all %}
                                 <li class="nav-footer__item">
-                                    <a class="nav-footer__item-link" href="{{ link.url }}" target="_blank" title="{% trans 'Follow us on' %} {{ link.title }}">{{ link.title }}</a>
+                                    <a class="nav-footer__item-link nav-footer__item-link--small" href="{{ link.url }}" target="_blank" title="{% trans 'Follow us on' %} {{ link.title }}">{{ link.title }}</a>
                                 </li>
                             {% endfor %}
                         </ul>

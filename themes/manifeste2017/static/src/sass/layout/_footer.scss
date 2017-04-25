@@ -24,7 +24,7 @@ $module: ".footer";
 
     /* Rectangle 2: */
     background-image: linear-gradient(-180deg, $color-white 0%, #00B3D5 100%);
-    @include margin-top(10);
+    @include margin-top(0);
 
     @include mq($until: xs) {
         div[class^="col-"] {

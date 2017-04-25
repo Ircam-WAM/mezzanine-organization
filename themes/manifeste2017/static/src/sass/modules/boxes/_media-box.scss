@@ -247,6 +247,7 @@ $module: ".media-box";
         @include line-height(.75);
         @include typeface(serif);
         @include margin(0);
+        @include margin-top(0.5);
         font-weight: weight(light);
         color: white;
         @include transition(color 0.5s ease-in-out);

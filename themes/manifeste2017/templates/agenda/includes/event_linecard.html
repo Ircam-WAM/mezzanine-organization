@@ -33,18 +33,26 @@
                         {% with event.links.all as links %}
                             {% if links %}
                                 <object class="event-line-box__button">
-                                    <a href="{{ links|get_type_link:'link'|first }}" class="button button--accent">
-                                        {% trans "Reserve" %}
+                                    <a href="{{ links|get_type_link:'link'|first }}" class="button button--white-accent">
+                                        <i class="fa fa-bookmark-o" aria-hidden="true"></i> {% trans "Reserve" %}
                                     </a>
                                 </object>
                             {% endif %}
                         {% endwith %}
                     {% else %}
+                        {% if event.prices.all.0|floatformat != '0' %}
+                            <object class="event-line-box__button">
+                                <a href="{% url 'event_booking' event.slug %}" class="button button--white-accent">
+                                    <i class="fa fa-bookmark-o" aria-hidden="true"></i> {% trans "Reserve" %}
+                                </a>
+                            </object>
+                        {% else %}
                         <object class="event-line-box__button">
-                            <a href="{% url 'event_booking' event.slug %}" class="button button--accent">
-                                {% trans "Reserve" %}
-                            </a>
+                            <span class="button button--accent">
+                                {% trans "Free" %}
+                            </span>
                         </object>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
 

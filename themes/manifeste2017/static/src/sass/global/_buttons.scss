@@ -30,10 +30,10 @@ $module: ".button";
 
     @include font-size(l);
     @include line-height(1);
-    @include typeface(sans-serif);
+    font-family: 'Oswald', sans-serif;
     @include padding(.25 1 .25 1);
     //@include margin(0);
-    font-weight: weight(light);
+    font-weight: weight(regular);
 
     background: $color-main;
     color: $color-black;
@@ -61,7 +61,7 @@ $module: ".button";
         color: white;
 
         &:hover {
-            background-color: $color-main;
+            background-color: white;
             color: $color-black;
         }
 
@@ -71,10 +71,35 @@ $module: ".button";
 
         background-color: white;
         color: $color-black;
-        border: 1px solid $color-black;
 
         &:hover {
             background-color: $color-black;
+            color: white;
+        }
+
+    }
+
+    &--white-main {
+
+        background-color: white;
+        color: $color-main;
+        border: 1px solid $color-main;
+
+        &:hover {
+            background-color: $color-main;
+            color: white;
+        }
+
+    }
+
+    &--white-accent {
+
+        background-color: white;
+        color: $color-accent;
+        border: 1px solid $color-accent;
+
+        &:hover {
+            background-color: $color-accent;
             color: white;
         }
 
