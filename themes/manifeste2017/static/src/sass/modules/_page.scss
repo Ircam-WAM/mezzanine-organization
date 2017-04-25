@@ -195,6 +195,36 @@ $module: ".page";
         text-align: left;
     }
 
+    &__block-special {
+
+        border-radius: 16px;
+        @include margin-bottom(4);
+
+        @include mq($until: md) {
+            @include margin-bottom(2);
+        }
+
+        h2 {
+            @include margin(1 0 1 0);
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        &--yellow {
+            background: $color-main;
+            @include padding(1 1 1 1);
+            color: $color-black;
+        }
+        &--red {
+            background: $color-accent;
+            @include padding(1 1 1 1);
+            color: white;
+        }
+
+    }
+
     &__block {
 
         @include padding-bottom(1);
@@ -330,6 +360,13 @@ $module: ".page";
 
         }
 
+        &--column {
+
+            width: 50%;
+            float: left;
+
+        }
+
         &--black {
 
             background-color: $color-background;
@@ -393,7 +430,7 @@ $module: ".page";
 
         &--red {
 
-            background-color: red;
+            background-color: $color-accent;
             color: white;
             @include padding-top(2);
             @include padding-bottom(2);

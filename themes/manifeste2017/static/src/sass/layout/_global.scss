@@ -27,6 +27,12 @@
         @include margin(0 0 0 0);
 
     }
+
+    @include mq($until: sm) {
+
+        margin-top: 70px;
+
+    }
 }
 
 #container {
