@@ -222,6 +222,7 @@ SLUGIFY = 'django.template.defaultfilters.slugify'
 BLOG_SLUG = 'article'
 BLOG_POST_PER_PAGE = 200
 ARTICLE_PER_PAGE = 10
+ARTICLE_KEYWORDS = ['article', 'audio', 'video']
 MEDIA_PER_PAGE = 9
 
 # The numeric mode to set newly-uploaded files to. The value should be

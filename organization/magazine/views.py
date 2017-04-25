@@ -18,7 +18,8 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-
+from collections import OrderedDict
+from re import match
 from urllib.parse import urlparse
 from django.shortcuts import render
 from django.utils import timezone
@@ -194,14 +195,24 @@ class ArticleListView(SlugMixin, ListView):
     model = Article
     template_name='magazine/article/article_list.html'
     context_object_name = 'objects'
+    keywords = OrderedDict()
 
     def get_queryset(self):
         qs = super(ArticleListView, self).get_queryset()
-        qs = qs.filter(status=2)
-        medias = Media.objects.published()
+        qs = qs.filter(status=2).order_by('-created')
+        query = qs
+        medias = Media.objects.published().order_by('-created').distinct()
+
+        if 'type' in self.kwargs:
+            if self.kwargs['type'] == "article":
+                medias = []
+
+            if self.kwargs['type'] == "video" or self.kwargs['type'] == "audio":
+                medias = medias.filter(transcoded__mime_type__contains=self.kwargs['type'])
+                query = []
 
         qs = sorted(
-            chain(qs, medias),
+            chain(query, medias),
             key=lambda instance: instance.created,
             reverse=True)
 
@@ -209,4 +220,5 @@ class ArticleListView(SlugMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
+        context['keywords'] = settings.ARTICLE_KEYWORDS
         return context
