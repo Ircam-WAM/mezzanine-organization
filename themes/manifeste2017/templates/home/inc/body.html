@@ -8,9 +8,7 @@
             <div class="row-12">
                 {% for content in home.dynamiccontenthomebody_set.all %}
                     <div class="col-xs-4{% if forloop.counter > 3 %} hide-until-xs{% endif %}">
-                        {% if content.content_type.model == "brief" %}
-                            {% include "magazine/brief/inc/brief_card.html" %}
-                        {% elif content.content_type.model == "article" %}
+                        {% if content.content_type.model == "article" %}
                             {% include "magazine/article/includes/article_card.html" with object=content.content_object %}
                         {% elif content.content_type.model == "event" %}
                             {% include "agenda/event/includes/event_card.html" with object=content.content_object %}

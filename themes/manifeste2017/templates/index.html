@@ -8,17 +8,34 @@
 {% block breaking_news %}
     {% for content in home.dynamiccontenthomebody_set.all %}
         {% if content.content_type.model == "brief" %}
-            <div>
-                Breaking News ! {{ content.content_object.title }}
+            <div class="breaking-news">
+                <div class="breaking-news__title">
+                    {% trans "Breaking News" %}
+                </div>
+                <div class="breaking-news__content">
+                    <span>
+                        {{ content.content_object.title }}
+                    </span>
+                </div>
+            </div>
+            <div class="breaking-news">
+                <div class="breaking-news__title">
+                    {% trans "Breaking News" %}
+                </div>
+                <div class="breaking-news__content">
+                    <span>
+                        {{ content.content_object.title }}
+                    </span>
+                </div>
             </div>
         {% endif %}
     {% endfor %}
 {% endblock %}
 
 {% spaceless %}
-{% block body_class %}
-    home
-{% endblock %}
+    {% block body_class %}
+        home
+    {% endblock %}
 {% endspaceless %}
 
 {% block hero %}
