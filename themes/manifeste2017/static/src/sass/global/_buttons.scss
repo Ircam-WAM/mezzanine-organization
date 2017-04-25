@@ -30,10 +30,10 @@ $module: ".button";
 
     @include font-size(l);
     @include line-height(1);
-    @include typeface(sans-serif);
+    font-family: 'Oswald', sans-serif;
     @include padding(.25 1 .25 1);
     //@include margin(0);
-    font-weight: weight(light);
+    font-weight: weight(regular);
 
     background: $color-main;
     color: $color-black;
@@ -61,7 +61,7 @@ $module: ".button";
         color: white;
 
         &:hover {
-            background-color: $color-main;
+            background-color: white;
             color: $color-black;
         }
 

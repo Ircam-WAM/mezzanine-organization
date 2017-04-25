@@ -45,9 +45,6 @@
                                 </div>
                                 <div class="slider-network__slide-subtitle" data-marker-subtitle>
                                     {{ organization.city }}, {{ organization.country.name }}
-                                    {% with event_location=organization.event_locations.first.event_location %}
-                                        {% url 'event_list' %}?event_locations_filter[]={{ event_location.title|urlencode }}
-                                    {% endwith %}
                                 </div>
 
                                 <div class="">
@@ -55,6 +52,9 @@
                                 </div>
                                 <div class="slider-network__slide-description" data-marker-description>
                                     {{ organization.description }}
+                                    <a href="{% url 'event_list' %}?event_locations_filter[]={{ event_location.title|urlencode }}" class="button button--xsmall button--black">
+                                        {% trans "LINKED EVENTS" %}
+                                    </a>
                                 </div>
 
                             </li>

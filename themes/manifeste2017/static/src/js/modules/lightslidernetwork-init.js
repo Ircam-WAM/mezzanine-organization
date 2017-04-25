@@ -17,8 +17,6 @@ LightSliderNetworkInit.prototype.init = function() {
 
     var that = this;
 
-    console.log('init');
-
     //
     // Slider init
     //
@@ -208,7 +206,7 @@ LightSliderNetworkInit.prototype.initMarkers = function() {
         };
 
         var info = new google.maps.InfoWindow({
-            content: '<div class="map-infowindow"><div class="map-infowindow__image"><a href="' + $(this).attr('data-marker-url') + '" target="_blank"><img src="' + $(this).attr('data-marker-image') + '" /></a></div><div class="map-infowindow__content"><div class="map-infowindow__title">' + $(this).find('[data-marker-title]').text() + '</div><div class="map-infowindow__subtitle">' + $(this).find('[data-marker-subtitle]').text() + '</div><p>' + $(this).find('[data-marker-description]').text() + '</p></div></div>'
+            content: '<div class="map-infowindow"><div class="map-infowindow__image"><a href="' + $(this).attr('data-marker-url') + '" target="_blank"><img src="' + $(this).attr('data-marker-image') + '" /></a></div><div class="map-infowindow__content"><div class="map-infowindow__title">' + $(this).find('[data-marker-title]').text() + '</div><div class="map-infowindow__subtitle">' + $(this).find('[data-marker-subtitle]').text() + '</div><p>' + $(this).find('[data-marker-description]').html() + '</p></div></div>'
         });
 
         google.maps.event.addListener(info, 'domready', function() {
