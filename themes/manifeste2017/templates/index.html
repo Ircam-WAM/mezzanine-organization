@@ -8,7 +8,7 @@
 {% block breaking_news %}
     {% for content in home.dynamiccontenthomebody_set.all %}
         {% if content.content_type.model == "brief" %}
-            <div class="breaking-news">
+            <div class="breaking-news" id="jsBreakingNews">
                 <div class="breaking-news__title">
                     {% trans "Breaking News" %}
                 </div>

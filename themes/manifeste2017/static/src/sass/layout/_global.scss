@@ -22,17 +22,19 @@
     @include margin(0 0 0 0);
     @include padding(0 0 0 0);
 
-    @media screen and (max-height: 900px) {
-
-        @include margin(0 0 0 0);
-
-    }
+    @include margin-top(5);
 
     @include mq($until: sm) {
-
         margin-top: 70px;
-
     }
+
+    .organization & {
+        margin-top: 0 !important;
+    }
+}
+
+.section {
+    @include margin-bottom(3);
 }
 
 #container {

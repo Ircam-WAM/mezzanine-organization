@@ -13,12 +13,12 @@ $module: ".section-title";
     letter-spacing: 1px;
 
     @include margin-bottom(2);
-    @include margin-top(3);
+    @include margin-top(0);
 
     @include mq($until: md) {
 
         @include margin-bottom(1);
-        @include margin-top(1.25);
+        @include margin-top(0);
 
         .page__slider & {
             @include margin-top(0);
@@ -84,6 +84,7 @@ $module: ".section-title";
         font-weight: weight(bold);
         @include margin-bottom(3);
         @include line-height(1.75);
+        @include margin-top(0);
         display: block;
 
         &:before {

@@ -316,7 +316,7 @@ $module: ".article-box";
 
     &--person {
 
-        @include margin-top(2);
+        @include margin-top(0);
         position: relative;
         border: 0;
         @include padding(0);
