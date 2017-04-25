@@ -73,12 +73,25 @@
     #id_event_categories_filter,
     #id_event_locations_filter {
 
+        padding: 0px 90px;
+
+        @include mq($until: lg) {
+            padding: 0px 74px;
+        }
+
+        @include mq($until: md) {
+            padding: 0px 0px;
+        }
+
+        @include mq($until: sm) {
+            padding: 0px 0px;
+        }
+
         input {
             display: none;
         }
 
         list-style-type: none;
-        padding: 0;
         margin: 0;
 
         >li {
@@ -86,9 +99,28 @@
             margin: 0 8px 8px 0;
             border:1px solid $color-black;
             opacity: 0.3;
+            cursor: pointer;
+
+            @include transition(all 0.25s ease);
+
+            &:hover {
+                background: $color-main;
+                color: white;
+                border-color: white;
+            }
 
             &.active {
                 opacity: 1;
+
+                label {
+
+                    &:after {
+
+                        content: "\f00c";
+
+                    }
+
+                }
             }
 
             label {
@@ -96,12 +128,13 @@
                 padding: 5px 15px;
                 text-transform: uppercase;
                 @include font-size(m);
+                cursor: pointer;
 
                 &:after {
 
                     display: inline-block;
                     font-family: "FontAwesome";
-                    content: "\f00c";
+                    content: "\f00d";
                     font-size: 12px;
                     margin-left: 8px;
 
