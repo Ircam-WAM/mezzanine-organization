@@ -12,20 +12,8 @@
                 <div class="breaking-news__title">
                     {% trans "Breaking News" %}
                 </div>
-                <div class="breaking-news__content">
-                    <span>
-                        {{ content.content_object.title }}
-                    </span>
-                </div>
-            </div>
-            <div class="breaking-news">
-                <div class="breaking-news__title">
-                    {% trans "Breaking News" %}
-                </div>
-                <div class="breaking-news__content">
-                    <span>
-                        {{ content.content_object.title }}
-                    </span>
+                <div class="breaking-news__content marquee" >
+                    {{ content.content_object.title }}
                 </div>
             </div>
         {% endif %}

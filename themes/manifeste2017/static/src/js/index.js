@@ -49,3 +49,7 @@ window['Video'] = new Video();
 window[VideoOverlay] = new VideoOverlay();
 window[Instagram] = new Instagram();
 window[EventForm] = new EventForm();
+
+$('.marquee').marquee({
+    duration: parseInt($('.marquee').width(), 10) / (100) * 1000
+});

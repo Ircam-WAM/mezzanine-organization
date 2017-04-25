@@ -44,6 +44,9 @@ $module: ".breaking-news";
         @include font-size(m);
         float: left;
         width: 75%;
+        height: 38px;
+
+        overflow: hidden;
 
         @include mq($until: sm) {
             padding: 0 8px;
