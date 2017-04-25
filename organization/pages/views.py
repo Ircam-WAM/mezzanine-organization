@@ -111,6 +111,7 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
         events = Event.objects.all()
         briefs = Brief.objects.all()
         medias = Media.objects.all()
+        persons = Person.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
@@ -118,8 +119,9 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
             events = events.filter(title__icontains=self.q)
             briefs = briefs.filter(title__icontains=self.q)
             medias = medias.filter(title__icontains=self.q)
+            persons = persons.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias)
+        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons)
 
         if self.q:
             # This would apply the filter on all the querysets
