@@ -34,7 +34,7 @@
 
         {% if event.prices.all %}
             {% if event.prices.all.0|floatformat != '0' %}
-            
+
                 <div class="col-md-4">
 
                     <div class="page__meta-section">{% trans "Price(s)" %}</div>
@@ -51,10 +51,14 @@
 
             {% else %}
 
-                <div class="page__meta-section">{% trans "Price(s)" %}</div>
+                <div class="col-md-4">
 
-                <div class="page__meta-title">
-                    {{ event.no_price_comments }}
+                    <div class="page__meta-section">{% trans "Price(s)" %}</div>
+
+                    <div class="page__meta-title">
+                        {{ event.no_price_comments }}
+                    </div>
+
                 </div>
 
             {% endif %}
