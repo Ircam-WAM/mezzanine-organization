@@ -71,15 +71,23 @@ $module: ".hero";
 
         position: absolute;
         top: 40%;
-        left: 10%;
+        left: 17%;
         width: 50%;
-        text-align: center;
+        text-align: left;
 
         @include transform(translateY(-50%));
 
+        @include mq($until: lg) {
+            left: 10%;
+        }
+
+        @include mq($until: md) {
+            left: 5%;
+        }
+
         @include mq($until: sm) {
             img {
-                width: 70%;
+                width: 90%;
             }
         }
 
@@ -96,12 +104,20 @@ $module: ".hero";
 
     &__left {
 
-        text-align: center;
+        text-align: left;
 
         position: absolute;
         bottom: 50px;
-        left: 0;
+        left: 17%;
         width: 50%;
+
+        @include mq($until: lg) {
+            left: 10%;
+        }
+
+        @include mq($until: md) {
+            left: 5%;
+        }
 
         @include mq($until: xs) {
             width: 100%;
