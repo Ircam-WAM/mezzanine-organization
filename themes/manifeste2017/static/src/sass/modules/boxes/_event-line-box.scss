@@ -225,7 +225,7 @@ $module: ".event-line-box";
         color: $color-main;
 
         margin: 0 !important;
-        padding-right: 200px;
+        margin-right: 200px;
 
         a:not(.button) {
 
@@ -240,7 +240,7 @@ $module: ".event-line-box";
 
         @include mq($until: sm) {
             color: white;
-            padding-right: 0px;
+            margin-right: 0px;
         }
 
     }
