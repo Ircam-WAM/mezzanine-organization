@@ -31,12 +31,13 @@
     <link rel="stylesheet" href="{% static "vendors/pushy/css/pushy.css" %}">
     <link rel="stylesheet" href="{% static "vendors/video.js/dist/video-js.css" %}">
     <link rel="stylesheet" href="{% static "css/index.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/override_base_colors.css" %}">
     {% endcompress %}
 
     {% block extra_head %}{% endblock %}
 </head>
 
-<body id="{% block body_id %}body{% endblock %}" class="{% block body_class %}{% endblock %}">
+<body id="{% block body_id %}body{% endblock %}" class="{% block body_class %}{% endblock %} override_background">
     {% spaceless %}
 
     {% block sidebar %}
@@ -77,7 +78,7 @@
             {% endblock %}
 
             {% block footer %}
-                <footer class="footer" role="footer">
+                <footer class="footer override_footer" role="footer">
                     {% include "starts_eu/includes/footer.html" %}
                 </footer>
             {% endblock %}
