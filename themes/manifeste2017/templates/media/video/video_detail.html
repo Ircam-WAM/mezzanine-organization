@@ -17,13 +17,13 @@
 
 {% block page_title %}
     {% editable media.title %}
-        <h1 class="section-title section-title--uppercase section-title--main">{{ media.title }}</h1>
+        <h1 class="section-title section-title--big section-title--uppercase section-title--main">{{ media.title }}</h1>
     {% endeditable %}
 {% endblock %}
 
 {% block page_sidebar %}
 
-    <div class="page__meta" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
+    <div data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
         <div class="page__meta-title">
             {% trans 'Publish date' %}
         </div>
