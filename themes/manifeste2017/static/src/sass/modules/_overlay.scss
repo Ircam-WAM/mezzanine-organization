@@ -10,7 +10,7 @@ $module: ".overlay";
 
     overflow: hidden;
 
-    background: rgba($color-background, .95);
+    background: rgba(#FFF, .75);
 
     display: block;
     height: 0;
@@ -32,7 +32,7 @@ $module: ".overlay";
         top: 2rem;
         right: 2rem;
         z-index: 2;
-        color: white;
+        color: $color-black;
         display: block;
 
         width: 40px;

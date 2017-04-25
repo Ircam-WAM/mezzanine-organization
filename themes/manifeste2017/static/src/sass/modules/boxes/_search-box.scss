@@ -38,7 +38,7 @@ $module: ".search-box";
         @include margin(0 0 0 0);
         font-weight: weight(bold);
         text-transform: uppercase;
-        color: white;
+        color: $color-black;
         @include transition(color 0.25s ease-in-out);
 
         i {
