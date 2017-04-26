@@ -22,7 +22,7 @@
     @include margin(0 0 0 0);
     @include padding(0 0 0 0);
 
-    @include margin-top(5);
+    @include margin-top(3);
 
     @include mq($until: sm) {
         margin-top: 70px;

@@ -139,11 +139,21 @@ $module: ".event-line-box";
         position: absolute;
         top: 50%;
         right: 1rem;
+        z-index: 3;
         @include transform(translateY(-50%));
 
         @include mq($until: sm) {
-            top: 70px;
             width: auto;
+
+            position: relative;
+            /* width: 100%; */
+            display: block;
+            top: 0;
+            transform: none;
+            /* right: 0; */
+            /* width: 100%; */
+            margin-top: 23px;
+            left: 1.5rem;
         }
 
     }
@@ -224,7 +234,7 @@ $module: ".event-line-box";
 
         color: $color-main;
 
-        margin: 0 !important;
+        margin: 0;
         margin-right: 200px;
 
         a:not(.button) {
@@ -241,6 +251,9 @@ $module: ".event-line-box";
         @include mq($until: sm) {
             color: white;
             margin-right: 0px;
+
+            font-size: 22px;
+            line-height: 28px;
         }
 
     }
@@ -256,6 +269,9 @@ $module: ".event-line-box";
 
         @include mq($until: sm) {
             color: white;
+
+            font-size: 14px;
+            line-height: 16px;
         }
 
     }

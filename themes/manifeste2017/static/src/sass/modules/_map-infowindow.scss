@@ -55,6 +55,11 @@ $module: ".map-infowindow";
         p {
             @include margin(0);
             line-height: 1.1rem;
+            margin-bottom: 8px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
 
     }
