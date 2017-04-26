@@ -46,23 +46,29 @@
                                     {{ organization.name }}
                                 </div>
                                 <div class="slider-network__slide-subtitle" data-marker-subtitle>
-                                    {{ organization.address }}
+                                    {{ organization.address }}, {{ organization.postal_code }} {{ organization.city }}
                                 </div>
 
-                                <div class="">
-                                    {{ organization.type }}, {{ organization.type.css_class }}
-                                </div>
                                 <div class="slider-network__slide-description" data-marker-description>
 
-                                    {% if organization.url %}
+                                    {% if organization.url or organization.telephone %}
                                         <p>
-                                            <a href="organization.url" target="_blank">
-                                                {{ organization.url }}
-                                            </a>
+                                            {% if organization.url %}
+                                                <a href="organization.url" target="_blank">
+                                                    {{ organization.url }}
+                                                </a><br />
+                                            {% endif %}
+                                            {% if organization.telephone %}
+                                                {{ organization.telephone }}
+                                            {% endif %}
                                         </p>
                                     {% endif %}
 
-                                    {{ organization.description }}
+                                    {% if organization.subway_access %}
+                                        <p>
+                                            {{ organization.subway_access }}
+                                        </p>
+                                    {% endif %}
 
                                     <p>
                                         <a href="{% url 'event_list' %}?event_locations_filter[]={{ event_location.title|urlencode }}" class="button button--xsmall button--black">
