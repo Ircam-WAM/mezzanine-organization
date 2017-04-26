@@ -12,6 +12,9 @@ $module: ".section-title";
     line-height: 1.5em;
     letter-spacing: 1px;
 
+    position: relative;
+    top: -14px;
+
     @include margin-bottom(2);
     @include margin-top(0);
 
