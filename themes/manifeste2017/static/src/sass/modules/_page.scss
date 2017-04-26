@@ -179,6 +179,12 @@ $module: ".page";
             text-transform: uppercase;
         }
 
+        small {
+            @include font-size(s);
+            display: block;
+            text-transform: uppercase;
+        }
+
     }
 
     a.page__meta-title {
