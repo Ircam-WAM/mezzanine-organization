@@ -1,11 +1,14 @@
 {% extends "base.html" %}
-{% load i18n pages_tags mezzanine_tags %}
+{% load i18n pages_tags mezzanine_tags organization_tags %}
 
 {% block meta_title %}
     {% trans "Home" %}
 {% endblock %}
 
 {% block breaking_news %}
+    {% with home.dynamiccontenthomebody_set.all|get_first_brief as brief %}
+        {{ brief.title }}
+    {% endwith %}
     {% for content in home.dynamiccontenthomebody_set.all %}
         {% if content.content_type.model == "brief" %}
             <div class="breaking-news" id="jsBreakingNews">

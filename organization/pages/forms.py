@@ -63,7 +63,8 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
             CustomPage.objects.all(),
             Brief.objects.all(),
             Event.objects.all(),
-            Media.objects.all()
+            Media.objects.all(),
+            Person.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-body'),

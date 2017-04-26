@@ -261,3 +261,12 @@ def get_value(dict, value):
 @register.filter(name='times')
 def times(number):
     return range(number)
+
+
+@register.filter
+def get_first_brief(object_list):
+    brief_obj = object_list.filter(content_type__model="brief").first()
+    content_obj = None
+    if brief_obj:
+        content_obj = brief_obj.content_object
+    return content_obj
