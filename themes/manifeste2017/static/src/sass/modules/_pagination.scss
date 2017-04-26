@@ -55,6 +55,7 @@ $module: ".pagination";
         }
 
         &:last-child {
+            border-right: 1px solid $color-main;
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
 
