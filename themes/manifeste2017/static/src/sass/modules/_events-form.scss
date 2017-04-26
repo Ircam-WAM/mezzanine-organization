@@ -1,4 +1,5 @@
 #jsEventsForm,
+#jsArticlesForm,
 #jsEventsHomeForm {
 
     >label {
@@ -70,8 +71,13 @@
 
     }
 
+    #id_article_type_filter {
+        text-align: center;
+    }
+
     #id_event_categories_filter,
-    #id_event_locations_filter {
+    #id_event_locations_filter,
+    #id_article_type_filter {
 
         padding: 0px 90px;
 
@@ -112,7 +118,7 @@
             &.active {
                 opacity: 1;
 
-                label {
+                label, a {
 
                     &:after {
 
@@ -123,10 +129,12 @@
                 }
             }
 
-            label {
+            label, a {
 
                 padding: 5px 15px;
                 text-transform: uppercase;
+                text-decoration: none;
+                border: 0;
                 @include font-size(m);
                 cursor: pointer;
 

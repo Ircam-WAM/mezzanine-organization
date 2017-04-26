@@ -35,11 +35,22 @@
             </div>
         </div>
         <div class="row">
-            <ul>
-                {% for keyword in keywords %}
-                    <li><a href="{% url 'magazine-article-list' keyword %}" title="">{{ keyword }}</a></li>
-                {% endfor %}
-            </ul>
+            <div class="col-md-14 col-md-push-1 col-lg-12 col-lg-push-2 mb2" id="jsArticlesForm">
+                <ul id="id_article_type_filter">
+                    {% for keyword in keywords %}
+                        {% if not current_keyword %}
+                            <li class="active">
+                                <a href="{% url 'magazine-article-list' keyword %}" title="">{{ keyword }}</a>
+                            </li>
+                        {% else %}
+                            <li class="{% if current_keyword == keyword %}active{% endif %}">
+                                <a href="{% if current_keyword == keyword %}{% url 'magazine-article-list' %}{% else %}{% url 'magazine-article-list' keyword %}{% endif %}" title="">{{ keyword }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
         </div>
         <div class="row">
 

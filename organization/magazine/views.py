@@ -221,4 +221,6 @@ class ArticleListView(SlugMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
         context['keywords'] = settings.ARTICLE_KEYWORDS
+        if 'type' in self.kwargs:
+            context['current_keyword'] = self.kwargs['type'];
         return context
