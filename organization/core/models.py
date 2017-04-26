@@ -33,7 +33,7 @@ from mezzanine.core.models import Displayable, Slugged, Orderable
 from django_countries.fields import CountryField
 
 
-COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')), ('white', _('white')),)
+COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')), ('white', _('white')), ('blue', _('blue')), ('purple', _('purple')),)
 
 ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
 
