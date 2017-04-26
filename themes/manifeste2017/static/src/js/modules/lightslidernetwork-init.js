@@ -184,6 +184,12 @@ LightSliderNetworkInit.prototype.init = function() {
             //if (that.map.getZoom() < 3) that.map.setZoom(3);
         });
 
+        google.maps.event.addListener(that.map, "click", function(event) {
+            that.markers.forEach(function(m, i) {
+                m.info.close();
+            });
+        });
+
     }
 
 };

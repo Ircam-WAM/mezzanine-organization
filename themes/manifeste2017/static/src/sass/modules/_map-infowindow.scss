@@ -29,7 +29,18 @@
 
    & + * {
        right: 64px !important;
+       display: none;
    }
+
+   @include mq($until: sm) {
+       width: 100% !important;
+
+       & + * {
+           right: 12px !important;
+           z-index: 200;
+       }
+   }
+
 }
 
 $module: ".map-infowindow";
@@ -51,6 +62,10 @@ $module: ".map-infowindow";
         width: 250px;
         float: left;
         margin-left: 12px;
+
+        @include mq($until: sm) {
+            width: 100%;
+        }
 
         p {
             @include margin(0);
@@ -100,6 +115,10 @@ $module: ".map-infowindow";
         img {
             width: 238px;
             height: auto;
+        }
+
+        @include mq($until: sm) {
+            display: none;
         }
 
     }
