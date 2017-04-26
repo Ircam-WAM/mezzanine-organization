@@ -77,6 +77,10 @@ $module: ".page";
         font-weight: weight(heavy);
 
         span {
+            font-size: 13px;
+            margin-top: 2px;
+            font-weight: weight(regular);
+            display: block;
             &.inline-date {
                 display: inline;
                 @include font-size(m);
@@ -84,10 +88,7 @@ $module: ".page";
                 @include typeface(serif);
                 font-weight: weight(heavy);
             }
-            font-size: 13px;
-            margin-top: 2px;
-            font-weight: weight(regular);
-            display: block;
+
         }
 
     }
