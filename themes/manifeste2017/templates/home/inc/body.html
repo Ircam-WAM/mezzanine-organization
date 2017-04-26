@@ -7,19 +7,21 @@
             </div>
             <div class="row-12">
                 {% for content in home.dynamiccontenthomebody_set.all %}
-                    <div class="col-xs-4{% if forloop.counter > 3 %} hide-until-xs{% endif %}">
-                        {% if content.content_type.model == "article" %}
-                            {% include "magazine/article/includes/article_card.html" with object=content.content_object %}
-                        {% elif content.content_type.model == "event" %}
-                            {% include "agenda/event/includes/event_card.html" with object=content.content_object %}
-                        {% elif content.content_type.model == "custompage" %}
-                            {% include "pages/page/includes/page_card.html" with  object=content.content_object %}
-                        {% elif content.content_type.model == "media" %}
-                            {% include "media/media/includes/media_card.html" with  object=content.content_object %}
-                        {% elif content.content_type.model == "person" %}
-                            {% include "network/person/includes/person_card.html" with  object=content.content_object %}
-                        {% endif %}
-                    </div>
+                    {% if content.content_type.model != "brief" %}
+                        <div class="col-xs-4{% if forloop.counter > 3 %} hide-until-xs{% endif %}">
+                            {% if content.content_type.model == "article" %}
+                                {% include "magazine/article/includes/article_card.html" with object=content.content_object %}
+                            {% elif content.content_type.model == "event" %}
+                                {% include "agenda/event/includes/event_card.html" with object=content.content_object %}
+                            {% elif content.content_type.model == "custompage" %}
+                                {% include "pages/page/includes/page_card.html" with  object=content.content_object %}
+                            {% elif content.content_type.model == "media" %}
+                                {% include "media/media/includes/media_card.html" with  object=content.content_object %}
+                            {% elif content.content_type.model == "person" %}
+                                {% include "network/person/includes/person_card.html" with  object=content.content_object %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
