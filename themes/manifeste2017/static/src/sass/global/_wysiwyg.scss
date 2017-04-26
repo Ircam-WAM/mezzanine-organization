@@ -162,6 +162,64 @@
 
 }
 
+.wys-button-white-main {
+
+    @extend .button;
+    @extend .button--white-main;
+
+    @include margin(0 .5 0 0);
+
+}
+
+.wys-button-white-main-small {
+
+    @extend .button;
+    @extend .button--white-main;
+    @extend .button--small;
+
+    @include margin(0 .5 0 0);
+
+}
+
+.wys-button-white-main-xsmall {
+
+    @extend .button;
+    @extend .button--white-main;
+    @extend .button--xsmall;
+
+    @include margin(0 .5 0 0);
+
+}
+
+.wys-button-white-accent {
+
+    @extend .button;
+    @extend .button--white-main;
+
+    @include margin(0 .5 0 0);
+
+}
+
+.wys-button-white-accent-small {
+
+    @extend .button;
+    @extend .button--white-main;
+    @extend .button--small;
+
+    @include margin(0 .5 0 0);
+
+}
+
+.wys-button-white-accent-xsmall {
+
+    @extend .button;
+    @extend .button--white-main;
+    @extend .button--xsmall;
+
+    @include margin(0 .5 0 0);
+
+}
+
 .wys-highlighted-paragraph {
 
     @include padding-left(1);

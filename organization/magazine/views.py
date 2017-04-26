@@ -220,8 +220,9 @@ class ArticleListView(SlugMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
         context['keywords'] = settings.ARTICLE_KEYWORDS
-
         context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
                               settings.MEDIA_PER_PAGE,
                               settings.MAX_PAGING_LINKS)
+        if 'type' in self.kwargs:
+            context['current_keyword'] = self.kwargs['type'];
         return context

@@ -155,7 +155,6 @@
 {% block page_link %}
     {% with person.links.all as links %}
         {% if links %}
-            <h3>{% trans 'Links' %}</h3>
             {% include 'core/inc/link.html' %}
         {% endif %}
     {% endwith %}

@@ -43,6 +43,28 @@ $module: ".page";
 
     }
 
+    &__subtitle {
+
+        @include font-size(l);
+        @include line-height(1);
+        @include typeface(serif);
+        font-weight: weight(heavy);
+        text-transform: uppercase;
+
+        @include margin-bottom(2);
+        @include padding(0 4);
+        letter-spacing: 3px;
+
+        @include mq($until: md) {
+            @include padding(0 2);
+        }
+
+        @include mq($until: sm) {
+            @include padding(0 0);
+        }
+
+    }
+
     &__meta {
 
         border-top: 1px solid $color-black;
@@ -50,11 +72,17 @@ $module: ".page";
 
         @include padding(1 0);
 
+        @include mq($until: md) {
+            .col-md-4 {
+                margin-bottom: 20px;
+            }
+        }
+
     }
 
     &__sidebar {
 
-        @include mq($until: sm) {
+        @include mq($until: md) {
             //background: white;
             text-align: center;
             @include margin-bottom(2);
@@ -146,6 +174,12 @@ $module: ".page";
         font-weight: weight(bold);
 
         &--small {
+            @include font-size(s);
+            display: block;
+            text-transform: uppercase;
+        }
+
+        small {
             @include font-size(s);
             display: block;
             text-transform: uppercase;

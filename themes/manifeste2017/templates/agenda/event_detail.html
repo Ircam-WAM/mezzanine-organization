@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block page_title %}
-    <h1 class="section-title section-title--uppercase section-title--underline section-title--main section-title--no-margin"><a href="{% url 'event_list' %}"><i class="fsl fa fa-angle-left"></i>{% trans "Back to events" %}</a></h1>
+    <h1 class="section-title section-title--uppercase section-title--underline section-title--main"><a href="{% url 'event_list' %}"><i class="fsl fa fa-angle-left"></i>{% trans "Back to events" %}</a></h1>
     {% include 'agenda/includes/event_linecard.html' %}
 {% endblock %}
 
@@ -33,6 +33,15 @@
 {% endblock %}
 
 {% block page_content %}
+
+    {% if event.subtitle %}
+        <div class="page__subtitle">
+            {% editable event.subtitle %}
+                {{ event.subtitle }}
+            {% endeditable %}
+        </div>
+    {% endif %}
+
     {% include 'agenda/includes/event_metainfo.html' %}
 
     {% block event_detail_content %}
@@ -42,6 +51,7 @@
             {% endeditable %}
         {% endif %}
     {% endblock %}
+
 {% endblock %}
 
 {% block page_link %}
@@ -106,7 +116,7 @@
                                 {% if event.trainings.all %}
                                     {% trans "Trainers" %}<br>
                                 {% else %}
-                                    {% trans "Persons" %}<br>
+                                    {% trans "Artists" %}<br>
                                 {% endif %}
                             </h2>
                         </div>
