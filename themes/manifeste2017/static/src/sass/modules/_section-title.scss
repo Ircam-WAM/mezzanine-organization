@@ -94,6 +94,11 @@ $module: ".section-title";
             display: none;
         }
 
+        @include mq($until: sm) {
+            @include font-size(xl);
+            @include line-height(1.5);
+        }
+
     }
 
     &--no-margin {
