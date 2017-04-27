@@ -75,6 +75,10 @@
         text-align: center;
     }
 
+    #id_event_locations_filter {
+        display: none;
+    }
+
     #id_event_categories_filter,
     #id_event_locations_filter,
     #id_article_type_filter {
