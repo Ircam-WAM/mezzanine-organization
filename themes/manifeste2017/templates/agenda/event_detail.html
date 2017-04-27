@@ -21,7 +21,17 @@
 
 {% block page_title %}
     <h1 class="section-title section-title--uppercase section-title--underline section-title--main"><a href="{% url 'event_list' %}"><i class="fsl fa fa-angle-left"></i>{% trans "Back to events" %}</a></h1>
-    {% include 'agenda/includes/event_linecard.html' %}
+
+    <div style="position: relative;">
+        {% if previous_event_url %}
+            <a href="{{ previous_event_url }}" class="page__previous"><i class="fa fa-angle-left"></i></a>
+        {% endif %}
+        {% include 'agenda/includes/event_linecard.html' %}
+        {% if next_event_url %}
+            <a href="{{ next_event_url }}" class="page__next"><i class="fa fa-angle-right"></i></a>
+        {% endif %}
+    </div>
+
 {% endblock %}
 
 {% block breadcrumb_menu %}
@@ -52,8 +62,6 @@
         {% endif %}
     {% endblock %}
 
-    {{ previous_event_url }} 
-    {{ next_event_url }}
 {% endblock %}
 
 {% block page_link %}

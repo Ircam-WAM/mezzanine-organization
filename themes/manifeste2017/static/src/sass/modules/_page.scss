@@ -574,4 +574,29 @@ $module: ".page";
 
     }
 
+    &__previous,
+    &__next {
+        position: absolute;
+        top: 50%;
+        font-size: 64px;
+        margin-top: -64px;
+        display: block;
+
+        @include transition(all 0.15s ease-in-out);
+    }
+
+    &__previous {
+        left: -70px;
+        &:hover {
+            @include transform(translateX(-10px));
+        }
+    }
+
+    &__next {
+        right: -70px;
+        &:hover {
+            @include transform(translateX(10px));
+        }
+    }
+
 }
