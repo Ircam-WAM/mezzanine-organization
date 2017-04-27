@@ -55,6 +55,10 @@ $module: ".map-infowindow";
     background: $color-main;
     width: 512px;
 
+    @include mq($until: sm) {
+        width: 100% !important;
+    }
+
     &__content {
 
         //float: left;
