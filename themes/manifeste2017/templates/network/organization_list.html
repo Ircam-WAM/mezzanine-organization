@@ -71,9 +71,11 @@
                                     {% endif %}
 
                                     <p>
-                                        <a href="{% url 'event_list' %}?event_locations_filter[]={{ event_location.title|urlencode }}" class="button button--xsmall button--black">
-                                            {% trans "LINKED EVENTS" %}
-                                        </a>
+                                        {% with event_location=organization.event_locations.first.event_location %}
+                                            <a href="{% url 'event_list' %}?event_locations_filter[]={{ event_location.title|urlencode }}" class="button button--xsmall button--black">
+                                                {% trans "LINKED EVENTS" %}
+                                            </a>
+                                        {% endwith %}
                                     </p>
                                 </div>
 
