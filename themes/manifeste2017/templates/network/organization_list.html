@@ -54,7 +54,7 @@
                                     {% if organization.url or organization.telephone %}
                                         <p>
                                             {% if organization.url %}
-                                                <a href="organization.url" target="_blank">
+                                                <a href="{{ organization.url }}" target="_blank">
                                                     {{ organization.url }}
                                                 </a><br />
                                             {% endif %}
