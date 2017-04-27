@@ -18,7 +18,7 @@
                             {% elif content.content_type.model == "media" %}
                                 {% include "media/media/includes/media_card.html" with  object=content.content_object %}
                             {% elif content.content_type.model == "person" %}
-                                {% include "network/person/includes/person_card.html" with  object=content.content_object %}
+                                {% include "network/inc/person/person_card_square.html" with  person=content.content_object %}
                             {% endif %}
                         </div>
                     {% endif %}

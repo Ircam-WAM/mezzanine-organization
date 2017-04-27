@@ -368,7 +368,8 @@ $module: ".article-box";
 
         #{$module}__image {
 
-            @include fluid-aspect(427 500);
+            //@include fluid-aspect(427 500);
+            @include fluid-aspect(328 380);
 
         }
 
