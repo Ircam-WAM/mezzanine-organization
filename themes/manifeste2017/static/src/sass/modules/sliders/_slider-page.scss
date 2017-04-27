@@ -86,6 +86,14 @@ $module: ".slider-page";
         // Nothing ?
         position: relative;
 
+        @include mq($until: sm) {
+            height: 500px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
     }
 
     //
@@ -95,7 +103,8 @@ $module: ".slider-page";
     &__img {
 
         @include mq($until: sm) {
-            width: 100%;
+            max-height: 100%;
+            height: auto;
         }
 
     }
@@ -110,6 +119,17 @@ $module: ".slider-page";
 
         max-width: 250px;
         margin: 0 auto;
+
+        @include mq($until: sm) {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 100%;
+            padding: 10px;
+            color: black;
+            background: rgba($color-white, 0.5);
+        }
 
     }
 
