@@ -42,7 +42,7 @@
         {% include "home/inc/bio.html" %}
     </div>
 
-    {% if home.dynamic_content_home_media|length > 0 %}
+    {% if home.dynamic_content_home_media.all|length > 0 %}
         {% with home.dynamic_content_home_media.first as dynamic_object %}
             {% with dynamic_object.content_object.medias.first as playlist %}
                 <div class="container section">
