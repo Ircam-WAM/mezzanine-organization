@@ -18,6 +18,10 @@ var EventForm = function() {
     }
 
     if(this.$homeform.length > 0) {
+        $('input[type="radio"][disabled]', that.$homeform).each(function(idx) {
+            $(this).parents('li').addClass('disabled');
+        });
+
         $('input[type="radio"]', that.$homeform).on('change', function() {
             that.$homeform.submit();
         });
