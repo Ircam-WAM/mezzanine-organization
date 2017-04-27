@@ -55,6 +55,18 @@ $module: ".button";
         }
     }
 
+    &--no-hover {
+        &:hover {
+            background: $color-accent !important;
+            color: white !important;
+            border: 1px solid $color-accent !important;
+
+            a {
+                color: white !important;
+            }
+        }
+    }
+
     &--black {
 
         background-color: $color-black;
