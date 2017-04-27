@@ -44,10 +44,10 @@
 
 {% block page_content %}
 
-    {% if event.subtitle %}
+    {% if event.sub_title %}
         <div class="page__subtitle">
-            {% editable event.subtitle %}
-                {{ event.subtitle }}
+            {% editable event.sub_title %}
+                {{ event.sub_title }}
             {% endeditable %}
         </div>
     {% endif %}
