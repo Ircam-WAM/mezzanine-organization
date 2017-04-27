@@ -93,8 +93,8 @@ $module: ".hero";
 
         @include mq($until: xs) {
             width: 100%;
-            @include transform(translateY(0%));
-            top: 30px;
+            @include transform(translateY(-50%));
+            top: 50%;
             img {
                 width: 90%;
             }
@@ -121,7 +121,8 @@ $module: ".hero";
 
         @include mq($until: xs) {
             width: 100%;
-            top: 50%;
+            top: auto;
+            bottom: 30px;
             img {
                 width: 90%;
             }
@@ -140,8 +141,7 @@ $module: ".hero";
 
         @include mq($until: xs) {
             width: 100%;
-            top: auto;
-            bottom: 30px;
+            top: 30px;
             right: 30px;
             text-align: right;
             img {
