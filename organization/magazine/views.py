@@ -200,18 +200,18 @@ class ArticleListView(SlugMixin, ListView):
     def get_queryset(self):
         self.qs = super(ArticleListView, self).get_queryset()
         self.qs = self.qs.filter(status=2).order_by('-created')
-        medias = Media.objects.published().order_by('-created').distinct()
+        playlists = Playlist.objects.published().order_by('-created').distinct()
 
         if 'type' in self.kwargs:
             if self.kwargs['type'] == "article":
-                medias = []
+                playlists = []
 
             if self.kwargs['type'] == "video" or self.kwargs['type'] == "audio":
-                medias = medias.filter(transcoded__mime_type__contains=self.kwargs['type'])
+                playlists = playlists.filter(transcoded__mime_type__contains=self.kwargs['type'])
                 self.qs = []
 
         self.qs = sorted(
-            chain( self.qs, medias),
+            chain( self.qs, playlists),
             key=lambda instance: instance.created,
             reverse=True)
 
