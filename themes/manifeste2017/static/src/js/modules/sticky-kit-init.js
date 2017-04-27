@@ -36,6 +36,12 @@ StickyKitInit.prototype.init = function() {
             $(this).parent().parent().css('position', 'relative');
             $(this).parent().css('position', 'relative');
             $(this).removeClass('to-bottom');
+        })
+        .on('sticky_kit:unstick', function(e) {
+            var $self = $(this);
+            if($self.attr('data-base-top')) {
+                $self.css('top', $self.attr('data-base-top') + 'px');
+            }
         });
 
         data = $(this).data();

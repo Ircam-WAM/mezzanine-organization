@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block title %}
-    {{ object.title }}
+    {{ object.title|truncatechars_html:50 }}
 {% endblock %}
 
 {% block url %}

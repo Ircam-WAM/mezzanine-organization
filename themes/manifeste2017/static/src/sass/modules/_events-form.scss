@@ -45,7 +45,7 @@
             }
 
             &.disabled {
-                //color: lightgrey;
+                color: lightgrey;
             }
 
             &.active {
@@ -73,6 +73,10 @@
 
     #id_article_type_filter {
         text-align: center;
+    }
+
+    #id_event_locations_filter {
+        display: none;
     }
 
     #id_event_categories_filter,

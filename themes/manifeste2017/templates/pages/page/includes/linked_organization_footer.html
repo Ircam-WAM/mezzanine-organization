@@ -2,7 +2,7 @@
 {% for lof in linked_organization_footer %}
     {% if lof.images.all|length > 0 %}
     <a href="{{ lof.url }}" target="_blank" title="{{ lof.name }}">
-        {% with lof.images|get_type:"logo_white" as img %}
+        {% with lof.images|get_type:"logo_footer" as img %}
             {% if img %}
                 {% with img|first as img %}
                     <img class="footer__partner" src="{{ MEDIA_URL }}{{ img }}" title="{{ img.title }}" width="120" height="66" />
