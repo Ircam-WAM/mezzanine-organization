@@ -98,7 +98,7 @@ $module: ".button";
         border: 1px solid $color-main;
 
         &:hover {
-            background-color: $color-main;
+            background-color: darken($color-main, 10%);
             color: white;
         }
 
@@ -111,7 +111,7 @@ $module: ".button";
         border: 1px solid $color-accent;
 
         &:hover {
-            background-color: $color-accent;
+            background-color: darken($color-accent, 10%);
             color: white;
         }
 
