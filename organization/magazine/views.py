@@ -207,7 +207,7 @@ class ArticleListView(SlugMixin, ListView):
                 playlists = []
 
             if self.kwargs['type'] == "video" or self.kwargs['type'] == "audio":
-                playlists = playlists.filter(transcoded__mime_type__contains=self.kwargs['type'])
+                playlists = playlists.filter(type=self.kwargs['type'])
                 self.qs = []
 
         self.qs = sorted(
