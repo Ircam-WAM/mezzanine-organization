@@ -132,7 +132,7 @@ LANGUAGES = (
     ('en', _('English')),
 )
 
-#LOCALE_PATHS = ['locale', '../']
+LOCALE_PATHS = ['locale', '../lib/mezzanine-agenda/mezzanine_agenda/locale/']
 
 # Whether a user's session cookie expires when the Web browser is closed.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
