@@ -22,7 +22,7 @@
                             </figure>
                         </a>
                     {% else %}
-                        {% with event.parent.images.all|get_type:'card' as images %}
+                        {% with event.images.all|get_type:'card' as images %}
                             {% if images %}
                                 <a href="{{ event.get_absolute_url }}">
                                     <figure class="event-line-box__image">
@@ -38,17 +38,17 @@
                 {% keywords_for event as tags %}
                 <div class="event-line-box__tags">
                     <div class="tag tag--small dashed">
-                        {% if event.departments.all %}{{ event.departments.all.0.department.name }}{% else %}{{ event.parent.departments.all.0.department.name }}{% endif %}
+                        {{ event.departments.all.0.department.name }}
                     </div>
                     <div class="tag tag--small tag--category">
-                        {% if event.category %}{{ event.category }}{% else %}{{ event.parent.category }}{% endif %}
+                        {{ event.category }}
                     </div>
                 </div>
                 <h3 class="event-line-box__title">
                     <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
                 </h3>
                 <div class="event-line-box__desc">
-                    {% if event.description %}{{ event.description|slice:":100" }}{% else %}{{ event.parent.description|slice:":100" }}{% endif %}
+                    {{ event.description|slice:":100" }}
                 </div>
             </div>
         </div>
