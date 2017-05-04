@@ -27,7 +27,7 @@
             </figure>
         </a>
         {% else %}
-            {% with event.parent.images.all|get_type:'card' as images %}
+            {% with event.images.all|get_type:'card' as images %}
                 {% if images %}
                 <a href="{{ event.get_absolute_url }}" class="search-box__image-wrapper">
                     <figure class="search-box__image">
