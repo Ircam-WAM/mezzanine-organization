@@ -30,10 +30,11 @@ from mezzanine_agenda.models import Event
 from mezzanine.conf import settings
 from random import shuffle
 from django.utils.translation import ugettext_lazy as _
-
-
+from organization.agenda.models import EventPeriod
 from organization.magazine.models import *
 from organization.projects.models import *
+from django.utils.formats import get_format
+from django.utils.dateformat import DateFormat
 
 register = Library()
 
@@ -237,3 +238,47 @@ def get_value(dict, value):
 @register.filter(name='times')
 def times(number):
     return range(number)
+
+@register.filter
+def get_separator_with(date_start, date_end):
+    separator = ""
+    # several days between two dates
+    if date_end:
+        diff = date_end - date_start
+        diff = diff.days * 24 + diff.seconds/3600
+        if diff > 24 :
+            separator = _("through")
+        # less than 24 hours between two dates
+        else :
+            separator = _("and")
+    return separator
+
+
+@register.filter
+def format_date_fct_of(date_start, date_end):
+    date_start = DateFormat(date_start)
+    date_start = date_start.format(get_format('DATE_EVENT_FORMAT'))
+    if date_end:
+        date_end = DateFormat(date_end)
+        if date_start.format(get_format('SHORT_DATE_FORMAT')) == date_end.format(get_format('SHORT_DATE_FORMAT')):
+            date_start = date_start.format(get_format('DATE_EVENT_FORMAT'))
+        elif date_start.format(get_format('YEAR_MONTH_FORMAT')) == date_end.format(get_format('YEAR_MONTH_FORMAT')):
+            date_start = date_start.format(get_format('WEEK_DAY_FORMAT'))
+    return date_start
+
+
+@register.filter
+def period_is_more_than_hours(date_obj, hours):
+    is_more = False
+    if isinstance(date_obj, EventPeriod):
+        is_more = is_more_then_hours(date_obj.date_from, date_obj.date_to, hours)
+    if isinstance(date_obj, Event):
+        is_more = is_more_then_hours(date_obj.start, date_obj.end, hours)
+    return is_more
+
+def is_more_then_hours(date_begin, date_end, hours):
+    if not date_end:
+        is_more = False
+    else :
+        is_more = (date_end - date_begin).seconds > hours*3600
+    return is_more
