@@ -36,6 +36,7 @@ NEVERCACHE_KEY = "m)u^%r@uh#r3wu0&$=#$1ogx)uy4hv93^2lt%c3@xi=^gifoj8paozijdihaze
 
 EMAIL_HOST = 'smtp.ircam.fr'
 EMAIL_PORT = '25'
+SERVER_EMAIL = 'no-reply@ircam.fr'
 DEFAULT_FROM_EMAIL = 'Vertigo@iuk.fraunhofer.de'
 DEFAULT_TO_EMAIL = 'Vertigo@iuk.fraunhofer.de'
 EMAIL_SUBJECT_PREFIX = "[VERTIGO]"
