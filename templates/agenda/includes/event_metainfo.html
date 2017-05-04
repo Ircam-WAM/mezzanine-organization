@@ -71,7 +71,7 @@
                         </a>
                     {% endif %}
                 {% endwith %}
-            {% else %}
+            {% elif event.external_id  %}
                 <a class="button button--block" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
                     {% trans "Reserve" %}
                 </a>
