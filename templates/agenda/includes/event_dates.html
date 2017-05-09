@@ -11,7 +11,7 @@
                     {% if same_day_in_periods and forloop.first  %}
                         {% include 'agenda/includes/event_date.html' with date_begin=period.date_from date_end=period.date_to %}
                     {% elif not same_day_in_periods %}
-                        {% include 'agenda/includes/event_date.html' with date_begin=period.date_from date_end=period.date_to %}
+                        {% include 'agenda/includes/event_date.html' with date_begin=period.date_from date_end=period.date_to %}<span class="inline-date">,</span><br>
                     {% endif %}
                     {# display only one time a the last loop if same time  #}
                     {% if same_time_in_periods and forloop.last %}
@@ -33,7 +33,7 @@
   {# else, display event.start and event.end #}
   {% else %}
 
-    {% include 'agenda/includes/event_date.html' with date_begin=event.start date_end=event.end %}
+    {% include 'agenda/includes/event_date.html' with date_begin=event.start date_end=event.end %}<span class="inline-date">,</span><br>
     {% include 'agenda/includes/event_time.html' with date_obj=event date_begin=event.start date_end=event.end %}
 
   {% endif %}
