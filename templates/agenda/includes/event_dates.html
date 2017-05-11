@@ -1,0 +1,40 @@
+{% load event_tags pages_tags mezzanine_tags organization_tags i18n  %}
+
+{% with event.periods.all as periods %}
+  {# if periods, display periods #}
+  {% if periods %}
+    {# bool describing whether we found the same day in periods #}
+        {% with periods|same_day_in_periods as same_day_in_periods %}
+            {# bool describing whether we found the same time in periods #}
+            {% with periods|same_time_in_periods as same_time_in_periods %}
+                {% for period in periods %}
+                    {% if same_day_in_periods and forloop.first  %}
+                        {% include 'agenda/includes/event_date.html' with date_begin=period.date_from date_end=period.date_to %}
+                    {% elif not same_day_in_periods %}
+                        {% include 'agenda/includes/event_date.html' with date_begin=period.date_from date_end=period.date_to %}<span class="inline-date">,</span><br>
+                    {% endif %}
+                    {# display only one time a the last loop if same time  #}
+                    {% if same_time_in_periods and forloop.last %}
+                        {% include 'agenda/includes/event_time.html' with date_obj=period date_begin=period.date_from date_end=period.date_to %}
+                    {# not same time, display all differents times #}
+                    {% elif not same_time_in_periods %}
+                        {% include 'agenda/includes/event_time.html' with date_obj=period date_begin=period.date_from date_end=period.date_to %}
+                        {% if not same_day_in_periods  %}
+                            <br>
+                        {% endif %}
+                    {% endif %}
+                    {% if not forloop.last and periods|length == 2 and not same_day_in_periods %}
+                        {% trans 'and' %}<br>
+                    {% endif %}
+                {% endfor %}
+            {% endwith %}
+        {% endwith %}
+
+  {# else, display event.start and event.end #}
+  {% else %}
+
+    {% include 'agenda/includes/event_date.html' with date_begin=event.start date_end=event.end %}<span class="inline-date">,</span><br>
+    {% include 'agenda/includes/event_time.html' with date_obj=event date_begin=event.start date_end=event.end %}
+
+  {% endif %}
+{% endwith %}
