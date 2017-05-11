@@ -91,7 +91,7 @@ FILEBROWSER_SELECT_FORMATS = {
     'Document': ['Document'],
     # for TinyMCE we can also define lower-case items
     'image': ['Image'],
-    'file': ['Folder', 'Image', 'Document'],    
+    'file': ['Folder', 'Image', 'Document'],
     'media': ['Video', 'Audio'],
     'audio': ['Audio'],
 }
@@ -337,6 +337,7 @@ LOGIN_REDIRECT_URL = "/profile"
 # TIMESHEET
 
 TIMESHEET_USER_TEST = 849  # Emilie Zawadzki
+TIMESHEET_LOG_PATH = "/var/log/cron/" 
 
 if DEBUG == True:
     TIMESHEET_MASTER_MAIL = "zawadzki@ircam.fr"
