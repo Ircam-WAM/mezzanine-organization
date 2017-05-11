@@ -1,7 +1,7 @@
 {% load i18n mezzanine_tags event_tags organization_tags %}
 
 <div class="page__meta-date">
-    {% include 'agenda/includes/event_date.html' %}
+    {% include 'agenda/includes/event_dates.html' %}
 </div>
 
 <div class="page__meta-separator"></div>
@@ -71,7 +71,7 @@
                         </a>
                     {% endif %}
                 {% endwith %}
-            {% else %}
+            {% elif event.external_id  %}
                 <a class="button button--block" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
                     {% trans "Reserve" %}
                 </a>

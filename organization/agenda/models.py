@@ -96,6 +96,7 @@ class EventPeriod(PeriodDateTime):
     class Meta:
         verbose_name = _("period")
         verbose_name_plural = _("periods")
+        ordering = ['date_from', ]
 
 
 class EventPublicType(Named):
