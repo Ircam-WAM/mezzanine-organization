@@ -91,7 +91,7 @@ FILEBROWSER_SELECT_FORMATS = {
     'Document': ['Document'],
     # for TinyMCE we can also define lower-case items
     'image': ['Image'],
-    'file': ['Folder', 'Image', 'Document'],    
+    'file': ['Folder', 'Image', 'Document'],
     'media': ['Video', 'Audio'],
     'audio': ['Audio'],
 }
@@ -214,6 +214,11 @@ EVENT_SHOP_URL = EVENT_DOMAIN+"/pub.php/event/%d/edit"
 EVENT_PASS_URL = EVENT_DOMAIN+"/pub.php/pass/"
 EVENT_CONFIRMATION_URL = EVENT_DOMAIN+"/pub.php/cart/done?transaction_id=%s"
 EVENT_EXCLUDE_TAG_LIST = ['tournees', ]
+
+DRUM_SLUG = "drum"
+ACCOUNTS_PROFILE_MODEL = "organization-network.Person"
+ITEMS_PER_PAGE = 10
+
 
 TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
 

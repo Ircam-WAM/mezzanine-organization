@@ -49,4 +49,6 @@ urlpatterns = [
     url("^network/$", OrganizationListView.as_view(), name='network'),
     url("^organization-linked-list-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
     url("^organization-linked-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
+
+    url(r'profile/(?P<username>.*)/$', RedirectView.as_view(url=reverse_lazy('organization-network-person-detail'), permanent=True), name="profile"),
     ]

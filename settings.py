@@ -245,6 +245,7 @@ INSTALLED_APPS = [
     "prestashop",
     'djangobower',
     "meta",
+    'drum.links',
     "mezzanine_agenda",
     "organization.core",
     "organization.media",
