@@ -79,7 +79,8 @@ class PersonDetailView(SlugMixin, DetailView):
                                     if not isinstance(instance, person_list_block_inline.person_list_block.__class__) :  #and not isinstance(person_list_block_inline.person_list_block.__class__):
                                         context["related"]["other"].append(instance)
 
-        context["related"]["other"].sort(key=lambda x: x.created, reverse=True)
+        if context["related"]["other"]:
+            context["related"]["other"].sort(key=lambda x: x.created, reverse=True)
         context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
         return context
 
