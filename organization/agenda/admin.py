@@ -35,6 +35,7 @@ from mezzanine_agenda.admin import *
 from organization.core.models import *
 from organization.agenda.models import *
 from organization.agenda.forms import *
+from organization.agenda.translation import *
 
 
 class EventBlockInline(StackedDynamicInlineAdmin):

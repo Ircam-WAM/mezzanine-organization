@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 try:
-    from local_settings import *
+    from settings import *
 except ImportError:
     pass
 # Test runner with no database creation

@@ -25,6 +25,7 @@ from copy import deepcopy
 from mezzanine.core.admin import *
 from organization.job.models import *
 from organization.job.forms import *
+from organization.job.translation import *
 
 
 class JobResponseInline(TabularDynamicInlineAdmin):

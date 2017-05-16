@@ -30,7 +30,7 @@ from organization.core.admin import *
 from organization.projects.models import *
 from organization.pages.models import *
 from organization.shop.models import *
-
+from organization.shop.translation import *
 from cartridge.shop.admin import *
 
 

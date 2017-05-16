@@ -19,15 +19,35 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase, TestCase
+from django.core import management
+from io import StringIO
 import datetime
 from organization.network.utils import get_nb_half_days_by_period, get_nb_half_days_by_period_per_month
 from organization.network.api import get_leave_days_per_month
-
+import ast
 #
 # To run tests without database :
 # python manage.py test organization.network.tests.[method_name] --settings='organization.core.no_db_settings'
 #
+
+class Timesheet(TestCase):
+
+    def setUp(self):
+        self.resulted_person = StringIO()
+        # id of persons who as to enter its timesheet
+        self.expected_person = [2, 64, 70, 77, 83, 96, 132,
+                                137, 156, 167, 171, 173, 174,
+                                248, 355, 442, 497, 646, 656,
+                                823, 849, 861, 887, 888]
+        self.date_from = "2017/03/01"
+        self.date_to = "2017/03/31"
+
+    def test_person_has_to_enter_timesheet(self):
+        management.call_command("timesheetmail", input_from=self.date_from, input_to=self.date_to, stdout=self.resulted_person)
+        self.assertListEqual(ast.literal_eval(self.resulted_person.getvalue()), self.expected_person)
+        self.resulted_person.close()
+
 
 class NbOfHalfDaysInPeriodTestCase(SimpleTestCase):
 

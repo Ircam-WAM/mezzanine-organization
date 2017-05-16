@@ -33,6 +33,9 @@ from organization.core.admin import *
 from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline, DynamicContentPageInline, PageRelatedTitleAdmin
 from organization.shop.models import PageProductList
 from organization.network.utils import TimesheetXLS, set_timesheets_validation_date
+from organization.network.translation import *
+
+
 
 class OrganizationAdminInline(StackedDynamicInlineAdmin):
 

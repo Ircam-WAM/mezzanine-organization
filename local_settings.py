@@ -27,6 +27,11 @@ from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
+if DEBUG:
+    MODELTRANSLATION_DEBUG = True
+
+DOMAIN = "www.ircam.fr/"
+
 ADMINS = (
     ('Guillaume Pellerin', 'guillaume.pellerin@ircam.fr'),
     ('Emilie Zawadzki', 'emilie.zawadzki@ircam.fr'),
@@ -337,9 +342,9 @@ LOGIN_REDIRECT_URL = "/profile"
 # TIMESHEET
 
 TIMESHEET_USER_TEST = 849  # Emilie Zawadzki
-TIMESHEET_LOG_PATH = "/var/log/cron/" 
+TIMESHEET_LOG_PATH = "/var/log/cron/"
 
-if DEBUG == True:
+if DEBUG:
     TIMESHEET_MASTER_MAIL = "zawadzki@ircam.fr"
 else:
     TIMESHEET_MASTER_MAIL = "Hugues.Vinet@ircam.fr"

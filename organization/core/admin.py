@@ -28,7 +28,7 @@ from mezzanine.blog.models import BlogPost
 from mezzanine.generic.models import ThreadedComment, Keyword
 from mezzanine.conf import settings
 from django.contrib.admin import SimpleListFilter
-
+from organization.core.translation import *
 
 class KeywordAdmin(BaseTranslationModelAdmin):
 

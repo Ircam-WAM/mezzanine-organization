@@ -27,7 +27,7 @@ from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from organization.magazine.models import *
 from organization.magazine.forms import *
-
+from organization.magazine.translation import *
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
 
