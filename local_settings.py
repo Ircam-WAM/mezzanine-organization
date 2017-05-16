@@ -32,6 +32,8 @@ if DEBUG:
 
 DOMAIN = "www.ircam.fr/"
 
+IRCAM_EMPLOYER = 1
+
 ADMINS = (
     ('Guillaume Pellerin', 'guillaume.pellerin@ircam.fr'),
     ('Emilie Zawadzki', 'emilie.zawadzki@ircam.fr'),

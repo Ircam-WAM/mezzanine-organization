@@ -147,7 +147,8 @@ class Command(BaseCommand):
                                                     | (Q(work_packages__date_from__lt=self.first_day_in_month) & Q(work_packages__date_to__range=(self.first_day_in_month, self.last_day_in_month))
                                                     | Q(work_packages__date_from__range=(self.first_day_in_month, self.last_day_in_month)) & Q(work_packages__date_to__range=(self.first_day_in_month, self.last_day_in_month))
                                                     | Q(work_packages__date_from__range=(self.first_day_in_month, self.last_day_in_month)) & Q(work_packages__date_to__range=(self.first_day_in_month, self.last_day_in_month))
-                                                    | Q(work_packages__date_from__lt=self.first_day_in_month) & Q(work_packages__date_to__gt=self.last_day_in_month))) \
+                                                    | Q(work_packages__date_from__lt=self.first_day_in_month) & Q(work_packages__date_to__gt=self.last_day_in_month))
+                                                    & Q(activity__employers__id=settings.IRCAM_EMPLOYER)) \
         .exclude(Q(project__date_from__isnull=True) \
                  and Q(project__date_to__isnull=True)
                  and Q(default_percentage__isnull=True)) \
@@ -307,7 +308,7 @@ def send_mail_to_master_list_user(date_from, date_to, log_file):
     }
 
     message = get_template('email/timesheet_master_notification_for_validation.html').render(ctx)
-    msg = EmailMessage(subject, message, to=to, from_email=from_email)
+    msg = EmailMessage(subject, message, to=to, from_email=settings.TIMESHEET_MASTER_MAIL)
     msg.content_subtype = 'html'
     msg.attach_file(log_file)
     msg.send()
