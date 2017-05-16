@@ -34,8 +34,3 @@ urlpatterns = [
      url("^search/$", CustomSearchView.as_view(), name="search"),
      url("^profile/$", AccountProfilView.as_view(), name="profile"),
 ]
-
-if "drum.links" in settings.INSTALLED_APPS:
-    urlpatterns += [
-        url("^%s/" % settings.DRUM_SLUG, include("drum.links.urls")),
-    ]

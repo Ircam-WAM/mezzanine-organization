@@ -43,3 +43,8 @@ urlpatterns = [
     url("^", include('organization.job.urls')),
     url("^", include('organization.shop.urls')),
 ]
+
+if "drum.links" in settings.INSTALLED_APPS:
+    urlpatterns += [
+        url("^%s/" % settings.DRUM_SLUG, include("drum.links.urls")),
+    ]
