@@ -39,7 +39,7 @@ from organization.network.models import (Person,
                                 PersonActivityTimeSheet,
                                 ProjectActivity)
 from organization.pages.models import Page, CustomPage
-
+from organization.network.utils import timesheet_master_notification_for_validation
 
 class PageCustomPersonListForm(forms.ModelForm):
 
@@ -101,7 +101,13 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
 
     def save(self):
         self.instance.accounting = timezone.now()
+        # send mail
         super(PersonActivityTimeSheetForm, self).save()
+        timesheet_master_notification_for_validation(self.instance.activity.person,
+                                                    self.instance.month,
+                                                    self.instance.year,
+                                                    self.instance._meta.app_config.label,
+                                                    self.instance.__class__.__name__)
 
     class Meta:
         model = PersonActivityTimeSheet

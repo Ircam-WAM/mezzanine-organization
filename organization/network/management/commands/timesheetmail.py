@@ -239,7 +239,7 @@ class Command(BaseCommand):
 
         # Send list of user to master
         if self.dry_run:
-            send_mail_to_master(self.first_day_in_month, self.last_day_in_month, self.log_file)
+            send_mail_to_master_list_user(self.first_day_in_month, self.last_day_in_month, self.log_file)
 
         # used only for test
         self.stdout.write(str(self.expected_person))
@@ -296,7 +296,7 @@ def send_mail_to_user(first_name, last_name, email, date_from, date_to, domain, 
 
     return HttpResponse('email_application_notification')
 
-def send_mail_to_master(date_from, date_to, log_file):
+def send_mail_to_master_list_user(date_from, date_to, log_file):
     subject = "[WWW] Listes utilisateurs pour la période du "+date_from.strftime('%d/%m/%Y')+" au "+date_to.strftime('%d/%m/%Y')
     to = (settings.TIMESHEET_MASTER_MAIL,)
     from_email = settings.DEFAULT_FROM_EMAIL
@@ -306,7 +306,7 @@ def send_mail_to_master(date_from, date_to, log_file):
         'date_to': date_to,
     }
 
-    message = get_template('email/timesheet_master_list_user.html').render(ctx)
+    message = get_template('email/timesheet_master_notification_for_validation.html').render(ctx)
     msg = EmailMessage(subject, message, to=to, from_email=from_email)
     msg.content_subtype = 'html'
     msg.attach_file(log_file)

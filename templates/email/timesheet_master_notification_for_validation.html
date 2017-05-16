@@ -1,3 +1,5 @@
+{% load organization_tags %}
+
 <!doctype html>
 
 <html lang="en">
@@ -6,10 +8,11 @@
 </head>
 
 <body>
-  <p>Bonjour {{ firstname }} {{ lastname }},</p>
-<br />
-  <p>Veuillez saisir vos timesheets pour la période du <strong>{{ date_from|date:"d/m/Y" }}</strong> au <strong>{{ date_to|date:"d/m/Y" }}</strong> en cliquant sur le lien suivant ou en le copiant dans un navigateur :</p>
-  <p><a href="{{ timesheet_url }}" target="_blank">{{ timesheet_url }}</a></p>
+  <p>Bonjour,</p>
+  <br />
+  <p>{{ person_first_name }}  {{ person_last_name }} vient de saisir ses timesheets pour la période : {{ month|month_name }} {{ year }}.</p>
+  <p>Cliquez sur le lien ci-dessous pour procéder à une validation :</p>
+  <p><a href="{{ url }}" target="_blank">{{ url }}</a></p>
   <br />
   <p>Bonne journée ! :)</p>
 </body>

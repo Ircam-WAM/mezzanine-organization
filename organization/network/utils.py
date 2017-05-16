@@ -6,10 +6,15 @@ from xlwt import *
 import calendar
 import datetime
 from django.utils import timezone
+from django.http import QueryDict
 from organization.network.api import *
 from collections import defaultdict, OrderedDict
 from pprint import pprint
 from workalendar.europe import France
+from django.core.urlresolvers import reverse
+from django.template.loader import get_template
+from django.core.mail import EmailMessage
+from django.contrib.sites.models import Site
 
 
 def get_nb_half_days_by_period(date_from, date_to):
@@ -308,9 +313,32 @@ class TimesheetXLS(object):
         return response
 
 
-
 def set_timesheets_validation_date(timesheets):
     """ Admin action to set validation date for selected timesheets """
     for timesheet in timesheets :
         timesheet.validation = timezone.now()
         timesheet.save()
+
+
+def timesheet_master_notification_for_validation(person, month, year, app_label, model):
+    q = QueryDict(mutable=True)
+    q['activity__person__id'] = person.id
+    q['month__exact'] = str(month)
+    q['year__exact'] = str(year)
+    query_string = q.urlencode()
+    url_admin = reverse("admin:%s_%s_changelist" % (app_label, model.lower()))
+    current_site = Site.objects.get_current()
+
+    ctx = {
+        'url' : "https://"+current_site.domain+url_admin +"?"+query_string,
+        'person_first_name': person.first_name,
+        'person_last_name': person.last_name,
+        'month': month,
+        'year': year
+    }
+
+    subject = "[WWW] " + person.first_name + " " + person.last_name + " vient de saisir ses timesheets"
+    message = get_template('email/timesheet_master_notification_for_validation.html').render(ctx)
+    msg = EmailMessage(subject, message, to=(settings.TIMESHEET_MASTER_MAIL,), from_email=settings.DEFAULT_FROM_EMAIL)
+    msg.content_subtype = 'html'
+    msg.send()
