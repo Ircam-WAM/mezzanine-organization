@@ -184,6 +184,17 @@ $module: ".article-box";
         font-weight: weight(bold);
         color: $color-main;
         @include transition(color 0.5s ease-in-out);
+
+        &--accent {
+            @include font-size(xl);
+            @include line-height(1.25);
+            @include typeface(sans-serif);
+            @include margin(.5 0 0 0);
+            font-weight: weight(bold);
+            color: $color-accent;
+            @include transition(color 0.5s ease-in-out);
+        }
+
     }
 
     &__tag {

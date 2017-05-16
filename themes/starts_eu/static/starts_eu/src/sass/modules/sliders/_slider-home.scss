@@ -39,20 +39,26 @@ $module: ".slider-home";
 
         width: 100%;
         position: relative;
+        height: 760px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
 
     }
 
     &__wrapper {
 
-        position: relative;
+        position: absolute;
+        bottom: 75px;
+        left: 75px;
+        right: 0;
 
         @include padding(1);
-        border: 1px solid $color-main;
         display: table;
-        width: 100%;
+        width: 25%;
         background: $color-background;
         @include transition(background 0.5s ease-in-out);
-
+        border: 1px solid $color-main;
         &:hover {
             background: $color-main;
             #{$module}__image-container {
@@ -73,6 +79,42 @@ $module: ".slider-home";
             }
             .article-box__desc {
                 color: $color-background;
+            }
+        }
+
+        &--accent {
+            position: absolute;
+            bottom: 75px;
+            left: 75px;
+            right: 0;
+
+            @include padding(1);
+            display: table;
+            width: 25%;
+            background: $color-background;
+            @include transition(background 0.5s ease-in-out);
+            border: 1px solid $color-accent;
+            &:hover {
+                background: $color-accent;
+                #{$module}__image-container {
+                    background: black;
+                }
+                #{$module}__image {
+                    -webkit-filter: grayscale(0);
+                    filter: grayscale(0);
+                }
+                .article-box__title--accent {
+                    color: $color-background;
+                }
+                .article-box__tags {
+                    color: $color-background;
+                }
+                .article-box__subtitle {
+                    color: $color-background;
+                }
+                .article-box__desc {
+                    color: $color-background;
+                }
             }
         }
 
@@ -150,7 +192,7 @@ $module: ".slider-home";
 
         position: absolute;
         bottom: 33px;
-        left: 0;
+        left: 0px;
         right: 0;
 
         ul {
@@ -164,14 +206,25 @@ $module: ".slider-home";
                     display: block;
                     width: 14px;
                     height: 14px;
-                    background: white;
-                    border-bottom: 0 !important;
+                    background: black;
+                    border: 1px solid $color-main;
                     &:hover {
                         background: $color-main;
+                    }
+                    &.--accent{
+                        border: 1px solid $color-accent;
+                        &:hover {
+                            background: $color-accent;
+                        }
                     }
                 }
                 &.active a {
                     background: $color-main;
+                }
+                &.--accent {
+                    &.active a {
+                        background: $color-accent;
+                    }
                 }
             }
         }

@@ -5,7 +5,7 @@
                 {% with slider.content_object.images.all|get_type:'slider' as images %}
                     {% if images %}
                         <li class="slider-home__slide" style="background-image: url('{{ MEDIA_URL }}{% thumbnail images.0.file 1440 760 %}');">
-                            <div class="slider-home__wrapper">
+                            <div class="slider-home__wrapper--accent">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-11 col-sm-push-1">
@@ -35,7 +35,7 @@
                                                 {% endif %}
 
                                                 <div class="article-box__content tal">
-                                                    <h3 class="article-box__title">{{ slider.content_object.title }}</h3>
+                                                    <h3 class="article-box__title--accent">{{ slider.content_object.title }}</h3>
                                                     <div class="article-box__subtitle">
                                                         {% if slider.content_type.model != 'event' %}
                                                             {{ slider.content_object.sub_title }}
@@ -71,14 +71,23 @@
                 {% endwith %}
         {% endfor %}
         {% for image in home.images.all|get_type:'slider' %}
-            <li class="slider-home__slide">
-                <div class="row">
-                    <div class="col-sm-12 col-sm-push-2">
+            <li class="slider-home__slide lslide" style="background-image: url({{ MEDIA_URL }}{% thumbnail image.file 1440 760 %}); width: 1845px; margin-right: 0px;">
+                <div class="slider-home__wrapper">
+                    <div class="container">
                         <div class="row">
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-14">
-                                <div class="slider-home__image-container">
-                                    <img class="slider-home__image" src="{{ MEDIA_URL }}{% thumbnail image.file 1440 760 %}" />
+                            <div class="col-xs-12 col-sm-11 col-sm-push-1">
+                                <div class="article-box article-box--inline" title="{{ image.title }}">
+                                    <div class="article-box__content tal">
+                                        <h3 class="article-box__title">
+                                            {{ image.title }}
+                                        </h3>
+                                        <div class="article-box__subtitle">
+                                            {{ image.description }}
+                                        </div>
+                                        <div class="article-box__desc">
+                                            {{ image.credits }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -88,22 +97,23 @@
         {% endfor %}
     </ul>
     <div class="slider-home__pager">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-11 col-sm-push-1">
-                    <ul class="">
-                        {% for slider in home.dynamiccontenthomeslider_set.all %}
-                            {% with slider.content_object.images.all|get_type:'slider' as images %}
-                                {% if images %}
-                                    <li class="{% if forloop.first %}active{% endif %}">
-                                        <a href="#"></a>
-                                    </li>
-                                {% endif %}
-                            {% endwith %}
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+        <div class="col-xs-12 col-sm-11 col-sm-push-1">
+            <ul class="">
+                {% for slider in home.dynamiccontenthomeslider_set.all %}
+                    {% with slider.content_object.images.all|get_type:'slider' as images %}
+                        {% if images %}
+                            <li class="{% if forloop.first %}active{% endif %} --accent">
+                                <a class="--accent" href="#"></a>
+                            </li>
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+                {% for image in home.images.all|get_type:'slider' %}
+                    <li class="{% if not home.dynamiccontenthomeslider_set.all %}active{% endif %}">
+                        <a href="#"></a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>
