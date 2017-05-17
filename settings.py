@@ -227,10 +227,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
     'django_extensions',
+    'drum.links',
     "mezzanine.boot",
     "mezzanine.conf",
-    "django.contrib.sitemaps",
     "mezzanine.core",
     "mezzanine.generic",
     "mezzanine.pages",
@@ -245,7 +246,6 @@ INSTALLED_APPS = [
     "prestashop",
     'djangobower',
     "meta",
-    'drum.links',
     "mezzanine_agenda",
     "organization.core",
     "organization.media",
@@ -353,6 +353,25 @@ GRAPH_MODELS = {
   'all_applications': True,
   'group_models': True,
 }
+
+########
+# DRUM #
+########
+
+# Drum-specific Mezzanine settings
+# ACCOUNTS_PROFILE_MODEL = "links.Profile"
+# SITE_TITLE = "IRCAM"
+RATINGS_RANGE = (-1, 1)
+COMMENTS_ACCOUNT_REQUIRED = True
+RATINGS_ACCOUNT_REQUIRED = True
+ACCOUNTS_PROFILE_VIEWS_ENABLED = True
+SEARCH_MODEL_CHOICES = ("links.Link",)
+
+# Drum settings
+ALLOWED_DUPLICATE_LINK_HOURS = 24 * 7 * 3
+ITEMS_PER_PAGE = 20
+LINK_REQUIRED = False
+AUTO_TAG = True
 
 #########################
 # OPTIONAL APPLICATIONS #

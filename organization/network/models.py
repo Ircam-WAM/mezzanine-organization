@@ -315,6 +315,7 @@ class Person(Displayable, AdminThumbMixin):
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
+    karma = models.IntegerField(default=0, editable=False)
 
     class Meta:
         verbose_name = _('person')
