@@ -97,7 +97,11 @@
         </footer>
     </div>
     {% search_form %}
-    {% include "includes/footer_scripts.html" %}
+
+    {% block footer_script %}
+        {% include "includes/footer_scripts.html" %}
+    {% endblock %}
+
     {% endspaceless %}
 
 </body>
