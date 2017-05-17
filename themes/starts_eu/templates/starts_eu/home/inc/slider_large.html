@@ -9,7 +9,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-11 col-sm-push-1">
-                                            <a class="article-box article-box--inline" href="{{ slider.content_object.get_absolute_url }}" title="{{ slider.content_object.title }}">
+                                            <a class="article-box article-box--inline" href="{% if slider.content_object.links.all.0 %}{{ slider.content_object.links.all.0 }}{% else %}{{ slider.content_object.get_absolute_url }}{% endif %}" title="{{ slider.content_object.title }}">
                                                 {% if slider.content_object.department %}
                                                     <div class="tag dashed">
                                                       {{ slider.content_object.department.name }}

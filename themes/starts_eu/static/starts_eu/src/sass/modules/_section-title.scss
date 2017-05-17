@@ -7,7 +7,7 @@ $module: ".section-title";
     font-weight: weight(regular);
 
     text-align: center;
-    color: white;
+    color: black;
     display: inline-block;
     line-height: 1.5em;
 
@@ -47,7 +47,7 @@ $module: ".section-title";
     }
 
     &--underline {
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid black;
     }
 
     &--dark {
