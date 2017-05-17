@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
     <meta name="description" content="{% block meta_description %}{% endblock %}">
-    <title>{% spaceless %}{% block meta_title %}{% endblock %}{% endspaceless %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+    <title>{% spaceless %}{% block meta_title %}{% endblock %}{% endspaceless %} | STARTS</title>
 
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{% static "img/favicons/apple-touch-icon-152x152-precomposed.png" %}">
 	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="{% static "img/favicons/apple-touch-icon-120x120-precomposed.png" %}">
@@ -72,9 +72,11 @@
                 {% block content_footer %}{% endblock %}
             </main>
 
+            {% comment %}
             {% block social %}
-                {# {% include "includes/social.html" %}#}
+                {% include "starts_eu/includes/social.html" %}
             {% endblock %}
+            {% endcomment %}
 
             {% block footer %}
                 <footer class="footer" role="footer">
