@@ -65,6 +65,13 @@ class PersonDetailView(SlugMixin, DetailView):
         return context
 
 
+class UserDetailView(PersonDetailView):
+
+    def get_object(self):
+        user = User.objects.get(username=self.kwargs['username'])
+        return Person.objects.get(user=user)
+
+
 class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):
 
     def get_queryset(self):
