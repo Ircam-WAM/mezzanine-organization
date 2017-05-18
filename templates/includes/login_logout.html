@@ -4,9 +4,9 @@
         <li class="profil-menu__item active">
             <a href="#" class="unclickable"><i class="fa fa-user-circle"></i></a>
         </li>
-        {% if request.session.person_slug %}
+        {% if user.is_authenticated %}
         <li class="profil-menu__item">
-            <a href="{% url 'organization-network-person-detail' request.session.person_slug %}">Profil</a>
+            <a href="{% url 'organization-network-person-detail' user.person.slug %}">Profil</a>
         </li>
         {% endif %}
         <li class="profil-menu__item">

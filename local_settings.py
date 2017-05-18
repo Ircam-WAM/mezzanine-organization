@@ -23,6 +23,7 @@ import os
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime, date
 import ldap, logging
+from django.core.urlresolvers import reverse_lazy
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 DEBUG = True if os.environ.get('DEBUG') == 'True' else False
@@ -329,7 +330,7 @@ AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 
 
 AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap.backend.LDAPBackend',
+    "organization.core.backend.OrganizationLDAPBackend",
     "mezzanine.core.auth_backends.MezzanineBackend",
     'guardian.backends.ObjectPermissionBackend',
 )
@@ -337,7 +338,7 @@ AUTHENTICATION_BACKENDS = (
 # guardian
 ANONYMOUS_USER_NAME = None
 
-LOGIN_REDIRECT_URL = "/profile"
+LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
 
 # TIMESHEET
 
