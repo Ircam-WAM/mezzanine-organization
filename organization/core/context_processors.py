@@ -52,14 +52,6 @@ def settings(request):
 
     research_slug = "recherche"
 
-    if not request.session.__contains__("person_slug"):
-        if hasattr(request.user, 'email'):
-            try :
-                person = Person.objects.get(email=request.user.email)
-                request.session.__setitem__("person_slug", person.slug)
-            except:
-                pass
-
     return {'current_season': current_season,
             'current_season_styled': current_season_styled,
             'newsletter_subscribing_url': newsletter_subscribing_url,

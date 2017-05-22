@@ -23,6 +23,7 @@ import os
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime, date
 import ldap, logging
+from django.core.urlresolvers import reverse_lazy
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 DEBUG = True if os.environ.get('DEBUG') == 'True' else False
@@ -91,7 +92,7 @@ FILEBROWSER_SELECT_FORMATS = {
     'Document': ['Document'],
     # for TinyMCE we can also define lower-case items
     'image': ['Image'],
-    'file': ['Folder', 'Image', 'Document'],    
+    'file': ['Folder', 'Image', 'Document'],
     'media': ['Video', 'Audio'],
     'audio': ['Audio'],
 }
@@ -215,6 +216,11 @@ EVENT_PASS_URL = EVENT_DOMAIN+"/pub.php/pass/"
 EVENT_CONFIRMATION_URL = EVENT_DOMAIN+"/pub.php/cart/done?transaction_id=%s"
 EVENT_EXCLUDE_TAG_LIST = ['tournees', ]
 
+DRUM_SLUG = "drum"
+ACCOUNTS_PROFILE_MODEL = "organization-network.Person"
+ITEMS_PER_PAGE = 10
+
+
 TINYMCE_SETUP_JS = "/static/js/tinymce_setup.js"
 
 SLUGIFY = 'django.template.defaultfilters.slugify'
@@ -324,7 +330,7 @@ AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 
 
 AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap.backend.LDAPBackend',
+    "organization.core.backend.OrganizationLDAPBackend",
     "mezzanine.core.auth_backends.MezzanineBackend",
     'guardian.backends.ObjectPermissionBackend',
 )
@@ -332,7 +338,7 @@ AUTHENTICATION_BACKENDS = (
 # guardian
 ANONYMOUS_USER_NAME = None
 
-LOGIN_REDIRECT_URL = "/profile"
+LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
 
 # TIMESHEET
 

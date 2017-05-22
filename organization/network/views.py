@@ -59,10 +59,34 @@ class PersonDetailView(SlugMixin, DetailView):
     template_name='network/person_detail.html'
     context_object_name = 'person'
 
+    def get(self, request, *args, **kwargs):
+        if self.kwargs['slug'] is None and not self.request.user.is_authenticated():
+            response = redirect('organization-home')
+        else :
+            self.object = self.get_object(self.queryset)
+            context = self.get_context_data(object=self.object)
+            response = self.render_to_response(context)
+        return response
+
+    def get_object(self, queryset):
+        obj = None
+        if not self.kwargs['slug'] and self.request.user.is_authenticated():
+            obj = self.request.user.person
+        else:
+            obj = super().get_object()
+        return obj
+
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
         context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
         return context
+
+
+class UserDetailView(PersonDetailView):
+
+    def get_object(self):
+        user = User.objects.get(username=self.kwargs['username'])
+        return Person.objects.get(user=user)
 
 
 class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):
@@ -99,6 +123,7 @@ class PersonListView(autocomplete.Select2QuerySetView):
             qs = qs.filter(person_title__istartswith=self.q)
 
         return qs
+
 
 class OrganizationListView(ListView):
 

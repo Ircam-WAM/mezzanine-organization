@@ -199,20 +199,3 @@ def autocomplete_result_formatting(self, context):
         all_results.append(curr_model_result)
 
     return all_results
-
-
-class AccountProfilView(RedirectView):
-    permanent = False
-
-    def get_redirect_url(self, *args, **kwargs):
-        redirect_url = reverse('home')
-        try :
-            person = Person.objects.get(email=self.request.user._wrapped.email)
-            if person:
-                person.user = self.request.user
-                person.save()
-                if person.register_id :
-                    redirect_url = reverse("organization-network-person-detail", kwargs={"slug": person.slug})
-        except :
-            pass
-        return redirect_url

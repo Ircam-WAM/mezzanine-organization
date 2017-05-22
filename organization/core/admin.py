@@ -80,4 +80,4 @@ def null_filter(field, title_=None):
 admin.site.register(LinkType)
 admin.site.unregister(BlogPost)
 admin.site.unregister(ThreadedComment)
-admin.site.register(Keyword, KeywordAdmin)
+# admin.site.register(Keyword, KeywordAdmin)
