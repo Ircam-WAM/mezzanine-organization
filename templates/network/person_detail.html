@@ -74,8 +74,21 @@
         {% endwith %}
     {% endif %}
 
-    {% if user.email == person.email %}
-        {% page_menu "pages/menus/tree.html" %}
+    {% if user.email == person.email and user.is_authenticated %}
+        {% get_pages_in_menu menu_person_id as menu_login_logout %}
+        {% for page in menu_login_logout %}
+            {% if forloop.first %}
+                <ul class="nav-tree nav-tree--level-{{ branch_level }}" data-sticky data-sticky-parent="page" data-sticky-offset="100" data-sticky-detach-at="971">
+            {% endif %}
+            {% if not page.parent %}
+                <li class="nav-tree__item">
+                    <a class="nav-tree__link{% if page.is_current %} active{% endif %}" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+                </li>
+            {% endif %}
+            {% if forloop.last %}
+                </ul>
+            {% endif %}
+        {% endfor %}
     {% endif %}
 
 {% endblock %}
