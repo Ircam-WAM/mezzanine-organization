@@ -60,7 +60,7 @@ class PersonDetailView(SlugMixin, DetailView):
     context_object_name = 'person'
 
     def get(self, request, *args, **kwargs):
-        if self.kwargs['slug'] is None and not self.request.user.is_authenticated():
+        if not hasattr(self.request.user, 'ldap_user') or not self.request.user.person:
             response = redirect('organization-home')
         else :
             self.object = self.get_object(self.queryset)
@@ -75,6 +75,7 @@ class PersonDetailView(SlugMixin, DetailView):
         else:
             obj = super().get_object()
         return obj
+
 
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
