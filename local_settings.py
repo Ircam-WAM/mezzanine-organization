@@ -294,10 +294,9 @@ if DEBUG:
 AUTH_LDAP_SERVER_URI = "ldap://clusterldap1.ircam.fr"
 # AUTH_LDAP_BIND_DN = "dc=ircam,dc=fr"
 # AUTH_LDAP_BIND_PASSWORD = ""
-# AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=People,dc=ircam,dc=fr", ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
-
+AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=People,dc=ircam,dc=fr", ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
 # or perhaps:
-AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=People,dc=ircam,dc=fr"
+#AUTH_LDAP_USER_DN_TEMPLATE = "ou=People,dc=ircam,dc=fr uid=%(user)s"
 
 # Set up the basic group parameters.
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch("ou=People,dc=ircam,dc=fr",
