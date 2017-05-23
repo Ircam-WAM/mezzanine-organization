@@ -74,6 +74,8 @@ PAGE_MENU_TEMPLATES = (
     (7, _("Personnes"), "pages/menus/tree.html"),
 )
 
+MENU_PERSON_ID = 7
+
 # A sequence of fields that will be injected into Mezzanine's (or any
 # library's) models. Each item in the sequence is a four item sequence.
 # The first two items are the dotted path to the model and its field
@@ -293,7 +295,7 @@ TEMPLATES = [{'APP_DIRS': True,
                                                   'django.core.context_processors.tz',
                                                   'mezzanine.conf.context_processors.settings',
                                                   'mezzanine.pages.context_processors.page',
-                                                  'organization.core.context_processors.settings',
+                                                  'organization.core.context_processors.organization_settings',
                                                   )
                         }
             }]
