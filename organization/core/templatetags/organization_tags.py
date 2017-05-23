@@ -115,6 +115,10 @@ def get_mezzanine_menu_name(menu_id):
         return settings.PAGE_MENU_TEMPLATES[int(menu_id)-1][1]
     return 'None'
 
+@register.as_tag
+def get_pages_in_menu(menu_id):
+    return Page.objects.filter(in_menus=str(menu_id)).order_by("_order")
+
 @register.filter
 def get_type(objects, type):
     if objects:
