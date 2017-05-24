@@ -1,13 +1,19 @@
 {% load i18n pages_tags mezzanine_tags staticfiles keyword_tags event_tags organization_tags %}
+
 <ul class="profil-menu" id="ProfilSelector">
     {% if request.user.is_authenticated %}
         <li class="profil-menu__item active">
             <a href="#" class="unclickable"><i class="fa fa-user-circle"></i></a>
         </li>
-        {% if user.is_authenticated %}
-        <li class="profil-menu__item">
-            <a href="{% url 'organization-network-person-detail' user.person.slug %}">Profil</a>
-        </li>
+        {% if user.is_authenticated and user.person %}
+            {% get_pages_in_menu menu_person_id as menu_login_logout %}
+            {% for menu_item in menu_login_logout %}
+                {% if not menu_item.parent %}
+                    <li class="profil-menu__item">
+                        <a href="{{ menu_item.get_absolute_url }}">{{ menu_item.title }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
         {% endif %}
         <li class="profil-menu__item">
             <a href="{% url 'logout' %}">logout</a>

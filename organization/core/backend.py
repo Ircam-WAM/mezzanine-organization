@@ -18,8 +18,7 @@ class OrganizationLDAPBackend(LDAPBackend):
                     last_name=user.last_name,
                     email=user.email,
                 )
-
-            if person :
+            if not person.user :
                 person.user = user
                 try :
                     person.save()
