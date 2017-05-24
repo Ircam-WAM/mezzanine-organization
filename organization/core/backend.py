@@ -10,18 +10,17 @@ class OrganizationLDAPBackend(LDAPBackend):
         user = super().get_user(user_id)
         if user:
             try :
-                person = Person.objects.get(email=user.email)
-            except ObjectDoesNotExist:
-                person = Person.objects.create(
-                    title=user.first_name+" "+user.last_name,
-                    first_name=user.first_name,
-                    last_name=user.last_name,
-                    email=user.email,
-                )
-            if not person.user :
-                person.user = user
+                person = Person.objects.get(user=user)
+                person.title=user.first_name+" "+user.last_name
+                person.first_name=user.first_name
+                person.last_name=user.last_name
+                person.email=user.email
                 try :
                     person.save()
                 except IntegrityError:
                     pass
+            except ObjectDoesNotExist:
+                person = Person.objects.get(
+                    email=user.email
+                )
         return user
