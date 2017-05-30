@@ -61,4 +61,5 @@ def organization_settings(request):
             'linked_organization_footer_2' : linked_org_footer_2,
             'research_slug' : research_slug,
             'menu_person_id': settings.MENU_PERSON_ID
+            'debug_mode' : settings.DEBUG
             }

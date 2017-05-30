@@ -232,6 +232,9 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     'django_extensions',
     'drum.links',
+    'hijack',
+    'compat',
+    'hijack_admin',
     "mezzanine.boot",
     "mezzanine.conf",
     "mezzanine.core",
@@ -261,7 +264,6 @@ INSTALLED_APPS = [
     'guardian',
     'extra_views',
 ]
-
 
 BOWER_COMPONENTS_ROOT = '/srv/bower/'
 BOWER_PATH = '/usr/local/bin/bower'
@@ -419,3 +421,15 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+
+# HIJACK
+HIJACK_DISPLAY_WARNING = False
+HIJACK_ALLOW_GET_REQUESTS = False
+HIJACK_REGISTER_ADMIN = False
+
+if DEBUG :
+    HIJACK_LOGIN_REDIRECT_URL = "/person"
+    HIJACK_LOGOUT_REDIRECT_URL = "/"
+    HIJACK_ALLOW_GET_REQUESTS =  True
+    HIJACK_DISPLAY_WARNING = True
+    HIJACK_REGISTER_ADMIN = True
