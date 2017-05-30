@@ -97,7 +97,10 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
             self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(project=kwargs['initial']['project'])
             self.fields['project'].choices = ((kwargs['initial']['project'].id, kwargs['initial']['project']),)
             self.fields['activity'].choices = ((kwargs['initial']['activity'].id, kwargs['initial']['activity']),)
-        self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(choices=self.fields['work_packages'].choices)
+        if self.fields['work_packages'].choices.__len__() == 0:
+            self.fields['work_packages'].widget = forms.MultipleHiddenInput()
+        else:
+            self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(choices=self.fields['work_packages'].choices)
 
     def save(self):
         self.instance.accounting = timezone.now()

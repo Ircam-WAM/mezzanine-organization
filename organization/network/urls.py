@@ -30,6 +30,7 @@ from mezzanine.conf import settings
 
 from organization.network.views import *
 
+
 urlpatterns = [
     url(r'^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
     url(r'^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name="organization-network-timesheet-create-view"),
@@ -41,11 +42,3 @@ urlpatterns = [
     url("^organization-linked-list-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
     url("^organization-linked-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
 ]
-
-
-if settings.DEBUG :
-    urlpatterns += [
-        url(r'^person/(?P<slug>.*)/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name="organization-network-timesheet-create-view"),
-        url(r'^person/(?P<slug>.*)/timesheet/$', PersonActivityTimeSheetListView.as_view(), name="organization-network-timesheet-list-view" ),
-        url(r'^person/(?P<slug>.*)/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/export_xls/$', PersonActivityTimeSheetExportView.as_view(), name="organization-network-timesheet-export-xls-view"),
-    ]

@@ -100,6 +100,7 @@ class PersonListView(autocomplete.Select2QuerySetView):
 
         return qs
 
+
 class OrganizationListView(ListView):
 
     model = Organization
@@ -158,12 +159,9 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
     curr_month = date.today().month
     curr_year = date.today().year
 
-    def get_activity_by_project(self, email, year, month):
+    def get_activity_by_project(self, user, year, month):
         project_list = []
-        # backdoor to delete
-        # activities = PersonActivity.objects.filter(person__slug=email).filter(date_to__gt=date.today())
-        # if not activities :
-        activities = PersonActivity.objects.filter(person__email=email).filter(date_to__gt=date.today())
+
         first_day_in_month = ''
         last_day_in_month = ''
 
@@ -173,6 +171,12 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
         except ValueError:
             raise Http404
 
+        activities = PersonActivity.objects.filter(person=user.person).filter(
+            Q(date_from__lte=first_day_in_month) & Q(date_to__range=(first_day_in_month, last_day_in_month)) \
+            | Q(date_from__range=(first_day_in_month, last_day_in_month)) & Q(date_to__range=(first_day_in_month, last_day_in_month)) \
+            | Q(date_from__range=(first_day_in_month, last_day_in_month)) & Q(date_to__gte=last_day_in_month) \
+            | Q(date_from__lte=first_day_in_month) & Q(date_to__gte=last_day_in_month) \
+        )
         # gather projects of all current activities
         for activity in activities:
             for project_activity in activity.project_activity.filter(project__date_to__gt=date.today()) :
@@ -180,9 +184,10 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
                     'activity' : activity,
                     'project' : project_activity.project,
                     'work_packages' : project_activity.work_packages.filter(
-                        Q(date_from__lte=first_day_in_month) & Q(date_to__gte=first_day_in_month)
-                        | Q(date_from__gte=first_day_in_month) & Q(date_to__lte=last_day_in_month)
-                        | Q(date_from__lte=last_day_in_month) & Q(date_to__gte=last_day_in_month)
+                        Q(date_from__lte=first_day_in_month) & Q(date_to__range=(first_day_in_month, last_day_in_month)) \
+                        | Q(date_from__range=(first_day_in_month, last_day_in_month)) & Q(date_to__range=(first_day_in_month, last_day_in_month)) \
+                        | Q(date_from__range=(first_day_in_month, last_day_in_month)) & Q(date_to__gte=last_day_in_month) \
+                        | Q(date_from__lte=first_day_in_month) & Q(date_to__gte=last_day_in_month) \
                     ),
                     'year' : year,
                     'month' : month,
@@ -205,11 +210,7 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
         if "month" in self.kwargs:
             self.curr_month = self.kwargs['month']
 
-        # if "slug" in self.kwargs:
-        #     # backdoor to delete
-        #     initial = self.get_activity_by_project(self.kwargs['slug'], self.curr_year, self.curr_month)
-        # else :
-        initial = self.get_activity_by_project(self.request.user.email, self.curr_year, self.curr_month)
+        initial = self.get_activity_by_project(self.request.user, self.curr_year, self.curr_month)
 
         return initial
 
@@ -251,11 +252,7 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
     context_object_name = 'timesheets_by_year'
 
     def get_queryset(self):
-        # if 'slug' in self.kwargs:
-        #     # backdoor to delete
-        #     timesheets = PersonActivityTimeSheet.objects.filter(activity__person__slug__exact=self.kwargs['slug']).order_by('-year', 'month', 'project')
-        # else:
-        timesheets = PersonActivityTimeSheet.objects.filter(activity__person__email__exact=self.request.user.email).order_by('-year', 'month', 'project')
+        timesheets = PersonActivityTimeSheet.objects.filter(activity__person=self.request.user.person).order_by('-year', 'month', 'project')
 
         t_dict = {}
         for timesheet in timesheets:
