@@ -43,3 +43,8 @@ urlpatterns = [
     url("^", include('organization.job.urls')),
     url("^", include('organization.shop.urls')),
 ]
+
+if settings.DEBUG :
+    urlpatterns += [
+        url(r'^hijack/', include('hijack.urls')),
+    ]

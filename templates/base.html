@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
-{% load i18n pages_tags mezzanine_tags staticfiles keyword_tags event_tags organization_tags %}
+{% load i18n pages_tags mezzanine_tags staticfiles keyword_tags event_tags organization_tags hijack_tags %}
 {% get_language_info_list for LANGUAGES as languages %}
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -33,10 +33,18 @@
     <link rel="stylesheet" href="{% static "css/index.min.css" %}">
     {% endcompress %}
 
+    {% if debug_mode %}
+        <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}" />
+    {% endif %}
+
     {% block extra_head %}{% endblock %}
 </head>
 
 <body id="{% block body_id %}body{% endblock %}" class="{% block body_class %}{% endblock %}">
+    {% if debug_mode %}
+        {% hijack_notification %}
+    {% endif %}
+
     {% spaceless %}
 
     <div class="pushy pushy-left">
