@@ -38,7 +38,7 @@ from django.db.models import Q
 from dal import autocomplete
 from organization.network.models import *
 from organization.core.views import *
-from datetime import date
+from datetime import date, timedelta, datetime
 from organization.network.forms import *
 from organization.network.utils import TimesheetXLS
 from organization.projects.models import ProjectWorkPackage
@@ -156,8 +156,9 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
     formset = ""
     extra = 0
     success_url = reverse_lazy("organization-network-timesheet-list-view")
-    curr_month = date.today().month
-    curr_year = date.today().year
+    last_day_in_month = date.today().replace(day=1) - timedelta(days=1)
+    curr_month = last_day_in_month.month
+    curr_year = last_day_in_month.year
 
     def get_activity_by_project(self, user, year, month):
         project_list = []
@@ -279,10 +280,11 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
         return OrderedDict(sorted(t_dict.items(), key=lambda t: -t[0]))
 
     def get_context_data(self, **kwargs):
+        last_day_in_month = date.today().replace(day=1) - timedelta(days=1)
         context = super(PersonActivityTimeSheetListView, self).get_context_data(**kwargs)
-        context['current_month'] = date.today().month
-        context['current_year'] = date.today().year
-        context['months'] = list(range(1, date.today().month + 1))
+        context['current_month'] = last_day_in_month.month
+        context['current_year'] = last_day_in_month.year
+        context['months'] = list(range(1, last_day_in_month.month + 1))
         context.update(self.kwargs)
         return context
 
