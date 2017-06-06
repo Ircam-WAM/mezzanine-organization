@@ -224,10 +224,9 @@ class Command(BaseCommand):
                 if self.reminder:
                     l_reminder = log_reminder(True)
                 if not self.dry_run and not settings.DEBUG:
-                    pass
-                    # send_mail_to_user(person['activity__person__first_name'],
-                    #           person['activity__person__last_name'],
-                    #           person['activity__person__email'],
+                    # send_mail_to_user(person_v['firstname'],
+                    #           person_v['lastname'],
+                    #           person_v['email'],
                     #           self.first_day_in_month,
                     #           self.last_day_in_month,
                     #           current_site.domain,

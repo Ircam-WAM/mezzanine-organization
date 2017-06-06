@@ -195,7 +195,7 @@ class TimesheetXLS(object):
         row = sheet.row(self.first_month_row)
         for i in range(self.first_month_col + 1, self.last_month_col):
             row.write(i, calendar.month_name[i - self.first_month_col][:3] +"-"+ str(year % 100), self.header_date_style)
-        sheet.write_merge(self.month_label_row, self.month_label_row, self.month_label_col, self.month_label_col + 4, self.month_label, self.header_style)
+        sheet.write_merge(self.month_label_row, self.month_label_row, month_label_col, self.month_label_col + 4, self.month_label, self.header_style)
         sheet.write(self.beneficiary_row, self.beneficiary_col, "Beneficiary :", self.header_style)
         sheet.write(self.beneficiary_row, self.beneficiary_col + 1, "IRCAM")
         sheet.write(self.name_person_row, self.name_person_col, "Name of person working on the action :", self.header_style)
@@ -227,10 +227,10 @@ class TimesheetXLS(object):
                             worked_hours_by_month[m_key] = 0
                         half_day_nb_hours = getattr(timesheet.activity, nhd_k)
                         if not half_day_nb_hours is None :
-                            # is the person has been present during current m_key month ?
+                            # has the person been present during current m_key month ?
                             if m_key in leave_days :
                                 if nhd_k in leave_days[m_key]:
-                                    # has the person been present during current half day nhd_d ?
+                                    # has the person been absent during current half day nhd_d ?
                                     worked_hours_by_month[m_key] += (nb_half_days[m_key][nhd_k] - leave_days[m_key][nhd_k]) * half_day_nb_hours
                                 else :
                                     # if not, count theorical nb oh hours for this half day
@@ -248,7 +248,7 @@ class TimesheetXLS(object):
                 self.t_dict[person_slug][project_slug] = []
             # ...calculate nb of worked hours proportionally
             # the property 'worked_hours' does not exists in the model, it just calculated on the fly
-            timesheet.worked_hours = worked_hours_by_month[timesheet.month] * (timesheet.percentage / 100)
+            timesheet.worked_hours = worked_hours_by_month[timesheet.month]
             self.t_dict[person_slug][project_slug].append(timesheet)
         return self.t_dict
 
@@ -267,7 +267,8 @@ class TimesheetXLS(object):
             except:
                 pass
             # for each project
-            project_row_last = (len(person_v) - 1) * self.project_margin_row + self.project_first_row
+            number_of_projects = len(person_v)
+            project_row_last = (number_of_projects - 1) * self.project_margin_row + self.project_first_row
             for project_k, project_v in person_v.items():
                 project_position = list(person_v.keys()).index(project_k)
                 project_row_index = self.project_margin_row * project_position + self.project_first_row
@@ -285,15 +286,16 @@ class TimesheetXLS(object):
                         pass
 
                     # percent
+                    percent = timesheet.percentage / 100
                     try:
-                        sheet.write(project_row_index + self.percent_margin, timesheet.month + self.first_month_col, timesheet.percentage, self.txt_centered)
+                        sheet.write(project_row_index + self.percent_margin, timesheet.month + self.first_month_col, percent, self.txt_centered)
                     except :
                         pass
 
                     # nb worked hours
-                    total_prod_hours += timesheet.worked_hours
+                    total_prod_hours += timesheet.worked_hours / number_of_projects
                     try:
-                        sheet.write(project_row_index + self.hours_margin, timesheet.month + self.first_month_col, timesheet.worked_hours, self.txt_centered)
+                        sheet.write(project_row_index + self.hours_margin, timesheet.month + self.first_month_col, timesheet.worked_hours * percent, self.txt_centered)
                     except :
                         pass
 
@@ -339,7 +341,7 @@ class TimesheetXLS(object):
             try :
                 # productive hours
                 sheet.write_merge(self.total_prod_hours_label_row, self.total_prod_hours_label_row, self.total_prod_hours_label_col, self.total_prod_hours_label_col + 3, self.total_prod_hours_label, self.header_style)
-                sheet.write(self.total_prod_hours_label_val_row, self.total_prod_hours_label_val_col, total_prod_hours)    
+                sheet.write(self.total_prod_hours_label_val_row, self.total_prod_hours_label_val_col, total_prod_hours)
             except:
                 pass
 
