@@ -76,7 +76,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-xs-12 col-sm-11 col-sm-push-1">
-                                <div class="article-box article-box--inline" title="{{ image.title }}">
+                                <a class="article-box article-box--inline" href="{% if image.url %}{{ image.url }}{% endif %}" title="{{ image.title }}">
                                     <div class="article-box__content tal">
                                         <h3 class="article-box__title">
                                             {{ image.title }}
@@ -88,7 +88,7 @@
                                             {{ image.credits }}
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>

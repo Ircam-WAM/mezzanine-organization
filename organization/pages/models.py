@@ -129,7 +129,7 @@ class DynamicContentHomeMedia(DynamicContent, Orderable):
         verbose_name = 'Media'
 
 
-class HomeImage(Image):
+class HomeImage(Image, URL):
 
     home = models.ForeignKey("home", verbose_name=_('home'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
 
