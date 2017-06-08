@@ -39,8 +39,8 @@ $module: ".nav-header";
 
         @include mq($until: lg) {
             margin-left: -107px;
-
         }
+
         /*@include mq($until: lg) {
             margin-left : auto;
             margin-right : auto;
@@ -147,27 +147,28 @@ $module: ".nav-header";
                 height: $header-height - 10px;
                 img {
                     width: 200px;
+                    height: 200px;
                 }
             }
             @include mq($until: md) {
                 height: $header-height - 10px;
                 img {
                     width: 160px;
+                    height: 160px;
                 }
             }
 
             @include mq($until: sm) {
                 position: absolute;
                 top: 20px;
-                left: 0;
-                width: 100%;
+                left: 50%;
                 z-index: 2;
                 @include padding(0);
                 @include margin(0);
+                margin-left: -80px;
                 text-align: center;
                 img {
                     // width: auto;
-                    height: 70px;
                     display: block;
                     margin: 0 auto;
                 }
@@ -177,7 +178,7 @@ $module: ".nav-header";
 
                 img {
                     // width: 200px;
-                    height: auto;
+                    //height: auto;
                     display: block;
                     margin: 0 auto;
                 }
