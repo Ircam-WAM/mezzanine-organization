@@ -195,7 +195,7 @@ class TimesheetXLS(object):
         row = sheet.row(self.first_month_row)
         for i in range(self.first_month_col + 1, self.last_month_col):
             row.write(i, calendar.month_name[i - self.first_month_col][:3] +"-"+ str(year % 100), self.header_date_style)
-        sheet.write_merge(self.month_label_row, self.month_label_row, month_label_col, self.month_label_col + 4, self.month_label, self.header_style)
+        sheet.write_merge(self.month_label_row, self.month_label_row, self.month_label_col, self.month_label_col + 4, self.month_label, self.header_style)
         sheet.write(self.beneficiary_row, self.beneficiary_col, "Beneficiary :", self.header_style)
         sheet.write(self.beneficiary_row, self.beneficiary_col + 1, "IRCAM")
         sheet.write(self.name_person_row, self.name_person_col, "Name of person working on the action :", self.header_style)

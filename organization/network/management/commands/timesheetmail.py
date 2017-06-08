@@ -224,14 +224,14 @@ class Command(BaseCommand):
                 if self.reminder:
                     l_reminder = log_reminder(True)
                 if not self.dry_run and not settings.DEBUG:
-                    # send_mail_to_user(person_v['firstname'],
-                    #           person_v['lastname'],
-                    #           person_v['email'],
-                    #           self.first_day_in_month,
-                    #           self.last_day_in_month,
-                    #           current_site.domain,
-                    #           self.reminder
-                    #           )
+                    send_mail_to_user(person_v['firstname'],
+                          person_v['lastname'],
+                          person_v['email'],
+                          self.first_day_in_month,
+                          self.last_day_in_month,
+                          current_site.domain,
+                          self.reminder
+                    )
             else :
                 l_timesheet = log_timehseet(True)
 
