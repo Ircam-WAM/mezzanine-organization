@@ -41,7 +41,7 @@ from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 
 from mezzanine.pages.models import Page
-from mezzanine.core.models import RichText, Displayable, Slugged
+from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 
@@ -448,7 +448,7 @@ class PageCustomPersonListBlockInline(Titled):
         return self.title
 
 
-class PersonListBlock(Titled, Dated):
+class PersonListBlock(Titled, Dated, SiteRelated):
 
     style = models.CharField(_('style'), max_length=16, choices=PERSON_LIST_STYLE_CHOICES)
 
@@ -459,7 +459,7 @@ class PersonListBlock(Titled, Dated):
         return self.title
 
 
-class PersonListBlockInline(models.Model):
+class PersonListBlockInline(SiteRelated):
 
     person_list_block = models.ForeignKey(PersonListBlock, verbose_name=_('Person List Block'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
     person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)

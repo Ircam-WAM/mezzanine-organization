@@ -28,11 +28,15 @@
 {% block main %}
     <div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
         <div class="container">
+            <div class="" style="padding: 3rem;"></div>
+            {% comment %}
             <div class="row">
                 <div class="col-sm-16 col-md-12 col-md-push-2 tac">
                     <h1 class="section-title section-title--uppercase section-title--main">{% trans "Events" %}</h1>
+
                 </div>
             </div>
+            {% endcomment %}
             <div class="row">
                 <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
                     <div class="page__content">
