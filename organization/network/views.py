@@ -76,7 +76,7 @@ class PersonDetailView(SlugMixin, DetailView):
                                 if isinstance(field, ForeignKey) :
                                     instance = getattr(related_inline, field.name)
                                     # get only article, custom page etc...
-                                    if not isinstance(instance, person_list_block_inline.person_list_block.__class__) :  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                    if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
                                         context["related"]["other"].append(instance)
 
         context["related"]["other"].sort(key=lambda x: x.created, reverse=True)
