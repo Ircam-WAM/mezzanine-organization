@@ -24,6 +24,7 @@ from django.contrib import admin
 from mezzanine.core.admin import *
 from organization.media.models import *
 from organization.media.forms import *
+from organization.media.translation import *
 
 
 class MediaTranscodedAdmin(TabularDynamicInlineAdmin):

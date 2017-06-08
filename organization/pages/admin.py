@@ -36,7 +36,7 @@ from organization.pages.forms import *
 from organization.network.forms import *
 from organization.network.models import PageCustomPersonListBlockInline
 from organization.shop.models import *
-
+from organization.pages.translation import *
 
 class PageBlockInline(StackedDynamicInlineAdmin):
 
