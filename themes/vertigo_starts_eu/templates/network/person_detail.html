@@ -125,7 +125,7 @@
 
                             <div class="col-xs-6 col-xs-push-2">
                                 {% with app_label=concrete_object|app_label_short classname=concrete_object|classname|lower object=concrete_object  %}
-                                    {% with app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"_card.html" as template %}
+                                    {% with "vertigo_starts_eu/"|add:app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"_card.html" as template %}
                                         {% include template %}
                                     {% endwith %}
                                 {% endwith %}
