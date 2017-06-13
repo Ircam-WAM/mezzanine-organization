@@ -144,10 +144,12 @@ class TimesheetXLS(object):
     director_signature_label = "Signature of R&D Department Director:"
     director_signature_col = 7
     director_signature_row_margin = 9
+    debug_col = 4
+    debug_row = 38
 
 
     def __init__(self, timesheets, year=''):
-        self.timesheets = timesheets.order_by('activity', 'project', 'year', 'month')
+        self.timesheets = timesheets.order_by('activity__person', 'project', 'year', 'month')
         self.book = Workbook()
         self.year = year
         font_header = Font()
@@ -225,6 +227,7 @@ class TimesheetXLS(object):
                     for nhd_k, nhd_v in m_val.items():
                         if not m_key in worked_hours_by_month:
                             worked_hours_by_month[m_key] = 0
+                        # get theorical hours worked by half days, taking in account full / half time contract
                         half_day_nb_hours = getattr(timesheet.activity, nhd_k)
                         if not half_day_nb_hours is None :
                             # has the person been present during current m_key month ?
@@ -296,6 +299,8 @@ class TimesheetXLS(object):
                     total_prod_hours += timesheet.worked_hours / number_of_projects
                     try:
                         sheet.write(project_row_index + self.hours_margin, timesheet.month + self.first_month_col, timesheet.worked_hours * percent, self.txt_centered)
+                        if settings.DEBUG:
+                            sheet.write(self.debug_row + project_position,  timesheet.month + self.debug_col, timesheet.worked_hours, self.txt_centered)
                     except :
                         pass
 
