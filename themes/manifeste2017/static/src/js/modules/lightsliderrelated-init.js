@@ -33,7 +33,12 @@ LightSliderRelatedInit.prototype.init = function() {
                     item: 1
                 }
             }
-        ]
+        ],
+        onAfterSlide: function(slider) {
+            var $next = $(".active").next('div.lslide').find('figure img');
+            var $img_src = $next.attr('data-original');
+            var $next = $next.attr('src', $img_src);
+        },
     });
 
 };

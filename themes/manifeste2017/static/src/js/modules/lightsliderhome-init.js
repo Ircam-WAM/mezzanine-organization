@@ -20,9 +20,12 @@ LightSliderHomeInit.prototype.init = function() {
         pauseOnHover: true,
         pause: 5000,
         onAfterSlide: function(slider) {
-            var $pages = slider.parents('.slider-home').find('.slider-home__pager li');
+            var $pages = slider.find('li.slider-home__slide.lslide');
             $pages.removeClass('active');
             $($pages[slider.getCurrentSlideCount()-1]).addClass('active');
+            var $next = $($pages[slider.getCurrentSlideCount()-1]).next('li.slider-home__slide.lslide').find('figure img');
+            var $img_src = $next.attr('data-original');
+            var $next = $next.attr('src', $img_src);
         },
         onSliderLoad: function(slider) {
             var $pages = slider.parents('.slider-home').find('.slider-home__pager li');
