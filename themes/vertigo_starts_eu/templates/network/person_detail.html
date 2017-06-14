@@ -125,8 +125,16 @@
 
                             <div class="col-xs-6 col-xs-push-2">
                                 {% with app_label=concrete_object|app_label_short classname=concrete_object|classname|lower object=concrete_object  %}
-                                    {% with "vertigo_starts_eu/"|add:app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"_card.html" as template %}
-                                        {% include template %}
+                                    {% with object.images.all|get_type:'card' as images %}
+                                        {% if images %}
+                                            {% with "vertigo_starts_eu/"|add:app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"_card.html" as template %}
+                                                {% include template %}
+                                            {% endwith %}
+                                        {% else %}
+                                            <div class="tac">
+                                                <a class="button" href="{{ object.get_absolute_url }}">{{ object.title }}</a>
+                                            </div>
+                                        {% endif %}
                                     {% endwith %}
                                 {% endwith %}
                             </div>
