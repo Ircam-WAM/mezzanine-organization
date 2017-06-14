@@ -40,7 +40,6 @@ from organization.core.views import SlugMixin, autocomplete_result_formatting
 from django.template.defaultfilters import slugify
 from itertools import chain
 
-
 class ArticleDetailView(SlugMixin, DetailView):
 
     model = Article
@@ -56,18 +55,17 @@ class ArticleDetailView(SlugMixin, DetailView):
 
         # automatic relation : dynamic content page
         pages = DynamicContentPage.objects.filter(object_id=self.object.id).all()
-        pages = [p.content_object for p in pages]
+        pages = [p.page for p in pages]
 
         # automatic relation : dynamic content article
         articles = DynamicContentArticle.objects.filter(object_id=self.object.id).all()
-        articles = [a.content_object for a in articles]
-
+        articles = [a.article for a in articles]
         # manual relation : get dynamic contents of current article
         dynamic_content = [dca.content_object for dca in self.object.dynamic_content_articles.all()]
 
         # gather all and order by creation date
         related_content = pages
-        related_content = articles
+        related_content += articles
         related_content += dynamic_content
         related_content.sort(key=lambda x: x.created, reverse=True)
         context['related_content'] = related_content
