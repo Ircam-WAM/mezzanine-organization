@@ -241,9 +241,9 @@ class TimesheetXLS(object):
                             # if not, count theorical nb of hours for whole month
                             else :
                                 worked_hours_by_month[m_key] += nb_half_days[m_key][nhd_k] * half_day_nb_hours
-                        else :
-                            # missing data...
-                            worked_hours_by_month[m_key] = 0
+                        # else :
+                        #     # missing data...
+                        #     worked_hours_by_month[m_key] = 0
 
             # for each percent time worked on a project...
             project_slug = timesheet.project.slug
