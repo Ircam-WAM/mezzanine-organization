@@ -419,7 +419,8 @@ class ProjectResidency(Displayable, Period, RichText):
         verbose_name_plural = 'Project residencies'
 
     def get_absolute_url(self):
-        return reverse("organization-residency-detail", kwargs={"slug": self.slug})
+        #TODO: Fix call_slug
+        return reverse("organization-residency-detail", kwargs={"call_slug": "2017", "slug": self.slug})
 
 
 class ProjectResidencyFile(File):

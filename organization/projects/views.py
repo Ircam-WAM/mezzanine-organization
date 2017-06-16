@@ -230,6 +230,12 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
     model = ProjectResidency
     template_name='projects/project_residency_detail.html'
 
+    def get_queryset(self):
+        #TODO: Filter by active
+        qs = ProjectResidency.objects.filter(validated=True).select_related()
+        print("***FOUND*** {}".format(qs))
+        return qs
+
 
 class ProjectResidencyListView(ListView):
 
