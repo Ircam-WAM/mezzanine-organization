@@ -40,7 +40,6 @@ from organization.network.models import *
 from organization.core.views import *
 from datetime import date, timedelta, datetime
 from organization.network.forms import *
-from organization.network.utils import TimesheetXLS
 from organization.projects.models import ProjectWorkPackage
 from collections import OrderedDict
 from django.http.response import HttpResponseRedirect
@@ -322,14 +321,6 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
         context['months'] = list(range(1, last_day_in_month.month + 1))
         context.update(self.kwargs)
         return context
-
-
-class PersonActivityTimeSheetExportView(TimesheetAbstractView, View):
-
-    def get(self, *args, **kwargs):
-        timesheets = PersonActivityTimeSheet.objects.filter(activity__person__slug__exact=kwargs['slug'], year=kwargs['year'])
-        xls = TimesheetXLS(timesheets)
-        return xls.write()
 
 
 class TimeSheetCreateCurrMonthView(TimeSheetCreateView):

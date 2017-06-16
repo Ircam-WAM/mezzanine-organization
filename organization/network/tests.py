@@ -390,12 +390,38 @@ class NbOfHalfDaysInPeriodPerMonthTestCase2(SimpleTestCase):
         self.assertEquals(result, expected)
 
 
+class NbOfLeaveDaysPerMonthTestCase4(SimpleTestCase):
+
+    def setUp(self):
+        self.date_from = datetime.date(2017,5,1)
+        self.date_to = datetime.date(2017,5,31)
+        self.external_id = 185 # Emilie Zawadzki
+
+    def test_nb_leave_days(self):
+        expected = {}
+        result = get_leave_days_per_month(self.date_from, self.date_to, self.external_id)
+        self.assertEquals(result, expected)
+
+
+class NbOfLeaveDaysPerMonthTestCase3(SimpleTestCase):
+
+    def setUp(self):
+        self.date_from = datetime.date(2016,1,1)
+        self.date_to = datetime.date(2016,1,31)
+        self.external_id = 162 # Olivier Houix
+
+    def test_nb_leave_days(self):
+        expected = {}
+        result = get_leave_days_per_month(self.date_from, self.date_to, self.external_id)
+        self.assertEquals(result, expected)
+
+
 class NbOfLeaveDaysPerMonthTestCase2(SimpleTestCase):
 
     def setUp(self):
         self.date_from = datetime.date(2016,1,1)
         self.date_to = datetime.date(2016,1,31)
-        self.external_id = 106
+        self.external_id = 106 # Hugues Vinet
 
     def test_nb_leave_days(self):
         expected = {}
@@ -408,7 +434,7 @@ class NbOfLeaveDaysPerMonthTestCase(SimpleTestCase):
     def setUp(self):
         self.date_from = datetime.date(2015,1,1)
         self.date_to = datetime.date(2015,12,31)
-        self.external_id = 97
+        self.external_id = 97 # Norber Schnell
 
     def test_nb_leave_days(self):
 

@@ -247,7 +247,7 @@ INSTALLED_APPS = [
     "mezzanine.twitter",
     "mezzanine.accounts",
     "cartridge.shop",
-    "eve",
+    # "eve",
     "prestashop",
     'djangobower',
     "meta",
