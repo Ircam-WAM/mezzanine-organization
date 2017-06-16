@@ -306,7 +306,7 @@ def send_mail_to_master_list_user(date_from, date_to, log_file):
         'date_to': date_to,
     }
 
-    message = get_template('email/timesheet_master_notification_for_validation.html').render(ctx)
+    message = get_template('email/timesheet_master_list_user.html').render(ctx)
     msg = EmailMessage(subject, message, to=to, from_email=settings.TIMESHEET_MASTER_MAIL)
     msg.content_subtype = 'html'
     msg.attach_file(log_file)
