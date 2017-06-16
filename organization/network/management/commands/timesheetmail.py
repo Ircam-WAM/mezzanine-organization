@@ -298,7 +298,7 @@ def send_mail_to_user(first_name, last_name, email, date_from, date_to, domain, 
 
 def send_mail_to_master_list_user(date_from, date_to, log_file):
     subject = "[WWW] Listes utilisateurs pour la période du "+date_from.strftime('%d/%m/%Y')+" au "+date_to.strftime('%d/%m/%Y')
-    to = (settings.TIMESHEET_MASTER_MAIL,)
+    to = (settings.TIMESHEET_MASTER_MAIL, 'zawadzki@ircam.fr')
     from_email = settings.DEFAULT_FROM_EMAIL
 
     ctx = {
