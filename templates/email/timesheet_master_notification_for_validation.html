@@ -10,7 +10,7 @@
 <body>
   <p>Bonjour,</p>
   <br />
-  <p>{{ person_first_name }}  {{ person_last_name }} vient de saisir ses timesheets pour la période : {{ date_to.month|month_name }} {{ year }}.</p>
+  <p>{{ person_first_name }}  {{ person_last_name }} vient de saisir ses timesheets pour la période : {{ month|month_name }} {{ year }}.</p>
   <p>Cliquez sur le lien ci-dessous pour procéder à une validation :</p>
   <p><a href="{{ url }}" target="_blank">{{ url }}</a></p>
   <br />
