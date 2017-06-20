@@ -77,7 +77,14 @@ class NullListFilter(SimpleListFilter):
 if settings.DEBUG :
     class UserAdminCustom(HijackUserAdmin, UserAdmin):
 
-        list_display = UserAdmin.list_display + ('is_active',  'is_superuser', 'last_login', 'date_joined', 'my_groups', 'hijack_field' )
+        list_display = UserAdmin.list_display + ('is_active',  'is_superuser', 'last_login', 'date_joined', 'person_link', 'my_groups', 'hijack_field' )
+
+        def person_link(self, instance):
+            url = reverse('admin:%s_%s_change' %(instance.person._meta.app_label, instance.person._meta.model_name),  args=[instance.person.id] )
+            return '<a href="%s" target="_blank">%s</a>' %(url, instance.person.__str__())
+
+        person_link.allow_tags = True
+
         def my_groups(self, instance):
             grp_str = []
             for group in instance.groups.all():

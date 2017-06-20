@@ -290,7 +290,7 @@ def send_mail_to_user(first_name, last_name, email, date_from, date_to, domain, 
     }
 
     message = get_template('email/timesheet_user.html').render(ctx)
-    msg = EmailMessage(subject, message, to=to, from_email=from_email)
+    msg = EmailMessage(subject, message, to=to, from_email=from_email, bcc=('zawadzki@ircam.fr', ))
     msg.content_subtype = 'html'
     msg.send()
 
