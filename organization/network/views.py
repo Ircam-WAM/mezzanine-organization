@@ -73,7 +73,7 @@ class PersonDetailView(SlugMixin, DetailView):
         else:
             slug = None
 
-        if not slug and self.request.user.is_authenticated() and not 'username' in self.kwargs:
+        if hasattr(self.request.user, 'person') and not slug and self.request.user.is_authenticated() and not 'username' in self.kwargs:
             obj = self.request.user.person
         elif 'username' in self.kwargs:
             user = User.objects.get(username=self.kwargs['username'])

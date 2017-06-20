@@ -14,13 +14,13 @@ class OrganizationLDAPBackend(LDAPBackend):
                 # get Person by mail
                 person, created = Person.objects.get_or_create(email=user.email)
 
+                person.user = user
                 # if the Person is the created default one
-                if not user.person.first_name and not user.person.last_name:
-                    old_person = user.person
+                # if not user.person.first_name and not user.person.last_name:
+                    # old_person = user.person
                     # reassign the right Person
-                    user.person = person
                     # delete the old one
-                    old_person.delete()
+                    # old_person.delete()
 
                 # if a Person is created, populate it
                 if created:
@@ -29,14 +29,13 @@ class OrganizationLDAPBackend(LDAPBackend):
                     person.last_name=user.last_name
                     person.email=user.email
 
-                try :
-                    person.save()
-                except IntegrityError:
-                    pass
-
+                person.save()
 
             except ObjectDoesNotExist:
                 person = Person.objects.get(
                     email=user.email
                 )
+            except IntegrityError:
+                pass
+
         return user
