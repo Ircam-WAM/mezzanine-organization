@@ -58,11 +58,46 @@ class PersonDetailView(SlugMixin, DetailView):
     template_name='network/person_detail.html'
     context_object_name = 'person'
 
+    def get(self, request, *args, **kwargs):
+        # if not hasattr(self.request.user, 'ldap_user') or not self.request.user.person:
+        #     response = redirect('organization-home')
+        self.object = self.get_object(self.queryset)
+        context = self.get_context_data(object=self.object)
+        response = self.render_to_response(context)
+        return response
+
+    def get_object(self, queryset):
+        obj = None
+        if 'slug' in self.kwargs:
+            slug = self.kwargs['slug']
+        else:
+            slug = None
+
+        if not slug and self.request.user.is_authenticated() and not 'username' in self.kwargs:
+            obj = self.request.user.person
+        elif 'username' in self.kwargs:
+            user = User.objects.get(username=self.kwargs['username'])
+            obj = Person.objects.get(user=user)
+        else:
+            obj = super().get_object()
+        return obj
+
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
         context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
         return context
 
+
+class ProfileDetailView(RedirectView):
+
+    permanent = False
+    query_string = True
+    pattern_name = 'organization-network-person-detail'
+
+    def get_redirect_url(self, *args, **kwargs):
+        article = get_object_or_404(Article, pk=kwargs['pk'])
+        article.update_counter()
+        return super(ArticleCounterRedirectView, self).get_redirect_url(*args, **kwargs)
 
 class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):
 

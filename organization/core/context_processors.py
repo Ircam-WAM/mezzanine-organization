@@ -52,14 +52,6 @@ def organization_settings(request):
 
     research_slug = "recherche"
 
-    if not request.session.__contains__("person_slug"):
-        if hasattr(request.user, 'email'):
-            try :
-                person = Person.objects.get(email=request.user.email)
-                request.session.__setitem__("person_slug", person.slug)
-            except:
-                pass
-
     return {'current_season': current_season,
             'current_season_styled': current_season_styled,
             'newsletter_subscribing_url': newsletter_subscribing_url,
@@ -68,5 +60,6 @@ def organization_settings(request):
             'linked_organization_footer' : linked_org_footer,
             'linked_organization_footer_2' : linked_org_footer_2,
             'research_slug' : research_slug,
+            'menu_person_id': settings.MENU_PERSON_ID,
             'debug_mode' : settings.DEBUG
             }

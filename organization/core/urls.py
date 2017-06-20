@@ -32,5 +32,4 @@ from organization.core.views import *
 
 urlpatterns = [
      url("^search/$", CustomSearchView.as_view(), name="search"),
-     url("^profile/$", AccountProfilView.as_view(), name="profile"),
 ]

@@ -1,0 +1,11 @@
+{% load event_tags pages_tags mezzanine_tags organization_tags i18n  %}
+
+{# display begin time only if != 23:59, because this field is required #}
+{% if date_begin|date:"H:i" != "23:59" %}
+    <span class="inline-date">{{ date_begin|time:"TIME_FORMAT" }}</span>
+    {# display end time if exists and not equal to 23:59, because time is required #}
+    {% if date_end and date_end|date:"H:i" != "23:59" %}
+        <span class="inline-date">- {{ date_end|time:"TIME_FORMAT" }}</span>
+    {% endif %}
+
+{% endif %}

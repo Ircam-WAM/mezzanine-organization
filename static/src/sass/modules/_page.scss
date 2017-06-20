@@ -23,7 +23,7 @@ $module: ".page";
 #{$module} {
 
     min-height: 500px;
-    
+
     @include mq($until: sm) {
         min-height: 0;
     }
@@ -81,6 +81,14 @@ $module: ".page";
             margin-top: 2px;
             font-weight: weight(regular);
             display: block;
+            &.inline-date {
+                display: inline;
+                @include font-size(m);
+                @include line-height(1);
+                @include typeface(serif);
+                font-weight: weight(heavy);
+            }
+
         }
 
     }

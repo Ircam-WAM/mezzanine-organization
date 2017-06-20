@@ -100,6 +100,7 @@ class ProjectDemoDetailView(SlugMixin, ProjectMixin, DetailView):
 
     model = ProjectDemo
     template_name='projects/project_demo_detail.html'
+    context_object_name = 'demo'
 
 
 class ProjectBlogPageView(SlugMixin, ProjectMixin, DetailView):

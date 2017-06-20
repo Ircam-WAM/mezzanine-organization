@@ -31,8 +31,14 @@ admin.autodiscover()
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
+urlpatterns = []
 
-urlpatterns = [
+if "drum.links" in settings.INSTALLED_APPS:
+    urlpatterns += [
+        url("^%s/" % settings.DRUM_SLUG, include("drum.links.urls")),
+    ]
+
+urlpatterns += [
     url("^", include('organization.core.urls')),
     url("^", include('organization.pages.urls')),
     url("^", include('organization.magazine.urls')),
