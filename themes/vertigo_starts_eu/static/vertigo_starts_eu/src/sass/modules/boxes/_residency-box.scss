@@ -37,7 +37,7 @@ $module: ".residency-box";
         height: auto;
     }
 
-/*
+    /*
     @include mq($until: md) {
         @include padding(.5);
     }
@@ -54,6 +54,7 @@ $module: ".residency-box";
         border: 1px solid rgba($color-main, 1);
         background: $color-main;
 
+
         .residency-box__image-container {
             background: black;
         }
@@ -69,7 +70,12 @@ $module: ".residency-box";
 
         .residency-box__title {
             color: $color-background;
+            opacity:0;
+
+            vertical-align: top;
+            text-alegment:left;
         }
+
         .residency-box__tags {
             color: $color-background;
         }
@@ -82,6 +88,10 @@ $module: ".residency-box";
             color: $color-background;
         }
 
+        .residency-box__label_overlay {
+
+            opacity: 1;
+        }
     }
     
     &__background-image {
@@ -89,14 +99,58 @@ $module: ".residency-box";
     }
 
     &__background {
+    /*
         background: linear-gradient(
             rgba(0, 0, 0, 0.6),
             rgba(0, 0, 0, 0.6)
         );
+        */
+
         background-size: cover;
         width: 400px;
         height: 400px;
         //margin: 10px 10px 10px 10px;
+    }
+
+    &__background:hover {
+        opacity: 0;
+    }
+
+    &__background:hover &__label_overlay {
+        opacity: 1;
+    }
+
+    &__label_overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        opacity: 0;
+    }
+
+    &__label_overlay_title {
+        @include font-size(l);
+        @include line-height(.75);
+        font-weight: weight(bold);
+        color: black;
+        font-weight: weight(bold);
+        @include transition(color 0.5s ease-in-out);
+        text-transform: uppercase;
+        text-align: left;
+        margin-left:30px;
+        margin-right:30px;
+        margin-top:30px;
+        margin-bottom:0px;
+    }
+
+    &__label_overlay_body {
+        @include font-size(m);
+        @include line-height(.75);
+        @include margin-top(.25);
+        color: black;
+        @include transition(color 0.5s ease-in-out);
+        text-align: left;
+        margin-left:30px;
+        margin-right:30px;
     }
 
     &__header {
@@ -350,14 +404,17 @@ $module: ".residency-box";
         &:hover {
             border: 0;
             background-color: $color-background;
+
+            /*
             #{$module}__title {
                 color: $color-main;
             }
             #{$module}__desc {
                 color: white;
             }
+            */
         }
-
     }
+
 
 }

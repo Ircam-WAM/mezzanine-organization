@@ -1,0 +1,65 @@
+{% extends "vertigo_starts_eu/pages/page.html" %}
+{% load mezzanine_tags staticfiles keyword_tags i18n organization_tags pages_tags %}
+
+
+{% block meta_title %}
+    {% trans "Current Residencies" %}
+{% endblock %}
+
+
+{% block meta_keywords %}
+    {% metablock %}
+    {% keywords_for object as keywords %}
+    {% for keyword in keywords %}
+        {% if not forloop.first %}, {% endif %}
+        {{ keyword }}
+    {% endfor %}
+    {% endmetablock %}
+{% endblock %}
+
+
+{% block body_class %}
+    pattern pattern-bg {{ department.pages.all.0.weaving_css_class }}
+{% endblock %}
+
+
+{% block breadcrumb_menu %}
+    {{ block.super }}
+    <li class="breadcrumb__item active">{{ object.title }}</li>
+{% endblock %}
+
+
+{% block page_tags %}
+
+    {% comment %}
+        {% if department %}
+            <div class="tag dashed dashed--yellow">
+              {{ department.pages.all.0.title }}
+            </div>
+        {% endif %}
+        <div class="tag tag--category">
+            {% trans 'Project' %}
+        </div>
+    {% endcomment %}
+
+{% endblock %}
+
+
+{% block page_title %}
+
+    <h1 class="dotted">
+        {% trans "Current Residencies" %}
+    </h1>
+
+{% endblock %}
+
+
+{% block main %}
+<div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
+    <div class="container">
+
+    </div>
+    {% pagination_for object_list %}
+</div>
+
+{% endblock %}
