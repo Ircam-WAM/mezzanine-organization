@@ -28,18 +28,20 @@ $module: ".residency-box";
     @include transition(all 0.5s ease-in-out);
 
     border: 1px solid rgba($color-main, 0.35);
-    @include padding(1);
+    //@include padding(1);
 
-    height: 400px;
-    width: 400px;
+    height: 402px;
+    width: 402px;
 
     @include mq($until: xs) {
         height: auto;
     }
 
+/*
     @include mq($until: md) {
         @include padding(.5);
     }
+    */
 
     .slider-home & {
         @include margin(0);
@@ -71,9 +73,11 @@ $module: ".residency-box";
         .residency-box__tags {
             color: $color-background;
         }
+        /*
         .residency-box__subtitle {
             color: $color-background;
         }
+        */
         .residency-box__desc {
             color: $color-background;
         }
@@ -92,7 +96,7 @@ $module: ".residency-box";
         background-size: cover;
         width: 400px;
         height: 400px;
-        margin: 10px 10px 10px 10px;
+        //margin: 10px 10px 10px 10px;
     }
 
     &__header {
@@ -196,12 +200,16 @@ $module: ".residency-box";
         @include font-size(xl); /*TODO: Bigger */
         @include line-height(1.25); /*TODO: Bigger*/
         @include typeface(sans-serif);
-        @include margin(.5 0 0 0);
+        //@include margin(.5 0 0 0);
         font-weight: weight(bold);
         color: $color-main;
         @include transition(color 0.5s ease-in-out);
         text-transform: uppercase;
         text-align: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width:100%
         /*TODO: Vertical align: middle */
     }
 
@@ -298,7 +306,7 @@ $module: ".residency-box";
             @include font-size(xl);
             @include line-height(1.25);
             @include typeface(sans-serif);
-            @include margin(.25 0 .25 0);
+            //@include margin(.25 0 .25 0);
             font-weight: weight(heavy);
 
         }

@@ -1,0 +1,55 @@
+.button-residency {
+  background: $color-white;
+  color: $color-black;
+  border: 1px solid $color-main;
+  border-radius: 7px;
+  outline: 0;
+  box-sizing: border-box;
+  min-width: 136px;
+  margin: 0 .75rem 10px 0;
+  padding: .375rem .375rem .375rem 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.5rem;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: all .25s ease-in-out;
+  text-decoration: inherit;
+  text-align:center;
+  list-style: none;
+
+  &:hover {
+    background: $color-background;
+    color: $color-white;
+  }
+  &-selected {
+    background: $color-background;
+    color: $color-white;
+    &:hover {
+      background: $color-white;
+      color: $color-background;
+    }
+    &::after{
+      color: $color-main;
+      content: "✗";
+      margin-left: 5px;
+      float: right;
+    }
+  }
+
+  &-unselected {
+    background: $color-white;
+    color: $color-black;
+    &:hover {
+      background: $color-black;
+      color: $color-white;
+    }
+    &::after{
+      content: "✔";
+      margin-left: 5px;
+      float:right;
+    }
+  }
+
+}
