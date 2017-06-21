@@ -84,6 +84,7 @@ $module: ".residency-box";
             color: $color-background;
         }
         */
+
         .residency-box__desc {
             color: $color-background;
         }
@@ -91,6 +92,11 @@ $module: ".residency-box";
         .residency-box__label_overlay {
 
             opacity: 1;
+        }
+
+        .residency-box__background-margin {
+
+            opacity: 0;
         }
     }
     
@@ -112,7 +118,18 @@ $module: ".residency-box";
         //margin: 10px 10px 10px 10px;
     }
 
+    &__background-margin {
+
+        margin: 20px 20px 20px 20px;
+        background-size: 90% 90%;
+        background-repeat: no-repeat;
+    }
+
     &__background:hover {
+        opacity: 0;
+    }
+
+    &__background-margin:hover {
         opacity: 0;
     }
 
@@ -251,8 +268,8 @@ $module: ".residency-box";
     }
 
     &__title {
-        @include font-size(xl); /*TODO: Bigger */
-        @include line-height(1.25); /*TODO: Bigger*/
+        @include font-size(xxxl); /*TODO: Bigger */
+        @include line-height(2.25); /*TODO: Bigger*/
         @include typeface(sans-serif);
         //@include margin(.5 0 0 0);
         font-weight: weight(bold);
