@@ -79,6 +79,7 @@ $module: ".residency-box";
         .residency-box__tags {
             color: $color-background;
         }
+
         /*
         .residency-box__subtitle {
             color: $color-background;
@@ -126,18 +127,22 @@ $module: ".residency-box";
     }
 
     &__background:hover {
+
         opacity: 0;
     }
 
     &__background-margin:hover {
+
         opacity: 0;
     }
 
     &__background:hover &__label_overlay {
+
         opacity: 1;
     }
 
     &__label_overlay {
+
         position: absolute;
         top: 0;
         bottom: 0;
@@ -145,6 +150,7 @@ $module: ".residency-box";
     }
 
     &__label_overlay_title {
+
         @include font-size(l);
         @include line-height(.75);
         font-weight: weight(bold);
@@ -160,6 +166,7 @@ $module: ".residency-box";
     }
 
     &__label_overlay_body {
+
         @include font-size(m);
         @include line-height(.75);
         @include margin-top(.25);
@@ -171,15 +178,18 @@ $module: ".residency-box";
     }
 
     &__header {
+
         position: relative;
     }
 
     &__image-container {
+
         background: $color-background;
         @include transition(all 0.5s ease-in-out);
     }
 
     &__image {
+
         margin: 0;
         padding: 0;
         width: 100%;
@@ -243,6 +253,7 @@ $module: ".residency-box";
     }
 
     &__btn {
+
         position: absolute;
         bottom: 0;
         right: 0;
@@ -253,6 +264,7 @@ $module: ".residency-box";
     }
 
     &__content {
+
         @include padding(.25 .25 .25 .25);
 
         position: relative;
@@ -268,6 +280,7 @@ $module: ".residency-box";
     }
 
     &__title {
+
         @include font-size(xxxl); /*TODO: Bigger */
         @include line-height(2.25); /*TODO: Bigger*/
         @include typeface(sans-serif);
@@ -289,6 +302,7 @@ $module: ".residency-box";
     }
 
     &__subtitle {
+
         @include font-size(m);
         @include line-height(.75);
         @include typeface(sans-serif);
@@ -314,6 +328,7 @@ $module: ".residency-box";
     }
 
     &__desc {
+
         @include font-size(s);
         @include line-height(.75);
         @include typeface(serif);
@@ -339,6 +354,7 @@ $module: ".residency-box";
     }
 
     .slider-home & {
+
         display: inline-block;
         max-width: 450px;
         background: transparent;
@@ -432,6 +448,4 @@ $module: ".residency-box";
             */
         }
     }
-
-
 }
