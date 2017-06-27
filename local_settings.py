@@ -127,6 +127,7 @@ ADMIN_MENU_ORDER = (
                   'mezzanine_agenda.EventLocation',
                   'mezzanine_agenda.EventPrice',
                   'mezzanine_agenda.EventCategory',
+                  'mezzanine_agenda.EventShop',
                   'organization-agenda.EventPublicType',
                   'organization-agenda.EventTrainingLevel',
                   'generic.Keyword',
