@@ -6,7 +6,7 @@
             </div>
             <div class="row">
                 {% for content in home.dynamiccontenthomebody_set.all %}
-                    <div class="col-xs-8{% if forloop.counter > 3 %} hide-until-xs{% endif %}">
+                    <div class="col-xs-12{% if forloop.counter > 3 %} hide-until-xs{% endif %}">
                         {% if content.content_type.model == "brief" %}
                             {% include "magazine/brief/inc/brief_card.html" %}
                         {% elif content.content_type.model == "article" %}
