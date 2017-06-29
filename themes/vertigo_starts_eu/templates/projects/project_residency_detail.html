@@ -33,7 +33,7 @@
     {% comment %}
         {% if department %}
             <div class="tag dashed dashed--yellow">
-               <!-- {{ department.pages.all.0.title }} -->
+               {{ object.title }}
             </div>
         {% endif %}
         <div class="tag tag--category">
@@ -62,7 +62,12 @@
     </div>
 
     <div>
-       {% include "vertigo_starts_eu/projects/inc/projectresidency_slider.html" %}
+       <!--{% include "vertigo_starts_eu/projects/inc/projectresidency_slider.html" %}-->
+      <img src="{{ MEDIA_URL }}{% thumbnail object.project.public_data.all.0.image 0 400 padding=true %}" style="width:100%;height:300px;margin-bottom:20px;" />
+
+      <div class="residency-detail__text-banner">
+            {{ object.description }}
+      </div>
     </div>
 
     <script>
@@ -124,14 +129,12 @@
         <div class="residency-detail__disable-overflow">
             <div class="residency-detail__margin-block">
                 <div>
-                    <img class="residency-detail__image-left" src="http://dummyimage.com/300x300/f0f/fff" />
-                    <div class="residency-detail__title">{{ object.title }}</div>
+                    <img class="residency-detail__image-left" src="{{ MEDIA_URL }}{% thumbnail object.artist.images.all|first 300 300 padding=true %}" />
+                    <div class="residency-detail__title">{{ object.artist.first_name }} {{ object.artist.last_name }}</div>
                     <br>
-                    <!-- {{ object.description }} -->
-                    Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta)
-                    desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen
+                    {{ object.artist.bio }}
                     <br><br>
-                    <div class="residency-detail__underline-text"><a href="http://www.raphael.civuels.com">www.raphael.civuels.com</a></div>
+                    <div class="residency-detail__underline-text"><a href="{{ object.artist_short_url|safe }}">{{ object.artist_short_url }}</a></div>
                 </div>
             </div>
         </div>
@@ -148,17 +151,18 @@
                 <div>
                     <div class="residency-detail__title">{% trans "Title project" %}</div>
                     <br>
-                    Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta)
-                    desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen
+                    {{ object.residencies.all.0.producer.bio }}
                     <br><br>
                     <div class="residency-detail__title">{% trans "About this residency" %}</div>
                     <br>
-                    <img src="http://dummyimage.com/300x300/f0f/fff" class="residency-detail__right-image" />
+                    <img src="{{ MEDIA_URL }}{% thumbnail object.residencies.all.0.producer.images.all|first 300 300 padding=true %}" class="residency-detail__right-image" />
                     <div class="residency-detail__width-text-second-tab">
-                        From September, 4 to December 16, 2017<br>
-                        Labo : IRCAM (Institut de Recherche et de Coordination Acoustique/Musique)<br>
-                        Localisation : Paris, France<br><br>
-                        Keyword
+                        From {{ object.residencies.all.0.date_from|date:"F, j" }} to {{ object.residencies.all.0.date_to|date:"F j, Y" }}<br>
+                        Labo : {{ object.residencies.all.0.producer.description }}<br>
+                        Localisation : {{ object.residencies.all.0.producer.city }}, {{ object.residencies.all.0.producer.country }}<br><br>
+                        {% for keyword in object.artist.keywords.all %}
+                        {{ keyword }} &nbsp;
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -168,12 +172,11 @@
         <div class="residency-detail__disable-overflow">
             <div class="residency-detail__margin-block">
                 <div>
-                    <div class="residency-detail__title">{% trans "Title Project" %}</div>
+                    <div class="residency-detail__title">{{ object.title }}</div>
                     <br>
-                    <img src="http://dummyimage.com/300x300/f0f/fff" class="residency-detail__right-image" />
+                    <img src="{{ MEDIA_URL }}{% thumbnail public_data.image 0 400 padding=true %}" class="residency-detail__right-image" />
                     <div class="residency-detail__width-text-second-tab">
-                        Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta)
-                        desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen
+                        {{ object.description }}
                     </div>
                 </div>
 
