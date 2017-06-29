@@ -15,6 +15,10 @@
     {% endmetablock %}
 {% endblock %}
 
+{% block page_class %}
+    object
+{% endblock %}
+
 {% block body_class %}
     pattern pattern-bg {{ department.pages.all.0.weaving_css_class }}
 {% endblock %}
@@ -29,7 +33,7 @@
     {% comment %}
         {% if department %}
             <div class="tag dashed dashed--yellow">
-              {{ department.pages.all.0.title }}
+               <!-- {{ department.pages.all.0.title }} -->
             </div>
         {% endif %}
         <div class="tag tag--category">
@@ -48,11 +52,134 @@
 {% endblock %}
 
 {% block main %}
-<div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
-    <div class="container">
 
+<div class="residency-detail__background-main residency-detail__margin-global">
+
+    <div class="row">
+        <div class="col-sm-16 col-md-10 col-md-push-3 tac">
+            <h1 class="section-title section-title--uppercase section-title--main ">{% trans "Current Residencies" %}</h1>
+        </div>
     </div>
-    {% pagination_for object_list %}
-</div>
 
+    <div>
+       {% include "vertigo_starts_eu/projects/inc/projectresidency_slider.html" %}
+    </div>
+
+    <script>
+        function clickedLink(link,event) {
+
+            event.preventDefault();
+
+            var firstDiv = document.getElementById("first_div");
+            var secondDiv = document.getElementById("second_div");
+            var thirdDiv = document.getElementById("third_div");
+
+            firstDiv.style.display = 'none';
+            secondDiv.style.display = 'none';
+            thirdDiv.style.display = 'none';
+
+            var linkArtist = document.getElementById("artist");
+            var linkArtistResidency = document.getElementById("artist_residency");
+            var linkProject = document.getElementById("project");
+
+            var buttons = document.getElementsByClassName('residency-detail__button');
+
+            for (var i = 0; i < buttons.length; i++)
+            {
+                buttons[i].classList.remove('active');
+            }
+
+            if (link.id === 'artist')
+            {
+                firstDiv.style.display = 'block';
+                linkArtist.classList.add('active');
+            }
+
+            if (link.id === 'artist_residency')
+            {
+                secondDiv.style.display = 'block';
+                linkArtistResidency.classList.add('active');
+            }
+
+            if (link.id === 'project')
+            {
+                thirdDiv.style.display = 'block';
+                linkProject.classList.add('active');
+            }
+        }
+    </script>
+    <div class ="row residency-detail__margin-row">
+            <div class="col-sm-16 col-md-12 residency-detail__center-buttons">
+                <a id='artist' class="button residency-detail__button active" href="#" onclick="clickedLink(this,event);">{% trans "The artist" %}</a>
+                <a id='artist_residency' class="button residency-detail__button" href="#" onclick="clickedLink(this,event);">{% trans "Artist residency" %}</a>
+                <a id='project' class="button residency-detail__button" href="#" onclick="clickedLink(this,event);">{% trans "The project" %}</a>
+            </div>
+    </div>
+    <div class="residency-detail__green-top-line"></div>
+    <div class="residency-detail__block--white residency-detail__margin-white">
+        <div style="background-image: url({{ MEDIA_URL }}{% thumbnail public_data.image 0 400 padding=true %})" />
+    </div>
+
+    <div id="first_div" class="show-detail__hide-container">
+        <div class="residency-detail__disable-overflow">
+            <div class="residency-detail__margin-block">
+                <div>
+                    <img class="residency-detail__image-left" src="http://dummyimage.com/300x300/f0f/fff" />
+                    <div class="residency-detail__title">{{ object.title }}</div>
+                    <br>
+                    <!-- {{ object.description }} -->
+                    Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta)
+                    desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen
+                    <br><br>
+                    <div class="residency-detail__underline-text"><a href="http://www.raphael.civuels.com">www.raphael.civuels.com</a></div>
+                </div>
+            </div>
+        </div>
+        <h1 class="residency-detail__underline-text-green">{% trans "Video" %}</h1>
+        <object class="residency-detail__video-style"><param name="movie" value="http://www.youtube.com/v/v1gTI4BOPUw?version=3">
+            <param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always">
+            <embed src="http://www.youtube.com/v/v1gTI4BOPUw?version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="390">
+        </object>
+    </div>
+
+    <div id="second_div" class="residency-detail__hide-container">
+        <div>
+            <div class="residency-detail__margin-block">
+                <div>
+                    <div class="residency-detail__title">{% trans "Title project" %}</div>
+                    <br>
+                    Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta)
+                    desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen
+                    <br><br>
+                    <div class="residency-detail__title">{% trans "About this residency" %}</div>
+                    <br>
+                    <img src="http://dummyimage.com/300x300/f0f/fff" class="residency-detail__right-image" />
+                    <div class="residency-detail__width-text-second-tab">
+                        From September, 4 to December 16, 2017<br>
+                        Labo : IRCAM (Institut de Recherche et de Coordination Acoustique/Musique)<br>
+                        Localisation : Paris, France<br><br>
+                        Keyword
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="third_div" class="residency-detail__hide-container">
+        <div class="residency-detail__disable-overflow">
+            <div class="residency-detail__margin-block">
+                <div>
+                    <div class="residency-detail__title">{% trans "Title Project" %}</div>
+                    <br>
+                    <img src="http://dummyimage.com/300x300/f0f/fff" class="residency-detail__right-image" />
+                    <div class="residency-detail__width-text-second-tab">
+                        Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta)
+                        desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <a class="residency-detail__margin-block residency-detail__button-project residency-detail__margin-bottom-third-tab" href="">{% trans "Find more" %}</a>
+    </div>
+</div>
 {% endblock %}
