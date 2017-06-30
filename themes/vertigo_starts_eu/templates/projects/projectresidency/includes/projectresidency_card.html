@@ -53,8 +53,7 @@
     {% comment %}
     <div class="residency-box__content">
         <div class="residency-box__title">
-            <!--{{ object.project.title }}-->
-            Project1<br>
+            {{ object.project.residencies.all.0.title }}<br>
             X<br>
             {{ object.artist.first_name }} {{ object.artist.last_name }}<br>
         </div>
