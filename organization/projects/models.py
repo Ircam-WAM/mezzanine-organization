@@ -419,7 +419,6 @@ class ProjectResidency(Displayable, Period, RichText):
         verbose_name_plural = 'Project residencies'
 
     def get_absolute_url(self):
-        print("Tried to retrieve; {}".format(reverse("organization-residency-detail", kwargs={"call_slug": self.project.call.slug, "slug": self.slug})))
         return reverse("organization-residency-detail", kwargs={"call_slug": self.project.call.slug, "slug": self.slug})
 
 

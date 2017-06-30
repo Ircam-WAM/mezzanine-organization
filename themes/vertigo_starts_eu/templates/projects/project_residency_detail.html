@@ -62,12 +62,13 @@
     </div>
 
     <div>
-       <!--{% include "vertigo_starts_eu/projects/inc/projectresidency_slider.html" %}-->
-      <img src="{{ MEDIA_URL }}{% thumbnail object.project.public_data.all.0.image 0 400 padding=true %}" style="width:100%;height:300px;margin-bottom:20px;" />
+        <!--TODO: Use slider-->
+        <!--{% include "vertigo_starts_eu/projects/inc/projectresidency_slider.html" %}-->
+        <img src="{{ MEDIA_URL }}{% thumbnail object.project.public_data.all.0.image 0 400 padding=true %}" style="width:100%;height:300px;margin-bottom:20px;" />
 
-      <div class="residency-detail__text-banner">
+        <div class="residency-detail__text-banner">
             {{ object.description }}
-      </div>
+        </div>
     </div>
 
     <script>
@@ -113,6 +114,7 @@
             }
         }
     </script>
+    
     <div class ="row residency-detail__margin-row">
             <div class="col-sm-16 col-md-12 residency-detail__center-buttons">
                 <a id='artist' class="button residency-detail__button active" href="#" onclick="clickedLink(this,event);">{% trans "The artist" %}</a>
@@ -138,11 +140,33 @@
                 </div>
             </div>
         </div>
-        <h1 class="residency-detail__underline-text-green">{% trans "Video" %}</h1>
-        <object class="residency-detail__video-style"><param name="movie" value="http://www.youtube.com/v/v1gTI4BOPUw?version=3">
-            <param name="allowFullScreen" value="true"><param name="allowScriptAccess" value="always">
-            <embed src="http://www.youtube.com/v/v1gTI4BOPUw?version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowScriptAccess="always" width="640" height="390">
-        </object>
+        
+        {% block page_link %}
+            {% with object.artist.links.all as links %}
+                {% if links %}
+                    {% include 'core/inc/link.html' %}
+                {% endif %}
+            {% endwith %}
+        {% endblock %}
+
+        {% block page_audio %}
+          {% with object.artist as object %}
+              {{ block.super }}
+          {% endwith %}
+        {% endblock %}
+
+        {% block page_slider %}
+            {% with object.artist as object %}
+                {{ block.super }}
+            {% endwith %}
+        {% endblock %}
+
+        {% block page_video %}
+          {% with object.artist as object %}
+              {{ block.super }}
+          {% endwith %}
+        {% endblock %}
+        
     </div>
 
     <div id="second_div" class="residency-detail__hide-container">
@@ -151,15 +175,15 @@
                 <div>
                     <div class="residency-detail__title">{% trans "Title project" %}</div>
                     <br>
-                    {{ object.residencies.all.0.producer.bio }}
+                    {{ object.project.title }}
                     <br><br>
                     <div class="residency-detail__title">{% trans "About this residency" %}</div>
                     <br>
                     <img src="{{ MEDIA_URL }}{% thumbnail object.residencies.all.0.producer.images.all|first 300 300 padding=true %}" class="residency-detail__right-image" />
                     <div class="residency-detail__width-text-second-tab">
-                        From {{ object.residencies.all.0.date_from|date:"F, j" }} to {{ object.residencies.all.0.date_to|date:"F j, Y" }}<br>
-                        Labo : {{ object.residencies.all.0.producer.description }}<br>
-                        Localisation : {{ object.residencies.all.0.producer.city }}, {{ object.residencies.all.0.producer.country }}<br><br>
+                        <!--TODO: Fix this data-->
+                        From {{ object.residencies.date_from}} to {{ object.residencies.date_to }}<br>
+                        Localization: {{ object.producer.city }}, {{ object.producer.country }}<br><br>
                         {% for keyword in object.artist.keywords.all %}
                         {{ keyword }} &nbsp;
                         {% endfor %}
@@ -168,21 +192,22 @@
             </div>
         </div>
     </div>
+    
     <div id="third_div" class="residency-detail__hide-container">
         <div class="residency-detail__disable-overflow">
             <div class="residency-detail__margin-block">
                 <div>
-                    <div class="residency-detail__title">{{ object.title }}</div>
+                    <div class="residency-detail__title">{{ object.project.title }}</div>
                     <br>
-                    <img src="{{ MEDIA_URL }}{% thumbnail public_data.image 0 400 padding=true %}" class="residency-detail__right-image" />
+                    <img src="{{ MEDIA_URL }}{% thumbnail object.project.public_data.all.0.image 0 400 padding=true %}" class="residency-detail__right-image" />
                     <div class="residency-detail__width-text-second-tab">
-                        {{ object.description }}
+                        {{ object.project.description }}
                     </div>
                 </div>
 
             </div>
         </div>
-        <a class="residency-detail__margin-block residency-detail__button-project residency-detail__margin-bottom-third-tab" href="">{% trans "Find more" %}</a>
+        <a class="residency-detail__margin-block residency-detail__button-project residency-detail__margin-bottom-third-tab" href="{{ object.project.website }}">{% trans "Find more" %}</a>
     </div>
 </div>
 {% endblock %}

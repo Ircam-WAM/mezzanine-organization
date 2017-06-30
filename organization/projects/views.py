@@ -230,17 +230,22 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
     model = ProjectResidency
     template_name='projects/project_residency_detail.html'
 
-    def get_queryset(self):
-        #TODO: Filter by active
-        qs = ProjectResidency.objects.filter(validated=True).select_related()
-        print("***FOUND*** {}".format(qs))
-        return qs
-
 
 class ProjectResidencyListView(ListView):
 
     model = ProjectResidency
     template_name='projects/project_residency_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectResidencyListView, self).get_context_data(**kwargs)
+        context["call"] = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
+        return context
+
+    def get_queryset(self):
+        call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
+        projects = Project.objects.filter(call=call)
+        qs = ProjectResidency.objects.filter(project__in=projects).filter(validated=True).select_related()
+        return qs
 
 
 class ProjectResidencyCreateView(CreateWithInlinesView):
