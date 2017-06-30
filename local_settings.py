@@ -70,10 +70,10 @@ if os.environ.get('EVEDB_ENV_POSTGRES_PASSWORD'):
 if os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'):
     DATABASES['prestashop'] = {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'USER': 'ircam_shops',      # Not used with sqlite3.
+        'USER': 'ouaibe',      # Not used with sqlite3.
         'PASSWORD': os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
         'NAME': 'ircam_shops',
-        'HOST': 'prestadb',      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': 'mysql2.ircam.fr',      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
         }
 
