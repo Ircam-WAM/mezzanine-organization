@@ -1,0 +1,108 @@
+{% extends "vertigo_starts_eu/pages/page.html" %}
+{% load mezzanine_tags staticfiles keyword_tags i18n organization_tags pages_tags %}
+
+
+{% block meta_title %}
+    {% trans "Current Residencies" %}
+{% endblock %}
+
+
+{% block meta_keywords %}
+    {% metablock %}
+    {% keywords_for object as keywords %}
+    {% for keyword in keywords %}
+        {% if not forloop.first %}, {% endif %}
+        {{ keyword }}
+    {% endfor %}
+    {% endmetablock %}
+{% endblock %}
+
+
+{% block body_class %}
+    pattern pattern-bg {{ department.pages.all.0.weaving_css_class }}
+{% endblock %}
+
+
+{% block breadcrumb_menu %}
+    {{ block.super }}
+    <li class="breadcrumb__item active">{{ object.title }}</li>
+{% endblock %}
+
+
+{% block page_tags %}
+
+    {% comment %}
+        {% if department %}
+            <div class="tag dashed dashed--yellow">
+              {{ department.pages.all.0.title }}
+            </div>
+        {% endif %}
+        <div class="tag tag--category">
+            {% trans 'Project' %}
+        </div>
+    {% endcomment %}
+
+{% endblock %}
+
+
+{% block page_title %}
+
+    <h1 class="dotted">
+        {% trans "Current Residencies" %}
+    </h1>
+
+{% endblock %}
+
+
+{% block main %}
+<div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-16 col-md-10 col-md-push-3 tac">
+                <h1 class="section-title section-title--uppercase section-title--main section-title--underline">{% trans "Current Residencies" %}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2 page__sidebar"></div>
+            <div class="mb2 col-sm-16 col-md-12 page__content">
+                <p>{{ call.description }}</p>
+            </div>
+        </div>
+
+        <div class ="row">
+            <div class="col-md-2 page__sidebar"></div>
+            <div class="mb2 col-sm-16 col-md-12">
+                <!--TODO: Filter tags-->
+                <a class="button button-residency" href="">Keyword 1</a>
+                <a class="button button-residency" href="">Keyword 2</a>
+                <a class="button button-residency" href="">Keyword 3</a>
+                <a class="button button-residency" href="">Keyword 4</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
+                <div class="page__content">
+                    <div class="container">
+                        <div class="row">
+                            {% for object in object_list %}
+                                <div class="col-xs-8">
+                                    {% with app_label=object|app_label_short classname=object|classname|lower  %}
+                                        {% with app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"_card.html" as template %}
+                                            {% include template %}
+                                        {% endwith %}
+                                    {% endwith %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% pagination_for object_list %}
+</div>
+
+{% endblock %}
+

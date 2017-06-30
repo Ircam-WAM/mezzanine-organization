@@ -1,0 +1,213 @@
+{% extends "vertigo_starts_eu/pages/page.html" %}
+{% load mezzanine_tags staticfiles keyword_tags i18n organization_tags pages_tags %}
+
+{% block meta_title %}
+    {% trans "Current Residencies" %}
+{% endblock %}
+
+{% block meta_keywords %}
+    {% metablock %}
+    {% keywords_for object as keywords %}
+    {% for keyword in keywords %}
+        {% if not forloop.first %}, {% endif %}
+        {{ keyword }}
+    {% endfor %}
+    {% endmetablock %}
+{% endblock %}
+
+{% block page_class %}
+    object
+{% endblock %}
+
+{% block body_class %}
+    pattern pattern-bg {{ department.pages.all.0.weaving_css_class }}
+{% endblock %}
+
+{% block breadcrumb_menu %}
+    {{ block.super }}
+    <li class="breadcrumb__item active">{{ object.title }}</li>
+{% endblock %}
+
+{% block page_tags %}
+
+    {% comment %}
+        {% if department %}
+            <div class="tag dashed dashed--yellow">
+               {{ object.title }}
+            </div>
+        {% endif %}
+        <div class="tag tag--category">
+            {% trans 'Project' %}
+        </div>
+    {% endcomment %}
+
+{% endblock %}
+
+{% block page_title %}
+
+    <h1 class="dotted">
+        {% trans "Current Residencies" %}
+    </h1>
+
+{% endblock %}
+
+{% block main %}
+
+<div class="residency-detail__background-main residency-detail__margin-global">
+
+    <div class="row">
+        <div class="col-sm-16 col-md-10 col-md-push-3 tac">
+            <h1 class="section-title section-title--uppercase section-title--main ">{% trans "Current Residencies" %}</h1>
+        </div>
+    </div>
+
+    <div>
+        <!--TODO: Use slider-->
+        <!--{% include "vertigo_starts_eu/projects/inc/projectresidency_slider.html" %}-->
+        <img src="{{ MEDIA_URL }}{% thumbnail object.project.public_data.all.0.image 0 400 padding=true %}" style="width:100%;height:300px;margin-bottom:20px;" />
+
+        <div class="residency-detail__text-banner">
+            {{ object.description }}
+        </div>
+    </div>
+
+    <script>
+        function clickedLink(link,event) {
+
+            event.preventDefault();
+
+            var firstDiv = document.getElementById("first_div");
+            var secondDiv = document.getElementById("second_div");
+            var thirdDiv = document.getElementById("third_div");
+
+            firstDiv.style.display = 'none';
+            secondDiv.style.display = 'none';
+            thirdDiv.style.display = 'none';
+
+            var linkArtist = document.getElementById("artist");
+            var linkArtistResidency = document.getElementById("artist_residency");
+            var linkProject = document.getElementById("project");
+
+            var buttons = document.getElementsByClassName('residency-detail__button');
+
+            for (var i = 0; i < buttons.length; i++)
+            {
+                buttons[i].classList.remove('active');
+            }
+
+            if (link.id === 'artist')
+            {
+                firstDiv.style.display = 'block';
+                linkArtist.classList.add('active');
+            }
+
+            if (link.id === 'artist_residency')
+            {
+                secondDiv.style.display = 'block';
+                linkArtistResidency.classList.add('active');
+            }
+
+            if (link.id === 'project')
+            {
+                thirdDiv.style.display = 'block';
+                linkProject.classList.add('active');
+            }
+        }
+    </script>
+    
+    <div class ="row residency-detail__margin-row">
+            <div class="col-sm-16 col-md-12 residency-detail__center-buttons">
+                <a id='artist' class="button residency-detail__button active" href="#" onclick="clickedLink(this,event);">{% trans "The artist" %}</a>
+                <a id='artist_residency' class="button residency-detail__button" href="#" onclick="clickedLink(this,event);">{% trans "Artist residency" %}</a>
+                <a id='project' class="button residency-detail__button" href="#" onclick="clickedLink(this,event);">{% trans "The project" %}</a>
+            </div>
+    </div>
+    <div class="residency-detail__green-top-line"></div>
+    <div class="residency-detail__block--white residency-detail__margin-white">
+        <div style="background-image: url({{ MEDIA_URL }}{% thumbnail public_data.image 0 400 padding=true %})" />
+    </div>
+
+    <div id="first_div" class="show-detail__hide-container">
+        <div class="residency-detail__disable-overflow">
+            <div class="residency-detail__margin-block">
+                <div>
+                    <img class="residency-detail__image-left" src="{{ MEDIA_URL }}{% thumbnail object.artist.images.all|first 300 300 padding=true %}" />
+                    <div class="residency-detail__title">{{ object.artist.first_name }} {{ object.artist.last_name }}</div>
+                    <br>
+                    {{ object.artist.bio }}
+                    <br><br>
+                    <div class="residency-detail__underline-text"><a href="{{ object.artist_short_url|safe }}">{{ object.artist_short_url }}</a></div>
+                </div>
+            </div>
+        </div>
+        
+        {% block page_link %}
+            {% with object.artist.links.all as links %}
+                {% if links %}
+                    {% include 'core/inc/link.html' %}
+                {% endif %}
+            {% endwith %}
+        {% endblock %}
+
+        {% block page_audio %}
+          {% with object.artist as object %}
+              {{ block.super }}
+          {% endwith %}
+        {% endblock %}
+
+        {% block page_slider %}
+            {% with object.artist as object %}
+                {{ block.super }}
+            {% endwith %}
+        {% endblock %}
+
+        {% block page_video %}
+          {% with object.artist as object %}
+              {{ block.super }}
+          {% endwith %}
+        {% endblock %}
+        
+    </div>
+
+    <div id="second_div" class="residency-detail__hide-container">
+        <div>
+            <div class="residency-detail__margin-block">
+                <div>
+                    <div class="residency-detail__title">{% trans "Title project" %}</div>
+                    <br>
+                    {{ object.project.title }}
+                    <br><br>
+                    <div class="residency-detail__title">{% trans "About this residency" %}</div>
+                    <br>
+                    <img src="{{ MEDIA_URL }}{% thumbnail object.residencies.all.0.producer.images.all|first 300 300 padding=true %}" class="residency-detail__right-image" />
+                    <div class="residency-detail__width-text-second-tab">
+                        <!--TODO: Fix this data-->
+                        From {{ object.residencies.date_from}} to {{ object.residencies.date_to }}<br>
+                        Localization: {{ object.producer.city }}, {{ object.producer.country }}<br><br>
+                        {% for keyword in object.artist.keywords.all %}
+                        {{ keyword }} &nbsp;
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="third_div" class="residency-detail__hide-container">
+        <div class="residency-detail__disable-overflow">
+            <div class="residency-detail__margin-block">
+                <div>
+                    <div class="residency-detail__title">{{ object.project.title }}</div>
+                    <br>
+                    <img src="{{ MEDIA_URL }}{% thumbnail object.project.public_data.all.0.image 0 400 padding=true %}" class="residency-detail__right-image" />
+                    <div class="residency-detail__width-text-second-tab">
+                        {{ object.project.description }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <a class="residency-detail__margin-block residency-detail__button-project residency-detail__margin-bottom-third-tab" href="{{ object.project.website }}">{% trans "Find more" %}</a>
+    </div>
+</div>
+{% endblock %}

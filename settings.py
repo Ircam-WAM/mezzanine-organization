@@ -456,6 +456,7 @@ ADMIN_MENU_ORDER = (
                     )),
     (_('Projects'), ('organization-projects.Project',
                     'organization-projects.ProjectCall',
+                    'organization-projects.ProjectResidency'
                     'organization-projects.ProjectProgram',
                     'organization-projects.ProjectProgramType',
                     'organization-projects.ProjectTopic',
