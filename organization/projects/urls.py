@@ -49,12 +49,6 @@ urlpatterns = [
     url("^calls/(?P<slug>.*)/residencies/submission/$", ProjectResidencyCreateView.as_view(), name='organization-residency-create'),
     url("^calls/(?P<call_slug>.*)/residencies/(?P<slug>.*)/detail/$", ProjectResidencyDetailView.as_view(), name='organization-residency-detail'),
     url("^calls/(?P<call_slug>.*)/residencies/list/$", ProjectResidencyListView.as_view(), name='organization-residency-list'),
-    
-    url("^calls/list/$", ProjectCallListView.as_view(), name='organization-call-list'),
-    url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-call-detail'),
-
-    url("^calls/(?P<slug>.*)/detail/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack1'), #HACK
-    url("^calls/detail/(?P<slug>.*)/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack2'), #HACK 
 
     url("^calls/$", ProjectCallListAsEventsView.as_view(), name='organization-call-list-as-events'),
 
