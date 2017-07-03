@@ -73,13 +73,65 @@
         <div class ="row">
             <div class="col-md-2 page__sidebar"></div>
             <div class="mb2 col-sm-16 col-md-12">
-                <!--TODO: Filter tags-->
-                <a class="button button-residency" href="">Keyword 1</a>
-                <a class="button button-residency" href="">Keyword 2</a>
-                <a class="button button-residency" href="">Keyword 3</a>
-                <a class="button button-residency" href="">Keyword 4</a>
+                {% for keyword in keywords %}
+                    <span class="button button-residency" onclick="addFilter(this, '{{ keyword.id }}')">{{ keyword }}</span>
+                {% endfor %}
             </div>
         </div>
+        
+        <script type="text/javascript">
+            var selectedFilters = []
+            function addFilter(residencyButton, keyword) {
+                if (selectedFilters.length == 0) {
+                    var buttons = document.getElementsByClassName('button-residency');
+                    for (i = 0; i < buttons.length; i++) {
+                        buttons[i].classList.add('button-residency-unselected');
+                    }
+                }
+                residencyButton.classList.remove('button-residency-unselected');
+                residencyButton.classList.add('button-residency-selected');
+                residencyButton.onclick = function() {
+                    removeFilter(residencyButton, keyword);
+                };
+                selectedFilters.push(keyword);
+                filterResidencies();
+            }
+            function removeFilter(residencyButton, keyword) {
+                residencyButton.classList.remove('button-residency-selected');
+                residencyButton.classList.add('button-residency-unselected');
+                residencyButton.onclick = function() {
+                    addFilter(residencyButton, keyword);
+                };
+                var index = selectedFilters.indexOf(keyword);
+                if (index > -1) {
+                    selectedFilters.splice(index, 1);
+                }
+                if (selectedFilters.length == 0) {
+                    var buttons = document.getElementsByClassName('button-residency');
+                    for (i = 0; i < buttons.length; i++) {
+                        buttons[i].classList.remove('button-residency-unselected');
+                    }
+                }
+                filterResidencies();
+            }
+            function filterResidencies() {
+                console.log("Current filters: " + selectedFilters)
+                {% for object in object_list %}
+                    var residency = document.getElementById('{{ object.slug }}');
+                    if (selectedFilters.length == 0) {
+                        $(residency).show();
+                    } else {
+                        $(residency).hide();
+                        {% for keyword in object.keywords.all %}
+                            var index = selectedFilters.indexOf("{{ keyword.id }}");
+                            if (index > -1) {
+                                $(residency).show();
+                            }
+                        {% endfor %}
+                    }
+                {% endfor %}
+            }
+        </script>
 
         <div class="row">
             <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
@@ -87,7 +139,7 @@
                     <div class="container">
                         <div class="row">
                             {% for object in object_list %}
-                                <div class="col-xs-8">
+                                <div class="col-xs-8" id="{{ object.slug }}">
                                     {% with app_label=object|app_label_short classname=object|classname|lower  %}
                                         {% with app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"_card.html" as template %}
                                             {% include template %}
