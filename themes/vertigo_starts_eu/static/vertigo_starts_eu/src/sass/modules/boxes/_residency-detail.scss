@@ -30,13 +30,13 @@ $module: ".residency-detail";
     }
 
     &__background-main {
-        background-color: rgba(39, 55, 71, 1);
+        background-color: $color-black-light;
     }
 
     &__button {
         background: none;
         border: none;
-        color: gray;
+        color: $color-gray;
         text-align: center;
         text-decoration: none;
         display: inline-block;
@@ -50,45 +50,45 @@ $module: ".residency-detail";
 
         &:hover {
             background: none;
-            color: rgba(81, 226, 195, 1);
+            color: $color-main;
             font-size: 26px;
         }
 
         &.active {
             cursor: normal;
             background: none;
-            color: rgba(81, 226, 195, 1);
+            color: $color-main;
             font-size: 26px;
         }
 
         &-selected {
             background: none;
-            color: rgba(81, 226, 195, 1);
+            color: $color-main;
             font-size: 26px;
 
             &:hover {
                 background: none;
-                color: rgba(81, 226, 195, 1);
+                color: $color-main;
                 font-size: 26px;
             }
         }
 
         &-unselected {
             background: none;
-            color: gray;
+            color: $color-gray;
             font-size: 22px;
 
             &:hover {
                 background: none;
-                color: rgba(81, 226, 195, 1);
+                color: $color-main;
                 font-size: 22px;
             }
         }
     }
 
     &__block--white {
-	    background-color: white;
-	    color: #000F24;
+	    background-color: $color-white;
+	    color: $color-black;
 	    padding-top: 48px;
 	    padding-top: 3rem;
 	    margin: 48px 0px 0px 0px;
@@ -163,9 +163,9 @@ $module: ".residency-detail";
 	    line-height: 1.5em;
         text-transform: uppercase;
         text-align: center;
-        color: black;
+        color: $color-black;
         text-decoration: none;
-        border-bottom: 2px solid rgba(81, 226, 195, 1);
+        border-bottom: 2px solid $color-main;
         display: table;
         margin-right: auto;
         margin-left: auto;
@@ -173,7 +173,7 @@ $module: ".residency-detail";
     }
 
     &__green-top-line {
-        border-top: 2px solid rgba(81, 226, 195, 1);
+        border-top: 2px solid $color-main;
     }
 
     &__video-style {
@@ -206,7 +206,7 @@ $module: ".residency-detail";
     }
 
     &__button-project {
-        background: rgba(81, 226, 195, 1);
+        background: $color-main;
         color: $color-black;
         border-radius: 7px;
         outline: 0;
@@ -223,7 +223,7 @@ $module: ".residency-detail";
         text-align:center;
         list-style: none;
         font-size:18px;
-        border: 1px solid black;
+        border: 1px solid $color-black;
         padding-top: 5px;
         padding-bottom: 5px;
         font-weight: 650;
@@ -250,5 +250,21 @@ $module: ".residency-detail";
 
     &__social-link {
         margin: 0px 5px 0px 0px;
+    }
+    
+    &__map {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        float: right;
+        border-style: solid;
+        border-color: $color-main;
+        border-width: 1px;
+        margin: 10px 0px 50px 0px;
+
+        &::after {
+            clear: both;
+        }
+
     }
 }

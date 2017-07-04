@@ -2,7 +2,7 @@
 {% load mezzanine_tags staticfiles keyword_tags i18n organization_tags pages_tags %}
 
 {% block meta_title %}
-    {% trans "Current Residencies" %}
+    {{ object.project.title }} X {{ object.artist.first_name }} {{ object.artist.last_name }}
 {% endblock %}
 
 {% block meta_keywords %}
@@ -25,7 +25,7 @@
 
 {% block breadcrumb_menu %}
     {{ block.super }}
-    <li class="breadcrumb__item active">{{ object.title }}</li>
+    <li class="breadcrumb__item active">{{ object.project.title }} X {{ object.artist.first_name }} {{ object.artist.last_name }}</li>
 {% endblock %}
 
 {% block page_tags %}
@@ -45,26 +45,16 @@
 
 {% block page_title %}
 
-    <h1 class="dotted">
-        {% trans "Current Residencies" %}
-    </h1>
-
 {% endblock %}
 
 {% block main %}
 
 <div class="residency-detail__background-main residency-detail__margin-global">
 
-    <div class="row">
-        <div class="col-sm-16 col-md-10 col-md-push-3 tac">
-            <h1 class="section-title section-title--uppercase section-title--main ">{% trans "Current Residencies" %}</h1>
-        </div>
-    </div>
-
     <div>
         <!--TODO: Use slider-->
         <!--{% include "vertigo_starts_eu/projects/inc/projectresidency_slider.html" %}-->
-        <img src="{{ MEDIA_URL }}{% thumbnail object.project.public_data.all.0.image 0 400 padding=true %}" style="width:100%;height:300px;margin-bottom:20px;" />
+        <img src="{{ MEDIA_URL }}{% thumbnail object.project.public_data.all.0.image 0 400 padding=true %}" style="width:100%;height:400px;margin-bottom:20px;" />
 
         <div class="residency-detail__text-banner">
             {{ object.description }}
@@ -207,19 +197,52 @@
                 <div>
                     <div class="residency-detail__title">{{ object.project.title }}</div>
                     <br>
-                    
-                    <br><br>
+                    <!--TODO: Here comes some text -->
+                    <p></p>
                     <div class="residency-detail__title">{% trans "About this residency" %}</div>
                     <br>
-                    <!--TODO: Here comes the map -->
-                    <img src="{{ MEDIA_URL }}{% thumbnail object.residencies.all.0.producer.images.all|first 300 300 padding=true %}" class="residency-detail__right-image" />
-                    <div class="residency-detail__width-text-second-tab">
-                        From {{ object.date_from}} to {{ object.date_to }}<br><br>
-                        Producer: {{ object.producer }}<br>
-                        Localization: {{ object.producer.city }}, {{ object.producer.country }}<br><br>
-                        {% for keyword in object.artist.keywords.all %}
-                            {{ keyword }} &nbsp;
-                        {% endfor %}
+                    <div>
+                        <div class="residency-detail__map" id="network-map"></div>
+                        <div class="container hide">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-10 col-md-push-1">
+                                    <div class="slider-network">
+                                        <ul class="slider-network__slider" data-slider-network>
+                                            <li class="slider-network__slide" data-marker-url="{{object.producer.url}}" data-marker-color="{{ object.producer.type.css_class }}" {% with object.producer.images.all|get_type:'logo' as images %}{% if images %}data-marker-image="{{ MEDIA_URL }}{{images.first.file}}"{% endif %}{% endwith %} data-marker-idx="{{forloop.counter0}}" data-marker-lat="{{ object.producer.lat }}" data-marker-lng="{{ object.producer.lon }}">
+                                                <div class="slider-network__slide-image"
+                                                    {% with object.producer.images.all|get_type:'logo' as images %}
+                                                        {% if images %}
+                                                            style="background-image: url('{{ MEDIA_URL }}{{images.first.file}}');"
+                                                        {% endif %}
+                                                    {% endwith %}
+                                                >
+                                                </div>
+                                                <div class="slider-network__slide-title" data-marker-title>
+                                                    {{ object.producer.name }}
+                                                </div>
+                                                <div class="slider-network__slide-subtitle" data-marker-subtitle>
+                                                    {{ object.producer.city }}, {{ object.producer.country.name }}
+                                                </div>
+                                                <div class="">
+                                                    {{ object.producer.type }}, {{ object.producer.type.css_class }}
+                                                </div>
+                                                <div class="slider-network__slide-description" data-marker-description>
+                                                    {{ object.producer.description }}
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="residency-detail__width-text-second-tab">
+                            From {{ object.date_from}} to {{ object.date_to }}<br><br>
+                            Producer: {{ object.producer }}<br>
+                            Localization: {{ object.producer.city }}, {{ object.producer.country }}<br><br>
+                            {% for keyword in object.keywords.all %}
+                                {{ keyword }} &nbsp;
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
