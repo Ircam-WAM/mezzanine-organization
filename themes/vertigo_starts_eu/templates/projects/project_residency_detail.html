@@ -133,21 +133,53 @@
                 <div>
                     <img class="residency-detail__image-left" src="{{ MEDIA_URL }}{% thumbnail object.artist.images.all|first 300 300 padding=true %}" />
                     <div class="residency-detail__title">{{ object.artist.first_name }} {{ object.artist.last_name }}</div>
-                    <br>
-                    {{ object.artist.bio }}
-                    <br><br>
-                    <div class="residency-detail__underline-text"><a href="{{ object.artist_short_url|safe }}">{{ object.artist_short_url }}</a></div>
+                    <div class="residency-detail__text-detail">
+                        <p>{{ object.artist.bio|safe }}</p>
+                        {% with object.artist.links.all as links %}
+                            {% if links %}
+                                {% with links|get_type_link:"link" as webpage_links %}
+                                    {% if webpage_links %}
+                                        <div class="residency-detail__underline-text">
+                                            <a href="{{ webpage_links|first|safe }}">{{ webpage_links|first }}</a>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                                    <div class="residency-detail__social-links">
+                                        {% with links|get_type_link:"facebook" as facebook_links %}
+                                            {% if facebook_links %}
+                                                {% with path="uploads/logos/social/facebook_logo.png" %}
+                                                    <a class="residency-detail__social-link" href="{{ facebook_links|first|safe }}"><img src="{{ MEDIA_URL }}{% thumbnail path 32 32 padding=true %}" alt="Facebook"></a>
+                                                {% endwith %}
+                                            {% endif %}
+                                        {% endwith %}
+                                        {% with links|get_type_link:"twitter" as twitter_links %}
+                                            {% if twitter_links %}
+                                                {% with path="uploads/logos/social/twitter_logo.png" %}
+                                                    <a class="residency-detail__social-link" href="{{ twitter_links|first|safe }}"><img src="{{ MEDIA_URL }}{% thumbnail path 32 32 padding=true %}" alt="Twitter"></a>
+                                                {% endwith %}
+                                            {% endif %}
+                                        {% endwith %}
+                                        {% with links|get_type_link:"youtube" as youtube_links %}
+                                            {% if youtube_links %}
+                                                {% with path="uploads/logos/social/youtube_logo.png" %}
+                                                    <a class="residency-detail__social-link" href="{{ youtube_links|first|safe }}"><img src="{{ MEDIA_URL }}{% thumbnail path 32 32 padding=true %}" alt="Youtube"></a>
+                                                {% endwith %}
+                                            {% endif %}
+                                        {% endwith %}
+                                        {% with links|get_type_link:"instagram" as instagram_links %}
+                                            {% if instagram_links %}
+                                                {% with path="uploads/logos/social/instagram_logo.png" %}
+                                                    <a class="residency-detail__social-link" href="{{ instagram_links|first|safe }}"><img src="{{ MEDIA_URL }}{% thumbnail path 32 32 padding=true %}" alt="Instagram"></a>
+                                                {% endwith %}
+                                            {% endif %}
+                                        {% endwith %}
+                                    </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
                 </div>
             </div>
         </div>
-        
-        {% block page_link %}
-            {% with object.artist.links.all as links %}
-                {% if links %}
-                    {% include 'core/inc/link.html' %}
-                {% endif %}
-            {% endwith %}
-        {% endblock %}
 
         {% block page_audio %}
           {% with object.artist as object %}
@@ -173,19 +205,20 @@
         <div>
             <div class="residency-detail__margin-block">
                 <div>
-                    <div class="residency-detail__title">{% trans "Title project" %}</div>
+                    <div class="residency-detail__title">{{ object.project.title }}</div>
                     <br>
-                    {{ object.project.title }}
+                    
                     <br><br>
                     <div class="residency-detail__title">{% trans "About this residency" %}</div>
                     <br>
+                    <!--TODO: Here comes the map -->
                     <img src="{{ MEDIA_URL }}{% thumbnail object.residencies.all.0.producer.images.all|first 300 300 padding=true %}" class="residency-detail__right-image" />
                     <div class="residency-detail__width-text-second-tab">
-                        <!--TODO: Fix this data-->
-                        From {{ object.residencies.date_from}} to {{ object.residencies.date_to }}<br>
+                        From {{ object.date_from}} to {{ object.date_to }}<br><br>
+                        Producer: {{ object.producer }}<br>
                         Localization: {{ object.producer.city }}, {{ object.producer.country }}<br><br>
                         {% for keyword in object.artist.keywords.all %}
-                        {{ keyword }} &nbsp;
+                            {{ keyword }} &nbsp;
                         {% endfor %}
                     </div>
                 </div>
@@ -199,15 +232,21 @@
                 <div>
                     <div class="residency-detail__title">{{ object.project.title }}</div>
                     <br>
-                    <img src="{{ MEDIA_URL }}{% thumbnail object.project.public_data.all.0.image 0 400 padding=true %}" class="residency-detail__right-image" />
-                    <div class="residency-detail__width-text-second-tab">
-                        {{ object.project.description }}
-                    </div>
+                    {% with object.project.public_data.all|first as project_public_data %}
+                        {% if project_public_data.image_is_panoramic %}
+                            <img src="{{ MEDIA_URL }}{% thumbnail project_public_data.image 300 0 padding=true %}" class="residency-detail__right-image" />
+                        {% else %}
+                            <img src="{{ MEDIA_URL }}{% thumbnail project_public_data.image 0 300 padding=true %}" class="residency-detail__right-image" />
+                        {% endif %}
+                        <div class="residency-detail__text-detail">
+                            <p>{{ project_public_data.challenges_description }}</p>
+                        </div>
+                    {% endwith %}
                 </div>
 
             </div>
         </div>
-        <a class="residency-detail__margin-block residency-detail__button-project residency-detail__margin-bottom-third-tab" href="{{ object.project.website }}">{% trans "Find more" %}</a>
+        <a class="residency-detail__margin-block residency-detail__button-project residency-detail__margin-bottom-third-tab" href="{{ object.project.get_absolute_url }}">{% trans "Find more" %}</a>
     </div>
 </div>
 {% endblock %}

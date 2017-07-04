@@ -23,7 +23,6 @@ $module: ".residency-detail";
 #{$module} {
 
     &__margin-global {
-
         margin-top: 0%;
         margin-right: 15%;
         margin-bottom: 0%;
@@ -31,12 +30,10 @@ $module: ".residency-detail";
     }
 
     &__background-main {
-
         background-color: rgba(39, 55, 71, 1);
     }
 
     &__button {
-
         background: none;
         border: none;
         color: gray;
@@ -52,7 +49,6 @@ $module: ".residency-detail";
         margin-bottom: 0px;
 
         &:hover {
-
             background: none;
             color: rgba(81, 226, 195, 1);
             font-size: 26px;
@@ -66,7 +62,6 @@ $module: ".residency-detail";
         }
 
         &-selected {
-
             background: none;
             color: rgba(81, 226, 195, 1);
             font-size: 26px;
@@ -79,7 +74,6 @@ $module: ".residency-detail";
         }
 
         &-unselected {
-
             background: none;
             color: gray;
             font-size: 22px;
@@ -93,7 +87,6 @@ $module: ".residency-detail";
     }
 
     &__block--white {
-
 	    background-color: white;
 	    color: #000F24;
 	    padding-top: 48px;
@@ -105,17 +98,14 @@ $module: ".residency-detail";
     }
 
     &__margin-row {
-
         margin-bottom: 10px;
     }
 
     &__margin-white {
-
         margin:3px 0px 0px 0px;
     }
 
     &__center-buttons {
-
 	    width: auto;
 	    margin: 0 auto;
 	    display: table;
@@ -124,36 +114,30 @@ $module: ".residency-detail";
     }
 
     &__hide-container {
-
         display: none;
     }
 
     &__show-container {
-
         display: block;
     }
 
     &__margin-block {
-
         margin-right: 10%;
         margin-left: 10%;
     }
 
     &__image-left {
-
         float:left;
         margin:0 20px 20px 0;
     }
 
     &__container {
-
         margin-left: 320px;
         margin-right: 200px;
         position: relative;
     }
 
     &__title {
-
         text-transform: uppercase;
         text-decoration: none;
         font-size: 20px;
@@ -161,19 +145,16 @@ $module: ".residency-detail";
     }
 
     &__text {
-
         text-decoration: none;
         font-size: 20px;
         font-family: "Oswald", sans-serif;
     }
 
     &__underline-text {
-
         text-decoration: underline;
     }
 
     &__underline-text-green {
-
 	    font-family: "Oswald", sans-serif;
 	    font-size: 1.2rem;
 	    font-weight: 400;
@@ -192,12 +173,10 @@ $module: ".residency-detail";
     }
 
     &__green-top-line {
-
         border-top: 2px solid rgba(81, 226, 195, 1);
     }
 
     &__video-style {
-
         height: 390px;
         width: 640px;
         display:table;
@@ -207,18 +186,26 @@ $module: ".residency-detail";
     }
 
     &__right-image {
-
         float:right;
         margin-bottom: 20px;
     }
 
     &__width-text-second-tab {
+        width: 70%;
+    }
 
-        width:70%;
+    &__text-detail {
+        overflow: hidden;
+        white-space: pre-wrap;
+        padding: 0px 25px 25px 0px;
+        font-size: 0.9 rem;
+        
+        p a {
+            color: $color-black !important;
+        }
     }
 
     &__button-project {
-
         background: rgba(81, 226, 195, 1);
         color: $color-black;
         border-radius: 7px;
@@ -243,20 +230,25 @@ $module: ".residency-detail";
     }
 
     &__disable-overflow {
-
         overflow: hidden;
     }
 
     &__margin-bottom-third-tab {
-
         margin-bottom: 5%;
         margin-left: 10%;
     }
 
     &__text-banner {
-
         margin-left: 10%;
         margin-right: 10%;
         margin-bottom: 5%;
+    }
+
+    &__social-links {
+        margin: 25px 0px 25px 0px;
+    }
+
+    &__social-link {
+        margin: 0px 5px 0px 0px;
     }
 }
