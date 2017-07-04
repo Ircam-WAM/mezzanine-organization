@@ -456,12 +456,15 @@ ADMIN_MENU_ORDER = (
                     )),
     (_('Projects'), ('organization-projects.Project',
                     'organization-projects.ProjectCall',
-                    'organization-projects.ProjectResidency'
+                    'organization-projects.ProjectResidency',
                     'organization-projects.ProjectProgram',
                     'organization-projects.ProjectProgramType',
                     'organization-projects.ProjectTopic',
                     'organization-projects.ProjectProgramType',
                     'organization-projects.ProjectDemo',
+                    'organization-projects.ProjectPublicData',
+                    'organization-projects.ProjectPrivateData',
+                    'organization-projects.ProjectContact',
                     'organization-projects.Repository',
                     'organization-projects.RepositorySystem',
                     'organization-projects.ProjectWorkPackage'
