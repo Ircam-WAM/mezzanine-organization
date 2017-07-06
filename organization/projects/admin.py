@@ -140,11 +140,18 @@ class DynamicContentProjectInline(TabularDynamicInlineAdmin):
         )
 
 
+class ProjectResidencyUserImageInline(StackedDynamicInlineAdmin):
+
+    model = ProjectResidencyUserImage
+
+
 class ProjectResidencyAdmin(admin.ModelAdmin):
 
     model = ProjectResidency
     list_display = ["title", "project", "artist", "producer", "validated",]
     list_filter = ["validated"]
+    inlines = [ ProjectResidencyUserImageInline,
+                ]
 
 
 class ProjectAdminDisplayable(DisplayableAdmin):

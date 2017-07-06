@@ -107,17 +107,17 @@
     
     <div class ="row residency-detail__margin-row">
             <div class="col-sm-16 col-md-12 residency-detail__center-buttons">
-                <a id='artist' class="button residency-detail__button active" href="#" onclick="clickedLink(this,event);">{% trans "The artist" %}</a>
-                <a id='artist_residency' class="button residency-detail__button" href="#" onclick="clickedLink(this,event);">{% trans "Artist residency" %}</a>
+                <a id='artist' class="button residency-detail__button" href="#" onclick="clickedLink(this,event);">{% trans "The artist" %}</a>
+                <a id='artist_residency' class="button residency-detail__button active" href="#" onclick="clickedLink(this,event);">{% trans "Artist residency" %}</a>
                 <a id='project' class="button residency-detail__button" href="#" onclick="clickedLink(this,event);">{% trans "The project" %}</a>
             </div>
     </div>
     <div class="residency-detail__green-top-line"></div>
     <div class="residency-detail__block--white residency-detail__margin-white">
-        <div style="background-image: url({{ MEDIA_URL }}{% thumbnail public_data.image 0 400 padding=true %})" />
+        <div style="background-color: #FFFFFF" />
     </div>
 
-    <div id="first_div" class="show-detail__hide-container">
+    <div id="first_div" class="residency-detail__hide-container">
         <div class="residency-detail__disable-overflow">
             <div class="residency-detail__margin-block">
                 <div>
@@ -136,32 +136,32 @@
                                 {% endwith %}
                                     <div class="residency-detail__social-links">
                                         {% with links|get_type_link:"facebook" as facebook_links %}
-                                            {% if facebook_links %}
-                                                {% with path="uploads/logos/social/facebook_logo.png" %}
-                                                    <a class="residency-detail__social-link" href="{{ facebook_links|first|safe }}"><img src="{{ MEDIA_URL }}{% thumbnail path 32 32 padding=true %}" alt="Facebook"></a>
-                                                {% endwith %}
-                                            {% endif %}
+                                        {% if facebook_links %}
+                                            <a class="residency-detail__social-link" href="{{ facebook_links|first|safe }}">
+                                                <img src="{{ STATIC_URL }}vertigo_starts_eu/src/assets/img/vertigo/logos/facebook-logo-residencies.png" width="32" height="32" alt="Facebook">
+                                            </a>
+                                        {% endif %}
                                         {% endwith %}
                                         {% with links|get_type_link:"twitter" as twitter_links %}
                                             {% if twitter_links %}
-                                                {% with path="uploads/logos/social/twitter_logo.png" %}
-                                                    <a class="residency-detail__social-link" href="{{ twitter_links|first|safe }}"><img src="{{ MEDIA_URL }}{% thumbnail path 32 32 padding=true %}" alt="Twitter"></a>
-                                                {% endwith %}
+                                                <a class="residency-detail__social-link" href="{{ twitter_links|first|safe }}">
+                                                    <img src="{{ STATIC_URL }}vertigo_starts_eu/src/assets/img/vertigo/logos/twitter-logo-residencies.png" width="32" height="32" alt="Twitter">
+                                                </a>
                                             {% endif %}
                                         {% endwith %}
                                         {% with links|get_type_link:"youtube" as youtube_links %}
-                                            {% if youtube_links %}
-                                                {% with path="uploads/logos/social/youtube_logo.png" %}
-                                                    <a class="residency-detail__social-link" href="{{ youtube_links|first|safe }}"><img src="{{ MEDIA_URL }}{% thumbnail path 32 32 padding=true %}" alt="Youtube"></a>
-                                                {% endwith %}
-                                            {% endif %}
+                                        {% if youtube_links %}
+                                            <a class="residency-detail__social-link" href="{{ youtube_links|first|safe }}">
+                                                <img src="{{ STATIC_URL }}vertigo_starts_eu/src/assets/img/vertigo/logos/youtube-logo-residencies.png" width="32" height="32" alt="Youtube">
+                                            </a>
+                                        {% endif %}
                                         {% endwith %}
                                         {% with links|get_type_link:"instagram" as instagram_links %}
-                                            {% if instagram_links %}
-                                                {% with path="uploads/logos/social/instagram_logo.png" %}
-                                                    <a class="residency-detail__social-link" href="{{ instagram_links|first|safe }}"><img src="{{ MEDIA_URL }}{% thumbnail path 32 32 padding=true %}" alt="Instagram"></a>
-                                                {% endwith %}
-                                            {% endif %}
+                                        {% if instagram_links %}
+                                            <a class="residency-detail__social-link" href="{{ instagram_links|first|safe }}">
+                                                <img src="{{ STATIC_URL }}vertigo_starts_eu/src/assets/img/vertigo/logos/instagram-logo-residencies.png" width="32" height="32" alt="Instagram">
+                                            </a>
+                                        {% endif %}
                                         {% endwith %}
                                     </div>
                             {% endif %}
@@ -191,43 +191,31 @@
         
     </div>
 
-    <div id="second_div" class="residency-detail__hide-container">
+    <div id="second_div" class="show-detail__hide-container">
         <div>
             <div class="residency-detail__margin-block">
                 <div>
-                    <div class="residency-detail__title">{{ object.project.title }}</div>
+                    <div class="residency-detail__title">{{ object.title }}</div>
                     <br>
-                    <!--TODO: Here comes some text -->
-                    <p></p>
+                    <p>{{ object.description }}</p>
                     <div class="residency-detail__title">{% trans "About this residency" %}</div>
                     <br>
                     <div>
-                        <div class="residency-detail__map" id="network-map"></div>
+                        <div class="residency-detail__map" id="network-map-residencies"></div>
                         <div class="container hide">
                             <div class="row">
                                 <div class="col-xs-12 col-md-10 col-md-push-1">
                                     <div class="slider-network">
                                         <ul class="slider-network__slider" data-slider-network>
-                                            <li class="slider-network__slide" data-marker-url="{{object.producer.url}}" data-marker-color="{{ object.producer.type.css_class }}" {% with object.producer.images.all|get_type:'logo' as images %}{% if images %}data-marker-image="{{ MEDIA_URL }}{{images.first.file}}"{% endif %}{% endwith %} data-marker-idx="{{forloop.counter0}}" data-marker-lat="{{ object.producer.lat }}" data-marker-lng="{{ object.producer.lon }}">
-                                                <div class="slider-network__slide-image"
-                                                    {% with object.producer.images.all|get_type:'logo' as images %}
-                                                        {% if images %}
-                                                            style="background-image: url('{{ MEDIA_URL }}{{images.first.file}}');"
-                                                        {% endif %}
-                                                    {% endwith %}
-                                                >
+                                            <li class="slider-network__slide" data-marker-residencies-color="blue" data-marker-residencies-idx="{{forloop.counter0}}" data-marker-residencies-lat="{{ object.lat }}" data-marker-residencies-lng="{{ object.lon }}">
+                                                <div class="slider-network__slide-title" data-marker-residencies-title>
+                                                    {{ object.title }}
                                                 </div>
-                                                <div class="slider-network__slide-title" data-marker-title>
-                                                    {{ object.producer.name }}
+                                                <div class="slider-network__slide-subtitle" data-marker-residencies-subtitle>
+                                                    {{ object.city }}, {{ object.country.name }}
                                                 </div>
-                                                <div class="slider-network__slide-subtitle" data-marker-subtitle>
-                                                    {{ object.producer.city }}, {{ object.producer.country.name }}
-                                                </div>
-                                                <div class="">
-                                                    {{ object.producer.type }}, {{ object.producer.type.css_class }}
-                                                </div>
-                                                <div class="slider-network__slide-description" data-marker-description>
-                                                    {{ object.producer.description }}
+                                                <div class="slider-network__slide-description" data-marker-residencies-description>
+                                                    {{ object.description }}
                                                 </div>
                                             </li>
                                         </ul>
@@ -238,7 +226,7 @@
                         <div class="residency-detail__width-text-second-tab">
                             From {{ object.date_from}} to {{ object.date_to }}<br><br>
                             Producer: {{ object.producer }}<br>
-                            Localization: {{ object.producer.city }}, {{ object.producer.country }}<br><br>
+                            Localization: {{ object.city }}, {{ object.country }}<br><br>
                             {% for keyword in object.keywords.all %}
                                 {{ keyword }} &nbsp;
                             {% endfor %}
@@ -271,5 +259,6 @@
         </div>
         <a class="residency-detail__margin-block residency-detail__button-project residency-detail__margin-bottom-third-tab" href="{{ object.project.get_absolute_url }}">{% trans "Find more" %}</a>
     </div>
+
 </div>
 {% endblock %}
