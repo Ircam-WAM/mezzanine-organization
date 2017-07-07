@@ -65,12 +65,12 @@
             <div class="residency-detail__header-next">
                 <a href="{{ next_residency.get_absolute_url }}"></a>
             </div>
-            <div class="residency-detail__header-image">
-                {% with object.project.public_data.all|first as public_data %}
-                    {% if public_data and public_data.image %}
-                        <img src="{{ MEDIA_URL }}{% thumbnail public_data.image 0 400 padding=true %}" />
-                    {% endif %}
-                {% endwith %}
+            <div class="residency-detail__header-image" style="background-image: linear-gradient(rgba(0, 64, 64, 0.2), rgba(0, 64, 64, 0.2)), url({{ MEDIA_URL }}{% thumbnail object.project.public_data.all.0.image 0 400 padding=true %});">
+                <span>
+                    {{ object.project.title }} <br><br><br>
+                    X <br><br><br>
+                    {{ object.artist.first_name }} {{ object.artist.last_name }}
+                </span>
             </div>
         </div>
 

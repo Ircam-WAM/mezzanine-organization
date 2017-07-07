@@ -5125,10 +5125,22 @@ html, body {
 .residency-detail__header-image {
   width: 70%;
   margin: 0 auto;
-}
-.residency-detail__header-image img {
   display: block;
+  height: 400px;
+  position: relative;
+  background-image: url("");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.residency-detail__header-image span {
+  position: absolute;
   margin: 0 auto;
+  width: 100%;
+  top: 125px;
+  color: #50E3C2;
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
 }
 .residency-detail__header-text {
   margin-left: 15%;
