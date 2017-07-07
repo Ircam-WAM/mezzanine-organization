@@ -22,6 +22,75 @@ $module: ".residency-detail";
 
 #{$module} {
 
+    &__header {
+        width: 100%;
+
+        &::after {
+            clear: both;
+        }
+    }
+
+    &__header-previous {
+        width: 15%;
+        float: left;
+
+        & a{
+            margin-top: 150px;
+            margin-left: 50px;
+            display: inline-block;
+            height: 100px;
+            width: 100px;
+            border: 3px solid $color-main;
+            border-radius: 3px;
+            border-top: 0;
+            border-right: 0;
+            -webkit-transform: rotateZ(45deg);
+            transform: rotateZ(45deg);
+        }
+
+    }
+
+    &__header-next {
+        width: 15%;
+        float: right;
+
+        & a{
+            margin-top: 150px;
+            margin-left: -moz-calc(100% - 150px);
+            margin-left: -webkit-calc(100% - 150px);
+            margin-left: -o-calc(100% - 150px);
+            margin-left: calc(100% - 150px);
+            display: inline-block;
+            height: 100px;
+            width: 100px;
+            border: 3px solid $color-main;
+            border-radius: 3px;
+            border-top: 0;
+            border-left: 0;
+            -webkit-transform: rotateZ(-45deg);
+            transform: rotateZ(-45deg);
+        }
+
+    }
+
+    &__header-image {
+        width: 70%;
+        margin: 0 auto;
+
+        & img {
+            display: block;
+            margin: 0 auto;
+        }
+    }
+
+    &__header-text {
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-bottom: 5%;
+        margin-top: 2%;
+        color: $color-white;
+    }
+
     &__margin-global {
         margin-top: 0%;
         margin-right: 15%;
@@ -236,12 +305,6 @@ $module: ".residency-detail";
     &__margin-bottom-third-tab {
         margin-bottom: 5%;
         margin-left: 10%;
-    }
-
-    &__text-banner {
-        margin-left: 10%;
-        margin-right: 10%;
-        margin-bottom: 5%;
     }
 
     &__social-links {

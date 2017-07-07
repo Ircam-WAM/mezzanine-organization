@@ -242,6 +242,22 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
 
     model = ProjectResidency
     template_name='projects/project_residency_detail.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(ProjectResidencyDetailView, self).get_context_data(**kwargs)
+        # Add the previous and next residencies to the context
+        call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
+        projects = Project.objects.filter(call=call)
+        residencies = ProjectResidency.objects.filter(project__in=projects).filter(validated=True).select_related().order_by("id")
+        this_residency = residencies.get(slug=self.kwargs["slug"])
+        index = 0
+        for i, residency in enumerate(residencies):
+            if residency == this_residency:
+                index = i
+                break
+        context["previous_residency"] = residencies[(index - 1) % len(residencies)]
+        context["next_residency"] = residencies[(index + 1) % len(residencies)]
+        return context
 
 
 class ProjectResidencyListView(ListView):
@@ -265,7 +281,7 @@ class ProjectResidencyListView(ListView):
     def get_queryset(self):
         call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
         projects = Project.objects.filter(call=call)
-        qs = ProjectResidency.objects.filter(project__in=projects).filter(validated=True).select_related()
+        qs = ProjectResidency.objects.filter(project__in=projects).filter(validated=True).select_related().order_by("id")
         return qs
 
 

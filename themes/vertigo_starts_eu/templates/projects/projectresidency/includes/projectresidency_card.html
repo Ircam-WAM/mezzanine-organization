@@ -1,6 +1,6 @@
 {% load mezzanine_tags staticfiles keyword_tags i18n organization_tags pages_tags %}
 
-<a class="residency-box" href="{{ object.get_absolute_url }}" {% block target %}{% endblock %} title="{{ object.project.title }} X {{ object.artist.first_name }} {{ object.artist.last_name }}">
+<a class="residency-box" href="{{ object.get_absolute_url }}" title="{{ object.project.title }} X {{ object.artist.first_name }} {{ object.artist.last_name }}">
 
     {% with object.project.public_data.all|first as public_data %}
         {% comment %}
@@ -65,4 +65,5 @@
         </div>
     </div>
     {% endcomment %}
+
 </a>
