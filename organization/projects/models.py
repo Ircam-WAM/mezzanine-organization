@@ -410,7 +410,6 @@ class ProjectResidency(Displayable, Period, Address, RichText):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
     artist = models.ForeignKey(Person, verbose_name=_('artist'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
-    producer = models.ForeignKey('organization-network.Organization', verbose_name=_('producer'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
     validated = models.BooleanField(default=False)
     producer_commitment = models.TextField(_('producer commitment'), help_text="")
     mappable_location = models.CharField(max_length=128, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
@@ -455,9 +454,20 @@ class ProjectResidency(Displayable, Period, Address, RichText):
             self.lon = lon
 
 
+class ProjectResidencyProducer(models.Model):
+
+    residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='producers', blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(Organization, verbose_name=_('producer'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
+
+
 class ProjectResidencyFile(File):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('project residency file'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectResidencyImage(Image):
+
+    residency = models.ForeignKey(ProjectResidency, verbose_name=_('project residency image'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectResidencyUserImage(UserImage):

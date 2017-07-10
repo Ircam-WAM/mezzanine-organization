@@ -140,6 +140,16 @@ class DynamicContentProjectInline(TabularDynamicInlineAdmin):
         )
 
 
+class ProjectResidencyProducerInline(TabularDynamicInlineAdmin):
+
+    model = ProjectResidencyProducer
+
+
+class ProjectResidencyImageInline(StackedDynamicInlineAdmin):
+
+    model = ProjectResidencyImage
+
+
 class ProjectResidencyUserImageInline(StackedDynamicInlineAdmin):
 
     model = ProjectResidencyUserImage
@@ -148,10 +158,23 @@ class ProjectResidencyUserImageInline(StackedDynamicInlineAdmin):
 class ProjectResidencyAdmin(admin.ModelAdmin):
 
     model = ProjectResidency
-    list_display = ["title", "project", "artist", "producer", "validated",]
+    list_display = ["title", "project", "artist", "get_producers", "validated",]
     list_filter = ["validated"]
-    inlines = [ ProjectResidencyUserImageInline,
+    inlines = [ ProjectResidencyProducerInline,
+                ProjectResidencyImageInline,
+                ProjectResidencyUserImageInline,
                 ]
+
+    def get_producers(self, obj):
+        producers = ""
+        if obj.producers:
+            names = []
+            for producer in obj.producers.all():
+                names.append(producer.organization.name)
+            producers = ", ".join(names)
+        return producers
+    
+    get_producers.short_description = "producers"
 
 
 class ProjectAdminDisplayable(DisplayableAdmin):

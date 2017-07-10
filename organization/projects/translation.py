@@ -48,6 +48,18 @@ class ProjectUserImageTranslationOptions(TranslationOptions):
     pass
 
 
+@register(ProjectResidencyProducer)
+class ProjectResidencProducerTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(ProjectResidencyImage)
+class ProjectResidencImageTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(ProjectResidencyUserImage)
 class ProjectResidencUserImageTranslationOptions(TranslationOptions):
 
