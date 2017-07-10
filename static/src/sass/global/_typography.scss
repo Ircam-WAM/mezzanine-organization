@@ -72,6 +72,11 @@ h3 {
     @include margin-top(1);
 }
 
+.page__content {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
 .page__content ul, .page__block ul {
 	font-weight: weight(light);
 	@include line-height(1.25);
