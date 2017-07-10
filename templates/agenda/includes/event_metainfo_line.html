@@ -16,7 +16,7 @@
 
     {% if event.prices.all and not is_archive and not event.is_full %}
         <p>
-            {% if event.trainings.all|length %}
+            {% if event.trainings.all|length and not event.external_id %}
                 {% with event.links.all as links %}
                     {% if links %}
                         <a class="button mt1" href="{{ links|get_type_link:'link'|first }}" class="event__meta__btn">
