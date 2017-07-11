@@ -151,7 +151,7 @@ class TimesheetXLS(object):
     def __init__(self, timesheets, year=''):
         self.timesheets = timesheets.order_by('activity__person', 'project', 'year', 'month')
         self.book = Workbook()
-        self.year = year
+        self.year = int(year)
         font_header = Font()
         font_header.bold = True
 
@@ -210,40 +210,46 @@ class TimesheetXLS(object):
 
     def format(self):
         self.t_dict = OrderedDict()
+
         for timesheet in self.timesheets:
+            worked_hours_by_month = {}
             person_slug = timesheet.activity.person.slug
+            date_from = datetime.date(timesheet.year, 1, 1)
+            date_to = datetime.date(timesheet.year, 12, 31)
             # if new person
             if not person_slug in self.t_dict:
                 self.t_dict[person_slug] = {}
-                # caculate for each person leaved days in year
-                date_from = datetime.date(timesheet.year, 1, 1)
-                date_to = datetime.date(timesheet.year, 12, 31)
-                nb_half_days = get_nb_half_days_by_period_per_month(date_from, date_to)
                 leave_days = get_leave_days_per_month(date_from, date_to, timesheet.activity.person.external_id)
-                worked_hours_by_month = {}
-                # for each month
-                for m_key, m_val in nb_half_days.items():
-                    # for each week day
-                    for nhd_k, nhd_v in m_val.items():
-                        if not m_key in worked_hours_by_month:
-                            worked_hours_by_month[m_key] = 0
-                        # get theorical hours worked by half days, taking in account full / half time contract
-                        half_day_nb_hours = getattr(timesheet.activity, nhd_k)
-                        if not half_day_nb_hours is None :
-                            # has the person been present during current m_key month ?
-                            if m_key in leave_days :
-                                if nhd_k in leave_days[m_key]:
-                                    # has the person been absent during current half day nhd_d ?
-                                    worked_hours_by_month[m_key] += (nb_half_days[m_key][nhd_k] - leave_days[m_key][nhd_k]) * half_day_nb_hours
-                                else :
-                                    # if not, count theorical nb oh hours for this half day
-                                    worked_hours_by_month[m_key] += nb_half_days[m_key][nhd_k] * half_day_nb_hours
-                            # if not, count theorical nb of hours for whole month
+                # caculate for each person leaved days in year
+            nb_half_days = get_nb_half_days_by_period_per_month(date_from, date_to)
+            # for each month
+            m_key = timesheet.month
+            m_val = nb_half_days[m_key]
+            if not m_key in worked_hours_by_month:
+                worked_hours_by_month[m_key] = 0
+            curr_date = datetime.date(self.year, m_key, 1)
+            if timesheet.activity.date_from <= curr_date and curr_date <= timesheet.activity.date_to :
+                # for each week day
+                for nhd_k, nhd_v in m_val.items():
+                    # get theorical hours worked by half days, taking in account full / half time contract
+                    half_day_nb_hours = getattr(timesheet.activity, nhd_k)
+                    if not half_day_nb_hours is None :
+                        # has the person been present during current m_key month ?
+                        if m_key in leave_days :
+                            if nhd_k in leave_days[m_key]:
+                                # has the person been absent during current half day nhd_d ?
+                                worked_hours_by_month[m_key] += (nb_half_days[m_key][nhd_k] - leave_days[m_key][nhd_k]) * half_day_nb_hours
                             else :
+                                # if not, count theorical nb oh hours for this half day
                                 worked_hours_by_month[m_key] += nb_half_days[m_key][nhd_k] * half_day_nb_hours
-                        # else :
-                        #     # missing data...
-                        #     worked_hours_by_month[m_key] = 0
+                        # if not, count theorical nb of hours for whole month
+                        else :
+                            worked_hours_by_month[m_key] += nb_half_days[m_key][nhd_k] * half_day_nb_hours
+                    # else :
+                    #     # missing data...
+                    #     worked_hours_by_month[m_key] = 0
+            else :
+                worked_hours_by_month[m_key] = 0;
 
             # for each percent time worked on a project...
             project_slug = timesheet.project.slug
@@ -356,7 +362,7 @@ class TimesheetXLS(object):
         self.format()
         self.export()
         response = HttpResponse(content_type="application/vnd.ms-excel")
-        response['Content-Disposition'] = 'attachment; filename=timesheet_ircam'+self.year+'.xls'
+        response['Content-Disposition'] = 'attachment; filename=timesheet_ircam'+str(self.year)+'.xls'
         self.book.save(response)
         return response
 
