@@ -15,7 +15,7 @@
 
         {% if images %}
         <div>
-            <div style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({{ MEDIA_URL }}{% thumbnail images|first 0 400 padding=true %})" class="residency-box__background residency-box__background-margin"></div>
+            <div style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ MEDIA_URL }}{% thumbnail images|first 0 400 padding=true %}')" class="residency-box__background residency-box__background-margin"></div>
         {% else %}
         <div class="residency-box__background">
         {% endif %}

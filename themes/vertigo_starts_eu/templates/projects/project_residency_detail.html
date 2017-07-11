@@ -67,7 +67,7 @@
             </div>
             {% with object.images.all|get_type:'slider' as images %}
                 {% if images %}
-                <div class="residency-detail__header-image" style="background-image: linear-gradient(rgba(0, 64, 64, 0.2), rgba(0, 64, 64, 0.2)), url({{ MEDIA_URL }}{% thumbnail images|first 0 400 padding=true %});">
+                <div class="residency-detail__header-image" style="background-image: linear-gradient(rgba(0, 64, 64, 0.2), rgba(0, 64, 64, 0.2)), url('{{ MEDIA_URL }}{% thumbnail images|first 0 400 padding=true %}');">
                 {% else %}
                 <div class="residency-detail__header-image">
                 {% endif %}
@@ -248,7 +248,6 @@
                         </div>
                         <div class="residency-detail__width-text-second-tab">
                             From {{ object.date_from}} to {{ object.date_to }}<br><br>
-                            <!--TODO: Multiple producers -->
                             {% with object.producers.all as producers %}
                                 {% if producers %}
                                     {% if producers|length == 1 %}
