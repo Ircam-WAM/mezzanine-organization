@@ -29,10 +29,10 @@ $module: ".event-line-box";
 
     background: $color-background;
     @include transition(all 0.5s ease-in-out);
-    @include margin-bottom(5);
+    @include margin-bottom(1.333);
 
     @include mq($until: sm) {
-        @include margin-bottom(1);
+        @include margin-bottom(0.666);
     }
 
     .lightSlider & {

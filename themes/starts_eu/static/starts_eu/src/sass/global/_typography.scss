@@ -43,32 +43,32 @@ h1, h2, h3 {
 h1 {
     @include typeset(heading-1);
     @include typeface(sans-serif);
-    @include margin-bottom(3);
+    @include margin-bottom(1.0);
 	@include margin-top(1);
 }
 
 h2 {
     @include typeset(heading-2);
     @include typeface(sans-serif);
-    @include margin-bottom(2);
+    @include margin-bottom(0.666);
     @include margin-top(1);
 
 	& + .chapo {
 		@include margin-top(0);
-		@include margin-bottom(1);
+		@include margin-bottom(0.333);
 	}
 }
 
 p + h2 {
 
-	@include margin-top(2);
+	@include margin-top(1);
 
 }
 
 h3 {
     @include typeset(heading-3);
     @include typeface(serif);
-    @include margin-bottom(1);
+    @include margin-bottom(0.333);
     @include margin-top(1);
 
 	.page__content &, .page__block & {
@@ -92,7 +92,7 @@ h3 {
 
 p + h3 {
 
-	@include margin-top(2);
+	@include margin-top(1);
 
 }
 
@@ -100,12 +100,12 @@ p + h3 {
 	font-weight: weight(light);
 	@include line-height(1.25);
 	@include margin-top(0);
-    @include margin-bottom(1);
+    @include margin-bottom(0.333);
 }
 
 main p, main ul.unstyled-list, main ul:not([class]), main td {
     @include margin-top(0);
-    @include margin-bottom(1);
+    @include margin-bottom(0.333);
 	@include line-height(1.25);
     @include typeface(serif);
     @include typey-debug-grid;
@@ -213,13 +213,13 @@ figure {
 	@include font-size(l);
     @include line-height(1.25);
 	@include typeface(serif);
-    @include margin-bottom(2);
+    @include margin-bottom(0.666);
 	font-weight: weight(heavy);
 }
 
 h1 + .chapo {
 	@include margin-top(-2);
-	@include margin-bottom(4);
+	@include margin-bottom(1.333);
 	@include typeface(sans-serif);
 	@include font-size(xxl);
 	font-weight: weight(regular);
