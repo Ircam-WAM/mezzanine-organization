@@ -160,6 +160,11 @@ class ProjectResidencyArticleInline(TabularDynamicInlineAdmin):
     model = ProjectResidencyArticle
 
 
+class ProjectResidencyEventInline(TabularDynamicInlineAdmin):
+
+    model = ProjectResidencyEvent
+
+
 class ProjectResidencyAdmin(admin.ModelAdmin):
 
     model = ProjectResidency
@@ -169,6 +174,7 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
                 ProjectResidencyImageInline,
                 ProjectResidencyUserImageInline,
                 ProjectResidencyArticleInline,
+                ProjectResidencyEventInline,
                 ]
 
     def get_producers(self, obj):

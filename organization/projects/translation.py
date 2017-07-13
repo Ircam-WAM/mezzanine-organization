@@ -72,6 +72,12 @@ class ProjectResidencArticleTranslationOptions(TranslationOptions):
     pass
 
 
+@register(ProjectResidencyEvent)
+class ProjectResidencEventTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(ProjectFile)
 class ProjectFileTranslationOptions(TranslationOptions):
 

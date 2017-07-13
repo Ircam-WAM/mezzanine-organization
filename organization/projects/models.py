@@ -35,6 +35,7 @@ from organization.core.models import *
 from organization.pages.models import *
 from organization.network.models import *
 from organization.magazine.models import *
+from mezzanine_agenda.models import *
 
 
 PROJECT_TYPE_CHOICES = [
@@ -417,6 +418,20 @@ class ProjectResidency(Displayable, Period, Address, RichText):
     lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
     lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
 
+    @property 
+    def articles(self):
+        #TODO: Any way to avoid magic number in status filter?
+        articles = Article.objects.filter(residencies__residency=self).filter(status=2).filter(publish_date__lte=datetime.date.today()).order_by("-publish_date")
+        return articles
+
+
+    @property 
+    def events(self):
+        #TODO: Any way to avoid magic number in status filter?
+        events = Event.objects.filter(residencies__residency=self).filter(status=2).filter(publish_date__lte=datetime.date.today()).order_by("-publish_date")
+        return events
+
+
     class Meta:
         verbose_name = 'Project residency'
         verbose_name_plural = 'Project residencies'
@@ -478,5 +493,11 @@ class ProjectResidencyUserImage(UserImage):
 
 class ProjectResidencyArticle(models.Model):
 
-    residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='articles', blank=True, null=True, on_delete=models.SET_NULL)
+    residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='residency_articles', blank=True, null=True, on_delete=models.SET_NULL)
     article = models.ForeignKey(Article, verbose_name=_('article'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectResidencyEvent(models.Model):
+
+    residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='residency_events', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)

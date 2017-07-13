@@ -337,42 +337,61 @@
 
 </div>
 
-{% with object.articles.all as articles %}
-    {% if articles %}
-        <div class="page" id="news">
+{% if object.articles %}
+    <div class="page" id="residency_news">
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-16 col-md-10 col-md-push-3 tac">
-                        <h1 class="section-title section-title--uppercase section-title--main section-title--underline">{% trans "News" %}</h1>
-                    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-16 col-md-10 col-md-push-3 tac">
+                    <h1 class="section-title section-title--uppercase section-title--main section-title--underline">{% trans "News" %}</h1>
                 </div>
+            </div>
 
-                <div class="row">
-
-                    <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
-                        <div class="page__content">
-                            <div class="container">
-                                <div class="row">
-                                    {% for art in articles %}
-                                        {% with art.article as article %}
-                                            <div class="col-xs-8">
-                                                {% with app_label=object|app_label_short classname=object|classname|lower  %}
-                                                    {% with app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"article_card.html" as template_article %}
-                                                        {% include template_article %}
-                                                    {% endwith %}
-                                                {% endwith %}
-                                            </div>
+            <div class="row">
+                <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
+                    <div class="page__content">
+                        <div class="container">
+                            <div class="row">
+                                {% for article in object.articles %}
+                                    <div class="col-xs-8">
+                                        {% with app_label=object|app_label_short classname=object|classname|lower  %}
+                                            {% with app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"article_card.html" as template_article %}
+                                                {% include template_article %}
+                                            {% endwith %}
                                         {% endwith %}
-                                    {% endfor %}
-                                </div>
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {% pagination_for articles %}
         </div>
-    {% endif %}
-{% endwith %}
+        {% pagination_for object.articles %}
+    </div>
+{% endif %}
+
+{% if object.events %}
+    <div class="page" id="residency_events">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-16 col-md-12 col-md-push-2 tac">
+                    <h1 class="section-title section-title--uppercase section-title--main">{% trans "Events" %}</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
+                    <div class="page__content">
+                        {% for event in object.events %}
+                            {% include 'agenda/includes/event_linecard.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
 {% endblock %}
