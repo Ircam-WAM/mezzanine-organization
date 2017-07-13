@@ -39,9 +39,11 @@
         }
     }
     > a.lSPrev {
-
+        background-color: $color-main;
+        background-blend-mode: multiply;
     }
     > a.lSNext {
-
+        background-color: $color-main;
+        background-blend-mode: multiply;
     }
 }

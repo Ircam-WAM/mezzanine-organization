@@ -66,6 +66,12 @@ class ProjectResidencUserImageTranslationOptions(TranslationOptions):
     pass
 
 
+@register(ProjectResidencyArticle)
+class ProjectResidencArticleTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(ProjectFile)
 class ProjectFileTranslationOptions(TranslationOptions):
 

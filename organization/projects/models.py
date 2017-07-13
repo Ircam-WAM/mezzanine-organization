@@ -34,6 +34,7 @@ from django.core.files.images import get_image_dimensions
 from organization.core.models import *
 from organization.pages.models import *
 from organization.network.models import *
+from organization.magazine.models import *
 
 
 PROJECT_TYPE_CHOICES = [
@@ -473,3 +474,9 @@ class ProjectResidencyImage(Image):
 class ProjectResidencyUserImage(UserImage):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('project residency user image'), related_name='user_images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectResidencyArticle(models.Model):
+
+    residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='articles', blank=True, null=True, on_delete=models.SET_NULL)
+    article = models.ForeignKey(Article, verbose_name=_('article'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)

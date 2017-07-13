@@ -223,31 +223,39 @@
                     <p>{{ object.content|safe }}</p>
                     <div class="residency-detail__title">{% trans "About this residency" %}</div>
                     <br>
-                    <div>
+                    <div class="residency-detail__details">
                         <div class="residency-detail__map" id="network-map-residencies"></div>
-                        <div class="container hide">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-10 col-md-push-1">
-                                    <div class="slider-network">
-                                        <ul class="slider-network__slider" data-slider-network>
-                                            <li class="slider-network__slide" data-marker-residencies-color="blue" data-marker-residencies-idx="{{forloop.counter0}}" data-marker-residencies-lat="{{ object.lat }}" data-marker-residencies-lng="{{ object.lon }}">
-                                                <div class="slider-network__slide-title" data-marker-residencies-title>
-                                                    {{ object.title }}
-                                                </div>
-                                                <div class="slider-network__slide-subtitle" data-marker-residencies-subtitle>
-                                                    {{ object.city }}, {{ object.country.name }}
-                                                </div>
-                                                <div class="slider-network__slide-description" data-marker-residencies-description>
-                                                    {{ object.description }}
-                                                </div>
-                                            </li>
-                                        </ul>
+                        {% if object.lat and object.lon %}
+                            <div class="container hide">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-10 col-md-push-1">
+                                        <div class="slider-network">
+                                            <ul class="slider-network__slider" data-slider-network>
+                                                <li class="slider-network__slide" data-marker-residencies-color="blue" data-marker-residencies-idx="{{forloop.counter0}}" data-marker-residencies-lat="{{ object.lat }}" data-marker-residencies-lng="{{ object.lon }}">
+                                                    <div class="slider-network__slide-title" data-marker-residencies-title>
+                                                        {{ object.title }}
+                                                    </div>
+                                                    <div class="slider-network__slide-subtitle" data-marker-residencies-subtitle>
+                                                        {{ object.city }}, {{ object.country.name }}
+                                                    </div>
+                                                    <div class="slider-network__slide-description" data-marker-residencies-description>
+                                                        {{ object.description }}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
                         <div class="residency-detail__width-text-second-tab">
-                            From {{ object.date_from}} to {{ object.date_to }}<br><br>
+                            {% if object.date_from %}
+                                From {{ object.date_from}} 
+                                {% if object.date_to %}
+                                    to {{ object.date_to }}
+                                {% endif %}
+                                <br><br>
+                            {% endif %}
                             {% with object.producers.all as producers %}
                                 {% if producers %}
                                     {% if producers|length == 1 %}
@@ -265,12 +273,40 @@
                                     {% endif %}
                                 {% endif %}
                             {% endwith %}
-                            Localization: {{ object.city }}, {{ object.country }}<br><br>
+                            {% if object.city and object.country %}
+                                Localization: {{ object.city }}, {{ object.country }}<br><br>
+                            {% endif %}
                             {% for keyword in object.keywords.all %}
                                 {{ keyword }} &nbsp;
                             {% endfor %}
                         </div>
                     </div>
+                    {% with object.user_images.all as user_images %}
+                        {% if object.user_images %}
+                            <div>
+                                <div class="page__slider">
+                                    <ul class="slider-page" data-slider-page>
+                                        {% for user_image in user_images %}
+                                            <li class="slider-page__slide" data-src="{{ MEDIA_URL }}{{ user_image.file }}">
+                                                <div class="slider-page__wrapper">
+                                                    <img title="{{ user_image.title }}" alt="{{ user_image.title }} {{ user_image.description }} {{ user_image.credits }}" class="slider-page__img" src="{{ MEDIA_URL}}{% thumbnail user_image.file 0 400 %}" alt="" />
+                                                    <div class="slider-page__caption">
+                                                        {{ user_image.title }}
+                                                        {% if user_image.description %}
+                                                            {{ user_image.description }}
+                                                        {% endif %}
+                                                        {% if user_image.credits %}
+                                                            {{ user_image.credits }}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
                 </div>
             </div>
         </div>
@@ -300,4 +336,43 @@
     </div>
 
 </div>
+
+{% with object.articles.all as articles %}
+    {% if articles %}
+        <div class="page" id="news">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-16 col-md-10 col-md-push-3 tac">
+                        <h1 class="section-title section-title--uppercase section-title--main section-title--underline">{% trans "News" %}</h1>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
+                        <div class="page__content">
+                            <div class="container">
+                                <div class="row">
+                                    {% for art in articles %}
+                                        {% with art.article as article %}
+                                            <div class="col-xs-8">
+                                                {% with app_label=object|app_label_short classname=object|classname|lower  %}
+                                                    {% with app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"article_card.html" as template_article %}
+                                                        {% include template_article %}
+                                                    {% endwith %}
+                                                {% endwith %}
+                                            </div>
+                                        {% endwith %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% pagination_for articles %}
+        </div>
+    {% endif %}
+{% endwith %}
 {% endblock %}

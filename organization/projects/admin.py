@@ -155,6 +155,11 @@ class ProjectResidencyUserImageInline(StackedDynamicInlineAdmin):
     model = ProjectResidencyUserImage
 
 
+class ProjectResidencyArticleInline(TabularDynamicInlineAdmin):
+
+    model = ProjectResidencyArticle
+
+
 class ProjectResidencyAdmin(admin.ModelAdmin):
 
     model = ProjectResidency
@@ -163,6 +168,7 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
     inlines = [ ProjectResidencyProducerInline,
                 ProjectResidencyImageInline,
                 ProjectResidencyUserImageInline,
+                ProjectResidencyArticleInline,
                 ]
 
     def get_producers(self, obj):

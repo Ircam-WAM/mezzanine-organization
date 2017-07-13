@@ -5354,6 +5354,9 @@ html, body {
 .residency-detail__map::after {
   clear: both;
 }
+.residency-detail__details {
+  overflow: hidden;
+}
 
 .slider-page {
   list-style-type: none;
@@ -8150,6 +8153,14 @@ blockquote--small {
 .lSAction > a:before {
   color: #F2EDDC;
   font-size: 40px;
+}
+.lSAction > a.lSPrev {
+  background-color: #50E3C2;
+  background-blend-mode: multiply;
+}
+.lSAction > a.lSNext {
+  background-color: #50E3C2;
+  background-blend-mode: multiply;
 }
 
 .pushy {
