@@ -224,21 +224,21 @@
                     <div class="residency-detail__title">{% trans "About this residency" %}</div>
                     <br>
                     <div class="residency-detail__details">
-                        <div class="residency-detail__map" id="network-map-residencies"></div>
+                        <div class="residency-detail__map" id="network-map-small"></div>
                         {% if object.lat and object.lon %}
                             <div class="container hide">
                                 <div class="row">
                                     <div class="col-xs-12 col-md-10 col-md-push-1">
                                         <div class="slider-network">
                                             <ul class="slider-network__slider" data-slider-network>
-                                                <li class="slider-network__slide" data-marker-residencies-color="blue" data-marker-residencies-idx="{{forloop.counter0}}" data-marker-residencies-lat="{{ object.lat }}" data-marker-residencies-lng="{{ object.lon }}">
-                                                    <div class="slider-network__slide-title" data-marker-residencies-title>
+                                                <li class="slider-network__slide" data-marker-small-color="blue" data-marker-small-idx="{{forloop.counter0}}" data-marker-small-lat="{{ object.lat }}" data-marker-small-lng="{{ object.lon }}">
+                                                    <div class="slider-network__slide-title" data-marker-small-title>
                                                         {{ object.title }}
                                                     </div>
-                                                    <div class="slider-network__slide-subtitle" data-marker-residencies-subtitle>
+                                                    <div class="slider-network__slide-subtitle" data-marker-small-subtitle>
                                                         {{ object.city }}, {{ object.country.name }}
                                                     </div>
-                                                    <div class="slider-network__slide-description" data-marker-residencies-description>
+                                                    <div class="slider-network__slide-description" data-marker-small-description>
                                                         {{ object.description }}
                                                     </div>
                                                 </li>

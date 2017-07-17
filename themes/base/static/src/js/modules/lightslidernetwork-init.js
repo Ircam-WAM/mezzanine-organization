@@ -64,9 +64,9 @@ LightSliderNetworkInit.prototype.init = function() {
 
     }
     
-    if($('#network-map-residencies').length > 0) {
+    if($('#network-map-small').length > 0) {
 
-        that.map = new google.maps.Map(document.getElementById('network-map-residencies'), {
+        that.map = new google.maps.Map(document.getElementById('network-map-small'), {
             zoom: 3,
             center: {lat: 48.85982, lng: 2.351402},
             //styles: [ { "featureType": "all", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "administrative", "elementType": "labels.text", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape", "elementType": "all", "stylers": [ { "color": "#6c8080" }, { "visibility": "simplified" } ] }, { "featureType": "landscape.man_made", "elementType": "geometry.fill", "stylers": [ { "lightness": "0" }, { "color": "#000f24" } ] }, { "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [ { "lightness": "0" }, { "color": "#000f24" } ] }, { "featureType": "landscape.natural.landcover", "elementType": "geometry.fill", "stylers": [ { "saturation": "0" }, { "lightness": "0" }, { "color": "#000f24" } ] }, { "featureType": "landscape.natural.terrain", "elementType": "geometry.fill", "stylers": [ { "color": "#000f24" } ] }, { "featureType": "landscape.natural.terrain", "elementType": "geometry.stroke", "stylers": [ { "saturation": "0" }, { "lightness": "0" } ] }, { "featureType": "poi", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road", "elementType": "all", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "road", "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "featureType": "road.highway", "elementType": "all", "stylers": [ { "color": "#d98080" }, { "hue": "#eeff00" }, { "lightness": 100 }, { "weight": 1.5 } ] }, { "featureType": "road.highway", "elementType": "labels", "stylers": [ { "visibility": "off" } ] }, { "featureType": "transit", "elementType": "labels", "stylers": [ { "visibility": "off" } ] } ]
@@ -74,7 +74,7 @@ LightSliderNetworkInit.prototype.init = function() {
         });
 
         google.maps.event.addListenerOnce(that.map, 'projection_changed', function() {
-            that.initMarkersResidencies();
+            that.initMarkersSmall();
         });
 
         google.maps.event.addListener(that.map, 'zoom_changed', function() {
@@ -122,25 +122,25 @@ LightSliderNetworkInit.prototype.initMarkers = function() {
 };
 
 
-LightSliderNetworkInit.prototype.initMarkersResidencies = function() {
+LightSliderNetworkInit.prototype.initMarkersSmall = function() {
 
     var that = this;
 
-    $('[data-marker-residencies-idx]').each(function(idx) {
+    $('[data-marker-small-idx]').each(function(idx) {
 
         var obj = {
-            'lat': parseFloat($(this).attr('data-marker-residencies-lat').replace(',', '.')),
-            'lng': parseFloat($(this).attr('data-marker-residencies-lng').replace(',', '.')),
+            'lat': parseFloat($(this).attr('data-marker-small-lat').replace(',', '.')),
+            'lng': parseFloat($(this).attr('data-marker-small-lng').replace(',', '.')),
             'elem': $(this),
             'marker': new google.maps.Marker({
-                position: {lat: parseFloat($(this).attr('data-marker-residencies-lat').replace(',', '.')), lng: parseFloat($(this).attr('data-marker-residencies-lng').replace(',', '.'))},
+                position: {lat: parseFloat($(this).attr('data-marker-small-lat').replace(',', '.')), lng: parseFloat($(this).attr('data-marker-small-lng').replace(',', '.'))},
                 map: that.map,
-                icon: "/static/img/map-marker-" + $(this).attr('data-marker-residencies-color') + ".png"
+                icon: "/static/img/map-marker-" + $(this).attr('data-marker-small-color') + ".png"
             })
         };
 
         var info = new google.maps.InfoWindow({
-            content: '<div class="map-infowindow-residencies"><div class="map-infowindow-residencies__content"><div class="map-infowindow__title">' + $(this).find('[data-marker-residencies-title]').text() + '</div><div class="map-infowindow-residencies__subtitle">' + $(this).find('[data-marker-residencies-subtitle]').text() + '</div><p>' + $(this).find('[data-marker-residencies-description]').text() + '</p></div></div>'
+            content: '<div class="map-infowindow-small"><div class="map-infowindow-small__content"><div class="map-infowindow__title">' + $(this).find('[data-marker-small-title]').text() + '</div><div class="map-infowindow-small__subtitle">' + $(this).find('[data-marker-small-subtitle]').text() + '</div><p>' + $(this).find('[data-marker-small-description]').text() + '</p></div></div>'
         });
 
         obj.info = info;
