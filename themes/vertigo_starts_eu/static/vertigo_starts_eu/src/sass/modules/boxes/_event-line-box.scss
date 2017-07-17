@@ -304,4 +304,16 @@ $module: ".event-line-box";
     &__top-space {
         @include margin-top(5);
     }
+
+    &__top-space-left {
+
+        margin-top: 1.5rem;
+    }
+
+    &__text-color-date {
+
+        @include typeface(sans-serif);
+        color: $color-main;
+        font-size: 18px;
+    }
 }

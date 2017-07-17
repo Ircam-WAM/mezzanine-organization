@@ -37,17 +37,24 @@
 
 {% block page_content %}
 <div class="row">
-     <div class="col-xs-4" id="left-item">
-        <p>LEFT SECTION</p>
+     <div class="col-xs-4 event-line-box__top-space-left event-line-box__text-color-date" id="left-item">
+        {% include 'agenda/includes/event_detail_date_line.html' with object=event %}
+        <div class="event-line-box__top-space-left">
+             {{ event.location }}
+        </div>
+
+         <div class="event-line-box__top-space-left">
+              
+         </div>
      </div>
      <div class="col-xs-10" id="right-item">
-        {% block event_detail_content %}
+         {% block event_detail_content %}
             {% if event.content %}
-                {% editable event.content %}
+                {# {% editable event.content %} #}
                 {{ event.content|richtext_filters|safe }}
-                {% endeditable %}
+                {# {% endeditable %} #}
             {% endif %}
-        {% endblock %}
+         {% endblock %}
      </div>
 </div>
 {% endblock %}
