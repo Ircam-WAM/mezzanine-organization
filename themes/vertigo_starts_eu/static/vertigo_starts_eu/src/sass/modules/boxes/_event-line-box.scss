@@ -131,7 +131,6 @@ $module: ".event-line-box";
         -webkit-filter: grayscale(1);
         filter: grayscale(1);
         mix-blend-mode: screen;
-
     }
 
     &__button {
@@ -260,4 +259,49 @@ $module: ".event-line-box";
 
     }
 
+    &__title-center {
+
+        font-size: 36px;
+        @include line-height(1.5);
+        @include typeface(sans-serif);
+        font-weight: weight(regular);
+        text-transform: uppercase;
+        text-align:center;
+        color: white;
+
+        margin: 0 !important;
+
+        a:not(.button) {
+
+            color: $color-main;
+            border: 0;
+
+            &:hover {
+                box-shadow: none;
+            }
+        }
+    }
+
+     &__body-center {
+
+        position: absolute;
+        top: 50%;
+        @include transform(translateY(-50%));
+
+        @include mq($until: sm) {
+            position: static;
+            @include transform(translateY(0));
+            @include padding(1);
+        }
+
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+
+     }
+
+    &__top-space {
+        @include margin-top(5);
+    }
 }
