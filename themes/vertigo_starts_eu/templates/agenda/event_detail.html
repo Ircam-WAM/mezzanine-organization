@@ -1,4 +1,4 @@
-{% extends "agenda/event_base.html" %}
+{% extends "vertigo_starts_eu/agenda/event_base.html" %}
 {% load mezzanine_tags comment_tags keyword_tags rating_tags i18n future disqus_tags event_tags organization_tags pages_tags %}
 
 {% block meta_title %}{{ event.meta_title }}{% endblock %}
@@ -20,8 +20,11 @@
 {% endblock %}
 
 {% block page_title %}
-    <h1 class="section-title section-title--uppercase section-title--main"><a href="{% url 'event_list' %}"><i class="fsl fa fa-angle-left"></i>{% trans "Back to events" %}</a></h1>
-    {% include 'agenda/includes/event_linecard.html' %}
+    <div class="event-line-box__top-space"></div>
+    {% include 'vertigo_starts_eu/agenda/includes/event_linecard.html' %}
+    <div class="event-line-detail-box__container-back-link">
+        <a class="event-line-detail-box__back-link" href="{% url 'event_list' %}"><span class="event-line-detail-box__arrow-align">&#x21DA;</span> {% trans "Back to all events" %}</a>
+    </div>
 {% endblock %}
 
 {% block breadcrumb_menu %}
@@ -33,15 +36,30 @@
 {% endblock %}
 
 {% block page_content %}
-    {% block event_detail_content %}
-        {% if event.content %}
-            {% editable event.content %}
+<div class="row">
+     <div class="col-xs-4 event-line-box__top-space-left event-line-box__text-color-date" id="left-item">
+        {% include 'agenda/includes/event_detail_date_line.html' with object=event %}
+        <div class="event-line-box__top-space-left">
+             {{ event.location }}
+        </div>
+
+         <div class="event-line-box__top-space-left">
+              
+         </div>
+     </div>
+     <div class="col-xs-10" id="right-item">
+         {% block event_detail_content %}
+            {% if event.content %}
+                {# {% editable event.content %} #}
                 {{ event.content|richtext_filters|safe }}
-            {% endeditable %}
-        {% endif %}
-    {% endblock %}
+                {# {% endeditable %} #}
+            {% endif %}
+         {% endblock %}
+     </div>
+</div>
 {% endblock %}
 
+{% comment %}
 {% block page_link %}
     {% if event.mentions or event.links.all|length > 0 %}
         <div class="mt4">
@@ -139,6 +157,7 @@
     {% endwith %}
 {% endblock %}
 
+
 {% block page_sidebar %}
     <div class="" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="1171">
         {% include "includes/share_buttons.html" %}
@@ -150,3 +169,4 @@
         {% include "core/inc/related_content.html" %}
     {% endwith %}
 {% endblock %}
+{% endcomment %}
