@@ -42,10 +42,29 @@
         <div class="event-line-box__top-space-left">
              {{ event.location }}
         </div>
-
-         <div class="event-line-box__top-space-left">
-              
-         </div>
+        <div class="event-line-box__top-space-left">
+            <div class="event-line-detail-box__map-event" id="network-map-small"></div>
+                {% if event.lat and event.lon %}
+                    <div class="container hide">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-10 col-md-push-1">
+                                <div class="slider-network">
+                                    <ul class="slider-network__slider" data-slider-network>
+                                        <li class="slider-network__slide" data-marker-small-color="blue" data-marker-small-idx="{{forloop.counter0}}" data-marker-small-lat="{{ event.lat }}" data-marker-small-lng="{{ event.lon }}">
+                                            <div class="slider-network__slide-title" data-marker-small-title>
+                                                {{ event.title }}
+                                            </div>
+                                            <div class="slider-network__slide-subtitle" data-marker-small-subtitle>
+                                                {{ event.city }}, {{ event.country.name }}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+        </div>
      </div>
      <div class="col-xs-10" id="right-item">
          {% block event_detail_content %}

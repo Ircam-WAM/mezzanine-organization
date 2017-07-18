@@ -11,6 +11,7 @@ $module: ".event-line-detail-box";
 
     &__back-link {
 
+        display: block;
         font-size: 18px;
         border: none;
         position: absolute;
@@ -34,5 +35,15 @@ $module: ".event-line-detail-box";
         font-size:30px;
     }
 
+    &__map-event {
 
+        position: relative;
+        width: 245px;
+        height: 245px;
+        float: right;
+        border-style: solid;
+        border-color: #50E3C2;
+        border-width: 1px;
+        margin: 10px 0px 50px 0px;
+    }
 }
