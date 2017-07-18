@@ -26,54 +26,15 @@
 {% endblock %}
 
 {% block main %}
-    <script>
-        function clickedLink(link,event) {
 
-            event.preventDefault();
-
-            var firstDiv = document.getElementById("first_event_div");
-            var secondDiv = document.getElementById("second_event_div");
-
-            firstDiv.style.display = 'none';
-            secondDiv.style.display = 'none';
-
-            var linkNews = document.getElementById("event_news");
-            var linkEventsList = document.getElementById("event_items");
-
-            var buttons = document.getElementsByClassName('event-line-box__event-button');
-
-            for (var i = 0; i < buttons.length; i++)
-            {
-                buttons[i].classList.remove('active');
-                buttons[i].classList.remove('event-line-box__underline-text-green');
-            }
-
-            if (link.id === 'event_news')
-            {
-                firstDiv.style.display = 'block';
-                linkNews.classList.add('active');
-                linkNews.classList.add('event-line-box__underline-text-green');
-            }
-
-            if (link.id === 'event_items')
-            {
-                secondDiv.style.display = 'block';
-                linkEventsList.classList.add('active');
-                linkEventsList.classList.add('event-line-box__underline-text-green');
-            }
-        }
-    </script>
     <div class ="row residency-detail__margin-row">
             <div class="col-sm-16 col-md-12 event-line-box__center-buttons">
-                <a id='event_news' class="button event-line-box__event-button event-line-box__underline-text-green active" href="#" onclick="clickedLink(this,event);">{% trans "News" %}</a>
-                <a id='event_items' class="button event-line-box__event-button" href="#" onclick="clickedLink(this,event);">{% trans "Events" %}</a>
+                <a id='event_news' class="button event-line-box__event-button" href="/article/list">{% trans "News" %}</a>
+                <a id='event_items' class="button event-line-box__event-button event-line-box__underline-text-green active" href="/agenda">{% trans "Events" %}</a>
             </div>
     </div>
 
-    <div id="first_event_div" class="event-line-box__hide-container">
-
-    </div>
-    <div id="second_event_div" class="event-line-box__hide-container">
+    <div>
         <div class="page__block event-line-box__block--white">
             <div class="container">
                 <div class="row" data-summary-content>
