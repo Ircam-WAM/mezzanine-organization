@@ -118,6 +118,23 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
         exclude = ['accounting', 'validation', 'month', 'year']
 
 
+class PersonActivityTimeSheetAdminForm(forms.ModelForm):
+
+    class Meta:
+        model = PersonActivityTimeSheet
+        fields = ('__all__')
+        widgets = {
+            'activity': autocomplete.ModelSelect2(
+                url='person-activity-autocomplete',
+                attrs={'data-html': True}
+            ),
+            'work_packages': autocomplete.ModelSelect2Multiple(
+                url='work-packages-autocomplete',
+                attrs={'data-html': True}
+            )
+        }
+
+
 class ProjectActivityForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
