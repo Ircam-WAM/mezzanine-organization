@@ -26,38 +26,104 @@
 {% endblock %}
 
 {% block main %}
-    <div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-16 col-md-12 col-md-push-2 tac">
-                    <h1 class="section-title section-title--uppercase section-title--main">{% trans "Friki Events" %}</h1>
-                </div>
+    <script>
+        function clickedLink(link,event) {
+
+            event.preventDefault();
+
+            var firstDiv = document.getElementById("first_event_div");
+            var secondDiv = document.getElementById("second_event_div");
+
+            firstDiv.style.display = 'none';
+            secondDiv.style.display = 'none';
+
+            var linkNews = document.getElementById("event_news");
+            var linkEventsList = document.getElementById("event_items");
+
+            var buttons = document.getElementsByClassName('event-line-box__event-button');
+
+            for (var i = 0; i < buttons.length; i++)
+            {
+                buttons[i].classList.remove('active');
+                buttons[i].classList.remove('event-line-box__underline-text-green');
+            }
+
+            if (link.id === 'event_news')
+            {
+                firstDiv.style.display = 'block';
+                linkNews.classList.add('active');
+                linkNews.classList.add('event-line-box__underline-text-green');
+            }
+
+            if (link.id === 'event_items')
+            {
+                secondDiv.style.display = 'block';
+                linkEventsList.classList.add('active');
+                linkEventsList.classList.add('event-line-box__underline-text-green');
+            }
+        }
+    </script>
+    <div class ="row residency-detail__margin-row">
+            <div class="col-sm-16 col-md-12 event-line-box__center-buttons">
+                <a id='event_news' class="button event-line-box__event-button event-line-box__underline-text-green active" href="#" onclick="clickedLink(this,event);">{% trans "News" %}</a>
+                <a id='event_items' class="button event-line-box__event-button" href="#" onclick="clickedLink(this,event);">{% trans "Events" %}</a>
             </div>
-            <div class="row">
-                <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
-                    <div class="page__content">
-                        {% for event in events %}
-                            {% include 'agenda/includes/event_linecard.html' %}
-                        {% endfor %}
+    </div>
+
+    <div id="first_event_div" class="event-line-box__hide-container">
+
+    </div>
+    <div id="second_event_div" class="event-line-box__hide-container">
+        <div class="page__block event-line-box__block--white">
+            <div class="container">
+                <div class="row" data-summary-content>
+                    <div class="col-sm-16 col-md-12 col-md-push-2 event-line-box__margin-paragraph-bottom">
+                        <div class="event-line-box__text-event-paragraph event-line-box__dark-blue">
+                            <h2 class="event-line-box__bold-text event-line-box__center-text">VERTIGO events</h2><br>
+                            <div class="event-line-box__margins">
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                                Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
+                                accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            {% if past_events %}
+        </div>
+        <div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
+            <div class="container">
                 <div class="row">
                     <div class="col-sm-16 col-md-12 col-md-push-2 tac">
-                        <h1 class="section-title section-title--uppercase section-title--main">{% trans "Past events" %}</h1>
+                        <h1 class="event-line-box__section-title section-title--uppercase section-title--main">{% trans "Upcoming Events" %}</h1>
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
                         <div class="page__content">
-                            {% for event in past_events %}
+                            {% for event in events %}
                                 {% include 'agenda/includes/event_linecard_hover.html' %}
                             {% endfor %}
                         </div>
                     </div>
                 </div>
-            {% endif %}
+                {% if past_events %}
+                    <div class="row">
+                        <div class="col-sm-16 col-md-12 col-md-push-2 tac">
+                            <h1 class="event-line-box__section-title section-title--uppercase section-title--main">{% trans "Past events" %}</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
+                            <div class="page__content">
+                                {% for event in past_events %}
+                                    {% include 'agenda/includes/event_linecard_hover.html' %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -198,7 +198,7 @@ $module: ".event-line-box";
 
         font-size: 36px;
         @include line-height(1.5);
-        @include typeface(sans-serif);
+        font-family: "Oswald", sans-serif;
         font-weight: weight(regular);
         text-transform: uppercase;
 
@@ -226,7 +226,6 @@ $module: ".event-line-box";
         @include typeface(sans-serif);
         font-weight: weight(regular);
         color: $color-main;
-
     }
 
     &__date {
@@ -262,7 +261,7 @@ $module: ".event-line-box";
 
         font-size: 36px;
         @include line-height(1.5);
-        @include typeface(sans-serif);
+        font-family: "Oswald", sans-serif;
         font-weight: weight(regular);
         text-transform: uppercase;
         text-align:center;
@@ -314,5 +313,224 @@ $module: ".event-line-box";
         @include typeface(sans-serif);
         color: $color-main;
         font-size: 18px;
+    }
+
+    &__center-buttons {
+
+        background: none;
+	    width: 100%;
+	    display: table;
+	    text-align: center;
+	    text-transform: uppercase;
+	    margin-top: 150px;
+        font-size: 15px;
+        @include typeface(sans-serif);
+        color: white;
+    }
+
+     &__event-button {
+
+        background: none;
+        border: none;
+        color: #19494c;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 22px;
+        font-weight: normal;
+        margin-right: 30px;
+        margin-left: 30px;
+        padding: 0;
+        width: 180px;
+        margin-bottom: 0px;
+
+        &:hover {
+            background: none;
+            color: $color-main;
+            font-size: 22px;
+        }
+
+        &.active {
+            cursor: normal;
+            background: none;
+            color: $color-main;
+            font-size: 22px;
+        }
+
+        &-selected {
+            background: none;
+            color: $color-main;
+            font-size: 22px;
+
+            &:hover {
+                background: none;
+                color: $color-main;
+                font-size: 22px;
+            }
+        }
+
+        &-unselected {
+            background: none;
+            color: white;
+            font-size: 22px;
+
+            &:hover {
+                background: none;
+                color: $color-main;
+                font-size: 22px;
+            }
+        }
+    }
+
+    &__underline-text-green {
+
+	    text-align: center;
+	    display: inline-block;
+	    line-height: 1.5em;
+        text-decoration: none;
+        border-bottom: 2px solid $color-main;
+    }
+
+     &__underline-text-unselected {
+
+	    text-align: center;
+	    display: inline-block;
+	    line-height: 1.5em;
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+    }
+
+    &__block--white {
+
+	    background-color: $color-white;
+	    color: $color-black;
+	    padding-top: 48px;
+	    padding-top: 3rem;
+        width: 100%;
+	    position: relative;
+	    overflow: hidden;
+    }
+
+    &__text-event-paragraph {
+
+        font-family: "Merriweather", serif;
+    }
+
+    &__hide-container {
+
+        display: none;
+    }
+
+    &__show-container {
+
+        display: block;
+    }
+
+    &__margin-paragraph-bottom {
+
+        margin-bottom: 5%;
+    }
+
+    &__center-text {
+
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    &__margins {
+
+        margin-right: 10%;
+        margin-left: 10%;
+    }
+
+    &__block--white {
+
+        background-color: white;
+        color: #000F24;
+        padding-top: 48px;
+        padding-top: 3rem;
+        padding-bottom: 48px;
+        position: relative;
+    }
+
+    &__text-events-list {
+
+        @include typeface(sans-serif);
+    }
+
+    &__bold-text {
+
+        font-weight: bold;
+    }
+
+    &__dark-blue {
+
+        text-color: #525a67;
+    }
+
+    &__section-title {
+
+        font-family: "Oswald", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        text-align: left;
+        color: white;
+        font-weight: bold;
+        line-height: 1.5em;
+        margin-bottom: 96px;
+        margin-top: 120px;
+    }
+
+    &__white-color {
+
+        text-color: white;
+    }
+
+    &__turquoise-color {
+
+        text-color: rgba($color-main, 1);
+    }
+
+    &__small-margin {
+
+        margin-bottom: 15px;
+    }
+
+    &__title-list {
+
+        font-size: 36px;
+        line-height: 36px;
+        line-height: 2.25rem;
+        font-family: "Oswald", sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: white;
+        margin: 0 !important;
+    }
+
+    &__date-list {
+
+        @include font-size(l);
+        @include line-height(1.25);
+        @include typeface(sans-serif);
+        font-weight: weight(regular);
+        color: rgba($color-main, 1);
+        @include transition(all 0.5s ease-in-out);
+
+        @include margin-top(1);
+
+        span {
+            display: block;
+            @include font-size(m);
+        }
+    }
+
+    &__location-list {
+
+        @include font-size(l);
+        @include line-height(1.25);
+        @include typeface(sans-serif);
+        font-weight: weight(regular);
+        color: $color-main;
     }
 }
