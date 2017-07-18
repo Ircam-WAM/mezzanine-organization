@@ -42,10 +42,9 @@
                         <div class="event-line-box__text-event-paragraph event-line-box__dark-blue">
                             <h2 class="event-line-box__bold-text event-line-box__center-text">VERTIGO events</h2><br>
                             <div class="event-line-box__margins">
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                                Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-                                Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
-                                accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+                                {% comment %}
+                                    TODO: Fill with the Events description text
+                                {% endcomment %}
                             </div>
                         </div>
                     </div>
@@ -64,6 +63,8 @@
                         <div class="page__content">
                             {% for event in events %}
                                 {% include 'agenda/includes/event_linecard_hover.html' %}
+                            {% empty %}
+                                <p>No upcomming events found.</p>
                             {% endfor %}
                         </div>
                     </div>
@@ -79,6 +80,8 @@
                             <div class="page__content">
                                 {% for event in past_events %}
                                     {% include 'agenda/includes/event_linecard_hover.html' %}
+                                {% empty %}
+                                    <p>No past events found.</p>
                                 {% endfor %}
                             </div>
                         </div>
