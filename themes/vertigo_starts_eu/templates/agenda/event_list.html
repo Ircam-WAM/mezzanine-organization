@@ -30,7 +30,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-16 col-md-12 col-md-push-2 tac">
-                    <h1 class="section-title section-title--uppercase section-title--main">{% trans "Events" %}</h1>
+                    <h1 class="section-title section-title--uppercase section-title--main">{% trans "Friki Events" %}</h1>
                 </div>
             </div>
             <div class="row">
@@ -52,7 +52,7 @@
                     <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
                         <div class="page__content">
                             {% for event in past_events %}
-                                {% include 'agenda/includes/event_linecard.html' %}
+                                {% include 'agenda/includes/event_linecard_hover.html' %}
                             {% endfor %}
                         </div>
                     </div>
