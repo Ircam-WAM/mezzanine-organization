@@ -24,7 +24,7 @@ $module: ".footer";
 
     /* Rectangle 2: */
     background-color: $color-main;
-    @include margin-top(10);
+    @include margin-top(1);
 
     @include mq($until: xs) {
         div[class^="col-"] {
