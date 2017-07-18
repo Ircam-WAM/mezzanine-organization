@@ -42,4 +42,6 @@ urlpatterns = [
     url("^network/$", OrganizationListView.as_view(), name='network'),
     url("^organization-linked-list-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
     url("^organization-linked-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
+    url(r'^person-activity-autocomplete/$', PersonActivityAutocompleteView.as_view(), name='person-activity-autocomplete'),
+    url(r'^work-packages-autocomplete/$', WorkPackageAutocompleteView.as_view(), name='work-packages-autocomplete'),
 ]

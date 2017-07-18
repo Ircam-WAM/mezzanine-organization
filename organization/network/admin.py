@@ -287,7 +287,6 @@ class TrainingLevelAdmin(BaseTranslationModelAdmin):
     model = TrainingLevel
 
 
-
 class TrainingSpecialityAdmin(BaseTranslationModelAdmin):
 
     model = TrainingSpeciality
@@ -305,6 +304,7 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
     list_filter = ['activity__person', 'year', 'month', 'project']
     actions = ['export_xls', 'validate_timesheets']
     first_fields = ['title',]
+    form = PersonActivityTimeSheetAdminForm
 
     def person(self, instance):
         return instance.activity.person

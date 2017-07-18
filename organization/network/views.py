@@ -330,3 +330,48 @@ class TimeSheetCreateCurrMonthView(TimeSheetCreateView):
 def fetch_work_packages(request, **kwargs):
     work_packages = ProjectWorkPackage.objects.filter(project_id=kwargs['project_id'])
     return HttpResponse(work_packages)
+
+
+class PersonActivityAutocompleteView(autocomplete.Select2QuerySetView):
+
+    def get_result_label(self, item):
+        return item.person.first_name + ' ' + item.person.last_name + "  -  " + item.__str__()
+
+    def get_queryset(self):
+        if not self.request.user.is_authenticated():
+            return PersonActivity.objects.none()
+
+        qs = PersonActivity.objects.all()
+
+        person_ln = self.forwarded.get('person__last_name', None)
+
+        if person_ln:
+            qs = qs.filter(person__last_name=person_ln)
+
+        if self.q:
+            qs = qs.filter(person__last_name__istartswith=self.q)
+
+        return qs
+
+
+
+class WorkPackageAutocompleteView(autocomplete.Select2QuerySetView):# ModelSelect2Multiple
+
+    def get_result_label(self, item):
+        return item.project.title + ' - ' + item.title
+
+    def get_queryset(self):
+        if not self.request.user.is_authenticated():
+            return ProjectWorkPackage.objects.none()
+
+        qs = ProjectWorkPackage.objects.all()
+
+        project_title = self.forwarded.get('project__title', None)
+
+        if project_title:
+            qs = qs.filter(project__title=project_title)
+
+        if self.q:
+            qs = qs.filter(project__title__istartswith=self.q)
+
+        return qs
