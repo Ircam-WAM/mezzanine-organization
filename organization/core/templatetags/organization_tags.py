@@ -247,8 +247,11 @@ def order_links(links):
     while links_list:
         minor = links_list[0]
         for link in links_list:
-            if (link.link_type.ordering < minor.link_type.ordering):
-                minor = link
+            try:
+                if (link.link_type.ordering < minor.link_type.ordering):
+                    minor = link
+            except TypeError:
+                pass
         ordered_links.append(link)
         links_list.remove(minor)
     return ordered_links
