@@ -50,6 +50,7 @@
         </div>
     </div>
     <div class="container">
+        {% if jury|length > 0 %}
             <div class="col-md-8 col-md-push-4 tac">
                 <div class="row">
                     <div>
@@ -57,12 +58,13 @@
                             <div class="col-md-8">
                                 {% include "network/inc/jury/jury_card_box.html" %}
                             </div>
-                        {% empty %}
-                            <p>No jury members found.</p>
                         {% endfor %}
                     </div>
                 </div>
             </div>
+        {% else %}
+            <p style="margin-top: 20px;">No jury members found.</p>
+        {% endif %}
     </div>
 
 {% endblock %}
