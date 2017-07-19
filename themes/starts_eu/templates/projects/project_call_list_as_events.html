@@ -28,24 +28,32 @@
 {% block main %}
     <div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
         <div class="container">
-            {% comment %}
-            <div class="" style="padding: 3rem;"></div>
-            {% endcomment %}
+            {# Same title style than CustomPage content #}
             <div class="row">
-                <div class="col-sm-16 col-md-12 col-md-push-2 tac">
-                    <h1 class="section-title section-title--uppercase section-title--main">{% trans "Open Calls" %}</h1>
-
-                </div>
+                <div class="col-sm-16 col-md-12 col-md-push-2 tac"></div>
             </div>
             <div class="row">
-                <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
-                    <div class="page__content">
-                        {% for event in open_calls %}
-                            {% include 'starts_eu/agenda/includes/event_linecard.html' %}
-                        {% endfor %}
+                <h2 style="text-align: center;">
+                    Events
+                </h2>
+            </div>
+            {% if open_calls %}
+                <div class="row">
+                    <div class="col-sm-16 col-md-12 col-md-push-2 tac">
+                        <h1 class="section-title section-title--uppercase section-title--main">{% trans "Open Calls" %}</h1>
+
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
+                        <div class="page__content">
+                            {% for event in open_calls %}
+                                {% include 'starts_eu/agenda/includes/event_linecard.html' %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             {% if closed_calls %}
                 <div class="row">
                     <div class="col-sm-16 col-md-12 col-md-push-2 tac">

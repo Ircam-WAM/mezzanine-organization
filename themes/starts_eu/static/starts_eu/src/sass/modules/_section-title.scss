@@ -11,8 +11,8 @@ $module: ".section-title";
     display: inline-block;
     line-height: 1.5em;
 
-    @include margin-bottom(4);
-    @include margin-top(5);
+    @include margin-bottom(0.5);
+    @include margin-top(1);
 
     @include mq($until: md) {
 

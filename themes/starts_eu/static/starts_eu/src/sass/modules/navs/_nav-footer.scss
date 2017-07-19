@@ -31,23 +31,54 @@ $module: ".nav-footer";
         #{$module}__item {
 
             display: inline-block;
-            @include margin-right(2);
-
-        }
-
-        #{$module}__item-link {
-
-            @include font-size(s);
+            @include margin-left(0.5);
+            @include margin-right(0.5);
 
         }
 
     }
 
     &__item-link {
-        @include font-size(m);
+        @include font-size(xxxl);
         @include typeface(sans-serif);
         font-weight: weight(regular);
         color: white;
+        
+        &:hover {
+            &.facebook {
+                color: $color-facebook;
+            }
+            &.twitter {
+                color: $color-twitter;
+            }
+            &.instagram {
+                color: $color-instagram;
+            }
+            &.youtube {
+                color: $color-youtube;
+            }
+            &.vimeo {
+                color: $color-vimeo;
+            }
+            &.linkedin {
+                color: $color-linkedin;
+            }
+            &.googleplus {
+                color: $color-googleplus;
+            }
+            &.tumblr {
+                color: $color-tumblr;
+            }
+            &.pinterest {
+                color: $color-pinterest;
+            }
+            &.vine {
+                color: $color-vine;
+            }
+            &.soundcloud {
+                color: $color-soundcloud;
+            }
+        }
     }
 
 }

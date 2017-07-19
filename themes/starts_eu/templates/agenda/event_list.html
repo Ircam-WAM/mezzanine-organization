@@ -28,32 +28,38 @@
 {% block main %}
     <div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
         <div class="container">
-            <div class="" style="padding: 3rem;"></div>
-            {% comment %}
+            {# Same title style than CustomPage content #}
             <div class="row">
-                <div class="col-sm-16 col-md-12 col-md-push-2 tac">
-                    <h1 class="section-title section-title--uppercase section-title--main">{% trans "Events" %}</h1>
-
-                </div>
+                <div class="col-sm-16 col-md-12 col-md-push-2 tac"></div>
             </div>
-            {% endcomment %}
             <div class="row">
-                <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
-                    <div class="page__content">
-                        {% for event in events %}
-                            {% include 'agenda/includes/event_linecard.html' %}
-                        {% endfor %}
+                <h2 style="text-align: center;">
+                    Events
+                </h2>
+            </div>
+            {% if events %}
+                <div class="row">
+                    <div class="col-sm-16 col-md-12 col-md-push-2 tac">
+                        <h1 class="section-title section-title--uppercase section-title--main">{% trans "Events" %}</h1>
+
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
+                        <div class="page__content">
+                            {% for event in events %}
+                                {% include 'agenda/includes/event_linecard.html' %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             {% if past_events %}
-                {% comment %}
                 <div class="row">
                     <div class="col-sm-16 col-md-12 col-md-push-2 tac">
                         <h1 class="section-title section-title--uppercase section-title--main">{% trans "Past events" %}</h1>
                     </div>
                 </div>
-                {% endcomment %}
                 <div class="row">
                     <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
                         <div class="page__content">
