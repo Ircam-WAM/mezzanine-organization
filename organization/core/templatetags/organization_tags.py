@@ -32,6 +32,7 @@ from mezzanine.conf import settings
 from random import shuffle
 from organization.magazine.models import *
 from organization.projects.models import *
+from organization.core.models import *
 
 register = Library()
 
@@ -238,3 +239,16 @@ def filter_content(dynamic_contents):
         else :
             dict["other"].append(dc)
     return dict
+
+@register.filter
+def order_links(links):
+    links_list = list(links)
+    ordered_links = []
+    while links_list:
+        minor = links_list[0]
+        for link in links_list:
+            if (link.link_type.ordering < minor.link_type.ordering):
+                minor = link
+        ordered_links.append(link)
+        links_list.remove(minor)
+    return ordered_links

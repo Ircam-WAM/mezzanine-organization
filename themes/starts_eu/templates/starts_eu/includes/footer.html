@@ -8,15 +8,17 @@
         <div class="row">
             <div class="col-xxs-16 col-sm-14 col-sm-push-1 tac fcb">
                 <ul class="nav-footer nav-footer--horizontal" role="navigation">
-                    {% for link in host_organization.links.all %}
-                        <li class="nav-footer__item">
-                            {% with link.link_type as type %}
-                                <a class="nav-footer__item-link {{ type.slug }}" href="{{ link.url }}" target="_blank" title="{% trans 'Follow us on' %} {{ type.name }}">
-                                    <i class="fa fa-{{ type.fa_option }}"></i>
-                                </a>
-                            {% endwith %}
-                        </li>
-                    {% endfor %}
+                    {% with host_organization.links.all|order_links as ordered_links %}
+                        {% for link in ordered_links %}
+                            <li class="nav-footer__item">
+                                {% with link.link_type as type %}
+                                    <a class="nav-footer__item-link {{ type.slug }}" href="{{ link.url }}" target="_blank" title="{% trans 'Follow us on' %} {{ type.name }}">
+                                        <i class="fa fa-{{ type.fa_option }}"></i>
+                                    </a>
+                                {% endwith %}
+                            </li>
+                        {% endfor %}
+                    {% endwith %}
                 </ul>
             </div>
         </div>
