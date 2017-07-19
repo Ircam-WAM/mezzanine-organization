@@ -42,6 +42,7 @@
                             <h2 class="event-line-box__bold-text event-line-box__center-text">The Jury</h2><br>
                             <div class="event-line-box__margins">
                                 {{ description }}
+                                {# Fill the description for Jury section #}
                             </div>
                         </div>
                     </div>
@@ -56,6 +57,7 @@
                     <div>
                         {% for member in jury %}
                             <div class="col-md-8">
+                                {# Card included for each jury #}
                                 {% include "network/inc/jury/jury_card_box.html" %}
                             </div>
                         {% endfor %}
@@ -63,7 +65,7 @@
                 </div>
             </div>
         {% else %}
-            <p style="margin-top: 20px;">No jury members found.</p>
+            <p class="jury-box__top-margin">No jury members found.</p>
         {% endif %}
     </div>
 

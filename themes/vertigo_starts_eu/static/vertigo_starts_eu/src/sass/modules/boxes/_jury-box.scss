@@ -116,4 +116,9 @@ $module: ".jury-box";
         color: white;
         @include transition(color 0.5s ease-in-out);
     }
+
+    &__top-margin {
+
+        margin-top: 20px;
+    }
 }
