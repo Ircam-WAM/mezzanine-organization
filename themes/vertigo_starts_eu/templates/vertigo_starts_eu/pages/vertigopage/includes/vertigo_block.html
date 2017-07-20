@@ -1,0 +1,62 @@
+{% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
+
+{% if blocks %}
+
+    <div class="pb2">
+
+        {% if blocks|length == 1 %}
+
+            {# TODO: Use background color #}
+            <div class="page__block event-line-box__block--white">
+                <div class="container">
+                    <div class="row" data-summary-content>
+                        <div class="col-sm-16 col-md-12 col-md-push-2 event-line-box__margin-paragraph-bottom">
+                            <div class="event-line-box__text-event-paragraph event-line-box__dark-blue">
+                                {% with blocks|first as block %}
+                                    <h2 class="event-line-box__bold-text event-line-box__center-text">{{ block.title }}</h2><br>
+                                    <div class="event-line-box__margins">
+                                        {% if block.content %}
+                                            {{ block.content|richtext_filters|safe }}
+                                        {% endif %}
+                                    </div>
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+
+            {# TODO: Check this #}
+            {% for block in blocks %}
+                {% if block.content %}
+                    {% if block.with_separator %}
+                        <hr />
+                    {% endif %}
+                    <div>
+                        <div class="container">
+                            <div class="row" data-summary-content>
+                                <div class="col-sm-16 col-md-12 col-md-push-2">
+                                    {% editable block.title %}
+                                        <div class="page__block-title">
+                                            <a id='title' class="button vertigopage__sibling {% if forloop.first %}active{% endif %}" href="#"  onclick="javascript::clickedLinkVertigo(this,event,{{ block.title }});">{{ block.title }}</a>
+                                        </div>
+                                    {% endeditable %}
+                                    {% if block.content %}
+                                        {% editable block.content %}
+                                            {{ block.content|richtext_filters|safe }}
+                                        {% endeditable %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+
+{% endif %}

@@ -37,6 +37,14 @@ class CustomPage(Page, SubTitled, RichText):
         verbose_name = 'custom page'
 
 
+class VertigoPage(Page, SubTitled, RichText):
+
+    objects = CustomSearchableManager()
+
+    class Meta:
+        verbose_name = "vertigo page"
+
+
 class PageBlock(Block):
 
     page = models.ForeignKey(Page, verbose_name=_('page'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)

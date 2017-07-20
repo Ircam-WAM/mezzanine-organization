@@ -1,0 +1,54 @@
+{% extends "vertigo_starts_eu/pages/page.html" %}
+{% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
+
+{% block page_class %}
+    vertigopage
+{% endblock %}
+
+{% block body_class %}
+    {% with page.get_ascendants|last as top_level_parent %}
+        {% if top_level_parent.get_content_model.weaving_css_class %}
+            pattern pattern-bg {{ top_level_parent.get_content_model.weaving_css_class }}
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block page_title %}
+    {% with page.get_ascendants|first as parent %}
+        {% if parent %}
+            {% children_pages parent.id as childrens %}
+            {% if childrens|length > 1 %}
+                {# TODO: Multititle #}
+                {% for children in childrens %}
+                    <h1 class="section-title section-title--uppercase section-title--main">{{ children.title }}</h1>
+                {% endfor %}
+                {# TODO end #}
+            {% else %}
+                <h1 class="section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1>
+            {% endif %}
+        {% else %}
+            <h1 class="section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1>
+        {% endif%}
+    {% endwith %}
+{% endblock %}
+
+{% block page_content %}
+    {% if page.vertigopage.content %}
+        {{ page.vertigopage.content|richtext_filters|safe }}
+    {% endif %}
+{% endblock %}
+
+{% block page_sub_content %}
+    {% with page.vertigopage.blocks.all as blocks %}
+        {% include "vertigo_starts_eu/pages/vertigopage/includes/vertigo_block.html" %}
+  {% endwith %}
+{% endblock %}
+
+{# TODO: Related content #}
+{% comment %}
+{% block page_related_content %}
+    {% with dynamic_content=page.dynamic_content_pages.all|filter_content object=page %}
+        {% include "core/inc/related_content.html" %}
+    {% endwith %}
+{% endblock %}
+{% endcomment %}

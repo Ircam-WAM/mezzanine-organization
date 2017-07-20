@@ -55,6 +55,12 @@ class CustomPageTranslationOptions(TranslationOptions):
     fields = ('sub_title', 'content')
 
 
+@register(VertigoPage)
+class VertigoPageTranslationOptions(TranslationOptions):
+
+    fields = ('sub_title', 'content')
+
+
 @register(PageBlock)
 class PageBlockTranslationOptions(TranslationOptions):
 

@@ -109,6 +109,18 @@ class CustomPageAdmin(PageAdmin):
             ]
 
 
+class VertigoPageAdmin(PageAdmin):
+
+    inlines = [PageBlockInline,
+            PageImageInline,
+            PagePlaylistInline,
+            PageLinkInline,
+            PageProductListInline,
+            PageRelatedTitleAdmin,
+            DynamicContentPageInline
+            ]
+
+
 class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
 
     model = DynamicContentHomeSlider
@@ -147,6 +159,7 @@ class HomeAdminDisplayable(BaseTranslationModelAdmin):
 
 
 admin.site.register(CustomPage, CustomPageAdmin)
+admin.site.register(VertigoPage,VertigoPageAdmin)
 admin.site.register(Home, HomeAdminDisplayable)
 admin.site.unregister(MezzanineLink)
 admin.site.register(MezzanineLink, LinkImageAdmin)
