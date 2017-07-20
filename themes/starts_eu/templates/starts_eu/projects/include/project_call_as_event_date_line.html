@@ -1,0 +1,24 @@
+{% load event_tags pages_tags mezzanine_tags organization_tags i18n  %}
+    <!-- date_from date only  -->
+    {% if event.date_from and not event.date_to %}
+        {{ event.date_from|date:"DATE_EVENT_FORMAT" }}
+    <!-- date_from and date_to date  -->
+    {% else %}
+        <!-- date_from and date_to date is the same day  -->
+        {% if event.date_from|date:"d.m.y" == event.date_to|date:"d.m.y" %}
+            {{ event.date_from|date:"DATE_EVENT_FORMAT" }}
+        <!-- date_from and date_to date are the same month  -->
+        {% elif event.date_from|date:"m.y" == event.date_to|date:"m.y" %}
+            {{ event.date_from|date:"WEEK_DAY_FORMAT" }}
+            {% if event.date_to|subtract:event.date_from|get_attr:"days" > 1 %}
+                {% trans "through" %}
+            {% else %}
+                {% trans "and" %}
+            {% endif %}
+            {{ event.date_to|date:"DATE_EVENT_FORMAT" }}
+        <!-- date_from and date_to date are completely different  -->
+        {% else %}
+            {{ event.date_from|date:"DATE_EVENT_FORMAT" }} {% trans "through" %} {{ event.date_to|date:"DATE_EVENT_FORMAT" }}
+        {% endif %}
+
+    {% endif %}
