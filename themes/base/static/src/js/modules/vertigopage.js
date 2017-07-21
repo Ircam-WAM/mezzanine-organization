@@ -2,12 +2,12 @@ function clickedLinkVertigo(link,event) {
 
     event.preventDefault();
 
-    var buttons = document.getElementsByClassName('vertigopage__button');
+    var linksItems = document.getElementsByClassName('vertigopage__button');
 
-    for (var i = 0; i < buttons.length; i++)
+    for (var i = 0; i < linksItems.length; i++)
     {
         var indexItem = i + 1;
-        var buttonLink = buttons[i];
+        var buttonLink = linksItems[i];
 
         buttonLink.classList.remove('vertigopage__selected');
         buttonLink.classList.remove('vertigopage__unselected');
