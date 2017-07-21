@@ -21,19 +21,65 @@ $module: ".vertigopage";
 
 #{$module} {
 
-    color: $color-white;
+    color: #C3C3C3;;
 
     &__selected {
 
-         color: $color-main;
+         color: #50E3C2;
     }
 
     &__unselected {
 
-         color: $color-white;
+         color: #C3C3C3;
     }
 
-    &__sibling {
+    &__section-title {
 
+        font-family: "Oswald", sans-serif;
+        font-size: 16px;
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: center;
+        color: #50E3C2;
+        display: inline-block;
+        line-height: 1.5em;
+        margin-bottom: 96px;
+        margin-bottom: 6rem;
+        margin-top: 120px;
+        margin-top: 7.5rem;
+        margin-right: 60px;
+        margin-left: 60px;
+    }
+
+    &__button {
+
+        background: none;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        font-weight: normal;
+        margin-right: 30px;
+        margin-left: 30px;
+        padding: 0;
+        width: 280px;
+        margin-bottom: 0px;
+
+        &:hover {
+
+            background: none;
+            color: #50E3C2;
+        }
+    }
+
+    &__visible {
+
+        display: block;
+    }
+
+    &__invisible {
+
+        display: none;
     }
 }

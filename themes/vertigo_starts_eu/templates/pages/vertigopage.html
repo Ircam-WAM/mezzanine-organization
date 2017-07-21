@@ -20,14 +20,14 @@
             {% if childrens|length > 1 %}
                 {# TODO: Multititle #}
                 {% for children in childrens %}
-                    <h1 class="section-title section-title--uppercase section-title--main">{{ children.title }}</h1>
+                    <a href="#"><h1 class="vertigopage__section-title section-title--uppercase section-title--main">{{ children.title }}</h1></a>
                 {% endfor %}
                 {# TODO end #}
             {% else %}
-                <h1 class="section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1>
+                <a href="#"><h1 class="vertigopage__section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1></a>
             {% endif %}
         {% else %}
-            <h1 class="section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1>
+            <a href="#"><h1 class="vertigopage__section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1></a>
         {% endif%}
     {% endwith %}
 {% endblock %}
@@ -41,7 +41,7 @@
 {% block page_sub_content %}
     {% with page.vertigopage.blocks.all as blocks %}
         {% include "vertigo_starts_eu/pages/vertigopage/includes/vertigo_block.html" %}
-  {% endwith %}
+    {% endwith %}
 {% endblock %}
 
 {# TODO: Related content #}
