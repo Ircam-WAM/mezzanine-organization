@@ -37,7 +37,7 @@ function clickedLinkVertigo(link,event) {
 {% if blocks %}
 
     <div class="pb2">
-
+        {% comment %}
         {% if blocks|length == 1 %}
 
             {% with blocks|first as block %}
@@ -60,7 +60,7 @@ function clickedLinkVertigo(link,event) {
             {% endwith %}
 
         {% else %}
-
+        {% endcomment %}
             <div class ="row residency-detail__margin-row">
                 <div class="col-sm-16 col-md-12 residency-detail__center-buttons">
                     {% for block in blocks %}
@@ -73,7 +73,7 @@ function clickedLinkVertigo(link,event) {
 
             {% for block in blocks %}
                 {% if block.content %}
-                    <div id="content-{{forloop.counter}}" class="page__block page__block--{{ block.background_color }} {% if forloop.first %}vertigopage__visible{% else %}vertigopage__invisible{% endif %}">
+                    <div id="content-{{forloop.counter}}" class="page__block page__block--{{ block.background_color }} vertigopage__space--white {% if forloop.first %}vertigopage__visible{% else %}vertigopage__invisible{% endif %}">
                         <div class="container">
                             {% if block.content %}
                                 {{ block.content|richtext_filters|safe }}
@@ -82,9 +82,9 @@ function clickedLinkVertigo(link,event) {
                     </div>
                 {% endif %}
             {% endfor %}
-
+        {% comment %}
         {% endif %}
-
+        {% endcomment %}
     </div>
 
 {% endif %}

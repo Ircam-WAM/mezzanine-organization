@@ -20,14 +20,14 @@
             {% if childrens|length > 1 %}
                 {# TODO: Multititle #}
                 {% for children in childrens %}
-                    <a href="#"><h1 class="vertigopage__section-title section-title--uppercase section-title--main">{{ children.title }}</h1></a>
+                    <a href="#"><h1 class="vertigopage__section-title section-title--uppercase section-title--main {% if page == children %}event-line-box__underline-text-green{% endif %}">{{ children.title }}</h1></a>
                 {% endfor %}
                 {# TODO end #}
             {% else %}
-                <a href="#"><h1 class="vertigopage__section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1></a>
+                <a href="#"><h1 class="page__section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1></a>
             {% endif %}
         {% else %}
-            <a href="#"><h1 class="vertigopage__section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1></a>
+            <a href="#"><h1 class="page__section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1></a>
         {% endif%}
     {% endwith %}
 {% endblock %}
