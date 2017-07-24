@@ -20,15 +20,29 @@
             {% if childrens|length > 1 %}
                 {# TODO: Multititle #}
                 {% for children in childrens %}
-                    <a href="#"><h1 class="vertigopage__section-title section-title--uppercase section-title--main {% if page == children %}event-line-box__underline-text-green{% endif %}">{{ children.title }}</h1></a>
+                    <a href="#"><h1 class="vertigopage__section-title section-title--uppercase section-title--main {% if page == children %}event-line-box__underline-text-green{% endif %} vertigopage__margin-collapse">{{ children.title }}</h1></a>
                 {% endfor %}
                 {# TODO end #}
             {% else %}
-                <a href="#"><h1 class="page__section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1></a>
+                <a href="#"><h1 class="page__section-title section-title--uppercase section-title--main vertigopage__margin-collapse">{{ page.vertigopage.title }}</h1></a>
             {% endif %}
         {% else %}
-            <a href="#"><h1 class="page__section-title section-title--uppercase section-title--main">{{ page.vertigopage.title }}</h1></a>
+            <a href="#"><h1 class="page__section-title section-title--uppercase section-title--main vertigopage__margin-collapse">{{ page.vertigopage.title }}</h1></a>
         {% endif%}
+    {% endwith %}
+
+    {% with page.images.all|get_type:'logo_header' as images %}
+        {% if images %}
+            {% with images|first as image %}
+                <div class="vertigopage__header-image" style="background-image: linear-gradient(180deg, transparent, transparent 50%, rgba(0,0,0,.8)), url('{{ MEDIA_URL }}{% thumbnail image.file 1897 500 top=0.5 %}');">
+                    <div class="vertigopage__header-text">
+                        <span>
+                            {{ image.description }}
+                        </span>
+                    </div>
+                </div>
+            {% endwith %}
+        {% endif %}
     {% endwith %}
 {% endblock %}
 

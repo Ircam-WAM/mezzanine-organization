@@ -43,8 +43,6 @@ $module: ".vertigopage";
         color: #50E3C2;
         display: inline-block;
         line-height: 1.5em;
-        margin-bottom: 96px;
-        margin-bottom: 6rem;
         margin-top: 120px;
         margin-top: 7.5rem;
         margin-right: 60px;
@@ -86,5 +84,66 @@ $module: ".vertigopage";
     &__space--white {
 
 	    margin: 1rem 0 0 0;
+    }
+
+    &__header-image {
+
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 30px;
+        display: block;
+        height: 300px;
+        position:relative;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        & span {
+
+            font-family: "Oswald", sans-serif;
+            position: relative;
+            margin: 0 auto;
+            width: 100%;
+            top: 120px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+
+    &__margin-collapse {
+
+        margin-bottom: 0px;
+    }
+
+    &__header-text {
+
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-bottom: 5%;
+        margin-top: 2%;
+        color: $color-white;
+        line-height: 250%;
+    }
+
+    &__image {
+
+        margin: 0;
+        padding: 0;
+        width: 90%;
+        position: relative;
+        overflow: hidden;
+
+        @include fluid-aspect(427 286);
+
+        img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+
+            @include transition(all 0.5s ease-in-out);
+
+            mix-blend-mode: screen;
+        }
     }
 }
