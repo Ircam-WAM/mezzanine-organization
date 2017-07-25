@@ -56,11 +56,10 @@
                     </p>
                 {% endif %}
             {% endfor %}
-        {% else %}
-            <p>
-                {{ event.no_price_comments }}
-            </p>
         {% endif %}
+        <p>
+            {{ event.no_price_comments }}
+        </p>
         {% if not event.is_full %}
         <p>
             {% if event.trainings.all|length and not event.external_id %}
