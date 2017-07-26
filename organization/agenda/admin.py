@@ -30,7 +30,7 @@ from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from mezzanine.conf import settings
 from mezzanine.core.admin import DisplayableAdmin, OwnableAdmin
-from mezzanine_agenda.models import Event, EventCategory
+from mezzanine_agenda.models import Event, EventCategory, Season
 from mezzanine_agenda.admin import *
 from organization.core.models import *
 from organization.agenda.models import *
@@ -103,6 +103,7 @@ class DynamicContentEventInline(TabularDynamicInlineAdmin):
             static("mezzanine/js/admin/dynamic_inline.js"),
         )
 
+
 class EventParentFilter(admin.SimpleListFilter):
     # Human-readable title which will be displayed in the
     # right admin sidebar just above the filter options.
@@ -136,6 +137,25 @@ class EventParentFilter(admin.SimpleListFilter):
             return queryset.exclude(parent__isnull=True)
 
 
+class SeasonFilter(admin.SimpleListFilter):
+
+    title = _('Seasons')
+    parameter_name = 'seaon'
+
+    def lookups(self, request, model_admin):
+        seasons = Season.objects.all();
+        season_lookups = ()
+        for season in seasons:
+            season_lookups = season_lookups + ((str(season.start.year), season.title),)
+        return season_lookups
+
+    def queryset(self, request, queryset):
+
+        if self.value():
+            season = Season.objects.get(start__year=self.value())
+            return queryset.filter(start__range=[season.start, season.end])
+
+
 class CustomEventAdmin(EventAdmin):
     """
     Admin class for events.
@@ -153,7 +173,7 @@ class CustomEventAdmin(EventAdmin):
     list_display = ["title", "start", "end", "user", "status", "is_parent","admin_link"]
     if settings.EVENT_USE_FEATURED_IMAGE:
         list_display.insert(0, "admin_thumb")
-    list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location", "category", EventParentFilter)
+    list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location", "category", EventParentFilter, SeasonFilter)
     inlines = [EventPeriodInline, EventBlockInline, EventImageInline, EventDepartmentInline,
                 EventPersonInline, EventLinkInline, EventPlaylistInline, EventTrainingInline,
                 EventRelatedTitleAdmin, DynamicContentEventInline]
