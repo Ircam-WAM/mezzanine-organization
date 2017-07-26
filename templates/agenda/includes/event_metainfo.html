@@ -41,41 +41,43 @@
 {% endif %}
 
 {% if unit_booking %}
-    {% if event.prices.all %}
-        {% if event.prices.all.0|floatformat != '0' %}
-            {% for price in event.prices.all %}
-                {% if forloop.first %}
-                    <div class="page__meta-title page__meta-title--small">{% trans "Prices" %}</div>
-                    <p class="page__meta-text">
-                {% endif %}
-                {% if price.event_price_description.description %}
-                    {{ price.event_price_description.description }} :
-                {% endif %}
-                {{ price.value|floatformat:"-2" }} {{ price.unit }} {% if not forloop.last %} <br /> {% endif %}
-                {% if forloop.last %}
-                    </p>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        <p>
-            {{ event.no_price_comments }}
-        </p>
-        {% if not event.is_full %}
-        <p>
-            {% if event.trainings.all|length and not event.external_id %}
-                {% with event.links.all as links %}
-                    {% if links %}
-                        <a class="button button--block" href="{{ links|get_type_link:'link'|first }}" class="event__meta__btn">
-                            {% trans "Reserve" %}
-                        </a>
+    {% with event.prices.all as prices %}
+        {% if prices %}
+            {% if prices.0|floatformat != '0' %}
+                {% for price in prices %}
+                    {% if forloop.first %}
+                        <div class="page__meta-title page__meta-title--small">{% trans "Prices" %}</div>
+                        <p class="page__meta-text">
                     {% endif %}
-                {% endwith %}
-            {% elif event.external_id  %}
-                <a class="button button--block" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
-                    {% trans "Reserve" %}
-                </a>
+                    {% if price.event_price_description.description %}
+                        {{ price.event_price_description.description }} :
+                    {% endif %}
+                    {{ price.value|floatformat:"-2" }} {{ price.unit }} {% if not forloop.last %} <br /> {% endif %}
+                    {% if forloop.last %}
+                        </p>
+                    {% endif %}
+                {% endfor %}
             {% endif %}
-        </p>
         {% endif %}
-    {% endif %}
+        <p>
+            {{ event.no_price_comments|richtext_filters|safe }}
+        </p>
+        {% if prices and not event.is_full %}
+            <p>
+                {% if not event.external_id %}
+                    {% with event.links.all as links %}
+                        {% if links %}
+                            <a class="button button--block" href="{{ links|get_type_link:'link'|first }}" class="event__meta__btn">
+                                {% trans "Reserve" %}
+                            </a>
+                        {% endif %}
+                    {% endwith %}
+                {% else %}
+                    <a class="button button--block" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
+                        {% trans "Reserve" %}
+                    </a>
+                {% endif %}
+            </p>
+        {% endif %}
+    {% endwith %}
 {% endif %}
