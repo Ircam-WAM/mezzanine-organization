@@ -10,10 +10,20 @@
 {% block subtitle %}
     <div class="search-box__subtitle">
         {% include 'agenda/includes/event_date_line.html' with object=event %}
-        {% if event.prices.all.0|floatformat != '0' and event.prices.all|length > 0 and not is_archive and not event.is_full %}
-            <a class="button button--small ml1" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
-                {% trans "Reserve" %}
-            </a>
+        {% if event.prices.all|length > 0 and not is_archive and not event.is_full %}
+            {% if not event.external_id %}
+                {% with event.links.all as links %}
+                    {% if links %}
+                        <a class="button button--small ml1 event__meta__btn" href="{{ links|get_type_link:'link'|first }}">
+                            {% trans "Reserve" %}
+                        </a>
+                    {% endif %}
+                {% endwith %}
+            {% else %}
+                <a class="button button--small ml1 event__meta__btn" href="{% url 'event_booking' event.slug %}">
+                    {% trans "Reserve" %}
+                </a>
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}

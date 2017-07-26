@@ -166,4 +166,4 @@ class DynamicContentPageView(Select2QuerySetSequenceView):
 
     def get_results(self, context):
         results = autocomplete_result_formatting(self, context)
-        return results    
+        return results

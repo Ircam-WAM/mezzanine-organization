@@ -59,9 +59,11 @@
                 {% endfor %}
             {% endif %}
         {% endif %}
+        {% if event.no_price_comments %}
         <p>
             {{ event.no_price_comments|richtext_filters|safe }}
         </p>
+        {% endif %}
         {% if prices and not event.is_full %}
             <p>
                 {% if not event.external_id %}
