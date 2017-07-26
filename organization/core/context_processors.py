@@ -23,12 +23,17 @@ from django.conf import settings # import the settings file
 from datetime import datetime, date
 from organization.pages.models import Page
 from organization.network.models import Organization, OrganizationLinkedInline, Person
+from mezzanine_agenda.models import Season
 
 def organization_settings(request):
     date_now = datetime.now()
     # SEASON
-    current_season = int(date_now.year) - 1 if datetime(date_now.year, 1,1) <= date_now and date_now <= datetime(date_now.year, 7, 31) else date_now.year
-    current_season_styled = str(current_season)[-2:]+"."+str(current_season+1)[-2:]
+    current_season, created = Season.objects.get_or_create(
+        start__year=date_now.year,
+        defaults={'title' : 'Season ' + str(date_now.year) + '-' + str(date_now.year + 1),
+                  'start' : date(date_now.year, 7, 31),
+                  'end' : date(date_now.year + 1, 8, 1)})
+    current_season_styled = str(current_season.start.year)[-2:]+"."+str(current_season.end.year)[-2:]
 
     # NEWSLETTER
     newsletter_page = Page.objects.filter(slug="newsletter")
@@ -52,7 +57,7 @@ def organization_settings(request):
 
     research_slug = "recherche"
 
-    return {'current_season': current_season,
+    return {'current_season_year': current_season.start.year,
             'current_season_styled': current_season_styled,
             'newsletter_subscribing_url': newsletter_subscribing_url,
             'host_organization': host_org,

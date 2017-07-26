@@ -57,59 +57,9 @@
                             </div>
                         </a>
                         {% endif %}
-
                         <div class="nav-tree-wrapper" data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="971">
-                            {% if not tag and not is_archive %}
-                                {% page_menu "pages/menus/current_tree_event.html" %}
-                            {% else %}
-                                <ul class="nav-tree nav-tree--level-{{ branch_level }}">
-                                    <li class="nav-tree__item">
-                                        <a class="nav-tree__link active" href="{% url 'event_list' %}">
-                                            {% if tag and tag|tag_is_excluded %}
-                                                {% trans "On tour" %}
-                                            {% elif is_archive %}
-                                                {% trans 'Archives' %}
-                                            {% else %}
-                                                {% trans "Rendez-vous in Paris" %}
-                                            {% endif %}
-                                        </a>
+                            {% page_menu "pages/menus/current_tree_event.html" %}
 
-                                        <ul class="nav-tree" data-summary>
-                                            <li class="nav-tree__item nav-tree__item--sub hide">
-                                                <a class="nav-tree__link nav-tree__link--sub" href="#"></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                    {% if is_archive %}
-                                        <li class="nav-tree__item">
-                                            <a class="nav-tree__link" href="{% url 'event_list' %}">
-                                                {% trans "Rendez-vous in Paris" %}
-                                            </a>
-                                        </li>
-                                    {% endif %}
-
-                                    {% if tag and tag|tag_is_excluded %}
-                                        <li class="nav-tree__item">
-                                            <a class="nav-tree__link" href="{% url 'event_list' %}">
-                                                {% trans "Rendez-vous in Paris" %}
-                                            </a>
-                                        </li>
-                                    {% else %}
-                                        <li class="nav-tree__item">
-                                            <a class="nav-tree__link" href="{% url 'event_list_tag' 'tournees' %}">
-                                                {% trans "On tour" %}
-                                            </a>
-                                        </li>
-                                    {% endif %}
-
-                                    {% if not is_archive %}
-                                        <li class="nav-tree__item">
-                                            <a class="nav-tree__link" href="{% url "event_list_year" current_season %}" title="{% trans 'archive' %}">{% trans 'Archives' %}</a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            {% endif %}
 
                             {% if tag and not tag|tag_is_excluded or not tag and not is_archive %}
                                 <ul class="nav-tree nav-tree--level-{{ branch_level }}">

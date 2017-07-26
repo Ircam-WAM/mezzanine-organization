@@ -88,17 +88,6 @@ class PersonDetailView(SlugMixin, DetailView):
         return context
 
 
-class ProfileDetailView(RedirectView):
-
-    permanent = False
-    query_string = True
-    pattern_name = 'organization-network-person-detail'
-
-    def get_redirect_url(self, *args, **kwargs):
-        article = get_object_or_404(Article, pk=kwargs['pk'])
-        article.update_counter()
-        return super(ArticleCounterRedirectView, self).get_redirect_url(*args, **kwargs)
-
 class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):
 
     def get_queryset(self):

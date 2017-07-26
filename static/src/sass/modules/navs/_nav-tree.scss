@@ -137,6 +137,24 @@ $module: ".nav-tree";
             }
         }
 
+        &--niv4 {
+            @include padding-left(3);
+            background: lighten($color_main, 30%);
+            color: $color-black-light;
+
+            @include transition(all 0.25s ease-in-out);
+
+            &.active, &:hover {
+                background: lighten($color_main, 20%);
+                padding: 8px 20px;
+                @include padding-left(3);
+                color: $color-black-light;
+                font-weight: weight(regular);
+                @include font-size(xs);
+                color: black;
+            }
+        }
+
         &.alinea {
             padding-left: 45px
         }

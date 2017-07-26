@@ -52,6 +52,7 @@ Summary.prototype.init = function() {
                     that.$links.forEach(function (elem) {
                         elem.removeClass('active');
                     });
+
                     $('[href="#' + $(this.element).attr('id') + '"]').addClass('active');
                 }, {
                     offset: '200'
@@ -63,7 +64,6 @@ Summary.prototype.init = function() {
                     });
                     var sectionNumber = parseInt($(this.element).attr('id').substr(8));
                     sectionNumber--;
-                    console.log(sectionNumber);
                     $('[href="#section-' + sectionNumber + '"]').addClass('active');
                 }, {
                     offset: '50%'
