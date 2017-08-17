@@ -26,7 +26,14 @@
         {# Copyright #}
         <div class="row">
             <div class="col-xxs-16 col-sm-14 col-sm-push-1 tac fcb">
-                Copyright &copy; {% current_year %} {{ host_organization.name }}. {% trans "All rights reserved" %}.
+                <div style="margin: auto; margin-bottom: 10px; width: 60%">
+                    <i>The sole responsibility for the content of this webpage lies with the authors. It does not necessarily reflect the opinion of the European Union. Neither the authors nor the European Commission are responsible for any use that may be made of the information contained therein.</i>
+                </div>
+                <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+                    <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+                </a>
+                <br />
+                Copyright &copy; {% current_year %} {{ host_organization.name }}.
             </div>
         </div>
 
