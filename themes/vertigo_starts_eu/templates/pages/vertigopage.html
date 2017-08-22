@@ -58,11 +58,12 @@
     {% endwith %}
 {% endblock %}
 
-{# TODO: Related content #}
-{% comment %}
-{% block page_related_content %}
-    {% with dynamic_content=page.dynamic_content_pages.all|filter_content object=page %}
-        {% include "core/inc/related_content.html" %}
-    {% endwith %}
+{% block page_extra_content %}
+    {% for extra_content in page.vertigopage.extra_content.all %}
+        {% if extra_content.template %}
+            {% with extra_content|filter_vertigo_page_extra_content as objects %}
+                {% include extra_content.template %}
+            {% endwith %}
+        {% endif %}
+    {% endfor %}
 {% endblock %}
-{% endcomment %}

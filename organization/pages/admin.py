@@ -109,6 +109,11 @@ class CustomPageAdmin(PageAdmin):
             ]
 
 
+class VertigoPageDynamicContentInline(TabularDynamicInlineAdmin):
+
+    model = VertigoPageDynamicContent
+
+
 class VertigoPageAdmin(PageAdmin):
 
     inlines = [PageBlockInline,
@@ -117,6 +122,7 @@ class VertigoPageAdmin(PageAdmin):
             PageLinkInline,
             PageProductListInline,
             PageRelatedTitleAdmin,
+            VertigoPageDynamicContentInline,
             DynamicContentPageInline
             ]
 

@@ -33,6 +33,7 @@ from random import shuffle
 from organization.magazine.models import *
 from organization.projects.models import *
 from organization.core.models import *
+from itertools import chain
 
 register = Library()
 
@@ -255,3 +256,19 @@ def order_links(links):
         ordered_links.append(link)
         links_list.remove(minor)
     return ordered_links
+
+@register.filter
+def filter_vertigo_page_extra_content(extra_content):
+    data = {}
+    if extra_content.name == "List of News":
+        qs = Article.objects.all()
+        qs = qs.filter(status=2)
+        medias = Media.objects.published()
+        qs = sorted(
+            chain(qs, medias),
+            key=lambda instance: instance.created,
+            reverse=True)
+        data["news"] = qs
+    elif extra_content.name == "List of Events":
+        pass
+    return data

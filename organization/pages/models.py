@@ -45,6 +45,39 @@ class VertigoPage(Page, SubTitled, RichText):
         verbose_name = "vertigo page"
 
 
+class VertigoPageDynamicContent(models.Model):
+
+    NONE = 0
+    LIST_NEWS = 1
+    LIST_EVENTS = 2
+
+    EXTRA_CONTENT_CHOICES = (
+        (NONE, "No extra content"),
+        (LIST_NEWS, "List of News"),
+        (LIST_EVENTS, "List of Events"),
+    )
+
+    TEMPLATE_CHOICES = (
+        (NONE, ""),
+        (LIST_NEWS, "magazine/article/vp_inc/article_list.html"),
+        (LIST_EVENTS, ""),
+    )
+
+    page = models.ForeignKey(VertigoPage, verbose_name="vertigo page", related_name="extra_content", blank=True, null=True, on_delete=models.SET_NULL)
+    extra_content = models.IntegerField(choices=EXTRA_CONTENT_CHOICES, default=NONE)
+
+    @property
+    def name(self):
+        return self.get_extra_content_display()
+
+    @property
+    def template(self):
+        try:
+            temp = dict(self.TEMPLATE_CHOICES)[self.extra_content]
+        except KeyError:
+            temp = ""
+        return temp
+
 class PageBlock(Block):
 
     page = models.ForeignKey(Page, verbose_name=_('page'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
