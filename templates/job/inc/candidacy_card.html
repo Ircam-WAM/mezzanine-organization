@@ -27,8 +27,10 @@
                     {% endif %}
                 {% endeditable %}
                 <br />
-                {% editable content.description %}
-                    {{ content.description|safe }}
+                {% editable content.content %}
+                    <div class="article-box__desc">
+                        {{ content.content|richtext_filters|safe|truncatechars_html:255 }}
+                    </div>
                 {% endeditable %}
             </div>
             {% if content.external_content and content.text_button_external %}
