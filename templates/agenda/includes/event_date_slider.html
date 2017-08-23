@@ -26,7 +26,15 @@
                         {{ period.date_from|time:"TIME_FORMAT" }} - {{ period.date_to|time:"TIME_FORMAT" }}
                     {% else %}
                         <span class="inline-date">{{ period.date_from|time:"TIME_FORMAT" }}</span>
-                        {% if not forloop.last and periods|length == 2 %} {% trans "and" %} {% elif forloop.last %}<span class="inline-date">,</span>{% endif %}
+                        {% if not forloop.last %}
+                            {% if periods|length == 2 %}
+                                {% trans "and" %}
+                            {% elif periods|length > 2 %}
+                                <span class="inline-date">,</span>
+                            {% endif %}
+                        {% elif forloop.last and periods|length > 1 %}
+                            <span class="inline-date">,</span>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             {% endif %}
