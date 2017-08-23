@@ -1,4 +1,4 @@
-{% load i18n pages_tags %}
+{% load i18n pages_tags organization_tags event_tags %}
 
 {% for page in page_branch %}
     {% if not has_home and page.is_primary and forloop.first %}
@@ -16,10 +16,13 @@
             </li>
         {% endif %}
         {% if page.has_children %}
-            {% page_menu page %}
-        {% else %}
-
+            {% if tag and tag|tag_is_excluded %}
+                <li class="breadcrumb__item" id="breadcrumb-menu-{{ page.html_id }}">
+                    {{ tag }}
+                </li>
+            {% else %}
+                {% page_menu page %}
+            {% endif %}
         {% endif %}
     {% endif %}
-
 {% endfor %}
