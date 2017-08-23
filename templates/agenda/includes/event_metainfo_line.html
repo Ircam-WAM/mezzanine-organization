@@ -16,15 +16,7 @@
 
     {% if event.prices.all and not is_archive and not event.is_full %}
         <p>
-            {% if not event.external_id %}
-                {% with event.links.all as links %}
-                    {% if links %}
-                        <a class="button mt1" href="{{ links|get_type_link:'link'|first }}" class="event__meta__btn">
-                            {% trans "Reserve" %}
-                        </a>
-                    {% endif %}
-                {% endwith %}
-            {% else %}
+            {% if event.external_id %}
                 <a class="button mt1" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
                     {% trans "Reserve" %}
                 </a>
