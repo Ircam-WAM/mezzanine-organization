@@ -46,6 +46,7 @@ class PageBlock(Block):
         verbose_name = _("block")
         verbose_name_plural = _("blocks")
         verbose_name = 'page block'
+        ordering = ['_order',]
 
 
 class PageImage(Image):
