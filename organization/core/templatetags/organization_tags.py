@@ -34,6 +34,7 @@ from organization.magazine.models import *
 from organization.projects.models import *
 from organization.core.models import *
 from itertools import chain
+from django.db.models import Q
 
 register = Library()
 
@@ -259,7 +260,7 @@ def order_links(links):
 
 @register.filter
 def filter_vertigo_page_extra_content(extra_content):
-    data = {}
+    context = {}
     if extra_content.name == "List of News":
         qs = Article.objects.all()
         qs = qs.filter(status=2)
@@ -268,7 +269,9 @@ def filter_vertigo_page_extra_content(extra_content):
             chain(qs, medias),
             key=lambda instance: instance.created,
             reverse=True)
-        data["news"] = qs
+        context["news"] = qs
     elif extra_content.name == "List of Events":
-        pass
-    return data
+        events = Event.objects.published()
+        context["events"] = events.filter(Q(start__gt=datetime.datetime.now()) | Q(end__gt=datetime.datetime.now()))
+        context["past_events"] = events.filter(end__lt=datetime.datetime.now()).order_by("start")
+    return context

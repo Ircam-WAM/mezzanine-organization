@@ -1,16 +1,9 @@
 {% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags staticfiles pages_tags %}
-<div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
+
+<div class="page">
     <div class="container">
 
-
         <div class="row">
-            <div class="col-sm-16 col-md-10 col-md-push-3 tac">
-                <h1 class="section-title section-title--uppercase section-title--main section-title--underline">{% trans "News" %}</h1>
-            </div>
-        </div>
-
-        <div class="row">
-
             <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
                 <div class="page__content">
                     <div class="container">
@@ -31,6 +24,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     {% pagination_for objects %}
 </div>

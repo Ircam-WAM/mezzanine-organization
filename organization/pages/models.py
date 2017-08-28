@@ -60,7 +60,7 @@ class VertigoPageDynamicContent(models.Model):
     TEMPLATE_CHOICES = (
         (NONE, ""),
         (LIST_NEWS, "magazine/article/vp_inc/article_list.html"),
-        (LIST_EVENTS, ""),
+        (LIST_EVENTS, "agenda/vp_inc/event_list.html"),
     )
 
     page = models.ForeignKey(VertigoPage, verbose_name="vertigo page", related_name="extra_content", blank=True, null=True, on_delete=models.SET_NULL)
