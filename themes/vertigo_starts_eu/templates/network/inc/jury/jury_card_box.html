@@ -1,0 +1,24 @@
+{% load organization_tags mezzanine_tags %}
+
+<div class="jury-box jury-box__person jury-box__margin-right" >
+    {% with member.images.all|get_type:'card' as card_images %}
+        {% if card_images %}
+            <div class="jury-box__header">
+                <figure>
+                    <img class="lazyload" src="{{ MEDIA_URL }}{% thumbnail card_images.first 427 500 top=0.5 %}" alt="member"/>
+                </figure>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="jury-box__content tal">
+
+        <h3 class="jury-box__title">{{ member.first_name }}&nbsp;{{ member.last_name }}</h3>
+
+        {% if member.description %}
+            <div class="jury-box__desc">{{ member.description|richtext_filters|safe|truncatechars_html:100 }}</div>
+        {% elif member.bio %}
+            <div class="jury-box__desc">{{ member.bio|richtext_filters|safe|truncatechars_html:100 }}</div>
+        {% endif %}
+    </div>
+</div>
