@@ -35,6 +35,7 @@ from organization.projects.models import *
 from organization.core.models import *
 from itertools import chain
 from django.db.models import Q
+from organization.pages.models import VertigoPageDynamicContent as VPDC
 
 register = Library()
 
@@ -261,17 +262,24 @@ def order_links(links):
 @register.filter
 def filter_vertigo_page_extra_content(extra_content):
     context = {}
-    if extra_content.name == "List of News":
-        qs = Article.objects.all()
-        qs = qs.filter(status=2)
+    if extra_content.choice == VPDC.LIST_NEWS:
+        news = Article.objects.all()
+        news = news.filter(status=2)
         medias = Media.objects.published()
-        qs = sorted(
-            chain(qs, medias),
+        news = sorted(
+            chain(news, medias),
             key=lambda instance: instance.created,
             reverse=True)
-        context["news"] = qs
-    elif extra_content.name == "List of Events":
+        context["news"] = news
+    elif extra_content.choice == VPDC.LIST_EVENTS:
         events = Event.objects.published()
         context["events"] = events.filter(Q(start__gt=datetime.datetime.now()) | Q(end__gt=datetime.datetime.now()))
         context["past_events"] = events.filter(end__lt=datetime.datetime.now()).order_by("start")
+    elif extra_content.choice == VPDC.LIST_JURY:
+        jury = PersonListBlock.objects.filter(title__in=["Jury", "jury"])
+        if jury:
+            jury_list = Person.objects.filter(person_list_block_inlines__person_list_block=jury).order_by("last_name")
+        else:
+            jury_list = Person.objects.none()
+        context["jury"] = jury_list
     return context

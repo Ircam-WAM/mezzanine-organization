@@ -1,0 +1,24 @@
+{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags staticfiles pages_tags %}
+
+<div class="page">
+    <div class="container">
+
+        {% if objects.jury|length > 0 %}
+            <div class="col-md-8 col-md-push-4 tac">
+                <div class="row">
+                    <div>
+                        {% for member in objects.jury %}
+                            <div class="col-md-8">
+                                {# Card included for each jury #}
+                                {% include "network/inc/jury/jury_card_box.html" %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="jury-box__top-margin">No jury members found.</p>
+        {% endif %}
+
+    </div>
+</div>

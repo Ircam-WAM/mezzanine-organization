@@ -47,24 +47,31 @@ class VertigoPage(Page, SubTitled, RichText):
 
 class VertigoPageDynamicContent(models.Model):
 
-    NONE = 0
-    LIST_NEWS = 1
-    LIST_EVENTS = 2
+    NONE = "none"
+    LIST_NEWS = "news"
+    LIST_EVENTS = "events"
+    LIST_JURY = "jury"
 
     EXTRA_CONTENT_CHOICES = (
         (NONE, "No extra content"),
         (LIST_NEWS, "List of News"),
         (LIST_EVENTS, "List of Events"),
+        (LIST_JURY, "List of the Jury"),
     )
 
     TEMPLATE_CHOICES = (
         (NONE, ""),
         (LIST_NEWS, "magazine/article/vp_inc/article_list.html"),
         (LIST_EVENTS, "agenda/vp_inc/event_list.html"),
+        (LIST_JURY, "network/vp_inc/jury_list.html"),
     )
 
     page = models.ForeignKey(VertigoPage, verbose_name="vertigo page", related_name="extra_content", blank=True, null=True, on_delete=models.SET_NULL)
-    extra_content = models.IntegerField(choices=EXTRA_CONTENT_CHOICES, default=NONE)
+    extra_content = models.CharField(max_length=32, choices=EXTRA_CONTENT_CHOICES, default=NONE)
+    
+    @property
+    def choice(self):
+        return self.extra_content
 
     @property
     def name(self):
