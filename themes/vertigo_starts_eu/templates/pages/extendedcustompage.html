@@ -2,7 +2,7 @@
 {% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
 
 {% block page_class %}
-    vertigopage
+    extendedcustompage
 {% endblock %}
 
 {% block body_class %}
@@ -24,10 +24,10 @@
                 {% endfor %}
                 {# TODO end #}
             {% else %}
-                <a href="{{ page.get_absolute_url }}"><h1 class="vertigopage__section-title section-title--uppercase section-title--main vertigopage__margin-collapse event-line-box__underline-text-green">{{ page.vertigopage.title }}</h1></a>
+                <a href="{{ page.get_absolute_url }}"><h1 class="vertigopage__section-title section-title--uppercase section-title--main vertigopage__margin-collapse event-line-box__underline-text-green">{{ page.extendedcustompage.title }}</h1></a>
             {% endif %}
         {% else %}
-            <a href="{{ page.get_absolute_url }}"><h1 class="vertigopage__section-title section-title--uppercase section-title--main vertigopage__margin-collapse event-line-box__underline-text-green">{{ page.vertigopage.title }}</h1></a>
+            <a href="{{ page.get_absolute_url }}"><h1 class="vertigopage__section-title section-title--uppercase section-title--main vertigopage__margin-collapse event-line-box__underline-text-green">{{ page.extendedcustompage.title }}</h1></a>
         {% endif%}
     {% endwith %}
 
@@ -47,21 +47,21 @@
 {% endblock %}
 
 {% block page_content %}
-    {% if page.vertigopage.content %}
-        {{ page.vertigopage.content|richtext_filters|safe }}
+    {% if page.extendedcustompage.content %}
+        {{ page.extendedcustompage.content|richtext_filters|safe }}
     {% endif %}
 {% endblock %}
 
 {% block page_sub_content %}
-    {% with page.vertigopage.blocks.all as blocks %}
+    {% with page.extendedcustompage.blocks.all as blocks %}
         {% include "vertigo_starts_eu/pages/vertigopage/includes/vertigo_block.html" %}
     {% endwith %}
 {% endblock %}
 
 {% block page_extra_content %}
-    {% for extra_content in page.vertigopage.extra_content.all %}
+    {% for extra_content in page.extendedcustompage.extra_content.all %}
         {% if extra_content.template %}
-            {% with extra_content|filter_vertigo_page_extra_content as objects %}
+            {% with extra_content|extended_custompage_extra_content as objects %}
                 {% include extra_content.template %}
             {% endwith %}
         {% endif %}

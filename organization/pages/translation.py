@@ -55,14 +55,14 @@ class CustomPageTranslationOptions(TranslationOptions):
     fields = ('sub_title', 'content')
 
 
-@register(VertigoPage)
-class VertigoPageTranslationOptions(TranslationOptions):
+@register(ExtendedCustomPage)
+class ExtendedCustomPageTranslationOptions(TranslationOptions):
 
     fields = ('sub_title', 'content')
 
 
-@register(VertigoPageDynamicContent)
-class VertigoPageDynamicContentTranslationOptions(TranslationOptions):
+@register(ExtendedCustomPageDynamicContent)
+class ExtendedCustomPageDynamicContentTranslationOptions(TranslationOptions):
 
     pass
 

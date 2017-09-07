@@ -37,15 +37,15 @@ class CustomPage(Page, SubTitled, RichText):
         verbose_name = 'custom page'
 
 
-class VertigoPage(Page, SubTitled, RichText):
+class ExtendedCustomPage(Page, SubTitled, RichText):
 
     objects = CustomSearchableManager()
 
     class Meta:
-        verbose_name = "vertigo page"
+        verbose_name = "extended custom page"
 
 
-class VertigoPageDynamicContent(models.Model):
+class ExtendedCustomPageDynamicContent(models.Model):
 
     NONE = "none"
     LIST_NEWS = "news"
@@ -61,12 +61,12 @@ class VertigoPageDynamicContent(models.Model):
 
     TEMPLATE_CHOICES = (
         (NONE, ""),
-        (LIST_NEWS, "magazine/article/vp_inc/article_list.html"),
-        (LIST_EVENTS, "agenda/vp_inc/event_list.html"),
-        (LIST_JURY, "network/vp_inc/jury_list.html"),
+        (LIST_NEWS, "magazine/article/ecp_inc/article_list.html"),
+        (LIST_EVENTS, "agenda/ecp_inc/event_list.html"),
+        (LIST_JURY, "network/ecp_inc/jury_list.html"),
     )
 
-    page = models.ForeignKey(VertigoPage, verbose_name="vertigo page", related_name="extra_content", blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey(ExtendedCustomPage, verbose_name="extended custom page", related_name="extra_content", blank=True, null=True, on_delete=models.SET_NULL)
     extra_content = models.CharField(max_length=32, choices=EXTRA_CONTENT_CHOICES, default=NONE)
     
     @property

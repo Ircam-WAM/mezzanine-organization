@@ -28,7 +28,7 @@ from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
-from organization.pages.models import CustomPage, VertigoPage
+from organization.pages.models import CustomPage, ExtendedCustomPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import Home
@@ -168,15 +168,15 @@ class DynamicContentPageView(Select2QuerySetSequenceView):
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
-        vertigopage = VertigoPage.objects.all()
+        extended_custompage = ExtendedCustomPage.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
-            vertigopage = vertigopage.filter(title__icontains=self.q)
+            extended_custompage = extended_custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, vertigopage, events)
+        qs = autocomplete.QuerySetSequence(articles, custompage, extended_custompage, events)
 
         if self.q:
             qs = qs.filter(title__icontains=self.q)
