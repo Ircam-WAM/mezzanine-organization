@@ -1,0 +1,90 @@
+{% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
+
+<script type="text/javascript">
+function clickedLinkVertigo(link,event) {
+
+    event.preventDefault();
+
+    var linksItems = document.getElementsByClassName('vertigopage__button');
+
+    for (var i = 0; i < linksItems.length; i++)
+    {
+        var indexItem = i + 1;
+        var buttonLink = linksItems[i];
+
+        buttonLink.classList.remove('vertigopage__selected');
+        buttonLink.classList.remove('vertigopage__unselected');
+
+        var contentText = document.getElementById("content-" + indexItem);
+
+        contentText.classList.remove('vertigopage__visible');
+        contentText.classList.remove('vertigopage__invisible');
+
+        if (link.id === "link-" + indexItem)
+        {
+            buttonLink.classList.add('vertigopage__selected');
+            contentText.classList.add('vertigopage__visible');
+        }
+        else
+        {
+            buttonLink.classList.add('vertigopage__unselected');
+            contentText.classList.add('vertigopage__invisible');
+        }
+    }
+}
+</script>
+
+{% if blocks %}
+
+    <div class="pb2">
+        
+        {% if blocks|length == 1 %}
+
+            {% with blocks|first as block %}
+                <div class="page__block page__block--{{ block.background_color }}">
+                    <div class="container">
+                        <div class="row" data-summary-content>
+                            <div class="col-sm-16 col-md-12 col-md-push-2 event-line-box__margin-paragraph-bottom">
+                                <div class="event-line-box__text-event-paragraph event-line-box__dark-blue">
+                                    <h2 class="event-line-box__bold-text event-line-box__center-text">{{ block.title }}</h2><br>
+                                    <div class="event-line-box__margins">
+                                        {% if block.content %}
+                                            {{ block.content|richtext_filters|safe }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endwith %}
+
+        {% else %}
+        
+            <div class ="row residency-detail__margin-row">
+                <div class="col-sm-16 col-md-12 residency-detail__center-buttons">
+                    {% for block in blocks %}
+                        {% if block.content %}
+                            <a id="link-{{forloop.counter}}" class="button vertigopage__button {% if forloop.first %}vertigopage__selected{% else %}vertigopage__unselected{% endif %}" href="#" onclick="clickedLinkVertigo(this,event);">{{ block.title }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% for block in blocks %}
+                {% if block.content %}
+                    <div id="content-{{forloop.counter}}" class="page__block page__block--{{ block.background_color }} vertigopage__space--white {% if forloop.first %}vertigopage__visible{% else %}vertigopage__invisible{% endif %}">
+                        <div class="container">
+                            {% if block.content %}
+                                {{ block.content|richtext_filters|safe }}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+
+{% endif %}

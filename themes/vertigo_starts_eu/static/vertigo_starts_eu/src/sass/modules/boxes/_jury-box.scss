@@ -1,0 +1,124 @@
+// -*- coding: utf-8 -*-
+
+// Copyright (c) 2016-2017 Ircam
+// Copyright (c) 2016-2017 Jérémy Fabre
+
+// This file is part of mezzanine-organization.
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+
+// You should have received a copy of the GNU Affero General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+$module: ".jury-box";
+
+#{$module} {
+
+    background: none;
+    position: relative;
+    display: block;
+    @include margin-bottom(1);
+    @include transition(all 0.5s ease-in-out);
+
+    height: 550px;
+
+    @include padding(1);
+
+    &__header {
+
+        position: relative;
+    }
+
+    &__header:after {
+
+	    content: "";
+	    display: block;
+	    background: linear-gradient(180deg, transparent, transparent 50%, rgba(0,0,0,.8));
+	    position: absolute;
+	    top: 0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+    }
+
+    &__margin-right {
+
+        margin-right: 30px;
+    }
+
+    &__person {
+
+	    margin-top: 48px;
+	    margin-top: 3rem;
+	    position: relative;
+	    border: 0;
+	    padding: 0px;
+	    padding: 0;
+	    height: auto;
+    }
+
+    &__image {
+
+        margin: 0;
+        padding: 0;
+        width: 90%;
+        position: relative;
+        overflow: hidden;
+
+        @include fluid-aspect(427 286);
+
+        img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+
+            @include transition(all 0.5s ease-in-out);
+
+            mix-blend-mode: screen;
+        }
+    }
+
+    &__content {
+
+        @include padding(.25 .25 .25 .25);
+
+        position: relative;
+        overflow: hidden;
+    }
+
+    &__title {
+
+        @include font-size(xl);
+        @include line-height(1.25);
+        font-family: "Merriweather", "sans";
+        @include margin(.5 0 0 0);
+        font-weight: weight(bold);
+        color: white;
+        @include transition(color 0.5s ease-in-out);
+    }
+
+    &__desc {
+
+        @include font-size(s);
+        @include line-height(.75);
+        font-family: "Merriweather", "sans";
+        @include margin(1 0 .25 0);
+        font-weight: weight(light);
+        color: white;
+        @include transition(color 0.5s ease-in-out);
+    }
+
+    &__top-margin {
+
+        margin-top: 20px;
+    }
+}

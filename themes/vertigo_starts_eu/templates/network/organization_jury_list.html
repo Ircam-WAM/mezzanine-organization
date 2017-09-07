@@ -1,0 +1,72 @@
+{% extends "vertigo_starts_eu/pages/page.html" %}
+{% load mezzanine_tags staticfiles keyword_tags i18n organization_tags pages_tags %}
+
+
+{% block meta_title %}
+    {% trans "Current Residencies" %}
+{% endblock %}
+
+
+{% block meta_keywords %}
+    {% metablock %}
+    {% keywords_for object as keywords %}
+    {% for keyword in keywords %}
+        {% if not forloop.first %}, {% endif %}
+        {{ keyword }}
+    {% endfor %}
+    {% endmetablock %}
+{% endblock %}
+
+{% block meta_description %}
+    {% metablock %}
+        {{ page.description }}
+    {% endmetablock %}
+{% endblock %}
+
+{% block main %}
+
+    <div class ="row residency-detail__margin-row">
+        <div class="col-sm-16 col-md-12 event-line-box__center-buttons">
+            <a class="button event-line-box__event-button" href="#">{% trans "Open calls" %}</a>
+            <a class="button event-line-box__event-button" href="#">{% trans "Artist residencies" %}</a>
+            <a class="button event-line-box__event-button" href="#">{% trans "Artwork outcomes" %}</a>
+            <a class="button event-line-box__event-button event-line-box__underline-text-green active" href="#">{% trans "The Jury" %}</a>
+        </div>
+    </div>
+    <div>
+        <div class="page__block event-line-box__block--white">
+            <div class="container">
+                <div class="row" data-summary-content>
+                    <div class="col-sm-16 col-md-12 col-md-push-2 event-line-box__margin-paragraph-bottom">
+                        <div class="event-line-box__text-event-paragraph event-line-box__dark-blue">
+                            <h2 class="event-line-box__bold-text event-line-box__center-text">The Jury</h2><br>
+                            <div class="event-line-box__margins">
+                                {{ description }}
+                                {# Fill the description for Jury section #}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        {% if jury|length > 0 %}
+            <div class="col-md-8 col-md-push-4 tac">
+                <div class="row">
+                    <div>
+                        {% for member in jury %}
+                            <div class="col-md-8">
+                                {# Card included for each jury #}
+                                {% include "network/inc/jury/jury_card_box.html" %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="jury-box__top-margin">No jury members found.</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "vertigo_starts_eu/pages/page.html" %}
+{% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
+
+{% block page_class %}
+    extendedcustompage
+{% endblock %}
+
+{% block body_class %}
+    {% with page.get_ascendants|last as top_level_parent %}
+        {% if top_level_parent.get_content_model.weaving_css_class %}
+            pattern pattern-bg {{ top_level_parent.get_content_model.weaving_css_class }}
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block page_title %}
+    {% with page.get_ascendants|first as parent %}
+        {% if parent %}
+            {% children_pages parent.id as childrens %}
+            {% if childrens|length > 1 %}
+                {# TODO: Multititle #}
+                {% for children in childrens %}
+                    <a href="{{ children.get_absolute_url }}"><h1 class="vertigopage__section-title section-title--uppercase section-title--main {% if page == children %}event-line-box__underline-text-green{% endif %} vertigopage__margin-collapse">{{ children.title }}</h1></a>
+                {% endfor %}
+                {# TODO end #}
+            {% else %}
+                <a href="{{ page.get_absolute_url }}"><h1 class="vertigopage__section-title section-title--uppercase section-title--main vertigopage__margin-collapse event-line-box__underline-text-green">{{ page.extendedcustompage.title }}</h1></a>
+            {% endif %}
+        {% else %}
+            <a href="{{ page.get_absolute_url }}"><h1 class="vertigopage__section-title section-title--uppercase section-title--main vertigopage__margin-collapse event-line-box__underline-text-green">{{ page.extendedcustompage.title }}</h1></a>
+        {% endif%}
+    {% endwith %}
+
+    {% with page.images.all|get_type:'logo_header' as images %}
+        {% if images %}
+            {% with images|first as image %}
+                <div class="vertigopage__header-image" style="background-image: linear-gradient(180deg, transparent, transparent 50%, rgba(0,0,0,.8)), url('{{ MEDIA_URL }}{% thumbnail image.file 1897 200 top=0.5 %}');">
+                    <div class="vertigopage__header-text">
+                        <span>
+                            {{ image.description }}
+                        </span>
+                    </div>
+                </div>
+            {% endwith %}
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block page_content %}
+    {% if page.extendedcustompage.content %}
+        {{ page.extendedcustompage.content|richtext_filters|safe }}
+    {% endif %}
+{% endblock %}
+
+{% block page_sub_content %}
+    {% with page.extendedcustompage.blocks.all as blocks %}
+        {% include "vertigo_starts_eu/pages/vertigopage/includes/vertigo_block.html" %}
+    {% endwith %}
+{% endblock %}
+
+{% block page_extra_content %}
+    {% for extra_content in page.extendedcustompage.extra_content.all %}
+        {% if extra_content.template %}
+            {% with extra_content|extended_custompage_extra_content as objects %}
+                {% include extra_content.template %}
+            {% endwith %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

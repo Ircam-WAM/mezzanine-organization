@@ -37,6 +37,54 @@ class CustomPage(Page, SubTitled, RichText):
         verbose_name = 'custom page'
 
 
+class ExtendedCustomPage(Page, SubTitled, RichText):
+
+    objects = CustomSearchableManager()
+
+    class Meta:
+        verbose_name = "extended custom page"
+
+
+class ExtendedCustomPageDynamicContent(models.Model):
+
+    NONE = "none"
+    LIST_NEWS = "news"
+    LIST_EVENTS = "events"
+    LIST_JURY = "jury"
+
+    EXTRA_CONTENT_CHOICES = (
+        (NONE, "No extra content"),
+        (LIST_NEWS, "List of News"),
+        (LIST_EVENTS, "List of Events"),
+        (LIST_JURY, "List of the Jury"),
+    )
+
+    TEMPLATE_CHOICES = (
+        (NONE, ""),
+        (LIST_NEWS, "magazine/article/ecp_inc/article_list.html"),
+        (LIST_EVENTS, "agenda/ecp_inc/event_list.html"),
+        (LIST_JURY, "network/ecp_inc/jury_list.html"),
+    )
+
+    page = models.ForeignKey(ExtendedCustomPage, verbose_name="extended custom page", related_name="extra_content", blank=True, null=True, on_delete=models.SET_NULL)
+    extra_content = models.CharField(max_length=32, choices=EXTRA_CONTENT_CHOICES, default=NONE)
+    
+    @property
+    def choice(self):
+        return self.extra_content
+
+    @property
+    def name(self):
+        return self.get_extra_content_display()
+
+    @property
+    def template(self):
+        try:
+            temp = dict(self.TEMPLATE_CHOICES)[self.extra_content]
+        except KeyError:
+            temp = ""
+        return temp
+
 class PageBlock(Block):
 
     page = models.ForeignKey(Page, verbose_name=_('page'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)

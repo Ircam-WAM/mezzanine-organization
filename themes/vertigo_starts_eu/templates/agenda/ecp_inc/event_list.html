@@ -1,0 +1,44 @@
+{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags staticfiles pages_tags %}
+
+<div class="page">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-16 col-md-12 col-md-push-2 tac">
+                <h1 class="event-line-box__section-title section-title--uppercase section-title--main">{% trans "Upcoming Events" %}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
+                <div class="page__content">
+                    {% for event in objects.events %}
+                        {% include 'agenda/includes/event_linecard_hover.html' %}
+                    {% empty %}
+                        <p>No upcomming events found.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% if objects.past_events %}
+            <div class="row">
+                <div class="col-sm-16 col-md-12 col-md-push-2 tac">
+                    <h1 class="event-line-box__section-title section-title--uppercase section-title--main">{% trans "Past events" %}</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
+                    <div class="page__content">
+                        {% for event in objects.past_events %}
+                            {% include 'agenda/includes/event_linecard_hover.html' %}
+                        {% empty %}
+                            <p>No past events found.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</div>

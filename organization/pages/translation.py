@@ -55,6 +55,18 @@ class CustomPageTranslationOptions(TranslationOptions):
     fields = ('sub_title', 'content')
 
 
+@register(ExtendedCustomPage)
+class ExtendedCustomPageTranslationOptions(TranslationOptions):
+
+    fields = ('sub_title', 'content')
+
+
+@register(ExtendedCustomPageDynamicContent)
+class ExtendedCustomPageDynamicContentTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(PageBlock)
 class PageBlockTranslationOptions(TranslationOptions):
 

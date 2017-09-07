@@ -109,6 +109,24 @@ class CustomPageAdmin(PageAdmin):
             ]
 
 
+class ExtendedCustomPageDynamicContentInline(TabularDynamicInlineAdmin):
+
+    model = ExtendedCustomPageDynamicContent
+
+
+class ExtendedCustomPageAdmin(PageAdmin):
+
+    inlines = [PageBlockInline,
+            PageImageInline,
+            PagePlaylistInline,
+            PageLinkInline,
+            PageProductListInline,
+            PageRelatedTitleAdmin,
+            ExtendedCustomPageDynamicContentInline,
+            DynamicContentPageInline
+            ]
+
+
 class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
 
     model = DynamicContentHomeSlider
@@ -147,6 +165,7 @@ class HomeAdminDisplayable(BaseTranslationModelAdmin):
 
 
 admin.site.register(CustomPage, CustomPageAdmin)
+admin.site.register(ExtendedCustomPage, ExtendedCustomPageAdmin)
 admin.site.register(Home, HomeAdminDisplayable)
 admin.site.unregister(MezzanineLink)
 admin.site.register(MezzanineLink, LinkImageAdmin)
