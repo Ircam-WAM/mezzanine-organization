@@ -49,13 +49,27 @@
         {% if page.is_primary %}
             {% if forloop.last %}
 
-                {# <li class="nav-header__item nav-header__item--right nav-header__item--separator">#}
-                    {# {% include "includes/languages.html" %}#}
-                {# </li>#}
-                {# <li class="nav-header__item nav-header__item--centered nav-header__item--right nav-header__item--no-separator">
+                {% comment %}
+                {<li class="nav-header__item nav-header__item--right nav-header__item--separator">
+                    {% include "includes/languages.html" %}
+                </li>
+                <li class="nav-header__item nav-header__item--centered nav-header__item--right nav-header__item--no-separator">
                     <a href="#" class="fsxl" data-open-button="search" data-search-button><i class="fa fa-search" aria-hidden="true"></i></a>
-                </li>#}
-
+                </li>
+                {% endcomment %}
+                <li class="nav-header__item nav-header__item--centered nav-header__item--right nav-header__item--no-separator">
+                    {% if request.user.is_authenticated %}
+                        <a href="/accounts/update/">
+                            {{ request.user }} &nbsp;
+                            <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                        </a>
+                    {% else %}
+                        <a href="/accounts/login/">
+                            Sign In / Sign Up &nbsp;
+                            <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                </li>
             </ul>
             {% endif %}
         {% endif %}
