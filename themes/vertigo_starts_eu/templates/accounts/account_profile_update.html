@@ -1,1 +1,15 @@
-{% extends "vertigo_starts_eu/accounts/account_form.html" %}
+{% extends "accounts/account_form.html" %}
+{% load i18n mezzanine_tags %}
+{% block page_title %}
+	<h1 style="font-family:'Oswald';margin-bottom:100px;padding-top:200px;color:#000F24">{% trans "Update profile" %}</h1>
+{% endblock %}
+
+{% block page_content %}
+<div style="padding-top:100px;background: linear-gradient(rgba(0, 0, 0, 1) 2%, rgba(0, 15, 36, 1) 2%, rgba(80,227,194, 1) 40%);">
+{#{ super.}}#}
+{{ block.super }}
+<div style="margin-top:100px;">
+	<input class="btn btn-primary btn-lg" type="submit" value="Logout" onclick="window.location='/account/logout';" style="background:#1D1D1B;color:white">
+</div>
+</div>
+{% endblock %}

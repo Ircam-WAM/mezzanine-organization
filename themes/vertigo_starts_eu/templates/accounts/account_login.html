@@ -1,4 +1,4 @@
-{% extends "vertigo_starts_eu/accounts/account_form.html" %}
+{% extends "accounts/account_form_login.html" %}
 {% load i18n mezzanine_tags %}
 
 {% block meta_title %}
@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block page_title %}
-	<h1 class="dotted">{% trans "Login" %}</h1>
+	<h1 style="font-family:'Oswald';margin-bottom:100px;padding-top:200px;color:#000F24">{% trans "Login" %}</h1>
 {% endblock %}
 
 {% block page_content %}
@@ -21,10 +21,25 @@
     {% url "signup" as signup_url %}
     {% url "mezzanine_password_reset" as password_reset_url %}
     {% url "profile_update" as profile_update_url %}
-	{% block message %}
-		<br>
-		{% blocktrans with request.GET.next as next %}<p>If you don't have an account, you can <a href="{{ signup_url }}?next={{ next }}">SIGN UP</a>.</p>{% endblocktrans %}
-	    {% blocktrans with request.GET.next as next %}<p>You can also <a href="{{ password_reset_url }}?next={{ next }}">RESET YOUR PASSWORD</a> if you've forgotten it.</p>{% endblocktrans %}
-	{% endblock %}
+		{% block message %}
+			<br>
+			<div style="text-align:center">
+				{% blocktrans with request.GET.next as next %}<a style="font-family:'Helvetica';color:red;border-bottom:0px;" href="{{ password_reset_url }}?next={{ next }}">Forgotten your password?</a>{% endblocktrans %}
+			</div>
+			<br><br>
+			<div style="text-align:center;margin-top:50px;">
+				<span style="color:black;font-family:'Oswald';font-size:20px;color:#1D1D1B">Don't have an account yet?</span>
+				<br><br>
+				<div style="border: 1px solid #1D1D1B;text-align:center;width:200px;display:inline-block">
+					{% blocktrans with request.GET.next as next %}
+						<a style="font-family:'Oswald';font-size:20px;border-color:#1D1D1B;font-weight:bold;width:200px;display:block;text-align:center;color:#1D1D1B;" href="{{ signup_url }}?next={{ next }}">
+							<div style="border: 0.5px solid #1D1D1B;text-align:center;padding-top:20px;padding-bottom:20px;">
+								Sign up
+							</div>
+						</a>
+					{% endblocktrans %}
+				</div>
+			</div>
+		{% endblock %}
 {% endif %}
 {% endblock %}
