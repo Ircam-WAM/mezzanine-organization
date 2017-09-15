@@ -36,6 +36,7 @@ from organization.core.views import *
 from organization.magazine.views import Article
 from organization.pages.models import CustomPage
 from datetime import datetime, date, timedelta
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class ProjectMixin(SingleObjectMixin):
@@ -152,7 +153,7 @@ class ProjectICTSubmissionView(ProjectCallMixin, TemplateView):
     template_name='projects/project_ict_submission.html'
 
 
-class ProjectICTCreateView(ProjectCallMixin, CreateWithInlinesView):
+class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
 
     model = Project
     form_class = ProjectForm
@@ -163,6 +164,7 @@ class ProjectICTCreateView(ProjectCallMixin, CreateWithInlinesView):
 
     def forms_valid(self, form, inlines):
         self.object = form.save()
+        self.object.user = self.request.user
         self.call = ProjectCall.objects.get(slug=self.kwargs['slug'])
         self.object.call = self.call
         self.object.topic, c = ProjectTopic.objects.get_or_create(key='ICT')

@@ -35,6 +35,9 @@ from mezzanine.utils.models import base_concrete_model, get_user_model_name
 from django_countries.fields import CountryField
 
 
+user_model_name = get_user_model_name()
+
+
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')), ('white', _('white')),)
 
 ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
@@ -373,6 +376,18 @@ class Address(models.Model):
 class RelatedTitle(models.Model):
 
     title = models.CharField(_('title'), max_length=1024, null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
+class OwnableOrNot(models.Model):
+    """
+    Abstract model that provides ownership of an object for a user.
+    """
+
+    user = models.ForeignKey(user_model_name, verbose_name=_("Author"),
+        related_name="%(class)ss", null=True, blank=True)
 
     class Meta:
         abstract = True

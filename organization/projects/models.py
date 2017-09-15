@@ -57,7 +57,7 @@ PROJECT_STATUS_CHOICES = (
 )
 
 
-class Project(Displayable, Period, RichText):
+class Project(Displayable, Period, RichText, OwnableOrNot):
     """(Project description)"""
 
     type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES)
