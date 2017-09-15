@@ -185,7 +185,7 @@ class ProducerListView(ListView):
         return qs
 
 
-class ProducerCreateView(CreateWithInlinesView):
+class ProducerCreateView(LoginRequiredMixin, CreateWithInlinesView):
 
     model = Organization
     form_class = ProducerForm
@@ -194,6 +194,7 @@ class ProducerCreateView(CreateWithInlinesView):
 
     def forms_valid(self, form, inlines):
         self.object = form.save()
+        self.object.user = self.request.user
         self.object.role, c = OrganizationRole.objects.get_or_create(key='Producer')
         self.object.save()
         return super(ProducerCreateView, self).forms_valid(form, inlines)

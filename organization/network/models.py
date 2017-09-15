@@ -121,7 +121,7 @@ ORGANIZATION_STATUS_CHOICES = (
 )
 
 
-class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable):
+class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
     """(Organization description)"""
 
     mappable_location = models.CharField(max_length=128, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
