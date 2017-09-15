@@ -1,4 +1,4 @@
-{% extends "pages/page_account_login.html" %}
+{% extends "vertigo_starts_eu/pages/page_account_operations.html" %}
 {% load i18n mezzanine_tags %}
 
 {% block meta_title %}
@@ -16,7 +16,7 @@
     {% fields_for form %}
     <div class="form-actions" style="text-align:center">
         {% block account_form_actions %}
-        <input class="btn btn-primary btn-lg" type="submit" value="{{ title }}" style="margin-right:0px;font-weight:bold;width:200px;background:#1D1D1B;color:white;padding-top:20px;padding-bottom:20px">
+        <input class="btn btn-primary btn-lg" type="submit" value="{{ title }}" style="background:#1D1D1B;color:white">
         {% endblock %}
     </div>
     </fieldset>
