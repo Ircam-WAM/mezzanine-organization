@@ -40,8 +40,9 @@ urlpatterns = [
     url("^ict-projects/list/$", ProjectICTListView.as_view(), name='organization-ict-project-list'),
     url("^ict-projects/(?P<slug>.*)/detail/$", ProjectICTDetailView.as_view(), name='organization-ict-project-detail'),
 
-    url("^calls/(?P<slug>.*)/detail/projects/create/$", ProjectICTCreateView.as_view(), name='organization-project-create'),
-    url("^calls/(?P<slug>.*)/detail/projects/validation/$", ProjectICTValidationView.as_view(), name='organization-project-validation'),
+    url("^calls/(?P<slug>.*)/projects/create/public/$", ProjectICTCreatePublicFundingView.as_view(), name='organization-project-public-create'),
+    url("^calls/(?P<slug>.*)/projects/create/private/$", ProjectICTCreatePrivateFundingView.as_view(), name='organization-project-private-create'),
+    url("^calls/(?P<slug>.*)/projects/validation/$", ProjectICTValidationView.as_view(), name='organization-project-validation'),
 
     url("^calls/(?P<call_slug>.*)/projects/detail/(?P<slug>.*)/$", ProjectICTDetailView.as_view(), name='organization-project-detail'),
     url("^calls/(?P<call_slug>.*)/projects/list/$", ProjectICTListView.as_view(), name='organization-project-list'),

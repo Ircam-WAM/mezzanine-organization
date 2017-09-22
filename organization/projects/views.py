@@ -172,7 +172,6 @@ class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlin
         self.object.save()
 
         for formset in inlines:
-            print(formset.prefix)
             if 'contact' in formset.prefix:
                 for f in formset:
                     contact_data = f.cleaned_data
@@ -193,6 +192,96 @@ class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlin
         msg.send()
 
         return super(ProjectICTCreateView, self).forms_valid(form, inlines)
+
+    def get_success_url(self):
+        return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})
+
+
+class ProjectICTCreatePublicFundingView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
+
+    model = Project
+    form_class = ProjectForm
+    template_name='projects/project_ict_create_public_funding.html'
+    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, ProjectUserImageInline,
+                ProjectContactInline]
+    topic = 'ICT'
+
+    def forms_valid(self, form, inlines):
+        self.object = form.save()
+        self.object.user = self.request.user
+        self.call = ProjectCall.objects.get(slug=self.kwargs['slug'])
+        self.object.call = self.call
+        self.object.topic, c = ProjectTopic.objects.get_or_create(key='ICT')
+        self.status = 1
+        self.object.funding = "public"
+        self.object.save()
+
+        for formset in inlines:
+            if 'contact' in formset.prefix:
+                for f in formset:
+                    contact_data = f.cleaned_data
+                    contact_email = contact_data.get("email")
+
+        from_email = settings.DEFAULT_FROM_EMAIL
+        to_email = [contact_email, settings.DEFAULT_TO_EMAIL]
+        subject = settings.EMAIL_SUBJECT_PREFIX + ' ' + self.call.title
+        ctx = {
+            'first_name': contact_data['first_name'],
+            'last_name': contact_data['last_name'],
+            'project_title': self.object.title,
+        }
+
+        message = get_template('projects/project_ict_create_notification.html').render(Context(ctx))
+        msg = EmailMessage(subject, message, to=to_email, from_email=from_email)
+        msg.content_subtype = 'html'
+        msg.send()
+
+        return super(ProjectICTCreatePublicFundingView, self).forms_valid(form, inlines)
+
+    def get_success_url(self):
+        return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})
+
+
+class ProjectICTCreatePrivateFundingView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
+
+    model = Project
+    form_class = ProjectForm
+    template_name='projects/project_ict_create_private_funding.html'
+    inlines = [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline, ProjectUserImageInline,
+                ProjectContactInline]
+    topic = 'ICT'
+
+    def forms_valid(self, form, inlines):
+        self.object = form.save()
+        self.object.user = self.request.user
+        self.call = ProjectCall.objects.get(slug=self.kwargs['slug'])
+        self.object.call = self.call
+        self.object.topic, c = ProjectTopic.objects.get_or_create(key='ICT')
+        self.status = 1
+        self.object.funding = "private"
+        self.object.save()
+
+        for formset in inlines:
+            if 'contact' in formset.prefix:
+                for f in formset:
+                    contact_data = f.cleaned_data
+                    contact_email = contact_data.get("email")
+
+        from_email = settings.DEFAULT_FROM_EMAIL
+        to_email = [contact_email, settings.DEFAULT_TO_EMAIL]
+        subject = settings.EMAIL_SUBJECT_PREFIX + ' ' + self.call.title
+        ctx = {
+            'first_name': contact_data['first_name'],
+            'last_name': contact_data['last_name'],
+            'project_title': self.object.title,
+        }
+
+        message = get_template('projects/project_ict_create_notification.html').render(Context(ctx))
+        msg = EmailMessage(subject, message, to=to_email, from_email=from_email)
+        msg.content_subtype = 'html'
+        msg.send()
+
+        return super(ProjectICTCreatePrivateFundingView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
         return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})

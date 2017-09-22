@@ -56,6 +56,17 @@ PROJECT_STATUS_CHOICES = (
     (3, _('accepted')),
 )
 
+DIMENSION_CHOICES = (
+    ('startup', _('Start-up / Micro')),
+    ('sme', _('SME')),
+    ('large', _('Large')),
+)
+
+FUNDING_CHOICES = (
+    ('public', _('EU / National Program')),
+    ('private', _('Privately Funded'))
+)
+
 
 class Project(Displayable, Period, RichText, OwnableOrNot):
     """(Project description)"""
@@ -74,6 +85,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     referring_person = models.ManyToManyField('organization-network.Person', verbose_name=_('Referring Person'), related_name='projects_referring_person', blank=True)
     manager =  models.ManyToManyField('organization-network.Person', verbose_name=_('Manager'), related_name='projects_manager', blank=True)
     validation_status = models.IntegerField(_('validation status'), choices=PROJECT_STATUS_CHOICES, default=1)
+    funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
 
     class Meta:
         verbose_name = _('project')
@@ -354,12 +366,13 @@ class ProjectPublicData(models.Model):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='public_data', blank=True, null=True, on_delete=models.SET_NULL)
 
-    brief_description = models.CharField(_('brief description'), max_length=110, help_text="Brief description of the challenges faced by the project to be used for wider communication strategy (e.g. Twitter) (110 characters max).")
-    challenges_description = models.TextField(_('challenges description'), help_text="Full description of the challenges faced by the project (100-150 words).")
+    brief_description = models.CharField(_('brief description'), max_length=110, help_text="Brief description of the technology/challenges faced by the project (110 characters max).")
+    challenges_description = models.TextField(_('challenges description'), help_text="Description of the project technology to be made available to artist + challenges it produces (100 words - must include the elements to be made available to the artist with sufficient functional and implementation details for enabling him/her to elaborate a technical approach)).")
     technology_description = models.TextField(_('technology description'), help_text="Must include the elements to be made available to the artist with sufficient functional and implementation details for enabling him/her to elaborate his/her technical approach (100-200 words).")
     objectives_description = models.TextField(_('objectives description'), help_text="What the project is looking to gain from the collaboration and what kind of artist would be suitable (100 – 150 words).")
     resources_description = models.TextField(_('resource description'), help_text="Resources available to the artist -- e.g. office facility, studio facility, technical equipment, internet connection, laboratory, and periods of availability for artistic production, staff possibly allocated to the project, available budget for travel, consumables and equipment, etc... (50 – 100 words).")
-    implementation_start_date = models.DateField(_('residency start date'), help_text="Possible start date of implementation (must be part of the project implementation workplan) (MM/DD/YYYY)")
+    implementation_start_date = models.DateField(_('residency start date'), help_text="Possible period for the implementation of the residency (must be within the period of the project implementation workplan) (MM/DD/YYYY)")
+    implementation_period = models.DateField(_('period for direct cooperation'), blank=False, null=True, help_text="Possible period for direct cooperation with the artist (must be within the period of the project implementation workplan) (MM/DD/YYYY)")
     implementation_duration = models.CharField(_('residency duration'), max_length=128, help_text="Possible duration of implementation in months (must be part of the project implementation workplan) (months)", default='1')
     image = models.FileField(_("Image"), max_length=1024, upload_to="user/images/%Y/%m/%d/", help_text="Representing the project")
     image_credits = models.CharField(_('Image credits'), max_length=256, null=True)
@@ -388,9 +401,11 @@ class ProjectPrivateData(models.Model):
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='private_data', blank=True, null=True, on_delete=models.SET_NULL)
 
     description = models.TextField(_('project description'), help_text="(500 - 1000 words)")
-    affiliation = models.CharField(_('affiliation'), max_length=512)
+    funding_programme = models.CharField(_('funding programme'), max_length=512, blank=False, null=True, help_text="Designation of EU/National Funding Programme")
     commitment_letter = models.FileField(_("letter of commitment by the project coordinator"), max_length=1024, upload_to="user/documents/%Y/%m/%d/", help_text=mark_safe('Written on behalf of the whole project consortium, this letter will commit in implementing the collaboration of a residency application selected by the VERTIGO jury, on the conditions set by the project (in annex of letter: synthesis of all related information entered by project).<br>Please <a href="http://vertigo.starts.eu/media/uploads/vertigo%20starts/CALL/vertigo_loc_v3.rtf">download and use the template letter.</a>'))
+    investor_letter = models.FileField(_("letter of recommendations from investor (e.g VC)"), max_length=1024 , blank=False, null=True, upload_to="user/documents/%Y/%m/%d/", help_text="If the organisation is a Start-Up or micro enterprise (less than 3 years and/or less than 10 staff members), the presentation of letter of recommendation from an investor is mandatory to apply to this call.")
     persons = models.CharField(_('persons'), max_length=512, help_text="First name and last name of the persons from organization / project who will be part preliminary of the project team (separated by a comma)")
+    dimension = models.CharField(_('dimension'), max_length=128, choices=DIMENSION_CHOICES, blank=False, null=True)
 
     class Meta:
         verbose_name = 'Project private data'
