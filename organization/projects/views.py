@@ -321,7 +321,7 @@ class ProjectCallListAsEventsView(ListView):
 
     model = ProjectCall
     template_name = "projects/project_call_list_as_events.html"
-    
+
     def get_context_data(self, *args, **kwargs):
         context = {}
         context["open_calls"] = ProjectCall.objects.filter(date_to__gte=datetime.now()).order_by("date_to")
@@ -333,7 +333,7 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
 
     model = ProjectResidency
     template_name='projects/project_residency_detail.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super(ProjectResidencyDetailView, self).get_context_data(**kwargs)
         # Add the previous and next residencies to the context

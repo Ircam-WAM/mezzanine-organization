@@ -1,0 +1,272 @@
+// -*- coding: utf-8 -*-
+
+// Copyright (c) 2016-2017 Ircam
+// Copyright (c) 2016-2017 Jérémy Fabre
+
+// This file is part of mezzanine-organization.
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+
+// You should have received a copy of the GNU Affero General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+$module: ".ict-project-form";
+
+
+#{$module} {
+
+    background: white;
+
+    fieldset {
+      border: 1px solid black;
+    }
+
+    p {
+        @include margin(0);
+
+        a:hover {
+          box-shadow: none;
+        }
+
+        label.control-label {
+
+          display: inline-block;
+          background: transparent;
+          color: rgba(1,12,27,1);
+          font-size: 15px;
+        }
+    }
+
+    .form-group {
+        @include margin-bottom(.5);
+
+        ul {
+            list-style-type: none;
+            clear: both;
+            padding: 0;
+        }
+    }
+
+    input[type="submit"] {
+        @extend .button;
+        width: 50%;
+        display: inline-block;
+        background: black;
+        color: white;
+        font-family: "Oswald";
+        text-align: center;
+    }
+
+    h1, h2 {
+    	font-size: 1.875rem;
+    	line-height: 2.25rem;
+    	font-weight: 400;
+    	font-family: "Oswald", sans-serif;
+    	margin-bottom: 3rem;
+    	margin-top: 1.5rem;
+      color: black;
+    }
+
+    h5 {
+    	font-size: 18px;
+    	line-height: 2.25rem;
+    	font-weight: 400;
+    	font-family: "Oswald", sans-serif;
+    	margin-bottom: 3rem;
+    	margin-top: 1.5rem;
+      color: black;
+    }
+
+    label {
+        text-align: left;
+        display: block;
+        vertical-align: top;
+        float: left;
+        width: 100%;
+
+        @include padding(0.25 1 0.25 0);
+        @include font-size(m);
+        @include line-height(1);
+        //@include typeface(sans-serif);
+        font-family: "Helvetica";
+        font-weight: small;
+        text-transform: capitalize;
+        color: rgba(1, 12, 27, 1);
+        @include mq($until: xs) {
+
+        }
+    }
+
+    span.help-block {
+        float: left;
+        color: red;
+        width: 100%;
+        display: block;
+
+        a {
+          color: black !important;
+        }
+    }
+
+    .help-block {
+        @include font-size(xs);
+
+        .has-error & {
+            color: $color-accent;
+        }
+    }
+
+    .has-error  {
+        .help-block, label {
+            color: $color-accent;
+        }
+        input[type="text"], input[type="email"], input[type="password"], input[type="url"], textarea, select {
+            border: 1px solid black;
+        }
+
+    }
+
+    .form-actions {
+
+        @include margin-top(4);
+    }
+
+    input[type="text"], input[type="email"], input[type="password"], input[type="url"], textarea {
+
+        @include font-size(m);
+        @include line-height(1);
+        @include padding(.25 .25);
+        display: block;
+
+        @include transition(all 0.25s ease-in-out);
+
+        outline: 0;
+        border: 0;
+        border-bottom: 1px solid transparent;
+        width: 100%;
+        color: black;
+        font-family: "Helvetica";
+        background: white;
+        border: 1px solid black;
+
+        &:focus {
+            border: 1px solid black;
+        }
+
+        @include mq($until: xs) {
+            width: 100%;
+        }
+    }
+
+    select {
+
+        @include font-size(m);
+        //@include line-height(1);
+        @include padding(.25 .25);
+
+       width: 100%;
+       overflow: hidden;
+       white-space: nowrap;
+       text-overflow: ellipsis;
+       padding-right: 28px;
+       border-radius: 1;
+       border: 1;
+       border: 1px solid white;
+       outline: 1;
+       color: black;
+       -webkit-appearance: none;
+       background-color: white;
+       background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 29 14" width="29"><path fill="#FFFFFF" d="M9.37727 3.625l5.08154 6.93523L19.54036 3.625"/></svg>');
+       background-position: center right;
+       background-repeat: no-repeat;
+
+       &:focus {
+           border: 1px solid white;
+           background-color: white;
+           background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 29 14" width="29"><path fill="#{$color-main}" d="M9.37727 3.625l5.08154 6.93523L19.54036 3.625"/></svg>');
+           background-position: center right;
+           background-repeat: no-repeat;
+      }
+    }
+
+    select::-ms-expand {
+
+        display: none;
+    }
+}
+
+main #{$module} input[type="file"] {
+
+  background: transparent;
+  font-size: 12px;
+  color: black;
+  font-family: "Merriweather", serif;
+}
+
+main #{$module} p.keywords-field {
+
+  a {
+
+    background: #50E3C2;
+    color: black !important;
+    border: 1px solid rgba(1, 12, 27, 1);
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 5px;
+    border-bottom: 1px solid rgba(1, 12, 27,1) !important;
+    display: inline-block;
+    transition: none !important;
+    font-size:13px;
+
+    &:hover {
+
+      //height: 83px;
+      background: white;
+      color: black !important;
+      border: 1px solid #50E3C2;
+      display: inline-block;
+      border-bottom: 0px !important;
+      box-shadow: inset 0 0px #50E3C2 !important;
+      border-bottom: 1px solid #50E3C2 !important;
+      font-size:13px;
+    }
+  }
+}
+
+main #{$module} p.select_style {
+  select {
+    border: 1px solid rgba(1, 12, 27, 1);
+
+      &:focus {
+        border: 1px solid rgba(1, 12, 27, 1);
+      }
+  }
+}
+
+.form-errors {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    @include margin-bottom(1);
+
+    @include font-size(s);
+    @include line-height(1);
+
+    @include mq($until: xs) {
+        padding-left: 0;
+    }
+}
