@@ -26,9 +26,11 @@
           </div>
         </div>
     {% endeditable %}
+    {% comment %}
     {% if not call.is_closed %}
         <h3>All fields are mandatory / required</h3>
     {% endif %}
+    {% endcomment %}
 {% endblock %}
 
 {% block hero %}
@@ -486,7 +488,7 @@
                   </div>
                   <div style="float:left;width:100%;height:10px;"></div>
                 </div>
-                <div class="form-actions" style="width:100%;display:block; float:left">
+                <div class="form-actions" style="width:100%;display:block;float:left">
                     <h3 style="color:#1D1D1B;">All fields are mandatory / required</h3>
                     <p style="color:#1D1D1B;">With the submission of data and documents about your project, you declare, that you are allowed to establish a cooperation with an artist funded by the Vertigo project.</p>
                     <br>
