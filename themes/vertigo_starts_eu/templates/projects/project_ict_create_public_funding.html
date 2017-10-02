@@ -195,7 +195,7 @@
                     <div style="float:left;width:48%;margin-right:40px">
                       <p class="ict-project-style__title-field">{{ form.date_from.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px">{{ form.date_from.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ form.date_from }}</p>
                     </div>
                   </div>
@@ -203,7 +203,7 @@
                     <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ form.date_to.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px">{{ form.date_to.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ form.date_to }}</p>
                     </div>
                   </div>
@@ -230,7 +230,7 @@
                     -->
                       <p class="ict-project-style__title-field">{{ inlines.1.0.persons.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px">{{ inlines.1.0.persons.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.1.0.persons }}</p>
                     </div>
                   </div>
@@ -462,6 +462,22 @@
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
                       <p class="ict-project-style__description-field">Define the resources that you can provide for the artist such as: office /studio facility, technical equipment, laboratory, staff possibly allocated to the project, available budget for travel, consumables, equipment, etc.</p>
                       <p class="ict-project-style__field-style">{{ inlines.0.0.resources_description }}</p>
+                    </div>
+                  </div>
+                  <div style="display:block">
+                    <div style="float:left;width:48%;">
+                      <p class="ict-project-style__title-field">{{ inlines.0.0.implementation_start_date.label }}</p>
+                      <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.implementation_start_date.help_text }}</p>
+                      <p class="ict-project-style__field-style">{{ inlines.0.0.implementation_start_date }}</p>
+                    </div>
+                  </div>
+                  <div style="display:block">
+                    <div style="float:left;width:48%;">
+                      <p class="ict-project-style__title-field">{{ inlines.0.0.implementation_period.label }}</p>
+                      <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.implementation_period.help_text }}</p>
+                      <p class="ict-project-style__field-style">{{ inlines.0.0.implementation_period }}</p>
                     </div>
                   </div>
                   <div style="display:block">
