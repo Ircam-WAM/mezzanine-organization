@@ -160,10 +160,10 @@
                 </div>
                 <div id="field-form-0">
                   <div style="display:block">
-                    <div style="float:left;width:48%;margin-right:40px">
+                    <div style="float:left;width:48%;margin-right:40px;margin-top:30px">
                       <p class="ict-project-style__title-field">{{ form.title.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field">Please include the acronym and full designation</p>
+                      <p class="ict-project-style__description-field">{{ form.title.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ form.title }}</p>
                     </div>
                   </div>
@@ -171,7 +171,7 @@
                     <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ inlines.3.0.organization_name.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.3.0.organization_name.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.3.0.organization_name }}</p>
                     </div>
                   </div>
@@ -179,7 +179,7 @@
                     <div style="float:left;width:48%;margin-right:40px">
                       <p class="ict-project-style__title-field">{{ form.website.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ form.website.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ form.website }}</p>
                     </div>
                   </div>
@@ -187,7 +187,7 @@
                     <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ inlines.1.0.funding_programme.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.1.0.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.1.0.funding_programme }}</p>
                     </div>
                   </div>
@@ -195,7 +195,7 @@
                     <div style="float:left;width:48%;margin-right:40px">
                       <p class="ict-project-style__title-field">{{ form.date_from.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px">{{ form.date_from.help_text }}</p>
+                      <p class="ict-project-style__description-field">{{ form.date_from.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ form.date_from }}</p>
                     </div>
                   </div>
@@ -203,7 +203,7 @@
                     <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ form.date_to.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px">{{ form.date_to.help_text }}</p>
+                      <p class="ict-project-style__description-field">{{ form.date_to.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ form.date_to }}</p>
                     </div>
                   </div>
@@ -211,7 +211,7 @@
                     <div style="float:left;width:48%;margin-right:40px">
                       <p class="ict-project-style__title-field">{{ inlines.1.0.commitment_letter.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field link-item-form">{{ inlines.1.0.commitment_letter.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.1.0.commitment_letter }}</p>
                     </div>
                   </div>
@@ -230,16 +230,20 @@
                     -->
                       <p class="ict-project-style__title-field">{{ inlines.1.0.persons.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px">{{ inlines.1.0.persons.help_text }}</p>
+                      <p class="ict-project-style__description-field">{{ inlines.1.0.persons.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.1.0.persons }}</p>
                     </div>
                   </div>
                   <div style="display:block">
-                    <div class="ict-project-style__section-title">Project key contact details</div>
+                    <div style="float:left;width:48%;margin-right:40px">
+                      <div class="ict-project-style__section-title">Project key contact details</div>
+                    </div>
+                  </div>
+                  <div style="display:block">
                     <div style="float:left;width:48%;margin-right:40px">
                       <p class="ict-project-style__title-field">{{ inlines.3.0.first_name.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.3.0.first_name.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.3.0.first_name }}</p>
                     </div>
                   </div>
@@ -247,31 +251,15 @@
                     <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ inlines.3.0.last_name.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.3.0.last_name.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.3.0.last_name }}</p>
-                    </div>
-                  </div>
-                  <div style="display:block">
-                    <div style="float:left;width:48%;margin-right:40px">
-                      <p class="ict-project-style__title-field">{{ inlines.3.0.position.label }}</p>
-                      <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
-                      <p class="ict-project-style__field-style">{{ inlines.3.0.position }}</p>
-                    </div>
-                  </div>
-                  <div style="display:block">
-                    <div style="float:left;width:48%;">
-                      <p class="ict-project-style__title-field">{{ inlines.3.0.address.label }}</p>
-                      <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
-                      <p class="ict-project-style__field-style">{{ inlines.3.0.address }}</p>
                     </div>
                   </div>
                   <div style="display:block">
                     <div style="float:left;width:48%;margin-right:40px">
                       <p class="ict-project-style__title-field">{{ inlines.3.0.telephone.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.3.0.telephone.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.3.0.telephone }}</p>
                     </div>
                   </div>
@@ -279,31 +267,39 @@
                     <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ inlines.3.0.email.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.3.0.email.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.3.0.email }}</p>
                     </div>
                   </div>
                   <div style="display:block">
                     <div style="float:left;width:48%;margin-right:40px">
-                      <p class="ict-project-style__title-field">{{ inlines.3.0.postal_code.label }}</p>
+                      <p class="ict-project-style__title-field">{{ inlines.3.0.position.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
-                      <p class="ict-project-style__field-style">{{ inlines.3.0.postal_code }}</p>
+                      <p class="ict-project-style__description-field">{{ inlines.3.0.position.help_text }}</p>
+                      <p class="ict-project-style__field-style">{{ inlines.3.0.position }}</p>
                     </div>
                   </div>
                   <div style="display:block">
                     <div style="float:left;width:48%;">
-                      <p class="ict-project-style__title-field">{{ inlines.3.0.city.label }}</p>
+                      <p class="ict-project-style__title-field">{{ inlines.3.0.postal_code.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
-                      <p class="ict-project-style__field-style">{{ inlines.3.0.city }}</p>
+                      <p class="ict-project-style__description-field">{{ inlines.3.0.postal_code.help_text }}</p>
+                      <p class="ict-project-style__field-style">{{ inlines.3.0.postal_code }}</p>
                     </div>
                   </div>
                   <div style="display:block">
                     <div style="float:left;width:48%;margin-right:40px">
+                      <p class="ict-project-style__title-field">{{ inlines.3.0.city.label }}</p>
+                      <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
+                      <p class="ict-project-style__description-field">{{ inlines.3.0.city.help_text }}</p>
+                      <p class="ict-project-style__field-style">{{ inlines.3.0.city }}</p>
+                    </div>
+                  </div>
+                  <div style="display:block">
+                    <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ inlines.3.0.country.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.3.0.country.help_text }}</p>
                       <p class="ict-project-style__field-style select_style">{{ inlines.3.0.country }}</p>
                     </div>
                   </div>
@@ -324,6 +320,14 @@
                     </div>
                   </div>
                 -->
+                  <div style="display:block">
+                    <div style="float:left;width:48%;margin-right:40px">
+                      <p class="ict-project-style__title-field">{{ inlines.3.0.address.label }}</p>
+                      <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
+                      <p class="ict-project-style__description-field">{{ inlines.3.0.address.help_text }}</p>
+                      <p class="ict-project-style__field-style">{{ inlines.3.0.address }}</p>
+                    </div>
+                  </div>
                   <div style="float:left;width:100%;height:10px;"></div>
                 </div>
               {% comment %}
@@ -364,7 +368,7 @@
                     <div style="float:left;width:48%;margin-right:40px">
                       <p class="ict-project-style__title-field">{{ inlines.0.0.brief_description.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field">Summarise the aim of your work and research in a maximum of 110 characters. Please use the following template as a starting point: <br>XXXX is a / explores / addresses / designs / aims to<br>e.g. “AugVis aims to enhance what the eye can see with computer vision and augmented reality”</p>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.brief_description.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.0.0.brief_description }}</p>
                     </div>
                   </div>
@@ -372,15 +376,15 @@
                     <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ inlines.0.0.technology_description.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field">Briefly describe your technology in a way that will both engage and inform potential artist collaborators.</p>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.technology_description.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.0.0.technology_description }}</p>
                     </div>
                   </div>
                   <div style="display:block">
-                    <div style="float:left;width:48%;margin-right:40px">
+                    <div style="float:left;width:48%;margin-right:40px;margin-top:-250px">
                       <p class="ict-project-style__title-field">{{ form.keywords.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field">Choose at least one, and up to three keywords from the following list to describe your project. If necessary, you can add one keyword manually, but at least one needs to be selected form the given list.</p>
+                      <p class="ict-project-style__description-field">{{ form.keywords.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ form.keywords }}</p>
                     </div>
                   </div>
@@ -388,20 +392,10 @@
                     <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ inlines.1.0.description.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field">Describe your project in detail, referencing the background, current work and future directions. Include suggestions of the challenges that your project addresses. This will be used to assess the suitability of your project for a VERTIGO residency.</p>
+                      <p class="ict-project-style__description-field">{{ inlines.1.0.description.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.1.0.description }}</p>
                     </div>
                   </div>
-                  <!--
-                  <div style="display:block">
-                    <div style="float:left;width:48%;margin-right:40px">
-                      <p class="ict-project-style__title-field">{{ inlines.0.0.objectives_description.label }}</p>
-                      <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field">Describe your organisation in detail. This will be used to assess the suitability of your project for a VERTIGO residency.</p>
-                      <p class="ict-project-style__field-style">{{ inlines.0.0.objectives_description }}</p>
-                    </div>
-                  </div>
-                  -->
                   <div style="float:left;width:100%;height:10px;"></div>
                 </div>
                 <div id="divider-2" class="ict-project-style__divider-section"  style="margin-left:-30px" onclick="showHideDivider(this, event);">
@@ -412,15 +406,14 @@
                 </div>
                 <div id="field-form-2">
                   <div class="ict-project-style__description-field" style="margin-top:20px;">Please upload at least one, and up to three, images to represent your project. The first image will be used as thumbnail and banner image for your project if selected. The size and colour of the images may be adjusted to fit the screen layout. Please use the preview function to see how your images will work. Please also provide short captions to describe the image and credits where relevant. Note that logos will not be accepted as images.</div>
-
                   <div style="display:block">
                     <div style="float:left;width:48%;margin-right:40px">
                       <p class="ict-project-style__title-field">{{ inlines.2.0.file.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.2.0.file.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.2.0.file }}</p>
                       <p class="ict-project-style__title-field">{{ inlines.2.0.credits.label }}</p>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.2.0.credits.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.2.0.credits }}</p>
                     </div>
                   </div>
@@ -428,10 +421,10 @@
                     <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ inlines.2.1.file.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.2.1.file.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.2.1.file }}</p>
                       <p class="ict-project-style__title-field">{{ inlines.2.1.credits.label }}</p>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.2.1.credits.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.2.1.credits }}</p>
                     </div>
                   </div>
@@ -439,10 +432,10 @@
                     <div style="float:left;width:48%;margin-right:40px">
                       <p class="ict-project-style__title-field">{{ inlines.2.2.file.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.2.2.file.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.2.2.file }}</p>
                       <p class="ict-project-style__title-field">{{ inlines.2.2.credits.label }}</p>
-                      <p class="ict-project-style__description-field" style="display:block;margin-bottom:40px"></p>
+                      <p class="ict-project-style__description-field">{{ inlines.2.2.credits.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.2.2.credits }}</p>
                     </div>
                   </div>
@@ -460,7 +453,7 @@
                     <div style="float:left;width:48%;margin-right:40px">
                       <p class="ict-project-style__title-field">{{ inlines.0.0.resources_description.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field">Define the resources that you can provide for the artist such as: office /studio facility, technical equipment, laboratory, staff possibly allocated to the project, available budget for travel, consumables, equipment, etc.</p>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.resources_description.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.0.0.resources_description }}</p>
                     </div>
                   </div>
@@ -484,7 +477,7 @@
                     <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ inlines.0.0.implementation_duration.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field">Define the possible period during which the residency can take place. This must be within your project’s implementation workplan.</p>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.implementation_duration.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.0.0.implementation_duration }}</p>
                     </div>
                   </div>
@@ -492,15 +485,15 @@
                     <div style="float:left;width:48%;margin-right:40px">
                       <p class="ict-project-style__title-field">{{ inlines.0.0.challenges_description.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field">Describe the challenges faced by your technology and research, which could be addressed by a collaborating artist.</p>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.challenges_description.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.0.0.challenges_description }}</p>
                     </div>
                   </div>
                   <div style="display:block">
-                    <div style="float:left;width:48%;margin-right:40px">
+                    <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ inlines.0.0.objectives_description.label }}</p>
                       <i class="fa fa-globe ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field">Describe what your project is looking to gain from an artistic collaboration and what kind of artist would be suitable.</p>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.objectives_description.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.0.0.objectives_description }}</p>
                     </div>
                   </div>
@@ -508,11 +501,11 @@
                 </div>
                 <div class="form-actions" style="width:100%;display:block;float:left">
                     <h3 style="color:#1D1D1B;">All fields are mandatory / required</h3>
-                    <p style="color:#1D1D1B;">With the submission of data and documents about your project, you declare, that you are allowed to establish a cooperation with an artist funded by the Vertigo project.</p>
+                    <p style="color:#1D1D1B;">With the submission of data and documents about your project, you declare, that you are allowed to establish a cooperation with an artist funded by the VERTIGO project.</p>
                     <br>
                     <div style="text-align:center;padding-bottom:20px">
                       <input class="ict-project-style__button-submit" type="submit" style="background:#50E3C2;color:white;"
-                          value="{% if page.form.button_text %}{{ page.form.button_text }}{% else %}{% trans "Submit" %}{% endif %}">
+                          value="{% if page.form.button_text %}{{ page.form.button_text }}{% else %}{% trans "Save" %}{% endif %}">
                     </div>
                 </div>
             </form>

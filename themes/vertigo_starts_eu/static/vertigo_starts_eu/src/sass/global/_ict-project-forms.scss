@@ -211,6 +211,26 @@ main #{$module} input[type="file"] {
   font-family: "Merriweather", serif;
 }
 
+main #{$module} p.link-item-form {
+
+  a {
+
+    background: black;
+    color: white !important;
+    box-shadow: inset 0 0px black !important;
+    border-bottom: 1px solid black !important;
+
+    &:hover {
+
+      //height: 83px;
+      background: black;
+      color: white !important;
+      box-shadow: inset 0 0px black !important;
+      border-bottom: 1px solid black !important;
+    }
+  }
+}
+
 main #{$module} p.keywords-field {
 
   a {
