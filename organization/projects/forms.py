@@ -57,7 +57,8 @@ class ProjectForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
-        self.fields['title'].label = "Project name (acronym + full designation)"
+        self.fields['title'].label = "Project name"
+        self.fields['title'].help_text =  "Acronym + full designation"
         self.fields['keywords'].help_text = "3 comma separated keywords"
         self.fields['date_from'].help_text = "Project start date (MM/DD/YYYY)"
         self.fields['date_to'].help_text = "Project end date (MM/DD/YYYY)"

@@ -373,7 +373,7 @@ class ProjectPublicData(models.Model):
     resources_description = models.TextField(_('resource description'), help_text="Resources available to the artist -- e.g. office facility, studio facility, technical equipment, internet connection, laboratory, and periods of availability for artistic production, staff possibly allocated to the project, available budget for travel, consumables and equipment, etc... (50 – 100 words).")
     implementation_start_date = models.DateField(_('residency start date'), help_text="Possible period for the implementation of the residency (must be within the period of the project implementation workplan) (MM/DD/YYYY)")
     implementation_period = models.DateField(_('period for direct cooperation'), blank=False, null=True, help_text="Possible period for direct cooperation with the artist (must be within the period of the project implementation workplan) (MM/DD/YYYY)")
-    implementation_duration = models.CharField(_('residency duration'), max_length=128, help_text="Possible duration of implementation in months (must be part of the project implementation workplan) (months)", default='1')
+    implementation_duration = models.CharField(_('residency duration'), max_length=128, help_text="Possible duration of implementation in months (must be part of the project implementation workplan) (months)")
     image = models.FileField(_("Image"), max_length=1024, upload_to="user/images/%Y/%m/%d/", help_text="Representing the project")
     image_credits = models.CharField(_('Image credits'), max_length=256, null=True)
 

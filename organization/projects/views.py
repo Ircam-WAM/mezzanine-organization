@@ -215,6 +215,12 @@ class ProjectICTCreatePublicFundingView(LoginRequiredMixin, ProjectCallMixin, Cr
         self.status = 1
         self.object.funding = "public"
         self.object.save()
+        
+        print("Validating form...")
+        for fomset in inlines:
+            print("Formset: {}".format(formset))
+            for f in formset:
+                print("\tField: {}".format(f))
 
         for formset in inlines:
             if 'contact' in formset.prefix:
@@ -260,6 +266,12 @@ class ProjectICTCreatePrivateFundingView(LoginRequiredMixin, ProjectCallMixin, C
         self.status = 1
         self.object.funding = "private"
         self.object.save()
+        
+        print("Validating form...")
+        for formset in inlines:
+            print("Formset: {}".format(formset))
+            for f in formset:
+                print("\tField: {}".format(f))
 
         for formset in inlines:
             if 'contact' in formset.prefix:
@@ -279,7 +291,7 @@ class ProjectICTCreatePrivateFundingView(LoginRequiredMixin, ProjectCallMixin, C
         message = get_template('projects/project_ict_create_notification.html').render(Context(ctx))
         msg = EmailMessage(subject, message, to=to_email, from_email=from_email)
         msg.content_subtype = 'html'
-        msg.send()
+    msg.send()
 
         return super(ProjectICTCreatePrivateFundingView, self).forms_valid(form, inlines)
 
