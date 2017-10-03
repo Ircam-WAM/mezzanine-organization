@@ -215,12 +215,6 @@ class ProjectICTCreatePublicFundingView(LoginRequiredMixin, ProjectCallMixin, Cr
         self.status = 1
         self.object.funding = "public"
         self.object.save()
-        
-        print("Validating form...")
-        for fomset in inlines:
-            print("Formset: {}".format(formset))
-            for f in formset:
-                print("\tField: {}".format(f))
 
         for formset in inlines:
             if 'contact' in formset.prefix:
