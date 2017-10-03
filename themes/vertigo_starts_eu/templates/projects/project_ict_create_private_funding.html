@@ -147,6 +147,7 @@
         </div>
       </div>
     </div>
+
     {% if call.is_closed %}
       <div class="ict-project-style__close-project">
         {% include 'projects/inc/project_call_closed.html' %}
@@ -166,7 +167,7 @@
                   </span>
                   <i id="chevron-0" class="fa fa-chevron-down ict-project-style__divider-chevron-section" aria-hidden="true"></i>
                 </div>
-                <div id="field-form-0" style="margin-left:30px;margin-right:30px">>
+                <div id="field-form-0" style="margin-left:30px;margin-right:30px">
                   <div style="display:block">
                     <div style="float:left;width:48%;margin-right:40px;margin-top:30px">
                       <p class="ict-project-style__title-field">{{ form.title.label }}</p>
@@ -401,6 +402,22 @@
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
                       <p class="ict-project-style__description-field">{{ inlines.1.0.description.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.1.0.description }}</p>
+                    </div>
+                  </div>
+                  <div style="display:block">
+                    <div style="float:left;width:48%;">
+                      <p class="ict-project-style__title-field">{{ inlines.0.0.image.label }}</p>
+                      <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.image.help_text }}</p>
+                      <p class="ict-project-style__field-style select_style">{{ inlines.0.0.image }}</p>
+                    </div>
+                  </div>
+                  <div style="display:block">
+                    <div style="float:left;width:48%;">
+                      <p class="ict-project-style__title-field">{{ inlines.0.0.image_credits.label }}</p>
+                      <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.image_credits.help_text }}</p>
+                      <p class="ict-project-style__field-style select_style">{{ inlines.0.0.image_credits }}</p>
                     </div>
                   </div>
                   <!--

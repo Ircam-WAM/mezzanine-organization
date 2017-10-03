@@ -140,6 +140,7 @@
 {% endblock %}
 
 {% block page_content %}
+
     <div class="row">
       <div class="ict-project-style__title-header">
         <div class="ict-project-style__title-style">
@@ -147,6 +148,7 @@
         </div>
       </div>
     </div>
+
     {% if call.is_closed %}
       <div class="ict-project-style__close-project">
         {% include 'projects/inc/project_call_closed.html' %}
@@ -404,6 +406,22 @@
                       <p class="ict-project-style__field-style">{{ inlines.1.0.description }}</p>
                     </div>
                   </div>
+                  <div style="display:block">
+                    <div style="float:left;width:48%;">
+                      <p class="ict-project-style__title-field">{{ inlines.0.0.image.label }}</p>
+                      <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.image.help_text }}</p>
+                      <p class="ict-project-style__field-style select_style">{{ inlines.0.0.image }}</p>
+                    </div>
+                  </div>
+                  <div style="display:block">
+                    <div style="float:left;width:48%;">
+                      <p class="ict-project-style__title-field">{{ inlines.0.0.image_credits.label }}</p>
+                      <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
+                      <p class="ict-project-style__description-field">{{ inlines.0.0.image_credits.help_text }}</p>
+                      <p class="ict-project-style__field-style select_style">{{ inlines.0.0.image_credits }}</p>
+                    </div>
+                  </div>
                   <div style="float:left;width:100%;height:10px;"></div>
                 </div>
                 <div id="divider-2" class="ict-project-style__divider-section" onclick="showHideDivider(this, event);">
@@ -447,7 +465,6 @@
                       <p class="ict-project-style__field-style">{{ inlines.2.2.credits }}</p>
                     </div>
                   </div>
-
                   <div style="float:left;width:100%;height:10px;"></div>
                 </div>
                 <div id="divider-3" class="ict-project-style__divider-section" onclick="showHideDivider(this, event);">
