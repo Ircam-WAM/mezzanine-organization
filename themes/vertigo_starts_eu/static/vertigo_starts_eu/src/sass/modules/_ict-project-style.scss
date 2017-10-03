@@ -56,12 +56,14 @@ $module: ".ict-project-style";
     display:inline-block;
     background: rgba(1, 12, 27, 1);
     color: white;
-    width: 106%;
+    width: 100%;
     padding-left: -30px;
     //padding-right: -20px;
     font-family: "Oswald", sans-serif;
     font-size: 20px;
     border: 1px solid rgba(79, 228, 189, 1);
+    padding-left:10px;
+    padding-right:10px;
   }
 
   &__divider-title-section {
@@ -69,9 +71,9 @@ $module: ".ict-project-style";
     font-family: "Oswald", sans-serif;
     display:inline-block;
     margin:10px;
-    width: 94%;
     color: white;
     font-weight: bold;
+    float:left;
   }
 
   &__divider-chevron-section {
@@ -80,6 +82,8 @@ $module: ".ict-project-style";
     text-align:right;
     color: #50E3C2;
     font-size:30px;
+    float: right;
+    margin-top:5px;
   }
 
   &__title-field {
@@ -145,9 +149,8 @@ $module: ".ict-project-style";
   &__title-header {
 
     background:white;
-    width:75%;
+    width:100%;
     text-align: center;
-    margin-left: 177px;
     padding-top: 20px;
     margin-top:-100px;
   }
