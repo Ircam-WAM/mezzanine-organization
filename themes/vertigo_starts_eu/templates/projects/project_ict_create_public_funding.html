@@ -155,11 +155,33 @@
       </div>
     {% else %}
         <div class="row" style="background-color:white">
-            {% errors_for form %}
+          {#  {% errors_for form %}#}
             <form class="form ict-project-form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for formset in inlines %}
                     {{ formset.management_form }}
+                    {% if formset.errors %}
+                        {% for form in formset.forms %}
+                          <div class="ict-project-style__errors-form-style">
+                          {% for error in form.errors %}
+                              {{ error.label }}
+                              {% if error.title|escape|lower == 'position' %}
+                                  <ul><li>Please review Position field</li></ul>
+                              {% elif error.title|escape|lower == 'address' %}
+                                  <ul><li>Please review Address field</li></ul>
+                              {% elif error.title|escape|lower == 'telephone' %}
+                                  <ul><li>Please review Telephone field</li></ul>
+                              {% elif error.title|escape|lower == 'postal_code' %}
+                                  <ul><li>Please review Postal code field</li></ul>
+                              {% elif error.title|escape|lower == 'city' %}
+                                  <ul><li>Please review City field</li></ul>
+                              {% elif error.title|escape|lower == 'country' %}
+                                  <ul><li>Please review Country field</li></ul>
+                              {% endif %}
+                          {% endfor %}
+                          </div>
+                        {% endfor %}
+                  {% endif %}
                 {% endfor %}
                 <div id="divider-0" class="ict-project-style__divider-section" onclick="showHideDivider(this, event);">
                   <span class="ict-project-style__divider-title-section">
@@ -196,7 +218,7 @@
                     <div style="float:left;width:48%;">
                       <p class="ict-project-style__title-field">{{ inlines.1.0.funding_programme.label }}</p>
                       <i class="fa fa-lock ict-project-style__icon-field" aria-hidden="true"></i>
-                      <p class="ict-project-style__description-field">{{ inlines.1.0.help_text }}</p>
+                      <p class="ict-project-style__description-field">{{ inlines.1.0.funding_programme.help_text }}</p>
                       <p class="ict-project-style__field-style">{{ inlines.1.0.funding_programme }}</p>
                     </div>
                   </div>

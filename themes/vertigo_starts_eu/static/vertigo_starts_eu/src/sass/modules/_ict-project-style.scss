@@ -155,6 +155,13 @@ $module: ".ict-project-style";
     padding-top: 20px;
     margin-top:-100px;
   }
+
+  &__errors-form-style {
+    
+    color:red;
+    display:block;
+    text-align:center;
+  }
 }
 
 h1, h2 {

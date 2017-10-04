@@ -160,6 +160,28 @@
                 {% csrf_token %}
                 {% for formset in inlines %}
                     {{ formset.management_form }}
+                    {% if formset.errors %}
+                        {% for form in formset.forms %}
+                          <div class="ict-project-style__errors-form-style">
+                          {% for error in form.errors %}
+                              {{ error.label }}
+                              {% if error.title|escape|lower == 'position' %}
+                                  <ul><li>Please review Position field</li></ul>
+                              {% elif error.title|escape|lower == 'address' %}
+                                  <ul><li>Please review Address field</li></ul>
+                              {% elif error.title|escape|lower == 'telephone' %}
+                                  <ul><li>Please review Telephone field</li></ul>
+                              {% elif error.title|escape|lower == 'postal_code' %}
+                                  <ul><li>Please review Postal code field</li></ul>
+                              {% elif error.title|escape|lower == 'city' %}
+                                  <ul><li>Please review City field</li></ul>
+                              {% elif error.title|escape|lower == 'country' %}
+                                  <ul><li>Please review Country field</li></ul>
+                              {% endif %}
+                          {% endfor %}
+                          </div>
+                        {% endfor %}
+                  {% endif %}
                 {% endfor %}
                 <div id="divider-0" class="ict-project-style__divider-section" onclick="showHideDivider(this, event);">
                   <span class="ict-project-style__divider-title-section">
