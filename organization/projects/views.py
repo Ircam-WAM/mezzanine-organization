@@ -226,8 +226,8 @@ class ProjectICTCreatePublicFundingView(LoginRequiredMixin, ProjectCallMixin, Cr
         to_email = [contact_email, settings.DEFAULT_TO_EMAIL]
         subject = settings.EMAIL_SUBJECT_PREFIX + ' ' + self.call.title
         ctx = {
-            'first_name': contact_data['first_name'],
-            'last_name': contact_data['last_name'],
+            'first_name': contact_data.get("first_name"),
+            'last_name': contact_data.get("last_name"),
             'project_title': self.object.title,
         }
 
@@ -271,8 +271,8 @@ class ProjectICTCreatePrivateFundingView(LoginRequiredMixin, ProjectCallMixin, C
         to_email = [contact_email, settings.DEFAULT_TO_EMAIL]
         subject = settings.EMAIL_SUBJECT_PREFIX + ' ' + self.call.title
         ctx = {
-            'first_name': contact_data['first_name'],
-            'last_name': contact_data['last_name'],
+            'first_name': contact_data.get("first_name"),
+            'last_name': contact_data.get("last_name"),
             'project_title': self.object.title,
         }
 
