@@ -1,0 +1,8 @@
+<div style="display:block">
+    <div style="float:left;width:48%;{% if left %}margin-right:40px;{% endif %}">
+        <p class="ict-project-style__title-field">{{ field.label }}</p>
+        <i class="fa {% if private %}fa-lock{% else %}fa-globe{% endif %} ict-project-style__icon-field" aria-hidden="true"></i>
+        <p class="ict-project-style__description-field">{{ field.help_text }}</p>
+        <p class="ict-project-style__field-style">{{ field }}</p>
+    </div>
+</div>
