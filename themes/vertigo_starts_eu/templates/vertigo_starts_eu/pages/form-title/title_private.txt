@@ -1,3 +1,3 @@
-<h2 style="text-align:center;color:black;">Application form for Projects (Private funding)</h2>
+<h2 style="text-align:center;color:black;">Application form for Projects (Privately funded)</h2>
 
 <p>Please, use the following form to apply for your Project to be part of a VERTIGO residency. Instructions are provided in the content to guide you. All fields must be filled. In case of query, please contact VERTIGO. Fields marked with a padlock symbol will only be seen by the VERTIGO consortium, fields marked with a globe symbol will be published publicly on this website if your Project is selected.</p>
