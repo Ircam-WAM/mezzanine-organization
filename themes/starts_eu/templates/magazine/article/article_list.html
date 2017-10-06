@@ -28,13 +28,18 @@
 {% block main %}
 <div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
     <div class="container">
+        
+        {# Same title style than CustomPage content #}
         <div class="row">
-            <div class="col-sm-16 col-md-10 col-md-push-3 tac">
-                <h1 class="section-title section-title--uppercase section-title--main section-title--underline">{% trans "News" %}</h1>
-            </div>
+            <div class="col-sm-16 col-md-12 col-md-push-2 tac"></div>
+        </div>
+        <div class="row">
+            <h2 style="text-align: center;">
+                News
+            </h2>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-top: 2em;">
 
             <div class="mb2 col-md-12 col-md-push-2 page__content" data-summary-content>
                 <div class="page__content">
