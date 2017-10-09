@@ -255,7 +255,7 @@ def order_links(links):
                     minor = link
             except TypeError:
                 pass
-        ordered_links.append(link)
+        ordered_links.append(minor)
         links_list.remove(minor)
     return ordered_links
 

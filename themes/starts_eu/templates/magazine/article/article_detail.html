@@ -77,9 +77,12 @@
     {% endfor %}
 {% endblock %}
 
+{% comment %}
+{# FIXME: Content from other sites appearing in related_content #}
 {% block page_related_content %}
     {% include "core/inc/related_content_dynamic.html" with concrete_objects=related_content object=article %}
 {% endblock %}
+{% endcomment %}
 
 {% block page_sidebar %}
 

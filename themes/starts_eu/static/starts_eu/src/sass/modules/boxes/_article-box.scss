@@ -207,7 +207,7 @@ $module: ".article-box";
         @include typeface(sans-serif);
         @include margin-top(.25);
         font-weight: weight(bold);
-        color: white;
+        color: $color-background;
         text-transform: uppercase;
         @include transition(color 0.5s ease-in-out);
 
@@ -232,7 +232,7 @@ $module: ".article-box";
         @include typeface(serif);
         @include margin(1 0 .25 0);
         font-weight: weight(light);
-        color: white;
+        color: $color-background;
         @include transition(color 0.5s ease-in-out);
     }
 
