@@ -9,7 +9,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-11 col-sm-push-1">
-                                            <a class="article-box article-box--inline" href="{% if slider.content_object.links.all.0 %}{{ slider.content_object.links.all.0 }}{% else %}{{ slider.content_object.get_absolute_url }}{% endif %}" title="{{ slider.content_object.title }}">
+                                            <a class="slider-box slider-box--inline" href="{% if slider.content_object.links.all.0 %}{{ slider.content_object.links.all.0 }}{% else %}{{ slider.content_object.get_absolute_url }}{% endif %}" title="{{ slider.content_object.title }}">
                                                 {% if slider.content_object.department %}
                                                     <div class="tag dashed">
                                                       {{ slider.content_object.department.name }}
@@ -34,9 +34,9 @@
                                                     {% endif %}
                                                 {% endif %}
 
-                                                <div class="article-box__content tal">
-                                                    <h3 class="article-box__title--accent">{{ slider.content_object.title }}</h3>
-                                                    <div class="article-box__subtitle">
+                                                <div class="slider-box__content tal">
+                                                    <h3 class="slider-box__title--accent">{{ slider.content_object.title }}</h3>
+                                                    <div class="slider-box__subtitle">
                                                         {% if slider.content_type.model != 'event' %}
                                                             {{ slider.content_object.sub_title }}
                                                         {% endif %}
@@ -52,7 +52,7 @@
                                                              <br />{{ slider.content_object.location }}
                                                         {% endif %}
                                                     </div>
-                                                    <div class="article-box__desc">
+                                                    <div class="slider-box__desc">
                                                         {{ slider.content_object.description|richtext_filters|safe|truncatechars_html:200 }}
                                                     </div>
                                                 </div>
@@ -76,15 +76,15 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-xs-12 col-sm-11 col-sm-push-1">
-                                <a class="article-box article-box--inline" href="{% if image.url %}{{ image.url }}{% endif %}" title="{{ image.title }}">
-                                    <div class="article-box__content tal">
-                                        <h3 class="article-box__title">
+                                <a class="slider-box slider-box--inline" href="{% if image.url %}{{ image.url }}{% endif %}" title="{{ image.title }}">
+                                    <div class="slider-box__content tal">
+                                        <h3 class="slider-box__title">
                                             {{ image.title }}
                                         </h3>
-                                        <div class="article-box__subtitle">
+                                        <div class="slider-box__subtitle">
                                             {{ image.description|linebreaksbr }}
                                         </div>
-                                        <div class="article-box__desc">
+                                        <div class="slider-box__desc">
                                             {{ image.credits }}
                                         </div>
                                     </div>

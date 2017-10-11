@@ -4,7 +4,7 @@
 
     <div class="col-sm-16">
 
-        <a class="event-line-box" href="{% if event.links.all|first %}{{event.links.all|first}}{% endif %}">
+        <a class="event-line-box" href="{{ event.get_absolute_url }}">
 
             {% with event.images.all|get_type:'card' as images %}
                 {% if images %}
