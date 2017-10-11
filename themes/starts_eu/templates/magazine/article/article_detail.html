@@ -24,6 +24,9 @@
 
 {% block page_title %}
 
+    <div class="row">
+        <div class="col-sm-16 col-md-12 col-md-push-2 tac"></div>
+    </div>
     {% editable article.title %}
         <h1 class="section-title section-title--uppercase section-title--main">{{ article.title }}</h1>
     {% endeditable %}
@@ -74,9 +77,12 @@
     {% endfor %}
 {% endblock %}
 
+{% comment %}
+{# FIXME: Content from other sites appearing in related_content #}
 {% block page_related_content %}
     {% include "core/inc/related_content_dynamic.html" with concrete_objects=related_content object=article %}
 {% endblock %}
+{% endcomment %}
 
 {% block page_sidebar %}
 

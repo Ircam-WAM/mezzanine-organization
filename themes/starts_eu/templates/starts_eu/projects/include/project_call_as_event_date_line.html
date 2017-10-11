@@ -20,5 +20,10 @@
         {% else %}
             {{ event.date_from|date:"DATE_EVENT_FORMAT" }} {% trans "through" %} {{ event.date_to|date:"DATE_EVENT_FORMAT" }}
         {% endif %}
+        {% if event.date_from|date:"Y" == event.date_to|date:"Y" %}
+            , {{ event.date_from|date:"Y" }}
+        {% else %}
+            , {{ event.date_from|date:"Y" }} - {{ event.date_to|date:"Y" }}
+        {% endif %}
 
     {% endif %}
