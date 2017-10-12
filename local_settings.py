@@ -357,3 +357,6 @@ if DEBUG:
     TIMESHEET_MASTER_MAIL = "zawadzki@ircam.fr"
 else:
     TIMESHEET_MASTER_MAIL = "Hugues.Vinet@ircam.fr"
+
+MEDIA_BASE_URL = 'https://medias.ircam.fr/embed/media/'
+
