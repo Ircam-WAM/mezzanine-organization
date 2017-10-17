@@ -118,8 +118,8 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 ]
 
     filter_horizontal = ['teams', 'organizations']
-    list_filter = ['type', 'program', 'program_type', 'lead_organization', null_filter('external_id')]
-    list_display = ['title', 'external_id', 'date_from', 'date_to', 'lead_organization', 'program', 'status', 'admin_link']
+    list_filter = ['type', 'program', 'program_type', 'lead_organization', null_filter('external_id'), 'is_archive']
+    list_display = ['title', 'external_id', 'date_from', 'date_to', 'lead_organization', 'program', 'status', 'is_archive', 'admin_link']
 
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
