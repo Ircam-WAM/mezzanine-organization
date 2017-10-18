@@ -91,7 +91,13 @@ class EventPriceDescriptionAdmin(TranslationTabularInline):
 class CustomEventPriceAdmin(BaseTranslationModelAdmin):
 
     inlines = [EventPriceDescriptionAdmin,]
+    list_display = ['value', 'description']
 
+    def description(self, instance):
+        desc = ""
+        if hasattr(instance, "event_price_description"):
+            desc = instance.event_price_description.description
+        return desc
 
 class DynamicContentEventInline(TabularDynamicInlineAdmin):
 
