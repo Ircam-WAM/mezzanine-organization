@@ -69,6 +69,7 @@ class ArticleRelatedTitleAdmin(TranslationTabularInline):
 class ArticleAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
+    list_display = ('title', 'department', 'publish_date', 'status', )
     exclude = ('related_posts',)
     filter_horizontal = ['categories',]
     inlines = [ArticleImageInline,
@@ -76,6 +77,7 @@ class ArticleAdminDisplayable(DisplayableAdmin):
               ArticleRelatedTitleAdmin,
               DynamicContentArticleInline,
               ArticlePlaylistInline]
+    list_filter = [ 'status', 'keywords', 'department', ]
 
 
 class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline

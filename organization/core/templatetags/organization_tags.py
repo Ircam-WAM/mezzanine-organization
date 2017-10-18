@@ -286,3 +286,8 @@ def is_more_then_hours(date_begin, date_end, hours):
     else :
         is_more = (date_end - date_begin).seconds > hours*3600
     return is_more
+
+
+@register.filter
+def get_article_by_department(department):
+    return Article.objects.filter(department=department).order_by('-publish_date')[:3]
