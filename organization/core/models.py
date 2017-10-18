@@ -86,6 +86,14 @@ class SubTitled(models.Model):
         abstract = True
 
 
+class Label(models.Model):
+
+    label = models.CharField(_('label'), max_length=1024)
+
+    class Meta:
+        abstract = True
+
+
 class CustomCategory(Named):
     """Category description)"""
 

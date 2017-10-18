@@ -44,6 +44,7 @@ from organization.projects.models import ProjectWorkPackage
 from collections import OrderedDict
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
+from django.utils import six
 
 
 class PersonListView(ListView):
@@ -90,19 +91,22 @@ class PersonDetailView(SlugMixin, DetailView):
 
 class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):
 
+    def get_result_label(self, result):
+        """Return the label of a result."""
+        label = result.label if result.label else "..."
+        return six.text_type(label + " - " + result.__str__())
+
     def get_queryset(self):
-        # if not self.request.is_authenticated():
-        #     return PersonListBlock.objects.none()
 
         qs = PersonListBlock.objects.all()
 
-        title = self.forwarded.get('title', None)
+        label = self.forwarded.get('label', None)
 
-        if title:
-            qs = qs.filter(title=title)
+        if label:
+            qs = qs.filter(label=label)
 
         if self.q:
-            qs = qs.filter(title__istartswith=self.q)
+            qs = qs.filter(label__istartswith=self.q)
 
         return qs
 
