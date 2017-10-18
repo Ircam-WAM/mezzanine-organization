@@ -39,7 +39,6 @@ class HomeView(SlugMixin, ListView):
 
     model = Home
     template_name = 'index.html'
-    briefs = Brief.objects.all() # with .published, order by isn't working anymore
     context_object_name = 'home'
 
     def get_queryset(self, **kwargs):
@@ -50,7 +49,7 @@ class HomeView(SlugMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['briefs'] = self.briefs
+        context['briefs'] = Brief.objects.published().order_by('-publish_date')[:8]
         return context
 
 

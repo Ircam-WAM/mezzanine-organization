@@ -87,10 +87,15 @@ class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline
 
 class BriefAdminDisplayable(BaseTranslationModelAdmin,): #, OrderableAdmin
 
-    list_display = ('title', 'external_content', 'content_object', )
+    list_display = ('title', 'ext_content', 'content_object', 'publish_date', 'status')
     form = BriefForm
     fieldsets = deepcopy(BriefAdmin.fieldsets)
     exclude = ("short_url", "keywords", "description", "slug", )
+    search_fields = ['title',]
+
+    def ext_content(self, instance):
+        return instance.external_content[:100] + "..."
+
 
 
 admin.site.register(Article, ArticleAdminDisplayable)
