@@ -75,7 +75,7 @@ class PlaylistListView(ListView):
     context_object_name = 'playlists'
 
     def get_queryset(self):
-        self.qs = Playlist.objects.all()
+        self.qs = Playlist.objects.all().order_by('-publish_date')
         self.current_type = None
         if "type" in self.kwargs:
             self.qs = self.qs.filter(type=self.kwargs['type'])
