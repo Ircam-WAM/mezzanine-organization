@@ -50,25 +50,18 @@
                 </div>
 
                 <div class="mb2 col-sm-9 col-lg-8 white-bg page__content">
-
-                    {% for result in results.object_list %}
+                    {% for object in results.object_list %}
                         {# result|classname #}
-                        {% if result|classname == 'Event' %}
-                            {% with result as event %}
+                        {% if object|classname == 'Event' %}
                                 {% include 'agenda/includes/event_search.html' %}
-                            {% endwith %}
-                        {% elif result|classname == 'Playlist' %}
-                            {% with result as playlist %}
+                        {% elif object|classname == 'Playlist' %}
                                 {% include 'media/inc/playlist_search.html' %}
-                            {% endwith %}
-                        {% elif result|classname == 'Product' %}
-                            {% with result as product %}
+                        {% elif object|classname == 'Product' %}
                                 {% include 'shop/product/includes/product_search.html' %}
-                            {% endwith %}
+                        {% elif object|classname == 'Article' %}
+                                {% include 'magazine/article/includes/article_search.html' %}
                         {% else %}
-                            {% with result as page %}
                                 {% include 'pages/page/includes/page_search.html' %}
-                            {% endwith %}
                         {% endif %}
                     {% endfor %}
                     <p>

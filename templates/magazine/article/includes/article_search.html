@@ -6,15 +6,11 @@
 {% block tags %}
     <div class="event-line-box__tags">
         <div class="tag tag--small dashed">
-            {% trans 'Software' %}
+            {% trans 'Article' %}
         </div>
     </div>
 {% endblock %}
 
 {% block url %}
-    {% with object.links.all as products %}
-        {% if products %}
-            {{ products|get_type_link:'link'|first }}
-        {% endif %}
-    {% endwith %}
+    {{ object.get_absolute_url }}
 {% endblock %}
