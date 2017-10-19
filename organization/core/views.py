@@ -112,27 +112,27 @@ class CustomSearchView(TemplateView):
         filter_dict = {
             'CustomPage': {
                 'count' : results_page_count,
-                'verbose_name' : 'Page',
+                'verbose_name' : _('Page'),
                 'app_label' : 'organization-pages'
             },
             'Event': {
                 'count' : results_event_count,
-                'verbose_name' : 'Event',
+                'verbose_name' : _('Event'),
                 'app_label' : 'mezzanine_agenda'
             },
             'Playlist': {
                 'count' : results_media_count,
-                'verbose_name' : 'Media',
+                'verbose_name' : _('Media'),
                 'app_label' : 'organization-media'
             },
             'Project': {
                 'count' : results_project_count,
-                'verbose_name' : 'Project',
+                'verbose_name' : _('Project'),
                 'app_label' : 'organization-projects'
             },
             'Article': {
                 'count' : results_article_count,
-                'verbose_name' : 'Article',
+                'verbose_name' : _('Article'),
                 'app_label' : 'organization-magazine'
             },
         }
