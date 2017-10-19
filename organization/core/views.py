@@ -39,6 +39,7 @@ from mezzanine_agenda.models import Event
 from organization.pages.models import CustomPage
 from organization.projects.models import Project
 from organization.network.models import Person
+from organization.magazine.models import Article
 from pprint import pprint
 
 
@@ -81,6 +82,7 @@ class CustomSearchView(TemplateView):
         results_page_count = len(CustomPage.objects.search(query, for_user=request.user))
         results_event_count = len(Event.objects.search(query, for_user=request.user))
         results_project_count = len(Project.objects.search(query, for_user=request.user))
+        results_article_count = len(Article.objects.search(query, for_user=request.user))
 
         # count objects
         filter_dict = dict()
@@ -127,6 +129,11 @@ class CustomSearchView(TemplateView):
                 'count' : results_project_count,
                 'verbose_name' : 'Project',
                 'app_label' : 'organization-projects'
+            },
+            'Article': {
+                'count' : results_article_count,
+                'verbose_name' : 'Article',
+                'app_label' : 'organization-magazine'
             },
         }
 

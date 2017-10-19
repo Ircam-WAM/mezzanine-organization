@@ -192,7 +192,8 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'organization-media.Playlist',
                         'mezzanine_agenda.Event',
                         'organization-projects.Project',
-                        'shop.Product')
+                        'shop.Product',
+                        'organization-magazine.Article')
 
 
 PAGES_MODELS = ('organization-pages.CustomPage',
@@ -359,4 +360,3 @@ else:
     TIMESHEET_MASTER_MAIL = "Hugues.Vinet@ircam.fr"
 
 MEDIA_BASE_URL = 'https://medias.ircam.fr/embed/media/'
-

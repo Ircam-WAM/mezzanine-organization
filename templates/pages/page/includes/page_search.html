@@ -27,6 +27,12 @@
                     {% trans 'Project' %}
                 </div>
             </div>
+        {% elif page|classname == "Article"  %}
+            <div class="event-line-box__tags">
+                <div class="tag tag--small dashed">
+                    {% trans 'Article' %}
+                </div>
+            </div>
         {% else %}
             <div class="event-line-box__tags">
                 <div class="tag tag--small dashed dashed--gray">
