@@ -115,10 +115,10 @@ class CustomSearchView(TemplateView):
                 'verbose_name' : _('Page'),
                 'app_label' : 'organization-pages'
             },
-            'Event': {
-                'count' : results_event_count,
-                'verbose_name' : _('Event'),
-                'app_label' : 'mezzanine_agenda'
+            'Article': {
+                'count' : results_article_count,
+                'verbose_name' : _('Article'),
+                'app_label' : 'organization-magazine'
             },
             'Playlist': {
                 'count' : results_media_count,
@@ -130,10 +130,10 @@ class CustomSearchView(TemplateView):
                 'verbose_name' : _('Project'),
                 'app_label' : 'organization-projects'
             },
-            'Article': {
-                'count' : results_article_count,
-                'verbose_name' : _('Article'),
-                'app_label' : 'organization-magazine'
+            'Event': {
+                'count' : results_event_count,
+                'verbose_name' : _('Event'),
+                'app_label' : 'mezzanine_agenda'
             },
         }
 
