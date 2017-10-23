@@ -158,7 +158,7 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
             raise ValidationError("Latitude required if specifying longitude.")
 
         if not (self.lat and self.lon) and not self.mappable_location:
-            if self.address:
+            if self.address and self.postal_code and self.city:
                 self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
 
         if self.mappable_location and not (self.lat and self.lon): #location should always override lat/long if set
