@@ -38,7 +38,8 @@ from mezzanine_agenda.models import Event
 from organization.pages.models import CustomPage
 from organization.projects.models import Project
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from organization.network.models import *
 
 class SlugMixin(object):
 
@@ -197,3 +198,24 @@ def autocomplete_result_formatting(self, context):
         all_results.append(curr_model_result)
 
     return all_results
+
+
+class UserProjectsView(LoginRequiredMixin, ListView):
+
+    model = Project
+    template_name='accounts/account_projects_list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Project.objects.filter(user=user).select_related().order_by('title')
+        return qs
+
+class UserProducerView(LoginRequiredMixin, ListView):
+
+    model = Organization
+    template_name='accounts/account_producer_list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Organization.objects.filter(user=user).select_related().order_by('title')
+        return qs

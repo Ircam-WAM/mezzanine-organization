@@ -1,0 +1,30 @@
+{% extends "vertigo_starts_eu/accounts/account_form_login.html" %}
+{% load i18n mezzanine_tags %}
+{% block page_title %}
+	<h1 class="accounts-pages__big-title">{% trans "User producer list" %}</h1>
+{% endblock %}
+
+{% block page_content %}
+{{ block.super }}
+<div class="accounts-pages__list-style">
+	{% if object_list|length > 0 %}
+		<p class="accounts-pages__header-text-list">Click on green button to edit fields on producer</p>
+		{% for object in object_list %}
+			<div class="accounts-pages__element-container">
+				<div class="accounts-pages__left-element-item">
+					Producer name: <b>{{ object.name }}</b>
+				</div>
+				<div class="accounts-pages__right-element-item">
+					{% if object.validation_status == 1 %}
+						<a href="{{ object.url }}" class="accounts-pages__button-link-enable">Edit</a>
+					{% else %}
+						<a href="#" class="accounts-pages__button-link-disable">Disabled</a>
+					{% endif %}
+				</div>
+			</div>
+		{% endfor %}
+	{% else %}
+			<p class="accounts-pages__header-text-list">No Producers found</p>
+	{% endif%}
+</div>
+{% endblock %}
