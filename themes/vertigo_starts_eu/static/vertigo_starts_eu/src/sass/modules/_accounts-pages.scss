@@ -49,21 +49,23 @@ $module: ".accounts-pages";
   &__left-element-item {
 
     font-family:'Merriweather';
-    font-size:16px;
-    float:left;
-    height:100%;
-    width:50%;
-    background-color:clear;
-    display:inline-block;
-    color:black;
+    font-size: 16px;
+    float: left;
+    height: 100%;
+    width: 80%;
+    background-color: clear;
+    display: inline-block;
+    color: black;
     line-height: 50px;
   }
 
   &__right-element-item {
 
+    font-family:'Merriweather';
+    font-size: 16px;
     float: right;
     height: 100%;
-    width: 50%;
+    width: 20%;
     background-color: clear;
     display: inline-block;
     text-align: right;
