@@ -217,5 +217,5 @@ class UserProducerView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        qs = Organization.objects.filter(user=user).select_related().order_by('title')
+        qs = Organization.objects.filter(user=user).select_related().order_by('name')
         return qs
