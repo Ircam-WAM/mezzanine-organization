@@ -10,7 +10,7 @@
         {{content.content_object.content|richtext_filters|safe|truncatechars_html:150 }}
     </div>
     {% if content.content_object.external_content %}
-        <a class="brief-box__button" href="{{ content.content_object.external_content }}" title="{{ content.content_object.text_button }}">{{ content.content_object.text_button }}</a>
+        <a class="brief-box__button" href="{{ content.content_object.external_content }}" title="{{ content.content_object.text_button }}" target="_blank">{{ content.content_object.text_button }}</a>
     {% elif content.content_object.content_object %}
         <a class="brief-box__button" href="{{ content.content_object.content_object.get_absolute_url }}" title="{{ content.content_object.text_button }}">{{ content.content_object.text_button }}</a>
     {% else %}

@@ -34,7 +34,7 @@
                 {% endeditable %}
             </div>
             {% if content.external_content and content.text_button_external %}
-                <a class="button button--small" href="{{ content.external_content }}" title="{{ content.text_button_external }}">{{ content.text_button_external }}</a>
+                <a class="button button--small" href="{{ content.external_content }}" title="{{ content.text_button_external }}" target="_blank">{{ content.text_button_external }}</a>
             {% endif %}
             {% if content.content_object  and content.text_button_internal %}
                 <a class="button button--small" href="{{ content.content_object.get_absolute_url }}" title="{{ content.text_button_internal }}">{{ content.text_button_internal }}</a>
