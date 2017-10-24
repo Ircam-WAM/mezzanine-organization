@@ -44,6 +44,7 @@ $module: ".accounts-pages";
     width:100%;
     height:50px;
     color:black;
+    margin-top: 5px;
   }
 
   &__left-element-item {
@@ -72,34 +73,15 @@ $module: ".accounts-pages";
     line-height: 50px;
   }
 
-  &__button-link-enable {
-
-    background: #50E3C2;
-    color: white;
-  	margin-top: 20px;
-  	padding-top: 5px;
-  	padding-bottom: 5px;
-  	padding-top: 10px;
-  	padding-bottom: 10px;
-  	padding-left: 30px;
-  	padding-right: 30px;
-  	font-size: 16px;
-  	font-family: 'Merriweather';
-  }
-
-  &__button-link-disable {
-
-  	background: gray;
+  &__button-link {
+    
   	color: white;
-  	margin-top: 20px;
-  	padding-top: 5px;
-  	padding-bottom: 5px;
-  	padding-top: 10px;
-  	padding-bottom: 10px;
-  	padding-left: 30px;
-  	padding-right: 30px;
   	font-size: 16px;
   	font-family: 'Merriweather';
+  	text-align: center;
+  	width: auto;
+  	display: block;
+  	margin: auto;
   }
 
   &__header-text-list {
