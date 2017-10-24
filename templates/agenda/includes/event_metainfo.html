@@ -50,7 +50,7 @@
                         <p class="page__meta-text">
                     {% endif %}
                     {% if price.event_price_description.description %}
-                        {{ price.event_price_description.description }} :
+                        {{ price.event_price_description.description|safe }} :
                     {% endif %}
                     {{ price.value|floatformat:"-2" }} {{ price.unit }} {% if not forloop.last %} <br /> {% endif %}
                     {% if forloop.last %}

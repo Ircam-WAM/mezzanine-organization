@@ -43,7 +43,7 @@
     </tr>
     {% for item in order.items.all %}
     <tr>
-        <td>{{ item.description }}</td>
+        <td>{{ item.description|safe }}</td>
         <td align="right" valign="top">{{ item.unit_price|currency }}</td>
         <td align="right" valign="top">{{ item.quantity }}</td>
         <td align="right" valign="top">{{ item.total_price|currency }}</td>

@@ -12,7 +12,7 @@
 {% endmetablock %}{% endblock %}
 
 {% block meta_description %}{% metablock %}
-{{ page.description }}
+{{ page.description|safe }}
 {% endmetablock %}{% endblock %}
 
 {% block main %}

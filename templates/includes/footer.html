@@ -61,7 +61,7 @@
             </div>
 
             <div class="col-xs-4 col-sm-5 col-sm-push-1 tal">
-                <strong>{{ host_organization.description }}</strong><br/ >
+                <strong>{{ host_organization.description|safe }}</strong><br/ >
                 <br />
                 {% if linked_organization_footer %}
                     {% include 'pages/page/includes/linked_organization_footer.html' %}

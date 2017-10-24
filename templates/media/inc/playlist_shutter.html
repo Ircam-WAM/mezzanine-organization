@@ -9,7 +9,7 @@
             <h2><a href="{{ media.content_object.get_absolute_url }}" title="">{{ media.content_object.title }}</a></h2>
 
             {% if media.content_object.description %}
-                <p>{{ media.content_object.description|truncatechars:100 }}</p>
+                <p>{{ media.content_object.description|safe|truncatechars:100 }}</p>
             {% endif %}
 
             {% comment %}

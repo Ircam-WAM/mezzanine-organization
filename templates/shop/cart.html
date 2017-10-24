@@ -38,12 +38,12 @@
             {{ form.id }}
             {% if item.image %}
             <a href="{{ item.get_absolute_url }}">
-                <img alt="{{ item.description }}" src="{{ MEDIA_URL }}{% thumbnail item.image 30 30 %}">
+                <img alt="{{ item.description|safe }}" src="{{ MEDIA_URL }}{% thumbnail item.image 30 30 %}">
             </a>
             {% endif %}
         </td>
         <td class="left">
-            <a href="{{ item.get_absolute_url }}">{{ item.description }}</a>
+            <a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a>
         </td>
         <td>{{ item.unit_price|currency }}</td>
         <td class="quantity">{{ form.quantity }}</td>

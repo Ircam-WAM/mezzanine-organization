@@ -10,7 +10,7 @@
 {% endmetablock %}{% endblock %}
 
 {% block meta_description %}{% metablock %}
-{{ obj.description }}
+{{ obj.description|safe }}
 {% endmetablock %}{% endblock %}
 
 {% block main %}

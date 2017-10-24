@@ -14,7 +14,7 @@
 {% endmetablock %}{% endblock %}
 
 {% block meta_description %}{% metablock %}
-    {{ topic.description }}
+    {{ topic.description|safe }}
 {% endmetablock %}{% endblock %}
 
 {% block title %}

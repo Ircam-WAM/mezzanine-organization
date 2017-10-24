@@ -12,7 +12,7 @@
 
                     <h2 class="dotted">{{ person_list_block.title }}</h2>
                     {% if person_list_block.description %}
-                        <p>{{ person_list_block.description }}</p>
+                        <p>{{ person_list_block.description|safe }}</p>
                     {% endif %}
 
                 </div>

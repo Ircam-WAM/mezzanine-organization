@@ -49,7 +49,7 @@
         <td align="left" valign="top">{{ item.total_price|currency }}</td>
         <td align="left" valign="top">{{ item.quantity }}</td>
         <td align="left" valign="top">{{ item.unit_price|currency }}</td>
-        <td align="right">{{ item.description }}</td>
+        <td align="right">{{ item.description|safe }}</td>
 
 
 

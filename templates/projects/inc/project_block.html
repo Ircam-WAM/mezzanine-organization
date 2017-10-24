@@ -16,7 +16,7 @@
                                 {% if block.description %}
                                     <div class="chapo">
                                         {% editable block.description %}
-                                            {{ block.description }}
+                                            {{ block.description|safe }}
                                         {% endeditable %}
                                     </div>
                                 {% endif %}

@@ -7,7 +7,7 @@
                 <div class="col-sm-9 col-sm-push-3 col-lg-8 col-lg-push-2" data-summary-content>
                     <h2 class="dotted">{{ list.title }}</h2>
                     {% if list.description %}
-                        <p>{{ list.description }}</p>
+                        <p>{{ list.description|safe }}</p>
                     {% endif %}
                 </div>
             </div>

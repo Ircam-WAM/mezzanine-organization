@@ -5,7 +5,7 @@
 
 {% block meta_description %}
     {% metablock %}
-        {{ object.description }}
+        {{ object.description|safe }}
     {% endmetablock %}
 {% endblock %}
 
@@ -27,7 +27,7 @@
     {% if object.description %}
         {% editable object.description %}
             <div class="chapo">
-                {{ object.description }}
+                {{ object.description|safe }}
             </div>
         {% endeditable %}
     {% endif %}

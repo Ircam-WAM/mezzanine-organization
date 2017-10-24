@@ -12,7 +12,7 @@
 {% endmetablock %}{% endblock %}
 
 {% block meta_description %}{% metablock %}
-{{ product.description }}
+{{ product.description|safe }}
 {% endmetablock %}{% endblock %}
 
 {% block extra_css %}
@@ -59,7 +59,7 @@ $(document).ready(function() {
     {% for image in images %}
     <li id="image-{{ image.id }}-large"{% if not forloop.first %}style="display:none;"{% endif %}>
         <a class="product-image-large" href="{{ MEDIA_URL }}{{ image.file }}">
-            <img alt="{{ image.description }}" src="{{ MEDIA_URL }}{% thumbnail image.file 0 300 %}" class="img-thumbnail img-responsive col-xs-12">
+            <img alt="{{ image.description|safe }}" src="{{ MEDIA_URL }}{% thumbnail image.file 0 300 %}" class="img-thumbnail img-responsive col-xs-12">
         </a>
     </li>
     {% endfor %}
@@ -70,7 +70,7 @@ $(document).ready(function() {
     {% for image in images %}
     <li>
         <a class="thumbnail" id="image-{{ image.id }}" href="{{ MEDIA_URL }}{{ image.file }}">
-            <img alt="{{ image.description }}" src="{{ MEDIA_URL }}{% thumbnail image.file 75 75 %}">
+            <img alt="{{ image.description|safe }}" src="{{ MEDIA_URL }}{% thumbnail image.file 75 75 %}">
         </a>
     </li>
     {% endfor %}

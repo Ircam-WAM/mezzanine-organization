@@ -9,7 +9,7 @@
         {% if file.description %}
             <br />
             <p>
-                {{ file.description }}
+                {{ file.description|safe }}
             </p>
         {% endif %}
     </li>

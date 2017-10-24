@@ -9,7 +9,7 @@
 {% endmetablock %}{% endblock %}
 
 {% block meta_description %}{% metablock %}
-    {{ article.description }}
+    {{ article.description|safe }}
 {% endmetablock %}{% endblock %}
 
 {% block page_class %}

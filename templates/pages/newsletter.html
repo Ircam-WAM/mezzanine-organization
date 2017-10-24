@@ -4,7 +4,7 @@
 {% block meta_title %}{% trans "Newsletter" %}{% endblock %}
 
 {% block meta_description %}{% metablock %}
-{{ newsletter.description }}
+{{ newsletter.description|safe }}
 {% endmetablock %}{% endblock %}
 
 {% block page_class %}

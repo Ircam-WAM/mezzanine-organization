@@ -134,7 +134,7 @@
                         {% for status in statuses %}
                             {% with page.teampage.team|get_team_persons:status as persons %}
                                 {% if persons %}
-                                    <strong>{% if persons|length == 1 %}{{ status.name }}{% else %}{{ status.description }}{% endif %} : </strong>
+                                    <strong>{% if persons|length == 1 %}{{ status.name }}{% else %}{{ status.description|safe }}{% endif %} : </strong>
                                     {% for person in persons %}
                                         <a href="{% url 'organization-network-person-detail' person.slug %}">{{ person.title }}</a>{% if not forloop.last %}, {% endif %}
                                     {% endfor %}

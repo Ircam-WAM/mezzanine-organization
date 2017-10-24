@@ -5,7 +5,7 @@
 
 {% block meta_description %}
     {% metablock %}
-        {{ organization.description }}
+        {{ organization.description|safe }}
     {% endmetablock %}
 {% endblock %}
 
