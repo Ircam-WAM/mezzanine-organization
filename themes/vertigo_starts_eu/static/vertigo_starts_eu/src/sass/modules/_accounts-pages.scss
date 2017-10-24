@@ -110,4 +110,12 @@ $module: ".accounts-pages";
     font-family:'Merriweather';
     font-weight: bold;
   }
+
+  &__wrapper-link {
+
+    width:130px;
+    height:95%;
+    float:right;
+    text-align:center;
+  }
 }
