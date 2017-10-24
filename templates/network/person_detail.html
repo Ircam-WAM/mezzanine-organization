@@ -67,7 +67,7 @@
     {% if person.images.all %}
         {% with person.images.all|get_type:'page_featured' as images %}
             {% if images.first %}
-                <figure class="person-list-box__image">
+                <figure class="person-list-box__image profile">
                     <img src="{{ MEDIA_URL }}{% thumbnail images.first 135 135 top=0.5 %}" alt="person"/>
                 </figure>
             {% endif %}

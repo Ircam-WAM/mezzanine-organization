@@ -35,7 +35,11 @@ $module: ".person-list-box";
 
         }
 
-        margin:-150px auto 20px auto;
+        &.profile {
+            margin:-150px auto 20px auto;
+        }
+
+        margin: 0 auto;
         width: 135px;
         height: 135px;
         border-radius: 135px;
