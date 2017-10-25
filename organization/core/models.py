@@ -29,6 +29,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.core.models import Displayable, Slugged, Orderable
+from mezzanine.utils.urls import admin_url, slugify, unique_slug
+from mezzanine.utils.models import base_concrete_model, get_user_model_name
 
 from django_countries.fields import CountryField
 
@@ -78,6 +80,63 @@ class Named(models.Model):
     @property
     def slug(self):
         return slugify(self.__str__())
+
+
+class NamedSlugged(models.Model):
+    """
+    Abstract model that handles auto-generating slugs. Each named slugged
+    object is also affiliated with a specific site object.
+    """
+
+    name = models.CharField(_('name'), max_length=512)
+    description = models.TextField(_('description'), blank=True)
+    slug = models.CharField(_("URL"), max_length=2000, blank=True, null=True,
+            help_text=_("Leave blank to have the URL auto-generated from "
+                        "the name."))
+
+    class Meta:
+        abstract = True
+        ordering = ['name',]
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        """
+        If no slug is provided, generates one before saving.
+        """
+        if not self.slug:
+            self.slug = self.generate_unique_slug()
+        super(NamedSlugged, self).save(*args, **kwargs)
+
+    def generate_unique_slug(self):
+        """
+        Create a unique slug by passing the result of get_slug() to
+        utils.urls.unique_slug, which appends an index if necessary.
+        """
+        # For custom content types, use the ``Page`` instance for
+        # slug lookup.
+        concrete_model = base_concrete_model(NamedSlugged, self)
+        slug_qs = concrete_model.objects.exclude(id=self.id)
+        return unique_slug(slug_qs, "slug", self.get_slug())
+
+    def get_slug(self):
+        """
+        Allows subclasses to implement their own slug creation logic.
+        """
+        attr = "name"
+        if settings.USE_MODELTRANSLATION:
+            from modeltranslation.utils import build_localized_fieldname
+            attr = build_localized_fieldname(attr, settings.LANGUAGE_CODE)
+        # Get self.name_xx where xx is the default language, if any.
+        # Get self.name otherwise.
+        return slugify(getattr(self, attr, None) or self.name)
+
+    def admin_link(self):
+        return "<a href='%s'>%s</a>" % (self.get_absolute_url(),
+                                        ugettext("View on site"))
+    admin_link.allow_tags = True
+    admin_link.short_description = ""
 
 
 class Titled(models.Model):
@@ -255,7 +314,7 @@ class Link(URL):
 
 class Period(models.Model):
 
-    date_from = models.DateField(_('begin date'), null=True, blank=True)
+    date_from = models.DateField(_('start date'), null=True, blank=True)
     date_to = models.DateField(_('end date'), null=True, blank=True)
 
     class Meta:
@@ -323,6 +382,18 @@ class Address(models.Model):
 class RelatedTitle(models.Model):
 
     title = models.CharField(_('title'), max_length=1024, null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
+class OwnableOrNot(models.Model):
+    """
+    Abstract model that provides ownership of an object for a user.
+    """
+
+    user = models.ForeignKey(user_model_name, verbose_name=_("Author"),
+        related_name="%(class)ss", null=True, blank=True)
 
     class Meta:
         abstract = True

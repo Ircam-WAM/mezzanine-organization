@@ -1,0 +1,176 @@
+// -*- coding: utf-8 -*-
+
+// Copyright (c) 2016-2017 Ircam
+// Copyright (c) 2016-2017 Jérémy Fabre
+
+// This file is part of mezzanine-organization.
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+
+// You should have received a copy of the GNU Affero General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+$module: ".ict-project-style";
+
+#{$module} {
+
+  &__button-submit {
+
+    border: 0;
+    outline: 0;
+    background: none;
+    box-sizing: border-box;
+    margin: 0px 12px 0px 0px;
+    margin: 0 0.75rem 0 0;
+    font-size: 20px;
+    font-size: 1.25rem;
+    line-height: 24px;
+    font-family: "Oswald", sans-serif;
+    padding: 0.375rem 1.5rem 0.375rem 1.5rem;
+    font-weight: 300;
+    background: #1D1D1B;
+    color: white;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+  }
+
+  &__close-project {
+
+    text-align:left;
+    color:black;
+    display:inline-block;
+  }
+
+  &__divider-section {
+
+    display:inline-block;
+    background: rgba(1, 12, 27, 1);
+    color: white;
+    width: 100%;
+    padding-left: -30px;
+    //padding-right: -20px;
+    font-family: "Oswald", sans-serif;
+    font-size: 20px;
+    border: 1px solid rgba(79, 228, 189, 1);
+    padding-left:10px;
+    padding-right:10px;
+    margin-bottom: -8px;
+  }
+
+  &__divider-title-section {
+
+    font-family: "Oswald", sans-serif;
+    display:inline-block;
+    margin:10px;
+    color: white;
+    font-weight: bold;
+    float:left;
+  }
+
+  &__divider-chevron-section {
+
+    display:inline-block;
+    text-align:right;
+    color: #50E3C2;
+    font-size:30px;
+    float: right;
+    margin-top:5px;
+  }
+
+  &__title-field {
+
+    color: rgba(1, 9, 22, 1);
+    font-family: "Helvetica";
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 14px;
+    margin-bottom:10px !important;
+    margin-top:20px !important;
+    width:100%;
+    display:block;
+  }
+
+  &__field-style {
+
+    margin-bottom:10px !important;
+  }
+
+  &__description-field {
+
+    font-size: 15px;
+    font-family: "Garamond";
+    color: rgba(1, 9, 22, 1);
+  }
+
+  &__line-height-description {
+
+    line-height: 1.5;
+  }
+
+  &__section-title {
+
+    font-family: "Helvetica";
+    color: rgba(1, 9, 22, 1);
+    font-size: 18px;
+    margin-top:20px;
+  }
+
+  &__icon-field {
+
+    margin-top:-30px;
+    font-size:20px;
+    float:right;
+    display:block;
+    color:black;
+  }
+
+  &__title-style {
+
+    color:black;
+    font-size:15px;
+    width:80%;
+    display:inline-block;
+    font-family:'Helvetica';
+    margin: 0 auto;display: table;
+    text-align:justify;
+    padding-bottom:20px;
+    padding-top:20px;
+  }
+
+  &__title-header {
+
+    background:white;
+    width:100%;
+    text-align: center;
+    padding-top: 20px;
+    margin-top:-100px;
+  }
+
+  &__errors-form-style {
+
+    color:red;
+    display:block;
+    text-align:center;
+    padding-bottom:10px;
+  }
+}
+
+h1, h2 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 400;
+  font-family: "Oswald", sans-serif;
+  margin-bottom: 3rem;
+  margin-top: 1.5rem;
+  color: white;
+}

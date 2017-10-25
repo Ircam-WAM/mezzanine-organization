@@ -57,12 +57,14 @@ class ProjectForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
         self.fields['title'].label = "Project name"
-        self.fields['keywords'].help_text = "5 comma separated keywords"
+        self.fields['title'].help_text =  "Acronym + full designation"
+        self.fields['keywords'].help_text = "3 comma separated keywords"
+        self.fields['date_from'].help_text = "Project start date (MM/DD/YYYY)"
+        self.fields['date_to'].help_text = "Project end date (MM/DD/YYYY)"
 
     class Meta:
         model = Project
-        fields = ('title', 'keywords', 'website')
-
+        fields = ('title', 'keywords', 'website', 'date_from', 'date_to')
 
 
 class ProjectPublicDataInline(InlineFormSet):
@@ -83,6 +85,24 @@ class ProjectPrivateDataInline(InlineFormSet):
     fields = '__all__'
 
 
+class ProjectPrivateDataPublicFundingInline(InlineFormSet):
+
+    max_num = 1
+    model = ProjectPrivateData
+    prefix = "Private data"
+    can_delete = False
+    fields = ("description", "funding_programme", "commitment_letter", "persons",)
+
+
+class ProjectPrivateDataPrivateFundingInline(InlineFormSet):
+
+    max_num = 1
+    model = ProjectPrivateData
+    prefix = "Private data"
+    can_delete = False
+    fields = ("description", "dimension", "commitment_letter", "investor_letter", "persons",)
+
+
 class ProjectUserImageInline(InlineFormSet):
 
     extra = 3
@@ -93,40 +113,40 @@ class ProjectUserImageInline(InlineFormSet):
     fields = ['file', 'credits']
 
 
+class ProjectLinkInline(InlineFormSet):
+
+    extra = 3
+    model = ProjectLink
+    prefix = 'Public link'
+    text = "To be published only for ICT-Projects selected by the consortium"
+    can_delete = False
+    fields = ['url', 'type']
+
+
+
+class ProjectContactForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectContactForm, self).__init__(*args, **kwargs)
+        self.fields['organization_name'].help_text = "The organization related to the contact"
+        self.fields['position'].help_text = "The position of the contact in the organization"
+        for field in self._meta.fields:
+            self.fields[field].required = True
+
+    class Meta:
+        model = ProjectContact
+        fields = ('first_name', 'last_name', 'email', 'organization_name',
+                    'position', 'address', 'telephone', 'address', 'postal_code',
+                    'city', 'country')
+
+
 class ProjectContactInline(InlineFormSet):
 
     max_num = 1
     model = ProjectContact
+    form_class = ProjectContactForm
     prefix = 'Private project contact'
     can_delete = False
-    fields = ['first_name', 'last_name', 'address', 'email',
-                 'telephone', 'address', 'postal_code', 'city', 'country']
-
-
-class OrganizationContactInline(InlineFormSet):
-
-    max_num = 1
-    model = OrganizationContact
-    prefix = 'Contact'
-    can_delete = False
-    fields = ['person_title', 'first_name', 'last_name', 'email', 'telephone', 'role']
-
-
-class OrganizationUserImageInline(InlineFormSet):
-
-    max_num = 4
-    model = OrganizationUserImage
-    prefix = 'Images'
-    can_delete = False
-    fields = ['file', 'credits']
-
-
-class OrganizationForm(ModelForm):
-
-    class Meta:
-        model = Organization
-        fields = ['name', 'description', 'url', 'address',
-                  'address', 'postal_code', 'city', 'country',]
 
 
 class ProjectResidencyForm(ModelForm):

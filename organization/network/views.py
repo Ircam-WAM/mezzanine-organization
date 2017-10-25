@@ -34,6 +34,8 @@ from django.views.generic import View
 from django.forms import formset_factory, BaseFormSet
 from extra_views import FormSetView
 from django.http import HttpResponse
+from django.db.models.fields.related import ForeignKey
+from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -112,7 +114,7 @@ class PersonDetailView(SlugMixin, DetailView):
                                 if isinstance(field, ForeignKey) :
                                     instance = getattr(related_inline, field.name)
                                     # get only article, custom page etc...
-                                    if not isinstance(instance, person_list_block_inline.person_list_block.__class__) :  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                    if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
                                         context["related"]["other"].append(instance)
 
         context["related"]["other"].sort(key=lambda x: x.created, reverse=True)
@@ -196,6 +198,59 @@ class OrganizationLinkedView(autocomplete.Select2QuerySetView):
         if self.q:
             qs = qs.filter(name__istartswith=self.q)
         return qs
+
+
+class ProducerDetailView(SlugMixin, DetailView):
+
+    model = Organization
+    template_name='network/organization_producer_detail.html'
+
+    def get_object(self, queryset=None):
+        role, c = OrganizationRole.objects.get_or_create(key='Producer')
+        producer = super(ProducerDetailView, self).get_object()
+        if producer.role != role:
+            raise Http404()
+        #TODO: Check if user is registered and admin or creator to allow other status values
+        if producer.validation_status != 3:
+            raise Http404()
+        return producer
+
+
+class ProducerListView(ListView):
+
+    model = Organization
+    template_name='network/organization_producer_list.html'
+
+    def get_queryset(self):
+        role, c = OrganizationRole.objects.get_or_create(key='Producer')
+        qs = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
+        return qs
+
+
+class ProducerCreateView(LoginRequiredMixin, CreateWithInlinesView):
+
+    model = Organization
+    form_class = ProducerForm
+    template_name='network/organization_producer_create.html'
+    inlines = [ProducerDataInline]
+
+    def forms_valid(self, form, inlines):
+        self.object = form.save()
+        self.object.user = self.request.user
+        self.object.role, c = OrganizationRole.objects.get_or_create(key='Producer')
+        self.object.save()
+        return super(ProducerCreateView, self).forms_valid(form, inlines)
+
+    def get_success_url(self):
+        #TODO: When logging system is implemented, maybe use this instead
+        # return reverse_lazy('organization-producer-detail', kwargs={'slug':self.object.slug})
+        return reverse_lazy('organization-producer-validation', kwargs={'slug':self.object.slug})
+
+
+class ProducerValidationView(ProducerMixin, TemplateView):
+
+    model = Organization
+    template_name='network/organization_producer_validation.html'
 
 
 class TimesheetAbstractView(LoginRequiredMixin):
@@ -347,6 +402,14 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
         return context
 
 
+class PersonActivityTimeSheetExportView(TimesheetAbstractView, View):
+
+    def get(self, *args, **kwargs):
+        timesheets = PersonActivityTimeSheet.objects.filter(activity__person__slug__exact=kwargs['slug'], year=kwargs['year'])
+        xls = TimesheetXLS(timesheets)
+        return xls.write()
+
+
 class TimeSheetCreateCurrMonthView(TimeSheetCreateView):
     pass
 
@@ -399,3 +462,28 @@ class WorkPackageAutocompleteView(autocomplete.Select2QuerySetView):# ModelSelec
             qs = qs.filter(project__title__istartswith=self.q)
 
         return qs
+
+
+class JuryListView(ListView):
+
+    model = Person
+    template_name="network/organization_jury_list.html"
+    context_object_name = "jury"
+
+    def get_context_data(self, **kwargs):
+        context = super(JuryListView, self).get_context_data(**kwargs)
+        context["description"] = ""
+        jury_list = PersonListBlock.objects.filter(title__in=["Jury", "jury"])
+        if jury_list:
+            jury = jury_list[0]
+            context["description"] = jury.description
+        context.update(self.kwargs)
+        return context
+
+    def get_queryset(self):
+        jury_list = PersonListBlock.objects.filter(title__in=["Jury", "jury"])
+        if jury_list:
+            jury = jury_list[0]
+            qs = Person.objects.filter(person_list_block_inlines__person_list_block=jury).order_by("last_name")
+        else:
+            qs = Person.objects.none()

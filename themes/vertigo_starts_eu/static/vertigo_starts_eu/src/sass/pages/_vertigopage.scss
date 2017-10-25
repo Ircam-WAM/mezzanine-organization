@@ -1,0 +1,148 @@
+// -*- coding: utf-8 -*-
+
+// Copyright (c) 2016-2017 Ircam
+
+// This file is part of mezzanine-organization.
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+
+// You should have received a copy of the GNU Affero General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+$module: ".vertigopage";
+
+#{$module} {
+
+    color: #C3C3C3;;
+
+    &__selected {
+
+         color: #50E3C2;
+    }
+
+    &__unselected {
+
+         color: #C3C3C3;
+    }
+
+    &__section-title {
+
+        font-family: "Oswald", sans-serif;
+        font-size: 16px;
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: center;
+        color: #50E3C2;
+        display: inline-block;
+        line-height: 1.5em;
+        margin-top: 120px;
+        margin-top: 7.5rem;
+        margin-right: 60px;
+        margin-left: 60px;
+    }
+
+    &__button {
+
+        background: none;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        font-weight: normal;
+        margin-right: 30px;
+        margin-left: 30px;
+        padding: 0;
+        width: 280px;
+        margin-bottom: 0px;
+
+        &:hover {
+
+            background: none;
+            color: #50E3C2;
+        }
+    }
+
+    &__visible {
+
+        display: block;
+    }
+
+    &__invisible {
+
+        display: none;
+    }
+
+    &__space--white {
+
+	    margin: 1rem 0 0 0;
+    }
+
+    &__header-image {
+
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 30px;
+        display: block;
+        height: 200px;
+        position:relative;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        & span {
+
+            font-family: "Oswald", sans-serif;
+            position: relative;
+            margin: 0 auto;
+            width: 100%;
+            top: 50px;
+            color: white;
+            font-size: 50px;
+            text-align: center;
+        }
+    }
+
+    &__margin-collapse {
+
+        margin-bottom: 0px;
+    }
+
+    &__header-text {
+
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-bottom: 5%;
+        margin-top: 2%;
+        color: $color-white;
+        line-height: 250%;
+    }
+
+    &__image {
+
+        margin: 0;
+        padding: 0;
+        width: 90%;
+        position: relative;
+        overflow: hidden;
+
+        @include fluid-aspect(427 286);
+
+        img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+
+            @include transition(all 0.5s ease-in-out);
+
+            mix-blend-mode: screen;
+        }
+    }
+}

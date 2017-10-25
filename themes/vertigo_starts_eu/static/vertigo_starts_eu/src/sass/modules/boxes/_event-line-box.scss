@@ -1,0 +1,536 @@
+// -*- coding: utf-8 -*-
+
+// Copyright (c) 2016-2017 Ircam
+// Copyright (c) 2016-2017 Jérémy Fabre
+
+// This file is part of mezzanine-organization.
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+
+// You should have received a copy of the GNU Affero General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+$module: ".event-line-box";
+
+#{$module} {
+
+    position: relative;
+    display: block;
+
+    border: 1px solid rgba($color-main, 0.35);
+
+    background: $color-background;
+    @include transition(all 0.5s ease-in-out);
+    @include margin-bottom(5);
+
+    @include mq($until: sm) {
+        @include margin-bottom(1);
+    }
+
+    .lightSlider & {
+        margin-bottom: 0 !important;
+    }
+
+    &:after {
+
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* Rectangle 3: */
+        background-image: -webkit-linear-gradient(right, rgba(0,15,36,0.00) 0%, rgba(0,15,36,0.90) 99%);
+        background-image: -o-linear-gradient(right, rgba(0,15,36,0.00) 0%, rgba(0,15,36,0.90) 99%);
+        background-image: linear-gradient(to left, rgba(0,15,36,0.00) 0%, rgba(0,15,36,0.90) 99%);
+
+        z-index: 1;
+
+        @include mq($until: sm) {
+            display: none;
+        }
+
+    }
+/*
+    &:hover {
+
+        border: 1px solid rgba($color-main, 1);
+        background: black;
+
+        .event-line-box__image {
+
+            -webkit-filter: grayscale(0);
+            filter: grayscale(0);
+
+        }
+
+        .event-line-box__category {
+
+            background: $color-main;
+
+        }
+
+        .event-line-box__date {
+
+            color: $color-main;
+
+        }
+    }
+*/
+    &__content {
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        text-align: left;
+        z-index: 2;
+
+        @include mq($until: sm) {
+            position: static;
+        }
+
+        /*@include mq($until: lg) {
+            height: 312px;
+        }
+        @include mq($until: md) {
+            height: 361px;
+        }*/
+
+    }
+
+    &__month {
+
+        @include font-size(l);
+        @include line-height(1);
+        @include typeface(serif);
+        font-weight: weight(heavy);
+
+        visibility: hidden;
+        height: 0;
+
+    }
+
+    &__image {
+
+        @include fluid-aspect(1030 400);
+
+        @include transition(all 0.5s ease-in-out);
+
+        -webkit-filter: grayscale(1);
+        filter: grayscale(1);
+        mix-blend-mode: screen;
+    }
+
+    &__button {
+
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        @include transform(translateY(-50%));
+
+        @include mq($until: sm) {
+            top: 70px;
+            width: auto;
+        }
+
+    }
+
+    &__tags {
+
+        margin-bottom: 5px;
+
+    }
+
+    &__category {
+
+        position: absolute;
+        top: 50%;
+        left: 0;
+        background: white;
+        color: $color-background;
+        text-align: right;
+        text-transform: uppercase;
+        @include font-size(s);
+        @include line-height(1.25);
+        @include typeface(sans-serif);
+        font-weight: weight(regular);
+
+        @include padding(0.1 .5 0.1 .5);
+        @include transform(translateY(-50%));
+        @include transition(all 0.5s ease-in-out);
+        width: 10rem;
+
+        @include mq($until: sm) {
+            top: 70px;
+            width: auto;
+            @include padding(0.1 .5 0.1 2);
+        }
+
+    }
+
+    &__body {
+
+        position: absolute;
+        top: 50%;
+        left: 12rem;
+        @include transform(translateY(-50%));
+
+        @include mq($until: sm) {
+            position: static;
+            @include transform(translateY(0));
+            @include padding(1);
+        }
+
+    }
+
+    &__title {
+
+        font-size: 36px;
+        @include line-height(1.5);
+        font-family: "Oswald", sans-serif;
+        font-weight: weight(regular);
+        text-transform: uppercase;
+
+        color: $color-main;
+
+        margin: 0 !important;
+
+        a:not(.button) {
+
+            color: $color-main;
+            border: 0;
+
+            &:hover {
+                box-shadow: none;
+            }
+
+        }
+
+    }
+
+    &__location {
+
+        @include font-size(s);
+        @include line-height(1.25);
+        @include typeface(sans-serif);
+        font-weight: weight(regular);
+        color: $color-main;
+    }
+
+    &__date {
+
+        @include font-size(l);
+        @include line-height(1.25);
+        @include typeface(sans-serif);
+        font-weight: weight(regular);
+        color: white;
+        @include transition(all 0.5s ease-in-out);
+
+        @include margin-top(1);
+
+        span {
+            display: block;
+            @include font-size(m);
+        }
+
+    }
+
+    &__desc {
+
+        @include font-size(m);
+        @include line-height(1);
+        @include typeface(serif);
+        font-weight: weight(light);
+
+        color: $color-main;
+
+    }
+
+    &__title-center {
+
+        font-size: 36px;
+        @include line-height(1.5);
+        font-family: "Oswald", sans-serif;
+        font-weight: weight(regular);
+        text-transform: uppercase;
+        text-align:center;
+        color: white;
+
+        margin: 0 !important;
+
+        a:not(.button) {
+
+            color: $color-main;
+            border: 0;
+
+            &:hover {
+                box-shadow: none;
+            }
+        }
+    }
+
+     &__body-center {
+
+        position: absolute;
+        top: 50%;
+        @include transform(translateY(-50%));
+
+        @include mq($until: sm) {
+            position: static;
+            @include transform(translateY(0));
+            @include padding(1);
+        }
+
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+
+     }
+
+    &__top-space {
+        @include margin-top(5);
+    }
+
+    &__top-space-left {
+
+        margin-top: 1.5rem;
+    }
+
+    &__text-color-date {
+
+        @include typeface(sans-serif);
+        color: $color-main;
+        font-size: 18px;
+    }
+
+    &__center-buttons {
+
+        background: none;
+	    width: 100%;
+	    display: table;
+	    text-align: center;
+	    text-transform: uppercase;
+	    margin-top: 150px;
+        font-size: 15px;
+        @include typeface(sans-serif);
+        color: white;
+    }
+
+     &__event-button {
+
+        background: none;
+        border: none;
+        color: #19494c;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 22px;
+        font-weight: normal;
+        margin-right: 30px;
+        margin-left: 30px;
+        padding: 0;
+        width: 180px;
+        margin-bottom: 0px;
+
+        &:hover {
+            background: none;
+            color: $color-main;
+            font-size: 22px;
+        }
+
+        &.active {
+            cursor: normal;
+            background: none;
+            color: $color-main;
+            font-size: 22px;
+        }
+
+        &-selected {
+            background: none;
+            color: $color-main;
+            font-size: 22px;
+
+            &:hover {
+                background: none;
+                color: $color-main;
+                font-size: 22px;
+            }
+        }
+
+        &-unselected {
+            background: none;
+            color: white;
+            font-size: 22px;
+
+            &:hover {
+                background: none;
+                color: $color-main;
+                font-size: 22px;
+            }
+        }
+    }
+
+    &__underline-text-green {
+
+	    text-align: center;
+	    display: inline-block;
+	    line-height: 1.5em;
+        text-decoration: none;
+        border-bottom: 2px solid $color-main;
+    }
+
+     &__underline-text-unselected {
+
+	    text-align: center;
+	    display: inline-block;
+	    line-height: 1.5em;
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+    }
+
+    &__block--white {
+
+	    background-color: $color-white;
+	    color: $color-black;
+	    padding-top: 48px;
+	    padding-top: 3rem;
+        width: 100%;
+	    position: relative;
+	    overflow: hidden;
+    }
+
+    &__text-event-paragraph {
+
+        font-family: "Merriweather", serif;
+    }
+
+    &__hide-container {
+
+        display: none;
+    }
+
+    &__show-container {
+
+        display: block;
+    }
+
+    &__margin-paragraph-bottom {
+
+        margin-bottom: 5%;
+    }
+
+    &__center-text {
+
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    &__margins {
+
+        margin-right: 10%;
+        margin-left: 10%;
+    }
+
+    &__block--white {
+
+        background-color: white;
+        color: #000F24;
+        padding-top: 48px;
+        padding-top: 3rem;
+        padding-bottom: 48px;
+        position: relative;
+    }
+
+    &__text-events-list {
+
+        @include typeface(sans-serif);
+    }
+
+    &__bold-text {
+
+        font-weight: bold;
+    }
+
+    &__dark-blue {
+
+        text-color: #525a67;
+    }
+
+    &__section-title {
+
+        font-family: "Oswald", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        text-align: left;
+        color: white;
+        font-weight: bold;
+        line-height: 1.5em;
+        margin-bottom: 96px;
+        margin-top: 0px;
+    }
+
+    &__white-color {
+
+        text-color: white;
+    }
+
+    &__turquoise-color {
+
+        text-color: rgba($color-main, 1);
+    }
+
+    &__small-margin {
+
+        margin-bottom: 15px;
+    }
+
+    &__title-list {
+
+        font-size: 36px;
+        line-height: 36px;
+        line-height: 2.25rem;
+        font-family: "Oswald", sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: white;
+        margin: 0 !important;
+    }
+
+    &__date-list {
+
+        @include font-size(l);
+        @include line-height(1.25);
+        @include typeface(sans-serif);
+        font-weight: weight(regular);
+        color: rgba($color-main, 1);
+        @include transition(all 0.5s ease-in-out);
+
+        @include margin-top(1);
+
+        span {
+            display: block;
+            @include font-size(m);
+        }
+    }
+
+    &__location-list {
+
+        @include font-size(l);
+        @include line-height(1.25);
+        @include typeface(sans-serif);
+        font-weight: weight(regular);
+        color: $color-main;
+    }
+}

@@ -1,0 +1,103 @@
+// -*- coding: utf-8 -*-
+
+// Copyright (c) 2016-2017 Ircam
+// Copyright (c) 2016-2017 Jérémy Fabre
+
+// This file is part of mezzanine-organization.
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+
+// You should have received a copy of the GNU Affero General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+$module: ".accounts-pages";
+
+#{$module} {
+
+  &__big-title {
+
+    font-family:'Oswald';
+    margin-bottom:50px;
+    padding-top:20px;
+    color:black;
+  }
+
+  &__list-style {
+
+    padding-top:50px;
+    padding-bottom:50px;
+    background:white;
+    padding-left:25px;
+    padding-right:25px;
+  }
+
+  &__element-container {
+
+    width:100%;
+    height:50px;
+    color:black;
+    margin-top: 5px;
+  }
+
+  &__left-element-item {
+
+    font-family:'Merriweather';
+    font-size: 16px;
+    float: left;
+    height: 100%;
+    width: 80%;
+    background-color: clear;
+    display: inline-block;
+    color: black;
+    line-height: 50px;
+  }
+
+  &__right-element-item {
+
+    font-family:'Merriweather';
+    font-size: 16px;
+    float: right;
+    height: 100%;
+    width: 20%;
+    background-color: clear;
+    display: inline-block;
+    text-align: right;
+    line-height: 50px;
+  }
+
+  &__button-link {
+    
+  	color: white;
+  	font-size: 16px;
+  	font-family: 'Merriweather';
+  	text-align: center;
+  	width: auto;
+  	display: block;
+  	margin: auto;
+  }
+
+  &__header-text-list {
+
+    text-align: center;
+    color: black;
+    font-size: 18px;
+    font-family:'Merriweather';
+    font-weight: bold;
+  }
+
+  &__wrapper-link {
+
+    width:130px;
+    height:95%;
+    float:right;
+    text-align:center;
+  }
+}

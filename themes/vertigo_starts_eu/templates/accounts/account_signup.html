@@ -1,5 +1,9 @@
-{% extends "accounts/account_form.html" %}
+{% extends "vertigo_starts_eu/accounts/account_form_operations.html" %}
 {% load i18n %}
+
+{% block page_title %}
+	<h1 style="font-family:'Oswald';margin-bottom:100px;padding-top:200px;color:#000F24">{% trans "Want to be involved in a VERTIGO residency? Sign up here" %}</h1>
+{% endblock %}
 
 {% block main %}
 
@@ -14,4 +18,27 @@
     {% endif %}
 {% endif %}
 
+{% endblock %}
+
+{% block account_form_actions %}
+<input class="btn btn-primary btn-lg" type="submit" value="Submit" style="background:#1D1D1B;width:200px;padding-top:20px;padding-bottom:20px;margin-right:0px;color:rgba(80, 227, 194, 1);;font-family:'Oswald';font-weight:bold;font-size:20px">
+{% endblock %}
+
+
+{% block page_content %}
+    {{ block.super }}
+    <br><br>
+    <div style="text-align:center;margin-top:50px;">
+      <span style="color:black;font-family:'Oswald';font-size:20px;color:#1D1D1B">Already have an account?</span>
+      <br><br>
+      <div style="border: 1px solid #1D1D1B;text-align:center;width:200px;display:inline-block">
+        {% blocktrans with request.GET.next as next %}
+          <a style="font-family:'Oswald';font-size:20px;border-color:#1D1D1B;font-weight:bold;width:200px;display:block;text-align:center;color:#1D1D1B;" href="/accounts/login?next={{ next }}">
+            <div style="border: 0.5px solid #1D1D1B;text-align:center;padding-top:20px;padding-bottom:20px;">
+              Log in
+            </div>
+          </a>
+        {% endblocktrans %}
+      </div>
+    </div>
 {% endblock %}

@@ -40,6 +40,10 @@ from organization.network.models import (Person,
                                 ProjectActivity)
 from organization.pages.models import Page, CustomPage
 from organization.network.utils import timesheet_master_notification_for_validation
+from organization.network.models import *
+from organization.pages.models import Page, CustomPage
+from extra_views import InlineFormSet
+
 
 class PageCustomPersonListForm(forms.ModelForm):
 
@@ -149,3 +153,55 @@ class ProjectActivityForm(forms.ModelForm):
         help_texts = {
             'work_packages': 'Set percentage between 0 and 100',
         }
+
+
+class OrganizationContactInline(InlineFormSet):
+
+    max_num = 1
+    model = OrganizationContact
+    prefix = 'Contact'
+    can_delete = False
+    fields = ['person_title', 'first_name', 'last_name', 'email', 'telephone', 'role']
+
+
+class OrganizationUserImageInline(InlineFormSet):
+
+    max_num = 4
+    model = OrganizationUserImage
+    prefix = 'Images'
+    can_delete = False
+    fields = ['file', 'credits']
+
+
+class OrganizationForm(ModelForm):
+
+    class Meta:
+        model = Organization
+        fields = ['name', 'description', 'url', 'address',
+                  'address', 'postal_code', 'city', 'country',]
+
+
+class ProducerDataInline(InlineFormSet):
+
+    max_num = 1
+    model = ProducerData
+    prefix = "Descriptions"
+    can_delete = False
+    fields = ['producer_description', 'experience_description']
+
+    def get_factory_kwargs(self):
+        kwargs = super().get_factory_kwargs()
+        kwargs.update({"min_num": 1})
+        return kwargs
+
+
+class ProducerForm(ModelForm):
+
+    class Meta:
+        model = Organization
+        fields = ['name', 'url', 'email', 'telephone', 'address', 'postal_code', 'city', 'country',]
+
+    def __init__(self, *args, **kwargs):
+        super(ProducerForm, self).__init__(*args, **kwargs)
+        for key in self.fields:
+            self.fields[key].required = True

@@ -1,0 +1,100 @@
+{% extends "vertigo_starts_eu/pages/page.html" %}
+{% load mezzanine_tags staticfiles keyword_tags i18n organization_tags pages_tags %}
+
+
+{% block extra_head %}
+
+    {% compress css %}
+    <link rel="stylesheet" href="{% static "css/list_items.css" %}">
+    {% endcompress %}
+
+    <script type="text/javascript" src="{% static "mezzanine/js/jquery-1.8.3.min.js" %}"></script>
+    <script>
+        $(function(){
+            $(".list_header").click(function () {
+                $header = $(this);
+                $content = $header.next();
+                $content.slideToggle(500);
+            });
+        });
+    </script>
+
+{% endblock %}
+
+
+{% block meta_title %}
+    {% trans "Producer List" %}
+{% endblock %}
+
+
+{% block meta_keywords %}
+    {% metablock %}
+    {% keywords_for object as keywords %}
+    {% for keyword in keywords %}
+        {% if not forloop.first %}, {% endif %}
+        {{ keyword }}
+    {% endfor %}
+    {% endmetablock %}
+{% endblock %}
+
+
+{% block page_class %}
+    object
+{% endblock %}
+
+
+{% block body_class %}
+    pattern pattern-bg {{ department.pages.all.0.weaving_css_class }}
+{% endblock %}
+
+
+{% block breadcrumb_menu %}
+    {{ block.super }}
+    <li class="breadcrumb__item active">{{ object.name }}</li>
+{% endblock %}
+
+
+{% block page_tags %}
+
+    {% comment %}
+        {% if department %}
+            <div class="tag dashed dashed--yellow">
+              {{ department.pages.all.0.title }}
+            </div>
+        {% endif %}
+        <div class="tag tag--category">
+            {% trans 'Project' %}
+        </div>
+    {% endcomment %}
+
+{% endblock %}
+
+
+{% block page_title %}
+
+    <h1 class="dotted">
+        {% trans "Producer List" %}
+    </h1>
+
+{% endblock %}
+
+
+{% block page_content %}
+
+    <div class="row">
+        {% for producer in object_list %}
+            <div class="list_header">
+                {{ producer.name }}
+            </div>
+            <div class="list_content">
+                <p><b>{% trans "Full details" %}: </b><a href="{% url 'organization-producer-detail' producer.slug %}">{{ producer.name }}</a></p>
+                <p><b>{% trans "Producer description" %}: </b>{{ producer.producer_data.all.0.producer_description }}<p>
+            </div>
+        {% empty %}
+            <div class="chapo">
+                <p><b>{% trans "No producers yet" %}.</b></p>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

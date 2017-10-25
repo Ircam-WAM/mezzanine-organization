@@ -97,6 +97,24 @@ class ProjectAdmin(admin.ModelAdmin):
     model = Project
 
 
+class ProjectPublicDataAdmin(admin.ModelAdmin):
+
+    model = ProjectPublicData
+    list_display = ['project',]
+
+
+class ProjectPrivateDataAdmin(admin.ModelAdmin):
+
+    model = ProjectPrivateData
+    list_display = ['project',]
+
+
+class ProjectContactAdmin(admin.ModelAdmin):
+
+    model = ProjectContact
+    list_display = ['project',]
+
+
 class ProjectPublicDataInline(StackedDynamicInlineAdmin):
 
     model = ProjectPublicData
@@ -123,6 +141,55 @@ class DynamicContentProjectInline(TabularDynamicInlineAdmin):
         )
 
 
+class ProjectResidencyProducerInline(TabularDynamicInlineAdmin):
+
+    model = ProjectResidencyProducer
+
+
+class ProjectResidencyImageInline(StackedDynamicInlineAdmin):
+
+    model = ProjectResidencyImage
+
+
+class ProjectResidencyUserImageInline(StackedDynamicInlineAdmin):
+
+    model = ProjectResidencyUserImage
+
+
+class ProjectResidencyArticleInline(TabularDynamicInlineAdmin):
+
+    model = ProjectResidencyArticle
+
+
+class ProjectResidencyEventInline(TabularDynamicInlineAdmin):
+
+    model = ProjectResidencyEvent
+
+
+class ProjectResidencyAdmin(admin.ModelAdmin):
+
+    model = ProjectResidency
+    list_display = ["title", "project", "artist", "get_producers", "validated",]
+    list_filter = ["validated"]
+    inlines = [ ProjectResidencyProducerInline,
+                ProjectResidencyImageInline,
+                ProjectResidencyUserImageInline,
+                ProjectResidencyArticleInline,
+                ProjectResidencyEventInline,
+                ]
+
+    def get_producers(self, obj):
+        producers = ""
+        if obj.producers:
+            names = []
+            for producer in obj.producers.all():
+                names.append(producer.organization.name)
+            producers = ", ".join(names)
+        return producers
+    
+    get_producers.short_description = "producers"
+
+
 class ProjectAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectAdmin.fieldsets)
@@ -141,8 +208,14 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 ProjectBlogPageInline,
                 ]
     filter_horizontal = ['teams', 'organizations']
+<<<<<<< HEAD
     list_filter = ['type', 'program', 'program_type', 'lead_organization', null_filter('external_id'), 'is_archive']
     list_display = ['title', 'external_id', 'date_from', 'date_to', 'lead_organization', 'program', 'status', 'is_archive', 'admin_link']
+=======
+    list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status']
+    list_display = ['title', 'created', 'topic', 'validation_status',
+                    'date_from', 'date_to', 'status', 'external_id', 'admin_link']
+>>>>>>> vertigo/dev
 
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
@@ -211,6 +284,9 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
 
 
 admin.site.register(Project, ProjectAdminDisplayable)
+admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)
+admin.site.register(ProjectPrivateData, ProjectPrivateDataAdmin)
+admin.site.register(ProjectContact, ProjectContactAdmin)
 admin.site.register(ProjectProgram, ProjectProgramAdmin)
 admin.site.register(ProjectProgramType, ProjectProgramTypeAdmin)
 admin.site.register(ProjectTopic, ProjectTopicAdmin)
@@ -220,3 +296,4 @@ admin.site.register(Repository)
 admin.site.register(RepositorySystem)
 admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
 admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
+admin.site.register(ProjectResidency, ProjectResidencyAdmin)

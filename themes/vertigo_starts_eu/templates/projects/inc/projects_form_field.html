@@ -1,0 +1,8 @@
+<div style="display:block">
+    <div style="float:left;width:48%;{% if left %}margin-right:40px;{% endif %} {% if field.label|lower == 'keywords' %}margin-top:-250px;{% endif %}">
+        <p class="ict-project-style__title-field" {% if field.errors %}style="color: red;"{% endif %}>{{ field.label }}</p>
+        <i class="fa {% if private %}fa-lock{% else %}fa-globe{% endif %} ict-project-style__icon-field" aria-hidden="true" {% if field.errors %}style="color: red;"{% endif %}></i>
+        <p class="ict-project-style__description-field {% if field.label|lower == 'letter of commitment by the project coordinator' %}link-item-form{% endif %}" {% if field.errors %}style="color:red"{% endif %}>{{ field.help_text }}</p>
+        <p class="ict-project-style__field-style {% if field.label|lower == 'country' or field.label|lower == 'dimension' %}select_style{% endif %} {% if field.errors %}error_field_style{% endif %}">{{ field }}</p>
+    </div>
+</div>

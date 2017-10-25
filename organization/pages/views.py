@@ -29,7 +29,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from mezzanine_agenda.forms import EventCalendarForm
-from organization.pages.models import CustomPage
+from organization.pages.models import CustomPage, ExtendedCustomPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import Home
@@ -39,13 +39,13 @@ from organization.network.models import Person
 from django.shortcuts import redirect
 
 
-class HomeView(SlugMixin, ListView):
+class HomeView(SlugMixin, DetailView):
 
     model = Home
     template_name = 'index.html'
     context_object_name = 'home'
 
-    def get_queryset(self, **kwargs):
+    def get_object(self, **kwargs):
         homes = self.model.objects.published()
         if homes:
             return homes.latest("publish_date")
@@ -58,9 +58,12 @@ class HomeView(SlugMixin, ListView):
         return context
 
     def dispatch(self, request, *args, **kwargs):
-        if not self.get_queryset():
+        if not self.get_object():
             page = CustomPage.objects.first()
-            return redirect(reverse_lazy('page', kwargs={'slug': page.slug}))
+            if page:
+                return redirect(reverse_lazy('page', kwargs={'slug': page.slug}))
+            else:
+                return super(HomeView, self).dispatch(request, *args, **kwargs)
         else:
             return super(HomeView, self).dispatch(request, *args, **kwargs)
 
@@ -168,13 +171,15 @@ class DynamicContentPageView(Select2QuerySetSequenceView):
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
+        extended_custompage = ExtendedCustomPage.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
+            extended_custompage = extended_custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, events)
+        qs = autocomplete.QuerySetSequence(articles, custompage, extended_custompage, events)
 
         if self.q:
             qs = qs.filter(title__icontains=self.q)

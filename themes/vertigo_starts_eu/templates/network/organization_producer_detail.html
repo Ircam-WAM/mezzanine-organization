@@ -1,0 +1,96 @@
+{% extends "vertigo_starts_eu/pages/page.html" %}
+{% load mezzanine_tags staticfiles keyword_tags i18n organization_tags pages_tags %}
+
+
+{% block extra_head %}
+
+    {% compress css %}
+    <link rel="stylesheet" href="{% static "css/detail_items.css" %}">
+    {% endcompress %}
+
+{% endblock %}
+
+
+{% block meta_title %}
+    {{ object.name }}
+{% endblock %}
+
+
+{% block meta_keywords %}
+    {% metablock %}
+    {% endmetablock %}
+{% endblock %}
+
+
+{% block page_class %}
+    object
+{% endblock %}
+
+
+{% block body_class %}
+    pattern pattern-bg {{ department.pages.all.0.weaving_css_class }}
+{% endblock %}
+
+
+{% block breadcrumb_menu %}
+    {{ block.super }}
+    <li class="breadcrumb__item active">{{ object.name }}</li>
+{% endblock %}
+
+
+{% block page_tags %}
+
+    {% comment %}
+        {% if department %}
+            <div class="tag dashed dashed--yellow">
+              {{ department.pages.all.0.name }}
+            </div>
+        {% endif %}
+        <div class="tag tag--category">
+            {% trans 'Project' %}
+        </div>
+    {% endcomment %}
+
+{% endblock %}
+
+
+{% block page_title %}
+
+    <h1 class="dotted">{{ object.name }}</h1>
+
+    {% if object.url %}
+        <div class="chapo">
+            <p><a href="{{ object.website }}">{{ object.url }}</a></p>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block page_content %}
+
+    <div class="detail_section">
+        {% if object.producer_data.all.0.producer_description %}
+            <h2>{{ object.producer_data.all.0.producer_description }}</h2>
+        {% endif %}
+        {% if object.email %}
+            <p><b>{% trans "Contact"%}: </b><a href="mailto:{{ object.email }}">{{ object.email }}</a></p>
+        {% endif %}
+    </div>
+
+
+{% endblock %}
+
+
+{% block page_audio %}
+  {% with object as object %}
+      {{ block.super }}
+  {% endwith %}
+{% endblock %}
+
+
+{% block page_video %}
+  {% with object as object %}
+      {{ block.super }}
+  {% endwith %}
+{% endblock %}

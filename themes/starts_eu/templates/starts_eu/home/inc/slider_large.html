@@ -1,0 +1,119 @@
+{% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
+<div class="slider-home">
+    <ul data-slider-home>
+        {% for slider in home.dynamiccontenthomeslider_set.all %}
+                {% with slider.content_object.images.all|get_type:'slider' as images %}
+                    {% if images %}
+                        <li class="slider-home__slide" style="background-image: url('{{ MEDIA_URL }}{% thumbnail images.0.file 1440 760 %}');">
+                            <div class="slider-home__wrapper--accent">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-11 col-sm-push-1">
+                                            <a class="slider-box slider-box--inline" href="{% if slider.content_object.links.all.0 %}{{ slider.content_object.links.all.0 }}{% else %}{{ slider.content_object.get_absolute_url }}{% endif %}" title="{{ slider.content_object.title }}">
+                                                {% if slider.content_object.department %}
+                                                    <div class="tag dashed">
+                                                      {{ slider.content_object.department.name }}
+                                                    </div>
+                                                {% endif %}
+                                                {% if slider.content_type.model == 'article' %}
+                                                <div class="tag tag--category">
+                                                    {% trans 'News' %}
+                                                </div>
+                                                {% elif slider.content_type.model == 'event' %}
+                                                    {% if slider.content_object.departments.first %}
+                                                        {% with slider.content_object.departments.first as department %}
+                                                            <div class="tag dashed">
+                                                              {{ department.department.name }}
+                                                            </div>
+                                                        {% endwith %}
+                                                    {% endif %}
+                                                    {% if slider.content_object.category %}
+                                                        <div class="tag tag--category">
+                                                            {{ slider.content_object.category }}
+                                                        </div>
+                                                    {% endif %}
+                                                {% endif %}
+
+                                                <div class="slider-box__content tal">
+                                                    <h3 class="slider-box__title--accent">{{ slider.content_object.title }}</h3>
+                                                    <div class="slider-box__subtitle">
+                                                        {% if slider.content_type.model != 'event' %}
+                                                            {{ slider.content_object.sub_title }}
+                                                        {% endif %}
+                                                        {% if slider.content_object.start %}
+                                                            {% with slider.content_object as event %}
+                                                                {% if slider.content_object.sub_title %}
+                                                                    <br />
+                                                                {% endif %}
+                                                                {% include 'agenda/includes/event_date_slider.html' %}
+                                                            {% endwith %}
+                                                        {% endif %}
+                                                        {% if slider.content_object.location %}
+                                                             <br />{{ slider.content_object.location }}
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="slider-box__desc">
+                                                        {{ slider.content_object.description|richtext_filters|safe|truncatechars_html:200 }}
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if image.credits %}
+                                <div class="slider-home__credits">
+                                    {{ image.credits }}
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endwith %}
+        {% endfor %}
+        {% for image in home.images.all|get_type:'slider' %}
+            <li class="slider-home__slide lslide" style="background-image: url({{ MEDIA_URL }}{% thumbnail image.file 1440 760 %}); width: 1845px; margin-right: 0px;">
+                <div class="slider-home__wrapper">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-11 col-sm-push-1">
+                                <a class="slider-box slider-box--inline" href="{% if image.url %}{{ image.url }}{% endif %}" title="{{ image.title }}">
+                                    <div class="slider-box__content tal">
+                                        <h3 class="slider-box__title">
+                                            {{ image.title }}
+                                        </h3>
+                                        <div class="slider-box__subtitle">
+                                            {{ image.description|linebreaksbr }}
+                                        </div>
+                                        <div class="slider-box__desc">
+                                            {{ image.credits }}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="slider-home__pager">
+        <div class="col-xs-12 col-sm-11 col-sm-push-1">
+            <ul class="">
+                {% for slider in home.dynamiccontenthomeslider_set.all %}
+                    {% with slider.content_object.images.all|get_type:'slider' as images %}
+                        {% if images %}
+                            <li class="{% if forloop.first %}active{% endif %} --accent">
+                                <a class="--accent" href="#"></a>
+                            </li>
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+                {% for image in home.images.all|get_type:'slider' %}
+                    <li class="{% if not home.dynamiccontenthomeslider_set.all %}active{% endif %}">
+                        <a href="#"></a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

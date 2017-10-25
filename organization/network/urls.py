@@ -41,8 +41,18 @@ urlpatterns = [
     url("^person-list-block-autocomplete/$", permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
     url("^person-autocomplete/$", permission_required('person.can_edit')(PersonAutocompleteView.as_view()), name='person-autocomplete'),
     url("^network/$", OrganizationListView.as_view(), name='network'),
+
     url("^organization-linked-list-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
     url("^organization-linked-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
     url(r'^person-activity-autocomplete/$', PersonActivityAutocompleteView.as_view(), name='person-activity-autocomplete'),
     url(r'^work-packages-autocomplete/$', WorkPackageAutocompleteView.as_view(), name='work-packages-autocomplete'),
+
+    url("^producers/submission/$", ProducerCreateView.as_view(), name='organization-producer-create'),
+    url("^producers/submission/(?P<slug>.*)/validation/$", ProducerValidationView.as_view(), name='organization-producer-validation'),
+
+    url("^producers/(?P<slug>.*)/detail/$", ProducerDetailView.as_view(), name='organization-producer-detail'),
+    url("^producers/list/$", ProducerListView.as_view(), name='organization-producer-list'),
+
+    url("^jury/list/$", JuryListView.as_view(), name='organization-jury-list'),
+
 ]

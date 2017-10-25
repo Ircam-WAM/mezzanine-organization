@@ -39,8 +39,9 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django import forms
+from django.utils.text import slugify
 from mezzanine.pages.models import Page
-from mezzanine.core.models import RichText, Displayable, Slugged
+from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 
@@ -112,14 +113,23 @@ BOX_SIZE_CHOICES = [
     (6, 6),
 ]
 
+ORGANIZATION_STATUS_CHOICES = (
+    (0, _('rejected')),
+    (1, _('pending')),
+    (2, _('in process')),
+    (3, _('accepted')),
+)
 
-class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
+
+class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
     """(Organization description)"""
 
     mappable_location = models.CharField(max_length=128, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
     lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
     lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
+    role = models.ForeignKey('OrganizationRole', verbose_name=_('organization role'), blank=True, null=True, on_delete=models.SET_NULL)
+    email = models.EmailField(_('email'), blank=True, null=True)
     initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
     is_on_map = models.BooleanField(_('is on map'), default=False, blank=True)
     is_host = models.BooleanField(_('is host'), default=False, blank=True)
@@ -129,6 +139,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
     bio = models.TextField(_('bio'), blank=True)
     site = models.ForeignKey("sites.Site", blank=True, null=True, on_delete=models.SET_NULL)
     admin_thumb_type = 'logo'
+    validation_status = models.IntegerField(_('validation status'), choices=ORGANIZATION_STATUS_CHOICES, default=1)
 
     class Meta:
         verbose_name = _('organization')
@@ -147,7 +158,7 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
             raise ValidationError("Latitude required if specifying longitude.")
 
         if not (self.lat and self.lon) and not self.mappable_location:
-            if self.address:
+            if self.address and self.postal_code and self.city:
                 self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
 
         if self.mappable_location and not (self.lat and self.lon): #location should always override lat/long if set
@@ -166,6 +177,13 @@ class Organization(Named, Address, URL, AdminThumbRelatedMixin, Orderable):
     def save(self, **kwargs):
         self.clean()
         super(Organization, self).save()
+
+    def get_absolute_url(self):
+        role, c = OrganizationRole.objects.get_or_create(key='Producer')
+        if self.role == role:
+            return reverse("organization-producer-detail", kwargs={"slug": self.slug})
+        # TODO: Default organization view?
+        return reverse("network")
 
 
 class Team(Named, URL):
@@ -242,6 +260,8 @@ class Person(Displayable, AdminThumbMixin, Address):
             self.last_name = ' '.join(names[1:])
 
     def save(self, *args, **kwargs):
+        if not self.title or self.title == '-':
+            self.title = self.first_name + ' ' + self.last_name
         super(Person, self).save(args, kwargs)
         for activity in self.activities.all():
             update_activity(activity)
@@ -297,7 +317,7 @@ class OrganizationService(Named, URL, Orderable):
 
 
 class OrganizationType(Named):
-    """(OrganizationType description)"""
+    """Type of Organizations"""
 
     css_class = models.CharField(_('class css'), max_length=64, blank=True, null=True,  help_text="Determine color on map.")
 
@@ -313,6 +333,19 @@ class OrganizationEventLocation(models.Model):
 
     class Meta:
         verbose_name = 'Organization'
+
+
+class OrganizationRole(Named):
+    """Roles of Organizations"""
+
+    key = models.CharField(_('key'), blank=False, null=False, unique= True, max_length=128, default="unknown")
+
+    class Meta:
+        verbose_name = _('organization role')
+        ordering = ['key',]
+
+    def __str__(self):
+        return self.key
 
 
 class OrganizationContact(Person):
@@ -412,6 +445,27 @@ class Person(Displayable, AdminThumbMixin):
             update_activity(activity)
 
 
+class ProducerData(models.Model):
+    """(ProducerData description)"""
+
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='producer_data', blank=True, null=True, on_delete=models.SET_NULL)
+
+    experience_description = models.CharField(_('experience description'), max_length=60, help_text="Do you have prior experience with working in organizations in a co-creation process? If so, please describe it. (40 to 60 words)")
+    producer_description = models.TextField(_('producer description'), help_text="Description of the producer organization and the resources they bring for the proposal (100 to 150 words).")
+
+    class Meta:
+        verbose_name = 'Producer data'
+        verbose_name_plural = 'Producer data'
+
+
+class ProducerMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super(ProducerMixin, self).get_context_data(**kwargs)
+        self.producer = Organization.objects.get(slug=self.kwargs['slug'])
+        context['producer'] = self.producer
+        return context
+
 class PersonPlaylist(PlaylistRelated):
 
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
@@ -449,7 +503,7 @@ class PageCustomPersonListBlockInline(Titled):
         return self.title
 
 
-class PersonListBlock(Titled, Label, Dated):
+class PersonListBlock(Titled, Label, Dated, SiteRelated):
 
     style = models.CharField(_('style'), max_length=16, choices=PERSON_LIST_STYLE_CHOICES)
 
@@ -460,7 +514,7 @@ class PersonListBlock(Titled, Label, Dated):
         return self.title
 
 
-class PersonListBlockInline(models.Model):
+class PersonListBlockInline(SiteRelated):
 
     person_list_block = models.ForeignKey(PersonListBlock, verbose_name=_('Person List Block'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
     person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)

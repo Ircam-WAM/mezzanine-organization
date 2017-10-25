@@ -1,0 +1,54 @@
+{% load mezzanine_tags staticfiles keyword_tags i18n organization_tags pages_tags %}
+
+<a class="residency-box" href="{{ object.get_absolute_url }}" title="{{ object.project.title }} X {{ object.artist.first_name }} {{ object.artist.last_name }}">
+
+    {% with object.images.all|get_type:'card' as images %}
+
+        <div class="residency-box__label_overlay">
+            <div class="residency-box__label_overlay_title">
+                {{ object.project.title }} X {{ object.artist.first_name }} {{ object.artist.last_name }}
+            </div>
+            <div class="residency-box__label_overlay_body">
+                {{ object.description }}
+            </div>
+        </div>
+
+        {% if images %}
+        <div>
+            <div style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ MEDIA_URL }}{% thumbnail images|first 0 400 padding=true %}')" class="residency-box__background residency-box__background-margin"></div>
+        {% else %}
+        <div class="residency-box__background">
+        {% endif %}
+
+            <div class="residency-box__title">
+                {{ object.project.title }}<br>
+                X<br>
+                {{ object.artist.first_name }} {{ object.artist.last_name }}
+            </div>
+        </div>
+    {% endwith %}
+
+    <!-- this div tag breaks the layout -->
+    <!-- </div> -->
+
+    {% comment %}
+    <div class="residency-box__content">
+        <div class="residency-box__title">
+            {{ object.project.residencies.all.0.title }}<br>
+            X<br>
+            {{ object.artist.first_name }} {{ object.artist.last_name }}<br>
+        </div>
+        <div class="residency-box__tags">
+            {% block tags %}
+            {% endblock %}
+        </div>
+        <div class="residency-box__subtitle">
+            {{ object.sub_title }}
+        </div>
+        <div class="residency-box__desc">
+            {{ object.public_data.all.0.brief_description|richtext_filters|safe|truncatechars_html:200 }}
+        </div>
+    </div>
+    {% endcomment %}
+
+</a>

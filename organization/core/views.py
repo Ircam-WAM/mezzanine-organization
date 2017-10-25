@@ -42,6 +42,8 @@ from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineForm
 from organization.network.models import Person
 from organization.magazine.models import Article
 from pprint import pprint
+from django.contrib.auth.mixins import LoginRequiredMixin
+from organization.network.models import *
 
 
 class SlugMixin(object):
@@ -224,3 +226,25 @@ class AccountProfilView(RedirectView):
         except :
             pass
         return redirect_url
+
+
+class UserProjectsView(LoginRequiredMixin, ListView):
+
+    model = Project
+    template_name='accounts/account_projects_list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Project.objects.filter(user=user).select_related().order_by('title')
+        return qs
+
+
+class UserProducerView(LoginRequiredMixin, ListView):
+
+    model = Organization
+    template_name='accounts/account_producer_list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Organization.objects.filter(user=user).select_related().order_by('name')
+        return qs

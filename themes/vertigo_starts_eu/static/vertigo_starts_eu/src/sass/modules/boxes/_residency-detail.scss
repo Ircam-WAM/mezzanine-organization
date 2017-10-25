@@ -1,0 +1,353 @@
+// -*- coding: utf-8 -*-
+
+// Copyright (c) 2016-2017 Ircam
+// Copyright (c) 2016-2017 Jérémy Fabre
+
+// This file is part of mezzanine-organization.
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+
+// You should have received a copy of the GNU Affero General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+$module: ".residency-detail";
+
+#{$module} {
+
+    &__header {
+        width: 100%;
+
+        &::after {
+            clear: both;
+        }
+    }
+
+    &__header-previous {
+        width: 15%;
+        float: left;
+
+        & a{
+            margin-top: 150px;
+            margin-left: 50px;
+            display: inline-block;
+            height: 100px;
+            width: 100px;
+            border: 3px solid $color-main;
+            border-radius: 3px;
+            border-top: 0;
+            border-right: 0;
+            -webkit-transform: rotateZ(45deg);
+            transform: rotateZ(45deg);
+        }
+
+    }
+
+    &__header-next {
+        width: 15%;
+        float: right;
+
+        & a{
+            margin-top: 150px;
+            margin-left: -moz-calc(100% - 150px);
+            margin-left: -webkit-calc(100% - 150px);
+            margin-left: -o-calc(100% - 150px);
+            margin-left: calc(100% - 150px);
+            display: inline-block;
+            height: 100px;
+            width: 100px;
+            border: 3px solid $color-main;
+            border-radius: 3px;
+            border-top: 0;
+            border-left: 0;
+            -webkit-transform: rotateZ(-45deg);
+            transform: rotateZ(-45deg);
+        }
+
+    }
+
+    &__header-image {
+        width: 70%;
+        margin: 0 auto;
+        display: block;
+        height: 400px;
+        position:relative;
+        background-image: url("");
+        background-repeat: no-repeat;
+        background-position: center; 
+
+        & span {
+            position:absolute;
+            margin: 0 auto;
+            width: 100%;
+            top: 125px;
+            color: $color-main;
+            font-size: 50px;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+    
+    &__header-title {
+        
+    }
+
+    &__header-text {
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-bottom: 5%;
+        margin-top: 2%;
+        color: $color-white;
+    }
+
+    &__margin-global {
+        margin-top: 0%;
+        margin-right: 15%;
+        margin-bottom: 0%;
+        margin-left: 15%;
+    }
+
+    &__background-main {
+        background-color: $color-background;
+    }
+
+    &__button {
+        background: none;
+        border: none;
+        color: $color-gray;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 22px;
+        font-weight: normal;
+        margin-right: 30px;
+        margin-left: 30px;
+        padding: 0;
+        width: 180px;
+        margin-bottom: 0px;
+
+        &:hover {
+            background: none;
+            color: $color-main;
+            font-size: 26px;
+        }
+
+        &.active {
+            cursor: normal;
+            background: none;
+            color: $color-main;
+            font-size: 26px;
+        }
+
+        &-selected {
+            background: none;
+            color: $color-main;
+            font-size: 26px;
+
+            &:hover {
+                background: none;
+                color: $color-main;
+                font-size: 26px;
+            }
+        }
+
+        &-unselected {
+            background: none;
+            color: $color-gray;
+            font-size: 22px;
+
+            &:hover {
+                background: none;
+                color: $color-main;
+                font-size: 22px;
+            }
+        }
+    }
+
+    &__block--white {
+	    background-color: $color-white;
+	    color: $color-black;
+	    padding-top: 48px;
+	    padding-top: 3rem;
+	    margin: 48px 0px 0px 0px;
+	    margin: 3rem 0 0 0;
+	    position: relative;
+	    overflow: hidden;
+    }
+
+    &__margin-row {
+        margin-bottom: 10px;
+    }
+
+    &__margin-white {
+        margin:3px 0px 0px 0px;
+    }
+
+    &__center-buttons {
+	    width: auto;
+	    margin: 0 auto;
+	    display: table;
+	    text-align: center;
+	    text-transform: uppercase;
+    }
+
+    &__hide-container {
+        display: none;
+    }
+
+    &__show-container {
+        display: block;
+    }
+
+    &__margin-block {
+        margin-right: 10%;
+        margin-left: 10%;
+    }
+
+    &__image-left {
+        float:left;
+        margin:0 20px 20px 0;
+    }
+
+    &__container {
+        margin-left: 320px;
+        margin-right: 200px;
+        position: relative;
+    }
+
+    &__title {
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 20px;
+        font-family: "Oswald", sans-serif;
+    }
+
+    &__text {
+        text-decoration: none;
+        font-size: 20px;
+        font-family: "Oswald", sans-serif;
+    }
+
+    &__underline-text {
+        text-decoration: underline;
+    }
+
+    &__underline-text-green {
+	    font-family: "Oswald", sans-serif;
+	    font-size: 1.2rem;
+	    font-weight: 400;
+	    text-align: center;
+	    display: inline-block;
+	    line-height: 1.5em;
+        text-transform: uppercase;
+        text-align: center;
+        color: $color-black;
+        text-decoration: none;
+        border-bottom: 2px solid $color-main;
+        display: table;
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: 1.5em;
+    }
+
+    &__green-top-line {
+        border-top: 2px solid $color-main;
+    }
+
+    &__video-style {
+        height: 390px;
+        width: 640px;
+        display:table;
+        margin-right:auto;
+        margin-left:auto;
+        margin-bottom: 10px;
+    }
+
+    &__right-image {
+        float:right;
+        margin-bottom: 20px;
+    }
+
+    &__width-text-second-tab {
+        width: 70%;
+    }
+
+    &__text-detail {
+        overflow: hidden;
+        white-space: pre-wrap;
+        padding: 0px 25px 25px 0px;
+        font-size: 0.9 rem;
+        
+        p a {
+            color: $color-black !important;
+        }
+    }
+
+    &__button-project {
+        background: $color-main;
+        color: $color-black;
+        border-radius: 7px;
+        outline: 0;
+        box-sizing: border-box;
+        min-width: 136px;
+        margin: 0 .75rem 10px 0;
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+        display: inline-block;
+        vertical-align: middle;
+        cursor: pointer;
+        transition: all .25s ease-in-out;
+        text-decoration: inherit;
+        text-align:center;
+        list-style: none;
+        font-size:18px;
+        border: 1px solid $color-black;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-weight: 650;
+    }
+
+    &__disable-overflow {
+        overflow: hidden;
+    }
+
+    &__margin-bottom-third-tab {
+        margin-bottom: 5%;
+        margin-left: 10%;
+    }
+
+    &__social-links {
+        margin: 25px 0px 25px 0px;
+    }
+
+    &__social-link {
+        margin: 0px 5px 0px 0px;
+    }
+    
+    &__map {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        float: right;
+        border-style: solid;
+        border-color: $color-main;
+        border-width: 1px;
+        margin: 10px 0px 50px 0px;
+
+        &::after {
+            clear: both;
+        }
+
+    }
+    
+    &__details {
+        overflow: hidden;
+    }
+}

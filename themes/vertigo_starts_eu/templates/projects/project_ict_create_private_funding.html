@@ -1,0 +1,266 @@
+{% extends "vertigo_starts_eu/pages/page_ict_projects.html" %}
+{% load mezzanine_tags keyword_tags i18n organization_tags pages_tags projects_tags %}
+
+{% block meta_title %}{% endblock %}
+
+{% block meta_keywords %}{% endblock %}
+
+{% block body_class %}
+    pattern pattern-bg {{ department.pages.all.0.weaving_css_class }}
+{% endblock %}
+
+{% block breadcrumb_menu %}
+    {{ block.super }}
+    <li class="breadcrumb__item active">{{ object.title }}</li>
+{% endblock %}
+
+{% block page_tags %}
+{% endblock %}
+
+{% block page_title %}
+    {% comment %}
+    {% editable object.title %}
+      <!--  <h1>{% trans "Project submission form" %}</h1>-->
+        <div class="ict-project-style__title-header">
+          <div class="ict-project-style__title-style">
+            {% include 'vertigo_starts_eu/pages/form-title/title_private.txt' %}
+          </div>
+        </div>
+    {% endeditable %}
+    {% endcomment %}
+    {% comment %}
+    {% if not call.is_closed %}
+        <h3>All fields are mandatory / required</h3>
+    {% endif %}
+    {% endcomment %}
+{% endblock %}
+
+{% block hero %}
+<script>
+
+    function checkObject(object, array) {
+
+      var exists = false;
+
+      for (var i = 0; i < array.length; i++) {
+
+        if (array[i] == object) {
+          exists = true;
+          break;
+        }
+      }
+
+      return exists;
+    }
+
+    function addTag(object, event) {
+
+      if (event != null) {
+        event.preventDefault();
+      }
+
+      var id_box = "id_keywords_1";
+      var valueLink = object.innerText.replace("+", "");
+      var textBox = document.getElementById(id_box);
+      var textValue = textBox.value;
+
+      if (valueLink.length > 0) {
+        if (textValue == "") {
+
+          document.getElementById(id_box).value = valueLink;
+        } else {
+
+          var arrayText = textValue.split(",");
+          var arrayLenght = arrayText.length;
+
+          if (arrayLenght < 6) {
+
+            if (!checkObject(valueLink, arrayText)) {
+              document.getElementById(id_box).value += "," + valueLink;
+            }
+          }
+        }
+      }
+    }
+
+    function addOnclick() {
+
+      var element = document.getElementsByClassName("keywords-field")[0];
+
+      element.addEventListener('click', function(event) {
+
+        if (event.target && event.target.nodeName == "A") {
+          addTag(event.target,event);
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+       addOnclick();
+    }, false);
+
+    function showHideDivider(object, event) {
+
+      event.preventDefault();
+
+      var id_item = object.id;
+      var chevronId = id_item.replace("divider", "chevron");
+      var chevronItem = document.getElementById(chevronId);
+      var itemsClass = chevronItem.classList;
+
+      var fieldDivId = id_item.replace("divider", "field-form");
+      var formDivItem = document.getElementById(fieldDivId);
+
+      var openChevron = false;
+
+      for (var i = 0; i < itemsClass.length; i++) {
+
+        if (itemsClass[i].toLowerCase() == 'fa-chevron-down') {
+
+          openChevron = true;
+          break;
+        }
+      }
+
+      if (openChevron) {
+
+        chevronItem.classList.remove("fa-chevron-down");
+        chevronItem.classList.add("fa-chevron-up");
+        formDivItem.style.display = 'none';
+      } else {
+
+        chevronItem.classList.remove("fa-chevron-up");
+        chevronItem.classList.add("fa-chevron-down");
+        formDivItem.style.display = 'block';
+      }
+    }
+
+</script>
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="row">
+      <div class="ict-project-style__title-header">
+        <div class="ict-project-style__title-style">
+          {% include 'vertigo_starts_eu/pages/form-title/title_private.txt' %}
+        </div>
+      </div>
+    </div>
+
+    {% if call.is_closed %}
+      <div class="ict-project-style__close-project">
+        {% include 'projects/inc/project_call_closed.html' %}
+      </div>
+    {% else %}
+        <div class="row" style="background-color:white">
+            {% errors_for form %}
+            <form class="form ict-project-form" method="post" enctype="multipart/form-data">
+                {#{% fields_for form %}#}
+                {% csrf_token %}
+                {% for formset in inlines %}
+                    {{ formset.management_form }}
+                {% endfor %}
+                {% if form.errors or inlines.0.0.errors or inlines.1.0.errors or inlines.2.0.errors or inlines.2.1.errors or inlines.2.2.errors or inlines.3.0.errors %}
+                    <div class="ict-project-style__errors-form-style">
+                        <b>The data provided is not valid. Please review the red fields and save again.</b>
+                    </div>
+                {% endif %}
+                <div id="divider-0" class="ict-project-style__divider-section" onclick="showHideDivider(this, event);">
+                  <span class="ict-project-style__divider-title-section">
+                    Key details
+                  </span>
+                  <i id="chevron-0" class="fa fa-chevron-down ict-project-style__divider-chevron-section" aria-hidden="true"></i>
+                </div>
+                <div id="field-form-0" style="margin-left:30px;margin-right:30px">
+                  {# XXX: Examples of use #}
+                  {# projects_form_field field private left #}
+                  {% projects_form_field form.title False True %}
+                  {% projects_form_field inlines.3.0.organization_name False False %}
+                  {% projects_form_field form.website False True %}
+                  {% projects_form_field inlines.1.0.dimension True False %}
+                  {% projects_form_field form.date_from True True %}
+                  {% projects_form_field form.date_to True False %}
+                  {% projects_form_field inlines.1.0.commitment_letter True True %}
+                  {% projects_form_field inlines.1.0.investor_letter True False %}
+                  {% projects_form_field inlines.1.0.persons True True %}
+                  <div style="display:block">
+                    <div style="float:left;width:48%;margin-right:40px">
+                      <div class="ict-project-style__section-title">Project key contact details</div>
+                    </div>
+                  </div>
+                  {% projects_form_field inlines.3.0.first_name True True %}
+                  {% projects_form_field inlines.3.0.last_name True False %}
+                  {% projects_form_field inlines.3.0.telephone True True %}
+                  {% projects_form_field inlines.3.0.email True False %}
+                  {% projects_form_field inlines.3.0.position True True %}
+                  {% projects_form_field inlines.3.0.postal_code True False %}
+                  {% projects_form_field inlines.3.0.city True True %}
+                  {% projects_form_field inlines.3.0.country True False %}
+                  {% projects_form_field inlines.3.0.address True True %}
+                  <div style="float:left;width:100%;height:10px;"></div>
+                </div>
+                <div id="divider-1" class="ict-project-style__divider-section" onclick="showHideDivider(this, event);">
+                  <span class="ict-project-style__divider-title-section">
+                    About your project
+                  </span>
+                  <i id="chevron-1" class="fa fa-chevron-down ict-project-style__divider-chevron-section" aria-hidden="true"></i>
+                </div>
+                <div id="field-form-1" style="margin-left:30px;margin-right:30px">
+                  {% projects_form_field inlines.0.0.brief_description False True %}
+                  {% projects_form_field inlines.0.0.technology_description False False %}
+                  {% projects_form_field form.keywords False True %}
+                  {% projects_form_field inlines.1.0.description True False %}
+                  {% projects_form_field inlines.0.0.image True False %}
+                  {% projects_form_field inlines.0.0.image_credits True False %}
+                  <div style="float:left;width:100%;height:10px;"></div>
+                </div>
+                <div id="divider-2" class="ict-project-style__divider-section" onclick="showHideDivider(this, event);">
+                  <span class="ict-project-style__divider-title-section">
+                    Images
+                  </span>
+                  <i id="chevron-2" class="fa fa-chevron-down ict-project-style__divider-chevron-section" aria-hidden="true"></i>
+                </div>
+                <div id="field-form-2" style="margin-left:30px;margin-right:30px">
+                  <div class="ict-project-style__description-field" style="margin-top:20px;">Please upload at least one, and up to three, images to represent your project. The first image will be used as thumbnail and banner image for your project if selected. The size and colour of the images may be adjusted to fit the screen layout. Please use the preview function to see how your images will work. Please also provide short captions to describe the image and credits where relevant. Note that logos will not be accepted as images.</div>
+                  {% projects_form_field inlines.2.0.file False True %}
+                  {% projects_form_field inlines.2.1.file False False %}
+                  {% projects_form_field inlines.2.2.file False True %}
+                  <div style="float:left;width:100%;height:10px;"></div>
+                </div>
+                <div id="divider-3" class="ict-project-style__divider-section" onclick="showHideDivider(this, event);">
+                  <span class="ict-project-style__divider-title-section">
+                    About the residency
+                  </span>
+                  <i id="chevron-3" class="fa fa-chevron-down ict-project-style__divider-chevron-section" aria-hidden="true"></i>
+                </div>
+                <div id="field-form-3" style="margin-left:30px;margin-right:30px">
+                  {% projects_form_field inlines.0.0.resources_description False True %}
+                  {% projects_form_field inlines.0.0.implementation_start_date False False %}
+                  {% projects_form_field inlines.0.0.implementation_period False False %}
+                  {% projects_form_field inlines.0.0.implementation_duration False False %}
+                  {% projects_form_field inlines.0.0.challenges_description False True %}
+                  {% projects_form_field inlines.0.0.objectives_description False False %}
+                  <div style="float:left;width:100%;height:10px;"></div>
+                </div>
+                <div class="form-actions" style="display:block;float:left;margin-left:30px;margin-right:30px">
+                    <h3 style="color:#1D1D1B;">All fields are mandatory / required</h3>
+                    <p style="color:#1D1D1B;">With the submission of data and documents about your project, you declare, that you are allowed to establish a cooperation with an artist funded by the VERTIGO project.</p>
+                    <p style="color:#1D1D1B;">After you press save, you will be able to edit the form up until the deadline.</p>
+                    <br>
+                    <div style="text-align:center;padding-bottom:20px">
+                      <input class="ict-project-style__button-submit" type="submit" style="background:#50E3C2;color:white;"
+                          value="{% if page.form.button_text %}{{ page.form.button_text }}{% else %}{% trans "Save" %}{% endif %}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+$(function() {$('.mezzanine-form :input:visible:enabled:first').focus();});
+</script>
+{% endblock %}

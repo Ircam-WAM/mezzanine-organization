@@ -48,6 +48,36 @@ class ProjectUserImageTranslationOptions(TranslationOptions):
     pass
 
 
+@register(ProjectResidencyProducer)
+class ProjectResidencProducerTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(ProjectResidencyImage)
+class ProjectResidencImageTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(ProjectResidencyUserImage)
+class ProjectResidencUserImageTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(ProjectResidencyArticle)
+class ProjectResidencArticleTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(ProjectResidencyEvent)
+class ProjectResidencEventTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(ProjectFile)
 class ProjectFileTranslationOptions(TranslationOptions):
 
@@ -80,12 +110,6 @@ class ProjectProgramTranslationOptions(TranslationOptions):
 
 @register(ProjectProgramType)
 class ProjectProgramTypeTranslationOptions(TranslationOptions):
-
-    fields = ('name', 'description')
-
-
-@register(ProjectTopic)
-class ProjectTopicTranslationOptions(TranslationOptions):
 
     fields = ('name', 'description')
 
@@ -166,3 +190,7 @@ class ProjectContactTranslationOptions(TranslationOptions):
 
     pass
 
+@register(ProjectTopic)
+class ProjectTopicTranslationOptions(TranslationOptions):
+
+    fields = ('name', 'description')
