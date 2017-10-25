@@ -291,3 +291,8 @@ def is_more_then_hours(date_begin, date_end, hours):
 @register.filter
 def get_article_by_department(department):
     return Article.objects.filter(department=department).order_by('-publish_date')[:3]
+
+
+@register.filter
+def get_hal_url(hal_tutelage, hal_researche_structure):
+    return settings.HAL_URL % (hal_researche_structure.replace(' ', '+'), hal_tutelage.replace(' ', '+'))

@@ -260,6 +260,8 @@ class Team(Named, URL):
     code = models.CharField(_('code'), max_length=64, blank=True, null=True)
     is_legacy = models.BooleanField(_('is legacy'), default=False)
     parent = models.ForeignKey('Team', verbose_name=_('parent team'), related_name="children", blank=True, null=True, on_delete=models.SET_NULL)
+    hal_tutelage = models.CharField(_('HAL Tutelage'), max_length=255, blank=True, null=True)
+    hal_researche_structure = models.CharField(_('HAL Researche Structure'), max_length=255, blank=True, null=True)
 
     class Meta:
         verbose_name = _('team')

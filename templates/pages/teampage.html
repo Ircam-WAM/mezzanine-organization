@@ -154,3 +154,9 @@
         {% include "core/inc/block.html" %}
     {% endwith %}
 {% endblock %}
+
+{% block page_hal %}
+    {% if page.teampage.team.hal_tutelage and page.teampage.team.hal_researche_structure %}
+        {% include "pages/teampage/includes/hal.html" with team=page.teampage.team %}
+    {% endif %}
+{% endblock %}
