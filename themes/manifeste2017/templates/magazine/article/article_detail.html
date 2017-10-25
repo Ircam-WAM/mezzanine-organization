@@ -1,0 +1,166 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags keyword_tags i18n organization_tags %}
+
+{% block meta_title %}{{ article.meta_title }}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for article as tags %}
+{% for tag in tags %}{% if not forloop.first %}, {% endif %}{{ tag }}{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+    {{ article.description }}
+{% endmetablock %}{% endblock %}
+
+{% block page_class %}
+    article
+{% endblock %}
+
+{% block body_class %}
+    {% if department_weaving_css_class %}
+        pattern pattern-bg {{ department_weaving_css_class }}
+    {% endif %}
+{% endblock %}
+
+{% block page_title %}
+
+    {% editable article.title %}
+        <div class="section-title section-title--uppercase section-title--underline section-title--main section-title--no-margin"><a href="{% url 'magazine-article-list' %}"><i class="fsl fa fa-angle-left"></i>{% trans "Back to news" %}</a></div>
+        <h1 class="section-title section-title--uppercase section-title--big">{{ article.title }}</h1>
+        <div class="page__date">
+            {% trans 'Published on' %} {{ article.publish_date|date:"DATE_FORMAT" }}
+        </div>
+    {% endeditable %}
+
+    {% if article.sub_title %}
+        {% editable article.sub_title %}
+            <div class="chapo">
+                {{ article.sub_title }}
+            </div>
+        {% endeditable %}
+    {% endif %}
+
+{% endblock %}
+
+{% block page_content %}
+
+    {% if article.content %}
+      {% editable article.content %}
+        {{ article.content|richtext_filters|safe }}
+      {% endeditable %}
+    {% endif %}
+
+{% endblock %}
+
+{% block page_slider %}
+  {% with article.images.all|get_type:'page_slider' as slider_images %}
+    {% if slider_images %}
+      {% include 'core/inc/slider.html' %}
+    {% endif %}
+  {% endwith %}
+{% endblock %}
+
+{% block page_audio %}
+    {{ block.super }}
+{% endblock %}
+
+{% block page_video %}
+    {{ block.super }}
+{% endblock %}
+
+{% block page_person_list %}
+    {% for article_custom_person_list_block_inline in article.article_person_list_block_inlines.all  %}
+      {% with article_custom_person_list_block_inline.person_list_block as person_list_block %}
+        {% with "network/inc/person/list_"|add:person_list_block.style|add:"_style.html" as template %}
+          {% include template %}
+        {% endwith %}
+      {% endwith %}
+    {% endfor %}
+{% endblock %}
+
+{% block page_related_content %}
+    {% if related.event %}
+        <div class="pb2">
+            <div class="container">
+                <div class="row tac">
+                    <div class="col-xs-16">
+                        <h2 class="section-title section-title--underline section-title--uppercase section-title--main">{% trans "Linked events" %}</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xxs-16">
+                        <div data-slider-related>
+
+                            {% for event in related.event %}
+                                <div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-12 col-md-push-2">
+                                            {% include 'agenda/includes/event_linecard.html' %}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if related.other %}
+        <div class="pb2">
+            <div class="container">
+                <div class="row tac">
+                    <div class="col-xs-16">
+                        <h2 class="section-title section-title--underline section-title--uppercase section-title--main">{% trans "Linked contents" %}</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-14 col-md-push-1 col-lg-12 col-lg-push-2">
+                        <div data-slider-related>
+
+                            {% for concrete_object in related.other %}
+                                {% if forloop.counter0 == 0 or forloop.counter|divisibleby:3 %}
+                                    <div class="container">
+                                        <div class="row-12">
+                                {% endif %}
+
+                                <div class="col-xs-4">
+                                    {% with app_label=concrete_object|app_label_short classname=concrete_object|classname|lower object=concrete_object  %}
+                                        {% with app_label|add:"/"|add:classname|add:"/includes/"|add:classname|add:"_card.html" as template %}
+                                            {% include template %}
+                                        {% endwith %}
+                                    {% endwith %}
+                                </div>
+
+                                {% if forloop.last or forloop.counter|divisibleby:2 %}
+                                    </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block page_sidebar %}
+
+    <div data-sticky data-sticky-parent="row" data-sticky-offset="100" data-sticky-detach-at="1171">
+
+        {% with article as object %}
+            {% include "includes/share_buttons.html" %}
+        {% endwith %}
+
+    </div>
+
+{% endblock %}

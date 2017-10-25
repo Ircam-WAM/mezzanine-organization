@@ -134,7 +134,7 @@ LANGUAGES = (
     ('en', _('English')),
 )
 
-LOCALE_PATHS = ['locale',]
+LOCALE_PATHS = ['locale', '../lib/mezzanine-agenda/mezzanine_agenda/locale/']
 
 # Whether a user's session cookie expires when the Web browser is closed.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
@@ -195,9 +195,9 @@ STATIC_URL = "/static/"
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, STATIC_URL.strip("/"))
 STATIC_ROOT = '/srv/static/'
 
-STATICFILES_DIRS = [
-    '/srv/app/static',
-]
+# STATICFILES_DIRS = [
+#     '/srv/app/static',
+# ]
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -218,7 +218,8 @@ ROOT_URLCONF = "urls"
 ################
 
 INSTALLED_APPS = [
-    "modeltranslation",
+   "themes.manifeste2017",
+   "modeltranslation",
     "dal",
     "dal_select2",
     "dal_queryset_sequence",
@@ -248,7 +249,7 @@ INSTALLED_APPS = [
     "mezzanine.accounts",
     "cartridge.shop",
     # "eve",
-    "prestashop",
+    # "prestashop",
     'djangobower',
     "meta",
     "mezzanine_agenda",
@@ -261,6 +262,8 @@ INSTALLED_APPS = [
     "organization.agenda",
     "organization.shop",
     "organization.job",
+    "sorl.thumbnail", # required for thumbnail support
+    "django_instagram",
     'guardian',
     'extra_views',
 ]
@@ -285,7 +288,6 @@ MIGRATION_MODULES = {
 
 TEMPLATES = [{'APP_DIRS': True,
                'BACKEND': 'django.template.backends.django.DjangoTemplates',
-               'DIRS': ('/srv/app/templates',),
                'OPTIONS': {'builtins': ['mezzanine.template.loader_tags'],
                            'context_processors': ('django.contrib.auth.context_processors.auth',
                                                   'django.contrib.messages.context_processors.messages',
@@ -311,6 +313,9 @@ TEMPLATE_LOADERS_OPTIONS = [('django.template.loaders.cached.Loader', [
 if not DEBUG:
     TEMPLATES[0]['OPTIONS']['loaders'] = TEMPLATE_LOADERS_OPTIONS
     TEMPLATES[0]['APP_DIRS'] = False
+HOST_THEMES = [
+   ('manifeste.ircam.fr', 'themes.manifeste2017'),
+]
 
 # List of middleware classes to use. Order is important; in the request phase,
 # these middleware classes will be applied in the order given, and in the

@@ -22,6 +22,8 @@
 # -*- coding: utf-8 -*-
 import datetime
 import calendar
+import ast
+from re import match
 from django.http import QueryDict
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
@@ -227,6 +229,28 @@ def format_percent(percent):
     return str(percent * 100) + ' %'
 
 @register.filter
+def get_media_type(media):
+    mime_type = media.transcoded.first().mime_type
+    media_type = ""
+    if match('video', mime_type):
+        media_type = "Video"
+    elif match('audio', mime_type):
+        media_type = "Audio"
+    return media_type
+
+@register.filter
+def filter_content(dynamic_contents):
+    dict = {}
+    dict["event"] = []
+    dict["other"] = []
+    for dc in dynamic_contents:
+        if dc.content_object:
+            if dc.content_object._meta.model_name== "event":
+                dict["event"].append(dc)
+            else :
+                dict["other"].append(dc)
+    return dict
+
 def get_vars(object):
     return vars(object)
 
@@ -237,6 +261,8 @@ def has_alinea(page):
 
 @register.filter
 def get_value(dict, value):
+    if dict.__class__.__name__ == "str":
+        dict = ast.literal_eval(dict)
     return dict[value]
 
 @register.filter(name='times')
@@ -274,7 +300,8 @@ def format_date_fct_of(date_start, date_end):
 @register.filter
 def period_is_more_than_hours(date_obj, hours):
     is_more = False
-    if isinstance(date_obj, EventPeriod):
+    if isinstance(date_obj, EventPeriod)
+    :
         is_more = is_more_then_hours(date_obj.date_from, date_obj.date_to, hours)
     if isinstance(date_obj, Event):
         is_more = is_more_then_hours(date_obj.start, date_obj.end, hours)
@@ -291,3 +318,12 @@ def is_more_then_hours(date_begin, date_end, hours):
 @register.filter
 def get_article_by_department(department):
     return Article.objects.filter(department=department).order_by('-publish_date')[:3]
+
+
+@register.filter
+def get_first_brief(object_list):
+    brief_obj = object_list.filter(content_type__model="brief").first()
+    content_obj = None
+    if brief_obj:
+        content_obj = brief_obj.content_object
+    return content_obj

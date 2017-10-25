@@ -1,0 +1,91 @@
+// -*- coding: utf-8 -*-
+
+// Copyright (c) 2016-2017 Ircam
+// Copyright (c) 2016-2017 Jérémy Fabre
+
+// This file is part of mezzanine-organization.
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+
+// You should have received a copy of the GNU Affero General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+$module: ".pagination";
+
+#{$module} {
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+
+    @include typeface(sans-serif);
+
+    @include margin(0 0 2 0);
+
+    &__item {
+
+        display: inline-block;
+        vertical-align: middle;
+        cursor: pointer;
+
+        @include margin(0);
+        background: white;
+        border-top: 1px solid $color-main;
+        border-bottom: 1px solid $color-main;
+        border-left: 1px solid $color-main;
+
+        &:first-child {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            border-right: 1px solid $color-main;
+
+            a {
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+            }
+        }
+
+        &:last-child {
+            border-right: 1px solid $color-main;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+
+            a {
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+            }
+        }
+
+    }
+
+    &__link {
+
+        @include font-size(xs);
+        @include line-height(1);
+        @include typeface(serif);
+        @include margin(0);
+        font-weight: weight(bold);
+
+        display: block;
+        color: $color-main;
+
+        @include padding(.15 .5);
+        @include transition(all .25s ease-in-out);
+
+        &.active, &:hover {
+            background: $color-main;
+            color: white;
+        }
+
+    }
+
+}

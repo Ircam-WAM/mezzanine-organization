@@ -1,0 +1,103 @@
+{% load i18n mezzanine_tags event_tags organization_tags %}
+
+<div class="page__meta">
+
+    <div class="row">
+
+        <div class="col-md-4">
+
+            <div class="page__meta-section">{% trans "Date(s)" %}</div>
+
+            <div class="page__meta-date">
+                {% include 'agenda/includes/event_date.html' %}
+            </div>
+
+        </div>
+
+        {% if event.location %}
+            <div class="col-md-4">
+
+                <div class="page__meta-section">{% trans "Location(s)" %}</div>
+
+                <div class="page__meta-title">
+                    {{ event.location }}
+                    {% if event.location.room %}
+                        <small>{{ event.location.room }}</small>
+                    {% endif %}
+                </div>
+                <a href="{{ event|google_nav_url }}" target="_blank" class="page__meta-title" style="display: block;">
+                    {% trans "ACCESS PLAN" %}
+                </a>
+
+            </div>
+        {% endif %}
+
+        {% if event.prices.all %}
+            {% if event.prices.all.0|floatformat != '0' %}
+
+                <div class="col-md-4">
+
+                    <div class="page__meta-section">{% trans "Price(s)" %}</div>
+
+                    {% for price in event.prices.all %}
+                        <div class="page__meta-title">
+                            {% if price.event_price_description.description %}
+                                {{ price.event_price_description.description }} :
+                            {% endif %}
+                            {{ price.value|floatformat:"-2" }} {{ price.unit }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+
+                <div class="col-md-4">
+
+                    <div class="page__meta-section">{% trans "Price(s)" %}</div>
+
+                    <div class="page__meta-title">
+                        {{ event.no_price_comments }}
+                    </div>
+
+                </div>
+
+            {% endif %}
+        {% endif %}
+
+        <div class="col-md-4">
+
+            {% if event.prices.all %}
+                {% if event.prices.all.0|floatformat != '0' %}
+                    <p>
+                        {% if event.trainings.all|length %}
+                            {% with event.links.all as links %}
+                                {% if links %}
+                                    <a class="button button--white-accent" href="{{ links|get_type_link:'link'|first }}" class="event__meta__btn">
+                                        <i class="fa fa-bookmark-o" aria-hidden="true"></i> {% trans "Reserve" %}
+                                    </a>
+                                {% endif %}
+                            {% endwith %}
+                        {% else %}
+                            <a class="button button--white-accent" href="{% url 'event_booking' event.slug %}" class="event__meta__btn">
+                                <i class="fa fa-bookmark-o" aria-hidden="true"></i> {% trans "Reserve" %}
+                            </a>
+                        {% endif %}
+                    </p>
+                {% else %}
+                    <span class="button button--accent button--no-hover">
+                        {% trans "Free" %}
+                    </span>
+                {% endif %}
+            {% endif %}
+
+            {% if event.brochure %}
+                <a href="{{ event.brochure.url }}" target="_blank" class=" mt1 page__meta-title" style="display: block;">
+                    {{ event.brochure.filename }}
+                </a>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>

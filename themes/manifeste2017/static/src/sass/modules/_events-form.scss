@@ -1,0 +1,160 @@
+#jsEventsForm,
+#jsArticlesForm,
+#jsEventsHomeForm {
+
+    >label {
+        display: none;
+    }
+
+    #id_event_day_filter {
+
+        label {
+            cursor: pointer;
+            display: block;
+        }
+
+        input {
+            display: none;
+        }
+
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        color: $color-black;
+        text-align: center;
+        @include margin(0 0 2 0);
+
+        font-weight: weight(light);
+        font-family: $serif;
+        font-size: 16px;
+
+        @include mq($until: md) {
+            display: none;
+        }
+
+        >li {
+
+            &:first-child,
+            &:last-child {
+                width: 5%;
+                text-transform: uppercase;
+                font-family: $serif;
+                font-size: 18px;
+                font-weight: weight(heavy);
+            }
+
+            &.disabled {
+                color: lightgrey;
+            }
+
+            &.active {
+                color: $color-main;
+                font-weight: bold;
+            }
+
+            display: inline-block;
+            width: 2.9%;
+
+            span {
+                font-size: 14px;
+                opacity: 0.3;
+                display: block;
+
+                &.calendar__weekend {
+                    opacity: 1;
+                    font-weight: weight(regular);
+                }
+            }
+
+        }
+
+    }
+
+    #id_article_type_filter {
+        text-align: center;
+    }
+
+    #id_event_locations_filter {
+        display: none;
+    }
+
+    #id_event_categories_filter,
+    #id_event_locations_filter,
+    #id_article_type_filter {
+
+        padding: 0px 90px;
+
+        @include mq($until: lg) {
+            padding: 0px 74px;
+        }
+
+        @include mq($until: md) {
+            padding: 0px 0px;
+        }
+
+        @include mq($until: sm) {
+            padding: 0px 0px;
+        }
+
+        input {
+            display: none;
+        }
+
+        list-style-type: none;
+        margin: 0;
+
+        >li {
+            display: inline-block;
+            margin: 0 8px 8px 0;
+            border:1px solid $color-black;
+            opacity: 0.3;
+            cursor: pointer;
+
+            @include transition(all 0.25s ease);
+
+            &:hover {
+                background: $color-main;
+                color: white;
+                border-color: white;
+            }
+
+            &.active {
+                opacity: 1;
+
+                label, a {
+
+                    &:after {
+
+                        content: "\f00c";
+
+                    }
+
+                }
+            }
+
+            label, a {
+
+                padding: 5px 15px;
+                text-transform: uppercase;
+                text-decoration: none;
+                border: 0;
+                @include font-size(m);
+                cursor: pointer;
+
+                &:after {
+
+                    display: inline-block;
+                    font-family: "FontAwesome";
+                    content: "\f00d";
+                    font-size: 12px;
+                    margin-left: 8px;
+
+                }
+
+            }
+        }
+
+    }
+
+}

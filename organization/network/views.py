@@ -18,10 +18,12 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+
 from re import match
 from django.contrib import messages
 from pprint import pprint
 from calendar import monthrange
+from django.db.models.fields.related import ForeignKey
 from django.http import Http404
 from django.db.utils import IntegrityError
 from django.shortcuts import render, redirect
@@ -50,7 +52,8 @@ from django.utils import six
 class PersonListView(ListView):
 
     model = Person
-    template_name='team/person_list.html'
+    template_name='network/person_list.html'
+    context_object_name = 'persons'
 
 
 class PersonDetailView(SlugMixin, DetailView):
@@ -85,6 +88,34 @@ class PersonDetailView(SlugMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
+        context["related"] = {}
+        # Person events : this type is separated from the other because
+        # this is not managed by list of person by person in inlines directly
+        person_events = self.object.events.all()
+        events = [item.event for item in person_events]
+        context["related"]["event"] = events
+        # All other related models
+        person_list_block_inlines = self.object.person_list_block_inlines.all()
+        context["related"]["other"] = []
+        # for each person list to which the person belongs to...
+        for person_list_block_inline in person_list_block_inlines:
+            related_objects = person_list_block_inline.person_list_block._meta.get_all_related_objects()
+            for related_object in related_objects:
+                if hasattr(person_list_block_inline.person_list_block, related_object.name):
+                    # getting relating inlines like ArticlePersonListBlockInline, PageCustomPersonListBlockInline etc...
+                    related_inlines = getattr(person_list_block_inline.person_list_block, related_object.name).all()
+                    for related_inline in related_inlines:
+                        if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                            fields = related_inline._meta.get_fields()
+                            for field in fields:
+                                # check if it is a ForeignKey
+                                if isinstance(field, ForeignKey) :
+                                    instance = getattr(related_inline, field.name)
+                                    # get only article, custom page etc...
+                                    if not isinstance(instance, person_list_block_inline.person_list_block.__class__) :  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                        context["related"]["other"].append(instance)
+
+        context["related"]["other"].sort(key=lambda x: x.created, reverse=True)
         context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
         return context
 
@@ -111,7 +142,7 @@ class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):
         return qs
 
 
-class PersonListView(autocomplete.Select2QuerySetView):
+class PersonAutocompleteView(autocomplete.Select2QuerySetView):
 
     def get_queryset(self):
 

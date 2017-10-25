@@ -71,8 +71,8 @@ class LinkImageAdmin(LinkAdmin):
 class PersonListBlockAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
 
     model = PageCustomPersonListBlockInline
+    exclude = ("title", "description")
     form = PageCustomPersonListForm
-
 
 class PageProductListInline(TabularDynamicInlineAdmin):
 
@@ -131,9 +131,15 @@ class DynamicContentHomeMediaInline(TabularDynamicInlineAdmin):
     form = DynamicContentHomeMediaForm
 
 
+class HomeImageInline(TabularDynamicInlineAdmin):
+
+    model = HomeImage
+
+
 class HomeAdminDisplayable(BaseTranslationModelAdmin):
 
-    inlines = [ DynamicContentHomeSliderInline,
+    inlines = [ HomeImageInline,
+                DynamicContentHomeSliderInline,
                 DynamicContentHomeMediaInline,
                 DynamicContentHomeBodyInline,
                 ]

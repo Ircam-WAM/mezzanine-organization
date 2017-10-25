@@ -38,6 +38,7 @@ from organization.media.models import Playlist
 from mezzanine_agenda.models import Event
 from organization.pages.models import CustomPage
 from organization.projects.models import Project
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
 from organization.network.models import Person
 from organization.magazine.models import Article
 from pprint import pprint
@@ -206,3 +207,20 @@ def autocomplete_result_formatting(self, context):
         all_results.append(curr_model_result)
 
     return all_results
+
+
+class AccountProfilView(RedirectView):
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        redirect_url = reverse('home')
+        try :
+            person = Person.objects.get(email=self.request.user._wrapped.email)
+            if person:
+                person.user = self.request.user
+                person.save()
+                if person.register_id :
+                    redirect_url = reverse("organization-network-person-detail", kwargs={"slug": person.slug})
+        except :
+            pass
+        return redirect_url

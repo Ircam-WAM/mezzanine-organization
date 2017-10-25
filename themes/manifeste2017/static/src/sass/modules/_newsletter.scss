@@ -1,0 +1,52 @@
+$module: ".newsletter";
+
+#{$module} {
+
+    @include margin-bottom(2);
+
+    @include mq($until: sm) {
+
+        @include margin-top(2);
+
+    }
+
+    &__text {
+
+        @include font-size(s);
+        @include typeface(serif);
+        @include line-height(1);
+        font-weight: weight(regular);
+
+    }
+
+    &__input {
+
+        @include font-size(m);
+        @include typeface(serif);
+        font-weight: weight(regular);
+
+        width: 100%;
+        outline: 0;
+        background: transparent;
+        border: 0;
+        color: black;
+        border-bottom: 1px solid black;
+
+        margin-top: 20px;
+
+    }
+
+    &__button {
+
+        color: black;
+        outline: 0;
+        background: transparent;
+        border: 0;
+        position: absolute;
+        top: 20px;
+        right: 0px;
+        font-size: 1rem;
+
+    }
+
+}

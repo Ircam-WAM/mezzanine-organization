@@ -1,0 +1,20 @@
+{% load i18n %}
+<div class="section">
+    <div class="page__block page__block--accent">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-16 col-md-16 col-lg-10 fsl lh5 ffs fwl">
+                    <div class="fsxl ffss fwb mb2">
+                        MANIFESTE 2017
+                    </div>
+                    {% if host_organization.bio %}
+                        {{ host_organization.bio|safe }}
+                    {% else %}
+                            Un pont entre deux rives, parcouru par une foule de musiciens, chorégraphes et peintres, d’artistes de la lumière, du son et du brouillard, tous animés par la « réciprocité des feux ».<br />
+                            Marquant les 40 ans de l’Ircam, ManiFeste-2017 explore le regard musicien qui, de Scriabine jusqu’aux jeunes compositeurs d’aujourd’hui, est mobilisé par l’expérience visuelle.
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+{% extends "pages/page.html" %}
+{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags staticfiles pages_tags %}
+
+{% block meta_title %}
+    {% if page %}
+        {{ page.title }}
+    {% else %}
+        {% trans "Artists" %}
+    {% endif %}
+{% endblock %}
+
+{% block meta_keywords %}
+    {% metablock %}
+        {% keywords_for page as keywords %}
+        {% for keyword in keywords %}
+            {% if not forloop.first %}, {% endif %}
+            {{ keyword }}
+        {% endfor %}
+    {% endmetablock %}
+{% endblock %}
+
+{% block meta_description %}
+    {% metablock %}
+        {{ page.description }}
+    {% endmetablock %}
+{% endblock %}
+
+
+{% block main %}
+
+<div class="page page--{% spaceless %}{% block page_class %}{% endblock %}{% endspaceless %}">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="mb2 col-md-14 col-md-push-1 col-lg-12 col-lg-push-2 page__content" data-summary-content>
+                <div class="page__content">
+                    <div class="container">
+                        <div class="row-12">
+                            {% for person in persons %}
+                                <div class="col-xs-4">
+                                    {% include "network/inc/person/person_card_square.html" %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

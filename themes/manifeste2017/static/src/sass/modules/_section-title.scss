@@ -1,0 +1,113 @@
+$module: ".section-title";
+
+#{$module} {
+
+    @include typeface(sans-serif);
+    @include font-size(m);
+    font-weight: weight(regular);
+
+    text-align: center;
+    color: $color-black;
+    display: inline-block;
+    line-height: 1.5em;
+    letter-spacing: 1px;
+
+    position: relative;
+    top: -14px;
+
+    @include margin-bottom(2);
+    @include margin-top(0);
+
+    @include mq($until: md) {
+
+        @include margin-bottom(1);
+        @include margin-top(0);
+
+        .page__slider & {
+            @include margin-top(0);
+        }
+
+    }
+
+    i {
+        display: inline-block;
+        @include margin-right(.5);
+        @include transition(all 0.5s ease-in-out);
+    }
+
+    a {
+        color: inherit;
+        @include transition(all 0.5s ease-in-out);
+        &:hover {
+            color: $color-main;
+            i {
+                @include transform(translateX(-50%));
+            }
+        }
+    }
+
+    &--uppercase {
+        text-transform: uppercase;
+    }
+
+    &--underline {
+        border-bottom: 1px solid white;
+    }
+
+    &--dark {
+        color: $color-background;
+    }
+
+    &--accent {
+        border-color: $color-accent;
+        &:before {
+            color: $color-accent;
+        }
+    }
+
+    &--main {
+        border-color: $color-main;
+        &:before {
+            color: $color-main;
+        }
+    }
+
+    &:before {
+        content: '_';
+        display: block;
+        text-decoration: none !important;
+        @include font-size(m);
+        @include margin-bottom(.5);
+    }
+
+    &--big {
+
+        color: $color-black;
+        @include font-size(xxxl);
+        font-weight: weight(bold);
+        @include margin-bottom(3);
+        @include line-height(1.75);
+        @include margin-top(0);
+        display: block;
+
+        &:before {
+            display: none;
+        }
+
+        @include mq($until: sm) {
+            @include font-size(xl);
+            @include line-height(1.5);
+        }
+
+    }
+
+    &--no-margin {
+        @include margin-bottom(2);
+        @include margin-top(3);
+    }
+
+    & + .section-title {
+        margin-top: 0;
+    }
+
+}

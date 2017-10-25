@@ -132,6 +132,12 @@ class OrganizationServiceTranslationOptions(TranslationOptions):
     fields = ('name', 'description')
 
 
+@register(OrganizationContact)
+class OrganizationContactTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(PersonListBlock)
 class PersonListBlockTranslationOptions(TranslationOptions):
 
@@ -230,5 +236,11 @@ class PersonActivityTimeSheetTranslationOptions(TranslationOptions):
 
 @register(ProjectActivity)
 class ProjectActivityTranslationOptions(TranslationOptions):
+
+    fields = []
+
+
+@register(OrganizationEventLocation)
+class OrganizationEventLocationTranslationOptions(TranslationOptions):
 
     fields = []

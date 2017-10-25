@@ -23,6 +23,7 @@ from django import forms
 from django.http import HttpResponse
 from copy import deepcopy
 from dal import autocomplete
+from modeltranslation.admin import TranslationTabularInline
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
@@ -34,6 +35,7 @@ from organization.pages.admin import PageImageInline, PageBlockInline, PagePlayl
 from organization.shop.models import PageProductList
 from organization.network.utils import TimesheetXLS, set_timesheets_validation_date
 from organization.network.translation import *
+
 
 
 
@@ -75,6 +77,11 @@ class OrganizationImageInline(TabularDynamicInlineAdmin):
     model = OrganizationImage
 
 
+class OrganizationUserImageInline(TabularDynamicInlineAdmin):
+
+    model = OrganizationUserImage
+
+
 class OrganizationBlockInline(StackedDynamicInlineAdmin):
 
     model = OrganizationBlock
@@ -85,10 +92,17 @@ class OrganizationServiceInline(StackedDynamicInlineAdmin):
     model = OrganizationService
 
 
+class OrganizationEventLocationInline(TranslationTabularInline):
+
+    extra = 1
+    model = OrganizationEventLocation
+
+
 class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Organization
-    inlines = [ OrganizationServiceInline,
+    inlines = [ OrganizationEventLocationInline,
+                OrganizationServiceInline,
                 OrganizationPlaylistInline,
                 OrganizationImageInline,
                 OrganizationBlockInline,
@@ -96,10 +110,10 @@ class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
                 OrganizationLinkedBlockInlineAdmin
                  ]
     list_display = ['name', 'type', 'admin_thumb']
+    list_filter = ['is_on_map', 'type']
     list_filter = ['is_on_map',]
     search_fields = ['name',]
     first_fields = ['name',]
-
 
 
 class PageProductListInline(TabularDynamicInlineAdmin):
@@ -152,7 +166,7 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
     model = PersonActivity
     fk_name = 'person'
     filter_horizontal = ['organizations', 'employers', 'teams',
-                          'supervisors', 'phd_directors', ] #'projects',
+                         'supervisors', 'phd_directors', ]
 
 
 class PersonPlaylistInline(TabularDynamicInlineAdmin):
@@ -195,7 +209,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
     list_filter = ['person_title', 'activities__date_from', 'activities__date_to', 'user',
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
                     'activities__status', 'activities__teams',
-                    'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')] # 'project_activities__project',
+                    'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
 
     def last_weekly_hour_volume(self, instance):
         last_activity = instance.activities.first()

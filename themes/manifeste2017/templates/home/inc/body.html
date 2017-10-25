@@ -1,0 +1,29 @@
+{% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
+<div class="container section">
+    <div class="row">
+        <div class="col-md-14 col-md-push-1 col-lg-12 col-lg-push-2 tac">
+            <div class="section-title section-title--uppercase section-title--underline section-title--main">
+                à la une
+            </div>
+            <div class="row-12">
+                {% for content in home.dynamiccontenthomebody_set.all %}
+                    {% if content.content_type.model != "brief" %}
+                        <div class="col-xs-4{% if forloop.counter > 3 %} hide-until-xs{% endif %}">
+                            {% if content.content_type.model == "article" %}
+                                {% include "magazine/article/includes/article_card.html" with object=content.content_object %}
+                            {% elif content.content_type.model == "event" %}
+                                {% include "agenda/event/includes/event_card.html" with object=content.content_object %}
+                            {% elif content.content_type.model == "custompage" %}
+                                {% include "pages/page/includes/page_card.html" with  object=content.content_object %}
+                            {% elif content.content_type.model == "media" %}
+                                {% include "media/media/includes/media_card.html" with  object=content.content_object %}
+                            {% elif content.content_type.model == "person" %}
+                                {% include "network/inc/person/person_card_square.html" with  person=content.content_object %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+{% load i18n pages_tags mezzanine_tags staticfiles keyword_tags event_tags organization_tags %}
+
+<div class="hero" id="jsHero">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="hero__left">
+                <img alt=""src="{% static "img/manifeste2017/hero-date.png" %}" />
+            </div>
+
+            <div class="hero__right">
+                <img src="{% static "img/manifeste2017/hero-right.png" %}" />
+            </div>
+
+        </div>
+
+        <div class="hero__title">
+            <img src="{% static "img/manifeste2017/hero-title.png" %}" />
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+var w=window,
+    d=document,
+    e=d.documentElement,
+    g=d.getElementsByTagName('body')[0],
+    top=0,
+    x=w.innerWidth||e.clientWidth||g.clientWidth,
+    y=w.innerHeight||e.clientHeight||g.clientHeight;
+
+    var hero = document.getElementById('jsHero'),
+        header = document.getElementById('jsHeader'),
+        body = document.getElementsByTagName("body")[0],
+        breaking = document.getElementById('jsBreakingNews');
+
+    hero.style.height = y + "px";
+    header.style.top = y + "px";
+    header.setAttribute('data-base-top', y);
+    body.style.position = "relative";
+    body.style.padding = y + "px 0 0 0";
+
+    if(breaking) {
+        hero.style.height = y-40 + "px";
+        hero.style.top = "40px";
+    }
+
+    window.onresize = function() {
+
+        var w=window,
+            d=document,
+            e=d.documentElement,
+            g=d.getElementsByTagName('body')[0],
+            top= 0,
+            x=w.innerWidth||e.clientWidth||g.clientWidth,
+            y=w.innerHeight||e.clientHeight||g.clientHeight;
+
+        hero.style.height = y + "px";
+        header.style.top = y + "px";
+        body.style.position = "relative";
+        body.style.padding = y + "px 0 0 0";
+
+        if(breaking) {
+            hero.style.height = y-40 + "px";
+            hero.style.top = "40px";
+        }
+
+    };
+
+</script>

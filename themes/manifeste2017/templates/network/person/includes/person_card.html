@@ -1,0 +1,34 @@
+{% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
+
+<div class="article-box article-box--person" >
+    {% with object.images.all|get_type:'card' as card_images %}
+        {% if card_images %}
+            <div class="article-box__header">
+                <a href="{{ object.get_absolute_url }}" title="{{ object.first_name }}&nbsp;{{ object.last_name }}">
+                    <div class="article-box__image-container">
+                        <figure class="article-box__image">
+                            <img class="lazyload" src="{{ MEDIA_URL }}{% thumbnail card_images.first 427 500 top=0.5 %}" alt="person"/>
+                        </figure>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
+    {% endwith %}
+    <div class="article-box__content tal">
+
+        <div class="article-box__tags">
+            {% with object.activities.first as activity %}
+                {{ activity.status }}
+            {% endwith%}
+        </div>
+
+        <a href="{{ object.get_absolute_url }}" title="{{ object.first_name }}&nbsp;{{ object.last_name }}"><h3 class="article-box__title">{{ object.first_name }}&nbsp;{{ object.last_name }}</h3></a>
+
+        {% if object.description %}
+            <div class="article-box__desc">{{ object.description|richtext_filters|safe|truncatechars_html:200 }}</div>
+        {% elif object.bio %}
+            <div class="article-box__desc">{{ object.bio|richtext_filters|safe|truncatechars_html:200 }}</div>
+        {% endif %}
+
+    </div>
+</div>

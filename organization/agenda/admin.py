@@ -176,7 +176,7 @@ class CustomEventAdmin(EventAdmin):
     fieldsets = deepcopy(EventAdminBase.fieldsets)
     exclude = ("short_url", )
     is_parent.allow_tags = True
-    list_display = ["title", "start", "end", "user", "status", "is_parent","admin_link"]
+    list_display = ["title", "start", "end", "rank", '"user", "status", "is_parent","admin_link"]
     if settings.EVENT_USE_FEATURED_IMAGE:
         list_display.insert(0, "admin_thumb")
     list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location", "category", EventParentFilter, SeasonFilter)

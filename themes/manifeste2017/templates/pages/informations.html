@@ -1,0 +1,40 @@
+{% extends "pages/custompage.html" %}
+{% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
+
+{% block page_content %}
+
+    {% if page.custompage.blocks.all|length > 3 %}
+        <div class="row">
+            {% with page.custompage.blocks.all as blocks %}
+                {% for block in blocks %}
+                    <div class="col-md-8">
+                        <div class="page__block-special page__block-special--{{ block.background_color }}">
+                            {{ block.content|richtext_filters|safe }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endwith %}
+        </div>
+    {% endif %}
+
+    {{ block.super }}
+
+{% endblock %}
+
+{% block page_sub_content %}
+
+    {% if page.custompage.blocks.all|length > 3 %}
+
+        {% with page.custompage.blocks.all|slice:"4:" as blocks %}
+            {% include "core/inc/block.html" %}
+        {% endwith %}
+
+    {% else %}
+
+    {% with page.custompage.blocks.all as blocks %}
+        {% include "core/inc/block.html" %}
+    {% endwith %}
+
+    {% endif %}
+
+{% endblock %}

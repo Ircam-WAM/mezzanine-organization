@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load i18n pages_tags mezzanine_tags organization_tags %}
+
+{% block meta_title %}
+    {% trans "Home" %}
+{% endblock %}
+
+{% block breaking_news %}
+    {% with home.dynamiccontenthomebody_set.all|get_first_brief as brief %}
+        {% if brief.title %}
+            <div class="breaking-news" id="jsBreakingNews">
+                <div class="breaking-news__title">
+                    {% trans "Breaking News" %}
+                </div>
+                <div class="breaking-news__content marquee" >
+                    {{ brief.title }}
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% spaceless %}
+    {% block body_class %}
+        home
+    {% endblock %}
+{% endspaceless %}
+
+{% block hero %}
+    {% include "home/inc/hero.html" %}
+{% endblock %}
+
+{% block main %}
+
+    {% include "includes/calendar.html" %}
+
+    {% include "home/inc/slider.html" %}
+
+    {% include "home/inc/body.html" %}
+
+    <div class="mt4">
+        {% include "home/inc/bio.html" %}
+    </div>
+
+    {% if home.dynamic_content_home_media.all|length > 0 %}
+        {% with home.dynamic_content_home_media.first as dynamic_object %}
+            {% with dynamic_object.content_object.medias.first as playlist %}
+                <div class="container section">
+                    <div class="row">
+                        <div class="col-md-14 col-md-push-1 col-lg-12 col-lg-push-2">
+
+                            <audio preload="true"></audio>
+
+                            <ol class="audio-playlist">
+                                <li class="audio-playlist__item">
+                                    {% for transcoded in playlist.media.transcoded.all %}
+                                        {% if transcoded.mime_type == "audio/mp4" or transcoded.mime_type == "audio/mp3" %}
+                                            <a href="#" data-src="{{ transcoded.url }}"><span>{{ playlist.media.title }}</span>{% if playlist.media.description %}<small> {{ playlist.media.description }}</small>{% endif %}</a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </li>
+                            </ol>
+
+                        </div>
+                    </div>
+                </div>
+            {% endwith %}
+        {% endwith %}
+    {% endif %}
+
+{% endblock %}

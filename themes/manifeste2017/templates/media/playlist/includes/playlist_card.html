@@ -1,0 +1,5 @@
+{% load i18n mezzanine_tags keyword_tags organization_tags pages_tags %}
+
+{% with "media/inc/playlist_"|add:object.type|add:"_card.html" as template %}
+    {% include template with playlist=object %}
+{% endwith %}

@@ -1,0 +1,46 @@
+{% load i18n pages_tags mezzanine_tags media_tags organization_tags %}
+{% if home.dynamiccontenthomeslider_set.all|length > 0 %}
+    <div class="section container hide-xs">
+        <div class="row">
+            <div class="col-sm-16">
+                <div class="slider-home">
+                    <ul data-slider-home>
+                        {% for slider in home.dynamiccontenthomeslider_set.all %}
+                                {% with slider.content_object.images.all|get_type:'slider' as images %}
+                                    {% if images %}
+                                        {% if slider.content_type.model == 'event' %}
+                                            <li class="slider-home__slide">
+                                                {% with event=slider.content_object %}
+                                                    {% include 'agenda/includes/event_linecard.html' %}
+                                                {% endwith %}
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endwith %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="section container hide-from-sm">
+    <div class="row">
+        <div class="col-sm-12 col-sm-push-2 tac">
+            <div class="row-12">
+                {% for slider in home.dynamiccontenthomeslider_set.all %}
+                    {% with slider.content_object.images.all|get_type:'slider' as images %}
+                        {% if images %}
+                            <div class="col-xs-12">
+                                {% if slider.content_type.model == "event" %}
+                                    {% include "agenda/includes/event_linecard.html" with event=slider.content_object %}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

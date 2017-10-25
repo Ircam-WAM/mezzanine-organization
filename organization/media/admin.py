@@ -32,10 +32,15 @@ class MediaTranscodedAdmin(TabularDynamicInlineAdmin):
     model = MediaTranscoded
 
 
+class MediaImageInline(TabularDynamicInlineAdmin):
+
+    model = MediaImage
+
+
 class MediaAdmin(BaseTranslationModelAdmin):
 
     model = Media
-    inlines = (MediaTranscodedAdmin,)
+    inlines = (MediaTranscodedAdmin, MediaImageInline)
     list_display = ['title',]
 
 
@@ -56,10 +61,14 @@ class MediaCategoryAdmin(BaseTranslationModelAdmin):
     model = MediaCategory
 
 
+class LiveStreamingAdmin(BaseTranslationModelAdmin):
 
-
+    model = LiveStreaming
+    list_display = ['title',]
 
 
 admin.site.register(Media, MediaAdmin)
 admin.site.register(Playlist, PlaylistAdmin)
 admin.site.register(MediaCategory, MediaCategoryAdmin)
+admin.site.register(LiveStreaming, LiveStreamingAdmin)
+

@@ -15,3 +15,4 @@ def is_percent(value):
             _('%(value)s must be an integer between 0 and 100'),
             params={'value': value},
         )
+

@@ -1,0 +1,11 @@
+{% load i18n future mezzanine_tags event_tags keyword_tags disqus_tags organization_tags staticfiles pages_tags %}
+
+<div class="row">
+    <div class="mb2 col-md-14 col-md-push-1 page__content" data-summary-content>
+        <div class="page__content">
+            {% for event in events %}
+                {% include 'agenda/includes/event_linecard.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

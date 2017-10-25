@@ -1,0 +1,90 @@
+{% extends "pages/page.html" %}
+{% load i18n mezzanine_tags keyword_tags pages_tags organization_tags %}
+
+{% block body_class %}organization{% endblock %}
+
+{% block meta_title %}{% trans "Network" %}{% endblock %}
+
+{% block meta_description %}
+    {% metablock %}
+        {{ organization.description }}
+    {% endmetablock %}
+{% endblock %}
+
+{% block page_class %}
+    organization
+{% endblock %}
+
+{% block breadcrumb_menu %}
+    {{ block.super }}
+    <li class="breadcrumb__item active">{% trans "Network" %}</li>
+{% endblock %}
+
+{% block page_slider %}
+
+    <div class="section" style="position: relative;">
+        <div class="map" id="network-map">
+        </div>
+    </div>
+    <div class="container hide">
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-push-1">
+                <div class="slider-network">
+                    <ul class="slider-network__slider" data-slider-network>
+                        {% for organization in organizations %}
+
+                            <li class="slider-network__slide" data-marker-url="{{organization.url}}" data-marker-color="green" {% with organization.images.all|get_type:'card' as images %}{% if images %}data-marker-image="{{ MEDIA_URL }}{{images.first.file}}"{% endif %}{% endwith %} data-marker-idx="{{forloop.counter0}}" data-marker-lat="{{ organization.lat }}" data-marker-lng="{{ organization.lon }}">
+                                <div class="slider-network__slide-image"
+                                    {% with organization.images.all|get_type:'card' as images %}
+                                        {% if images %}
+                                            style="background-image: url('{{ MEDIA_URL }}{{images.first.file}}');"
+                                        {% endif %}
+                                    {% endwith %}
+                                >
+                                </div>
+                                <div class="slider-network__slide-title" data-marker-title>
+                                    {{ organization.name }}
+                                </div>
+                                <div class="slider-network__slide-subtitle" data-marker-subtitle>
+                                    {{ organization.address }}, {{ organization.postal_code }} {{ organization.city }}
+                                </div>
+
+                                <div class="slider-network__slide-description" data-marker-description>
+
+                                    {% if organization.url or organization.telephone %}
+                                        <p>
+                                            {% if organization.url %}
+                                                <a href="{{ organization.url }}" target="_blank">
+                                                    {{ organization.url }}
+                                                </a><br />
+                                            {% endif %}
+                                            {% if organization.telephone %}
+                                                {{ organization.telephone }}
+                                            {% endif %}
+                                        </p>
+                                    {% endif %}
+
+                                    {% if organization.subway_access %}
+                                        <p>
+                                            {{ organization.subway_access }}
+                                        </p>
+                                    {% endif %}
+
+                                    <p>
+                                        {% with event_location=organization.event_locations.first.event_location %}
+                                            <a href="{% url 'event_list' %}?event_locations_filter[]={{ event_location.title|urlencode }}" class="button button--xsmall button--black">
+                                                {% trans "LINKED EVENTS" %}
+                                            </a>
+                                        {% endwith %}
+                                    </p>
+                                </div>
+
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

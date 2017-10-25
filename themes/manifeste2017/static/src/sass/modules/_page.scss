@@ -1,0 +1,602 @@
+// -*- coding: utf-8 -*-
+
+// Copyright (c) 2016-2017 Ircam
+// Copyright (c) 2016-2017 Jérémy Fabre
+
+// This file is part of mezzanine-organization.
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+
+// You should have received a copy of the GNU Affero General Public License
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+$module: ".page";
+
+#{$module} {
+
+    min-height: 500px;
+
+    @include mq($until: sm) {
+        min-height: 0;
+    }
+
+    .event-line-box {
+        @include margin-bottom(2);
+    }
+
+    &__date {
+
+        @include margin-top(-2.75);
+        @include margin-bottom(2);
+
+        text-transform: uppercase;
+        font-family: $serif;
+        font-weight: weight(bold);
+
+    }
+
+    &__subtitle {
+
+        @include font-size(l);
+        @include line-height(1);
+        @include typeface(serif);
+        font-weight: weight(heavy);
+        text-transform: uppercase;
+
+        @include margin-bottom(2);
+        @include padding(0 4);
+        letter-spacing: 3px;
+
+        @include mq($until: md) {
+            @include padding(0 2);
+        }
+
+        @include mq($until: sm) {
+            @include padding(0 0);
+        }
+
+    }
+
+    &__meta {
+
+        border-top: 1px solid $color-black;
+        border-bottom: 1px solid $color-black;
+
+        @include padding(1 0);
+
+        @include mq($until: md) {
+            .col-md-4 {
+                margin-bottom: 20px;
+            }
+        }
+
+    }
+
+    &__sidebar {
+
+        @include mq($until: md) {
+            //background: white;
+            text-align: center;
+            @include margin-bottom(2);
+        }
+
+    }
+
+    &__slider {
+
+        @include padding-top(2);
+        @include padding-bottom(2);
+
+        @include mq($until: sm) {
+            @include padding-top(1);
+        }
+
+    }
+
+    &__meta {
+
+        @include margin-bottom(2);
+
+    }
+
+    &__image-container {
+        background: $color-background;
+        @include transition(all 0.5s ease-in-out);
+        @include margin-bottom(3);
+
+        img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    &__meta-separator {
+
+        height: 1px;
+        background: $color-main;
+        width: 45px;
+
+        @include margin(1 0);
+
+        @include mq($until: sm) {
+            @include margin(1 auto);
+        }
+
+        &--small {
+            @include margin(.5 0);
+        }
+
+    }
+
+    &__meta-section {
+
+        @include font-size(s);
+        @include line-height(1);
+        @include typeface(serif);
+        font-weight: weight(light);
+        text-transform: uppercase;
+
+    }
+
+    &__meta-date {
+
+        @include font-size(s);
+        @include line-height(1);
+        @include typeface(serif);
+        text-transform: uppercase;
+        font-weight: weight(bold);
+
+        span {
+            font-size: 13px;
+            margin-top: 2px;
+            font-weight: weight(regular);
+            display: block;
+        }
+
+    }
+
+    &__meta-title {
+
+        @include font-size(s);
+        @include line-height(1);
+        @include typeface(serif);
+        text-transform: uppercase;
+        font-weight: weight(bold);
+
+        &--small {
+            @include font-size(s);
+            display: block;
+            text-transform: uppercase;
+        }
+
+        small {
+            @include font-size(s);
+            display: block;
+            text-transform: uppercase;
+        }
+
+    }
+
+    a.page__meta-title {
+        font-weight: weight(regular);
+        text-decoration: underline;
+    }
+
+    &__meta-text {
+
+        font-size: 13px;
+        margin-top: 2px;
+        font-weight: weight(regular);
+        display: block;
+
+    }
+
+    &__filters {
+
+        @include margin(0 0 6 0);
+
+        @media screen and (max-height: 900px) {
+
+            @include margin(0 0 3 0);
+
+        }
+
+    }
+
+    hr + #{$module}__block--yellow {
+
+        //@include margin-top(-2);
+
+    }
+
+    hr + #{$module}__block--black {
+
+        //@include margin-top(-2);
+
+    }
+
+    &__block-title {
+        text-align: left;
+    }
+
+    &__block-special {
+
+        border-radius: 16px;
+        @include margin-bottom(4);
+
+        @include mq($until: md) {
+            @include margin-bottom(2);
+        }
+
+        h2 {
+            @include margin(1 0 1 0);
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        &--yellow {
+            background: $color-main;
+            @include padding(1 1 1 1);
+            color: $color-black;
+        }
+        &--red {
+            background: $color-accent;
+            @include padding(1 1 1 1);
+            color: white;
+        }
+
+    }
+
+    &__block {
+
+        @include padding-bottom(1);
+
+        h2:first-child {
+            @include font-size(l);
+            @include line-height(1);
+            @include typeface(serif);
+            font-weight: weight(bold);
+        }
+
+        &--yellow {
+
+            position: relative;
+            &:before {
+        		content: "";
+        		display: block;
+        		height: 1px;
+        		background: rgba($color-main, 0.5);
+        		width: 100%;
+        		top: -4px;
+        		position: absolute;
+        	}
+            &:after {
+                content: "";
+        		display: block;
+        		height: 1px;
+        		background: rgba($color-main, 0.5);
+        		width: 100%;
+        		bottom: -4px;
+        		position: absolute;
+            }
+
+            #{$module}__block-title {
+                text-align: center;
+            }
+
+            background-color: $color-main;
+            @include padding-top(2);
+            @include padding-bottom(2);
+            @include margin(2 0 0 0);
+            color: $color-background;
+
+            h2:first-child {
+
+            }
+
+            & + hr {
+                //margin-top: 1px;
+            }
+
+            & + .page__block {
+                //@include margin-top(2);
+            }
+
+            a:not(.button) {
+
+        		position: relative;
+        		z-index: 1;
+        		text-decoration: none;
+                border-color: $color-background;
+                border-bottom: 1px solid $color-background;
+                color: $color-background;
+                @include transition(all 0.15s ease-in-out);
+
+                &:hover {
+                    box-shadow: inset 0 -30px $color-background;
+                    color: $color-main;
+                }
+
+        	}
+
+        }
+
+        &--white {
+
+            background-color: white;
+            color: $color-background;
+            @include padding-top(2);
+            @include padding-bottom(2);
+            @include margin(2 0 0 0);
+
+            position: relative;
+            &:before {
+        		content: "";
+        		display: block;
+        		height: 1px;
+        		background: rgba($color-main, 0.5);
+        		width: 100%;
+        		top: -4px;
+        		position: absolute;
+        	}
+            &:after {
+                content: "";
+        		display: block;
+        		height: 1px;
+        		background: rgba($color-main, 0.5);
+        		width: 100%;
+        		bottom: -4px;
+        		position: absolute;
+            }
+
+            #{$module}__block-title {
+                text-align: center;
+            }
+
+            a:not(.button) {
+
+                color: $color-background;
+        		position: relative;
+        		z-index: 1;
+        		text-decoration: none;
+                border-color: $color-background;
+
+                &:hover {
+                    box-shadow: none;
+                    color: $color-background;
+                }
+
+        	}
+
+            h2:first-child {
+
+            }
+
+            & + hr {
+                //margin-top: 1px;
+            }
+
+            & + .page__block {
+                //@include margin-top(2);
+            }
+
+        }
+
+        &--column {
+
+            width: 50%;
+            float: left;
+
+        }
+
+        &--black {
+
+            background-color: $color-background;
+            color: white;
+            @include padding-top(2);
+            @include padding-bottom(2);
+            @include margin(2 0 0 0);
+
+            position: relative;
+            &:before {
+        		content: "";
+        		display: block;
+        		height: 1px;
+        		background: rgba($color-main, 0.5);
+        		width: 100%;
+        		top: -4px;
+        		position: absolute;
+        	}
+            &:after {
+                content: "";
+        		display: block;
+        		height: 1px;
+        		background: rgba($color-main, 0.5);
+        		width: 100%;
+        		bottom: -4px;
+        		position: absolute;
+            }
+
+            #{$module}__block-title {
+                text-align: center;
+            }
+
+            a:not(.button) {
+
+                color: white;
+        		position: relative;
+        		z-index: 1;
+        		text-decoration: none;
+                border-color: $color-main;
+
+                &:hover {
+                    box-shadow: none;
+                    color: $color-main;
+                }
+
+        	}
+
+            h2:first-child {
+
+            }
+
+            & + hr {
+                //margin-top: 1px;
+            }
+
+            & + .page__block {
+                //@include margin-top(2);
+            }
+
+        }
+
+        &--red {
+
+            background-color: $color-accent;
+            color: white;
+            @include padding-top(2);
+            @include padding-bottom(2);
+            @include margin(2 0);
+
+            position: relative;
+            &:before {
+        		content: "";
+        		display: block;
+        		height: 1px;
+        		background: rgba(255, 255, 255, 0.5);
+        		width: 100%;
+        		top: -4px;
+        		position: absolute;
+        	}
+            &:after {
+                content: "";
+        		display: block;
+        		height: 1px;
+        		background: rgba(255, 255, 255, 0.5);
+        		width: 100%;
+        		bottom: -4px;
+        		position: absolute;
+            }
+
+            #{$module}__block-title {
+                text-align: center;
+            }
+
+            a:not(.button) {
+
+                color: white;
+        		position: relative;
+        		z-index: 1;
+        		text-decoration: none;
+                border-color: white;
+
+                &:hover {
+                    box-shadow: none;
+                    color: white;
+                }
+
+        	}
+
+            h2:first-child {
+
+            }
+
+            & + hr {
+                //margin-top: 1px;
+            }
+
+            & + .page__block {
+                //@include margin-top(2);
+            }
+
+        }
+
+        &--accent {
+
+            background-color: $color-main;
+            color: $color-accent;
+            text-align: center;
+            font-family: $serif;
+
+            @include padding(2 0);
+
+            h2 {
+                font-family: $serif;
+                font-weight: weight(bold);
+                @include margin-bottom(1);
+                @include margin-top(0);
+            }
+
+            strong {
+                font-weight: weight(regular);
+            }
+
+        }
+
+        p:last-child {
+
+            margin-bottom: 0;
+
+        }
+
+    }
+
+    &--organization {
+
+        margin-top: -80px;
+
+        @include mq($until: xs) {
+
+        }
+
+        .map {
+            width: 100%;
+            height: 950px;
+        }
+
+    }
+
+    &--search {
+
+        margin-top: 8rem;
+
+    }
+
+    &__previous,
+    &__next {
+        position: absolute;
+        top: 50%;
+        font-size: 64px;
+        margin-top: -64px;
+        display: block;
+
+        @include transition(all 0.15s ease-in-out);
+    }
+
+    &__previous {
+        left: -70px;
+        &:hover {
+            @include transform(translateX(-10px));
+        }
+    }
+
+    &__next {
+        right: -70px;
+        &:hover {
+            @include transform(translateX(10px));
+        }
+    }
+
+}

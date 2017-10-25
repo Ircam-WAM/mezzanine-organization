@@ -1,0 +1,197 @@
+$module: ".hero";
+
+
+#{$module} {
+
+    background-image: url(../img/manifeste2017/hero.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 838px;
+    margin-bottom: 350px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    &.large-title {
+        margin-bottom: 500px;
+
+        #{$module}__title {
+            img {
+                max-width: 73%;
+            }
+            margin: 0 auto;
+            position: relative;
+
+            @include mq($until: lg) {
+                padding-top: 60px;
+            }
+            @include mq($until: md) {
+                padding-top: 97px;
+            }
+            @include mq($until: sm) {
+                padding-top: 115px;
+            }
+            @include mq($until: xs) {
+                padding-top: 120px;
+            }
+        }
+        @include mq($until: lg) {
+            margin-bottom: 450px;
+        }
+        @include mq($until: md) {
+            margin-bottom: 350px;
+        }
+        @include mq($until: sm) {
+            margin-bottom: 300px;
+        }
+        @include mq($until: xs) {
+            margin-bottom: 90px;
+        }
+    }
+
+    @include mq($until: xs) {
+        height: 346px;
+        margin-bottom: 140px;
+    }
+
+    .Background {
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+    	height: 563px;
+    	width: 100%;
+        @include mq($until: xs) {
+            height: 346px;
+        }
+    }
+
+    &__title {
+
+        position: absolute;
+        top: 40%;
+        left: 17%;
+        width: 50%;
+        text-align: left;
+
+        @include transform(translateY(-50%));
+
+        @include mq($until: lg) {
+            left: 10%;
+        }
+
+        @include mq($until: md) {
+            left: 5%;
+        }
+
+        @include mq($until: sm) {
+            img {
+                width: 90%;
+            }
+        }
+
+        @include mq($until: xs) {
+            width: 100%;
+            @include transform(translateY(-50%));
+            top: 50%;
+            img {
+                width: 90%;
+            }
+        }
+
+    }
+
+    &__left {
+
+        text-align: left;
+
+        position: absolute;
+        bottom: 50px;
+        left: 17%;
+        width: 50%;
+
+        @include mq($until: lg) {
+            left: 10%;
+        }
+
+        @include mq($until: md) {
+            left: 5%;
+        }
+
+        @include mq($until: xs) {
+            width: 100%;
+            top: auto;
+            bottom: 30px;
+            img {
+                width: 90%;
+            }
+        }
+
+    }
+
+    &__right {
+
+        text-align: center;
+
+        position: absolute;
+        top: 50px;
+        right: 0;
+        width: 50%;
+
+        @include mq($until: xs) {
+            width: 100%;
+            top: 30px;
+            right: 30px;
+            text-align: right;
+            img {
+                width: 100px;
+            }
+        }
+
+    }
+
+    &__date {
+
+        display: block;
+        @include margin-top(2);
+        @include margin-left(2);
+
+        @include mq($until: xs) {
+            display: block;
+            text-align: center;
+            width: 120px !important;
+            @include margin(0 auto);
+            @include transform(translateY(-20px) translateX(-14px));
+
+        }
+
+    }
+
+    &--small {
+
+        @include margin-bottom(4);
+        @include mq($until: xs) {
+            @include margin-bottom(4);
+        }
+
+        &:after {
+            display: none;
+        }
+
+        #{$module}__logo {
+
+            @include margin-top(15);
+            text-align: center;
+            @include mq($until: xs) {
+                @include margin-top(8);
+                img {
+                    width: 159px;
+                }
+            }
+
+        }
+
+    }
+
+}

@@ -41,11 +41,9 @@ ADMINS = (
 )
 
 # Make these unique, and don't share it with anybody.
-SECRET_KEY = "j1qa@u$5ktqr^0_kwh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
-NEVERCACHE_KEY = "m)u^%r@uh#r3wu0&$=#$1ogx)uy4hv93^2lt%c3@xi=^gifoj8paozijdihazefd"
-
-DATABASE_ROUTERS = ['eve.routers.EveRouter', 'prestashop.routers.PrestaRouter']
-
+SECRET_KEY = "j1qa@u$5kzeofiheoppoh@-j@*-80t$)ht!4-=ybz1xc%@3+r(r&tzefoih"
+NEVERCACHE_KEY = "m)u^%r@uez$ze##$1ogx)uy4hv93dbzt%c3@xi=^gifoj8paozijdihazefd"
+# DATABASE_ROUTERS = ['eve.routers.EveRouter', 'prestashop.routers.PrestaRouter']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -67,16 +65,15 @@ if os.environ.get('EVEDB_ENV_POSTGRES_PASSWORD'):
         'PORT': '5432',
     }
 
-if os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'):
-    DATABASES['prestashop'] = {
-        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'USER': 'ouaibe',      # Not used with sqlite3.
-        'PASSWORD': os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
-        'NAME': 'ircam_shops',
-        'HOST': 'mysql2.ircam.fr',      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
-        }
-
+# if os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'):
+#     DATABASES['prestashop'] = {
+#         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#         'USER': 'ircam_shops',      # Not used with sqlite3.
+#         'PASSWORD': os.environ.get('PRESTADB_ENV_MYSQL_PASSWORD'),  # Not used with sqlite3.
+#         'NAME': 'ircam_shops',
+#         'HOST': 'prestadb',      # Set to empty string for localhost. Not used with sqlite3.
+#         'PORT': '3306',      # Set to empty string for default. Not used with sqlite3.
+#         }
 
 # EXTENSIONS AND FORMATS
 # Allowed Extensions for File Upload. Lower case is important.
@@ -120,7 +117,8 @@ ADMIN_MENU_ORDER = (
                  'organization-core.LinkType')),
     (_('Media'), ('organization-media.Media',
                   'organization-media.Playlist',
-                 'organization-media.MediaCategory',
+                  'organization-media.LiveStreaming',
+                  'organization-media.MediaCategory',
                  (_('Media Library'), 'fb_browse'),
                  )),
     (_('Events'), ('mezzanine_agenda.Event',
@@ -156,10 +154,11 @@ ADMIN_MENU_ORDER = (
                     'organization-network.TrainingSpeciality',
                     )),
     (_('Timesheet'), ('organization-network.ActivityWeeklyHourVolume',
-                     'organization-network.PersonActivityTimeSheet',
-                      'organization-network.ProjectActivity'
+                    'organization-network.PersonActivityTimeSheet',
+                    'organization-network.ProjectActivity',
                     )),
     (_('Projects'), ('organization-projects.Project',
+                    'organization-projects.ProjectCall',
                     'organization-projects.ProjectProgram',
                     'organization-projects.ProjectProgramType',
                     'organization-projects.ProjectTopic',
@@ -187,6 +186,7 @@ GRAPPELLI_ADMIN_TITLE = 'IRCAM Admin'
 SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'organization-network.DepartmentPage',
                         'organization-network.TeamPage',
+                        'organization-network.Person',
                         'organization-projects.ProjectTopicPage',
                         'pages.Page',
                         'organization-media.Playlist',
@@ -238,6 +238,7 @@ SLUGIFY = 'django.template.defaultfilters.slugify'
 BLOG_SLUG = 'article'
 BLOG_POST_PER_PAGE = 200
 ARTICLE_PER_PAGE = 10
+ARTICLE_KEYWORDS = ['article', 'audio', 'video']
 MEDIA_PER_PAGE = 9
 
 # The numeric mode to set newly-uploaded files to. The value should be
