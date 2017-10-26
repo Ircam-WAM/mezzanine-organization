@@ -42,4 +42,5 @@ class Command(BaseCommand):
         if theme :
             theme_path = apps.get_app_config(theme.split('.')[1]).path
             os.chdir(theme_path)
-            subprocess.run(["bower", "--allow-root", "install", "&&", "gulp", "build"])
+            subprocess.run(["bower", "--allow-root", "install"])
+            subprocess.run(["gulp", "build"])
