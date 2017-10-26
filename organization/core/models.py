@@ -392,7 +392,7 @@ class OwnableOrNot(models.Model):
     Abstract model that provides ownership of an object for a user.
     """
 
-    user = models.ForeignKey(user_model_name, verbose_name=_("Author"),
+    user = models.ForeignKey(get_user_model_name(), verbose_name=_("Author"),
         related_name="%(class)ss", null=True, blank=True)
 
     class Meta:

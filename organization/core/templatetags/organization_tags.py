@@ -305,8 +305,7 @@ def format_date_fct_of(date_start, date_end):
 @register.filter
 def period_is_more_than_hours(date_obj, hours):
     is_more = False
-    if isinstance(date_obj, EventPeriod)
-    :
+    if isinstance(date_obj, EventPeriod):
         is_more = is_more_then_hours(date_obj.date_from, date_obj.date_to, hours)
     if isinstance(date_obj, Event):
         is_more = is_more_then_hours(date_obj.start, date_obj.end, hours)

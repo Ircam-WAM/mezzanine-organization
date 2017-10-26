@@ -186,7 +186,7 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
                 names.append(producer.organization.name)
             producers = ", ".join(names)
         return producers
-    
+
     get_producers.short_description = "producers"
 
 
@@ -208,14 +208,10 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 ProjectBlogPageInline,
                 ]
     filter_horizontal = ['teams', 'organizations']
-<<<<<<< HEAD
-    list_filter = ['type', 'program', 'program_type', 'lead_organization', null_filter('external_id'), 'is_archive']
-    list_display = ['title', 'external_id', 'date_from', 'date_to', 'lead_organization', 'program', 'status', 'is_archive', 'admin_link']
-=======
-    list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status']
-    list_display = ['title', 'created', 'topic', 'validation_status',
-                    'date_from', 'date_to', 'status', 'external_id', 'admin_link']
->>>>>>> vertigo/dev
+    list_filter = ['type', 'program', 'program_type', 'lead_organization',
+        null_filter('external_id'), 'is_archive', 'topic', 'validation_status']
+    list_display = ['title', 'external_id', 'date_from', 'date_to', 'lead_organization',
+        'program', 'status', 'is_archive', 'topic', 'validation_status', 'admin_link']
 
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):

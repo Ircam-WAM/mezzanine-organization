@@ -186,52 +186,6 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
         return reverse("network")
 
 
-class Person(Displayable, AdminThumbMixin, Address):
-    """(Person description)"""
-
-    user = models.OneToOneField(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
-    person_title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
-    gender = models.CharField(_('gender'), max_length=16, choices=GENDER_CHOICES, blank=True)
-    first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
-    last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
-    email = models.EmailField(_('email'), blank=True, null=True)
-    telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
-    register_id = models.CharField(_('register ID'), blank=True, null=True, max_length=128)
-    birthday = models.DateField(_('birthday'), blank=True, null=True)
-    bio = RichTextField(_('biography'), blank=True)
-    role = models.CharField(_('role'), max_length=256, blank=True, null=True)
-    external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
-
-    class Meta:
-        verbose_name = _('person')
-        ordering = ['last_name',]
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse("organization-network-person-detail", kwargs={'slug': self.slug})
-
-    def set_names(self):
-        names = self.title.split(' ')
-        if len(names) == 1:
-            self.first_name = ''
-            self.last_name = names[0]
-        elif len(names) == 2:
-            self.first_name = names[0]
-            self.last_name = names[1]
-        else:
-            self.first_name = names[0]
-            self.last_name = ' '.join(names[1:])
-
-    def save(self, *args, **kwargs):
-        if not self.title or self.title == '-':
-            self.title = self.first_name + ' ' + self.last_name
-        super(Person, self).save(args, kwargs)
-        for activity in self.activities.all():
-            update_activity(activity)
-
-
 class OrganizationLinkedBlockInline(Titled, Orderable):
     organization_linked = models.ForeignKey('OrganizationLinked', verbose_name=_('organization list'), related_name='organization_linked_block_inline_list', blank=True, null=True)
     organization_main = models.ForeignKey('Organization', verbose_name=_('organization'), related_name='organization_linked_block', blank=True, null=True, on_delete=models.SET_NULL)
@@ -403,7 +357,7 @@ class TeamLink(Link):
     team = models.ForeignKey(Team, verbose_name=_('team'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-class Person(Displayable, AdminThumbMixin):
+class Person(Displayable, AdminThumbMixin, Address):
     """(Person description)"""
 
     user = models.OneToOneField(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -416,6 +370,7 @@ class Person(Displayable, AdminThumbMixin):
     register_id = models.CharField(_('register ID'), blank=True, null=True, max_length=128)
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
+    role = models.CharField(_('role'), max_length=256, blank=True, null=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     karma = models.IntegerField(default=0, editable=False)
 
@@ -442,6 +397,8 @@ class Person(Displayable, AdminThumbMixin):
             self.last_name = ' '.join(names[1:])
 
     def save(self, *args, **kwargs):
+        if not self.title or self.title == '-':
+            self.title = self.first_name + ' ' + self.last_name
         super(Person, self).save(args, kwargs)
         for activity in self.activities.all():
             update_activity(activity)

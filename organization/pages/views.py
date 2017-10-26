@@ -55,6 +55,11 @@ class HomeView(SlugMixin, DetailView):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['briefs'] = Brief.objects.published().order_by('-publish_date')[:8]
         context['event_calendar_form'] = EventCalendarForm()
+        try:
+            from mezzanine_agenda.forms import EventCalendarForm
+            context['event_calendar_form'] = EventCalendarForm()
+        except:
+            pass
         return context
 
     def dispatch(self, request, *args, **kwargs):
