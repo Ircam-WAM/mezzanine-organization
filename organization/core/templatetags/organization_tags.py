@@ -296,3 +296,12 @@ def get_article_by_department(department):
 @register.filter
 def get_hal_url(hal_tutelage, hal_researche_structure):
     return settings.HAL_URL % (hal_researche_structure.replace(' ', '+'), hal_tutelage.replace(' ', '+'))
+
+
+@register.filter
+def tag_is_in_menu(page, tag):
+    is_in_menu = False
+    if tag and page :
+        if page.slug.lower().find(tag.slug.lower()) != -1:
+            is_in_menu = True
+    return is_in_menu
