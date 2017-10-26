@@ -136,6 +136,9 @@
             {% block page_sub_content_3 %}
             {% endblock %}
 
+            {% block page_hal %}
+            {% endblock %}
+
             {% block logo %}
                 {% with page.images.all|get_type:'logo' as images %}
                     {% if images %}

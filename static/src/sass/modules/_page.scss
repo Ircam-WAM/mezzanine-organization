@@ -255,4 +255,17 @@ $module: ".page";
 
     }
 
+    .hal_container {
+        position: relative;
+        height: 800px;
+    }
+
+    .hal_container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
 }

@@ -186,41 +186,6 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
         return reverse("network")
 
 
-class Team(Named, URL):
-    """(Team description)"""
-
-    organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
-    department = models.ForeignKey('Department', verbose_name=_('department'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
-    code = models.CharField(_('code'), max_length=64, blank=True, null=True)
-    is_legacy = models.BooleanField(_('is legacy'), default=False)
-    parent = models.ForeignKey('Team', verbose_name=_('parent team'), related_name="children", blank=True, null=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _('team')
-        ordering = ['name',]
-
-    def __str__(self):
-        if self.organization:
-            return ' - '.join((self.organization.name, self.name))
-        elif self.department:
-            if self.department.organization:
-                return ' - '.join((self.department.organization.name, self.department.name, self.name))
-            else:
-                return ' - '.join((self.department.name, self.name))
-        return self.name
-
-    @property
-    def short(self):
-        if self.organization:
-            return ' - '.join((self.organization.name, self.name))
-        elif self.department:
-            if self.department.organization:
-                return ' - '.join((self.department.organization.name, self.name))
-            else:
-                return ' - '.join((self.department.name, self.name))
-        return self.name
-
-
 class Person(Displayable, AdminThumbMixin, Address):
     """(Person description)"""
 
@@ -385,6 +350,43 @@ class DepartmentPage(Page, SubTitled, RichText):
 
     class Meta:
         verbose_name = _('department page')
+
+
+class Team(Named, URL):
+    """(Team description)"""
+
+    organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
+    department = models.ForeignKey('Department', verbose_name=_('department'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
+    code = models.CharField(_('code'), max_length=64, blank=True, null=True)
+    is_legacy = models.BooleanField(_('is legacy'), default=False)
+    parent = models.ForeignKey('Team', verbose_name=_('parent team'), related_name="children", blank=True, null=True, on_delete=models.SET_NULL)
+    hal_tutelage = models.CharField(_('HAL Tutelage'), max_length=255, blank=True, null=True)
+    hal_researche_structure = models.CharField(_('HAL Researche Structure'), max_length=255, blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('team')
+        ordering = ['name',]
+
+    def __str__(self):
+        if self.organization:
+            return ' - '.join((self.organization.name, self.name))
+        elif self.department:
+            if self.department.organization:
+                return ' - '.join((self.department.organization.name, self.department.name, self.name))
+            else:
+                return ' - '.join((self.department.name, self.name))
+        return self.name
+
+    @property
+    def short(self):
+        if self.organization:
+            return ' - '.join((self.organization.name, self.name))
+        elif self.department:
+            if self.department.organization:
+                return ' - '.join((self.department.organization.name, self.name))
+            else:
+                return ' - '.join((self.department.name, self.name))
+        return self.name
 
 
 class TeamPage(Page, SubTitled, RichText):

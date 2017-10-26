@@ -31,7 +31,16 @@ DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 if DEBUG:
     MODELTRANSLATION_DEBUG = True
 
-DOMAIN = "www.ircam.fr/"
+if DEBUG:
+    PROTOCOLE = "http://"
+else:
+    PROTOCOLE = "https://"
+
+if DEBUG:
+    DOMAIN = PROTOCOLE + "localhost:9020/"
+else :
+    DOMAIN = PROTOCOLE + "www.ircam.fr/"
+
 
 IRCAM_EMPLOYER = 1
 
@@ -361,3 +370,11 @@ else:
     TIMESHEET_MASTER_MAIL = "Hugues.Vinet@ircam.fr"
 
 MEDIA_BASE_URL = 'https://medias.ircam.fr/embed/media/'
+
+
+HAL_CSS = DOMAIN + "static/css/index.min.css"
+
+HAL_URL = PROTOCOLE + "haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?" \
+          "labos_exp=%s&affi_exp=%s&CB_auteur=oui" \
+          "&CB_titre=oui&CB_article=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=typdoc" \
+          "&tri_exp3=date_publi&ordre_aff=TA&Fen=Aff&css=" + HAL_CSS

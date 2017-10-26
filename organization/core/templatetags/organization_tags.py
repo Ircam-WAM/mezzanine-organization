@@ -373,3 +373,15 @@ def extended_custompage_extra_content(extra_content):
             jury_list = Person.objects.none()
         context["jury"] = jury_list
     return context
+
+def get_hal_url(hal_tutelage, hal_researche_structure):
+    return settings.HAL_URL % (hal_researche_structure.replace(' ', '+'), hal_tutelage.replace(' ', '+'))
+
+
+@register.filter
+def tag_is_in_menu(page, tag):
+    is_in_menu = False
+    if tag and page :
+        if page.slug.lower().find(tag.slug.lower()) != -1:
+            is_in_menu = True
+    return is_in_menu

@@ -1,4 +1,4 @@
-{% load i18n pages_tags %}
+{% load i18n pages_tags organization_tags %}
 
 {% spaceless %}
 {% if page_branch_in_menu %}
@@ -31,7 +31,7 @@
         {% for page in page_branch %}
             {% if page.in_menu and page.in_menus|first %}
                 <li class="nav-tree__item">
-                    <a class="nav-tree__link{% if page.is_current or page.is_current_or_ascendant %} active{% endif %}" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+                    <a class="nav-tree__link{% if page.is_current or page.is_current_or_ascendant or page|tag_is_in_menu:tag %} active{% endif %}" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
                     {% if page.is_current_or_ascendant and page.has_children_in_menu %}
                         <ul class="nav-tree nav-tree--level-{{ branch_level }}">
                             {% page_menu page %}
@@ -40,7 +40,7 @@
                             {% include "pages/menus/current_tree_summary.html" %}
                         </ul>
                     {% endif %}
-                    {% if page.is_current_or_ascendant and not page.has_children_in_menu %}
+                    {% if page.is_current_or_ascendant and not page.has_children_in_menu or page|tag_is_in_menu:tag %}
                         <ul class="nav-tree" {% if not is_archive %}data-summary{% endif %}>
                             {% include "pages/menus/current_tree_summary.html" %}
                         </ul>
