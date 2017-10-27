@@ -31,16 +31,13 @@ class Command(BaseCommand):
     help = "Build the front with bower and gulp"
 
     def handle(self, *args, **options):
-        theme = ""
-        theme_path = ""
         for ht in settings.HOST_THEMES:
             # search for theme name in INSTALLED_APPS
-            # to get the one is used
+            # to get the ones that are used
             if ht[1] in settings.INSTALLED_APPS:
                 theme = ht[1]
-
-        if theme :
-            theme_path = apps.get_app_config(theme.split('.')[1]).path
-            os.chdir(theme_path)
-            subprocess.run(["bower", "--allow-root", "install"])
-            subprocess.run(["gulp", "build"])
+                if theme :
+                    theme_path = apps.get_app_config(theme.split('.')[-1]).path
+                    os.chdir(theme_path)
+                    subprocess.run(["bower", "--allow-root", "install"])
+                    subprocess.run(["gulp", "build"])
