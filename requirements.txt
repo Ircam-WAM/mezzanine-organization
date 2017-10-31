@@ -1,6 +1,4 @@
 Django==1.9.11
-mezzanine==4.2.2
-cartridge==0.12.0
 pyquery
 humanize
 django-modeltranslation==0.12
