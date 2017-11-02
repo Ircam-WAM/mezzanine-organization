@@ -373,9 +373,9 @@ def extended_custompage_extra_content(extra_content):
         context["jury"] = jury_list
     return context
 
+@register.filter
 def get_hal_url(hal_tutelage, hal_researche_structure):
     return settings.HAL_URL % (hal_researche_structure.replace(' ', '+'), hal_tutelage.replace(' ', '+'))
-
 
 @register.filter
 def tag_is_in_menu(page, tag):
