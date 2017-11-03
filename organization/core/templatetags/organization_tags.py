@@ -42,7 +42,6 @@ from itertools import chain
 from django.db.models import Q
 from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
 
-
 register = Library()
 
 
@@ -373,9 +372,14 @@ def extended_custompage_extra_content(extra_content):
         context["jury"] = jury_list
     return context
 
+
 @register.filter
-def get_hal_url(hal_tutelage, hal_researche_structure):
-    return settings.HAL_URL % (hal_researche_structure.replace(' ', '+'), hal_tutelage.replace(' ', '+'))
+def hal_1(hal_tutelage, hal_researche_structure):
+    return settings.HAL_URL_PART_1 % (hal_researche_structure.replace(' ', '+'), hal_tutelage.replace(' ', '+'))
+
+@register.filter
+def hal_2(url_part, http_host):
+    return url_part + settings.HAL_URL_PART_2 % http_host
 
 @register.filter
 def tag_is_in_menu(page, tag):
