@@ -226,7 +226,7 @@ class Person(Displayable, AdminThumbMixin, Address):
             self.last_name = ' '.join(names[1:])
 
     def save(self, *args, **kwargs):
-        if not self.title or self.title == '-':
+        if self.first_name and self.last_name and (not self.title or self.title == '-'):
             self.title = self.first_name + ' ' + self.last_name
         super(Person, self).save(args, kwargs)
         for activity in self.activities.all():

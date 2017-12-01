@@ -25,4 +25,6 @@ django-hijack==2.1.4
 django-hijack-admin==2.1.4
 django-compat==1.0.14
 django-guardian==1.4.9
+pyldap
+django-auth-ldap==1.2.10
 -e .
