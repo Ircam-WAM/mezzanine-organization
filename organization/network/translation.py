@@ -255,3 +255,9 @@ class OrganizationEventLocationTranslationOptions(TranslationOptions):
 class OrganizationRoleTranslationOptions(TranslationOptions):
 
     fields = ['name', 'description']
+
+
+@register(MediaDepartment)
+class MediaDepartmentTranslationOptions(TranslationOptions):
+
+    fields = []

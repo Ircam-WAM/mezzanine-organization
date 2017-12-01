@@ -48,7 +48,7 @@ from mezzanine.utils.models import AdminThumbMixin, upload_to
 from organization.core.models import *
 from organization.media.models import *
 from organization.pages.models import CustomPage
-
+from organization.media.models import Media
 from organization.network.validators import *
 
 # from .nationalities.fields import NationalityField
@@ -718,3 +718,9 @@ def update_activity(a):
             a.friday_am = a.weekly_hour_volume.friday_am
             a.friday_pm = a.weekly_hour_volume.friday_pm
             a.save()
+
+
+class MediaDepartment(models.Model):
+
+    media = models.ForeignKey(Media, verbose_name=_('media'), related_name='department')
+    department = models.ForeignKey(Department, verbose_name=_('department'), related_name='medias', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
