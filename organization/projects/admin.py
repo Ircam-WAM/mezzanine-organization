@@ -34,6 +34,107 @@ from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm
 from organization.core.admin import null_filter
 from organization.projects.translation import *
+import csv
+from django.http import HttpResponse
+
+
+def export_projects_as_csv(modeladmin, request, queryset):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="vertigo_projects.csv"'
+    writer = csv.writer(response, delimiter=",", quotechar="\"", quoting=csv.QUOTE_ALL)
+    writer.writerow([
+        "Project name",
+        "ID",
+        "User",
+        "Slug",
+        "Call",
+        "Call slug",
+        "Created",
+        "Validation status",
+        "Topic",
+        "Organization name",
+        "Website",
+        "Dimension",
+        "Funding type",
+        "Funding programme",
+        "Date from",
+        "Date to",
+        "Persons",
+        "First name",
+        "Last name",
+        "Telephone",
+        "Email",
+        "Position",
+        "Postal code",
+        "City",
+        "Country",
+        "Address",
+        "Brief description",
+        "Technology description",
+        "Keywords",
+        "Project description",
+        "Resources description",
+        "Challenges description",
+        "Objectives description",
+        "Residency start date",
+        "Perior for direct cooperation",
+        "Residency duration"
+    ])
+    # Retrieve the Projects
+    for obj in queryset:
+        call = obj.call.name if obj.call else ""
+        call_slug = obj.call.slug if obj.call else ""
+        created = obj.created.strftime("%Y-%m-%d %H:%M:%S") if obj.created else ""
+        validation_status = str(dict(PROJECT_STATUS_CHOICES).get(obj.validation_status)) if obj.validation_status else ""
+        topic = obj.topic.name if obj.topic else ""
+        public_data = obj.public_data.all().first() if obj.public_data.all().first() else ProjectPublicData()
+        private_data = obj.private_data.all().first() if obj.private_data.all().first() else ProjectPrivateData()
+        contact = obj.contacts.all().first() if obj.contacts.all().first() else ProjectContact()
+        country = str(contact.country.name) if contact.country else ""
+        writer.writerow([
+            obj.title, # Project name
+            obj.id, # ID
+            obj.user, # User
+            obj.slug, # Slug
+            call, # Call
+            call_slug, # Call slug
+            created, # Created
+            validation_status, # Validation status
+            topic, # Topic
+            contact.organization_name, # Organization name
+            obj.website, # Website
+            private_data.dimension, # Dimension
+            obj.funding, # Funding
+            private_data.funding_programme, # Funding programme
+            obj.date_from, # Date from
+            obj.date_to, # Date to
+            private_data.persons, # Persons
+            contact.first_name, # First name
+            contact.last_name, # Last name
+            contact.telephone, # Telephone
+            contact.email, # Email
+            contact.position, # Position
+            contact.postal_code, # Postal code
+            contact.city, # City
+            country, # Country
+            contact.address, # Address
+            public_data.brief_description, # Brief description
+            public_data.technology_description, # Technology description
+            obj.keywords, # Keywords
+            private_data.description, # Project description
+            public_data.resources_description, # Resources description
+            public_data.challenges_description, # Challenges description
+            public_data.objectives_description, # Objectives description
+            public_data.implementation_start_date, # Residency start date
+            public_data.implementation_period, # Perior for direct cooperation
+            public_data.implementation_duration # Residency duration
+        ])
+    # Return the CSV file
+    return response
+
+
+export_projects_as_csv.short_description = "Export selected Projects as CSV"
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
@@ -212,6 +313,7 @@ class ProjectAdminDisplayable(DisplayableAdmin):
         null_filter('external_id'), 'is_archive', 'topic', 'validation_status']
     list_display = ['title', 'external_id', 'date_from', 'date_to', 'lead_organization',
         'program', 'status', 'is_archive', 'topic', 'validation_status', 'admin_link']
+    actions = [export_projects_as_csv]
 
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
