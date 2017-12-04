@@ -54,6 +54,7 @@ PROJECT_STATUS_CHOICES = (
     (1, _('pending')),
     (2, _('in process')),
     (3, _('accepted')),
+    (4, _('copied')),
 )
 
 DIMENSION_CHOICES = (
