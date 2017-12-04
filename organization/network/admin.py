@@ -35,8 +35,63 @@ from organization.pages.admin import PageImageInline, PageBlockInline, PagePlayl
 from organization.shop.models import PageProductList
 from organization.network.utils import TimesheetXLS, set_timesheets_validation_date
 from organization.network.translation import *
+import csv
+from django.http import HttpResponse
 
 
+def export_organizations_as_csv(modeladmin, request, queryset):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="vertigo_organizations.csv"'
+    writer = csv.writer(response, delimiter=",", quotechar="\"", quoting=csv.QUOTE_ALL)
+    writer.writerow([
+        "Organization name",
+        "ID",
+        "User",
+        "Slug",
+        "Validation status",
+        "Organization type",
+        "Organization role",
+        "URL",
+        "Email",
+        "Telephone",
+        "Address",
+        "Postal code",
+        "City",
+        "Country",
+        "Producer description",
+        "Experience description"
+    ])
+    # Retrieve the Organizations
+    for obj in queryset:
+        validation_status = str(dict(ORGANIZATION_STATUS_CHOICES).get(obj.validation_status)) if obj.validation_status else ""
+        country = str(obj.country.name) if obj.country else ""
+        organization_type = obj.type.name if obj.type else ""
+        organization_role = obj.role.name if obj.role else ""
+        producer_data = obj.producer_data.all().first() if obj.producer_data.all().first() else ProducerData()
+        writer.writerow([
+            obj.name, # Organization name
+            obj.id, # ID
+            obj.user, # User
+            obj.slug, # Slug
+            validation_status, # Validation status
+            organization_type, # Organization type
+            organization_role, # Organization role
+            obj.url, # URL
+            obj.email, # Email
+            obj.telephone, # Telephone
+            obj.address, # Address
+            obj.postal_code, # Postal code
+            obj.city, # City
+            country, # Country
+            producer_data.producer_description, # Producer description
+            producer_data.experience_description # Experience description
+        ])
+    # Return the CSV file
+    return response
+
+
+export_organizations_as_csv.short_description = "Export selected Organizations as CSV"
 
 
 class OrganizationAdminInline(StackedDynamicInlineAdmin):
@@ -119,6 +174,7 @@ class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
     list_filter = ['is_on_map', 'type', 'role', 'validation_status']
     search_fields = ['name',]
     first_fields = ['name',]
+    actions = [export_organizations_as_csv]
 
 
 class OrganizationRoleAdmin(BaseTranslationModelAdmin):
