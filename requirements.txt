@@ -1,11 +1,6 @@
-setuptools
-uwsgi
-watchdog
-mysqlclient
-psycopg2
+Django==1.9.11
 pyquery
 humanize
-Django==1.9.11
 django-modeltranslation==0.12
 django-meta==1.3.1
 django-bower==5.2.0
@@ -26,3 +21,10 @@ workalendar==1.0.0
 django-instagram==0.2.0a1
 django-extra-views==0.8.0
 bleach==1.5.0
+django-hijack==2.1.4
+django-hijack-admin==2.1.4
+django-compat==1.0.14
+django-guardian==1.4.9
+pyldap
+django-auth-ldap==1.2.10
+-e .

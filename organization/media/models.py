@@ -32,6 +32,7 @@ from mezzanine.utils.models import AdminThumbMixin, upload_to
 from organization.core.models import *
 from mezzanine_agenda.models import Event, EventLocation
 from django.conf import settings
+from django.apps import apps
 import requests
 
 
@@ -194,4 +195,3 @@ class LiveStreaming(Displayable):
 
     def get_absolute_url(self):
         return reverse("organization-streaming-detail", kwargs={"slug": self.slug, "type" : self.type})
-
