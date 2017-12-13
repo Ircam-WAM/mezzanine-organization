@@ -211,7 +211,6 @@ class ProjectAdminDisplayable(DisplayableAdmin):
     list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status', 'call']
     list_display = ['title', 'date_from', 'date_to', 'created', 'lead_organization',
         'program', 'status', 'is_archive', 'topic', 'external_id', 'validation_status', 'admin_link']
-    actions = [export_projects_as_csv, copy_projects]
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
 
