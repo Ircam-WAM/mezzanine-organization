@@ -222,7 +222,7 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
             self.name = self.title
         if not self.title and self.name:
             self.title = self.name
-        super('ProjectCall', self).save(args, kwargs)
+        super(ProjectCall, self).save(args, kwargs)
 
     @property
     def is_closed(self):
