@@ -115,7 +115,7 @@ class TopicDetailView(SlugMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(TopicDetailView, self).get_context_data(**kwargs)
         # paginate "manually" articles because we are not in a ListView
-        articles = paginate(self.object.articles.all(), self.request.GET.get("page", 1),
+        articles = paginate(self.object.articles.published(), self.request.GET.get("page", 1),
                           settings.ARTICLE_PER_PAGE,
                           settings.MAX_PAGING_LINKS)
         context['articles'] = articles
