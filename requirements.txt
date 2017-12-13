@@ -9,6 +9,7 @@ django-extensions==1.7.4
 django-countries==4.0
 django-querysetsequence==0.6.1
 django-autocomplete-light==3.2.1
+mezzanine==4.2.0
 xlrd==1.0.0
 ipython
 gitpython
