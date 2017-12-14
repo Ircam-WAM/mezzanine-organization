@@ -153,7 +153,11 @@ class CustomSearchView(TemplateView):
         paginated = paginate(results, page, per_page, max_paging_links)
 
         # count all results
-        all_results_count = results_media_count + results_page_count + results_event_count
+        all_results_count = results_media_count \
+            + results_page_count \
+            + results_event_count \
+            + results_article_count \
+            + results_project_count
 
         # context
         context = {"query": query, "results": paginated,
