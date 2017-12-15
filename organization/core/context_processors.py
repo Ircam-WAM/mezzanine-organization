@@ -67,7 +67,6 @@ def organization_settings(request):
     linked_org_footer_2 = organization_lists[2] if len(organization_lists) > 2 else None
 
     research_slug = "recherche"
-
     return {'current_season_year': current_season.start.year,
             'current_season_styled': current_season_styled,
             'newsletter_subscribing_url': newsletter_subscribing_url,
@@ -77,5 +76,6 @@ def organization_settings(request):
             'linked_organization_footer_2' : linked_org_footer_2,
             'research_slug' : research_slug,
             'menu_person_id': settings.MENU_PERSON_ID,
-            'debug_mode' : settings.DEBUG
+            'debug_mode' : settings.DEBUG,
+            'http_host' :  request.environ['HTTP_HOST']
             }

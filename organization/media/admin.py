@@ -25,6 +25,7 @@ from mezzanine.core.admin import *
 from organization.media.models import *
 from organization.media.forms import *
 from organization.media.translation import *
+from organization.network.models import MediaDepartment
 
 
 class MediaTranscodedAdmin(TabularDynamicInlineAdmin):
@@ -37,11 +38,21 @@ class MediaImageInline(TabularDynamicInlineAdmin):
     model = MediaImage
 
 
+class MediaDepartmentInline(TabularDynamicInlineAdmin):
+
+    model = MediaDepartment
+    max_num = 1
+
+
 class MediaAdmin(BaseTranslationModelAdmin):
 
     model = Media
-    inlines = (MediaTranscodedAdmin, MediaImageInline)
-    list_display = ['title',]
+    inlines = (MediaTranscodedAdmin, MediaImageInline, MediaDepartmentInline)
+    list_display = ['title', 'external_id', 'type']
+    search_fields = ['title', 'external_id', 'type']
+
+    def type(self, instance):
+        return instance.type
 
 
 class PlaylistMediaInline(TabularDynamicInlineAdmin):
@@ -71,4 +82,3 @@ admin.site.register(Media, MediaAdmin)
 admin.site.register(Playlist, PlaylistAdmin)
 admin.site.register(MediaCategory, MediaCategoryAdmin)
 admin.site.register(LiveStreaming, LiveStreamingAdmin)
-
