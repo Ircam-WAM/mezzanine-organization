@@ -128,5 +128,5 @@ class CustomSearchableManager(DisplayableManager):
                 queryset = model.objects.published(for_user=user)
             except AttributeError:
                 queryset = model.objects.get_queryset()
-            all_results.extend(queryset.search(*args, **kwargs).annotate_scores())
+            all_results.extend(queryset.search(*args, **kwargs))
         return sorted(all_results, key=lambda r: r.result_count, reverse=True)

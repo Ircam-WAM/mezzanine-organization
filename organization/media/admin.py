@@ -41,6 +41,7 @@ class MediaImageInline(TabularDynamicInlineAdmin):
 class MediaDepartmentInline(TabularDynamicInlineAdmin):
 
     model = MediaDepartment
+    max_num = 1
 
 
 class MediaAdmin(BaseTranslationModelAdmin):

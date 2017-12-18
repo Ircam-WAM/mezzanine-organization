@@ -451,7 +451,6 @@ class ProjectAdminDisplayable(DisplayableAdmin):
         'program', 'status', 'is_archive', 'topic', 'external_id', 'validation_status', 'admin_link']
     actions = [export_projects_as_csv, copy_projects]
 
-
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
 
     model = ProjectTopic
