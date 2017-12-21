@@ -85,9 +85,15 @@ class ProjectICTDetailView(SlugMixin, ProjectMixin, DetailView):
         project = super(ProjectICTDetailView, self).get_object()
         if project.topic != topic:
             raise Http404()
-        #TODO: Check if user is registered and admin or creator to allow other status values
-        if project.validation_status != 3:
-            raise Http404()
+        #TODO: Check if user is project reviewer or creator to allow other status values
+        user = self.request.user
+        if not user.is_superuser:
+            if not user.is_staff:
+                if project.validation_status != 3:
+                    raise Http404()
+            else:
+                if not ((project.validation_status == 2) or (project.validation_status == 3)):
+                    raise Http404()
         return project
 
 
@@ -383,4 +389,3 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     form_class = ProjectResidencyForm
     template_name='projects/project_residency_create.html'
     inlines = []
-

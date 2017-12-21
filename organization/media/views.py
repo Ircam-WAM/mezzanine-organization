@@ -43,6 +43,14 @@ class MediaDetailView(SlugMixin, DetailView):
         templates.insert(0,'media/'+self.kwargs['type'].lower()+'/'+self.kwargs['type'].lower()+'_detail.html')
         return templates
 
+    def get_context_data(self, **kwargs):
+        context = super(MediaDetailView, self).get_context_data(**kwargs)
+        department = self.object.department.first().department
+        if department:
+            context['department_weaving_css_class'] = department.pages.first().weaving_css_class
+        context['department_name'] = department.name
+        return context
+
 
 class PlaylistDetailView(SlugMixin, DetailView):
 
