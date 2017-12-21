@@ -57,8 +57,8 @@ class ArticleDetailView(SlugMixin, DetailView):
         pages = DynamicContentPage.objects.filter(object_id=self.object.id).all()
         pages_related = []
         for p in pages :
-            if p.pages :
-                pages_related.append(p.pages)
+            if p.page :
+                pages_related.append(p.page)
 
         # automatic relation : dynamic content article
         articles = DynamicContentArticle.objects.filter(object_id=self.object.id).all()
