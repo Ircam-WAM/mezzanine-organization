@@ -138,7 +138,7 @@ class PageRelatedTitle(RelatedTitle):
 
 class DynamicContentPage(DynamicContent, Orderable):
 
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='dynamic_content_pages', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='dynamic_content_pages', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Dynamic Content Page'

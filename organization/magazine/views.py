@@ -55,18 +55,28 @@ class ArticleDetailView(SlugMixin, DetailView):
 
         # automatic relation : dynamic content page
         pages = DynamicContentPage.objects.filter(object_id=self.object.id).all()
-        pages = [p.page for p in pages]
+        pages_related = []
+        for p in pages :
+            if p.page :
+                pages_related.append(p.page)
 
         # automatic relation : dynamic content article
         articles = DynamicContentArticle.objects.filter(object_id=self.object.id).all()
-        articles = [a.article for a in articles]
+        articles_related = []
+        for a in articles:
+            if a.article:
+                articles_related.append(a.article) 
+
         # manual relation : get dynamic contents of current article
-        dynamic_content = [dca.content_object for dca in self.object.dynamic_content_articles.all()]
+        dynamic_content_related = []
+        for dca in self.object.dynamic_content_articles.all():
+            if dca.content_object:
+                dynamic_content_related.append(dca.content_object)
 
         # gather all and order by creation date
-        related_content = pages
-        related_content += articles
-        related_content += dynamic_content
+        related_content = pages_related
+        related_content += articles_related
+        related_content += dynamic_content_related
         related_content.sort(key=lambda x: x.created, reverse=True)
         context['related_content'] = related_content
         context["related"] = {}

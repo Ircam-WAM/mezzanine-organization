@@ -44,11 +44,14 @@ class MediaDetailView(SlugMixin, DetailView):
         return templates
 
     def get_context_data(self, **kwargs):
-        context = super(MediaDetailView, self).get_context_data(**kwargs)
-        department = self.object.department.first().department
-        if department:
-            context['department_weaving_css_class'] = department.pages.first().weaving_css_class
-        context['department_name'] = department.name
+        context = super(MediaDetailView, self).get_context_data(**kwargs)   
+        if hasattr(self.object, 'department'):
+            if not self.object.department.first() is None:
+                department = self.object.department.first().department
+                if hasattr(department, 'pages') :
+                    if hasattr(department.pages.first(), 'weaving_css_class') :
+                        context['department_weaving_css_class'] = department.pages.first().weaving_css_class
+                        context['department_name'] = department.name
         return context
 
 

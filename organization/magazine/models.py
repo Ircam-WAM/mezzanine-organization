@@ -133,7 +133,7 @@ class ArticlePersonListBlockInline(Titled):
 
 class DynamicContentArticle(DynamicContent, Orderable):
 
-    article = models.ForeignKey(Article, verbose_name=_('article'), related_name='dynamic_content_articles', blank=True, null=True, on_delete=models.SET_NULL)
+    article = models.ForeignKey(Article, verbose_name=_('article'), related_name='dynamic_content_articles', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Dynamic Content Article'
