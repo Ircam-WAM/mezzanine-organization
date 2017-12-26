@@ -59,5 +59,6 @@ urlpatterns = [
     url("^calls/(?P<slug>.*)/detail/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack1'), #HACK
     url("^calls/detail/(?P<slug>.*)/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack2'), #HACK
 
-
+    url("^profile/project/(?P<slug>.*)/$", ProjectICTEditPublicFundingView.as_view(), name="user-project-edit"),
+    url("^profile/project/private/(?P<slug>.*)/$", ProjectICTEditPrivateFundingView.as_view(), name="user-project-edit-private"),
 ]
