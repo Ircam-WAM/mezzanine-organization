@@ -345,7 +345,7 @@ class ProjectRelatedTitle(RelatedTitle):
 
 class DynamicContentProject(DynamicContent, Orderable):
 
-    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='dynamic_content_project', blank=True, null=True, on_delete=models.SET_NULL)
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='dynamic_content_project', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Dynamic Content Project'

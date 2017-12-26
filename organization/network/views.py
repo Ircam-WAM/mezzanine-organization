@@ -101,21 +101,22 @@ class PersonDetailView(SlugMixin, DetailView):
         context["related"]["other"] = []
         # for each person list to which the person belongs to...
         for person_list_block_inline in person_list_block_inlines:
-            related_objects = person_list_block_inline.person_list_block._meta.get_all_related_objects()
-            for related_object in related_objects:
-                if hasattr(person_list_block_inline.person_list_block, related_object.name):
-                    # getting relating inlines like ArticlePersonListBlockInline, PageCustomPersonListBlockInline etc...
-                    related_inlines = getattr(person_list_block_inline.person_list_block, related_object.name).all()
-                    for related_inline in related_inlines:
-                        if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
-                            fields = related_inline._meta.get_fields()
-                            for field in fields:
-                                # check if it is a ForeignKey
-                                if isinstance(field, ForeignKey) :
-                                    instance = getattr(related_inline, field.name)
-                                    # get only article, custom page etc...
-                                    if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
-                                        context["related"]["other"].append(instance)
+            if hasattr(person_list_block_inline, 'person_list_block_inline') :
+                related_objects = person_list_block_inline.person_list_block._meta.get_all_related_objects()
+                for related_object in related_objects:
+                    if hasattr(person_list_block_inline.person_list_block, related_object.name):
+                        # getting relating inlines like ArticlePersonListBlockInline, PageCustomPersonListBlockInline etc...
+                        related_inlines = getattr(person_list_block_inline.person_list_block, related_object.name).all()
+                        for related_inline in related_inlines:
+                            if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                fields = related_inline._meta.get_fields()
+                                for field in fields:
+                                    # check if it is a ForeignKey
+                                    if isinstance(field, ForeignKey) :
+                                        instance = getattr(related_inline, field.name)
+                                        # get only article, custom page etc...
+                                        if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                            context["related"]["other"].append(instance)
 
         context["related"]["other"].sort(key=lambda x: x.created, reverse=True)
         context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
