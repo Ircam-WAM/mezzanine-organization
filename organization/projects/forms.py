@@ -151,7 +151,39 @@ class ProjectContactInline(InlineFormSet):
 
 class ProjectResidencyForm(ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(ProjectResidencyForm, self).__init__(*args, **kwargs)
+        #call = ProjectCall.objects.get(slug=call_slug)
+        self.fields["title"].label = "Working Title of Proposal"
+        self.fields["project"].queryset = Projects.objects.filter(call=call).filter(status=3)
+
     class Meta:
         model = ProjectResidency
-        fields = '__all__'
+        fields = ("title", "project")
 
+
+class ProjectResidencyPublicDataInline(InlineFormSet):
+
+    max_num = 1
+    model = ProjectResidencyPublicData
+    prefix = "Public data"
+    can_delete = False
+    fields = '__all__'
+
+
+class ProjectResidencyPrivateDataInline(InlineFormSet):
+
+    max_num = 1
+    model = ProjectResidencyPrivateData
+    prefix = "Private data"
+    can_delete = False
+    fields = '__all__'
+
+
+class ProjectResidencyPersonInline(InlineFormSet):
+
+    max_num = 1
+    model = Person
+    prefix = "Artist contact"
+    can_delete = False
+    fields = ("first_name", "last_name", "telephone", "email", "address", "postal_code", "city", "country", "bio")

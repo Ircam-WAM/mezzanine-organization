@@ -36,6 +36,7 @@ from organization.pages.models import *
 from organization.network.models import *
 from organization.magazine.models import *
 from mezzanine_agenda.models import *
+from mezzanine.generic.fields import KeywordsField
 
 
 PROJECT_TYPE_CHOICES = [
@@ -404,11 +405,11 @@ class ProjectPrivateData(models.Model):
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='private_data', blank=True, null=True, on_delete=models.SET_NULL)
 
     description = models.TextField(_('project description'), help_text="(500 - 1000 words)")
-    funding_programme = models.CharField(_('funding programme'), max_length=512, blank=False, null=True, help_text="Designation of EU/National Funding Programme")
-    commitment_letter = models.FileField(_("letter of commitment by the project coordinator"), max_length=1024, upload_to="user/documents/%Y/%m/%d/", help_text=mark_safe('Written on behalf of the whole project consortium, this letter will commit in implementing the collaboration of a residency application selected by the VERTIGO jury, on the conditions set by the project (in annex of letter: synthesis of all related information entered by project).<br>Please <a href="http://vertigo.starts.eu/media/uploads/vertigo%20starts/CALL/vertigo_loc_v3.rtf">download and use the template letter.</a>'))
-    investor_letter = models.FileField(_("letter of recommendations from investor (e.g VC)"), max_length=1024 , blank=False, null=True, upload_to="user/documents/%Y/%m/%d/", help_text="If the organisation is a Start-Up or micro enterprise (less than 3 years and/or less than 10 staff members), the presentation of letter of recommendation from an investor is mandatory to apply to this call.")
+    funding_programme = models.CharField(_('funding programme'), max_length=512, blank=True, null=True, help_text="Designation of EU/National Funding Programme")
+    commitment_letter = models.FileField(_("letter of commitment by the project coordinator"), max_length=1024, blank=True, null=True, upload_to="user/documents/%Y/%m/%d/", help_text=mark_safe('Written on behalf of the whole project consortium, this letter will commit in implementing the collaboration of a residency application selected by the VERTIGO jury, on the conditions set by the project (in annex of letter: synthesis of all related information entered by project).<br>Please <a href="http://vertigo.starts.eu/media/uploads/vertigo%20starts/CALL/vertigo_loc_v3.rtf">download and use the template letter.</a>'))
+    investor_letter = models.FileField(_("letter of recommendations from investor (e.g VC)"), max_length=1024 , blank=True, null=True, upload_to="user/documents/%Y/%m/%d/", help_text="If the organisation is a Start-Up or micro enterprise (less than 3 years and/or less than 10 staff members), the presentation of letter of recommendation from an investor is mandatory to apply to this call.")
     persons = models.CharField(_('persons'), max_length=512, help_text="First name and last name of the persons from organization / project who will be part preliminary of the project team (separated by a comma)")
-    dimension = models.CharField(_('dimension'), max_length=128, choices=DIMENSION_CHOICES, blank=False, null=True)
+    dimension = models.CharField(_('dimension'), max_length=128, choices=DIMENSION_CHOICES, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Project private data'
@@ -448,7 +449,6 @@ class ProjectResidency(Displayable, Period, Address, RichText):
         #TODO: Any way to avoid magic number in status filter?
         events = Event.objects.filter(residencies__residency=self).filter(status=2).filter(publish_date__lte=datetime.date.today()).order_by("-publish_date")
         return events
-
 
     class Meta:
         verbose_name = 'Project residency'
@@ -519,3 +519,21 @@ class ProjectResidencyEvent(models.Model):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='residency_events', blank=True, null=True, on_delete=models.SET_NULL)
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectResidencyPublicData(models.Model):
+
+    residency = models.ForeignKey(ProjectResidency, verbose_name=_("residency public data"), related_name="public_data", blank=True, null=True, on_delete=models.SET_NULL)
+    descriptive_title = models.CharField(_("Descriptive title of proposal (110 characters max)"), blank=True, null=True, max_length=110, help_text="To be used for wider communication strategy (eg. summaries and Twitter)")
+    brief_description = models.TextField(_("Brief description of proposal (150 - 200 words)"), blank=True, null=True, help_text="")
+    keywords = KeywordsField(verbose_name=_("5 key words"), blank=True, null=True, help_text="")
+
+
+class ProjectResidencyPrivateData(models.Model):
+
+    residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency private data'), related_name='private_data', blank=True, null=True, on_delete=models.SET_NULL)
+    artist_cv = models.FileField(_("Artist CV"), max_length=10240, blank=False, null=True, upload_to="user/documents/%Y/%m/%d/")
+    motivation_letter = models.FileField(_("Letter of Motivation for ART-ICT co-creation"), max_length=1024, blank=False, null=True, upload_to="user/documents/%Y/%m/%d/", help_text="Including expectations for the co-creation process")
+    comments = models.TextField(_("Proposals of experts to be included and request of experts to be excluded from the evaluation process"), blank=True, null=True, help_text="In order to avoid conflict interests")
+    other = models.TextField(_("Other"), blank=True, null=True, help_text="")
+

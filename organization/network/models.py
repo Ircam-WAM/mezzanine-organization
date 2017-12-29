@@ -202,6 +202,7 @@ class Person(Displayable, AdminThumbMixin, Address):
     role = models.CharField(_('role'), max_length=256, blank=True, null=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     karma = models.IntegerField(default=0, editable=False)
+    artist = models.BooleanField(_('artist'), blank=False, null=False, default=False)
 
     class Meta:
         verbose_name = _('person')

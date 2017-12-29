@@ -48,6 +48,18 @@ class ProjectUserImageTranslationOptions(TranslationOptions):
     pass
 
 
+@register(ProjectResidencyPublicData)
+class ProjectResidencyPublicDataTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(ProjectResidencyPrivateData)
+class ProjectResidencyPrivateDataTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(ProjectResidencyProducer)
 class ProjectResidencProducerTranslationOptions(TranslationOptions):
 

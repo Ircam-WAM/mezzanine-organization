@@ -48,6 +48,7 @@ urlpatterns = [
     url("^calls/(?P<call_slug>.*)/projects/list/$", ProjectICTListView.as_view(), name='organization-project-list'),
 
     url("^calls/(?P<slug>.*)/residencies/submission/$", ProjectResidencyCreateView.as_view(), name='organization-residency-create'),
+    url("^calls/(?P<slug>.*)/projects/validation/$", ProjectResidencyValidationView.as_view(), name='organization-residency-validation'),
     url("^calls/(?P<call_slug>.*)/residencies/(?P<slug>.*)/detail/$", ProjectResidencyDetailView.as_view(), name='organization-residency-detail'),
     url("^calls/(?P<call_slug>.*)/residencies/list/$", ProjectResidencyListView.as_view(), name='organization-residency-list'),
 
@@ -59,6 +60,6 @@ urlpatterns = [
     url("^calls/(?P<slug>.*)/detail/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack1'), #HACK
     url("^calls/detail/(?P<slug>.*)/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack2'), #HACK
 
-    url("^profile/project/(?P<slug>.*)/$", ProjectICTEditPublicFundingView.as_view(), name="user-project-edit"),
-    url("^profile/project/private/(?P<slug>.*)/$", ProjectICTEditPrivateFundingView.as_view(), name="user-project-edit-private"),
+    #url("^profile/project/public/(?P<slug>.*)/$", ProjectICTEditPublicFundingView.as_view(), name="user-project-edit-public"),
+    #url("^profile/project/private/(?P<slug>.*)/$", ProjectICTEditPrivateFundingView.as_view(), name="user-project-edit-private"),
 ]

@@ -383,9 +383,64 @@ class ProjectResidencyListView(ListView):
         return qs
 
 
-class ProjectResidencyCreateView(CreateWithInlinesView):
+class ProjectResidencyCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
 
     model = ProjectResidency
-    form_class = ProjectResidencyForm
+    form_class = ProjectResidencyForm(call_slug="2017-2")
     template_name='projects/project_residency_create.html'
-    inlines = []
+    inlines = [ProjectResidencyPublicDataInline, ProjectResidencyPrivateDataInline]
+    
+    call_slug = None
+
+    def get_form_kwargs(self):
+        kwargs = super(ProjectResidencyCreateView, self).get_form_kwargs()
+        kwargs.update({"call_slug": self.call_slug})
+        return kwargs
+
+    def __init__(self, *args, **kwargs):
+        self.call_slug = self.kwargs["slug"]
+
+    def forms_valid(self, form, inlines):
+        self.object = form.save()
+        
+        #TODO: From here
+        #self.object.user = self.request.user
+        #self.call = ProjectCall.objects.get(slug=self.kwargs['slug'])
+        #self.object.call = self.call
+        #self.object.topic, c = ProjectTopic.objects.get_or_create(key='ICT')
+        #self.status = 1
+        #self.object.funding = "public"
+        #self.object.save()
+
+        #for formset in inlines:
+        #    if 'contact' in formset.prefix:
+        #        for f in formset:
+        #            contact_data = f.cleaned_data
+        #            contact_email = contact_data.get("email")
+
+        #from_email = settings.DEFAULT_FROM_EMAIL
+        #to_email = [contact_email, settings.DEFAULT_TO_EMAIL]
+        #subject = settings.EMAIL_SUBJECT_PREFIX + ' ' + self.call.title
+        #ctx = {
+        #    'first_name': contact_data.get("first_name"),
+        #    'last_name': contact_data.get("last_name"),
+        #    'project_title': self.object.title,
+        #}
+
+        #message = get_template('projects/project_residency_create_notification.html').render(Context(ctx))
+        #msg = EmailMessage(subject, message, to=to_email, from_email=from_email)
+        #msg.content_subtype = 'html'
+        #msg.send()
+        #TODO: To here
+
+        return super(ProjectResidencyCreateView, self).forms_valid(form, inlines)
+
+    def get_success_url(self):
+        return reverse_lazy('organization-residency-validation', kwargs={'slug':self.call.slug})
+
+
+class ProjectResidencyValidationView(ProjectCallMixin, TemplateView):
+
+    model = Project
+    template_name='projects/residency_validation.html'
+

@@ -404,12 +404,24 @@ class ProjectResidencyEventInline(TabularDynamicInlineAdmin):
     model = ProjectResidencyEvent
 
 
+class ProjectResidencyPublicDataInline(StackedDynamicInlineAdmin):
+
+    model = ProjectResidencyPublicData
+
+
+class ProjectResidencyPrivateDataInline(StackedDynamicInlineAdmin):
+
+    model = ProjectResidencyPrivateData
+
+
 class ProjectResidencyAdmin(admin.ModelAdmin):
 
     model = ProjectResidency
     list_display = ["title", "project", "artist", "get_producers", "validated",]
     list_filter = ["validated"]
-    inlines = [ ProjectResidencyProducerInline,
+    inlines = [ ProjectResidencyPublicDataInline,
+                ProjectResidencyPrivateDataInline,
+                ProjectResidencyProducerInline,
                 ProjectResidencyImageInline,
                 ProjectResidencyUserImageInline,
                 ProjectResidencyArticleInline,
