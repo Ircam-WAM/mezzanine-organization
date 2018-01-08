@@ -56,9 +56,12 @@ urlpatterns = [
     url("^calls/list/$", ProjectCallListView.as_view(), name='organization-call-list'),
     url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-call-detail'),
 
-    url("^calls/(?P<slug>.*)/detail/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack1'), #HACK
-    url("^calls/detail/(?P<slug>.*)/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack2'), #HACK
+    #HACK
+    url("^calls/(?P<slug>.*)/detail/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack1'),
+    #HACK
+    url("^calls/detail/(?P<slug>.*)/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack2'),
 
-    url("^profile/project/(?P<slug>.*)/$", ProjectICTEditPublicFundingView.as_view(), name="user-project-edit"),
-    url("^profile/project/private/(?P<slug>.*)/$", ProjectICTEditPrivateFundingView.as_view(), name="user-project-edit-private"),
+    #TODO : add related views
+    # url("^profile/project/(?P<slug>.*)/$", ProjectICTEditPublicFundingView.as_view(), name="user-project-edit"),
+    # url("^profile/project/private/(?P<slug>.*)/$", ProjectICTEditPrivateFundingView.as_view(), name="user-project-edit-private"),
 ]
