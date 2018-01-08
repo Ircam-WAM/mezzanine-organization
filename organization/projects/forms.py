@@ -155,7 +155,7 @@ class ProjectResidencyForm(ModelForm):
         super(ProjectResidencyForm, self).__init__(*args, **kwargs)
         #call = ProjectCall.objects.get(slug=call_slug)
         self.fields["title"].label = "Working Title of Proposal"
-        self.fields["project"].queryset = Projects.objects.filter(call=call).filter(status=3)
+        #self.fields["project"].queryset = Projects.objects.filter(call=call).filter(status=3)
 
     class Meta:
         model = ProjectResidency

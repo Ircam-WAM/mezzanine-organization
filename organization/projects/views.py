@@ -517,19 +517,19 @@ class ProjectResidencyListView(ListView):
 class ProjectResidencyCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
 
     model = ProjectResidency
-    form_class = ProjectResidencyForm(call_slug="2017-2")
+    form_class = ProjectResidencyForm #(call_slug="2017-2")
     template_name='projects/project_residency_create.html'
     inlines = [ProjectResidencyPublicDataInline, ProjectResidencyPrivateDataInline]
 
     call_slug = None
 
-    def get_form_kwargs(self):
-        kwargs = super(ProjectResidencyCreateView, self).get_form_kwargs()
-        kwargs.update({"call_slug": self.call_slug})
-        return kwargs
-
-    def __init__(self, *args, **kwargs):
-        self.call_slug = self.kwargs["slug"]
+#    def get_form_kwargs(self):
+#        kwargs = super(ProjectResidencyCreateView, self).get_form_kwargs()
+#        kwargs.update({"call_slug": self.call_slug})
+#        return kwargs
+#
+#    def __init__(self, *args, **kwargs):
+#        self.call_slug = self.kwargs["slug"]
 
     def forms_valid(self, form, inlines):
         self.object = form.save()
