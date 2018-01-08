@@ -409,7 +409,7 @@ class ProducerData(models.Model):
 
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='producer_data', blank=True, null=True, on_delete=models.SET_NULL)
 
-    experience_description = models.CharField(_('experience description'), max_length=60, help_text="Do you have prior experience with working in organizations in a co-creation process? If so, please describe it. (40 to 60 words)")
+    experience_description = models.TextField(_('experience description'), help_text="Do you have prior experience with working in organizations in a co-creation process? If so, please describe it. (40 to 60 words)")
     producer_description = models.TextField(_('producer description'), help_text="Description of the producer organization and the resources they bring for the proposal (100 to 150 words).")
 
     class Meta:
