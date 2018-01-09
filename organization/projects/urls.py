@@ -37,8 +37,8 @@ urlpatterns = [
     url("^projects/demo/(?P<slug>.*)/$", ProjectDemoDetailView.as_view(), name='organization-project-demo-detail'),
     url("^projects/blog/(?P<slug>.*)/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
 
-    url("^ict-projects/list/$", ProjectICTListView.as_view(), name='organization-ict-project-list'),
-    url("^ict-projects/(?P<slug>.*)/detail/$", ProjectICTDetailView.as_view(), name='organization-ict-project-detail'),
+    #url("^ict-projects/list/$", ProjectICTListView.as_view(), name='organization-ict-project-list'),
+    #url("^ict-projects/(?P<slug>.*)/detail/$", ProjectICTDetailView.as_view(), name='organization-ict-project-detail'),
 
     url("^calls/(?P<slug>.*)/projects/create/public/$", ProjectICTCreatePublicFundingView.as_view(), name='organization-project-public-create'),
     url("^calls/(?P<slug>.*)/projects/create/private/$", ProjectICTCreatePrivateFundingView.as_view(), name='organization-project-private-create'),
@@ -59,6 +59,6 @@ urlpatterns = [
     url("^calls/(?P<slug>.*)/detail/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack1'), #HACK
     url("^calls/detail/(?P<slug>.*)/projects/submission/$", ProjectCallDetailView.as_view(), name='organization-project-submission-hack2'), #HACK
 
-    url("^profile/project/(?P<slug>.*)/$", ProjectICTEditPublicFundingView.as_view(), name="user-project-edit"),
-    url("^profile/project/private/(?P<slug>.*)/$", ProjectICTEditPrivateFundingView.as_view(), name="user-project-edit-private"),
+    #url("^profile/project/public/(?P<slug>.*)/$", ProjectICTEditPublicFundingView.as_view(), name="user-project-edit-public"),
+    #url("^profile/project/private/(?P<slug>.*)/$", ProjectICTEditPrivateFundingView.as_view(), name="user-project-edit-private"),
 ]

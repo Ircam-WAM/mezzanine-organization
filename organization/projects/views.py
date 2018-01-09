@@ -307,8 +307,8 @@ class ProjectICTListView(ListView):
 
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
-        #TODO: Filter by Call
-        qs = Project.objects.filter(topic=topic).filter(validation_status=3).select_related().order_by('title')
+        call = ProjectCall.objects.get(slug=self.kwargs['call_slug'])
+        qs = Project.objects.filter(topic=topic).filter(validation_status=3).filter(call=call).select_related().order_by('title')
         return qs
 
 
