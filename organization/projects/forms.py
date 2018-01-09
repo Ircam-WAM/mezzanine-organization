@@ -156,6 +156,8 @@ class ProjectResidencyForm(ModelForm):
         #call = ProjectCall.objects.get(slug=call_slug)
         self.fields["title"].label = "Working Title of Proposal"
         #self.fields["project"].queryset = Projects.objects.filter(call=call).filter(status=3)
+        for field in self._meta.fields:
+            self.fields[field].required = True
 
     class Meta:
         model = ProjectResidency
@@ -178,7 +180,6 @@ class ProjectResidencyPrivateDataInline(InlineFormSet):
     prefix = "Private data"
     can_delete = False
     fields = '__all__'
-
 
 class ProjectResidencyPersonInline(InlineFormSet):
 

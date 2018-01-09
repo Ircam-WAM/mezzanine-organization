@@ -361,7 +361,7 @@ class ProjectICTCreatePrivateFundingView(LoginRequiredMixin, ProjectCallMixin, C
 class ProjectICTEditPrivateFundingView(LoginRequiredMixin, ProjectCallMixin, UpdateWithInlinesView):
 
     model = Project
-    form_calss = ProjectForm
+    form_class = ProjectForm
     template_name='projects/project_ict_create_private_funding.html'
     inlines = [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline, ProjectUserImageInline,
                 ProjectContactInline]
@@ -516,6 +516,7 @@ class ProjectResidencyListView(ListView):
 
 class ProjectResidencyCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
 
+
     model = ProjectResidency
     form_class = ProjectResidencyForm #(call_slug="2017-2")
     template_name='projects/project_residency_create.html'
@@ -531,8 +532,15 @@ class ProjectResidencyCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWit
 #    def __init__(self, *args, **kwargs):
 #        self.call_slug = self.kwargs["slug"]
 
+    def get_context_data(self, **kwargs):
+        context = super(ProjectResidencyCreateView, self).get_context_data(**kwargs)
+
+        return context
+
     def forms_valid(self, form, inlines):
         self.object = form.save()
+        self.object.user = self.request.user
+        self.object.save()
 
         #TODO: From here
         #self.object.user = self.request.user
@@ -568,7 +576,6 @@ class ProjectResidencyCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWit
 
     def get_success_url(self):
         return reverse_lazy('organization-residency-validation', kwargs={'slug':self.call.slug})
-
 
 class ProjectResidencyValidationView(ProjectCallMixin, TemplateView):
 

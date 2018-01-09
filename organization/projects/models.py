@@ -528,12 +528,10 @@ class ProjectResidencyPublicData(models.Model):
     brief_description = models.TextField(_("Brief description of proposal (150 - 200 words)"), blank=True, null=True, help_text="")
     keywords = KeywordsField(verbose_name=_("5 key words"), blank=True, null=True, help_text="")
 
-
 class ProjectResidencyPrivateData(models.Model):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency private data'), related_name='private_data', blank=True, null=True, on_delete=models.SET_NULL)
-    artist_cv = models.FileField(_("Artist CV"), max_length=10240, blank=False, null=True, upload_to="user/documents/%Y/%m/%d/")
-    motivation_letter = models.FileField(_("Letter of Motivation for ART-ICT co-creation"), max_length=1024, blank=False, null=True, upload_to="user/documents/%Y/%m/%d/", help_text="Including expectations for the co-creation process")
+    artist_cv = models.FileField(_("Artist CV"), max_length=10240, blank=True, null=True, upload_to="user/documents/%Y/%m/%d/")
+    motivation_letter = models.FileField(_("Letter of Motivation for ART-ICT co-creation"), max_length=1024, blank=True, null=True, upload_to="user/documents/%Y/%m/%d/", help_text="Including expectations for the co-creation process")
     comments = models.TextField(_("Proposals of experts to be included and request of experts to be excluded from the evaluation process"), blank=True, null=True, help_text="In order to avoid conflict interests")
     other = models.TextField(_("Other"), blank=True, null=True, help_text="")
-
