@@ -100,9 +100,9 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
     def get_absolute_url(self):
         ict_topic, c = ProjectTopic.objects.get_or_create(key='ICT')
-        if self.topic == ict_topic:
-            return reverse("organization-ict-project-detail", kwargs={"slug": self.slug})
-        return reverse("organization-project-detail", kwargs={"slug": self.slug})
+        #if self.topic == ict_topic:
+        #    return reverse("organization-ict-project-detail", kwargs={"slug": self.slug})
+        return reverse("organization-project-detail", kwargs={"slug": self.slug, "call_slug": self.call.slug})
 
     def project_status(self):
         if self.date_from and self.date_to:
