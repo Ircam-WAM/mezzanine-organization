@@ -441,7 +441,7 @@ class ProjectICTListView(ListView):
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         call = ProjectCall.objects.get(slug=self.kwargs['call_slug'])
-        qs = Project.objects.filter(topic=topic).filter(validation_status=3).filter(call=call).select_related().order_by('title')
+        qs = Project.objects.filter(topic=topic, validation_status=3, call=call).select_related().order_by('title')
         return qs
 
 
@@ -479,7 +479,7 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
         # Add the previous and next residencies to the context
         call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
         projects = Project.objects.filter(call=call)
-        residencies = ProjectResidency.objects.filter(project__in=projects).filter(validated=True).select_related().order_by("id")
+        residencies = ProjectResidency.objects.filter(project__in=projects, validated=True).select_related().order_by("id")
         this_residency = residencies.get(slug=self.kwargs["slug"])
         index = 0
         for i, residency in enumerate(residencies):
@@ -512,7 +512,7 @@ class ProjectResidencyListView(ListView):
     def get_queryset(self):
         call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
         projects = Project.objects.filter(call=call)
-        qs = ProjectResidency.objects.filter(project__in=projects).filter(validated=True).select_related().order_by("id")
+        qs = ProjectResidency.objects.filter(project__in=projects, validated=True).select_related().order_by("id")
         return qs
 
 
