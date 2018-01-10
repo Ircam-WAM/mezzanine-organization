@@ -36,16 +36,14 @@ urlpatterns = [
     url("^projects/detail/(?P<slug>.*)/$", ProjectDetailView.as_view(), name='organization-project-detail'),
     url("^projects/demo/(?P<slug>.*)/$", ProjectDemoDetailView.as_view(), name='organization-project-demo-detail'),
     url("^projects/blog/(?P<slug>.*)/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
-
-    #url("^ict-projects/list/$", ProjectICTListView.as_view(), name='organization-ict-project-list'),
-    #url("^ict-projects/(?P<slug>.*)/detail/$", ProjectICTDetailView.as_view(), name='organization-ict-project-detail'),
+    url("^projects/list/$", ProjectListView.as_view(), name='organization-project-list'),
 
     url("^calls/(?P<slug>.*)/projects/create/public/$", ProjectICTCreatePublicFundingView.as_view(), name='organization-project-public-create'),
     url("^calls/(?P<slug>.*)/projects/create/private/$", ProjectICTCreatePrivateFundingView.as_view(), name='organization-project-private-create'),
     url("^calls/(?P<slug>.*)/projects/validation/$", ProjectICTValidationView.as_view(), name='organization-project-validation'),
 
-    url("^calls/(?P<call_slug>.*)/projects/detail/(?P<slug>.*)/$", ProjectICTDetailView.as_view(), name='organization-project-detail'),
-    url("^calls/(?P<call_slug>.*)/projects/list/$", ProjectICTListView.as_view(), name='organization-project-list'),
+    url("^calls/(?P<call_slug>.*)/projects/detail/(?P<slug>.*)/$", ProjectICTDetailView.as_view(), name='organization-call-project-detail'),
+    url("^calls/(?P<call_slug>.*)/projects/list/$", ProjectICTListView.as_view(), name='organization-call-project-list'),
 
     url("^calls/(?P<slug>.*)/residencies/submission/$", ProjectResidencyCreateView.as_view(), name='organization-residency-create'),
     url("^calls/(?P<call_slug>.*)/residencies/(?P<slug>.*)/detail/$", ProjectResidencyDetailView.as_view(), name='organization-residency-detail'),
