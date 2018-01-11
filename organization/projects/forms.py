@@ -181,6 +181,7 @@ class ProjectResidencyPrivateDataInline(InlineFormSet):
     can_delete = False
     fields = '__all__'
 
+
 class ProjectResidencyPersonInline(InlineFormSet):
 
     max_num = 1

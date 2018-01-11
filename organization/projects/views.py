@@ -37,7 +37,7 @@ from organization.magazine.views import Article
 from organization.pages.models import CustomPage
 from datetime import datetime, date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.forms.formsets import formset_factory, BaseFormSet
 
 class ProjectMixin(SingleObjectMixin):
 
@@ -532,12 +532,8 @@ class ProjectResidencyCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWit
 #    def __init__(self, *args, **kwargs):
 #        self.call_slug = self.kwargs["slug"]
 
-    def get_context_data(self, **kwargs):
-        context = super(ProjectResidencyCreateView, self).get_context_data(**kwargs)
-
-        return context
-
     def forms_valid(self, form, inlines):
+
         self.object = form.save()
         self.object.user = self.request.user
         self.object.save()
@@ -573,6 +569,7 @@ class ProjectResidencyCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWit
         #TODO: To here
 
         return super(ProjectResidencyCreateView, self).forms_valid(form, inlines)
+
 
     def get_success_url(self):
         return reverse_lazy('organization-residency-validation', kwargs={'slug':self.call.slug})

@@ -528,6 +528,7 @@ class ProjectResidencyPublicData(models.Model):
     brief_description = models.TextField(_("Brief description of proposal (150 - 200 words)"), blank=True, null=True, help_text="")
     keywords = KeywordsField(verbose_name=_("5 key words"), blank=True, null=True, help_text="")
 
+
 class ProjectResidencyPrivateData(models.Model):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency private data'), related_name='private_data', blank=True, null=True, on_delete=models.SET_NULL)

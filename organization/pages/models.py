@@ -69,7 +69,7 @@ class ExtendedCustomPageDynamicContent(models.Model):
 
     page = models.ForeignKey(ExtendedCustomPage, verbose_name="extended custom page", related_name="extra_content", blank=True, null=True, on_delete=models.SET_NULL)
     extra_content = models.CharField(max_length=32, choices=EXTRA_CONTENT_CHOICES, default=NONE)
-    
+
     @property
     def choice(self):
         return self.extra_content
