@@ -493,7 +493,7 @@ class JuryListView(ListView):
 class ProducerListView(ListView):
 
     model = Person
-    template_name="network/organization_jury_list.html"
+    template_name="network/organization_producers_list.html"
     context_object_name = "jury"
 
     def get_context_data(self, **kwargs):
