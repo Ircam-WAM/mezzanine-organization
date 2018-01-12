@@ -488,3 +488,4 @@ class JuryListView(ListView):
             qs = Person.objects.filter(person_list_block_inlines__person_list_block=jury).order_by("last_name")
         else:
             qs = Person.objects.none()
+

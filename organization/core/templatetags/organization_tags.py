@@ -370,6 +370,10 @@ def extended_custompage_extra_content(extra_content):
         else:
             jury_list = Person.objects.none()
         context["jury"] = jury_list
+    elif extra_content.choice == ECPDC.LIST_PRODUCERS:
+        role, c = OrganizationRole.objects.get_or_create(key="Producer")
+        producers_list = Organization.objects.filter(role=role, validation_status=3).select_related().order_by("name")
+        context["producers"] = producers_list
     return context
 
 @register.filter

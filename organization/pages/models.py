@@ -52,12 +52,14 @@ class ExtendedCustomPageDynamicContent(models.Model):
     LIST_NEWS = "news"
     LIST_EVENTS = "events"
     LIST_JURY = "jury"
+    LIST_PRODUCERS = "producers"
 
     EXTRA_CONTENT_CHOICES = (
         (NONE, "No extra content"),
         (LIST_NEWS, "List of News"),
         (LIST_EVENTS, "List of Events"),
         (LIST_JURY, "List of the Jury"),
+        (LIST_PRODUCERS, "List of Producers"),
     )
 
     TEMPLATE_CHOICES = (
@@ -65,11 +67,12 @@ class ExtendedCustomPageDynamicContent(models.Model):
         (LIST_NEWS, "magazine/article/ecp_inc/article_list.html"),
         (LIST_EVENTS, "agenda/ecp_inc/event_list.html"),
         (LIST_JURY, "network/ecp_inc/jury_list.html"),
+        (LIST_PRODUCERS, "network/ecp_inc/producers_list.html"),
     )
 
     page = models.ForeignKey(ExtendedCustomPage, verbose_name="extended custom page", related_name="extra_content", blank=True, null=True, on_delete=models.SET_NULL)
     extra_content = models.CharField(max_length=32, choices=EXTRA_CONTENT_CHOICES, default=NONE)
-    
+
     @property
     def choice(self):
         return self.extra_content
