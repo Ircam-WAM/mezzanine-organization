@@ -489,27 +489,3 @@ class JuryListView(ListView):
         else:
             qs = Person.objects.none()
 
-
-class ProducerListView(ListView):
-
-    model = Person
-    template_name="network/organization_producers_list.html"
-    context_object_name = "jury"
-
-    def get_context_data(self, **kwargs):
-        context = super(ProducerListView, self).get_context_data(**kwargs)
-        context["description"] = ""
-        producers_list = PersonListBlock.objects.filter(title__in=["Jury", "jury"])
-        if producers_list:
-            producer = producer_list[0]
-            context["description"] = producer.description
-            context.update(self.kwargs)
-        return context
-
-    def get_queryset(self):
-        producers_list = PersonListBlock.objects.filter(title__in=["Jury", "jury"])
-        if producers_list:
-            producer = producers_list[0]
-            qs = Person.objects.filter(person_list_block_inlines__person_list_block=producer).order_by("last_name")
-        else:
-            qs = Person.objects.name
