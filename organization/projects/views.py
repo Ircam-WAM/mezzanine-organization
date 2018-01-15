@@ -516,7 +516,6 @@ class ProjectResidencyListView(ListView):
 
 class ProjectResidencyCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
 
-
     model = ProjectResidency
     form_class = ProjectResidencyForm #(call_slug="2017-2")
     template_name='projects/project_residency_create.html'
@@ -533,7 +532,6 @@ class ProjectResidencyCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWit
 #        self.call_slug = self.kwargs["slug"]
 
     def forms_valid(self, form, inlines):
-
         self.object = form.save()
         self.object.user = self.request.user
         self.object.save()
@@ -570,12 +568,10 @@ class ProjectResidencyCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWit
 
         return super(ProjectResidencyCreateView, self).forms_valid(form, inlines)
 
-
     def get_success_url(self):
         return reverse_lazy('organization-residency-validation', kwargs={'slug':self.call.slug})
 
 class ProjectResidencyValidationView(ProjectCallMixin, TemplateView):
-
     model = Project
     template_name='projects/residency_validation.html'
 
@@ -584,13 +580,14 @@ class ProjectArtistProducerCreateView(LoginRequiredMixin, CreateWithInlinesView)
     model = Organization
     form_class = ProducerForm
     template_name='projects/project_artist_create_form.html'
-    inlines = [ProducerDataInline]
+    inline = [ProducerDataInline]
 
     def forms_valid(self, form, inlines):
         self.object = form.save()
         self.object.user = self.request.user
         self.object.role, c = OrganizationRole.objects.get_or_create(key='Producer')
         self.object.save()
+
         return super(ProjectArtistProducerCreateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
