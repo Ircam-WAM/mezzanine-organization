@@ -49,6 +49,7 @@ from collections import OrderedDict
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
 from django.utils import six
+from django.core.exceptions import PermissionDenied
 
 
 class PersonListView(ListView):
@@ -280,7 +281,7 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
             curr_date = datetime.date.today()
             asked_date = date(int(kwargs['year']), int(kwargs['month']), curr_date.day)
             if (curr_date - asked_date).days <= 0:
-                return HttpResponse('Unauthorized', status=401)
+                raise PermissionDenied
 
         return super(TimeSheetCreateView, self).get(request, *args, **kwargs)
 
