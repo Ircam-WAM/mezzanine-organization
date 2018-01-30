@@ -44,7 +44,12 @@ from organization.magazine.models import Article
 from pprint import pprint
 from django.contrib.auth.mixins import LoginRequiredMixin
 from organization.network.models import *
-
+from django import http
+from django.template import Context, Engine, TemplateDoesNotExist, loader
+from django.utils import six
+from django.utils.encoding import force_text
+from django.views.decorators.csrf import requires_csrf_token
+ 
 
 class SlugMixin(object):
 
