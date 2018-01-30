@@ -320,7 +320,7 @@ def is_more_then_hours(date_begin, date_end, hours):
 
 @register.filter
 def get_article_by_department(department):
-    return Article.objects.filter(department=department).order_by('-publish_date')[:3]
+    return Article.objects.published().filter(department=department).order_by('-publish_date')[:3]
 
 
 @register.filter
@@ -371,7 +371,6 @@ def extended_custompage_extra_content(extra_content):
             jury_list = Person.objects.none()
         context["jury"] = jury_list
     return context
-
 
 @register.filter
 def hal_1(hal_tutelage, hal_researche_structure):

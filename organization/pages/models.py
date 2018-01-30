@@ -138,7 +138,7 @@ class PageRelatedTitle(RelatedTitle):
 
 class DynamicContentPage(DynamicContent, Orderable):
 
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='dynamic_content_pages', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='dynamic_content_pages', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Dynamic Content Page'
@@ -157,7 +157,7 @@ class LinkImage(models.Model):
 
 class DynamicContentHomeSlider(DynamicContent, Orderable):
 
-    home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.SET_NULL)
+    home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Slider'
@@ -165,7 +165,7 @@ class DynamicContentHomeSlider(DynamicContent, Orderable):
 
 class DynamicContentHomeBody(DynamicContent, Orderable):
 
-    home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.SET_NULL)
+    home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _('Body')
@@ -173,7 +173,7 @@ class DynamicContentHomeBody(DynamicContent, Orderable):
 
 class DynamicContentHomeMedia(DynamicContent, Orderable):
 
-    home = models.ForeignKey("home", verbose_name=_('home'), related_name='dynamic_content_home_media', blank=True, null=True, on_delete=models.SET_NULL)
+    home = models.ForeignKey("home", verbose_name=_('home'), related_name='dynamic_content_home_media', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Media'

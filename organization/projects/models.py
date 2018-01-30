@@ -221,7 +221,7 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
             self.name = self.title
         if not self.title and self.name:
             self.title = self.name
-        super('ProjectCall', self).save(args, kwargs)
+        super(ProjectCall, self).save(args, kwargs)
 
     @property
     def is_closed(self):
@@ -345,7 +345,7 @@ class ProjectRelatedTitle(RelatedTitle):
 
 class DynamicContentProject(DynamicContent, Orderable):
 
-    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='dynamic_content_project', blank=True, null=True, on_delete=models.SET_NULL)
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='dynamic_content_project', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Dynamic Content Project'

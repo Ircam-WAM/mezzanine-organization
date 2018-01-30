@@ -101,21 +101,22 @@ class PersonDetailView(SlugMixin, DetailView):
         context["related"]["other"] = []
         # for each person list to which the person belongs to...
         for person_list_block_inline in person_list_block_inlines:
-            related_objects = person_list_block_inline.person_list_block._meta.get_all_related_objects()
-            for related_object in related_objects:
-                if hasattr(person_list_block_inline.person_list_block, related_object.name):
-                    # getting relating inlines like ArticlePersonListBlockInline, PageCustomPersonListBlockInline etc...
-                    related_inlines = getattr(person_list_block_inline.person_list_block, related_object.name).all()
-                    for related_inline in related_inlines:
-                        if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
-                            fields = related_inline._meta.get_fields()
-                            for field in fields:
-                                # check if it is a ForeignKey
-                                if isinstance(field, ForeignKey) :
-                                    instance = getattr(related_inline, field.name)
-                                    # get only article, custom page etc...
-                                    if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
-                                        context["related"]["other"].append(instance)
+            if hasattr(person_list_block_inline, 'person_list_block_inline') :
+                related_objects = person_list_block_inline.person_list_block._meta.get_all_related_objects()
+                for related_object in related_objects:
+                    if hasattr(person_list_block_inline.person_list_block, related_object.name):
+                        # getting relating inlines like ArticlePersonListBlockInline, PageCustomPersonListBlockInline etc...
+                        related_inlines = getattr(person_list_block_inline.person_list_block, related_object.name).all()
+                        for related_inline in related_inlines:
+                            if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                fields = related_inline._meta.get_fields()
+                                for field in fields:
+                                    # check if it is a ForeignKey
+                                    if isinstance(field, ForeignKey) :
+                                        instance = getattr(related_inline, field.name)
+                                        # get only article, custom page etc...
+                                        if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                            context["related"]["other"].append(instance)
 
         context["related"]["other"].sort(key=lambda x: x.created, reverse=True)
         context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
@@ -272,6 +273,16 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
     last_day_in_month = date.today().replace(day=1) - timedelta(days=1)
     curr_month = last_day_in_month.month
     curr_year = last_day_in_month.year
+
+    def get(self, request, *args, **kwargs):
+        # the user can create a timesheet only month-1..n
+        if 'year' in kwargs and 'month' in kwargs:
+            curr_date = datetime.date.today()
+            asked_date = date(int(kwargs['year']), int(kwargs['month']), curr_date.day)
+            if (curr_date - asked_date).days <= 0:
+                return HttpResponse('Unauthorized', status=401)
+
+        return super(TimeSheetCreateView, self).get(request, *args, **kwargs)
 
     def get_activity_by_project(self, user, year, month):
         project_list = []
