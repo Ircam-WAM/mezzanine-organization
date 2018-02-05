@@ -421,7 +421,8 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
         if obj.producers:
             names = []
             for producer in obj.producers.all():
-                names.append(producer.organization.name)
+                if producer.organization:
+                    names.append(producer.organization.name)
             producers = ", ".join(names)
         return producers
 
