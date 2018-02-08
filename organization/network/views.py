@@ -49,6 +49,8 @@ from collections import OrderedDict
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
 from django.utils import six
+from django.core.exceptions import PermissionDenied
+import pandas as pd
 
 
 class PersonListView(ListView):
@@ -101,21 +103,22 @@ class PersonDetailView(SlugMixin, DetailView):
         context["related"]["other"] = []
         # for each person list to which the person belongs to...
         for person_list_block_inline in person_list_block_inlines:
-            related_objects = person_list_block_inline.person_list_block._meta.get_all_related_objects()
-            for related_object in related_objects:
-                if hasattr(person_list_block_inline.person_list_block, related_object.name):
-                    # getting relating inlines like ArticlePersonListBlockInline, PageCustomPersonListBlockInline etc...
-                    related_inlines = getattr(person_list_block_inline.person_list_block, related_object.name).all()
-                    for related_inline in related_inlines:
-                        if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
-                            fields = related_inline._meta.get_fields()
-                            for field in fields:
-                                # check if it is a ForeignKey
-                                if isinstance(field, ForeignKey) :
-                                    instance = getattr(related_inline, field.name)
-                                    # get only article, custom page etc...
-                                    if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
-                                        context["related"]["other"].append(instance)
+            if hasattr(person_list_block_inline, 'person_list_block_inline') :
+                related_objects = person_list_block_inline.person_list_block._meta.get_all_related_objects()
+                for related_object in related_objects:
+                    if hasattr(person_list_block_inline.person_list_block, related_object.name):
+                        # getting relating inlines like ArticlePersonListBlockInline, PageCustomPersonListBlockInline etc...
+                        related_inlines = getattr(person_list_block_inline.person_list_block, related_object.name).all()
+                        for related_inline in related_inlines:
+                            if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                fields = related_inline._meta.get_fields()
+                                for field in fields:
+                                    # check if it is a ForeignKey
+                                    if isinstance(field, ForeignKey) :
+                                        instance = getattr(related_inline, field.name)
+                                        # get only article, custom page etc...
+                                        if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                            context["related"]["other"].append(instance)
 
         context["related"]["other"].sort(key=lambda x: x.created, reverse=True)
         context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
@@ -273,6 +276,16 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
     curr_month = last_day_in_month.month
     curr_year = last_day_in_month.year
 
+    def get(self, request, *args, **kwargs):
+        # the user can create a timesheet only month-1..n
+        if 'year' in kwargs and 'month' in kwargs:
+            curr_date = datetime.date.today()
+            asked_date = date(int(kwargs['year']), int(kwargs['month']), curr_date.day)
+            if (curr_date - asked_date).days <= 0:
+                raise PermissionDenied
+
+        return super(TimeSheetCreateView, self).get(request, *args, **kwargs)
+
     def get_activity_by_project(self, user, year, month):
         project_list = []
 
@@ -366,29 +379,31 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
     context_object_name = 'timesheets_by_year'
 
     def get_queryset(self):
-        timesheets = PersonActivityTimeSheet.objects.filter(activity__person=self.request.user.person).order_by('-year', 'month', 'project')
 
+        # get list of months / years per  
+        dt1 = date.today().replace(day=1)
+        prev_month = dt1 - timedelta(days=1)
+
+        timesheet_range = pd.date_range(settings.TIMESHEET_START, prev_month, freq="MS")
+        timesheets = PersonActivityTimeSheet.objects.filter(activity__person=self.request.user.person).order_by('-year', 'month', 'project')
         t_dict = {}
-        for timesheet in timesheets:
-            year = timesheet.year
-            month = timesheet.month
+
+        for timesheet_date in timesheet_range:
+            year = timesheet_date.year
+            month = timesheet_date.month
             if not year in t_dict:
                 t_dict[year] = {}
                 t_dict[year]['project_count'] = 0
                 t_dict[year]['timesheets'] = {}
 
-            # if new person
             if not month in t_dict[year]['timesheets']:
                 t_dict[year]['timesheets'][month] = []
 
-            t_dict[year]['timesheets'][month].append(timesheet)
+            timesheet = [t for t in timesheets if t.month == timesheet_date.month and t.year == timesheet_date.year]    
+            if timesheet:
+                t_dict[year]['timesheets'][month] += timesheet
+            
             t_dict[year]['project_count'] = max(t_dict[year]['project_count'], len(t_dict[year]['timesheets'][month]))
-
-        # add manually current year if not exists
-        curr_year = date.today().year
-        if not curr_year in t_dict.keys():
-            t_dict[curr_year] = {}
-            t_dict[curr_year]['project_count'] = 0
 
         return OrderedDict(sorted(t_dict.items(), key=lambda t: -t[0]))
 
