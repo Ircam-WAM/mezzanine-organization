@@ -148,7 +148,7 @@ class TimesheetXLS(object):
     debug_row = 38
 
 
-    def __init__(self, timesheets, year=''):
+    def __init__(self, timesheets, year=date.today().year):
         self.timesheets = timesheets.order_by('activity__person', 'project', 'year', 'month')
         self.book = Workbook()
         self.year = int(year)
@@ -267,9 +267,11 @@ class TimesheetXLS(object):
         percent_label_row_index = self.percent_label_row
         hours_label_row_index = self.hours_label_row
         project_row_last = 6
+
         # for each person
         for person_k, person_v in self.t_dict.items():
             total_prod_hours = 0
+            total_prod_hours_dict = dict()
             try :
                 sheet = self.book.add_sheet(person_k)
                 sheet.default_width = 200
@@ -302,7 +304,8 @@ class TimesheetXLS(object):
                         pass
 
                     # nb worked hours
-                    total_prod_hours += timesheet.worked_hours / number_of_projects
+                    if not timesheet.month in total_prod_hours_dict:
+                        total_prod_hours_dict[timesheet.month] = timesheet.worked_hours
                     try:
                         sheet.write(project_row_index + self.hours_margin, timesheet.month + self.first_month_col, timesheet.worked_hours * percent, self.txt_centered)
                         if settings.DEBUG:
@@ -349,6 +352,8 @@ class TimesheetXLS(object):
                         sheet.write_merge(director_signature_row, director_signature_row, self.director_signature_col, self.director_signature_col + 2, self.director_signature_label)
                     except:
                         pass
+
+            total_prod_hours = proccess_total_prod_hours(total_prod_hours_dict)         
             try :
                 # productive hours
                 sheet.write_merge(self.total_prod_hours_label_row, self.total_prod_hours_label_row, self.total_prod_hours_label_col, self.total_prod_hours_label_col + 3, self.total_prod_hours_label, self.header_style)
@@ -396,3 +401,10 @@ def timesheet_master_notification_for_validation(person, month, year, app_label,
     msg = EmailMessage(subject, message, to=(settings.TIMESHEET_MASTER_MAIL,), from_email=settings.DEFAULT_FROM_EMAIL)
     msg.content_subtype = 'html'
     msg.send()
+
+
+def proccess_total_prod_hours(prod_hours_dict):
+    total = 0
+    for month, hours in prod_hours_dict.items():
+        total += hours
+    return total    
