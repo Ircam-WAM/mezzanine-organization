@@ -194,3 +194,15 @@ class ProjectContactTranslationOptions(TranslationOptions):
 class ProjectTopicTranslationOptions(TranslationOptions):
 
     fields = ('name', 'description')
+
+
+@register(ProjectCollectionImage)
+class ProjectCollectionImageTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(ProjectCollection)
+class ProjectCollectionTranslationOptions(TranslationOptions):
+
+    fields = ('name', 'description')

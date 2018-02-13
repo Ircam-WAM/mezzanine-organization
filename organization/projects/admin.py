@@ -32,7 +32,7 @@ from organization.pages.models import *
 from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm
-from organization.core.admin import null_filter
+from organization.core.admin import *
 from organization.projects.translation import *
 
 
@@ -277,6 +277,18 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
     search_fields = ['title', 'project__title',]
 
 
+class ProjectCollectionImageInline(TabularDynamicInlineAdmin):
+
+    model = ProjectCollectionImage
+
+
+class ProjectCollectionAdmin(BaseTranslationOrderedModelAdmin):
+
+    model = ProjectCollection
+    inlines = [ ProjectCollectionImageInline ]
+    first_fields = ['title',]
+
+
 admin.site.register(Project, ProjectAdminDisplayable)
 admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)
 admin.site.register(ProjectPrivateData, ProjectPrivateDataAdmin)
@@ -291,3 +303,4 @@ admin.site.register(RepositorySystem)
 admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
 admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
 admin.site.register(ProjectResidency, ProjectResidencyAdmin)
+admin.site.register(ProjectCollection, ProjectCollectionAdmin)

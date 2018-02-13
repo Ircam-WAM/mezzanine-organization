@@ -518,3 +518,13 @@ class ProjectResidencyEvent(models.Model):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='residency_events', blank=True, null=True, on_delete=models.SET_NULL)
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectCollection(NamedSlugged, Dated):
+
+    projects = models.ManyToManyField(Project, verbose_name=_('projects'), blank=True)
+
+
+class ProjectCollectionImage(Image):
+
+    collection = models.ForeignKey(ProjectCollection, verbose_name=_('collection'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
