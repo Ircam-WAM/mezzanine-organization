@@ -520,11 +520,26 @@ class ProjectResidencyEvent(models.Model):
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-class ProjectCollection(NamedSlugged, Dated):
+class ProjectCollection(Displayable):
 
-    projects = models.ManyToManyField(Project, verbose_name=_('projects'), blank=True)
+    def get_absolute_url(self):
+        return reverse("organization-project-collection-detail", kwargs={"slug": self.slug})
+
+
+class ProjectCollectionProject(Project):
+
+    collection = models.ForeignKey(ProjectCollection, verbose_name=_('collection'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCollectionImage(Image):
 
     collection = models.ForeignKey(ProjectCollection, verbose_name=_('collection'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class DynamicCollectionProject(DynamicContent, Orderable):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='dynamic_collection_project', blank=True, null=True, on_delete=models.CASCADE)
+    collection = models.ForeignKey(ProjectCollection, verbose_name=_('collection'), related_name='dynamic_collection_collection', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Dynamic Collection Project'

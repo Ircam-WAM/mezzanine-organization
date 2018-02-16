@@ -32,10 +32,13 @@ from organization.projects.views import *
 
 urlpatterns = [
     url("^dynamic-content-project/$",  permission_required('project.can_edit')(DynamicContentProjectView.as_view()), name='dynamic-content-project'),
+    url("^dynamic-collection-project/$",  permission_required('project.can_edit')(DynamicCollectionProjectView.as_view()), name='dynamic-collection-project'),
 
     url("^projects/detail/(?P<slug>.*)/$", ProjectDetailView.as_view(), name='organization-project-detail'),
     url("^projects/demo/(?P<slug>.*)/$", ProjectDemoDetailView.as_view(), name='organization-project-demo-detail'),
     url("^projects/blog/(?P<slug>.*)/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
+
+    url("^collection/(?P<slug>.*)/$", ProjectCollectionDetailView.as_view(), name='organization-project-collection-detail'),
 
     url("^ict-projects/list/$", ProjectICTListView.as_view(), name='organization-ict-project-list'),
     url("^ict-projects/(?P<slug>.*)/detail/$", ProjectICTDetailView.as_view(), name='organization-ict-project-detail'),

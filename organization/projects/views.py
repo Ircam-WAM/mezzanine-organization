@@ -516,3 +516,34 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     form_class = ProjectResidencyForm
     template_name='projects/project_residency_create.html'
     inlines = []
+
+
+class ProjectCollectionDetailView(ListView):
+
+    model = ProjectCollection
+    template_name='projects/project_collection_detail.html'
+
+
+class DynamicCollectionProjectView(Select2QuerySetSequenceView):
+
+    paginate_by = settings.DAL_MAX_RESULTS
+
+    def get_queryset(self):
+
+        projects = Project.objects.all()
+
+        if self.q:
+            projects = projects.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(projects,)
+
+        if self.q:
+            qs = qs.filter(title__icontains=self.q)
+
+        qs = self.mixup_querysets(qs)
+
+        return qs
+
+    # def get_results(self, context):
+    #     results = autocomplete_result_formatting(self, context)
+    #     return results

@@ -31,8 +31,8 @@ from organization.projects.models import *
 from organization.pages.models import *
 from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
-from organization.projects.forms import DynamicContentProjectForm
-from organization.core.admin import *
+from organization.projects.forms import DynamicContentProjectForm, DynamicCollectionProjectForm
+from organization.core.admin import null_filter
 from organization.projects.translation import *
 
 
@@ -282,12 +282,27 @@ class ProjectCollectionImageInline(TabularDynamicInlineAdmin):
     model = ProjectCollectionImage
 
 
-class ProjectCollectionAdmin(BaseTranslationOrderedModelAdmin):
+class ProjectCollectionProjectInline(TabularDynamicInlineAdmin):
+
+    model = DynamicCollectionProject
+    form = DynamicCollectionProjectForm
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+
+class ProjectCollectionAdmin(admin.ModelAdmin):
 
     model = ProjectCollection
-    inlines = [ ProjectCollectionImageInline ]
-    first_fields = ['title',]
 
+
+class ProjectCollectionAdminDisplayable(DisplayableAdmin):
+
+    fieldsets = deepcopy(ProjectCollectionAdmin.fieldsets)
+    inlines = [ ProjectCollectionImageInline,
+                ProjectCollectionProjectInline ]
 
 admin.site.register(Project, ProjectAdminDisplayable)
 admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)
@@ -303,4 +318,4 @@ admin.site.register(RepositorySystem)
 admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
 admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
 admin.site.register(ProjectResidency, ProjectResidencyAdmin)
-admin.site.register(ProjectCollection, ProjectCollectionAdmin)
+admin.site.register(ProjectCollection, ProjectCollectionAdminDisplayable)

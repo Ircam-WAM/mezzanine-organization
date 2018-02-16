@@ -185,15 +185,23 @@ class ProjectCallFileTranslationOptions(TranslationOptions):
 
     pass
 
+
 @register(ProjectContact)
 class ProjectContactTranslationOptions(TranslationOptions):
 
     pass
 
+
 @register(ProjectTopic)
 class ProjectTopicTranslationOptions(TranslationOptions):
 
     fields = ('name', 'description')
+
+
+@register(ProjectCollection)
+class ProjectCollectionTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description')
 
 
 @register(ProjectCollectionImage)
@@ -202,7 +210,13 @@ class ProjectCollectionImageTranslationOptions(TranslationOptions):
     pass
 
 
-@register(ProjectCollection)
-class ProjectCollectionTranslationOptions(TranslationOptions):
+@register(ProjectCollectionProject)
+class ProjectCollectionProjectTranslationOptions(TranslationOptions):
 
-    fields = ('name', 'description')
+    pass
+
+
+@register(DynamicCollectionProject)
+class DynamicCollectionProjectTranslationOptions(TranslationOptions):
+
+    pass
