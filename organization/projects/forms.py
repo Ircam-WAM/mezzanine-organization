@@ -158,14 +158,12 @@ class ProjectResidencyForm(ModelForm):
 
 class DynamicCollectionProjectForm(autocomplete.FutureModelForm):
 
-    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Project.objects.all()
-        ),
-        required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-collection-project'),
-    )
-
     class Meta:
         model = DynamicCollectionProject
-        fields = ('content_object',)
+        fields = ('__all__')
+        widgets = {
+            'projects': autocomplete.ModelSelect2Multiple(
+                url='dynamic-collection-project',
+                attrs={'data-html': True}
+            )
+        }
