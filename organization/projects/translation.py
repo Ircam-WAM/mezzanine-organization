@@ -210,12 +210,6 @@ class ProjectCollectionImageTranslationOptions(TranslationOptions):
     pass
 
 
-@register(ProjectCollectionProject)
-class ProjectCollectionProjectTranslationOptions(TranslationOptions):
-
-    pass
-
-
 @register(DynamicCollectionProject)
 class DynamicCollectionProjectTranslationOptions(TranslationOptions):
 

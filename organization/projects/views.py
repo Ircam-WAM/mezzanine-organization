@@ -518,10 +518,20 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     inlines = []
 
 
-class ProjectCollectionDetailView(ListView):
+class ProjectCollectionDetailView(DetailView):
 
     model = ProjectCollection
     template_name='projects/project_collection_detail.html'
+
+
+class ProjectCollectionListView(ListView):
+
+    model = ProjectCollection
+    template_name='projects/project_collection_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectCollectionListView, self).get_context_data(**kwargs)
+        return context
 
 
 class DynamicCollectionProjectView(Select2QuerySetSequenceView):

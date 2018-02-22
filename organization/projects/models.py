@@ -526,11 +526,6 @@ class ProjectCollection(Displayable):
         return reverse("organization-project-collection-detail", kwargs={"slug": self.slug})
 
 
-class ProjectCollectionProject(Project):
-
-    collection = models.ForeignKey(ProjectCollection, verbose_name=_('collection'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
-
-
 class ProjectCollectionImage(Image):
 
     collection = models.ForeignKey(ProjectCollection, verbose_name=_('collection'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
