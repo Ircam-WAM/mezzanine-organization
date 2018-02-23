@@ -41,6 +41,7 @@ from organization.core.models import *
 from itertools import chain
 from django.db.models import Q
 from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
+from django.core import serializers
 
 register = Library()
 
@@ -387,3 +388,8 @@ def tag_is_in_menu(page, tag):
         if page.slug.lower().find(tag.slug.lower()) != -1:
             is_in_menu = True
     return is_in_menu
+
+
+@register.filter
+def serialize(value, serializer="json"):
+    return mark_safe(serializers.serialize(serializer, value, use_natural_foreign_keys=True, use_natural_primary_keys=True, indent=2))
