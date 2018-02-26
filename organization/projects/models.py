@@ -82,6 +82,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     organizations = models.ManyToManyField('organization-network.Organization', verbose_name=_('organizations'), blank=True)
     website = models.URLField(_('website'), max_length=512, blank=True)
     topic = models.ForeignKey('ProjectTopic', verbose_name=_('topic'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
+    topics = models.ManyToManyField('ProjectTopic', verbose_name=_('topics'), related_name='project_topics', blank=True)
     referring_person = models.ManyToManyField('organization-network.Person', verbose_name=_('Referring Person'), related_name='projects_referring_person', blank=True)
     manager =  models.ManyToManyField('organization-network.Person', verbose_name=_('Manager'), related_name='projects_manager', blank=True)
     is_archive = models.BooleanField(verbose_name=_('Is Archive'), help_text='Hide project in Team Page', default=False)
@@ -127,9 +128,9 @@ class ProjectTopic(Named):
 
     def __str__(self):
         if self.parent:
-            return ' - '.join((self.parent.name, self.key))
+            return ' - '.join((self.parent.name, self.name))
         else:
-            return self.key
+            return self.name
 
 
 class ProjectProgram(Named):
