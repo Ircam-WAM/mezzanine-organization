@@ -37,7 +37,7 @@ urlpatterns = [
     url(r'^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name="organization-network-timesheet-list-view" ),
     url(r'^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name="organization-network-person-detail"),    
     url(r'profile/(?P<username>.*)/$', PersonDetailView.as_view(), name="profile"),
-    url("^person/list/$", PersonListView.as_view(), name="organization-network-person-list"),
+    url(r'^person-list/$', PersonListView.as_view(), name="organization-network-person-list"),
     url("^person-list-block-autocomplete/$", permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
     url("^person-autocomplete/$", permission_required('person.can_edit')(PersonAutocompleteView.as_view()), name='person-autocomplete'),
     url("^network/$", OrganizationListView.as_view(), name='network'),
