@@ -8,28 +8,18 @@ from organization.agenda.admin import *
 from organization.job.admin import *
 from organization.shop.admin import *
 
+from organization.projects.models import Project
+
 
 class ProjectAdminCustomDisplayable(DisplayableAdmin):
 
-    fieldsets = deepcopy(ProjectAdmin.fieldsets)
-    inlines = [ ProjectBlockInline,
-                ProjectContactInline,
-                ProjectUserImageInline,
+    inlines = [ DynamicContentProjectInline,
                 ProjectImageInline,
-                ProjectPublicDataInline,
-                ProjectPrivateDataInline,
-                ProjectWorkPackageInline,
-                ProjectPlaylistInline,
                 ProjectLinkInline,
-                ProjectFileInline,
-                ProjectRelatedTitleAdmin,
-                DynamicContentProjectInline,
-                ProjectBlogPageInline,
                 ]
-    filter_horizontal = ['teams', 'organizations']
-    list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status', 'call']
-    list_display = ['title', 'date_from', 'date_to', 'created', 'lead_organization',
-        'program', 'status', 'is_archive', 'topic', 'external_id', 'validation_status', 'admin_link']
+    filter_horizontal = deepcopy(ProjectAdminDisplayable.filter_horizontal)
+    list_filter = deepcopy(ProjectAdminDisplayable.list_filter)
+    list_display = deepcopy(ProjectAdminDisplayable.list_display)
 
 admin.site.unregister(Project)
 admin.site.register(Project, ProjectAdminCustomDisplayable)
