@@ -175,9 +175,7 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
                 raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
             except TypeError as e:
                 raise ValidationError("The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.")
-            else:
-                pass
-            finally:
+            except GeocoderQuotaExceeded as e:
                 pass
             self.mappable_location = mappable_location
             self.lat = lat
