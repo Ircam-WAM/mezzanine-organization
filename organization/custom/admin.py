@@ -8,18 +8,32 @@ from organization.agenda.admin import *
 from organization.job.admin import *
 from organization.shop.admin import *
 
-from organization.projects.models import Project
+from organization.projects.models import *
+from django.utils.translation import ugettext_lazy as _
 
 
 class ProjectAdminCustomDisplayable(DisplayableAdmin):
 
-    inlines = [ DynamicContentProjectInline,
+    fieldsets = (
+        (None, {
+            "fields": ["title", "slug", "status", "topics"],
+        }),
+        (_("Meta data"), {
+            "fields": ["_meta_title",
+                       ("description", "gen_description"),
+                        "keywords", "in_sitemap"],
+            "classes": ("collapse-closed",)
+        }),
+    )
+
+    inlines = [ ProjectLinkInline,
+                DynamicContentProjectInline,
                 ProjectImageInline,
-                ProjectLinkInline,
                 ]
-    filter_horizontal = deepcopy(ProjectAdminDisplayable.filter_horizontal)
+    filter_horizontal = ['topics']
     list_filter = deepcopy(ProjectAdminDisplayable.list_filter)
     list_display = deepcopy(ProjectAdminDisplayable.list_display)
+
 
 admin.site.unregister(Project)
 admin.site.register(Project, ProjectAdminCustomDisplayable)
