@@ -31,8 +31,9 @@ from organization.core.managers import *
 
 class CustomPage(Page, SubTitled, RichText):
 
-    #objects = CustomSearchableManager()
+    objects = CustomSearchableManager()
     menu_alinea = models.BooleanField(_('menu alinea'), default=False)
+    class_css = models.CharField(max_length=32)
 
     class Meta:
         verbose_name = 'custom page'
@@ -40,7 +41,7 @@ class CustomPage(Page, SubTitled, RichText):
 
 class ExtendedCustomPage(Page, SubTitled, RichText):
 
-    #objects = CustomSearchableManager()
+    objects = CustomSearchableManager()
 
     class Meta:
         verbose_name = "extended custom page"
