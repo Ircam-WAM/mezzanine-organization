@@ -58,6 +58,12 @@ class SlugMixin(object):
         return get_object_or_404(objects, slug=self.kwargs['slug'])
 
 
+class PublishedMixin(object):
+    
+    def get_queryset(self, **kwargs):
+        return self.model.objects.published()
+
+
 class CustomSearchView(TemplateView):
 
     template_name='search_results.html'

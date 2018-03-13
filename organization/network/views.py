@@ -53,7 +53,7 @@ from django.core.exceptions import PermissionDenied
 import pandas as pd
 
 
-class PersonListView(ListView):
+class PersonListView(PublishedMixin, ListView):
 
     model = Person
     template_name='network/person_list.html'
