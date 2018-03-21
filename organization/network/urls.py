@@ -51,7 +51,7 @@ urlpatterns = [
     url("^producers/submission/(?P<slug>.*)/validation/$", ProducerValidationView.as_view(), name='organization-producer-validation'),
 
     url("^producers/(?P<slug>.*)/detail/$", ProducerDetailView.as_view(), name='organization-producer-detail'),
-    url("^producers/list/$", ProducerListView.as_view(), name='organization-producer-list'),
+    url("^producers/$", ProducerListView.as_view(), name='organization-producer-list'),
 
     url("^jury/list/$", JuryListView.as_view(), name='organization-jury-list'),
     url("^producers/list/$", ProducerListView.as_view(), name='organization-producer-list'),
