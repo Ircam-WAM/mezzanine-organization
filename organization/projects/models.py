@@ -127,9 +127,9 @@ class ProjectTopic(Named):
 
     def __str__(self):
         if self.parent:
-            return ' - '.join((self.parent.name, self.key))
+            return ' - '.join((self.parent.name, self.name))
         else:
-            return self.key
+            return self.name
 
 
 class ProjectProgram(Named):
@@ -289,7 +289,7 @@ class ProjectDemo(Displayable, RichText, URL):
 class Repository(Named):
 
     system = models.ForeignKey('RepositorySystem', verbose_name=_('system'), related_name='repositories')
-    access = models.CharField(_('access'), max_length=64, choices=REPOSITORY_ACCESS_CHOICES, default='private')
+    access = models.CharField(_('access rights'), max_length=64, choices=REPOSITORY_ACCESS_CHOICES, default='private')
     branch = models.CharField(_('branch'), max_length=32, default='master')
     url = models.CharField(_('URL'), max_length=256, help_text='http(s) or ssh')
 
