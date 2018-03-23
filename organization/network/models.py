@@ -30,7 +30,7 @@ import string
 import datetime
 import mimetypes
 from geopy.geocoders import GoogleV3 as GoogleMaps
-from geopy.exc import GeocoderQueryError
+from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -151,6 +151,10 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
         """
         super(Organization, self).clean()
 
+        lat = None
+        lon = None
+        mappable_location = ''
+
         if self.lat and not self.lon:
             raise ValidationError("Longitude required if specifying latitude.")
 
@@ -171,9 +175,12 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
                 raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
             except TypeError as e:
                 raise ValidationError("The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.")
+            except GeocoderQuotaExceeded as e:
+                pass
             self.mappable_location = mappable_location
             self.lat = lat
             self.lon = lon
+
     def save(self, **kwargs):
         self.clean()
         super(Organization, self).save()
