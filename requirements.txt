@@ -20,8 +20,7 @@ pandas==0.19.2
 xlwt==1.2.0
 DateTimeRange==0.2.8
 workalendar==1.0.0
-django-instagram==0.2.0a1
--e git+https://github.com/marcopompili/django-instagram.git@master#egg=django-instagram
+git+https://github.com/marcopompili/django-instagram.git@master#egg=django-instagram
 django-extra-views==0.8.0
 bleach==1.5.0
 django-hijack==2.1.4
