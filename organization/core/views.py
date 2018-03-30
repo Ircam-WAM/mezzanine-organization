@@ -49,6 +49,8 @@ from django.template import Context, Engine, TemplateDoesNotExist, loader
 from django.utils import six
 from django.utils.encoding import force_text
 from django.views.decorators.csrf import requires_csrf_token
+from mezzanine.generic.models import Keyword
+from dal import autocomplete
  
 
 class SlugMixin(object):
@@ -278,3 +280,15 @@ def permission_denied(request, exception, template_name='errors/403.html'):
     return http.HttpResponseForbidden(
         template.render(request=request, context={'exception': force_text(exception)})
     )
+
+
+class KeywordAutocomplete(autocomplete.Select2QuerySetView):
+
+    def get_queryset(self):
+        qs = Keyword.objects.all()
+        if self.q:
+            qs = qs.filter(title__istartswith=self.q)
+        return qs
+
+    def get_result_value(self, result):
+        return str(result.id)

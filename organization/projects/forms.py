@@ -28,6 +28,7 @@ from django import forms
 from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
 from mezzanine.core.models import Orderable
+from mezzanine.generic.models import Keyword
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
 from organization.agenda.models import Event, DynamicContentEvent
@@ -50,6 +51,22 @@ class DynamicContentProjectForm(autocomplete.FutureModelForm):
     class Meta:
         model = DynamicContentProject
         fields = ('content_object',)
+
+
+class ProjectAdminForm(ModelForm):
+
+    keywords = forms.ModelMultipleChoiceField(
+        queryset=Keyword.objects.all(),
+        widget=autocomplete.ModelSelect2Multiple(
+            url='keyword_autocomplete',
+            attrs={
+                'data-tags': 'true',
+            },)
+    )
+
+    class Meta:
+        model = Project
+        fields = ('__all__')
 
 
 class ProjectForm(ModelForm):
