@@ -16,18 +16,17 @@ class ProjectAdminCustomDisplayable(DisplayableAdmin):
 
     fieldsets = (
         (None, {
-            "fields": ["title", "slug", "status", "topics"],
+            "fields": ["title", "description", "slug", "status", "topics"],
         }),
         (_("Meta data"), {
             "fields": ["_meta_title",
-                       ("description", "gen_description"),
+                       ("gen_description"),
                         "keywords", "in_sitemap"],
             "classes": ("collapse-closed",)
         }),
     )
 
     inlines = [ ProjectLinkInline,
-                DynamicContentProjectInline,
                 ProjectImageInline,
                 ]
     filter_horizontal = ['topics']
