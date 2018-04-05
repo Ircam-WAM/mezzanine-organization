@@ -38,7 +38,11 @@ urlpatterns = [
     url("^projects/demo/(?P<slug>.*)/$", ProjectDemoDetailView.as_view(), name='organization-project-demo-detail'),
     url("^projects/blog/(?P<slug>.*)/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
 
-    url("^collection/(?P<slug>.*)/$", ProjectCollectionDetailView.as_view(), name='organization-project-collection-detail'),
+    url("^projects/detail/(?P<slug>.*)/repository/readme$", ProjectRepositoryViewJSON.as_view(), name='organization-project-detail-repository-readme'),
+
+    url("^topics/detail/(?P<pk>.*)-(?P<name>.*)/$", ProjectTopicDetailView.as_view(), name='organization-project-topic-detail'),
+
+    url("^collections/detail/(?P<slug>.*)/$", ProjectCollectionDetailView.as_view(), name='organization-project-collection-detail'),
     url("^collections/$", ProjectCollectionListView.as_view(), name='organization-project-collection-list'),
 
     # due to this commit 73743f67f1d1574dbeff6cc22aae37986d257a92, redirect to old patterns 'project' without 's'

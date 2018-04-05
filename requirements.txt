@@ -29,4 +29,6 @@ django-guardian==1.4.9
 pyldap
 django-auth-ldap==1.2.10
 Faker
+python-gitlab
+markdown
 -e .

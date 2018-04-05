@@ -115,6 +115,9 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         else:
             return _('pending')
 
+    def get_repository_readme(self):
+        return "Booyah"
+
 
 class ProjectTopic(Named):
 

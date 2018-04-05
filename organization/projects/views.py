@@ -37,6 +37,28 @@ from organization.magazine.views import Article
 from organization.pages.models import CustomPage
 from datetime import datetime, date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+
+
+class JSONResponseMixin:
+    """
+    A mixin that can be used to render a JSON response.
+    """
+    def render_to_json_response(self, context, **response_kwargs):
+        """
+        Returns a JSON response, transforming 'context' to make the payload.
+        """
+        return JsonResponse(
+            self.get_data(context),
+            **response_kwargs
+        )
+
+    def get_data(self, context):
+        """
+        Returns an object that will be serialized as JSON by json.dumps().
+        """
+        #context = context.values()
+        return context
 
 
 class ProjectMixin(SingleObjectMixin):
@@ -66,6 +88,8 @@ class ProjectMixin(SingleObjectMixin):
         elif self.project.topic:
             context['page'] = self.project.topic.pages.all().first()
 
+        context['repository_readme'] = self.project.get_repository_readme()
+
         return context
 
 
@@ -73,6 +97,47 @@ class ProjectDetailView(SlugMixin, ProjectMixin, DetailView):
 
     model = Project
     template_name='projects/project_detail.html'
+
+
+class ProjectRepositoryViewJSON(JSONResponseMixin, SlugMixin, DetailView):
+
+    model = Project
+
+    def render_to_response(self, context):
+        return self.render_to_json_response(context)
+
+    def get_context_data(self, **kwargs):
+        
+        context = super(ProjectRepositoryViewJSON, self).get_context_data(**kwargs)
+        new_context = {
+            "repositories": []
+        }
+        
+        repository_link_type = LinkType.objects.filter(slug="repository").first()
+        project_repositories_links = context['project'].links.filter(link_type=repository_link_type)
+        
+        for link in project_repositories_links:
+
+            repository = {}
+            repository['id'] = link.id
+            repository['url'] = link.url
+
+            repository_host = 'https://forge-2.ircam.fr'  # TODO: detection from URL
+            repository_vendor = 'gitlab'  # TODO: detection from URL
+
+            if repository_vendor == 'gitlab':
+                import gitlab, markdown
+                gl_namespace = "voyazopoulos/this-kills-the-crab"  # TODO: detection from URL
+                gl = gitlab.Gitlab(repository_host)
+                gl_project = gl.projects.get(gl_namespace)
+                f = gl_project.files.get(file_path='README.md', ref='master')  # TODO: scan for READMEs (md, rst, txt)
+                # IDEA: let user choose file and branch in the project settings
+                repository['readme_raw_content'] = f.decode().decode("utf-8")
+                repository['readme_html_content'] = markdown.markdown(repository['readme_raw_content'])
+
+            new_context['repositories'].append(repository)
+
+        return new_context
 
 
 class ProjectICTDetailView(SlugMixin, ProjectMixin, DetailView):
@@ -528,6 +593,15 @@ class ProjectCollectionListView(ListView):
 
     model = ProjectCollection
     template_name='projects/project_collection_list.html'
+
+
+class ProjectTopicDetailView(DetailView):
+
+    model = ProjectTopic
+    template_name='projects/project_topic_detail.html'
+
+    # def get_object(self):
+    #     return get_object_or_404(ProjectTopic, pk=self.kwargs['id'])
 
 
 class DynamicCollectionProjectView(Select2QuerySetSequenceView):
