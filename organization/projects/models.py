@@ -116,7 +116,37 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             return _('pending')
 
     def get_repository_readme(self):
-        return "Booyah"
+
+        repository_link_type = LinkType.objects.filter(slug="repository").first()
+
+        if not repository_link_type:
+            return None
+
+        project_repositories_links = self.links.filter(link_type=repository_link_type)
+
+        if not project_repositories_links:
+            return None
+
+        for link in project_repositories_links:
+
+            repository = {}
+            repository['id'] = link.id
+            repository['url'] = link.url
+
+            repository_host = 'https://forge-2.ircam.fr'  # TODO: detection from URL
+            repository_vendor = 'gitlab'  # TODO: detection from URL
+
+            if repository_vendor == 'gitlab':
+                import gitlab, markdown
+                gl_namespace = "voyazopoulos/this-kills-the-crab"  # TODO: detection from URL
+                gl = gitlab.Gitlab(repository_host)
+                gl_project = gl.projects.get(gl_namespace)
+                f = gl_project.files.get(file_path='README.md', ref='master')  # TODO: scan for READMEs (md, rst, txt)
+                # IDEA: let user choose file and branch in the project settings
+                repository['readme_raw_content'] = f.decode().decode("utf-8")
+                repository['readme_html_content'] = markdown.markdown(repository['readme_raw_content'])
+
+        return repository
 
 
 class ProjectTopic(Named):
