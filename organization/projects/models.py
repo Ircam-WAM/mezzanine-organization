@@ -121,6 +121,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
     def get_repository_readme(self):
 
+        from repository import abstract
+
         repository_link_type = LinkType.objects.filter(slug="repository").first()
 
         if not repository_link_type:
@@ -134,24 +136,11 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         repositories = []
 
         for link in project_repositories_links:
-
             repository = {}
             repository['id'] = link.id
             repository['url'] = link.url
-
-            repository_host = 'https://forge-2.ircam.fr'  # TODO: detection from URL
-            repository_vendor = 'gitlab'  # TODO: detection from URL
-
-            if repository_vendor == 'gitlab':
-                import gitlab, markdown
-                gl_namespace = "voyazopoulos/this-kills-the-crab"  # TODO: detection from URL
-                gl = gitlab.Gitlab(repository_host)
-                gl_project = gl.projects.get(gl_namespace)
-                f = gl_project.files.get(file_path='README.md', ref='master')  # TODO: scan for READMEs (md, rst, txt)
-                # IDEA: let user choose file and branch in the project settings
-                repository['readme_raw_content'] = f.decode().decode("utf-8")
-                repository['readme_html_content'] = markdown.markdown(repository['readme_raw_content'])
-
+            #repository['readme_html_content'] = abstract.Repository(link.url, link.vendor)
+            repository['readme_html_content'] = abstract.Repository("https://forge-2.ircam.fr/voyazopoulos/this-kills-the-crab", "gitlab").get_readme()
             repositories.append(repository)
 
         # At the moment, we assume a project only has one repository
