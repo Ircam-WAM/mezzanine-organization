@@ -115,6 +115,10 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         else:
             return _('pending')
 
+    @property
+    def repository_readme(self):
+        return self.get_repository_readme()
+
     def get_repository_readme(self):
 
         repository_link_type = LinkType.objects.filter(slug="repository").first()
@@ -126,6 +130,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
         if not project_repositories_links:
             return None
+
+        repositories = []
 
         for link in project_repositories_links:
 
@@ -146,7 +152,10 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
                 repository['readme_raw_content'] = f.decode().decode("utf-8")
                 repository['readme_html_content'] = markdown.markdown(repository['readme_raw_content'])
 
-        return repository
+            repositories.append(repository)
+
+        # At the moment, we assume a project only has one repository
+        return repositories[0]
 
 
 class ProjectTopic(Named):
