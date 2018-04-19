@@ -22,7 +22,11 @@
 from mezzanine.utils.tests import TestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.firefox.webdriver import WebDriver
-from organization.agenda.models import *    
+from organization.agenda.models import *
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.select import Select
 
 # Create your tests here.
 
@@ -40,7 +44,7 @@ class EventTestsSelenium(StaticLiveServerTestCase):
     @classmethod
     def tearDownClass(cls):
         cls.selenium.quit()
-        super(MySeleniumTests, cls).tearDownClass()
+        super(EventTestsSelenium, cls).tearDownClass()
 
     def test_event_creation(self):
         self.selenium.get('%s%s' % (self.live_server_url, '/admin/mezzanine_agenda/event/'))
@@ -50,6 +54,8 @@ class EventTestsSelenium(StaticLiveServerTestCase):
         """
         self.selenium.driver.find_element_by_id('id_title_fr').send_keys('Mon évènement')
         self.selenium.driver.find_element_by_id('id_status_0').click()
+        self.selenium.driver.find_element_by_id('id_keywords_1').click()
+        self.selenium.driver.find_element_by_id('id_keywords_2').click()
         Select(self.selenium.driver.find_element_by_id('id_user')).select_by_visible_text('admin')
         self.selenium.driver.find_element_by_id('id_start_0').send_keys('19/04/2021')
         self.selenium.driver.find_element_by_id('id_start_1').send_keys('10:07:08')
@@ -67,8 +73,12 @@ class EventTestsSelenium(StaticLiveServerTestCase):
         Select(self.selenium.driver.find_element_by_id('id_departments-0-department')).select_by_visible_text('Organisation 1')
         Select(self.selenium.driver.find_element_by_id('id_persons-0-person')).select_by_visible_text('Personne 1')
         self.selenium.driver.find_element_by_name('_save').click()
-
-        
+        try:
+            WebDriverWait(self.selenium.driver, 5).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "success"))
+            )
+        finally:
+            self.selenium.driver.quit()
 
     def test_load_page(self):
         self.selenium.get('%s%s' % (self.live_server_url, '/admin/'))
