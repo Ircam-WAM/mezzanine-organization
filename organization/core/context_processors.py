@@ -77,5 +77,5 @@ def organization_settings(request):
             'research_slug' : research_slug,
             'menu_person_id': settings.MENU_PERSON_ID,
             'debug_mode' : settings.DEBUG,
-            'http_host' :  request.environ['HTTP_HOST']
+            'http_host' :  request.environ['HTTP_HOST'] if 'HTTP_HOST' in request.environ else ''
             }
