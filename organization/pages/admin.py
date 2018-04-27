@@ -63,9 +63,14 @@ class LinkImageInline(StackedDynamicInlineAdmin):
     model = LinkImage
 
 
+class LinkStyleInline(TabularDynamicInlineAdmin):
+    
+    model = LinkStyle    
+
+
 class LinkImageAdmin(LinkAdmin):
 
-    inlines = [LinkImageInline,]
+    inlines = [LinkStyleInline, LinkImageInline]
 
 
 class PersonListBlockAutocompleteInlineAdmin(TabularDynamicInlineAdmin):

@@ -15,6 +15,7 @@ ipython
 gitpython
 pygraphviz
 sphinx_rtd_theme
+Sphinx
 pandas==0.19.2
 xlwt==1.2.0
 DateTimeRange==0.2.8

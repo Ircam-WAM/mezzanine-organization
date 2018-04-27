@@ -39,4 +39,6 @@ urlpatterns = [
     url("^dynamic-content-page/$",  permission_required('page.can_edit')(DynamicContentPageView.as_view()), name='dynamic-content-page'),
     url("^home/$", HomeView.as_view(), name='organization-home'),
     url("^newsletter/$", NewsletterView.as_view(), name='organization-newsletter'),
+    url("^information/$", InformationView.as_view(), name='organization-information'),
+
 ]

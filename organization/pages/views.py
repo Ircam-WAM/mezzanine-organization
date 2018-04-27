@@ -34,7 +34,7 @@ from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import Home
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
-from organization.network.models import Person
+from organization.network.models import Person, Organization
 from django.shortcuts import redirect
 
 
@@ -169,6 +169,21 @@ class DynamicContentHomeMediaView(Select2QuerySetSequenceView):
 class NewsletterView(TemplateView):
 
     template_name = "pages/newsletter.html"
+
+
+class InformationView(ListView):
+    
+    model = Organization
+    context_object_name = 'organizations'
+    template_name = "pages/informations.html"
+
+    def get_queryset(self, **kwargs):
+        return self.model.objects.filter(is_on_map=True)
+
+    def get_context_data(self, **kwargs):
+        context = super(InformationView, self).get_context_data(**kwargs)
+        context['organization_types'] = self.get_queryset().values_list('type__name', 'type__css_class').order_by('type__name').distinct('type__name')
+        return context
 
 
 class DynamicContentPageView(Select2QuerySetSequenceView):
