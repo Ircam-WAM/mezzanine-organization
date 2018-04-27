@@ -1456,25 +1456,11 @@
     }
 },
 {
-    "model": "generic.keyword",
-    "pk": 1,
-    "fields": {
-        "site": 1,
-        "title": "oui",
-        "title_fr": "oui",
-        "title_en": null,
-        "slug": "oui"
-    }
-},
-{
-    "model": "generic.keyword",
+    "model": "sites.site",
     "pk": 2,
     "fields": {
-        "site": 1,
-        "title": "non",
-        "title_fr": "non",
-        "title_en": null,
-        "slug": "non"
+        "domain": "ircam",
+        "name": "ircam"
     }
 },
 {
@@ -1583,6 +1569,40 @@
     }
 },
 {
+    "model": "pages.page",
+    "pk": 1,
+    "fields": {
+        "keywords_string": "",
+        "site": 1,
+        "title": "recherche",
+        "title_fr": "recherche",
+        "title_en": "",
+        "slug": "recherche",
+        "_meta_title": null,
+        "_meta_title_fr": null,
+        "_meta_title_en": null,
+        "description": "recherche",
+        "description_fr": "recherche",
+        "description_en": "recherche",
+        "gen_description": true,
+        "created": "2018-04-20T15:16:44.134Z",
+        "updated": "2018-04-20T15:16:44.353Z",
+        "status": 2,
+        "publish_date": "2018-04-20T15:16:44.065Z",
+        "expiry_date": null,
+        "short_url": null,
+        "in_sitemap": true,
+        "_order": 0,
+        "content_model": "custompage",
+        "parent": null,
+        "in_menus": "2",
+        "titles": "recherche",
+        "titles_fr": "recherche",
+        "titles_en": "recherche",
+        "login_required": false
+    }
+},
+{
     "model": "mezzanine_agenda.season",
     "pk": 1,
     "fields": {
@@ -1621,6 +1641,49 @@
     "pk": 1,
     "fields": {
         "playlist": 1
+    }
+},
+{
+    "model": "organization-pages.custompage",
+    "pk": 1,
+    "fields": {
+        "content": "",
+        "content_fr": "",
+        "content_en": "",
+        "sub_title": "",
+        "sub_title_fr": "",
+        "sub_title_en": "",
+        "menu_alinea": false
+    }
+},
+{
+    "model": "organization-pages.dynamiccontenthomebody",
+    "pk": 1,
+    "fields": {
+        "_order": 0,
+        "content_type": 69,
+        "object_id": 1,
+        "home": 1
+    }
+},
+{
+    "model": "organization-pages.home",
+    "pk": 1,
+    "fields": {
+        "keywords_string": "",
+        "site": 1,
+        "title": "page home",
+        "slug": "page-home",
+        "_meta_title": "",
+        "description": "page home",
+        "gen_description": true,
+        "created": "2018-04-20T14:48:42.795Z",
+        "updated": "2018-04-20T14:58:52.802Z",
+        "status": 2,
+        "publish_date": "2018-04-20T14:48:42Z",
+        "expiry_date": null,
+        "short_url": "",
+        "in_sitemap": true
     }
 },
 {
@@ -6618,7 +6681,7 @@
     "pk": 2,
     "fields": {
         "password": "pbkdf2_sha256$24000$3Zdxm8ZXcy7G$Ok5liORCHVIOaN5UvvEUX7rHVBNc3eBkhB0Dxglfy7g=",
-        "last_login": "2018-04-19T14:17:42.763Z",
+        "last_login": "2018-04-20T15:13:50.106Z",
         "is_superuser": true,
         "username": "alebrun",
         "first_name": "",
@@ -6651,7 +6714,7 @@
         "description_en": "Mon \u00e9v\u00e8nement",
         "gen_description": true,
         "created": "2018-04-19T08:28:52.308Z",
-        "updated": "2018-04-20T10:30:01.028Z",
+        "updated": "2018-04-20T15:00:34.598Z",
         "status": 2,
         "publish_date": "2018-04-19T08:28:52Z",
         "expiry_date": null,
@@ -8253,6 +8316,84 @@
         "object_repr": "ev1",
         "action_flag": 2,
         "change_message": "Changed title and id."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+        "action_time": "2018-04-20T14:05:48.797Z",
+        "user": 2,
+        "content_type": 11,
+        "object_id": "2",
+        "object_repr": "non",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+        "action_time": "2018-04-20T14:05:48.820Z",
+        "user": 2,
+        "content_type": 11,
+        "object_id": "1",
+        "object_repr": "oui",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+        "action_time": "2018-04-20T14:48:42.888Z",
+        "user": 2,
+        "content_type": 67,
+        "object_id": "1",
+        "object_repr": "page home",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+        "action_time": "2018-04-20T14:53:51.685Z",
+        "user": 2,
+        "content_type": 7,
+        "object_id": "2",
+        "object_repr": "ircam",
+        "action_flag": 1,
+        "change_message": "Added."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+        "action_time": "2018-04-20T14:58:52.886Z",
+        "user": 2,
+        "content_type": 67,
+        "object_id": "1",
+        "object_repr": "page home",
+        "action_flag": 2,
+        "change_message": "Changed keywords. Added Body \"DynamicContentHomeBody object\"."
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 22,
+    "fields": {
+        "action_time": "2018-04-20T15:16:44.544Z",
+        "user": 2,
+        "content_type": 53,
+        "object_id": "1",
+        "object_repr": "recherche",
+        "action_flag": 1,
+        "change_message": "Ajout."
     }
 }
 ]

@@ -185,10 +185,10 @@ class ProjectCallFileTranslationOptions(TranslationOptions):
 
     pass
 
-@register(ProjectContact)
-class ProjectContactTranslationOptions(TranslationOptions):
+# @register(ProjectContact)
+# class ProjectContactTranslationOptions(TranslationOptions):
 
-    pass
+#     pass
 
 @register(ProjectTopic)
 class ProjectTopicTranslationOptions(TranslationOptions):
