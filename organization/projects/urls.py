@@ -38,8 +38,6 @@ urlpatterns = [
     url("^projects/demo/(?P<slug>.*)/$", ProjectDemoDetailView.as_view(), name='organization-project-demo-detail'),
     url("^projects/blog/(?P<slug>.*)/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
 
-    url("^projects/detail/(?P<slug>.*)/repository/readme$", ProjectRepositoryViewJSON.as_view(), name='organization-project-detail-repository-readme'),
-
     url("^topics/detail/(?P<pk>.*)-(?P<name>.*)/$", ProjectTopicDetailView.as_view(), name='organization-project-topic-detail'),
 
     url("^collections/detail/(?P<slug>.*)/$", ProjectCollectionDetailView.as_view(), name='organization-project-collection-detail'),

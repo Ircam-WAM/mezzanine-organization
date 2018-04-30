@@ -116,8 +116,11 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             return _('pending')
 
     @property
-    def repository_readme(self):
-        return self.get_repository_readme()
+    def repositories(self):
+        repositories = []
+        # NOTE: the client assume a project can hold multiple repos
+        repositories.append(self.get_repository_readme())
+        return repositories
 
     def get_repository_readme(self):
 
