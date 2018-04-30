@@ -49,6 +49,10 @@ REPOSITORY_ACCESS_CHOICES = [
     ('private', _('private')),
 ]
 
+REPOSITORY_VENDORS = [
+    ('gitlab', _('Gitlab')),
+]
+
 PROJECT_STATUS_CHOICES = (
     (0, _('rejected')),
     (1, _('pending')),
@@ -123,26 +127,16 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
         from repository import abstract
 
-        repository_link_type = LinkType.objects.filter(slug="repository").first()
-
-        if not repository_link_type:
-            return None
-
-        project_repositories_links = self.links.filter(link_type=repository_link_type)
-
-        if not project_repositories_links:
-            return None
-
         repositories = []
 
-        for link in project_repositories_links:
-            repository = {}
-            repository['id'] = link.id
-            repository['url'] = link.url
-            #repository['readme_html_content'] = abstract.Repository(link.url, link.vendor)
-            repository['readme_html'] = abstract.Repository("https://forge-2.ircam.fr/voyazopoulos/this-kills-the-crab", "gitlab").get_readme()
-            repository['summary'] = abstract.Repository("https://forge-2.ircam.fr/voyazopoulos/this-kills-the-crab", "gitlab").get_summary()
-            repositories.append(repository)
+        for project_repository in self.project_repositories.all():
+            r = {}
+            repository = project_repository.repository
+            r['id'] = repository.id
+            r['url'] = repository.url
+            r['readme_html'] = abstract.Repository(repository.url, "gitlab").get_readme()
+            r['summary'] = abstract.Repository(repository.url, "gitlab").get_summary()
+            repositories.append(r)
 
         # At the moment, we assume a project only has one repository
         return repositories
@@ -319,53 +313,38 @@ class ProjectDemo(Displayable, RichText, URL):
             self.build()
 
 
-class Repository(Named):
+class Repository(models.Model):
 
     system = models.ForeignKey('RepositorySystem', verbose_name=_('system'), related_name='repositories')
-    access = models.CharField(_('access'), max_length=64, choices=REPOSITORY_ACCESS_CHOICES, default='private')
-    branch = models.CharField(_('branch'), max_length=32, default='master')
-    url = models.CharField(_('URL'), max_length=256, help_text='http(s) or ssh')
+    url = models.CharField(_('URL'), max_length=256, help_text='http(s)')
+    vendor = models.CharField(_('vendor'), max_length=64, choices=REPOSITORY_VENDORS, default='gitlab')
+
+    def __str__(self):
+        return self.url
 
     class Meta:
         verbose_name = _('repository')
         verbose_name_plural = _("repositories")
 
-    def save(self, *args, **kwargs):
-        super(Repository, self).save(args, kwargs)
-        os.path.exists(self.directory)
-        if not os.path.exists(self.directory):
-            self.clone()
-        self.checkout()
-
-    @property
-    def directory(self):
-        dir_name = self.url.split('/')[-1].split('.')[0]
-        return settings.PROJECT_DEMOS_DIR + dir_name
-
-    def clone(self):
-        os.chdir(settings.PROJECT_DEMOS_DIR)
-        os.system(' '.join((self.system.clone_command, self.url)))
-
-    def pull(self):
-        os.chdir(self.directory)
-        os.system(' '.join((self.system.pull_command, self.branch)))
-
-    def checkout(self):
-        os.chdir(self.directory)
-        os.system(' '.join((self.system.checkout_command, self.branch)))
-
 
 class RepositorySystem(Named):
-
-    clone_command = models.CharField(_('clone command'), max_length=256)
-    pull_command = models.CharField(_('pull command'), max_length=256)
-    checkout_command = models.CharField(_('checkout command'), max_length=256)
-    branch_command = models.CharField(_('branch command'), max_length=256)
 
     class Meta:
         verbose_name = _('repository system')
         verbose_name_plural = _("repository systems")
 
+
+class ProjectRepository(models.Model):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='project_repositories', blank=True, null=True, on_delete=models.SET_NULL)
+    repository = models.ForeignKey(Repository, verbose_name=_('repository'), related_name='project_repositories', blank=True, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.repository.url
+
+    class Meta:
+        verbose_name = _('project repository')
+        verbose_name_plural = _("project repositories")
 
 class ProjectRelatedTitle(RelatedTitle):
 

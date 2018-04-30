@@ -12,6 +12,11 @@ from organization.projects.models import *
 from django.utils.translation import ugettext_lazy as _
 
 
+class ProjectRepositoryInline(StackedDynamicInlineAdmin):
+
+    model = ProjectRepository
+
+
 class ProjectAdminCustomDisplayable(DisplayableAdmin):
 
     fieldsets = (
@@ -26,8 +31,9 @@ class ProjectAdminCustomDisplayable(DisplayableAdmin):
         }),
     )
 
-    inlines = [ ProjectLinkInline,
+    inlines = [ ProjectRepositoryInline,
                 ProjectImageInline,
+                ProjectLinkInline
                 ]
     filter_horizontal = ['topics']
     list_filter = deepcopy(ProjectAdminDisplayable.list_filter)

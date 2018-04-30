@@ -214,3 +214,9 @@ class ProjectCollectionImageTranslationOptions(TranslationOptions):
 class DynamicCollectionProjectTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(ProjectRepository)
+class RepositoryTranslationOptions(TranslationOptions):
+
+    pass
