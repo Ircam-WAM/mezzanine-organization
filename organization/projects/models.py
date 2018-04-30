@@ -117,12 +117,9 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
     @property
     def repositories(self):
-        repositories = []
-        # NOTE: the client assume a project can hold multiple repos
-        repositories.append(self.get_repository_readme())
-        return repositories
+        return self.get_repositories()
 
-    def get_repository_readme(self):
+    def get_repositories(self):
 
         from repository import abstract
 
@@ -143,11 +140,12 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             repository['id'] = link.id
             repository['url'] = link.url
             #repository['readme_html_content'] = abstract.Repository(link.url, link.vendor)
-            repository['readme_html_content'] = abstract.Repository("https://forge-2.ircam.fr/voyazopoulos/this-kills-the-crab", "gitlab").get_readme()
+            repository['readme_html'] = abstract.Repository("https://forge-2.ircam.fr/voyazopoulos/this-kills-the-crab", "gitlab").get_readme()
+            repository['summary'] = abstract.Repository("https://forge-2.ircam.fr/voyazopoulos/this-kills-the-crab", "gitlab").get_summary()
             repositories.append(repository)
 
         # At the moment, we assume a project only has one repository
-        return repositories[0]
+        return repositories
 
 
 class ProjectTopic(Named):
