@@ -73,6 +73,8 @@ class HomeView(SlugMixin, DetailView):
 
 class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
 
+    paginate_by = settings.DAL_MAX_RESULTS
+
     def get_queryset(self):
 
         articles = Article.objects.all()
@@ -146,6 +148,8 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
 
 class DynamicContentHomeMediaView(Select2QuerySetSequenceView):
 
+    paginate_by = settings.DAL_MAX_RESULTS
+
     def get_queryset(self):
 
         playlists = Playlist.objects.all()
@@ -168,6 +172,8 @@ class NewsletterView(TemplateView):
 
 
 class DynamicContentPageView(Select2QuerySetSequenceView):
+
+    paginate_by = settings.DAL_MAX_RESULTS
 
     def get_queryset(self):
 

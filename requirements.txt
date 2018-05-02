@@ -19,7 +19,7 @@ pandas==0.19.2
 xlwt==1.2.0
 DateTimeRange==0.2.8
 workalendar==1.0.0
-django-instagram==0.2.0a1
+git+https://github.com/marcopompili/django-instagram.git@master#egg=django-instagram
 django-extra-views==0.8.0
 bleach==1.5.0
 django-hijack==2.1.4
@@ -28,4 +28,6 @@ django-compat==1.0.14
 django-guardian==1.4.9
 pyldap
 django-auth-ldap==1.2.10
+selenium==3.11.0
+lxml==4.2.0
 -e .
