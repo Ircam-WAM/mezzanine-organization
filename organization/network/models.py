@@ -133,6 +133,7 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
     initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
     is_on_map = models.BooleanField(_('is on map'), default=False, blank=True)
     is_host = models.BooleanField(_('is host'), default=False, blank=True)
+    is_main = models.BooleanField(_('is main'), default=False, blank=True)
     telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
     opening_times = models.TextField(_('opening times'), blank=True)
     subway_access = models.TextField(_('subway access'), blank=True)
