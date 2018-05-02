@@ -44,7 +44,12 @@ from organization.magazine.models import Article
 from pprint import pprint
 from django.contrib.auth.mixins import LoginRequiredMixin
 from organization.network.models import *
-
+from django import http
+from django.template import Context, Engine, TemplateDoesNotExist, loader
+from django.utils import six
+from django.utils.encoding import force_text
+from django.views.decorators.csrf import requires_csrf_token
+ 
 
 class SlugMixin(object):
 
@@ -252,3 +257,24 @@ class UserProducerView(LoginRequiredMixin, ListView):
         user = self.request.user
         qs = Organization.objects.filter(user=user).select_related().order_by('name')
         return qs
+
+
+# This can be called when CsrfViewMiddleware.process_view has not run,
+# therefore need @requires_csrf_token in case the template needs
+# {% csrf_token %}.
+@requires_csrf_token
+def permission_denied(request, exception, template_name='errors/403.html'):
+    """
+    Permission denied (403) handler.
+    Templates: :template:`403.html`
+    Context: None
+    If the template does not exist, an Http403 response containing the text
+    "403 Forbidden" (as per RFC 2616) will be returned.
+    """
+    try:
+        template = loader.get_template(template_name)
+    except TemplateDoesNotExist:
+        return http.HttpResponseForbidden('<h1>403 Forbidden</h1>', content_type='text/html')
+    return http.HttpResponseForbidden(
+        template.render(request=request, context={'exception': force_text(exception)})
+    )

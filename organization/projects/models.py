@@ -127,9 +127,9 @@ class ProjectTopic(Named):
 
     def __str__(self):
         if self.parent:
-            return ' - '.join((self.parent.name, self.key))
+            return ' - '.join((self.parent.name, self.name))
         else:
-            return self.key
+            return self.name
 
 
 class ProjectProgram(Named):

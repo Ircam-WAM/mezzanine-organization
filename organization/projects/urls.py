@@ -38,6 +38,14 @@ urlpatterns = [
     url("^projects/blog/(?P<slug>.*)/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
     url("^projects/list/$", ProjectListView.as_view(), name='organization-project-list'),
 
+    # due to this commit 73743f67f1d1574dbeff6cc22aae37986d257a92, redirect to old patterns 'project' without 's'
+    url("^project/detail/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-detail'), name="redirect-project-detail"),
+    url("^project/demo/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-demo-detail'), name="redirect-project-demo"),
+    url("^project/blog/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-blogpage-detail'), name="redirect-project-blog"),
+
+    url("^ict-projects/list/$", ProjectICTListView.as_view(), name='organization-ict-project-list'),
+    url("^ict-projects/(?P<slug>.*)/detail/$", ProjectICTDetailView.as_view(), name='organization-ict-project-detail'),
+
     url("^calls/(?P<slug>.*)/projects/create/public/$", ProjectICTCreatePublicFundingView.as_view(), name='organization-project-public-create'),
     url("^calls/(?P<slug>.*)/projects/create/private/$", ProjectICTCreatePrivateFundingView.as_view(), name='organization-project-private-create'),
     url("^calls/(?P<slug>.*)/projects/validation/$", ProjectICTValidationView.as_view(), name='organization-project-validation'),
