@@ -133,6 +133,9 @@ class CandidacyListView(ListView):
 
 
 class CandidacyAutocomplete(Select2QuerySetSequenceView):
+    
+    paginate_by = settings.DAL_MAX_RESULTS
+    
     def get_queryset(self):
 
         articles = Article.objects.all()

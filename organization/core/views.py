@@ -198,7 +198,7 @@ def autocomplete_result_formatting(self, context):
         children = []
         for result in results:
             text = six.text_type(result)
-            if model._meta.verbose_name == "Event":
+            if model.__name__ == "Event":
                 event_date = timezone.localtime(result.start)
                 is_parent = ""
                 if not result.parent:

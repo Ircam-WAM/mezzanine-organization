@@ -256,6 +256,7 @@ def filter_content(dynamic_contents):
                 dict["other"].append(dc)
     return dict
 
+@register.filter
 def get_vars(object):
     return vars(object)
 
@@ -387,8 +388,6 @@ def tag_is_in_menu(page, tag):
     if tag and page :
         if page.slug.lower().find(tag.slug.lower()) != -1:
             is_in_menu = True
-    return is_in_menu
-
 
 @register.filter
 def serialize(value, serializer="json"):
