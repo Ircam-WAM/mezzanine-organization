@@ -540,7 +540,7 @@ class ProjectTopicDetailView(DetailView):
     #     return get_object_or_404(ProjectTopic, pk=self.kwargs['id'])
 
 
-class DynamicCollectionProjectView(Select2QuerySetSequenceView):
+class Pivot_Project_ProjectCollection_View(Select2QuerySetSequenceView):
 
     paginate_by = settings.DAL_MAX_RESULTS
 

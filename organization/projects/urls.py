@@ -32,7 +32,7 @@ from organization.projects.views import *
 
 urlpatterns = [
     url("^dynamic-content-project/$",  permission_required('project.can_edit')(DynamicContentProjectView.as_view()), name='dynamic-content-project'),
-    url("^dynamic-collection-project/$",  permission_required('project.can_edit')(DynamicCollectionProjectView.as_view()), name='dynamic-collection-project'),
+    url("^dynamic-collection-project/$",  permission_required('project.can_edit')(Pivot_Project_ProjectCollection_View.as_view()), name='dynamic-collection-project'),
 
     url("^projects/detail/(?P<slug>.*)/$", ProjectDetailView.as_view(), name='organization-project-detail'),
     url("^projects/demo/(?P<slug>.*)/$", ProjectDemoDetailView.as_view(), name='organization-project-demo-detail'),

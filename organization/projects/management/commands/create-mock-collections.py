@@ -56,7 +56,7 @@ class Command(BaseCommand):
 
             for project in projects:
 
-                rel = DynamicCollectionProject()
+                rel = Pivot_Project_ProjectCollection()
                 rel.collection = collection
                 rel.project = project
                 rel.save()

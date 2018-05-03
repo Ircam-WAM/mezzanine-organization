@@ -210,8 +210,8 @@ class ProjectCollectionImageTranslationOptions(TranslationOptions):
     pass
 
 
-@register(DynamicCollectionProject)
-class DynamicCollectionProjectTranslationOptions(TranslationOptions):
+@register(Pivot_Project_ProjectCollection)
+class Pivot_Project_ProjectCollectionTranslationOptions(TranslationOptions):
 
     pass
 

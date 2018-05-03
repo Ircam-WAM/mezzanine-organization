@@ -31,7 +31,7 @@ from organization.projects.models import *
 from organization.pages.models import *
 from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
-from organization.projects.forms import DynamicContentProjectForm, DynamicCollectionProjectForm
+from organization.projects.forms import DynamicContentProjectForm, Pivot_Project_ProjectCollection_Form
 from organization.core.admin import null_filter
 
 
@@ -283,8 +283,8 @@ class ProjectCollectionImageInline(TabularDynamicInlineAdmin):
 
 class ProjectCollectionProjectInline(TabularDynamicInlineAdmin):
 
-    model = DynamicCollectionProject
-    form = DynamicCollectionProjectForm
+    model = Pivot_Project_ProjectCollection
+    form = Pivot_Project_ProjectCollection_Form
 
     class Media:
         js = (

@@ -156,10 +156,10 @@ class ProjectResidencyForm(ModelForm):
         fields = '__all__'
 
 
-class DynamicCollectionProjectForm(autocomplete.FutureModelForm):
+class Pivot_Project_ProjectCollection_Form(autocomplete.FutureModelForm):
 
     class Meta:
-        model = DynamicCollectionProject
+        model = Pivot_Project_ProjectCollection
         fields = ('__all__')
         widgets = {
             'projects': autocomplete.ModelSelect2Multiple(

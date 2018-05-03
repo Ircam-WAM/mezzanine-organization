@@ -543,9 +543,9 @@ class ProjectCollectionImage(Image):
     collection = models.ForeignKey(ProjectCollection, verbose_name=_('collection'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-class DynamicCollectionProject(DynamicContent, Orderable):
+class Pivot_Project_ProjectCollection(DynamicContent, Orderable):
 
-    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='dynamic_collection_project', blank=True, null=True, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='collections_pivot', blank=True, null=True, on_delete=models.CASCADE)
     collection = models.ForeignKey(ProjectCollection, verbose_name=_('collection'), related_name='dynamic_collection_collection', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
