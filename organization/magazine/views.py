@@ -89,7 +89,10 @@ class ArticleDetailView(SlugMixin, DetailView):
             else :
                 context["related"]["other"].append(rc)
         if self.object.department:
-            context['department_weaving_css_class'] = self.object.department.pages.first().weaving_css_class
+            context['department_weaving_css_class'] = ''
+            page = self.object.department.pages.first()
+            if page:
+                context['department_weaving_css_class'] = page.weaving_css_class
             context['department_name'] = self.object.department.name
         return context
 
