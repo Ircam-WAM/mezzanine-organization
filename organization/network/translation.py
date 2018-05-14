@@ -63,7 +63,7 @@ class TeamPageTranslationOptions(TranslationOptions):
 @register(TeamLink)
 class TeamLinkTranslationOptions(TranslationOptions):
 
-    fields = ()
+    fields = ('title',)
 
 
 @register(Person)

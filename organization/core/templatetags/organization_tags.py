@@ -255,6 +255,7 @@ def filter_content(dynamic_contents):
                 dict["other"].append(dc)
     return dict
 
+@register.filter
 def get_vars(object):
     return vars(object)
 
