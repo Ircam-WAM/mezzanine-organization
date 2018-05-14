@@ -22,11 +22,21 @@
 from mezzanine.utils.tests import TestCase
 from organization.shop.models import *
 from cartridge.shop.models import Product
+from django.core import urlresolvers
+
+class URLTests(TestCase):
+    
+    def test_shop_url(self):
+        response = self.client.get('/shop/wishlist/')
+        self.assertEqual(response.status_code,200)
 
 class ProductTests(TestCase):
     
     def setUp(self):
         super(ProductTests, self).setUp()
+        app = "shop"
+        model = "product" 
+        self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         self.product = Product.objects.create()
 
     def test_product_deletion(self):
@@ -39,6 +49,40 @@ class ProductTests(TestCase):
         self.assertTrue(product_link in ProductLink.objects.filter(product__isnull=True))
         self.assertFalse(product_prestashop_product in ProductPrestashopProduct.objects.all())
         self.assertFalse(self.product in Product.objects.all())
+
+    def test_product_display_for_everyone(self):
+        self.client.logout()
+        response = self.client.get(self.product.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "shop/product.html")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.product.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "shop/product.html")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.product.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "shop/product.html")
+
+    def test_product_admin(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)   
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_product_admin_creation(self):
+        self.client.login(username='test', password='test')
+        nb = Product.objects.count()
+        response = self.client.post(self.url, {"title" : 'title','activities-INITIAL_FORMS':'0','activities-TOTAL_FORMS':'1','blocks-INITIAL_FORMS':'0','blocks-TOTAL_FORMS':'1','files-INITIAL_FORMS':'0',
+        'files-TOTAL_FORMS':'1','images-INITIAL_FORMS':'0','images-TOTAL_FORMS':'1','links-INITIAL_FORMS':'0','links-TOTAL_FORMS':'1','prestashop_products-INITIAL_FORMS':'0','prestashop_products-TOTAL_FORMS':'1',
+        'variations-INITIAL_FORMS':'0','variations-TOTAL_FORMS':'1','status':'2'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(nb+1,Product.objects.count())
 
 class ProductListTests(TestCase):
     

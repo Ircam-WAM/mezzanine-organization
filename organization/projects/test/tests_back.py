@@ -28,6 +28,8 @@ from django.utils.translation import ugettext_lazy as _
 import datetime
 from django.core.files.images import ImageFile
 import tempfile
+from django.core import urlresolvers
+from unittest import skip
 
 PROJECT_STATUS_CHOICES = (
     (0, _('rejected')),
@@ -35,6 +37,44 @@ PROJECT_STATUS_CHOICES = (
     (2, _('in process')),
     (3, _('accepted')),
 )
+class URLTests(TestCase):
+    def setUp(self):
+        super(URLTests, self).setUp()
+        self.project_topic = ProjectTopic.objects.create(name="ICT",key="ICT")
+        self.project = Project.objects.create(title='django',content="django project")
+        self.project_demo = ProjectDemo.objects.create(title="django", project= self.project, url="https://wave.ircam.fr/demo/bachotheque/")
+        self.project_blog_page = ProjectBlogPage.objects.create(project=self.project,content='django project blog page')
+
+    def test_projects_detail_url(self):
+        response = self.client.get('/projects/detail/' + self.project.slug + "/")
+        self.assertEqual(response.status_code,200)  
+        self.assertContains(response,"django project") 
+        response = self.client.get('/project/detail/' + self.project.slug + "/")
+        self.assertEqual(response.status_code,302)
+
+    def test_projects_demo_url(self):
+        response = self.client.get('/projects/demo/' + self.project_demo.slug + "/")
+        self.assertEqual(response.status_code,200)
+        response = self.client.get('/project/demo/' + self.project_demo.slug + "/")
+        self.assertEqual(response.status_code,302)
+
+    def test_projects_blog_page_url(self):
+        response = self.client.get('/projects/blog/' + self.project_blog_page.slug + "/")
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response,"django project blog page") 
+        response = self.client.get('/project/blog/' + self.project_blog_page.slug + "/")
+        self.assertEqual(response.status_code,302)      
+
+    @skip("Not implemented")
+    def test_ict_projects_list(self):
+        response = self.client.get('/ict-projects/list/')      
+        self.assertEqual(response.status_code,200)
+    
+    @skip("Not implemented")
+    def test_ict_projects_detail(self):
+        print('/ict-projects/' + self.project_topic.slug + '/detail/')
+        response = self.client.get('/ict-projects/' + self.project_topic.slug + '/detail/')      
+        self.assertEqual(response.status_code,200)
 
 class ProjectTests(TestCase):
 
@@ -42,6 +82,9 @@ class ProjectTests(TestCase):
         tomorrow = datetime.date.today() + datetime.timedelta(days=1)
         yesterday = datetime.date.today() - datetime.timedelta(days=1)
         super(ProjectTests, self).setUp()
+        app = "organization-projects"
+        model = "project" 
+        self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         self.project_program = ProjectProgram.objects.create()
         self.project_program_type = ProjectProgramType.objects.create()
         self.project_call = ProjectCall.objects.create()
@@ -173,6 +216,51 @@ class ProjectTests(TestCase):
         self.assertTrue(self.project in Project.objects.filter(topic__isnull=True))
         self.project.delete()
 
+    def test_project_display_for_everyone(self):
+        self.client.logout()
+        response = self.client.get(self.project.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "projects/project_detail.html")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.project.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "projects/project_detail.html")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.project.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "projects/project_detail.html")
+
+    @skip("No translation")
+    def test_project_admin(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)   
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)   
+
+    @skip("No translation")
+    def test_project_admin_creation(self):
+        self.client.login(username='test', password='test')
+        nb = Project.objects.count()
+        response = self.client.post(self.url, {"title":'current project',"date_from" : '12/04/2018',"date_to": '12/05/2018'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(nb+1,Project.objects.count())
+
+    def test_project_admin_edition(self):
+        self.client.logout()
+        response = self.client.get(self.project.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.project.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.project.get_absolute_url())
+        self.assertContains(response,"editable")
+
 class ProjectPublicDataTests(TestCase):
     
     def setUp(self):
@@ -261,9 +349,9 @@ class ProjectResidencyTests(TestCase):
         self.project_test = Project.objects.create()
         self.artist = Person.objects.create() 
         self.project = ProjectResidency.objects.create(project = self.project_test, artist = self.artist, validated = True, producer_commitment="producer_commitment")
-        self.event = Event.objects.create(title="mon-evenement", start=datetime.date.today(), user=self._user, status=CONTENT_STATUS_PUBLISHED)
+        self.event = Event.objects.create(title="mon-evenement", start=datetime.date.today(), user=self._user, status=CONTENT_STATUS_PUBLISHED,publish_date=datetime.date.today())
         self.residency_event = ProjectResidencyEvent.objects.create(residency = self.project, event = self.event)
-        self.article = Article.objects.create(title="Post", user=self._user, status=CONTENT_STATUS_PUBLISHED)
+        self.article = Article.objects.create(title="Post", user=self._user, status=CONTENT_STATUS_PUBLISHED,publish_date=datetime.date.today())
         self.project_residency_article = ProjectResidencyArticle.objects.create(residency = self.project, article= self.article)
 
     def test_project_events(self):

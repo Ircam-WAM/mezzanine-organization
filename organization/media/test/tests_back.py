@@ -21,6 +21,63 @@
 
 from mezzanine.utils.tests import TestCase
 from organization.media.models import *
+from django.contrib.auth import get_user_model as User
+from django.core import urlresolvers
+from unittest import skip
+
+class URLTests(TestCase):
+    
+    def setUp(self):
+        super(URLTests, self).setUp()
+        self.category = MediaCategory.objects.create(title="video")
+        self.media = Media.objects.create(title="video", external_id = "A10", poster_url="www.ircam.fr", category = self.category)   
+        self.playlist = Playlist.objects.create(type="audio",title="playlist django", description="playing django")
+        self.stream = LiveStreaming.objects.create(title="live",type="html5")
+
+
+    def test_playlist_slug_detail_url(self):
+        response = self.client.get('/playlists/' + self.playlist.slug + "/detail/")
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response,"playing django")        
+
+    def test_playlist_list_url(self):
+        response = self.client.get('/playlists/list/')
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response,"playlist django")    
+
+    def test_playlist_list_type_url(self):
+        response = self.client.get('/playlists/list/video/')
+        self.assertEqual(response.status_code,200)
+        self.assertNotContains(response,"playlist django")  
+        response = self.client.get('/playlists/list/audio/')
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response,"playlist django")    
+
+    @skip("No template yet")
+    def test_playlist_overlay(self):
+        response = self.client.get('/playlists/overlay/' + self.playlist.slug + "/")
+        self.assertEqual(response.status_code,200)
+
+    @skip("No template yet")
+    def test_media_type_slug_detail_url(self):
+        response = self.client.get('/media/video/' + self.media.slug + "/detail/")
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response,"playing django")    
+
+    @skip("No template yet")
+    def test_media_type_slug_overlay_url(self):
+        response = self.client.get('/media/video/' + self.media.slug + "/overlay/")
+        self.assertEqual(response.status_code,200)
+
+    def test_media_autocomplete(self):
+        self.client.login(username="test",password="test")
+        response = self.client.get('/playlist-media-autocomplete/')
+        self.assertEqual(response.status_code,200)        
+
+    @skip("No template yet")
+    def test_stream_slug_type_detail_url(self):
+        response = self.client.get('/streams/live/html5/detail/')
+        self.assertEqual(response.status_code,200)        
 
 class MediaTests(TestCase):
     
@@ -53,7 +110,7 @@ class MediaTests(TestCase):
         self.assertEqual(0,Media.objects.filter(external_id ="A10").count())
         self.assertEqual(1,Media.objects.filter(external_id="A11").count())     
 
-    def test_article_deletion(self):
+    def test_media_deletion(self):
         media_transcoded = MediaTranscoded.objects.create(media=self.media)
         media_image = MediaImage.objects.create(media=self.media)
         playlist_media = PlaylistMedia.objects.create(media=self.media)
@@ -67,7 +124,11 @@ class PlaylistTests(TestCase):
     
     def setUp(self):
         super(PlaylistTests,self).setUp()
+        self.user = User().objects.create_user(username="user", password='test')
         self.playlist = Playlist.objects.create(type="audio")
+        app = "organization-media"
+        model = "playlist" 
+        self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
     
     def test_playlist_creation(self):
         self.assertTrue(isinstance(self.playlist, Playlist))
@@ -77,7 +138,7 @@ class PlaylistTests(TestCase):
         self.assertTrue(self.playlist in Playlist.objects.all())
         self.assertTrue(self.playlist in Playlist.objects.filter(type="audio"))
 
-    def test_article_update(self):
+    def test_playlist_update(self):
         self.playlist.type="video"
         self.assertEqual(1,Playlist.objects.filter(type = "audio").count())
         self.assertEqual(0,Playlist.objects.filter(type = "video").count())
@@ -85,10 +146,49 @@ class PlaylistTests(TestCase):
         self.assertEqual(0,Playlist.objects.filter(type = "audio").count())
         self.assertEqual(1,Playlist.objects.filter(type = "video").count())        
 
-    def test_article_deletion(self):
+    def test_playlist_deletion(self):
         playlist_media = PlaylistMedia.objects.create(playlist=self.playlist)
         playlist_related = PlaylistRelated.objects.create(playlist=self.playlist)
         self.playlist.delete()
         self.assertTrue(playlist_media in PlaylistMedia.objects.filter(playlist__isnull=True))
         self.assertTrue(playlist_related in PlaylistRelated.objects.filter(playlist__isnull=True))
         self.assertFalse(self.playlist in Playlist.objects.all())
+
+    def test_playlist_display_for_everyone(self):
+        self.client.logout()
+        response = self.client.get(self.playlist.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "media/playlist_detail.html")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.playlist.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "media/playlist_detail.html")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.playlist.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "media/playlist_detail.html")
+
+    def test_playlist_admin_edition(self):
+        self.client.logout()
+        response = self.client.get(self.playlist.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.playlist.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='editor', password='pass')
+        response = self.client.get(self.playlist.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.playlist.get_absolute_url())
+        self.assertContains(response,"editable")
+
+    def test_playlist_admin(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)   
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)    

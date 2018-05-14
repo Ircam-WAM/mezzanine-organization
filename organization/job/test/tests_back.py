@@ -21,20 +21,95 @@
 
 from mezzanine.utils.tests import TestCase
 from organization.job.models import *
+from organization.job.admin import *
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
-
+from django.core import urlresolvers
+from django.forms import BaseFormSet
+from django.forms import formset_factory
+from django.contrib.auth import get_user_model as User
 
 # Create your tests here.
+class URLTests(TestCase):
+
+    def setUp(self):
+        super(URLTests, self).setUp()
+        self.job_offer = JobOffer.objects.create(title="django dev",email = "testing@email.fr", type="internship", content = "python")
+        self.candidacy = Candidacy.objects.create(title="research", text_button_external="more") 
+
+    def test_job_offer_detail_url(self):
+        response = self.client.get('/job-offer/' + self.job_offer.slug + "/")
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response, "python")  
+
+    def test_basic_job_offer_url(self):
+        response = self.client.get('/job-offer/')
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response, "django-dev")
+
+    def test_basic_candidacies_url(self):
+        response = self.client.get('/candidacies/')
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response, "research")
+
+    def test_candidacies_autocomplete(self):
+        response = self.client.get('/candidacy-autocomplete/')
+        self.assertEqual(response.status_code,200)
 
 class JobOfferTests(TestCase):
 
     def setUp(self):
         super(JobOfferTests, self).setUp()
+        app = "organization-job"
+        model = "joboffer" 
+        self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         self.file = SimpleUploadedFile('letter.txt'.encode(), 'content'.encode())
         self.job_offer = JobOffer.objects.create(email = "test@test.fr", type="internship")
         self.job_response = JobResponse.objects.create(first_name = "jean", last_name = "dupont", email="jean@dupont.fr" , message="I want this job", 
         curriculum_vitae = self.file, cover_letter = self.file, job_offer = self.job_offer)
+
+    def test_job_offer_display_for_everyone(self):
+        self.client.logout()
+        response = self.client.get(self.job_offer.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "job/job_offer_detail.html")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.job_offer.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "job/job_offer_detail.html")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.job_offer.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "job/job_offer_detail.html")
+
+    def test_job_offer_admin(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)   
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)   
+
+    def test_job_offer_admin_creation(self):
+        self.client.login(username='test', password='test')
+        nmb = JobOffer.objects.count()
+        response = self.client.post(self.url, {"title" : 'title', "status" : 2, "email" :'email@email.fr', "type":'internship','job_response-INITIAL_FORMS':'0','job_response-TOTAL_FORMS':'1'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(nmb+1,JobOffer.objects.count())
+
+    def test_job_offer_admin_edition(self):
+        self.client.logout()
+        response = self.client.get(self.job_offer.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.job_offer.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.job_offer.get_absolute_url())
+        self.assertContains(response,"editable")
 
     def test_job_offer_creation(self):
         self.assertTrue(isinstance(self.job_offer,JobOffer))
@@ -58,14 +133,31 @@ class JobResponseTests(TestCase):
     
     def setUp(self):
         super(JobResponseTests, self).setUp()
+        app = "organization-job"
+        model = "joboffer" 
+        self.user = User().objects.create_user(username="user", password='test')
         self.file = SimpleUploadedFile('letter.txt'.encode(), 'content'.encode())
         self.job_offer = JobOffer.objects.create(email = "test@test.fr", type="internship")
         self.job_response = JobResponse.objects.create(first_name = "jean", last_name = "dupont", email="jean@dupont.fr" , message="I want this job", 
         curriculum_vitae = self.file, cover_letter = self.file, job_offer = self.job_offer) 
+        self.url = urlresolvers.reverse("admin:%s_%s_change" % (app, model),args=(self.job_offer.id,))
 
     def test_job_response_fk_deletion(self):
         self.job_offer.delete()
         self.assertTrue(self.job_response in JobResponse.objects.filter(job_offer__isnull=True))
+
+    def test_job_response_not_display_for_everyone(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "admin/change_form.html")
+        self.assertContains(response,"jean@dupont.fr")
 
     def test_job_response_creation(self):
         self.assertTrue(isinstance(self.job_response,JobResponse))

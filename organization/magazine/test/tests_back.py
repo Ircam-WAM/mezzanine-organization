@@ -23,16 +23,61 @@ from mezzanine.utils.tests import TestCase
 from organization.magazine.models import *
 from organization.network.models import Organization
 from django.contrib.auth import get_user_model as User
+from django.core import urlresolvers
+from mezzanine.core.models import CONTENT_STATUS_PUBLISHED,KeywordsField
+from mezzanine.generic.models import Keyword,AssignedKeyword
+from unittest import skip
 
+class URLTests(TestCase):
+    
+    def setUp(self):
+        super(URLTests, self).setUp()
+        self.article = Article.objects.create(title="django article", user=self._user,content="django tricks",status=CONTENT_STATUS_PUBLISHED)
+        self.topic = Topic.objects.create(title="title",content="django topic")
+
+    @skip("No translation")
+    def test_article_detail_url(self):
+        response = self.client.get('/article/detail/' + self.article.slug + "/")
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response, "django tricks")    
+
+    @skip("No template yet")
+    def test_basic_article_url(self):
+        response = self.client.get('/article/list/')
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response, "django article")
+
+    @skip("No template yet")
+    def test_article_type_url(self):
+        response = self.client.get('/article/list/article/')
+        self.assertEqual(response.status_code,200)
+
+    def test_dynamic_content_article_url(self):
+        response = self.client.get('/dynamic-content-article/')
+        self.assertEqual(response.status_code,200)
+
+    def test_object_autocomplete_url(self):
+        response = self.client.get('/object-autocomplete/')
+        self.assertEqual(response.status_code,200)
+
+    @skip("No translation")
+    def test_topic_detail_url(self):
+        response = self.client.get('/topic/detail/' + self.topic.slug + "/")
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response, "django topic")    
 
 class ArticleTests(TestCase):
 
     def setUp(self):
         super(ArticleTests, self).setUp()
+        app = "organization-magazine"
+        model = "article" 
+        self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         organization = Organization.objects.create()
+        User().objects.create_user(username="user", password='test')
         self.department = Department.objects.create(organization = organization)
-        self.user = User().objects.create()
-        self.article = Article.objects.create(department = self.department,user = self.user)
+        self.user = User().objects.create_user(username="editor",password="pass")
+        self.article = Article.objects.create(department=self.department, user = self.user)
 
     def test_article_many_to_many_fields(self):
         topic = Topic.objects.create()
@@ -81,3 +126,41 @@ class ArticleTests(TestCase):
         self.assertTrue(article_person_list_block_inline in ArticlePersonListBlockInline.objects.filter(article__isnull=True))
         self.assertFalse(dynamic_content_article in DynamicContentArticle.objects.filter(article__isnull=True))
         self.assertFalse(self.article in Article.objects.all())
+
+    def test_article_display_for_everyone(self):
+        self.client.logout()
+        response = self.client.get(self.article.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.article.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.article.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+
+    def test_article_admin_edition(self):
+        self.client.logout()
+        response = self.client.get(self.article.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.article.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='editor', password='pass')
+        response = self.client.get(self.article.get_absolute_url())
+        self.assertContains(response,"editable")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.article.get_absolute_url())
+        self.assertContains(response,"editable")
+
+    def test_article_admin_creation(self):
+        nmb = Article.objects.count()
+        self.client.login(username='test', password='test')
+        response = self.client.post(self.url, {"title" : 'titre', "status" : 2, "user" :self.user.id,'article_person_list_block_inlines-INITIAL_FORMS':'0','article_person_list_block_inlines-TOTAL_FORMS':'1',
+        'dynamic_content_articles-INITIAL_FORMS':'0','dynamic_content_articles-TOTAL_FORMS':'1','images-INITIAL_FORMS':'0','images-TOTAL_FORMS':'1','playlists-INITIAL_FORMS':'0','playlists-TOTAL_FORMS':'1',
+        'related_title-INITIAL_FORMS':'0','related_title-TOTAL_FORMS':'1','allow_comments':'on','gen_description':'on','in_sitemap':'on','content':'yes','csrfmiddlewaretoken':'ahGmaJGV8YSLUM8Vuvlzt9DOE8Bz9IxD'})
+        self.assertEqual(response.status_code,302)
+        self.assertEqual(nmb+1,Article.objects.count())
+

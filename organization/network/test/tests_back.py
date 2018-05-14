@@ -23,7 +23,6 @@ from django.test import SimpleTestCase, TestCase
 from mezzanine.utils.tests import TestCase as TC
 from django.core import management
 from io import StringIO
-import datetime
 from organization.network.utils import get_nb_half_days_by_period, get_nb_half_days_by_period_per_month
 from organization.network.api import get_leave_days_per_month
 import ast
@@ -33,13 +32,91 @@ from datetime import datetime
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.files.images import ImageFile
 import tempfile
-
-
+from django.core import urlresolvers
+from mezzanine.core.models import CONTENT_STATUS_PUBLISHED
+from django.contrib.sites.models import Site
+from unittest import skip
 
 #
 # To run tests without database :
-# python manage.py test organization.network.tests.[class_name].[method_name] --settings='organization.core.no_db_settings'
+# python manage.py test organization.network.test.tests_back.[class_name].[method_name] --settings='organization.core.no_db_settings'
 #
+class URLTests(TC):
+    
+    def setUp(self):
+        super(URLTests, self).setUp()
+        from django.contrib.auth import get_user_model
+        self.user = get_user_model().objects.create_user(username="basic_user",email="email", password="basic_user")
+        self.person = Person.objects.create(user=self.user,person_title="basic_user")
+
+    def test_person_timesheet_url(self):
+        response = self.client.get('/person/timesheet/')
+        self.assertEqual(response.status_code,302)
+        self.client.logout()
+        self.client.login(username="basic_user",password="basic_user")
+        response = self.client.get('/person/timesheet/')
+        self.assertEqual(response.status_code,200)   
+
+    def test_person_detail_url(self):
+        response = self.client.get('/person/' + self.person.slug + "/")
+        self.assertEqual(response.status_code,200)    
+
+    def test_profile_detail_url(self):
+        response = self.client.get('/profile/' + self.person.user.username + "/")
+        self.assertEqual(response.status_code,200)     
+
+    def test_person_list_url(self):
+        response = self.client.get('/person/list/')
+        self.assertTemplateUsed(response,'network/person_list.html')   
+
+    def test_person_list_block_autocomplete_url(self):
+        self.client.login(username="test",password="test")
+        response = self.client.get('/person-list-block-autocomplete/')
+        self.assertEqual(response.status_code,200)    
+
+    def test_person_autocomplete_url(self):
+        self.client.login(username="test",password="test")
+        response = self.client.get('/person-autocomplete/')
+        self.assertEqual(response.status_code,200)    
+   
+    def test_network_url(self):
+        response = self.client.get('/network/')
+        self.assertEqual(response.status_code,200)  
+
+    def test_organization_linked_list_autocomplete(self):
+        self.client.login(username="test",password="test")
+        response = self.client.get('/organization-linked-list-autocomplete/')
+        self.assertEqual(response.status_code,200)    
+
+    def test_organization_linked_autocomplete(self):
+        self.client.login(username="test",password="test")
+        response = self.client.get('/organization-linked-autocomplete/')
+        self.assertEqual(response.status_code,200)         
+
+    def test_person_activity_autocomplete(self):
+        response = self.client.get('/person-activity-autocomplete/')
+        self.assertEqual(response.status_code,200) 
+
+    def test_work_packages_autocomplete(self):
+        response = self.client.get('/work-packages-autocomplete/')
+        self.assertEqual(response.status_code,200)            
+
+    @skip("Template not created yet")
+    def test_producers_submission(self):
+        self.client.login(username="test",password="test")
+        response = self.client.get('/producers/submission/')
+        print(response)
+        self.assertEqual(response.status_code,200)         
+
+    @skip("Template not created yet")        
+    def test_producers_list(self):
+        response = self.client.get('/producers/list/')
+        self.assertEqual(response.status_code,200)         
+
+    @skip("Template not created yet")        
+    def test_jury_list(self):
+        response = self.client.get('/jury/list/')
+        self.assertEqual(response.status_code,200)         
 
 class NetworkTests(TC):
     
@@ -65,8 +142,57 @@ class DepartmentTests(TC):
     
     def setUp(self):
         super(DepartmentTests, self).setUp()
-        self.organization = Organization.objects.create()
+        app = "organization-network"
+        model = "department" 
+        self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
+        self.organization = Organization.objects.create(name="orga")
         self.department = Department.objects.create(name="my department",organization=self.organization)
+        self.department_page = DepartmentPage.objects.create(title="title department",content="my dep content", publish_date=datetime.today(),department=self.department, status=CONTENT_STATUS_PUBLISHED)
+
+    @skip("Translation error")        
+    def test_department_display_for_everyone(self):
+        self.client.logout()
+        response = self.client.get("/title-department/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.department_page.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.department_page.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+
+    def test_department_admin(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)   
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_department_admin_creation(self):
+        self.client.login(username='test', password='test')
+        nb = Department.objects.count()
+        response = self.client.post(self.url, {"name" : 'department', "organization" : self.organization.id})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(nb+1,Department.objects.count())
+
+    @skip("Translation error")
+    def test_department_admin_edition(self):
+        self.client.logout()
+        response = self.client.get(self.department_page.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.department_page.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.department_page.get_absolute_url())
+        self.assertContains(response,"editable")
 
     def test_department_fk_deletion(self):
         self.organization.delete()
@@ -102,11 +228,15 @@ class TeamTests(TC):
     
     def setUp(self):
         super(TeamTests, self).setUp()
+        app = "organization-network"
+        model = "team" 
+        self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         self.organization = Organization.objects.create()
         self.department = Department.objects.create(name="my_department",organization=self.organization)
         self.parent_team = Team.objects.create()
         self.team = Team.objects.create(organization = self.organization, department = self.department, code="A10", is_legacy= True, parent= self.parent_team, hal_tutelage="hal_tutelage",
         hal_researche_structure="hal_researche_structure")
+        self.team_page = TeamPage.objects.create(team=self.team)
 
     def test_team_fk_deletion(self):
         self.organization.delete()
@@ -115,6 +245,52 @@ class TeamTests(TC):
         self.assertTrue(self.team in Team.objects.filter(organization__isnull=True))
         self.assertTrue(self.team in Team.objects.filter(department__isnull=True))
         self.assertTrue(self.team in Team.objects.filter(parent__isnull=True))
+
+    @skip("Translation error")
+    def test_team_display_for_everyone(self):
+        self.client.logout()
+        response = self.client.get(self.team_page.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.team_page.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.team_page.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+
+    def test_team_admin(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)   
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    @skip("Translation error")
+    def test_team_admin_creation(self):
+        self.client.login(username='test', password='test')
+        nb = Team.objects.count()
+        response = self.client.post(self.url, {"name" : 'team'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(nb+1,Team.objects.count())
+
+    @skip("Translation error")
+    def test_team_admin_edition(self):
+        self.client.logout()
+        response = self.client.get(self.team_page.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.team_page.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.team_page.get_absolute_url())
+        self.assertContains(response,"editable")
 
     def test_team_creation(self):
         self.assertTrue(isinstance(self.team,Team))
@@ -156,10 +332,59 @@ class OrganizationTests(TC):
 
     def setUp(self):
         super(OrganizationTests, self).setUp() 
+        app = "organization-network"
+        model = "organization" 
+        self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         self.organization_type = OrganizationType.objects.create(name="organization_type")
         self.organization_role = OrganizationRole.objects.create(name="organization_role", key="OR")
         self.organization = Organization.objects.create(type = self.organization_type, role = self.organization_role,
         email="organization@test.fr",initials="ORGNZT",is_on_map=True, is_host=True, telephone="0101010101", opening_times="daytime", subway_access="subway_access",bio ="bio")
+
+
+    def test_organization_display_for_everyone(self):
+        self.client.logout()
+        response = self.client.get(self.organization.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "network/organization_list.html")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.organization.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "network/organization_list.html")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.organization.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "network/organization_list.html")
+
+    def test_organization_admin(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)   
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_organization_admin_creation(self):
+        self.client.login(username='test', password='test')
+        nb = Organization.objects.count()
+        response = self.client.post(self.url, {"name" : 'organization','blocks-INITIAL_FORMS' :'0','blocks-TOTAL_FORMS' :'1','event_locations-INITIAL_FORMS' : '0', 'event_locations-TOTAL_FORMS':'1',
+        'images-INITIAL_FORMS': '0','images-TOTAL_FORMS' : '1', 'links-INITIAL_FORMS':'0','links-TOTAL_FORMS':'1','organization_linked_block-INITIAL_FORMS':'0','organization_linked_block-TOTAL_FORMS':'1',
+        'playlists-INITIAL_FORMS':'0', 'playlists-TOTAL_FORMS':'1','producer_data-INITIAL_FORMS' :'0','producer_data-TOTAL_FORMS':'1','services-0-box_size':'3','services-INITIAL_FORMS':'0','services-TOTAL_FORMS':'1','validation_status':'1'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(nb+1,Organization.objects.count())
+
+    def test_organization_admin_edition(self):
+        self.client.logout()
+        response = self.client.get(self.organization.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.organization.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.organization.get_absolute_url())
+        self.assertContains(response,"editable")
 
     def test_organization_fk_deletion(self):
         self.organization_type.delete()
@@ -240,13 +465,61 @@ class PersonTests(TC):
     
     def setUp(self):
         super(PersonTests, self).setUp()
-        from django.contrib.auth import get_user_model as User
-        self.user = User().objects.create()
+        app = "organization-network"
+        model = "person" 
+        self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
+        from django.contrib.auth import get_user_model
+        self.user = get_user_model().objects.create_user(username="user",password="pswd")
         self.person = Person.objects.create(first_name="Jean",last_name="Dupont",user=self.user,gender="male",email="test@test.fr",telephone="0606060606",
         bio="my bio", role="my role")
         self.person.save()
         self.person2 = Person.objects.create(title = "Jean Dupont")
         self.person2.set_names()
+
+    def test_person_display_for_everyone(self):
+        self.client.logout()
+        response = self.client.get(self.person.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "network/person_detail.html")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.person.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "network/person_detail.html")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.person.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "network/person_detail.html")
+
+    def test_person_admin(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)   
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_person_admin_creation(self):
+        self.client.login(username='test', password='test')
+        nb = Person.objects.count()
+        response = self.client.post(self.url, {"title" : 'title','activities-INITIAL_FORMS':'0','activities-TOTAL_FORMS':'1','blocks-INITIAL_FORMS':'0','blocks-TOTAL_FORMS':'1',
+        'files-INITIAL_FORMS':'0','files-TOTAL_FORMS':'1','images-INITIAL_FORMS':'0','images-TOTAL_FORMS':'1','links-INITIAL_FORMS':'0',
+        'links-TOTAL_FORMS':'1','playlists-INITIAL_FORMS':'0','playlists-TOTAL_FORMS':'1','status':'2'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(nb+1,Person.objects.count())
+
+    def test_person_admin_edition(self):
+        self.client.logout()
+        response = self.client.get(self.person.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.person.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.person.get_absolute_url())
+        self.assertContains(response,"editable")
 
     def test_person_title(self):
         self.assertEqual(self.person2.first_name,"Jean")
@@ -332,6 +605,7 @@ class Timesheet(TestCase):
 class NbOfHalfDaysInPeriodTestCase(SimpleTestCase):
 
     def setUp(self):
+        import datetime
         self.date_from = datetime.date(2016,12,1)
         self.date_to = datetime.date(2016,12,31)
 
@@ -357,6 +631,7 @@ class NbOfHalfDaysInPeriodTestCase(SimpleTestCase):
 class NbOfHalfDaysInPeriodPerMonthTestCase(SimpleTestCase):
 
     def setUp(self):
+        import datetime
         self.date_from = datetime.date(2015,1,1)
         self.date_to = datetime.date(2015,12,31)
 
@@ -516,6 +791,7 @@ class NbOfHalfDaysInPeriodPerMonthTestCase(SimpleTestCase):
 class NbOfHalfDaysInPeriodPerMonthTestCase2(SimpleTestCase):
 
     def setUp(self):
+        import datetime
         self.date_from = datetime.date(2016,1,1)
         self.date_to = datetime.date(2016,12,31)
 
@@ -673,6 +949,7 @@ class NbOfHalfDaysInPeriodPerMonthTestCase2(SimpleTestCase):
 class NbOfLeaveDaysPerMonthTestCase4(SimpleTestCase):
 
     def setUp(self):
+        import datetime
         self.date_from = datetime.date(2017,5,1)
         self.date_to = datetime.date(2017,5,31)
         self.external_id = 185 # Emilie Zawadzki
@@ -686,6 +963,7 @@ class NbOfLeaveDaysPerMonthTestCase4(SimpleTestCase):
 class NbOfLeaveDaysPerMonthTestCase3(SimpleTestCase):
 
     def setUp(self):
+        import datetime
         self.date_from = datetime.date(2016,1,1)
         self.date_to = datetime.date(2016,1,31)
         self.external_id = 162 # Olivier Houix
@@ -699,6 +977,7 @@ class NbOfLeaveDaysPerMonthTestCase3(SimpleTestCase):
 class NbOfLeaveDaysPerMonthTestCase2(SimpleTestCase):
 
     def setUp(self):
+        import datetime
         self.date_from = datetime.date(2016,1,1)
         self.date_to = datetime.date(2016,1,31)
         self.external_id = 106 # Hugues Vinet
@@ -712,6 +991,7 @@ class NbOfLeaveDaysPerMonthTestCase2(SimpleTestCase):
 class NbOfLeaveDaysPerMonthTestCase(SimpleTestCase):
 
     def setUp(self):
+        import datetime
         self.date_from = datetime.date(2015,1,1)
         self.date_to = datetime.date(2015,12,31)
         self.external_id = 97 # Norber Schnell
@@ -786,8 +1066,8 @@ class NbOfLeaveDaysPerMonthTestCase(SimpleTestCase):
               'thursday_am':2,
               'tuesday_pm':2,
               'wednesday_pm':2,
-              'tuesday_am':2,
               'monday_pm':2,
+              'tuesday_am':2,
               'thursday_pm':2
            }
         }

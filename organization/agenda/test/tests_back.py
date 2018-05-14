@@ -19,44 +19,137 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib.auth.admin import UserAdmin
 from mezzanine.utils.tests import TestCase
 from organization.agenda.models import *
-from mezzanine_agenda.models import EventCategory,EventShop,EventPrice
-
-from datetime import datetime
-from mezzanine.core.models import CONTENT_STATUS_PUBLISHED
+from mezzanine_agenda.models import EventCategory,EventShop,EventPrice,Event,Season
+from mezzanine_agenda.admin import EventAdmin
+import datetime
+from mezzanine.core.models import CONTENT_STATUS_PUBLISHED,KeywordsField
+from mezzanine.generic.models import Keyword,AssignedKeyword
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.files.images import ImageFile
 import tempfile
 from django.contrib.auth import get_user_model as User
-
+from django.core import urlresolvers
+from unittest import skip
 
 # Create your tests here.
 
 # Make sure selenium is working : python manage.py test organization.agenda.tests.EventTestsSelenium.test_load_page
+class URLTests(TestCase):
+    
+    def setUp(self):
+        super(URLTests, self).setUp()
+        self.basic_user = User().objects.create_user(username="user", password='test')
+        """
+        This simulate an event creation on front,
+        a keyword is created when keywords field is filled
+        """
+        keyword = Keyword.objects.create(title="scientific event")
+        self.event_tagged = Event.objects.create(title="mon-evenement", start=datetime.date.today() + datetime.timedelta(days=1),user=self.basic_user,keywords_string="scientific event")
+        AssignedKeyword.objects.create(keyword_id=keyword.id,content_object=self.event_tagged)
+        s1 = Season.objects.create(title="s1",start=datetime.datetime.strptime("2016-06-01", "%Y-%m-%d"),end=datetime.datetime.strptime("2016-05-31", "%Y-%m-%d"))
+        s2 = Season.objects.create(title="s2",start=datetime.datetime.strptime("2017-06-01", "%Y-%m-%d"),end=datetime.datetime.strptime("2017-05-31", "%Y-%m-%d"))
+        s3 = Season.objects.create(title="s3",start=datetime.datetime.strptime("2018-06-01", "%Y-%m-%d"),end=datetime.datetime.strptime("2018-05-31", "%Y-%m-%d"))
+        self.event_archive = Event.objects.create(title="past_event",start=datetime.datetime.strptime("2017-04-02", "%Y-%m-%d"), user=self.basic_user)
+
+    def test_url_tag(self):
+        response = self.client.get('/agenda/tag/scientific-event/')
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response,"mon-evenement")
+
+    def test_url_archive(self):
+        response = self.client.get('/agenda/archive/2017/')
+        self.assertEqual(response.status_code,200)
+        self.assertNotContains(response,"past_event")
+        response = self.client.get('/agenda/archive/2016/')
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response,"past_event")
+
+    def test_url_slug(self):
+        response = self.client.get('/agenda/' + self.event_tagged.slug + '/detail/')
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response,"mon-evenement")
+
+    def test_basic_url(self):
+        response = self.client.get('/agenda/')
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response,"mon-evenement")
+
+    def test_url_booking(self):
+        response = self.client.get('/agenda/' + self.event_tagged.slug + '/booking/')
+        self.assertEqual(response.status_code,200)
+        self.assertContains(response,"mon-evenement")      
+
+    def test_url_price_autocomplete(self):
+        response = self.client.get('/agenda/event-price-autocomplete')
+        self.assertEqual(response.status_code,200)
 
 class EventTests(TestCase):
 
     """fixtures = ['/srv/lib/mezzanine-organization/organization/agenda/fixtures/event.json']"""
-    
     def setUp(self):
         super(EventTests, self).setUp()
-        self.user = User().objects.create()
-        self.parent_event = Event.objects.create(start = datetime.today(), title="parent_event", user=self._user)
+        app = "mezzanine_agenda"
+        model = "event" 
+        self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
+        self.user = User().objects.create_user(username="user", password='test')
+        self.parent_event = Event.objects.create(start = datetime.datetime.today(), title="parent_event", user=self._user)
         self.category = EventCategory.objects.create(name="category")
         self.shop = EventShop.objects.create()
         file = tempfile.NamedTemporaryFile(suffix='.png')
         img = ImageFile(file, name=file.name)
-        self.event = Event.objects.create(title="mon-evenement", start=datetime.strptime("2018-01-13", "%Y-%m-%d").date(), end = datetime.strptime("2018-01-18", "%Y-%m-%d").date(),user=self.user,
+        self.event = Event.objects.create(title="mon-evenement", start=datetime.datetime.strptime("2018-01-13", "%Y-%m-%d").date(), end = datetime.datetime.strptime("2018-01-18", "%Y-%m-%d").date(),user=self.user,
         status=CONTENT_STATUS_PUBLISHED, category = self.category, facebook_event = 10, shop = self.shop, external_id= 12, is_full = True,
         brochure = img, no_price_comments="no_price_comments", mentions="mentions", allow_comments=True, rank = 2)
         # self.event = Event.objects.create(title="mon-evenement", start=datetime.strptime("2018-01-13", "%Y-%m-%d").date(), end = datetime.strptime("2018-01-18", "%Y-%m-%d").date(),user=self._user,
         # status=CONTENT_STATUS_PUBLISHED, parent = self.parent_event, category = self.category, facebook_event = 10, shop = self.shop, external_id= 12, is_full = True,
         # brochure = img, no_price_comments="no_price_comments", mentions="mentions", allow_comments=True, rank = 2)
 
-    def test_event_display(self):
-        self.client.get(self.event.get_absolute_url())
-        self.assertEqual(self.event.get_absolute_url(), 200)
+    def test_event_display_for_everyone(self):
+        self.client.logout()
+        response = self.client.get(self.event.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "agenda/event_detail.html")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.event.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "agenda/event_detail.html")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.event.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "agenda/event_detail.html")
+        
+    @skip("No translation")
+    def test_event_admin(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)   
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)    
+               
+    @skip('No translation')
+    def test_event_admin_creation(self):
+        self.client.login(username='test', password='test')
+        response = self.client.post(self.url, {"title" : 'titre', "status" : 2, "user" :1, "start_0" :'30/04/2018'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(1,Event.objects.count())
+
+    def test_event_admin_edition(self):
+        self.client.logout()
+        response = self.client.get(self.event.get_absolute_url())
+        self.assertNotContains(response,"editable")
+        self.client.login(username='user', password='test')
+        response = self.client.get(self.event.get_absolute_url())
+        self.assertContains(response,"editable")
+        self.client.login(username='test', password='test')
+        response = self.client.get(self.event.get_absolute_url())
+        self.assertContains(response,"editable")
 
     def test_event_many_to_many_fields(self):
         event_price = EventPrice.objects.create(value=1,unit=1)
@@ -70,20 +163,20 @@ class EventTests(TestCase):
         self.assertEqual(3,self.event.prices.all().count())
 
     def test_event_previous_next_date(self):
-        next_event = Event.objects.create(title="mon-futur-evenement", start=datetime.strptime("2018-01-14", "%Y-%m-%d").date(), user=self._user, status=CONTENT_STATUS_PUBLISHED)
-        previous_event =  Event.objects.create(title="mon-evenement-passe", start=datetime.strptime("2018-01-12", "%Y-%m-%d").date(), user=self._user, status=CONTENT_STATUS_PUBLISHED)
+        next_event = Event.objects.create(title="mon-futur-evenement", start=datetime.datetime.strptime("2018-01-14", "%Y-%m-%d").date(), user=self._user, status=CONTENT_STATUS_PUBLISHED)
+        previous_event =  Event.objects.create(title="mon-evenement-passe", start=datetime.datetime.strptime("2018-01-12", "%Y-%m-%d").date(), user=self._user, status=CONTENT_STATUS_PUBLISHED)
         self.assertEqual(self.event.get_previous_by_start_date(),previous_event)
         self.assertEqual(self.event.get_next_by_start_date(),next_event)
 
     def test_event_start_end_date(self):
-        event = Event(start = datetime.today(), title="parent_event", user=self._user, end = datetime.strptime("2018-01-14", "%Y-%m-%d").date())
+        event = Event(start = datetime.datetime.today(), title="parent_event", user=self._user, end = datetime.datetime.strptime("2018-01-14", "%Y-%m-%d").date())
         self.assertRaises(ValidationError, event.save())
 
     def test_event_creation(self):
         self.assertTrue(isinstance(self.event,Event))
         self.assertEqual(self.event.title,"mon-evenement")
-        self.assertEqual(self.event.start,datetime.strptime("2018-01-13", "%Y-%m-%d").date())
-        self.assertEqual(self.event.end,datetime.strptime("2018-01-18", "%Y-%m-%d").date())
+        self.assertEqual(self.event.start,datetime.datetime.strptime("2018-01-13", "%Y-%m-%d").date())
+        self.assertEqual(self.event.end,datetime.datetime.strptime("2018-01-18", "%Y-%m-%d").date())
         self.assertEqual(self.event.user,self.user)
         self.assertEqual(self.event.status,CONTENT_STATUS_PUBLISHED)
         self.assertEqual(self.event.category,self.category)
@@ -100,8 +193,8 @@ class EventTests(TestCase):
         self.assertTrue(self.event in Event.objects.all())
         self.assertTrue(self.event in Event.objects.filter(status=CONTENT_STATUS_PUBLISHED))
         self.assertTrue(self.event in Event.objects.filter(user=self.user))
-        self.assertTrue(self.event in Event.objects.filter(start=datetime.strptime("2018-01-13", "%Y-%m-%d").date()))
-        self.assertTrue(self.event in Event.objects.filter(end=datetime.strptime("2018-01-18", "%Y-%m-%d").date()))
+        self.assertTrue(self.event in Event.objects.filter(start=datetime.datetime.strptime("2018-01-13", "%Y-%m-%d").date()))
+        self.assertTrue(self.event in Event.objects.filter(end=datetime.datetime.strptime("2018-01-18", "%Y-%m-%d").date()))
         self.assertTrue(self.event in Event.objects.filter(category=self.category))
         self.assertTrue(self.event in Event.objects.filter(facebook_event=10))
         self.assertTrue(self.event in Event.objects.filter(shop=self.shop))
