@@ -18,8 +18,8 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-from re import match
+import pandas as pd
+from re import match, search
 from django.contrib import messages
 from pprint import pprint
 from calendar import monthrange
@@ -50,7 +50,9 @@ from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
 from django.utils import six
 from django.core.exceptions import PermissionDenied
-import pandas as pd
+from django.core.exceptions import ImproperlyConfigured
+from django.db.models.query import QuerySet
+from mezzanine.generic.models import Keyword
 
 
 class PersonListView(PublishedMixin, ListView):
@@ -58,6 +60,42 @@ class PersonListView(PublishedMixin, ListView):
     model = Person
     template_name='network/person_list.html'
     context_object_name = 'persons'
+
+    def get_queryset(self):
+        """
+        Return the list of items for this view.
+
+        The return value must be an iterable and may be an instance of
+        `QuerySet` in which case `QuerySet` specific behavior will be enabled.
+        """
+        if self.queryset is not None:
+            queryset = self.queryset
+            if isinstance(queryset, QuerySet):
+                queryset = queryset.all()
+        elif self.model is not None:
+            queryset = self.model._default_manager.all()
+        else:
+            raise ImproperlyConfigured(
+                "%(cls)s is missing a QuerySet. Define "
+                "%(cls)s.model, %(cls)s.queryset, or override "
+                "%(cls)s.get_queryset()." % {
+                    'cls': self.__class__.__name__
+                }
+            )
+
+        # exclude some person by tag
+        if hasattr(settings, 'VERTIGO_TAG'):
+            tag = Keyword.objects.get(id=settings.VERTIGO_TAG)
+            queryset = queryset.exclude(keywords_string=tag.title)
+
+        ordering = self.get_ordering()
+        if ordering:
+            if isinstance(ordering, six.string_types):
+                ordering = (ordering,)
+            queryset = queryset.order_by(*ordering)
+
+
+        return queryset
 
 
 class PersonDetailView(SlugMixin, DetailView):
@@ -122,6 +160,19 @@ class PersonDetailView(SlugMixin, DetailView):
 
         context["related"]["other"].sort(key=lambda x: x.created, reverse=True)
         context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
+        context["back"] = {}
+        context["back"]["url"] = reverse_lazy('organization-network-person-list')
+        context["back"]["label"] = _('Back to artists')
+
+        if hasattr(settings, 'VERTIGO_TAG'):
+            keywords_id = [k.keyword_id for k in self.object.keywords.all()]
+            context["is_vertigo"] = settings.VERTIGO_TAG in keywords_id
+            http_referer = self.request.META.get('HTTP_REFERER')
+            if http_referer:
+                if search(r'agenda\/(\w|-)+\/detail', http_referer):
+                    context["back"]["url"] = self.request.META.get('HTTP_REFERER')
+                    context["back"]["label"] = _('Back to the event')
+
         return context
 
 
