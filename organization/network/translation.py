@@ -66,10 +66,10 @@ class TeamLinkTranslationOptions(TranslationOptions):
     fields = ()
 
 
-# @register(Person)
-# class PersonTranslationOptions(TranslationOptions):
+@register(Person)
+class PersonTranslationOptions(TranslationOptions):
 
-#     fields = ('description','bio',)
+    fields = ('description','bio',)
 
 
 @register(PersonActivity)

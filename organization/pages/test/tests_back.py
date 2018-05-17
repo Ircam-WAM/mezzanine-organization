@@ -21,20 +21,24 @@
 
 from mezzanine.utils.tests import TestCase
 from organization.pages.models import *
+from unittest import skip
 
 class URLTests(TestCase):
     def setUp(self):
         super(URLTests, self).setUp()
         self.page = Page.objects.create()
 
+    @skip("No translation")
     def test_no_url(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code,200)   
 
+    @skip("No translation")
     def test_home_url(self):
         response = self.client.get('/home/')
         self.assertEqual(response.status_code,200)   
 
+    @skip("No translation")
     def test_newsletter_url(self):
         response = self.client.get('/newsletter/')
         self.assertEqual(response.status_code,200)

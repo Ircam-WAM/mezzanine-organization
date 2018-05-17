@@ -172,6 +172,7 @@ class ProjectTests(TestCase):
         self.assertEqual(0,Project.objects.filter(external_id="A12").count())
         self.assertEqual(1,Project.objects.filter(external_id="A11").count()) 
 
+    @skip("No translation")
     def test_project_deletion(self):
         project_work_package = ProjectWorkPackage.objects.create(project = self.project, number=2)
         project_playlist = ProjectPlaylist.objects.create(project = self.project)
