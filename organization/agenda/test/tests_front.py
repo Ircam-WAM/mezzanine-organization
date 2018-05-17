@@ -14,7 +14,9 @@ class EventTestsSelenium(FrontTest):
         super(EventTestsSelenium, self).tearDown()
 
     def test_event_creation(self):
-        self.webdriver.get('%s%s' % ("http://172.17.0.3:8081", '/admin/mezzanine_agenda/event/'))
+        self.log_as_admin()
+        self.webdriver.get(self.url + '/admin/mezzanine_agenda/event/')
+        print(self.webdriver.page_source)
         self.webdriver.find_element_by_link_text('add/').click()
         """
         Filling the needed inputs
@@ -44,12 +46,6 @@ class EventTestsSelenium(FrontTest):
         except NoSuchElementException:
             return False
         return True
-        
-
-    def test_load_page(self):
-        self.webdriver.get('https://172.17.0.8:9041/accounts/login/')
-        #print(self.webdriver.page_source)
-        self.assertTrue('mot de passe' in self.webdriver.page_source)
 
 class SearchTestsSelenium(FrontTest):               
     
