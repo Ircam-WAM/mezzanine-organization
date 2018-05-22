@@ -29,4 +29,5 @@ django-guardian==1.4.9
 pyldap
 django-auth-ldap==1.2.10
 lxml==4.2.0
+django-cookie-law==2.0.1
 -e .
