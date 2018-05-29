@@ -31,6 +31,7 @@ from mezzanine.conf import settings
 from organization.pages.models import CustomPage, ExtendedCustomPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting
 from organization.magazine.models import Article, Topic, Brief
+from organization.projects.models import Project, ProjectCollection
 from organization.pages.models import Home
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
@@ -52,6 +53,11 @@ class HomeView(SlugMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
+
+        context['articles'] = Article.objects.published().order_by('-publish_date')[:8]
+        context['projects'] = Project.objects.published().order_by('-publish_date')[:8]
+        context['collections'] = ProjectCollection.objects.published().order_by('-publish_date')[:8]
+        
         context['briefs'] = Brief.objects.published().order_by('-publish_date')[:8]
         try:
             from mezzanine_agenda.forms import EventCalendarForm
