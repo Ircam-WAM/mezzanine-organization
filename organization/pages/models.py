@@ -33,7 +33,7 @@ class CustomPage(Page, SubTitled, RichText):
 
     objects = CustomSearchableManager()
     menu_alinea = models.BooleanField(_('menu alinea'), default=False)
-    class_css = models.CharField(max_length=32)
+    class_css = models.CharField(_('CSS class'), max_length=32, blank=True, null=True)
 
     class Meta:
         verbose_name = 'custom page'
@@ -157,9 +157,9 @@ class LinkImage(models.Model):
 
 
 class LinkStyle(models.Model):
-    
+
     link = models.OneToOneField(MezzanineLink, verbose_name=_('link'), related_name='link_style', blank=True, null=True, on_delete=models.SET_NULL)
-    class_css = models.CharField(max_length=32)
+    class_css = models.CharField(_('CSS class'), max_length=32, blank=True, null=True)
 
     class Meta:
         verbose_name = _("css class")
