@@ -8,6 +8,8 @@ from organization.agenda.admin import *
 from organization.job.admin import *
 from organization.shop.admin import *
 
+from django.contrib.sessions.models import Session
+
 from organization.projects.models import *
 from django.utils.translation import ugettext_lazy as _
 
@@ -42,3 +44,4 @@ class ProjectAdminCustomDisplayable(DisplayableAdmin):
 
 admin.site.unregister(Project)
 admin.site.register(Project, ProjectAdminCustomDisplayable)
+admin.site.register(Session)
