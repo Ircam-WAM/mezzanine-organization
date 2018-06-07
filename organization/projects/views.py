@@ -39,6 +39,7 @@ from datetime import datetime, date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from guardian.mixins import *
+from django.core.exceptions import PermissionDenied
 
 
 class ProjectMixin(SingleObjectMixin):
@@ -78,6 +79,24 @@ class ProjectDetailView(PermissionRequiredMixin, SlugMixin, ProjectMixin, Detail
     permission_required = 'organization-projects.view_project'
     raise_exception = True  # Or else: endless loop if user hasn't the permission (project (not logged in) > auth > project (not authorized) > auth > ...)
     return_403 = True
+
+    def check_permissions(self, request):
+        '''
+        Private project = check view permission
+        Public project = do not check view permission
+        '''
+        requested_object  = self.get_object()
+        requested_object.private = False  # TODO: implement Project's `private` field instead of this hardcoded value
+        if not requested_object.private:
+            pass
+        else:
+            forbidden = False
+            try:
+                super().check_permissions(request)
+            except PermissionDenied:
+                forbidden = True
+            if forbidden:
+                raise PermissionDenied()
 
 
 class ProjectICTDetailView(SlugMixin, ProjectMixin, DetailView):
