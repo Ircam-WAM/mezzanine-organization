@@ -36,6 +36,8 @@ from django.core import urlresolvers
 from mezzanine.core.models import CONTENT_STATUS_PUBLISHED
 from django.contrib.sites.models import Site
 from unittest import skip
+from unittest import skipIf
+from django.conf import settings
 
 #
 # To run tests without database :
@@ -49,6 +51,7 @@ class URLTests(TC):
         self.user = get_user_model().objects.create_user(username="basic_user",email="email", password="basic_user")
         self.person = Person.objects.create(user=self.user,person_title="basic_user")
 
+    @skipIf(not hasattr(settings,'TIMESHEET_START'),'Ensure setting is set')
     def test_person_timesheet_url(self):
         response = self.client.get('/person/timesheet/')
         self.assertEqual(response.status_code,302)
@@ -596,6 +599,7 @@ class Timesheet(TestCase):
         self.date_from = "2017/03/01"
         self.date_to = "2017/03/31"
 
+    @skipIf(not hasattr(settings,'TIMESHEET_LOG_PATH'),'Ensure setting is set')
     def test_person_has_to_enter_timesheet(self):
         management.call_command("timesheetmail", input_from=self.date_from, input_to=self.date_to, stdout=self.resulted_person)
         self.assertListEqual(ast.literal_eval(self.resulted_person.getvalue()), self.expected_person)
@@ -635,6 +639,7 @@ class NbOfHalfDaysInPeriodPerMonthTestCase(SimpleTestCase):
         self.date_from = datetime.date(2015,1,1)
         self.date_to = datetime.date(2015,12,31)
 
+    @skipIf(not hasattr(settings,'FIGGO_API_URL_PROD'),'Ensure setting is set')
     def test_nbhalf_half_days(self):
 
         expected = {
@@ -954,6 +959,7 @@ class NbOfLeaveDaysPerMonthTestCase4(SimpleTestCase):
         self.date_to = datetime.date(2017,5,31)
         self.external_id = 185 # Emilie Zawadzki
 
+    @skipIf(not hasattr(settings,'FIGGO_API_URL_PROD'),'Ensure setting is set')
     def test_nb_leave_days(self):
         expected = {}
         result = get_leave_days_per_month(self.date_from, self.date_to, self.external_id)
@@ -968,6 +974,7 @@ class NbOfLeaveDaysPerMonthTestCase3(SimpleTestCase):
         self.date_to = datetime.date(2016,1,31)
         self.external_id = 162 # Olivier Houix
 
+    @skipIf(not hasattr(settings,'FIGGO_API_URL_PROD'),'Ensure setting is set')
     def test_nb_leave_days(self):
         expected = {}
         result = get_leave_days_per_month(self.date_from, self.date_to, self.external_id)
@@ -982,6 +989,7 @@ class NbOfLeaveDaysPerMonthTestCase2(SimpleTestCase):
         self.date_to = datetime.date(2016,1,31)
         self.external_id = 106 # Hugues Vinet
 
+    @skipIf(not hasattr(settings,'FIGGO_API_URL_PROD'),'Ensure setting is set')
     def test_nb_leave_days(self):
         expected = {}
         result = get_leave_days_per_month(self.date_from, self.date_to, self.external_id)
@@ -996,6 +1004,7 @@ class NbOfLeaveDaysPerMonthTestCase(SimpleTestCase):
         self.date_to = datetime.date(2015,12,31)
         self.external_id = 97 # Norber Schnell
 
+    @skipIf(not hasattr(settings,'FIGGO_API_URL_PROD'),'Ensure setting is set')
     def test_nb_leave_days(self):
 
         expected = {
