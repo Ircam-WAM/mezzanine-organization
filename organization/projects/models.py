@@ -101,6 +101,9 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         verbose_name_plural = _("projects")
         # ordering = ['-date_from', '-date_to']
         ordering = ['title', ]
+        permissions = (
+            ('view_project', 'Can view project'),
+        )
 
     def __str__(self):
         return self.title

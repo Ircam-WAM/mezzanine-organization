@@ -38,6 +38,7 @@ from organization.pages.models import CustomPage
 from datetime import datetime, date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
+from guardian.mixins import *
 
 
 class ProjectMixin(SingleObjectMixin):
@@ -70,10 +71,13 @@ class ProjectMixin(SingleObjectMixin):
         return context
 
 
-class ProjectDetailView(SlugMixin, ProjectMixin, DetailView):
+class ProjectDetailView(PermissionRequiredMixin, SlugMixin, ProjectMixin, DetailView):
 
     model = Project
     template_name='projects/project_detail.html'
+    permission_required = 'organization-projects.view_project'
+    raise_exception = True  # Or else: endless loop if user hasn't the permission (project (not logged in) > auth > project (not authorized) > auth > ...)
+    return_403 = True
 
 
 class ProjectICTDetailView(SlugMixin, ProjectMixin, DetailView):

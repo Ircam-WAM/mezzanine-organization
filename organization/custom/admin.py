@@ -9,6 +9,7 @@ from organization.job.admin import *
 from organization.shop.admin import *
 
 from django.contrib.sessions.models import Session
+from guardian.admin import GuardedModelAdmin
 
 from organization.projects.models import *
 from django.utils.translation import ugettext_lazy as _
@@ -19,7 +20,7 @@ class ProjectRepositoryInline(StackedDynamicInlineAdmin):
     model = ProjectRepository
 
 
-class ProjectAdminCustomDisplayable(DisplayableAdmin):
+class ProjectAdminCustomDisplayable(GuardedModelAdmin):
 
     fieldsets = (
         (None, {
