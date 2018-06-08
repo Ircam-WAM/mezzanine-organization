@@ -86,8 +86,7 @@ class ProjectDetailView(PermissionRequiredMixin, SlugMixin, ProjectMixin, Detail
         Public project = do not check view permission
         '''
         requested_object  = self.get_object()
-        requested_object.private = False  # TODO: implement Project's `private` field instead of this hardcoded value
-        if not requested_object.private:
+        if not requested_object.is_private:
             pass
         else:
             forbidden = False

@@ -92,6 +92,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     referring_person = models.ManyToManyField('organization-network.Person', verbose_name=_('Referring Person'), related_name='projects_referring_person', blank=True)
     manager =  models.ManyToManyField('organization-network.Person', verbose_name=_('Manager'), related_name='projects_manager', blank=True)
     is_archive = models.BooleanField(verbose_name=_('Is Archive'), help_text='Hide project in Team Page', default=False)
+    is_private = models.BooleanField(verbose_name=_('Is private'), help_text='If the project is private, permissions will be enforced. Else, the project is considered public and they will be omitted.', default=False)
     validation_status = models.IntegerField(_('validation status'), choices=PROJECT_STATUS_CHOICES, default=1)
     funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
     concepts = models.ManyToManyField('skosxl.Concept', verbose_name=_('concepts'), blank=True)
