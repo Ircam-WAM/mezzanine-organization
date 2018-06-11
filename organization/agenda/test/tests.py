@@ -36,7 +36,6 @@ from unittest import skip
 
 # Create your tests here.
 
-# Make sure selenium is working : python manage.py test organization.agenda.tests.EventTestsSelenium.test_load_page
 class URLTests(TestCase):
     
     def setUp(self):
@@ -88,7 +87,6 @@ class URLTests(TestCase):
 
 class EventTests(TestCase):
 
-    """fixtures = ['/srv/lib/mezzanine-organization/organization/agenda/fixtures/event.json']"""
     def setUp(self):
         super(EventTests, self).setUp()
         app = "mezzanine_agenda"

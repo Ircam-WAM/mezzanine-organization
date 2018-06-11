@@ -108,7 +108,6 @@ class URLTests(TC):
     def test_producers_submission(self):
         self.client.login(username="test",password="test")
         response = self.client.get('/producers/submission/')
-        print(response)
         self.assertEqual(response.status_code,200)         
 
     @skip("Template not created yet")        

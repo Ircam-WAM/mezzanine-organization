@@ -72,7 +72,6 @@ class URLTests(TestCase):
     
     @skip("Not implemented")
     def test_ict_projects_detail(self):
-        print('/ict-projects/' + self.project_topic.slug + '/detail/')
         response = self.client.get('/ict-projects/' + self.project_topic.slug + '/detail/')      
         self.assertEqual(response.status_code,200)
 
