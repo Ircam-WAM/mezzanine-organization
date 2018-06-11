@@ -58,6 +58,12 @@ class SlugMixin(object):
         return get_object_or_404(objects, slug=self.kwargs['slug'])
 
 
+class PublishedMixin(object):
+    
+    def get_queryset(self, **kwargs):
+        return self.model.objects.published()
+
+
 class CustomSearchView(TemplateView):
 
     template_name='search_results.html'
@@ -198,7 +204,7 @@ def autocomplete_result_formatting(self, context):
         children = []
         for result in results:
             text = six.text_type(result)
-            if model._meta.verbose_name == "Event":
+            if model.__name__ == "Event":
                 event_date = timezone.localtime(result.start)
                 is_parent = ""
                 if not result.parent:
