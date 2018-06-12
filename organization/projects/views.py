@@ -498,8 +498,11 @@ class ProjectResidencyListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProjectResidencyListView, self).get_context_data(**kwargs)
+        
         # Add the Call to the context
-        context["call"] = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
+        if 'call_slug' in self.kwargs:
+            context["call"] = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
+
         # Add the related Keywords to the context
         keywords = []
         for residency in context["object_list"]:
@@ -510,10 +513,13 @@ class ProjectResidencyListView(ListView):
         return context
 
     def get_queryset(self):
-        call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
-        projects = Project.objects.filter(call=call)
+        if 'call_slug' in self.kwargs:
+            call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
+            projects = Project.objects.filter(call=call) 
+        else:
+            projects = Project.objects.all()
         qs = ProjectResidency.objects.filter(project__in=projects, validated=True).select_related().order_by("id")
-        if not self.user.is_superuser:
+        if not self.request.user.is_superuser:
             qs = qs.filter(status=2)
         return qs
 
