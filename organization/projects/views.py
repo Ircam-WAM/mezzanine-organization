@@ -512,7 +512,7 @@ class ProjectResidencyListView(ListView):
     def get_queryset(self):
         call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
         projects = Project.objects.filter(call=call)
-        qs = ProjectResidency.objects.filter(project__in=projects, validated=True).select_related().order_by("id")
+        qs = ProjectResidency.objects.filter(project__in=projects, validated=True, status=2).select_related().order_by("id")
         return qs
 
 
