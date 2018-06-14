@@ -585,3 +585,8 @@ class Pivot_Project_ProjectCollection_View(Select2QuerySetSequenceView):
     # def get_results(self, context):
     #     results = autocomplete_result_formatting(self, context)
     #     return results
+
+
+class ProjectCreateView(LoginRequiredMixin, TemplateView):
+
+    template_name = 'projects/project_creation.html'
