@@ -35,10 +35,14 @@ urlpatterns = [
     url('^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
     url('^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name='organization-network-timesheet-create-view'),
     url('^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name='organization-network-timesheet-list-view' ),
-    url('^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name='organization-network-person-detail'),
-    url('^person/$', PersonDetailView.as_view(), name='organization-network-person-profile'),
-    url('^profile/(?P<username>.*)/$', PersonDetailView.as_view(), name='profile'),
+    
     url('^person/list/$', PersonListView.as_view(), name='organization-network-person-list'),
+    url('^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name='organization-network-person-detail'),
+    url('^person/(?P<username>.*)/$', PersonDetailView.as_view(), name='organization-network-person-username-detail'),
+    url('^messages/', include('postman.urls')),
+    url('^person/(?P<username>.*)/following/$', PersonFollowingListView.as_view(), name='organization-network-person-username-following'),
+    url('^person/(?P<username>.*)/followers/$', PersonFollowersListView.as_view(), name='organization-network-person-username-followers'),
+    url('^settings/$', PersonSettingsView.as_view(), name='organization-network-person-username-settings'),
 
     url('^person-list-block-autocomplete/$', permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
     url('^person-autocomplete/$', permission_required('person.can_edit')(PersonAutocompleteView.as_view()), name='person-autocomplete'),

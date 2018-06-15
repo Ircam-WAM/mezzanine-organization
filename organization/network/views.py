@@ -125,6 +125,43 @@ class PersonDetailView(SlugMixin, DetailView):
         return context
 
 
+
+class PersonMixin(object):
+
+    @property
+    def person():
+        if 'username' in self.kwargs:
+            user = User.objects.get_object_or_404(username=self.kwargs['username'])
+        else:
+            user = self.request.user
+        return user.person
+
+
+class PersonFollowingListView(PersonMixin, ListView):
+
+    model = Person
+    template_name='network/person_following.html'
+
+    def get_queryset(self):
+        return self.person.following.all()
+
+
+class PersonFollowersListView(PersonMixin, ListView):
+
+    model = Person
+    template_name='network/person_followers.html'
+
+    def get_queryset(self):
+        return self.person.followers.all()
+
+
+class PersonSettingsView(PersonMixin, UpdateView):
+
+    model = Person
+    template_name='network/person_following.html'
+
+
+
 class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):
 
     def get_result_label(self, result):

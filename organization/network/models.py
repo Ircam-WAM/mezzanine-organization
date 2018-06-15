@@ -211,6 +211,7 @@ class Person(Displayable, AdminThumbMixin, Address):
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     karma = models.IntegerField(default=0, editable=False)
     search_fields = {"title": 1}
+    following = models.ManyToManyField(User, verbose_name='following', related_name='followers', blank=True)
 
     class Meta:
         verbose_name = _('person')
