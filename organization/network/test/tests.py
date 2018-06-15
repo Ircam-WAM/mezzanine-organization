@@ -99,11 +99,17 @@ class URLTests(TC):
     def test_person_activity_autocomplete(self):
         response = self.client.get('/person-activity-autocomplete/')
         self.assertEqual(response.status_code,200) 
+        self.client.login(username='test', password='test')
+        response = self.client.get('/person-activity-autocomplete/')
+        self.assertEqual(response.status_code,200)  
 
     def test_work_packages_autocomplete(self):
         response = self.client.get('/work-packages-autocomplete/')
         self.assertEqual(response.status_code,200)            
-
+        self.client.login(username='test', password='test')
+        response = self.client.get('/work-packages-autocomplete/')
+        self.assertEqual(response.status_code,200)            
+        
     @skip("Template not created yet")
     def test_producers_submission(self):
         self.client.login(username="test",password="test")

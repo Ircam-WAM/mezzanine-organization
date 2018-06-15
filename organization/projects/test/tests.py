@@ -41,9 +41,13 @@ class URLTests(TestCase):
     def setUp(self):
         super(URLTests, self).setUp()
         self.project_topic = ProjectTopic.objects.create(name="ICT",key="ICT")
-        self.project = Project.objects.create(title='django',content="django project")
+        project_user = User.objects.filter(username="test").first()
+        self.project_ict = Project.objects.create(title="ict project",topic=self.project_topic,validation_status=3)
+        self.project_call = ProjectCall.objects.create(title="project call")
+        self.project = Project.objects.create(title='django',content="django project",user=project_user,validation_status=1, call= self.project_call)
         self.project_demo = ProjectDemo.objects.create(title="django", project= self.project, url="https://wave.ircam.fr/demo/bachotheque/")
         self.project_blog_page = ProjectBlogPage.objects.create(project=self.project,content='django project blog page')
+        self.project_residency = ProjectResidency.objects.create(project=self.project,validated=True)
 
     def test_projects_detail_url(self):
         response = self.client.get('/projects/detail/' + self.project.slug + "/")
@@ -65,15 +69,56 @@ class URLTests(TestCase):
         response = self.client.get('/project/blog/' + self.project_blog_page.slug + "/")
         self.assertEqual(response.status_code,302)      
 
-    @skip("Not implemented")
+    def test_dynamic_content_project_view(self):
+        response = self.client.get('/dynamic-content-project/')
+        self.assertEqual(response.status_code,302)
+        self.client.login(username="test",password="test")
+        response = self.client.get('/dynamic-content-project/')
+        self.assertEqual(response.status_code,200)        
+
     def test_ict_projects_list(self):
         response = self.client.get('/ict-projects/list/')      
         self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"projects/project_ict_list.html")
     
-    @skip("Not implemented")
     def test_ict_projects_detail(self):
-        response = self.client.get('/ict-projects/' + self.project_topic.slug + '/detail/')      
+        response = self.client.get('/ict-projects/' + self.project_ict.slug + '/detail/')      
         self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"projects/project_ict_detail.html")
+
+    def test_ict_projects_public(self):
+        response = self.client.get('/calls/' + self.project_call.slug + '/projects/create/public/')      
+        self.assertEqual(response.status_code,302)
+        self.client.login(username="test",password="test")
+        response = self.client.get('/calls/' + self.project_call.slug + '/projects/create/public/')      
+        self.assertEqual(response.status_code,200)        
+        self.assertTemplateUsed(response,"projects/project_ict_create_public_funding.html")
+        
+    def test_ict_edit_public(self):
+        response = self.client.get('/profile/project/' + self.project.slug + '/')      
+        self.assertEqual(response.status_code,302)
+        self.client.login(username="test",password="test")
+        response = self.client.get('/profile/project/' + self.project.slug + '/')      
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"projects/project_ict_edit_public_funding.html")
+
+    @skip('error')
+    def test_ict_edit_private(self):
+        response = self.client.get('/profile/project/private/' + self.project.slug + '/')      
+        self.assertEqual(response.status_code,302)
+        self.client.login(username="test",password="test")
+        response = self.client.get('/profile/project/private/' + self.project.slug + '/')      
+        self.assertEqual(response.status_code,200)
+        
+    def test_project_residency_list(self):
+        response = self.client.get('/calls/' + self.project_call.slug + '/residencies/list/')      
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"projects/project_residency_list.html")    
+
+    def test_project_residency_detail_view(self):
+        response = self.client.get('/calls/' + self.project_call.slug + '/residencies/' + self.project_residency.slug + '/detail/')      
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"projects/project_residency_detail.html")         
 
 class ProjectTests(TestCase):
 

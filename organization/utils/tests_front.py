@@ -22,16 +22,22 @@ class FrontTest(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.webdriver = webdriver.Remote(
+
+    def setUp(self):
+        self.webdriver = webdriver.Remote(
             command_executor='http://selenium:4444/wd/hub',
             desired_capabilities=DesiredCapabilities.CHROME,
         )
-        cls.webdriver.implicitly_wait(20)
-        cls.url="http://app:8000"
+        self.webdriver.implicitly_wait(20)
+        self.url="http://app:8000"
+        #self.url="http://app:8001"
+        self.webdriver.get(self.url + "/")
+
+    def tearDown(self):
+        self.webdriver.quit()
 
     @classmethod
     def tearDownClass(cls):
-        cls.webdriver.quit()
         super().tearDownClass()
 
     def log_as_admin(self):

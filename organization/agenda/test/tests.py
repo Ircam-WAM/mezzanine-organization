@@ -85,6 +85,15 @@ class URLTests(TestCase):
         response = self.client.get('/agenda/event-price-autocomplete')
         self.assertEqual(response.status_code,200)
 
+    def test_url_dynamic_content_event_view(self):
+        self.client.logout()
+        response = self.client.get('/dynamic-content-event/')
+        self.assertEqual(response.status_code,302)
+        self.client.login(username='test', password='test')
+        response = self.client.get('/dynamic-content-event/')
+        self.assertEqual(response.status_code,200)
+
+
 class EventTests(TestCase):
 
     def setUp(self):
