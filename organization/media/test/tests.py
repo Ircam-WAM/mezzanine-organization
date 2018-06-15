@@ -74,7 +74,6 @@ class URLTests(TestCase):
         response = self.client.get('/playlist-media-autocomplete/')
         self.assertEqual(response.status_code,200)        
 
-    @skip("No template yet")
     def test_stream_slug_type_detail_url(self):
         response = self.client.get('/streams/live/html5/detail/')
         self.assertEqual(response.status_code,200)        

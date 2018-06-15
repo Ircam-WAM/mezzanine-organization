@@ -110,18 +110,15 @@ class URLTests(TC):
         response = self.client.get('/work-packages-autocomplete/')
         self.assertEqual(response.status_code,200)            
         
-    @skip("Template not created yet")
     def test_producers_submission(self):
         self.client.login(username="test",password="test")
         response = self.client.get('/producers/submission/')
         self.assertEqual(response.status_code,200)         
 
-    @skip("Template not created yet")        
     def test_producers_list(self):
         response = self.client.get('/producers/list/')
         self.assertEqual(response.status_code,200)         
 
-    @skip("Template not created yet")        
     def test_jury_list(self):
         response = self.client.get('/jury/list/')
         self.assertEqual(response.status_code,200)         

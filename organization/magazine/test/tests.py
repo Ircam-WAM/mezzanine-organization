@@ -41,13 +41,13 @@ class URLTests(TestCase):
         self.assertEqual(response.status_code,200)
         self.assertContains(response, "django tricks")    
 
-    @skip("No template yet")
+    @skip("No translation")
     def test_basic_article_url(self):
         response = self.client.get('/article/list/')
         self.assertEqual(response.status_code,200)
         self.assertContains(response, "django article")
 
-    @skip("No template yet")
+    @skip("No translation")
     def test_article_type_url(self):
         response = self.client.get('/article/list/article/')
         self.assertEqual(response.status_code,200)
