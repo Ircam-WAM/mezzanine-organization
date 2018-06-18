@@ -29,6 +29,7 @@ class URLTests(TestCase):
     def test_shop_url(self):
         response = self.client.get('/shop/wishlist/')
         self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"shop/wishlist.html")
 
 class ProductTests(TestCase):
     

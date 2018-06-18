@@ -63,10 +63,12 @@ class URLTests(TC):
     def test_person_detail_url(self):
         response = self.client.get('/person/' + self.person.slug + "/")
         self.assertEqual(response.status_code,200)    
+        self.assertTemplateUsed(response,'network/person_detail.html')
 
     def test_profile_detail_url(self):
         response = self.client.get('/profile/' + self.person.user.username + "/")
         self.assertEqual(response.status_code,200)     
+        self.assertTemplateUsed(response,'network/person_detail.html')
 
     def test_person_list_url(self):
         response = self.client.get('/person/list/')
@@ -85,6 +87,7 @@ class URLTests(TC):
     def test_network_url(self):
         response = self.client.get('/network/')
         self.assertEqual(response.status_code,200)  
+        self.assertTemplateUsed(response,'network/organization_list.html')
 
     def test_organization_linked_list_autocomplete(self):
         self.client.login(username="test",password="test")
@@ -114,14 +117,17 @@ class URLTests(TC):
         self.client.login(username="test",password="test")
         response = self.client.get('/producers/submission/')
         self.assertEqual(response.status_code,200)         
+        self.assertTemplateUsed(response,'network/organization_producer_create.html')
 
     def test_producers_list(self):
         response = self.client.get('/producers/list/')
         self.assertEqual(response.status_code,200)         
+        self.assertTemplateUsed(response,'network/organization_producer_list.html')
 
     def test_jury_list(self):
         response = self.client.get('/jury/list/')
         self.assertEqual(response.status_code,200)         
+        self.assertTemplateUsed(response,'network/organization_jury_list.html')
 
 class NetworkTests(TC):
     

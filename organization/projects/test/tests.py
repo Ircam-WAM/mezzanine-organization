@@ -38,6 +38,7 @@ PROJECT_STATUS_CHOICES = (
     (3, _('accepted')),
 )
 class URLTests(TestCase):
+
     def setUp(self):
         super(URLTests, self).setUp()
         self.project_topic = ProjectTopic.objects.create(name="ICT",key="ICT")
@@ -53,12 +54,14 @@ class URLTests(TestCase):
         response = self.client.get('/projects/detail/' + self.project.slug + "/")
         self.assertEqual(response.status_code,200)  
         self.assertContains(response,"django project") 
+        self.assertTemplateUsed(response,'projects/project_detail.html')
         response = self.client.get('/project/detail/' + self.project.slug + "/")
         self.assertEqual(response.status_code,302)
 
     def test_projects_demo_url(self):
         response = self.client.get('/projects/demo/' + self.project_demo.slug + "/")
         self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'projects/project_demo_detail.html')
         response = self.client.get('/project/demo/' + self.project_demo.slug + "/")
         self.assertEqual(response.status_code,302)
 
@@ -66,6 +69,7 @@ class URLTests(TestCase):
         response = self.client.get('/projects/blog/' + self.project_blog_page.slug + "/")
         self.assertEqual(response.status_code,200)
         self.assertContains(response,"django project blog page") 
+        self.assertTemplateUsed(response,'projects/project_blogpage_detail.html')
         response = self.client.get('/project/blog/' + self.project_blog_page.slug + "/")
         self.assertEqual(response.status_code,302)      
 

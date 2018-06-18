@@ -154,7 +154,7 @@ class ProjectICTSubmissionView(ProjectCallMixin, TemplateView):
     template_name='projects/project_ict_submission.html'
 
 
-class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
+class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView): # pragma: no cover
 
     model = Project
     form_class = ProjectForm
@@ -162,7 +162,6 @@ class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlin
     inlines = [ProjectPublicDataInline, ProjectPrivateDataInline, ProjectUserImageInline,
                 ProjectContactInline]
     topic = 'ICT'
-
     def forms_valid(self, form, inlines):
         self.object = form.save()
         self.object.user = self.request.user
@@ -241,7 +240,6 @@ class ProjectICTCreatePublicFundingView(LoginRequiredMixin, ProjectCallMixin, Cr
     def get_success_url(self):
         return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})
 
-
 class ProjectICTEditPublicFundingView(LoginRequiredMixin, UpdateWithInlinesView):
 
     model = Project
@@ -289,7 +287,7 @@ class ProjectICTEditPublicFundingView(LoginRequiredMixin, UpdateWithInlinesView)
                         elif index <= 2 and index > 0:
                             keywords_result = "," + keyword
                         else:
-                            break;
+                            break
                     context["keywords"] = keywords_result
                 else:
                     context["keywords"] = ""
@@ -303,7 +301,7 @@ class ProjectICTEditPublicFundingView(LoginRequiredMixin, UpdateWithInlinesView)
         self.object = form.save()
         self.object.user = self.request.user
         self.object.save()
-        return super(ProjectICTCreatePublicFundingView, self).forms_valid(form, inlines)
+        return super(ProjectICTEditPublicFundingView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
         return reverse_lazy('user-project-edit', kwargs={'slug':self.call.slug})
@@ -353,15 +351,13 @@ class ProjectICTCreatePrivateFundingView(LoginRequiredMixin, ProjectCallMixin, C
         return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})
 
 
-class ProjectICTEditPrivateFundingView(LoginRequiredMixin, ProjectCallMixin, UpdateWithInlinesView):
+class ProjectICTEditPrivateFundingView(LoginRequiredMixin, UpdateWithInlinesView):
 
     model = Project
-    form_calss = ProjectForm
-    template_name='projects/project_ict_create_private_funding.html'
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline, ProjectUserImageInline,
+    form_class = ProjectForm
+    template_name='projects/project_ict_edit_public_funding.html'
+    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, ProjectUserImageInline,
                 ProjectContactInline]
-    topic = 'ICT'
-
     def get_initial(self):
         initial = super(ProjectICTEditPrivateFundingView, self).get_initial()
         slug = self.kwargs['slug']
@@ -385,7 +381,7 @@ class ProjectICTEditPrivateFundingView(LoginRequiredMixin, ProjectCallMixin, Upd
         if (project.validation_status != 1):
             raise Http404()
         context["project"] = project
-        context["public_data"] = project.pulic_data.all().first()
+        context["public_data"] = project.public_data.all().first()
         context["private_data"] = project.private_data.all().first()
         context["keywords"] = ""
         try:
@@ -431,7 +427,7 @@ class ProjectICTListView(ListView):
 
     model = Project
     template_name='projects/project_ict_list.html'
-
+    
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         #TODO: Filter by Call
@@ -467,7 +463,7 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
 
     model = ProjectResidency
     template_name='projects/project_residency_detail.html'
-
+    
     def get_context_data(self, **kwargs):
         context = super(ProjectResidencyDetailView, self).get_context_data(**kwargs)
         # Add the previous and next residencies to the context

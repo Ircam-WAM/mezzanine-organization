@@ -39,11 +39,13 @@ class URLTests(TestCase):
         response = self.client.get('/playlists/' + self.playlist.slug + "/detail/")
         self.assertEqual(response.status_code,200)
         self.assertContains(response,"playing django")        
+        self.assertTemplateUsed(response,'media/playlist_detail.html')
 
     def test_playlist_list_url(self):
         response = self.client.get('/playlists/list/')
         self.assertEqual(response.status_code,200)
         self.assertContains(response,"playlist django")    
+        self.assertTemplateUsed(response,'media/playlist_list.html')
 
     def test_playlist_list_type_url(self):
         response = self.client.get('/playlists/list/video/')
@@ -52,21 +54,21 @@ class URLTests(TestCase):
         response = self.client.get('/playlists/list/audio/')
         self.assertEqual(response.status_code,200)
         self.assertContains(response,"playlist django")    
+        self.assertTemplateUsed(response,'media/playlist_list.html')
 
-    @skip("No template yet")
     def test_playlist_overlay(self):
         response = self.client.get('/playlists/overlay/' + self.playlist.slug + "/")
         self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'media/playlist_overlay.html')
 
-    @skip("No template yet")
     def test_media_type_slug_detail_url(self):
-        response = self.client.get('/media/video/' + self.media.slug + "/detail/")
+        response = self.client.get('/medias/video/' + self.media.slug + "/detail/")
         self.assertEqual(response.status_code,200)
-        self.assertContains(response,"playing django")    
+        self.assertContains(response,"www.ircam.fr")    
 
-    @skip("No template yet")
+    @skip('MediaOverlayView : self.object.type = None. Maybe use self.object only')
     def test_media_type_slug_overlay_url(self):
-        response = self.client.get('/media/video/' + self.media.slug + "/overlay/")
+        response = self.client.get('/medias/video/' + self.media.slug + "/overlay/")
         self.assertEqual(response.status_code,200)
 
     def test_media_autocomplete(self):
@@ -77,6 +79,7 @@ class URLTests(TestCase):
     def test_stream_slug_type_detail_url(self):
         response = self.client.get('/streams/live/html5/detail/')
         self.assertEqual(response.status_code,200)        
+        self.assertTemplateUsed(response,'media/live_streaming/live_streaming_detail.html')
 
 class MediaTests(TestCase):
     

@@ -41,16 +41,19 @@ class URLTests(TestCase):
         response = self.client.get('/job-offer/' + self.job_offer.slug + "/")
         self.assertEqual(response.status_code,200)
         self.assertContains(response, "python")  
+        self.assertTemplateUsed(response,"job/job_offer_detail.html")
 
     def test_basic_job_offer_url(self):
         response = self.client.get('/job-offer/')
         self.assertEqual(response.status_code,200)
         self.assertContains(response, "django-dev")
+        self.assertTemplateUsed(response,"job/job_offer_list.html")
 
     def test_basic_candidacies_url(self):
         response = self.client.get('/candidacies/')
         self.assertEqual(response.status_code,200)
         self.assertContains(response, "research")
+        self.assertTemplateUsed(response,"job/candidacy_list.html")
 
     def test_candidacies_autocomplete(self):
         response = self.client.get('/candidacy-autocomplete/')

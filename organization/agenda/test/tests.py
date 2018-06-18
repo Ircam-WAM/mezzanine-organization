@@ -57,6 +57,7 @@ class URLTests(TestCase):
         response = self.client.get('/agenda/tag/scientific-event/')
         self.assertEqual(response.status_code,200)
         self.assertContains(response,"mon-evenement")
+        self.assertTemplateUsed(response,'agenda/event_list.html')
 
     def test_url_archive(self):
         response = self.client.get('/agenda/archive/2017/')
@@ -65,21 +66,25 @@ class URLTests(TestCase):
         response = self.client.get('/agenda/archive/2016/')
         self.assertEqual(response.status_code,200)
         self.assertContains(response,"past_event")
+        self.assertTemplateUsed(response,'agenda/event_list.html')
 
     def test_url_slug(self):
         response = self.client.get('/agenda/' + self.event_tagged.slug + '/detail/')
         self.assertEqual(response.status_code,200)
         self.assertContains(response,"mon-evenement")
+        self.assertTemplateUsed(response,'agenda/event_detail.html')
 
     def test_basic_url(self):
         response = self.client.get('/agenda/')
         self.assertEqual(response.status_code,200)
         self.assertContains(response,"mon-evenement")
+        self.assertTemplateUsed(response,'agenda/event_list.html')
 
     def test_url_booking(self):
         response = self.client.get('/agenda/' + self.event_tagged.slug + '/booking/')
         self.assertEqual(response.status_code,200)
         self.assertContains(response,"mon-evenement")      
+        self.assertTemplateUsed(response,'agenda/event_booking.html')
 
     def test_url_price_autocomplete(self):
         response = self.client.get('/agenda/event-price-autocomplete')
