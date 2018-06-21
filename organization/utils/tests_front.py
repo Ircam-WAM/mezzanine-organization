@@ -17,8 +17,6 @@ import requests
 
 class FrontTest(StaticLiveServerTestCase):
 
-    fixtures = ['event.json']
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
