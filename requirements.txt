@@ -30,4 +30,5 @@ pyldap
 django-auth-ldap==1.2.10
 selenium==3.11.0
 lxml==4.2.0
+coverage==4.5.1
 -e .
