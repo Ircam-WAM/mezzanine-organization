@@ -160,20 +160,20 @@ class DepartmentTests(TC):
         self.department = Department.objects.create(name="my department",organization=self.organization)
         self.department_page = DepartmentPage.objects.create(title="title department",content="my dep content", publish_date=datetime.today(),department=self.department, status=CONTENT_STATUS_PUBLISHED)
 
-    @skip("Translation error")        
+    @skip("error : title_fr not in list")
     def test_department_display_for_everyone(self):
         self.client.logout()
         response = self.client.get("/title-department/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+        self.assertTemplateUsed(response, "pages/departmentpage.html")
         self.client.login(username='user', password='test')
         response = self.client.get(self.department_page.get_absolute_url())
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+        self.assertTemplateUsed(response, "pages/departmentpage.html")
         self.client.login(username='test', password='test')
         response = self.client.get(self.department_page.get_absolute_url())
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "magazine/article/article_detail.html")
+        self.assertTemplateUsed(response, "pages/departmentpage.html")
 
     def test_department_admin(self):
         self.client.logout()
@@ -193,7 +193,7 @@ class DepartmentTests(TC):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(nb+1,Department.objects.count())
 
-    @skip("Translation error")
+    @skip("error : title_fr not in list")
     def test_department_admin_edition(self):
         self.client.logout()
         response = self.client.get(self.department_page.get_absolute_url())

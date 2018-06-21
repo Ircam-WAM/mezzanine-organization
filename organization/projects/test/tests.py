@@ -106,7 +106,7 @@ class URLTests(TestCase):
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,"projects/project_ict_edit_public_funding.html")
 
-    @skip('error')
+    @skip('404 error')
     def test_ict_edit_private(self):
         response = self.client.get('/profile/project/private/' + self.project.slug + '/')      
         self.assertEqual(response.status_code,302)

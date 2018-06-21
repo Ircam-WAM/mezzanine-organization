@@ -3,8 +3,8 @@ from unittest import skip
 from selenium.webdriver.common.keys import Keys
 import requests
 from organization.network.models import DepartmentPage
-class SearchTestsSelenium(FrontTest):               
 
+class SearchTestsSelenium(FrontTest):               
 
     @classmethod
     def setUpClass(cls):

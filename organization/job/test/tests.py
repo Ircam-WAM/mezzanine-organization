@@ -29,7 +29,6 @@ from django.forms import BaseFormSet
 from django.forms import formset_factory
 from django.contrib.auth import get_user_model as User
 
-# Create your tests here.
 class URLTests(TestCase):
 
     def setUp(self):
