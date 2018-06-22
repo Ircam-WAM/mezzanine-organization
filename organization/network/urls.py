@@ -39,7 +39,7 @@ urlpatterns = [
     url('^person/list/$', PersonListView.as_view(), name='organization-network-person-list'),
     url('^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name='organization-network-person-detail'),
     url('^person/(?P<username>.*)/$', PersonDetailView.as_view(), name='organization-network-person-username-detail'),
-    url('^messages/', include('postman.urls')),
+    # url('^messages/', include('postman.urls')),
     url('^person/(?P<username>.*)/following/$', PersonFollowingListView.as_view(), name='organization-network-person-username-following'),
     url('^person/(?P<username>.*)/followers/$', PersonFollowersListView.as_view(), name='organization-network-person-username-followers'),
     url('^settings/$', PersonSettingsView.as_view(), name='organization-network-person-username-settings'),
