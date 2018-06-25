@@ -149,7 +149,7 @@ class ProjectCallMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super(ProjectCallMixin, self).get_context_data(**kwargs)
-        self.call = ProjectCall.objects.get(slug=self.kwargs['slug'])
+        self.call = ProjectCall.objects.get(slug=self.kwargs['call_slug'])
         context['call'] = self.call
         return context
 
@@ -174,7 +174,7 @@ class ProjectTechPublicFundingCreateView(LoginRequiredMixin, ProjectCallMixin, C
     def forms_valid(self, form, inlines):
         self.object = form.save()
         self.object.user = self.request.user
-        self.call = ProjectCall.objects.get(slug=self.kwargs['slug'])
+        self.call = ProjectCall.objects.get(slug=self.kwargs['call_slug'])
         self.object.call = self.call
         self.object.topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         self.status = 1
@@ -204,11 +204,11 @@ class ProjectTechPublicFundingCreateView(LoginRequiredMixin, ProjectCallMixin, C
         return super(ProjectTechPublicCreateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})
+        return reverse_lazy('organization-project-public-update', kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug})
 
 
 
-class ProjectTechPublicFundingUpdateView(LoginRequiredMixin, UpdateWithInlinesView):
+class ProjectTechPublicFundingUpdateView(LoginRequiredMixin, ProjectMixin, UpdateWithInlinesView):
 
     model = Project
     form_class = ProjectForm
@@ -229,8 +229,8 @@ class ProjectTechPublicFundingUpdateView(LoginRequiredMixin, UpdateWithInlinesVi
                 initial['date_to'] = project.date_to
         return initial
 
-    def get_context_data(self, **kwargs):
-        context = super(ProjectTechPublicFundingUpdateView, self).get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProjectTechPublicFundingUpdateView, self).get_context_data(*args, **kwargs)
         slug = self.kwargs['slug']
         user = self.request.user
         project = Project.objects.get(slug=slug)
@@ -269,10 +269,10 @@ class ProjectTechPublicFundingUpdateView(LoginRequiredMixin, UpdateWithInlinesVi
         self.object = form.save()
         self.object.user = self.request.user
         self.object.save()
-        return super(ProjectTechPublicFundingCreateView, self).forms_valid(form, inlines)
+        return super(ProjectTechPublicFundingUpdateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('user-project-edit', kwargs={'slug':self.call.slug})
+        return reverse_lazy('organization-project-public-update', kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug})
 
 
 class ProjectTechPrivateFundingCreateView(ProjectTechPublicFundingCreateView):
@@ -280,11 +280,17 @@ class ProjectTechPrivateFundingCreateView(ProjectTechPublicFundingCreateView):
     template_name='projects/project_ict_create_private_funding.html'
     funding = 'private'
 
+    def get_success_url(self):
+        return reverse_lazy('organization-project-private-update', kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug})
+
 
 class ProjectTechPrivateFundingUpdateView(ProjectTechPublicFundingUpdateView):
 
     template_name='projects/project_ict_create_private_funding.html'
     funding = 'private'
+
+    def get_success_url(self):
+        return reverse_lazy('organization-project-private-update', kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug})
 
 
 class ProjectTechValidationView(ProjectCallMixin, TemplateView):
@@ -316,17 +322,17 @@ class ProjectCallListView(ListView):
     model = ProjectCall
     template_name='projects/project_call_list.html'
 
-
-class ProjectCallListAsEventsView(ListView):
-
-    model = ProjectCall
-    template_name = "projects/project_call_list_as_events.html"
-
     def get_context_data(self, *args, **kwargs):
-        context = {}
+        context = super(ProjectCallListView, self).get_context_data(*args, **kwargs)
         context["open_calls"] = ProjectCall.objects.filter(date_to__gte=datetime.now()).order_by("date_to")
         context["closed_calls"] = ProjectCall.objects.filter(date_to__lt=datetime.now()).order_by("date_to")
         return context
+
+
+class ProjectCallListAsEventsView(ProjectCallListView):
+
+    template_name = "projects/project_call_list_as_events.html"
+
 
 
 class ProjectResidencyDetailView(SlugMixin, DetailView):
@@ -334,8 +340,8 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
     model = ProjectResidency
     template_name='projects/project_residency_detail.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(ProjectResidencyDetailView, self).get_context_data(**kwargs)
+    def get_context_data(self,  *args, **kwargs):
+        context = super(ProjectResidencyDetailView, self).get_context_data(*args, **kwargs)
         # Add the previous and next residencies to the context
         call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
         projects = Project.objects.filter(call=call)
