@@ -75,14 +75,14 @@ class ProjectDetailView(SlugMixin, ProjectMixin, DetailView):
     template_name='projects/project_detail.html'
 
 
-class ProjectICTDetailView(SlugMixin, ProjectMixin, DetailView):
+class ProjectTechDetailView(SlugMixin, ProjectMixin, DetailView):
 
     model = Project
     template_name='projects/project_ict_detail.html'
 
     def get_object(self, queryset=None):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
-        project = super(ProjectICTDetailView, self).get_object()
+        project = super(ProjectTechDetailView, self).get_object()
         if project.topic != topic:
             raise Http404()
         #TODO: Check if user is project reviewer or creator to allow other status values
@@ -154,20 +154,22 @@ class ProjectCallMixin(object):
         return context
 
 
-class ProjectICTSubmissionView(ProjectCallMixin, TemplateView):
+class ProjectTechSubmissionView(ProjectCallMixin, TemplateView):
 
     model = Project
     template_name='projects/project_ict_submission.html'
 
 
-class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
+class ProjectTechPublicFundingCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
 
     model = Project
     form_class = ProjectForm
-    template_name='projects/project_ict_create.html'
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataInline, ProjectUserImageInline,
+    # template_name='projects/project_ict_create.html'
+    template_name='projects/project_ict_create_public_funding.html'
+    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, ProjectUserImageInline,
                 ProjectContactInline]
     topic = 'ICT'
+    funding = 'public'
 
     def forms_valid(self, form, inlines):
         self.object = form.save()
@@ -176,6 +178,7 @@ class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlin
         self.object.call = self.call
         self.object.topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         self.status = 1
+        self.object.funding = self.funding
         self.object.save()
 
         for formset in inlines:
@@ -198,57 +201,14 @@ class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlin
         msg.content_subtype = 'html'
         msg.send()
 
-        return super(ProjectICTCreateView, self).forms_valid(form, inlines)
+        return super(ProjectTechPublicCreateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
         return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})
 
 
-class ProjectICTCreatePublicFundingView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
 
-    model = Project
-    form_class = ProjectForm
-    template_name='projects/project_ict_create_public_funding.html'
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, ProjectUserImageInline,
-                ProjectContactInline]
-    topic = 'ICT'
-
-    def forms_valid(self, form, inlines):
-        self.object = form.save()
-        self.object.user = self.request.user
-        self.call = ProjectCall.objects.get(slug=self.kwargs['slug'])
-        self.object.call = self.call
-        self.object.topic, c = ProjectTopic.objects.get_or_create(key='ICT')
-        self.status = 1
-        self.object.funding = "public"
-        self.object.save()
-
-        for formset in inlines:
-            if 'contact' in formset.prefix:
-                for f in formset:
-                    contact_data = f.cleaned_data
-                    contact_email = contact_data.get("email")
-
-        from_email = settings.DEFAULT_FROM_EMAIL
-        to_email = [contact_email, settings.DEFAULT_TO_EMAIL]
-        subject = settings.EMAIL_SUBJECT_PREFIX + ' ' + self.call.title
-        ctx = {
-            'first_name': contact_data.get("first_name"),
-            'last_name': contact_data.get("last_name"),
-            'project_title': self.object.title,
-        }
-
-        message = get_template('projects/project_ict_create_notification.html').render(Context(ctx))
-        msg = EmailMessage(subject, message, to=to_email, from_email=from_email)
-        msg.content_subtype = 'html'
-        msg.send()
-        return super(ProjectICTCreatePublicFundingView, self).forms_valid(form, inlines)
-
-    def get_success_url(self):
-        return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})
-
-
-class ProjectICTEditPublicFundingView(LoginRequiredMixin, UpdateWithInlinesView):
+class ProjectTechPublicFundingUpdateView(LoginRequiredMixin, UpdateWithInlinesView):
 
     model = Project
     form_class = ProjectForm
@@ -257,7 +217,7 @@ class ProjectICTEditPublicFundingView(LoginRequiredMixin, UpdateWithInlinesView)
                 ProjectContactInline]
 
     def get_initial(self):
-        initial = super(ProjectICTEditPublicFundingView, self).get_initial()
+        initial = super(ProjectTechPublicFundingUpdateView, self).get_initial()
         slug = self.kwargs['slug']
         user = self.request.user
         project = Project.objects.get(slug=slug)
@@ -270,7 +230,7 @@ class ProjectICTEditPublicFundingView(LoginRequiredMixin, UpdateWithInlinesView)
         return initial
 
     def get_context_data(self, **kwargs):
-        context = super(ProjectICTEditPublicFundingView, self).get_context_data(**kwargs)
+        context = super(ProjectTechPublicFundingUpdateView, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
         user = self.request.user
         project = Project.objects.get(slug=slug)
@@ -309,131 +269,31 @@ class ProjectICTEditPublicFundingView(LoginRequiredMixin, UpdateWithInlinesView)
         self.object = form.save()
         self.object.user = self.request.user
         self.object.save()
-        return super(ProjectICTCreatePublicFundingView, self).forms_valid(form, inlines)
+        return super(ProjectTechPublicFundingCreateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
         return reverse_lazy('user-project-edit', kwargs={'slug':self.call.slug})
 
 
-class ProjectICTCreatePrivateFundingView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
+class ProjectTechPrivateFundingCreateView(ProjectTechPublicFundingCreateView):
 
-    model = Project
-    form_class = ProjectForm
     template_name='projects/project_ict_create_private_funding.html'
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline, ProjectUserImageInline,
-                ProjectContactInline]
-    topic = 'ICT'
-
-    def forms_valid(self, form, inlines):
-        self.object = form.save()
-        self.object.user = self.request.user
-        self.call = ProjectCall.objects.get(slug=self.kwargs['slug'])
-        self.object.call = self.call
-        self.object.topic, c = ProjectTopic.objects.get_or_create(key='ICT')
-        self.status = 1
-        self.object.funding = "private"
-        self.object.save()
-
-        for formset in inlines:
-            if 'contact' in formset.prefix:
-                for f in formset:
-                    contact_data = f.cleaned_data
-                    contact_email = contact_data.get("email")
-
-        from_email = settings.DEFAULT_FROM_EMAIL
-        to_email = [contact_email, settings.DEFAULT_TO_EMAIL]
-        subject = settings.EMAIL_SUBJECT_PREFIX + ' ' + self.call.title
-        ctx = {
-            'first_name': contact_data.get("first_name"),
-            'last_name': contact_data.get("last_name"),
-            'project_title': self.object.title,
-        }
-
-        message = get_template('projects/project_ict_create_notification.html').render(Context(ctx))
-        msg = EmailMessage(subject, message, to=to_email, from_email=from_email)
-        msg.content_subtype = 'html'
-        msg.send()
-        return super(ProjectICTCreatePrivateFundingView, self).forms_valid(form, inlines)
-
-    def get_success_url(self):
-        return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})
+    funding = 'private'
 
 
-class ProjectICTEditPrivateFundingView(LoginRequiredMixin, ProjectCallMixin, UpdateWithInlinesView):
+class ProjectTechPrivateFundingUpdateView(ProjectTechPublicFundingUpdateView):
 
-    model = Project
-    form_calss = ProjectForm
     template_name='projects/project_ict_create_private_funding.html'
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline, ProjectUserImageInline,
-                ProjectContactInline]
-    topic = 'ICT'
-
-    def get_initial(self):
-        initial = super(ProjectICTEditPrivateFundingView, self).get_initial()
-        slug = self.kwargs['slug']
-        user = self.request.user
-        project = Project.objects.get(slug=slug)
-        if project:
-            if project.user == user:
-                initial['title'] = project.title
-                initial['website'] = project.website
-                initial['date_from'] = project.date_from
-                initial['date_to'] = project.date_to
-        return initial
-
-    def get_context_data(self, **kwargs):
-        context = super(ProjectICTEditPrivateFundingView, self).get_context_data(**kwargs)
-        slug = self.kwargs['slug']
-        user = self.request.user
-        project = Project.objects.get(slug=slug)
-        if (not project) or (project.user != user):
-            raise Http404()
-        if (project.validation_status != 1):
-            raise Http404()
-        context["project"] = project
-        context["public_data"] = project.pulic_data.all().first()
-        context["private_data"] = project.private_data.all().first()
-        context["keywords"] = ""
-        try:
-            if project.contacts.all().count() > 0:
-                contacts = project.contacts.all().first()
-                context["contacts"] = contacts
-                if contacts.keywords.all().count() > 0:
-                    index = 0
-                    keywords_result = ""
-                    for key in contacts.keywords.all():
-                        if index == 0:
-                            keywords_result = keyword
-                        elif index <= 2 and index > 0:
-                            keywords_result = "," + keyword
-                        else:
-                            break
-                    context["keywords"] = keywords_result
-                else:
-                    context["keywords"] = ""
-            else:
-                context["keywords"] = ""
-        except Exception:
-            pass
-        return context
-
-    def forms_valid(self, form, inlines):
-        self.object = form.save()
-        self.object.user = self.request.user
-        self.object.save()
-        return super(ProjectICTEditPrivateFundingView, self).forms_valid(form, inlines)
-
-    def get_success_url(self):
-        return reverse_lazy('user-project-edit-private', kwargs={'slug':self.call.slug})
+    funding = 'private'
 
 
-class ProjectICTValidationView(ProjectCallMixin, TemplateView):
+class ProjectTechValidationView(ProjectCallMixin, TemplateView):
 
     model = Project
     template_name='projects/project_ict_validation.html'
 
 
-class ProjectICTListView(ListView):
+class ProjectTechListView(ListView):
 
     model = Project
     template_name='projects/project_ict_list.html'

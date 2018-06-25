@@ -244,6 +244,7 @@ class Person(Displayable, AdminThumbMixin, Address):
 
 
 class OrganizationLinkedBlockInline(Titled, Orderable):
+
     organization_linked = models.ForeignKey('OrganizationLinked', verbose_name=_('organization list'), related_name='organization_linked_block_inline_list', blank=True, null=True)
     organization_main = models.ForeignKey('Organization', verbose_name=_('organization'), related_name='organization_linked_block', blank=True, null=True, on_delete=models.SET_NULL)
 

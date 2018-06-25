@@ -53,6 +53,18 @@ from django.core.exceptions import PermissionDenied
 import pandas as pd
 
 
+
+class UserMixin(object):
+
+    @property
+    def person():
+        if 'username' in self.kwargs:
+            user = User.objects.get_object_or_404(username=self.kwargs['username'])
+        else:
+            user = self.request.user
+        return user.person
+
+
 class PersonListView(PublishedMixin, ListView):
 
     model = Person
@@ -60,7 +72,7 @@ class PersonListView(PublishedMixin, ListView):
     context_object_name = 'persons'
 
 
-class PersonDetailView(SlugMixin, DetailView):
+class PersonDetailView(UserMixin, SlugMixin, DetailView):
 
     model = Person
     template_name='network/person_detail.html'
@@ -84,8 +96,9 @@ class PersonDetailView(SlugMixin, DetailView):
         if hasattr(self.request.user, 'person') and not slug and self.request.user.is_authenticated() and not 'username' in self.kwargs:
             obj = self.request.user.person
         elif 'username' in self.kwargs:
+            print(self.kwargs['username'])
             user = User.objects.get(username=self.kwargs['username'])
-            obj = Person.objects.get(user=user)
+            obj = user.person
         else:
             obj = super().get_object()
         return obj
@@ -126,40 +139,42 @@ class PersonDetailView(SlugMixin, DetailView):
 
 
 
-class PersonMixin(object):
-
-    @property
-    def person():
-        if 'username' in self.kwargs:
-            user = User.objects.get_object_or_404(username=self.kwargs['username'])
-        else:
-            user = self.request.user
-        return user.person
 
 
-class PersonFollowingListView(PersonMixin, ListView):
+class PersonFollowingListView(PersonDetailView):
 
     model = Person
-    template_name='network/person_following.html'
+    template_name='accounts/account_profile_update_following.html'
 
     def get_queryset(self):
         return self.person.following.all()
 
 
-class PersonFollowersListView(PersonMixin, ListView):
+class PersonFollowersListView(PersonDetailView):
 
     model = Person
-    template_name='network/person_followers.html'
+    template_name='accounts/account_profile_update_followers.html'
 
     def get_queryset(self):
         return self.person.followers.all()
 
 
-class PersonSettingsView(PersonMixin, UpdateView):
+class PersonSettingsView(PersonDetailView):
 
     model = Person
-    template_name='network/person_following.html'
+    template_name='accounts/account_profile_update_settings.html'
 
+
+class PersonApplicationListView(PersonDetailView):
+
+    model = Person
+    template_name='accounts/account_profile_update_app_form.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super(PersonApplicationListView, self).get_context_data(**kwargs)
+        context['projects'] = Project.objects.filter(user=self.request.user)
+        return context
 
 
 class PersonListBlockAutocompleteView(autocomplete.Select2QuerySetView):

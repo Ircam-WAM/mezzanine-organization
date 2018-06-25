@@ -37,11 +37,12 @@ urlpatterns = [
     url('^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name='organization-network-timesheet-list-view' ),
     
     url('^person/list/$', PersonListView.as_view(), name='organization-network-person-list'),
-    url('^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name='organization-network-person-detail'),
-    url('^person/(?P<username>.*)/$', PersonDetailView.as_view(), name='organization-network-person-username-detail'),
+    # url('^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name='organization-network-person-detail'),
+    url('^person/(?P<username>[A-Za-z0-9._-]+)/$', PersonDetailView.as_view(), name='organization-network-person-detail'),
     # url('^messages/', include('postman.urls')),
-    url('^person/(?P<username>.*)/following/$', PersonFollowingListView.as_view(), name='organization-network-person-username-following'),
-    url('^person/(?P<username>.*)/followers/$', PersonFollowersListView.as_view(), name='organization-network-person-username-followers'),
+    url('^person/(?P<username>[A-Za-z0-9._-]+)/following/$', PersonFollowingListView.as_view(), name='organization-network-person-following'),
+    url('^person/(?P<username>[A-Za-z0-9._-]+)/followers/$', PersonFollowersListView.as_view(), name='organization-network-person-followers'),
+    url('^person/(?P<username>[A-Za-z0-9._-]+)/applications/$', PersonApplicationListView.as_view(), name='organization-network-person-applications'),
     url('^settings/$', PersonSettingsView.as_view(), name='organization-network-person-username-settings'),
 
     url('^person-list-block-autocomplete/$', permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
