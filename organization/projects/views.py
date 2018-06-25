@@ -160,25 +160,25 @@ class ProjectTechSubmissionView(ProjectCallMixin, TemplateView):
     template_name='projects/project_ict_submission.html'
 
 
-class ProjectTechPublicFundingCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
+class ProjectTechCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
 
     model = Project
     form_class = ProjectForm
-    # template_name='projects/project_ict_create.html'
-    template_name='projects/project_ict_create_public_funding.html'
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, ProjectUserImageInline,
-                ProjectContactInline]
-    topic = 'ICT'
-    funding = 'public'
+    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, 
+                ProjectUserImageInline, ProjectContactInline]
+    topic_key = 'ICT'
+
+    def get_template_names(self):
+        return ['projects/project_ict_create_%s_funding.html' % self.kwargs['funding']]
 
     def forms_valid(self, form, inlines):
         self.object = form.save()
         self.object.user = self.request.user
         self.call = ProjectCall.objects.get(slug=self.kwargs['call_slug'])
         self.object.call = self.call
-        self.object.topic, c = ProjectTopic.objects.get_or_create(key='ICT')
+        self.object.topic, c = ProjectTopic.objects.get_or_create(key=self.topic_key)
         self.status = 1
-        self.object.funding = self.funding
+        self.object.funding = self.kwargs['funding']
         self.object.save()
 
         for formset in inlines:
@@ -204,20 +204,24 @@ class ProjectTechPublicFundingCreateView(LoginRequiredMixin, ProjectCallMixin, C
         return super(ProjectTechPublicCreateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('organization-project-public-update', kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug})
+        return reverse_lazy('organization-call-project-update', 
+            kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug,
+                    'funding': self.kwargs['funding']})
 
 
 
-class ProjectTechPublicFundingUpdateView(LoginRequiredMixin, ProjectMixin, UpdateWithInlinesView):
+class ProjectTechUpdateView(LoginRequiredMixin, ProjectMixin, UpdateWithInlinesView):
 
     model = Project
     form_class = ProjectForm
-    template_name='projects/project_ict_edit_public_funding.html'
     inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, ProjectUserImageInline,
                 ProjectContactInline]
 
+    def get_template_names(self):
+        return ['projects/project_ict_edit_%s_funding.html' % self.object.funding]
+
     def get_initial(self):
-        initial = super(ProjectTechPublicFundingUpdateView, self).get_initial()
+        initial = super(ProjectTechUpdateView, self).get_initial()
         slug = self.kwargs['slug']
         user = self.request.user
         project = Project.objects.get(slug=slug)
@@ -230,7 +234,7 @@ class ProjectTechPublicFundingUpdateView(LoginRequiredMixin, ProjectMixin, Updat
         return initial
 
     def get_context_data(self, *args, **kwargs):
-        context = super(ProjectTechPublicFundingUpdateView, self).get_context_data(*args, **kwargs)
+        context = super(ProjectTechUpdateView, self).get_context_data(*args, **kwargs)
         slug = self.kwargs['slug']
         user = self.request.user
         project = Project.objects.get(slug=slug)
@@ -269,28 +273,11 @@ class ProjectTechPublicFundingUpdateView(LoginRequiredMixin, ProjectMixin, Updat
         self.object = form.save()
         self.object.user = self.request.user
         self.object.save()
-        return super(ProjectTechPublicFundingUpdateView, self).forms_valid(form, inlines)
+        return super(ProjectTechUpdateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('organization-project-public-update', kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug})
-
-
-class ProjectTechPrivateFundingCreateView(ProjectTechPublicFundingCreateView):
-
-    template_name='projects/project_ict_create_private_funding.html'
-    funding = 'private'
-
-    def get_success_url(self):
-        return reverse_lazy('organization-project-private-update', kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug})
-
-
-class ProjectTechPrivateFundingUpdateView(ProjectTechPublicFundingUpdateView):
-
-    template_name='projects/project_ict_create_private_funding.html'
-    funding = 'private'
-
-    def get_success_url(self):
-        return reverse_lazy('organization-project-private-update', kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug})
+        return reverse_lazy('organization-call-project-update', 
+                kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug})
 
 
 class ProjectTechValidationView(ProjectCallMixin, TemplateView):

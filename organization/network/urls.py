@@ -32,13 +32,16 @@ from organization.network.views import *
 
 
 urlpatterns = [
+    # Person timesheets
     url('^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
     url('^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name='organization-network-timesheet-create-view'),
     url('^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name='organization-network-timesheet-list-view' ),
     
+    # Persons
     url('^persons/list/$', PersonListView.as_view(), name='organization-network-person-list'),
     url('^person/(?P<slug>.*)/detail/$', PersonDetailView.as_view(), name='organization-network-person-detail'),
 
+    # Profiles
     url('^profiles/(?P<username>.*)/detail/$', PersonDetailView.as_view(), name='organization-network-person-detail-username'),
     url('^profiles/(?P<username>.*)/following/$', PersonFollowingListView.as_view(), name='organization-network-person-following'),
     url('^profiles/(?P<username>.*)/followers/$', PersonFollowersListView.as_view(), name='organization-network-person-followers'),
@@ -46,22 +49,27 @@ urlpatterns = [
     url('^profiles/settings/$', PersonSettingsView.as_view(), name='organization-network-person-settings'),
     # url('^messages/', include('postman.urls')),
 
+    # Person autocomplete
     url('^person-list-block-autocomplete/$', permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
     url('^person-autocomplete/$', permission_required('person.can_edit')(PersonAutocompleteView.as_view()), name='person-autocomplete'),
-    url('^network/$', OrganizationListView.as_view(), name='network'),
-
-    url('^organization-linked-list-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
-    url('^organization-linked-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
     url('^person-activity-autocomplete/$', PersonActivityAutocompleteView.as_view(), name='person-activity-autocomplete'),
     url('^work-packages-autocomplete/$', WorkPackageAutocompleteView.as_view(), name='work-packages-autocomplete'),
 
+    # Network
+    url('^network/$', OrganizationListView.as_view(), name='network'),
+
+    # Organizations
+    url('^organization-linked-list-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
+    url('^organization-linked-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
+    
+    # Producers
+    url('^producers/$', ProducerListView.as_view(), name='organization-producer-list'),
     url('^producers/submission/$', ProducerCreateView.as_view(), name='organization-producer-create'),
     url('^producers/submission/(?P<slug>.*)/validation/$', ProducerValidationView.as_view(), name='organization-producer-validation'),
-
     url('^producers/(?P<slug>.*)/detail/$', ProducerDetailView.as_view(), name='organization-producer-detail'),
-    url('^producers/$', ProducerListView.as_view(), name='organization-producer-list'),
-
-    url('^jury/list/$', JuryListView.as_view(), name='organization-jury-list'),
-    url('^producers/list/$', ProducerListView.as_view(), name='organization-producer-list'),
+    
+    # Jurys
+    url('^jurys/$', JuryListView.as_view(), name='organization-jury-list'),
+    
 
 ]
