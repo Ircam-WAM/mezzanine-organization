@@ -130,20 +130,44 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     def repositories(self):
         return self.get_repositories()
 
+    @property
+    def discussion_rooms(self):
+        print("--> discussion_rooms()")
+        return self.get_discussion_rooms()
+
+    def get_discussion_rooms(self):
+
+        from discussion import discussion as d
+
+        rooms_urls = []
+        discussion_rooms = []
+
+        # Room URLs are stored as ProjectLink's
+        discussion_link_type = LinkType.objects.get(slug="discussion")
+        for project_link in self.links.filter(link_type=discussion_link_type):
+            rooms_urls.append(project_link.url)
+
+        for room_url in rooms_urls:
+            tmp = {}
+            tmp['url'] = room_url
+            tmp['summary'] = d.Discussion(room_url, 'discourse').get_summary()
+            discussion_rooms.append(tmp)
+
+        return discussion_rooms
+
     def get_repositories(self):
 
-        from repository import abstract
+        from repository import repository as r
 
         repositories = []
 
         for project_repository in self.project_repositories.all():
-            r = {}
+            tmp = {}
             repository = project_repository.repository
-            r['id'] = repository.id
-            r['url'] = repository.url
-            r['readme_html'] = abstract.Repository(repository.url, "gitlab").get_readme()
-            r['summary'] = abstract.Repository(repository.url, "gitlab").get_summary()
-            repositories.append(r)
+            tmp['url'] = repository.url
+            tmp['readme_html'] = r.Repository(repository.url, 'gitlab').get_readme()
+            tmp['summary'] = r.Repository(repository.url, 'gitlab').get_summary()
+            repositories.append(tmp)
 
         # At the moment, we assume a project only has one repository
         return repositories
