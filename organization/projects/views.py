@@ -275,7 +275,7 @@ class ProjectTechValidateView(ProjectCallMixin, TemplateView):
             contact = contacts[0]
 
             from_email = settings.DEFAULT_FROM_EMAIL
-            to_email = [contact.email, settings.DEFAULT_TO_EMAIL]
+            to_email = [contact.email, self.request.user.email, settings.DEFAULT_TO_EMAIL]
             subject = settings.EMAIL_SUBJECT_PREFIX + ' ' + project.call.title
             ctx = {
                 'first_name': contact.first_name,
