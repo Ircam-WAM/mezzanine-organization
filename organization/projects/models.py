@@ -51,8 +51,8 @@ REPOSITORY_ACCESS_CHOICES = [
 
 PROJECT_STATUS_CHOICES = (
     (0, _('rejected')),
-    (1, _('pending')),
-    (2, _('in process')),
+    (1, _('draft')),
+    (2, _('pending')),
     (3, _('accepted')),
     (4, _('copied')),
 )
