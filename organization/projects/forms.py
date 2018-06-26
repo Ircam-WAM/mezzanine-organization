@@ -124,15 +124,14 @@ class ProjectLinkInline(InlineFormSet):
     fields = ['url', 'type']
 
 
-
 class ProjectContactForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProjectContactForm, self).__init__(*args, **kwargs)
         self.fields['organization_name'].help_text = "The organization related to the contact"
         self.fields['position'].help_text = "The position of the contact in the organization"
-        for field in self._meta.fields:
-            self.fields[field].required = True
+        for field in self._meta.fields: 
+            self.fields[field].required = False
 
     class Meta:
         model = ProjectContact
