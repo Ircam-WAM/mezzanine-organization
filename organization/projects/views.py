@@ -181,28 +181,7 @@ class ProjectTechCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInli
         self.status = 1
         self.object.funding = self.kwargs['funding']
         self.object.save()
-
-        for formset in inlines:
-            if 'contact' in formset.prefix:
-                for f in formset:
-                    contact_data = f.cleaned_data
-                    contact_email = contact_data.get("email")
-
-        from_email = settings.DEFAULT_FROM_EMAIL
-        to_email = [contact_email, settings.DEFAULT_TO_EMAIL]
-        subject = settings.EMAIL_SUBJECT_PREFIX + ' ' + self.call.title
-        ctx = {
-            'first_name': contact_data['first_name'],
-            'last_name': contact_data['last_name'],
-            'project_title': self.object.title,
-        }
-
-        message = get_template('projects/project_ict_create_notification.html').render(Context(ctx))
-        msg = EmailMessage(subject, message, to=to_email, from_email=from_email)
-        msg.content_subtype = 'html'
-        msg.send()
-
-        return super(ProjectTechPublicCreateView, self).forms_valid(form, inlines)
+        return super(ProjectTechCreateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
         return reverse_lazy('organization-network-person-applications', 
@@ -290,6 +269,25 @@ class ProjectTechValidateView(ProjectCallMixin, TemplateView):
         project = Project.objects.get(slug=kwargs['slug'])
         project.validation_status = 2
         project.save()
+
+        contacts = project.contacts.all()
+        if contacts:
+            contact = contacts[0]
+
+            from_email = settings.DEFAULT_FROM_EMAIL
+            to_email = [contact.email, settings.DEFAULT_TO_EMAIL]
+            subject = settings.EMAIL_SUBJECT_PREFIX + ' ' + project.call.title
+            ctx = {
+                'first_name': contact.first_name,
+                'last_name': contact.last_name,
+                'project_title': project.title,
+            }
+
+            message = get_template('projects/project_ict_create_notification.html').render(Context(ctx))
+            msg = EmailMessage(subject, message, to=to_email, from_email=from_email)
+            msg.content_subtype = 'html'
+            msg.send()
+
         return context
 
 class ProjectTechListView(ListView):
