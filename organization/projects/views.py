@@ -79,9 +79,10 @@ class ProjectTechDetailView(SlugMixin, ProjectMixin, DetailView):
 
     model = Project
     template_name='projects/project_ict_detail.html'
+    topic_key = 'ICT'
 
     def get_object(self, queryset=None):
-        topic, c = ProjectTopic.objects.get_or_create(key='ICT')
+        topic, c = ProjectTopic.objects.get_or_create(key=self.topic_key)
         project = super(ProjectTechDetailView, self).get_object()
         if project.topic != topic:
             raise Http404()
@@ -204,9 +205,8 @@ class ProjectTechCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInli
         return super(ProjectTechPublicCreateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('organization-call-project-update', 
-            kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug,
-                    'funding': self.kwargs['funding']})
+        return reverse_lazy('organization-network-person-applications', 
+                kwargs={'username': self.request.user.username})
 
 
 
@@ -214,8 +214,8 @@ class ProjectTechUpdateView(LoginRequiredMixin, ProjectMixin, UpdateWithInlinesV
 
     model = Project
     form_class = ProjectForm
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, ProjectUserImageInline,
-                ProjectContactInline]
+    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, 
+                ProjectUserImageInline, ProjectContactInline]
 
     def get_template_names(self):
         return ['projects/project_ict_edit_%s_funding.html' % self.object.funding]
@@ -276,15 +276,21 @@ class ProjectTechUpdateView(LoginRequiredMixin, ProjectMixin, UpdateWithInlinesV
         return super(ProjectTechUpdateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('organization-call-project-update', 
-                kwargs={'call_slug':self.object.call.slug, 'slug': self.object.slug})
+        return reverse_lazy('organization-network-person-applications', 
+                kwargs={'username': self.request.user.username})
 
 
-class ProjectTechValidationView(ProjectCallMixin, TemplateView):
+class ProjectTechValidateView(ProjectCallMixin, TemplateView):
 
     model = Project
     template_name='projects/project_ict_validation.html'
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProjectTechValidateView, self).get_context_data(*args, **kwargs)
+        project = Project.objects.get(slug=kwargs['slug'])
+        project.validation_status = 2
+        project.save()
+        return context
 
 class ProjectTechListView(ListView):
 
@@ -294,7 +300,8 @@ class ProjectTechListView(ListView):
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         call = ProjectCall.objects.get(slug=self.kwargs['call_slug'])
-        qs = Project.objects.filter(topic=topic, validation_status=3, call=call).select_related().order_by('title')
+        qs = Project.objects.filter(topic=topic, validation_status=3, 
+                call=call).select_related().order_by('title')
         return qs
 
 

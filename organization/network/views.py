@@ -78,15 +78,7 @@ class PersonDetailView(UserMixin, SlugMixin, DetailView):
     template_name='network/person_detail.html'
     context_object_name = 'person'
 
-    def get(self, request, *args, **kwargs):
-        # if not hasattr(self.request.user, 'ldap_user') or not self.request.user.person:
-        #     response = redirect('organization-home')
-        self.object = self.get_object(self.queryset)
-        context = self.get_context_data(object=self.object)
-        response = self.render_to_response(context)
-        return response
-
-    def get_object(self, queryset):
+    def get_object(self):
         obj = None
         if 'slug' in self.kwargs:
             slug = self.kwargs['slug']
@@ -96,8 +88,10 @@ class PersonDetailView(UserMixin, SlugMixin, DetailView):
         if hasattr(self.request.user, 'person') and not slug and self.request.user.is_authenticated() and not 'username' in self.kwargs:
             obj = self.request.user.person
         elif 'username' in self.kwargs:
-            print(self.kwargs['username'])
             user = User.objects.get(username=self.kwargs['username'])
+            if not Person.objects.filter(user=user):
+                person = Person(first_name=user.first_name, last_name=user.last_name, user=user)
+                person.save()
             obj = user.person
         else:
             obj = super().get_object()

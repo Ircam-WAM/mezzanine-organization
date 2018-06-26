@@ -46,18 +46,18 @@ urlpatterns = [
     url("^projects/(?P<slug>.*)/detail/$", ProjectDetailView.as_view(), name='organization-project-detail'),
     url("^projects/(?P<slug>.*)/demo/$", ProjectDemoDetailView.as_view(), name='organization-project-demo-detail'),
     url("^projects/(?P<slug>.*)/blog/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
-    
-    # Calls
-    url("^calls/$", ProjectCallListView.as_view(), name='organization-call-list'),
-    url("^calls/as_events/$", ProjectCallListAsEventsView.as_view(), name='organization-call-list-as-events'),
-    url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-call-detail'),
 
     # Call projects
     url("^calls/(?P<call_slug>.*)/projects/$", ProjectTechListView.as_view(), name='organization-call-project-list'),
     url("^calls/(?P<call_slug>.*)/projects/(?P<slug>.*)/detail/$", ProjectTechDetailView.as_view(), name='organization-call-project-detail'),
     url("^calls/(?P<call_slug>.*)/projects/(?P<funding>.*)/create/$", ProjectTechCreateView.as_view(), name='organization-call-project-create'),
     url("^calls/(?P<call_slug>.*)/projects/(?P<slug>.*)/update/$", ProjectTechUpdateView.as_view(), name="organization-call-project-update"),
-    url("^calls/(?P<call_slug>.*)/projects/(?P<slug>.*)/validate/$", ProjectTechValidationView.as_view(), name='organization-call-project-validate'),
+    url("^calls/(?P<call_slug>.*)/projects/(?P<slug>.*)/validate/$", ProjectTechValidateView.as_view(), name='organization-call-project-validate'),
+    
+    # Calls
+    url("^calls/$", ProjectCallListView.as_view(), name='organization-call-list'),
+    url("^calls/as_events/$", ProjectCallListAsEventsView.as_view(), name='organization-call-list-as-events'),
+    url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-call-detail'),
 
     # Call Residencies
     url("^calls/(?P<call_slug>.*)/residencies/$", ProjectResidencyListView.as_view(), name='organization-call-residency-list'),
