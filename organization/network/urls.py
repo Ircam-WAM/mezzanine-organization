@@ -64,8 +64,9 @@ urlpatterns = [
     
     # Producers
     url('^producers/$', ProducerListView.as_view(), name='organization-producer-list'),
-    url('^producers/submission/$', ProducerCreateView.as_view(), name='organization-producer-create'),
-    url('^producers/submission/(?P<slug>.*)/validation/$', ProducerValidationView.as_view(), name='organization-producer-validation'),
+    url('^producers/create/$', ProducerCreateView.as_view(), name='organization-producer-create'),
+    url('^producers/update/$', ProducerUpdateView.as_view(), name='organization-producer-update'),
+    url('^producers/(?P<slug>.*)/validate/$', ProducerValidationView.as_view(), name='organization-producer-validate'),
     url('^producers/(?P<slug>.*)/detail/$', ProducerDetailView.as_view(), name='organization-producer-detail'),
     
     # Jurys

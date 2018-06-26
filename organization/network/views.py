@@ -265,6 +265,13 @@ class ProducerDetailView(SlugMixin, DetailView):
         return producer
 
 
+class ProducerUpdateView(SlugMixin, UpdateView):
+
+    model = Organization
+    template_name='network/organization_producer_update.html'
+
+
+
 class ProducerListView(ListView):
 
     model = Organization
@@ -293,7 +300,7 @@ class ProducerCreateView(LoginRequiredMixin, CreateWithInlinesView):
     def get_success_url(self):
         #TODO: When logging system is implemented, maybe use this instead
         # return reverse_lazy('organization-producer-detail', kwargs={'slug':self.object.slug})
-        return reverse_lazy('organization-producer-validation', kwargs={'slug':self.object.slug})
+        return reverse_lazy('organization-producer-validate', kwargs={'slug':self.object.slug})
 
 
 class ProducerValidationView(ProducerMixin, TemplateView):
