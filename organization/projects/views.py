@@ -184,9 +184,15 @@ class ProjectTechCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInli
         return super(ProjectTechCreateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('organization-network-person-applications', 
+        if 'save' in self.request.POST:
+            return reverse_lazy('organization-network-person-applications', 
                 kwargs={'username': self.request.user.username})
-
+        elif 'submit' in self.request.POST:
+            return reverse_lazy('organization-call-project-validate', 
+                kwargs={'call_slug': self.object.call.slug, 'slug': self.object.slug})
+        else:
+            return reverse_lazy('organization-network-person-applications', 
+                kwargs={'username': self.request.user.username})
 
 
 class ProjectTechUpdateView(LoginRequiredMixin, ProjectMixin, UpdateWithInlinesView):
@@ -255,7 +261,14 @@ class ProjectTechUpdateView(LoginRequiredMixin, ProjectMixin, UpdateWithInlinesV
         return super(ProjectTechUpdateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('organization-network-person-applications', 
+        if 'save' in self.request.POST:
+            return reverse_lazy('organization-network-person-applications', 
+                kwargs={'username': self.request.user.username})
+        elif 'submit' in self.request.POST:
+            return reverse_lazy('organization-call-project-validate', 
+                kwargs={'call_slug': self.object.call.slug, 'slug': self.object.slug})
+        else:
+            return reverse_lazy('organization-network-person-applications', 
                 kwargs={'username': self.request.user.username})
 
 
