@@ -64,5 +64,4 @@ urlpatterns = [
     url("^calls/(?P<call_slug>.*)/residencies/submission/$", ProjectResidencyCreateView.as_view(), name='organization-residency-create'),
     url("^calls/(?P<call_slug>.*)/residencies/(?P<slug>.*)/detail/$", ProjectResidencyDetailView.as_view(), name='organization-residency-detail'),
     url("^calls/residencies/$", ProjectResidencyListView.as_view(), name='organization-all-residency-list'),
-
 ]
