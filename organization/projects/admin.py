@@ -448,7 +448,7 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 ]
     filter_horizontal = ['teams', 'organizations']
     list_filter = ['validation_status', 'call', 'topic']
-    list_display = ['title', 'created', 'call', 'validation_status', 'topic', 'date_from', 'date_to', 'status', 'admin_link']
+    list_display = ['title', 'created', 'updated', 'call', 'validation_status', 'topic', 'date_from', 'date_to', 'status', 'admin_link']
     actions = [export_projects_as_csv, copy_projects]
 
 

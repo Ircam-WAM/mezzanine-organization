@@ -93,7 +93,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         verbose_name = _('project')
         verbose_name_plural = _("projects")
         # ordering = ['-date_from', '-date_to']
-        ordering = ['title', ]
+        ordering = ['-created', ]
 
     def __str__(self):
         return self.title
@@ -227,8 +227,8 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
     def is_closed(self):
         """Return if the current date between 'from' and 'to' dates."""
         try:
-            today = datetime.date.today()
-            if today >= self.date_from and today <= self.date_to:
+            current_date = datetime.date.today()
+            if current_date >= self.date_from and current_date <= self.date_to:
                 return False
         except:
             pass
@@ -433,6 +433,9 @@ class ProjectContact(Person):
         verbose_name = 'Project contact'
         verbose_name_plural = 'Project contacts'
 
+    def save(self, *args, **kwargs):
+        self.title = ' '.join([self.first_name, self.last_name])
+        super(ProjectContact, self).save(*args, **kwargs)
 
 class ProjectResidency(Displayable, Period, Address, RichText):
 

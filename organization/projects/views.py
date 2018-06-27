@@ -216,6 +216,7 @@ class ProjectTechUpdateView(LoginRequiredMixin, ProjectMixin, UpdateWithInlinesV
                 initial['website'] = project.website
                 initial['date_from'] = project.date_from
                 initial['date_to'] = project.date_to
+                initial['keywords'] = project.keywords.all()
         return initial
 
     def get_context_data(self, *args, **kwargs):
@@ -230,32 +231,14 @@ class ProjectTechUpdateView(LoginRequiredMixin, ProjectMixin, UpdateWithInlinesV
         context["project"] = project
         context["public_data"] = project.public_data.all().first()
         context["private_data"] = project.private_data.all().first()
-        context["keywords"] = ""
-        try:
-            if project.contacts.all().count() > 0:
-                contacts = project.contacts.all().first()
-                context["contacts"] = contacts
-                if contacts.keywords.all().count() > 0:
-                    index = 0
-                    keywords_result = ""
-                    for key in contacts.keywords.all():
-                        if index == 0:
-                            keywords_result = keyword
-                        elif index <= 2 and index > 0:
-                            keywords_result = "," + keyword
-                        else:
-                            break;
-                    context["keywords"] = keywords_result
-                else:
-                    context["keywords"] = ""
-            else:
-                context["keywords"] = ""
-        except Exception:
-            pass
+        context["keywords"] = project.keywords.all()
         return context
 
     def forms_valid(self, form, inlines):
+        # print(self.request.POST)
         self.object = form.save()
+        # print(form.cleaned_data['keywords'])
+        # self.object.keywords = form.cleaned_data['keywords']
         self.object.user = self.request.user
         self.object.save()
         return super(ProjectTechUpdateView, self).forms_valid(form, inlines)
