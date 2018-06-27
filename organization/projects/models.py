@@ -227,12 +227,21 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
     def is_closed(self):
         """Return if the current date between 'from' and 'to' dates."""
         try:
-            current_date = datetime.date.today()
-            if current_date >= self.date_from and current_date <= self.date_to:
+            today = datetime.date.today()
+            if today >= self.date_from and today <= self.date_to:
                 return False
         except:
             pass
         return True
+
+    @property
+    def call_default_profile(self):
+        today = datetime.date.today()
+        if today >= self.date_from and today <= self.date_to:
+            profile = 'project'
+        else:
+            profile = 'artist'
+        return profile
 
 
 class ProjectCallBlock(Block):
