@@ -41,6 +41,7 @@ from organization.core.utils import split_events_from_other_related_content
 from django.template.defaultfilters import slugify
 from itertools import chain
 
+
 class ArticleDetailView(SlugMixin, DetailView):
 
     model = Article
