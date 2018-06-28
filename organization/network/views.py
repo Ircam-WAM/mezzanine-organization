@@ -173,7 +173,7 @@ class PersonSettingsView(PersonMixin, UpdateView):
     template_name='accounts/account_profile_update_settings.html'
 
 
-class PersonApplicationListView(PersonDetailView):
+class PersonApplicationListView(PersonMixin, DetailView):
 
     model = Person
     template_name='accounts/account_profile_update_app_form.html'
