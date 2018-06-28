@@ -53,15 +53,16 @@ urlpatterns = [
     url("^calls/(?P<call_slug>.*)/projects/(?P<funding>.*)/create/$", ProjectTechCreateView.as_view(), name='organization-call-project-create'),
     url("^calls/(?P<call_slug>.*)/projects/(?P<slug>.*)/update/$", ProjectTechUpdateView.as_view(), name="organization-call-project-update"),
     url("^calls/(?P<call_slug>.*)/projects/(?P<slug>.*)/validate/$", ProjectTechValidateView.as_view(), name='organization-call-project-validate'),
-    
-    # Calls
-    url("^calls/$", ProjectCallListView.as_view(), name='organization-call-list'),
-    url("^calls/as_events/$", ProjectCallListAsEventsView.as_view(), name='organization-call-list-as-events'),
-    url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-call-detail'),
 
     # Call Residencies
     url("^calls/(?P<call_slug>.*)/residencies/$", ProjectResidencyListView.as_view(), name='organization-call-residency-list'),
     url("^calls/(?P<call_slug>.*)/residencies/submission/$", ProjectResidencyCreateView.as_view(), name='organization-residency-create'),
     url("^calls/(?P<call_slug>.*)/residencies/(?P<slug>.*)/detail/$", ProjectResidencyDetailView.as_view(), name='organization-residency-detail'),
     url("^calls/residencies/$", ProjectResidencyListView.as_view(), name='organization-all-residency-list'),
+
+    # Calls
+    url("^calls/$", ProjectCallListView.as_view(), name='organization-call-list'),
+    url("^calls/as_events/$", ProjectCallListAsEventsView.as_view(), name='organization-call-list-as-events'),
+    url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-call-detail'),
+
 ]

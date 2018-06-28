@@ -326,7 +326,7 @@ class ProjectCallListAsEventsView(ProjectCallListView):
 class ProjectResidencyDetailView(SlugMixin, DetailView):
 
     model = ProjectResidency
-    template_name='projects/project_residency_detail.html'
+    template_name='projects/project_residency_detail.html'    
 
     def get_context_data(self,  *args, **kwargs):
         context = super(ProjectResidencyDetailView, self).get_context_data(*args, **kwargs)

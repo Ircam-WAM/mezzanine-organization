@@ -54,7 +54,27 @@ import pandas as pd
 
 
 
-class UserMixin(object):
+class PersonMixin(object):
+
+    model = Person
+    
+    def get_object(self):
+        person = None
+
+        if 'username' in self.kwargs:
+            user = User.objects.get(username=self.kwargs['username'])
+            person = user.person
+
+        elif 'slug' in self.kwargs:
+            person = Person.objects.get(slug=self.kwargs['slug'])
+
+        if self.request.user.is_authenticated():
+            if not Person.objects.filter(user=self.request.user):
+                person = Person(first_name=user.first_name, last_name=user.last_name, user=user)
+                person.save()
+            person = self.request.user.person
+        
+        return person
 
     @property
     def person():
@@ -72,30 +92,10 @@ class PersonListView(PublishedMixin, ListView):
     context_object_name = 'persons'
 
 
-class PersonDetailView(UserMixin, SlugMixin, DetailView):
+class PersonDetailView(PersonMixin, SlugMixin, DetailView):
 
-    model = Person
     template_name='network/person_detail.html'
     context_object_name = 'person'
-
-    def get_object(self):
-        obj = None
-        if 'slug' in self.kwargs:
-            slug = self.kwargs['slug']
-        else:
-            slug = None
-
-        if hasattr(self.request.user, 'person') and not slug and self.request.user.is_authenticated() and not 'username' in self.kwargs:
-            obj = self.request.user.person
-        elif 'username' in self.kwargs:
-            user = User.objects.get(username=self.kwargs['username'])
-            if not Person.objects.filter(user=user):
-                person = Person(first_name=user.first_name, last_name=user.last_name, user=user)
-                person.save()
-            obj = user.person
-        else:
-            obj = super().get_object()
-        return obj
 
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
@@ -153,9 +153,23 @@ class PersonFollowersListView(PersonDetailView):
         return self.person.followers.all()
 
 
-class PersonSettingsView(PersonDetailView):
+class UserSettingsView(UpdateView):
+
+    model = User
+    form_class = UserForm
+    template_name='accounts/account_profile_update_settings.html'
+
+    def get_object(self):
+        if self.request.user.is_authenticated():
+            return self.request.user
+        else:
+            raise Http404()
+        
+
+class PersonSettingsView(PersonMixin, UpdateView):
 
     model = Person
+    form_class = PersonForm
     template_name='accounts/account_profile_update_settings.html'
 
 
