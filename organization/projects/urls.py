@@ -40,6 +40,7 @@ urlpatterns = [
     url("^projects/create/$", ProjectCreateView.as_view(), name='organization-project-create'),
 
     url("^topics/detail/(?P<pk>.*)-(?P<name>.*)/$", ProjectTopicDetailView.as_view(), name='organization-project-topic-detail'),
+    url("^topics/autocomplete/$", ProjectTopicAutocompleteView.as_view(), name='organization-project-topic-autocomplete'),
 
     url("^collections/detail/(?P<slug>.*)/$", ProjectCollectionDetailView.as_view(), name='organization-project-collection-detail'),
     url("^collections/$", ProjectCollectionListView.as_view(), name='organization-project-collection-list'),

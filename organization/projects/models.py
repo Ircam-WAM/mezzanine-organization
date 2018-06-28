@@ -132,7 +132,6 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
     @property
     def discussion_rooms(self):
-        print("--> discussion_rooms()")
         return self.get_discussion_rooms()
 
     def get_discussion_rooms(self):

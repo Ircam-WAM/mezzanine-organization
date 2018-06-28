@@ -590,3 +590,31 @@ class Pivot_Project_ProjectCollection_View(Select2QuerySetSequenceView):
 class ProjectCreateView(LoginRequiredMixin, TemplateView):
 
     template_name = 'projects/project_creation.html'
+
+
+class ProjectTopicAutocompleteView(autocomplete.Select2QuerySetView):
+
+    from django.db.models import Q
+
+    def get_result_label(self, item):
+
+        from pprint import pprint
+        print('-' * 10)
+        pprint('[dump] {0} ({1}) ='.format('item', type(item)))
+        print(item)
+        return str(item)
+
+    def get_queryset(self):
+
+        qs = ProjectTopic.objects.all()
+
+        value = self.forwarded.get('value', None)
+
+        if value:
+            qs = qs.filter(value=value)
+
+        if self.q:
+            # For OR queries see https://docs.djangoproject.com/fr/2.0/topics/db/queries/#complex-lookups-with-q-objects
+            qs = qs.filter(key__istartswith=self.q)
+
+        return qs
