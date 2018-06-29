@@ -201,7 +201,7 @@ class ProjectTechCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInli
                 kwargs={'username': self.request.user.username})
 
 
-class ProjectTechUpdateView(LoginRequiredMixin, ProjectMixin, UpdateWithInlinesView):
+class ProjectTechUpdateView(LoginRequiredMixin, ProjectCallMixin, UpdateWithInlinesView):
 
     model = Project
     form_class = ProjectForm
