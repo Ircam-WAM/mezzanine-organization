@@ -236,14 +236,12 @@ class ProjectTechUpdateView(LoginRequiredMixin, ProjectCallMixin, UpdateWithInli
         slug = self.kwargs['slug']
         user = self.request.user
         project = Project.objects.get(slug=slug)
-        if (not project) or (project.user != user):
-            raise Http404()
-        if (project.validation_status != 1):
-            raise Http404()
         context["project"] = project
         context["public_data"] = project.public_data.all().first()
         context["private_data"] = project.private_data.all().first()
         context["keywords"] = project.keywords.all()
+        if not project or project.user != user:
+            raise Http404()
         return context
 
     def forms_valid(self, form, inlines):
