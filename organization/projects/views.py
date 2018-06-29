@@ -165,9 +165,15 @@ class ProjectTechCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInli
 
     model = Project
     form_class = ProjectForm
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, 
-                ProjectUserImageInline, ProjectContactInline]
     topic_key = 'ICT'
+
+    def get_inlines(self):
+        if self.kwargs['funding'] == 'public':
+            return [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, 
+                ProjectUserImageInline, ProjectContactInline]
+        elif self.kwargs['funding'] == 'private':
+            return [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline, 
+                ProjectUserImageInline, ProjectContactInline]
 
     def get_template_names(self):
         return ['projects/project_ict_create_%s_funding.html' % self.kwargs['funding']]
@@ -199,7 +205,13 @@ class ProjectTechUpdateView(LoginRequiredMixin, ProjectMixin, UpdateWithInlinesV
 
     model = Project
     form_class = ProjectForm
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, 
+    
+    def get_inlines(self):
+        if self.object.funding == 'public':
+            return [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, 
+                ProjectUserImageInline, ProjectContactInline]
+        elif self.object.funding == 'private':
+            return [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline, 
                 ProjectUserImageInline, ProjectContactInline]
 
     def get_template_names(self):

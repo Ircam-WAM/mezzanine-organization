@@ -53,7 +53,24 @@ class DynamicContentProjectForm(autocomplete.FutureModelForm):
         fields = ('content_object',)
 
 
-class ProjectForm(ModelForm):
+class RequiredFieldsMixin():
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for key in self.fields:
+            self.fields[key].required = False 
+        
+        # fields_required = getattr(self.Meta, 'fields_required', None)
+
+        # if fields_required:
+        #     for key in self.fields:
+        #         if key in fields_required:
+        #             print(key)
+        #             self.fields[key].required = False
+
+
+class ProjectForm(RequiredFieldsMixin, ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
@@ -68,14 +85,9 @@ class ProjectForm(ModelForm):
         fields = ('title', 'keywords', 'website', 'date_from', 'date_to')
 
 
-class ProjectPublicDataForm(ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        super(ProjectPublicDataForm, self).__init__(*args, **kwargs)
-        if self._meta.fields:
-            for field in self._meta.fields: 
-                self.fields[field].required = False
-
+class ProjectPublicDataForm(RequiredFieldsMixin, ModelForm):
+        
     class Meta:
         model = ProjectPublicData
         fields = '__all__'
@@ -91,36 +103,8 @@ class ProjectPublicDataInline(InlineFormSet):
     fields = '__all__'
 
 
-class ProjectPrivateDataForm(ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        super(ProjectPrivateDataForm, self).__init__(*args, **kwargs)
-        if self._meta.fields:
-            for field in self._meta.fields: 
-                self.fields[field].required = False
-
-    class Meta:
-        model = ProjectPrivateData
-        fields = '__all__'
-
-
-class ProjectPrivateDataInline(InlineFormSet):
-
-    max_num = 1
-    model = ProjectPrivateData
-    form_class = ProjectPrivateDataForm
-    prefix = "Private data"
-    can_delete = False
-    fields = '__all__'
-
-
-class ProjectPrivateDataPublicFundingForm(ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(ProjectPrivateDataPublicFundingForm, self).__init__(*args, **kwargs)
-        if self._meta.fields:
-            for field in self._meta.fields: 
-                self.fields[field].required = False
+class ProjectPrivateDataPublicFundingForm(RequiredFieldsMixin, ModelForm):
 
     class Meta:
         model = ProjectPrivateData
@@ -137,13 +121,7 @@ class ProjectPrivateDataPublicFundingInline(InlineFormSet):
     fields = ("description", "funding_programme", "commitment_letter", "persons",)
 
 
-class ProjectPrivateDataPrivateFundingForm(ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(ProjectPrivateDataPrivateFundingForm, self).__init__(*args, **kwargs)
-        if self._meta.fields:
-            for field in self._meta.fields: 
-                self.fields[field].required = False
+class ProjectPrivateDataPrivateFundingForm(RequiredFieldsMixin, ModelForm):
 
     class Meta:
         model = ProjectPrivateData
@@ -171,13 +149,7 @@ class ProjectUserImageInline(InlineFormSet):
     fields = ['file', 'credits']
 
 
-class ProjectLinkForm(ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super(ProjectLinkForm, self).__init__(*args, **kwargs)
-        if self._meta.fields:
-            for field in self._meta.fields: 
-                self.fields[field].required = False
+class ProjectLinkForm(RequiredFieldsMixin, ModelForm):
 
     class Meta:
         model = ProjectLink
@@ -195,16 +167,13 @@ class ProjectLinkInline(InlineFormSet):
     fields = ['url', 'type']
 
 
-class ProjectContactForm(ModelForm):
+class ProjectContactForm(RequiredFieldsMixin, ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProjectContactForm, self).__init__(*args, **kwargs)
         self.fields['organization_name'].help_text = "The organization related to the contact"
         self.fields['position'].help_text = "The position of the contact in the organization"
-        if self._meta.fields:
-            for field in self._meta.fields: 
-                self.fields[field].required = False
-
+        
     class Meta:
         model = ProjectContact
         fields = ('first_name', 'last_name', 'email', 'organization_name',

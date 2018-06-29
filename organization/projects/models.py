@@ -411,7 +411,7 @@ class ProjectPrivateData(models.Model):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='private_data', blank=True, null=True, on_delete=models.SET_NULL)
 
-    description = models.TextField(_('project description'), help_text="(500 - 1000 words)")
+    description = models.TextField(_('project description'), help_text="(500 - 1000 words)", blank=True)
     funding_programme = models.CharField(_('funding programme'), max_length=512, blank=False, null=True, help_text="Designation of EU/National Funding Programme")
     commitment_letter = models.FileField(_("letter of commitment by the project coordinator"), max_length=1024, upload_to="user/documents/%Y/%m/%d/", help_text=mark_safe('Written on behalf of the whole project consortium, this letter will commit in implementing the collaboration of a residency application selected by the VERTIGO jury, on the conditions set by the project (in annex of letter: synthesis of all related information entered by project).<br>Please <a href="http://vertigo.starts.eu/media/uploads/vertigo%20starts/CALL/vertigo_loc_v3.rtf">download and use the template letter.</a>'))
     investor_letter = models.FileField(_("letter of recommendations from investor (e.g VC)"), max_length=1024 , blank=False, null=True, upload_to="user/documents/%Y/%m/%d/", help_text="If the organisation is a Start-Up or micro enterprise (less than 3 years and/or less than 10 staff members), the presentation of letter of recommendation from an investor is mandatory to apply to this call.")
