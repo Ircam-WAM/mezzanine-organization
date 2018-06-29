@@ -597,12 +597,7 @@ class ProjectTopicAutocompleteView(autocomplete.Select2QuerySetView):
     from django.db.models import Q
 
     def get_result_label(self, item):
-
-        from pprint import pprint
-        print('-' * 10)
-        pprint('[dump] {0} ({1}) ='.format('item', type(item)))
-        print(item)
-        return str(item)
+        return item.name
 
     def get_queryset(self):
 
