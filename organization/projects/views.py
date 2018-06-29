@@ -290,6 +290,7 @@ class ProjectTechValidateView(ProjectCallMixin, TemplateView):
 
         return context
 
+
 class ProjectTechListView(ListView):
 
     model = Project
