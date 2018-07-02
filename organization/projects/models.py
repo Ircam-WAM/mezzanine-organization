@@ -127,12 +127,48 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             return _('pending')
 
     @property
+    def download_urls(self):
+
+        ret = []  # TODO: must set a schema for simple, clear format in the templates
+                  #       example: { version, platform, url, featured } or even more abstract
+
+        direct_url = self.get_link('download')  # First we try to get the "download" link type
+        if direct_url:
+            ret.append({
+                'url': direct_url.url,
+                'featured': True
+            })
+
+        from repository import repository as r
+        # If no 'download' link is found, fallback to the latest tag from the first repository
+        # TODO: what about multiple repositories?
+        for i, pr in enumerate(self.project_repositories.all()):
+            ret.append({
+                'url': r.Repository(pr.repository.url, pr.repository.vendor).get_archive_url(),
+                'featured': (not direct_url and i == 0)  # Only the first repository URL is featured,
+                                                         # if and only if no direct link has been set up
+            })
+        return ret
+
+    @property
+    def documentation_url(self):
+        return self.get_link('documentation')
+
+    @property
     def repositories(self):
         return self.get_repositories()
 
     @property
     def discussion_rooms(self):
         return self.get_discussion_rooms()
+
+    def get_link(self, link_type_slug=None):
+        ret = None
+        link_type = LinkType.objects.filter(slug=link_type_slug)
+        urls = self.links.filter(link_type=link_type)
+        if len(urls) > 0:
+            ret = urls.first()
+        return ret
 
     def get_discussion_rooms(self):
 
