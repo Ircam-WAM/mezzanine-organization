@@ -30,7 +30,7 @@ import string
 import datetime
 import mimetypes
 from geopy.geocoders import GoogleV3 as GoogleMaps
-from geopy.exc import GeocoderQueryError
+from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -133,6 +133,7 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
     initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
     is_on_map = models.BooleanField(_('is on map'), default=False, blank=True)
     is_host = models.BooleanField(_('is host'), default=False, blank=True)
+    is_main = models.BooleanField(_('is main'), default=False, blank=True)
     telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
     opening_times = models.TextField(_('opening times'), blank=True)
     subway_access = models.TextField(_('subway access'), blank=True)
@@ -150,6 +151,10 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
         Validate set/validate mappable_location, longitude and latitude.
         """
         super(Organization, self).clean()
+
+        lat = None
+        lon = None
+        mappable_location = ''
 
         if self.lat and not self.lon:
             raise ValidationError("Longitude required if specifying latitude.")
@@ -171,9 +176,12 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
                 raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
             except TypeError as e:
                 raise ValidationError("The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.")
+            except GeocoderQuotaExceeded as e:
+                pass
             self.mappable_location = mappable_location
             self.lat = lat
             self.lon = lon
+
     def save(self, **kwargs):
         self.clean()
         super(Organization, self).save()
@@ -202,6 +210,7 @@ class Person(Displayable, AdminThumbMixin, Address):
     role = models.CharField(_('role'), max_length=256, blank=True, null=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     karma = models.IntegerField(default=0, editable=False)
+    search_fields = {"title": 1}
 
     class Meta:
         verbose_name = _('person')
