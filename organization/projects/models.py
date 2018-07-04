@@ -37,6 +37,8 @@ from organization.network.models import *
 from organization.magazine.models import *
 from mezzanine_agenda.models import *
 
+from skosxl.models import Concept
+
 
 PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
@@ -87,6 +89,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     is_archive = models.BooleanField(verbose_name=_('Is Archive'), help_text='Hide project in Team Page', default=False)
     validation_status = models.IntegerField(_('validation status'), choices=PROJECT_STATUS_CHOICES, default=1)
     funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
+    concepts = models.ManyToManyField('skosxl.Concept', verbose_name=_('concepts'), blank=True)
 
     class Meta:
         verbose_name = _('project')
@@ -127,9 +130,9 @@ class ProjectTopic(Named):
 
     def __str__(self):
         if self.parent:
-            return ' - '.join((self.parent.name, self.key))
+            return ' - '.join((self.parent.name, self.name))
         else:
-            return self.key
+            return self.name
 
 
 class ProjectProgram(Named):
@@ -289,7 +292,7 @@ class ProjectDemo(Displayable, RichText, URL):
 class Repository(Named):
 
     system = models.ForeignKey('RepositorySystem', verbose_name=_('system'), related_name='repositories')
-    access = models.CharField(_('access'), max_length=64, choices=REPOSITORY_ACCESS_CHOICES, default='private')
+    access = models.CharField(_('access rights'), max_length=64, choices=REPOSITORY_ACCESS_CHOICES, default='private')
     branch = models.CharField(_('branch'), max_length=32, default='master')
     url = models.CharField(_('URL'), max_length=256, help_text='http(s) or ssh')
 
