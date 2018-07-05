@@ -392,3 +392,37 @@ def tag_is_in_menu(page, tag):
 @register.filter
 def serialize(value, serializer="json"):
     return mark_safe(serializers.serialize(serializer, value, use_natural_foreign_keys=True, use_natural_primary_keys=True, indent=2))
+
+@register.filter
+def props_filter(iterable, conditions):
+    from pprint import pprint
+    pprint(iterable)
+    pprint(conditions)
+    """
+    Filter an iterable following `conditions` (joined by AND)
+
+    Conditions example : `{'prop': 'value'}`
+    -> Will filter items having item.prop='value'
+    """
+
+    # SMELL: should not be a security issue as long as `conditions` does not include variables
+    conditions = eval(str(conditions))
+    if not isinstance(conditions, dict):
+        return iterable
+
+    def satisfies_conditions(item):
+        print('--> filtering {}'.format(item))
+        included = True
+        for c, v in conditions.items():
+            pprint('--> {} {}'.format(c, v))
+            if item[c] != v:
+                included = False
+        return included
+
+    ret = [item for item in iterable if satisfies_conditions(item)]
+
+    print(ret)
+
+    return ret
+
+    
