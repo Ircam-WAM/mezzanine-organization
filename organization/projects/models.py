@@ -27,6 +27,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
+from django.conf import settings
 
 from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
 from django.core.files.images import get_image_dimensions
@@ -44,6 +45,8 @@ PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
     ('external', _('external')),
 ]
+if settings.PROJECT_TYPE_CHOICES:
+    PROJECT_TYPE_CHOICES.extend(settings.PROJECT_TYPE_CHOICES)
 
 REPOSITORY_ACCESS_CHOICES = [
     ('public', _('public')),

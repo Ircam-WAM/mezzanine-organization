@@ -24,7 +24,7 @@ class ProjectAdminCustomDisplayable(GuardedModelAdmin):
 
     fieldsets = (
         (None, {
-            "fields": ["title", "description", "slug", "status", "is_private", "topics"],
+            "fields": ["title", "description", "slug", "status", "is_private", "topics", "type"],
         }),
         (_("Meta data"), {
             "fields": ["_meta_title",
