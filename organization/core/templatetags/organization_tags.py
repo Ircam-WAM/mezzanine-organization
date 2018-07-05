@@ -395,9 +395,6 @@ def serialize(value, serializer="json"):
 
 @register.filter
 def props_filter(iterable, conditions):
-    from pprint import pprint
-    pprint(iterable)
-    pprint(conditions)
     """
     Filter an iterable following `conditions` (joined by AND)
 
@@ -411,17 +408,13 @@ def props_filter(iterable, conditions):
         return iterable
 
     def satisfies_conditions(item):
-        print('--> filtering {}'.format(item))
         included = True
         for c, v in conditions.items():
-            pprint('--> {} {}'.format(c, v))
-            if item[c] != v:
+            if c not in item or item[c] != v:
                 included = False
         return included
 
     ret = [item for item in iterable if satisfies_conditions(item)]
-
-    print(ret)
 
     return ret
 
