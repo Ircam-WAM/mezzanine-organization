@@ -537,26 +537,35 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
 
     model = ProjectResidency
     form_class = ProjectResidencyForm
-    template_name='projects/project_residency_create.html'
+    template_name = 'projects/project_residency_create.html'
     inlines = []
 
 
 class ProjectCollectionDetailView(DetailView):
 
     model = ProjectCollection
-    template_name='projects/project_collection_detail.html'
+    template_name = 'projects/project_collection_detail.html'
+
+    # Ordering by project title
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProjectCollectionDetailView, self).get_context_data(*args, **kwargs)
+        collection = context['object']
+        pp = collection.projects_pivot.all().order_by('project__title')
+        context['projects'] = [p.project for p in pp]
+        return context
+
 
 
 class ProjectCollectionListView(ListView):
 
     model = ProjectCollection
-    template_name='projects/project_collection_list.html'
+    template_name = 'projects/project_collection_list.html'
 
 
 class ProjectTopicDetailView(DetailView):
 
     model = ProjectTopic
-    template_name='projects/project_topic_detail.html'
+    template_name = 'projects/project_topic_detail.html'
 
     # def get_object(self):
     #     return get_object_or_404(ProjectTopic, pk=self.kwargs['id'])
