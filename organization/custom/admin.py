@@ -20,7 +20,7 @@ class ProjectRepositoryInline(StackedDynamicInlineAdmin):
     model = ProjectRepository
 
 
-class ProjectAdminCustomDisplayable(GuardedModelAdmin):
+class ProjectAdminCustomDisplayable(DisplayableAdmin, GuardedModelAdmin):
 
     fieldsets = (
         (None, {
@@ -43,6 +43,30 @@ class ProjectAdminCustomDisplayable(GuardedModelAdmin):
     list_display = deepcopy(ProjectAdminDisplayable.list_display)
 
 
+class ProjectTopicInline(StackedDynamicInlineAdmin):
+
+    model = Pivot_ProjectTopic_Article
+
+
+class ArticleAdminCustomDisplayable(ArticleAdminDisplayable):
+
+    fieldsets = (
+        (None, {
+            "fields": ["title", "description", "slug", "status", "publish_date", "expiry_date"],
+        }),
+        (_("Meta data"), {
+            "fields": ["_meta_title",
+                       ("gen_description"),
+                        "keywords", "in_sitemap"],
+            "classes": ("collapse-closed",)
+        }),
+    )
+
+    inlines = [ProjectTopicInline]
+
+
 admin.site.unregister(Project)
 admin.site.register(Project, ProjectAdminCustomDisplayable)
+admin.site.unregister(Article)
+admin.site.register(Article, ArticleAdminCustomDisplayable)
 admin.site.register(Session)

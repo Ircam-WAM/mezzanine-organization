@@ -220,3 +220,9 @@ class Pivot_Project_ProjectCollectionTranslationOptions(TranslationOptions):
 class RepositoryTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(Pivot_ProjectTopic_Article)
+class Pivot_ProjectTopic_ArticleTranslationOptions(TranslationOptions):
+
+    pass

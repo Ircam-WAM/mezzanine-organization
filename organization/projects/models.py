@@ -35,7 +35,7 @@ from django.core.files.images import get_image_dimensions
 from organization.core.models import *
 from organization.pages.models import *
 from organization.network.models import *
-from organization.magazine.models import *
+from organization.magazine.models import Article
 from mezzanine_agenda.models import *
 
 from skosxl.models import Concept
@@ -619,3 +619,15 @@ class Pivot_Project_ProjectCollection(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Dynamic Collection Project'
+
+
+class Pivot_ProjectTopic_Article(DynamicContent, Orderable):
+
+    project_topic = models.ForeignKey(ProjectTopic, verbose_name=_('project topic'), related_name='articles_pivot', blank=True, null=True, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, verbose_name=_('article'), related_name='project_topics_pivot', blank=True, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.project_topic.__str__()
+
+    class Meta:
+        verbose_name = 'Project Topic'
