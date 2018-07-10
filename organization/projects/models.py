@@ -22,6 +22,7 @@
 from __future__ import unicode_literals
 import datetime
 import os
+import copy
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -207,8 +208,83 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             tmp['summary'] = r.Repository(repository.url, 'gitlab').get_summary()
             repositories.append(tmp)
 
-        # At the moment, we assume a project only has one repository
         return repositories
+
+    def get_contributors(self):
+
+        # Project contributors are sourced from:
+        # - Repositories (commits authors and members)
+        # - Discussion rooms (participants)
+        # - Forum project members
+
+        from repository import repository as r
+        from discussion import discussion as d
+        import forum_utils  # SMELL: makes the method forum-specific, move logic elsewhere?
+
+        CONTRIBUTORS_SOURCES = [
+            'repository_commits_contributors',
+            'repository_member',
+            'repository_issues_contributors',
+            'project_members',
+            'discussion_participants'
+        ]
+
+        # Not actually enforced. For info only.
+        CONTRIBUTOR_SCHEMA = {
+            'first_name': None,  # Optional
+            'last_name': None,   # Optional
+            'username': None,    # Optional
+            'name': None,        # Mandatory. Composed name or username depending on source
+            'email': None,       # Optional
+            'avatar_url': None,  # Optional. Getting it from Ircam OAuth server if email matches
+            'source': None,      # Mandatory. One of CONTRIBUTORS_SOURCES
+            'extra_data': {}     # Optional
+        }
+
+        contributors = []  # Holds all the contributors from all the sources
+
+        from pprint import pprint
+
+        # Getting each source
+        for source in CONTRIBUTORS_SOURCES:
+
+            # Commits and issues contributors
+            if source in ['repository_commits_contributors', 'repository_issues_contributors']:
+
+                # For each project repository...
+                for project_repository in self.project_repositories.all():
+
+                    repository_contributors = []
+                    repository = project_repository.repository
+
+                    repository_instance = r.Repository(repository.url, 'gitlab')
+
+                    if source == 'repository_commits_contributors':
+                        repository_contributors = repository_instance.get_commits_contributors()
+                    elif source == 'repository_issues_contributors':
+                        repository_contributors = repository_instance.get_issues_contributors()
+
+                    # Augmenting the contributors data with source
+                    for c in repository_contributors:
+
+                        tmp = copy.copy(c)
+                        #tmp.pop('email', None)  # We don't want the email to be visible
+                        tmp['source'] = source  # IDEA: include which repository?
+                        
+                        if source == 'repository_commits_contributors':
+                            tmp['oauth_id'] = forum_utils.get_oauth_id(email=c['email'])
+                        elif source == 'repository_issues_contributors':
+                            tmp['oauth_id'] = forum_utils.get_oauth_id(gitlab_username=c['username'])
+
+                        # TODO: add avatar URL
+                        
+                        contributors.append(tmp)
+
+        # NOTE: there may be duplicates, leaving the function caller the care to deduplicate it
+        # (duplicates can be used to determine a count, e.g. user posted X issues, etc.)
+        # If deduplicating it, the OAuth ID is the only really unique value to be trusted
+
+        return contributors
 
 
 class ProjectTopic(Named):
