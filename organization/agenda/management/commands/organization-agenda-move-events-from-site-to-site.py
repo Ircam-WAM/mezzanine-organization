@@ -39,30 +39,28 @@ class Command(BaseCommand):
     """Synchronize events from E-vement to mezzanine_agenda
     ex: python manage.py organization-agenda-move-events-from-site-to-site -f vertigo.starts.eu -t www.starts.eu -d Residencies
     """
-
-    option_list = BaseCommand.option_list + (
-        make_option('-f', '--from',
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '-f', '--from',
             dest='from_site_domain',
-            help='define the domain of the source site'),
-        make_option('-t', '--to',
+            help='define the domain of the source site',
+        )
+        parser.add_argument(
+            '-t', '--to',
             dest='to_site_domain',
             help='define the domain of the destination site'),
-        make_option('-d', '--departement',
+        parser.add_argument(
+            '-d', '--departement',
             dest='department',
             help='define the targeted department'),
-    )
 
     def handle(self, *args, **kwargs):
         from_site = Site.objects.get(domain=kwargs.get('from_site_domain'))
         to_site = Site.objects.get(domain=kwargs.get('to_site_domain'))
         department = Department.objects.get(name=kwargs.get('department'))
-
         events = ma_models.Event.objects.filter(site=from_site)
-        print(events)
         for event in events:
             event.site = to_site
-            event.save()
+            event.update(force_update=True)
             event_department = EventDepartment(event=event, department=department)
             event_department.save()
-
-
