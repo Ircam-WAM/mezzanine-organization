@@ -212,6 +212,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
     def get_contributors(self):
 
+        # NOTE: will need a bigass cache because it fetch resources from everywhere
+
         # Project contributors are sourced from:
         # - Repositories (commits authors and members)
         # - Discussion rooms (participants)
@@ -223,9 +225,9 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
         CONTRIBUTORS_SOURCES = [
             'repository_commits_contributors',
-            'repository_member',
+            'repository_members',
             'repository_issues_contributors',
-            'project_members',
+            'forum_project_members',
             'discussion_participants'
         ]
 
@@ -249,7 +251,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         for source in CONTRIBUTORS_SOURCES:
 
             # Commits and issues contributors
-            if source in ['repository_commits_contributors', 'repository_issues_contributors']:
+            if source in ['repository_commits_contributors', 'repository_issues_contributors', 'repository_members']:
 
                 # For each project repository...
                 for project_repository in self.project_repositories.all():
@@ -263,6 +265,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
                         repository_contributors = repository_instance.get_commits_contributors()
                     elif source == 'repository_issues_contributors':
                         repository_contributors = repository_instance.get_issues_contributors()
+                    elif source == 'repository_members':
+                        repository_contributors = repository_instance.get_members()
 
                     # Augmenting the contributors data with source
                     for c in repository_contributors:
@@ -270,12 +274,10 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
                         tmp = copy.copy(c)
                         #tmp.pop('email', None)  # We don't want the email to be visible
                         tmp['source'] = source  # IDEA: include which repository?
-                        
-                        if source == 'repository_commits_contributors':
+                        if c['email']:
                             tmp['oauth_id'] = forum_utils.get_oauth_id(email=c['email'])
-                        elif source == 'repository_issues_contributors':
-                            tmp['oauth_id'] = forum_utils.get_oauth_id(gitlab_username=c['username'])
-
+                        else:
+                            tmp['oauth_id'] = None
                         # TODO: add avatar URL
                         
                         contributors.append(tmp)
