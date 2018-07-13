@@ -34,8 +34,8 @@ def organization_settings(request):
     current_season, created = Season.objects.get_or_create(
         start__year=date_now.year,
         defaults={'title' : 'Season ' + str(date_now.year) + '-' + str(date_now.year + 1),
-                  'start' : date(date_now.year, 7, 31),
-                  'end' : date(date_now.year + 1, 8, 1)})
+                  'start' : date(date_now.year, settings.SEASON_START_MONTH, settings.SEASON_START_DAY),
+                  'end' : date(date_now.year + 1, settings.SEASON_END_MONTH, settings.SEASON_END_DAY)})
     current_season_styled = str(current_season.start.year)[-2:]+"."+str(current_season.end.year)[-2:]
 
     # NEWSLETTER
