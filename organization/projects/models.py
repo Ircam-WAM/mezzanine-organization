@@ -166,6 +166,18 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     def discussion_rooms(self):
         return self.get_discussion_rooms()
 
+    @property
+    def contributors(self):
+
+        def strip_emails(item):
+            item.pop('email')
+            return item
+
+        contributors = self.get_contributors()
+        contributors = list(map(strip_emails, contributors))
+        return contributors
+
+
     def get_link(self, link_type_slug=None):
         ret = None
         link_type = LinkType.objects.filter(slug=link_type_slug)
@@ -210,6 +222,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
         return repositories
 
+
     def get_contributors(self):
 
         # NOTE: will need a bigass cache because it fetch resources from everywhere
@@ -233,11 +246,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
         # Not actually enforced. For info only.
         CONTRIBUTOR_SCHEMA = {
-            'first_name': None,  # Optional
-            'last_name': None,   # Optional
-            'username': None,    # Optional
-            'name': None,        # Mandatory. Composed name or username depending on source
-            'email': None,       # Optional
+            'display_name': None,# Mandatory.
+            'email': None,       # Mandatory. Be careful to not show it in public (like your mom taught you).
             'avatar_url': None,  # Optional. Getting it from Ircam OAuth server if email matches
             'source': None,      # Mandatory. One of CONTRIBUTORS_SOURCES
             'extra_data': {}     # Optional
@@ -272,14 +282,18 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
                     for c in repository_contributors:
 
                         tmp = copy.copy(c)
-                        #tmp.pop('email', None)  # We don't want the email to be visible
-                        tmp['source'] = source  # IDEA: include which repository?
+                        tmp['source'] = source  # IDEA: also include which repository, in case of multiple repositories
+
                         if c['email']:
                             tmp['oauth_id'] = forum_utils.get_oauth_id(email=c['email'])
+                            if tmp['oauth_id']:
+                                # Build display_name from the OAuth profile
+                                pass
                         else:
                             tmp['oauth_id'] = None
+
                         # TODO: add avatar URL
-                        
+
                         contributors.append(tmp)
 
         # NOTE: there may be duplicates, leaving the function caller the care to deduplicate it
