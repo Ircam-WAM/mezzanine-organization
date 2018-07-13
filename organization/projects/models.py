@@ -45,7 +45,7 @@ PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
     ('external', _('external')),
 ]
-if settings.PROJECT_TYPE_CHOICES:
+if hasattr(settings, 'PROJECT_TYPE_CHOICES'):
     PROJECT_TYPE_CHOICES.extend(settings.PROJECT_TYPE_CHOICES)
 
 REPOSITORY_ACCESS_CHOICES = [
