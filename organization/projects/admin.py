@@ -206,10 +206,11 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 DynamicContentProjectInline,
                 ProjectBlogPageInline,
                 ]
-    filter_horizontal = ['teams', 'organizations']
+    filter_horizontal = ['teams', 'organizations', 'concepts']
     list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status', 'call']
     list_display = ['title', 'date_from', 'date_to', 'created', 'lead_organization',
         'program', 'status', 'is_archive', 'topic', 'external_id', 'validation_status', 'admin_link']
+
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
 

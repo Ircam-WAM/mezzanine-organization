@@ -204,13 +204,13 @@ class PersonAutocompleteView(autocomplete.Select2QuerySetView):
 
         qs = Person.objects.all()
 
-        person_title = self.forwarded.get('person_title', None)
+        person_title = self.forwarded.get('title', None)
 
         if person_title:
-            qs = qs.filter(person_title=person_title)
+            qs = qs.filter(title=person_title)
 
         if self.q:
-            qs = qs.filter(person_title__istartswith=self.q)
+            qs = qs.filter(title__icontains=self.q)
 
         return qs
 

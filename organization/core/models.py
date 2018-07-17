@@ -397,3 +397,14 @@ class OwnableOrNot(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Sites(models.Model):
+    # Abstract model to allow publishing content on multiple sites
+
+    sites = models.ManyToManyField("sites.Site", verbose_name=_("sites"), related_name='%(class)ss', blank=True)
+
+    class Meta:
+        abstract = True
+        verbose_name = 'Sites'
+        verbose_name_plural = 'Sites'
