@@ -22,6 +22,7 @@
 from __future__ import unicode_literals
 import datetime
 import os
+import copy
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -165,6 +166,18 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     def discussion_rooms(self):
         return self.get_discussion_rooms()
 
+    @property
+    def contributors(self):
+
+        def strip_emails(item):
+            item.pop('email')
+            return item
+
+        contributors = self.get_contributors()
+        contributors = list(map(strip_emails, contributors))
+        return contributors
+
+
     def get_link(self, link_type_slug=None):
         ret = None
         link_type = LinkType.objects.filter(slug=link_type_slug)
@@ -207,8 +220,87 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             tmp['summary'] = r.Repository(repository.url, 'gitlab').get_summary()
             repositories.append(tmp)
 
-        # At the moment, we assume a project only has one repository
         return repositories
+
+
+    def get_contributors(self):
+
+        # NOTE: will need a bigass cache because it fetch resources from everywhere
+
+        # Project contributors are sourced from:
+        # - Repositories (commits authors and members)
+        # - Discussion rooms (participants)
+        # - Forum project members
+
+        from repository import repository as r
+        from discussion import discussion as d
+        import forum_utils  # SMELL: makes the method forum-specific, move logic elsewhere?
+
+        CONTRIBUTORS_SOURCES = [
+            'repository_commits_contributors',
+            'repository_members',
+            'repository_issues_contributors',
+            'forum_project_members',
+            'discussion_participants'
+        ]
+
+        # Not actually enforced. For info only.
+        CONTRIBUTOR_SCHEMA = {
+            'display_name': None,# Mandatory.
+            'email': None,       # Mandatory. Be careful to not show it in public (like your mom taught you).
+            'avatar_url': None,  # Optional. Getting it from Ircam OAuth server if email matches
+            'source': None,      # Mandatory. One of CONTRIBUTORS_SOURCES
+            'extra_data': {}     # Optional
+        }
+
+        contributors = []  # Holds all the contributors from all the sources
+
+        from pprint import pprint
+
+        # Getting each source
+        for source in CONTRIBUTORS_SOURCES:
+
+            # Commits and issues contributors
+            if source in ['repository_commits_contributors', 'repository_issues_contributors', 'repository_members']:
+
+                # For each project repository...
+                for project_repository in self.project_repositories.all():
+
+                    repository_contributors = []
+                    repository = project_repository.repository
+
+                    repository_instance = r.Repository(repository.url, 'gitlab')
+
+                    if source == 'repository_commits_contributors':
+                        repository_contributors = repository_instance.get_commits_contributors()
+                    elif source == 'repository_issues_contributors':
+                        repository_contributors = repository_instance.get_issues_contributors()
+                    elif source == 'repository_members':
+                        repository_contributors = repository_instance.get_members()
+
+                    # Augmenting the contributors data with source
+                    for c in repository_contributors:
+
+                        tmp = copy.copy(c)
+                        tmp['source'] = source  # IDEA: also include which repository, in case of multiple repositories
+
+                        if c['email']:
+                            tmp['oauth_id'] = forum_utils.get_oauth_id(email=c['email'])
+                            if tmp['oauth_id']:
+                                # Build display_name from the OAuth profile
+                                pass
+                        else:
+                            tmp['oauth_id'] = None
+
+                        # TODO: add avatar URL
+
+                        contributors.append(tmp)
+
+        # NOTE: there may be duplicates, leaving the function caller the care to deduplicate it
+        # (duplicates can be used to determine a count, e.g. user posted X issues, etc.)
+        # If deduplicating it, the OAuth ID is the only really unique value to be trusted
+
+        return contributors
 
 
 class ProjectTopic(Named):
