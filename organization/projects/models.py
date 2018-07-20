@@ -487,6 +487,12 @@ class Repository(models.Model):
         verbose_name = _('repository')
         verbose_name_plural = _("repositories")
 
+    @property
+    def api(self):
+        from organization.projects.repository import repository as r
+        instance = r.Repository(self.url, self.vendor)
+        return instance
+
 
 class RepositorySystem(Named):
 
