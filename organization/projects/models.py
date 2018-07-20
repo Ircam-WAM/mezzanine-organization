@@ -143,12 +143,11 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
                 'featured': True
             })
 
-        from repository import repository as r
         # If no 'download' link is found, fallback to the latest tag from the first repository
         # TODO: what about multiple repositories?
         for i, pr in enumerate(self.project_repositories.all()):
             ret.append({
-                'url': r.Repository(pr.repository.url, pr.repository.vendor).get_archive_url(),
+                'url': pr.repository.api.get_archive_url(),
                 'featured': (not direct_url and i == 0)  # Only the first repository URL is featured,
                                                          # if and only if no direct link has been set up
             })
@@ -208,20 +207,17 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
     def get_repositories(self):
 
-        from repository import repository as r
-
         repositories = []
 
         for project_repository in self.project_repositories.all():
             tmp = {}
             repository = project_repository.repository
             tmp['url'] = repository.url
-            tmp['readme_html'] = r.Repository(repository.url, 'gitlab').get_readme()
-            tmp['summary'] = r.Repository(repository.url, 'gitlab').get_summary()
+            tmp['readme_html'] = repository.api.get_readme()
+            tmp['summary'] = repository.api.get_summary()
             repositories.append(tmp)
 
         return repositories
-
 
     def get_contributors(self):
 
@@ -232,7 +228,6 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         # - Discussion rooms (participants)
         # - Forum project members
 
-        from repository import repository as r
         from discussion import discussion as d
         import forum_utils  # SMELL: makes the method forum-specific, move logic elsewhere?
 
@@ -269,14 +264,12 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
                     repository_contributors = []
                     repository = project_repository.repository
 
-                    repository_instance = r.Repository(repository.url, 'gitlab')
-
                     if source == 'repository_commits_contributors':
-                        repository_contributors = repository_instance.get_commits_contributors()
+                        repository_contributors = repository.api.get_commits_contributors()
                     elif source == 'repository_issues_contributors':
-                        repository_contributors = repository_instance.get_issues_contributors()
+                        repository_contributors = repository.api.get_issues_contributors()
                     elif source == 'repository_members':
-                        repository_contributors = repository_instance.get_members()
+                        repository_contributors = repository.api.get_members()
 
                     # Augmenting the contributors data with source
                     for c in repository_contributors:

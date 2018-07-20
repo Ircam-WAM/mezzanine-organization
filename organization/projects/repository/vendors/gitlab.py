@@ -1,4 +1,4 @@
-from repository.vendors.utils import VendorInterface
+from .utils import VendorInterface
 import gitlab
 import markdown
 from urllib.parse import urlparse, urljoin

@@ -1,4 +1,4 @@
-from repository.vendors import *
+from .vendors import *
 
 
 class Repository:
