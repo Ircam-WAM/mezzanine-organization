@@ -482,11 +482,16 @@ class Repository(models.Model):
 
     @property
     def api(self):
-        from repository import repository as r
-        instance = r.Repository(self.url,
-                                self.vendor,
-                                settings=settings.REPOSITORY,
-                                debug=settings.DEBUG)
+
+        try:
+            from repository import repository as r
+            instance = r.Repository(self.url,
+                                    self.vendor,
+                                    settings=settings.REPOSITORY,
+                                    debug=settings.DEBUG)
+        except ImportError:
+            instance = None
+
         return instance
 
 
