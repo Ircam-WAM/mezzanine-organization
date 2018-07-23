@@ -100,6 +100,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     validation_status = models.IntegerField(_('validation status'), choices=PROJECT_STATUS_CHOICES, default=1)
     funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
     concepts = models.ManyToManyField('skosxl.Concept', verbose_name=_('concepts'), blank=True)
+    owner = models.ForeignKey(User, verbose_name=_('project owner'), related_name='owned_projects', blank=True, null=True, on_delete=models.SET_NULL)
+
 
     class Meta:
         verbose_name = _('project')
