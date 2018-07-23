@@ -482,7 +482,7 @@ class Repository(models.Model):
 
     @property
     def api(self):
-        from organization.projects.repository import repository as r
+        from repository import repository as r
         instance = r.Repository(self.url, self.vendor)
         return instance
 
