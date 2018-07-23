@@ -483,7 +483,10 @@ class Repository(models.Model):
     @property
     def api(self):
         from repository import repository as r
-        instance = r.Repository(self.url, self.vendor)
+        instance = r.Repository(self.url,
+                                self.vendor,
+                                settings=settings.REPOSITORY,
+                                debug=settings.DEBUG)
         return instance
 
 
