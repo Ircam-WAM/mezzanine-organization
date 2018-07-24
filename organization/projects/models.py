@@ -233,7 +233,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         # - Forum project members
 
         from discussion import discussion as d
-        import forum_utils  # SMELL: makes the method forum-specific, move logic elsewhere?
+        from ircamforum import utils  # SMELL: makes the method forum-specific, move logic elsewhere?
 
         CONTRIBUTORS_SOURCES = [
             'repository_commits_contributors',
@@ -293,7 +293,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
                             tmp['source'] = source  # IDEA: also include which repository, in case of multiple repositories
 
                             if c['email']:
-                                tmp['oauth_id'] = forum_utils.get_oauth_id(email=c['email'])
+                                tmp['oauth_id'] = utils.get_oauth_id(email=c['email'])
                                 if tmp['oauth_id']:
                                     # Build display_name from the OAuth profile
                                     pass
