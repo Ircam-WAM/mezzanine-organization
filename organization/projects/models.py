@@ -148,11 +148,12 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         # If no 'download' link is found, fallback to the latest tag from the first repository
         # TODO: what about multiple repositories?
         for i, pr in enumerate(self.project_repositories.all()):
-            ret.append({
-                'url': pr.repository.api.get_archive_url(),
-                'featured': (not direct_url and i == 0)  # Only the first repository URL is featured,
-                                                         # if and only if no direct link has been set up
-            })
+            if pr.repository.api:
+                ret.append({
+                    'url': pr.repository.api.get_archive_url(),
+                    'featured': (not direct_url and i == 0)  # Only the first repository URL is featured,
+                                                             # if and only if no direct link has been set up
+                })
         return ret
 
     @property
@@ -214,10 +215,11 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         for project_repository in self.project_repositories.all():
             tmp = {}
             repository = project_repository.repository
-            tmp['url'] = repository.url
-            tmp['readme_html'] = repository.api.get_readme()
-            tmp['summary'] = repository.api.get_summary()
-            repositories.append(tmp)
+            if repository.api:
+                tmp['url'] = repository.url
+                tmp['readme_html'] = repository.api.get_readme()
+                tmp['summary'] = repository.api.get_summary()
+                repositories.append(tmp)
 
         return repositories
 
@@ -266,30 +268,41 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
                     repository_contributors = []
                     repository = project_repository.repository
 
-                    if source == 'repository_commits_contributors':
-                        repository_contributors = repository.api.get_commits_contributors()
-                    elif source == 'repository_issues_contributors':
-                        repository_contributors = repository.api.get_issues_contributors()
-                    elif source == 'repository_members':
-                        repository_contributors = repository.api.get_members()
+                    if repository.api:
 
-                    # Augmenting the contributors data with source
-                    for c in repository_contributors:
+                        if source == 'repository_commits_contributors':
+                            try:
+                                repository_contributors = repository.api.get_commits_contributors()
+                            except Exception:
+                                repository_contributors = []
+                        elif source == 'repository_issues_contributors':
+                            try:
+                                repository_contributors = repository.api.get_issues_contributors()
+                            except Exception:
+                                repository_contributors = []
+                        elif source == 'repository_members':
+                            try:
+                                repository_contributors = repository.api.get_members()
+                            except Exception:
+                                repository_contributors = []
 
-                        tmp = copy.copy(c)
-                        tmp['source'] = source  # IDEA: also include which repository, in case of multiple repositories
+                        # Augmenting the contributors data with source
+                        for c in repository_contributors:
 
-                        if c['email']:
-                            tmp['oauth_id'] = forum_utils.get_oauth_id(email=c['email'])
-                            if tmp['oauth_id']:
-                                # Build display_name from the OAuth profile
-                                pass
-                        else:
-                            tmp['oauth_id'] = None
+                            tmp = copy.copy(c)
+                            tmp['source'] = source  # IDEA: also include which repository, in case of multiple repositories
 
-                        # TODO: add avatar URL
+                            if c['email']:
+                                tmp['oauth_id'] = forum_utils.get_oauth_id(email=c['email'])
+                                if tmp['oauth_id']:
+                                    # Build display_name from the OAuth profile
+                                    pass
+                            else:
+                                tmp['oauth_id'] = None
 
-                        contributors.append(tmp)
+                            # TODO: add avatar URL
+
+                            contributors.append(tmp)
 
         # NOTE: there may be duplicates, leaving the function caller the care to deduplicate it
         # (duplicates can be used to determine a count, e.g. user posted X issues, etc.)
