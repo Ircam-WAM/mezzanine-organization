@@ -138,7 +138,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         ret = []  # TODO: must set a schema for simple, clear format in the templates
                   #       example: { version, platform, url, featured } or even more abstract
 
-        direct_url = self.get_link('download')  # First we try to get the "download" link type
+        direct_url = self.get_link('download')[0]  # First we try to get the "download" link type
         if direct_url:
             ret.append({
                 'url': direct_url.url,
@@ -158,7 +158,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
     @property
     def documentation_url(self):
-        return self.get_link('documentation')
+        return self.get_link('documentation')[0]
 
     @property
     def repositories(self):
@@ -179,14 +179,10 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         contributors = list(map(strip_emails, contributors))
         return contributors
 
-
-    def get_link(self, link_type_slug=None):
-        ret = None
+    def get_links(self, link_type_slug=None):
         link_type = LinkType.objects.filter(slug=link_type_slug)
         urls = self.links.filter(link_type=link_type)
-        if len(urls) > 0:
-            ret = urls.first()
-        return ret
+        return list(urls)
 
     def get_discussion_rooms(self):
 
