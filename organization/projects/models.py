@@ -30,7 +30,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.conf import settings
 
-from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
+from mezzanine.core.models import RichText, Displayable, Slugged, Orderable, TimeStamped
 from django.core.files.images import get_image_dimensions
 
 from organization.core.models import *
@@ -75,6 +75,16 @@ DIMENSION_CHOICES = (
 FUNDING_CHOICES = (
     ('public', _('EU / National Program')),
     ('private', _('Privately Funded'))
+)
+
+SOFTWARE_OS_CHOICES = (
+    ('windows', _('Windows')),
+    ('macos', _('macOS')),
+    ('linux', _('Linux')),
+    ('android', _('Android')),
+    ('ios', _('iOS')),
+    ('cross', _('Cross-platforms')),
+    ('none', _('Not applicable')),
 )
 
 
@@ -745,3 +755,27 @@ class Pivot_ProjectTopic_Article(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Project Topic'
+
+
+class RepositoryRelease(TimeStamped):
+
+    version = models.CharField(_('Release version'), max_length=256, help_text="Without the \"v\" prefix. Best practice is to follow semver (semantic versionning).")
+    name = models.CharField(_('Release name'), max_length=256, null=True, blank=True, help_text="The release codename (if any)")
+    repository = models.ForeignKey(Repository, verbose_name=_('repository'), related_name='releases', null=True, on_delete=models.SET_NULL)
+    repository_ref = models.CharField(_('Repository ref'), max_length=256, null=True, help_text="Can be a tag, a commit sha or a branch")
+    requirements = models.TextField(_('requirements'), blank=True, null=True, help_text="Only common requirements for all platforms (e.g. Python >= 2.7)")
+
+    def __str__(self):
+        return '{} — {}'.format(self.repository.url, self.version)
+
+
+class RepositoryReleaseBinary(TimeStamped):
+
+    # TODO: allow file upload / if storage is GitLab, create Django GitLab storage
+    os = models.CharField(_('os'), choices=SOFTWARE_OS_CHOICES, max_length=128, blank=True, null=True)
+    url = models.CharField(_('URL'), max_length=1024, help_text='http(s)')
+    requirements = models.TextField(_('requirements'), help_text="Only specific requirements for this binary (e.g. macOS <= 10.12)")
+    repository_release = models.ForeignKey(RepositoryRelease, verbose_name=_('repository release'), related_name='binaries', null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name_plural = _("Repository release binaries")

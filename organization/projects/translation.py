@@ -226,3 +226,15 @@ class RepositoryTranslationOptions(TranslationOptions):
 class Pivot_ProjectTopic_ArticleTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(RepositoryRelease)
+class RepositoryReleaseTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(RepositoryReleaseBinary)
+class RepositoryReleaseBinaryTranslationOptions(TranslationOptions):
+
+    pass

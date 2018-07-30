@@ -304,6 +304,26 @@ class ProjectCollectionAdminDisplayable(DisplayableAdmin):
     inlines = [ ProjectCollectionImageInline,
                 ProjectCollectionProjectInline ]
 
+
+class RepositoryReleaseInline(StackedDynamicInlineAdmin):
+
+    model = RepositoryRelease
+
+
+class RepositoryAdmin(admin.ModelAdmin):
+
+    inlines = [RepositoryReleaseInline]
+
+
+class RepositoryReleaseBinaryInline(StackedDynamicInlineAdmin):
+
+    model = RepositoryReleaseBinary
+
+
+class RepositoryReleaseAdmin(admin.ModelAdmin):
+
+    inlines = [RepositoryReleaseBinaryInline]
+
 admin.site.register(Project, ProjectAdminDisplayable)
 admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)
 admin.site.register(ProjectPrivateData, ProjectPrivateDataAdmin)
@@ -313,9 +333,11 @@ admin.site.register(ProjectProgramType, ProjectProgramTypeAdmin)
 admin.site.register(ProjectTopic, ProjectTopicAdmin)
 admin.site.register(ProjectTopicPage, ProjectTopicPageAdmin)
 admin.site.register(ProjectDemo, ProjectDemoAdmin)
-admin.site.register(Repository)
+admin.site.register(Repository, RepositoryAdmin)
 admin.site.register(RepositorySystem)
 admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
 admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
 admin.site.register(ProjectResidency, ProjectResidencyAdmin)
 admin.site.register(ProjectCollection, ProjectCollectionAdminDisplayable)
+admin.site.register(RepositoryRelease, RepositoryReleaseAdmin)
+admin.site.register(RepositoryReleaseBinary)
