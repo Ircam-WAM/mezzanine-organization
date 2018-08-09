@@ -20,17 +20,17 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from django.shortcuts import render, get_object_or_404
-from django.http import Http404
 from django.views.generic.base import View, RedirectView
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView
 from django.apps import apps
 from django.utils import six, timezone, formats
 from django.utils.translation import ugettext_lazy as _
-from django.http import QueryDict
+from django.http import QueryDict, HttpResponse, Http404
 from django.template.defaultfilters import capfirst
 from django.core.urlresolvers import reverse
 from mezzanine.conf import settings
 from mezzanine.utils.views import paginate
+from mezzanine.generic.models import Keyword
 from organization.core.models import *
 from functools import reduce
 from operator import ior, iand
@@ -49,7 +49,9 @@ from django.template import Context, Engine, TemplateDoesNotExist, loader
 from django.utils import six
 from django.utils.encoding import force_text
 from django.views.decorators.csrf import requires_csrf_token
- 
+from organization.core.decorators import ajax_required
+from string import punctuation
+
 
 class SlugMixin(object):
 
@@ -284,3 +286,27 @@ def permission_denied(request, exception, template_name='errors/403.html'):
     return http.HttpResponseForbidden(
         template.render(request=request, context={'exception': force_text(exception)})
     )
+
+
+#@ajax_required
+@requires_csrf_token
+def front_keywords_submit(request):
+    """
+    Adds any new given keywords from the custom keywords field in the
+    admin, and returns their IDs for use when saving a model with a
+    keywords field.
+
+    duplicated from : mezzanine.generic.views.admin_keywords_submit
+    """
+    keyword_ids, titles = [], []
+    remove = punctuation.replace("-", "")  # Strip punctuation, allow dashes.
+    for title in request.POST.get("text_keywords", "").split(","):
+        title = "".join([c for c in title if c not in remove]).strip()
+        if title:
+            kw, created = Keyword.objects.get_or_create_iexact(title=title)
+            keyword_id = str(kw.id)
+            if keyword_id not in keyword_ids:
+                keyword_ids.append(keyword_id)
+                titles.append(title)
+    return HttpResponse("%s|%s" % (",".join(keyword_ids), ", ".join(titles)),
+        content_type='text/plain')

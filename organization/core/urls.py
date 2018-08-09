@@ -27,7 +27,6 @@ from django.conf.urls.i18n import i18n_patterns
 
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
-
 from organization.core.views import *
 
 LOGIN_URL = settings.LOGIN_URL
@@ -37,4 +36,5 @@ urlpatterns = [
      url("^search/$", CustomSearchView.as_view(), name="search"),
      url("^profile/projects/$", UserProjectsView.as_view(), name="user_projects"),
      url("^profile/producer/$", UserProducerView.as_view(), name="user_producer"), 
+     url("^front_keywords_submit/$", front_keywords_submit, name="front_keywords_submit"),
 ]

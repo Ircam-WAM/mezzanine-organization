@@ -245,10 +245,7 @@ class ProjectTechUpdateView(LoginRequiredMixin, ProjectCallMixin, UpdateWithInli
         return context
 
     def forms_valid(self, form, inlines):
-        # print(self.request.POST)
         self.object = form.save()
-        # print(form.cleaned_data['keywords'])
-        # self.object.keywords = form.cleaned_data['keywords']
         self.object.user = self.request.user
         self.object.save()
         return super(ProjectTechUpdateView, self).forms_valid(form, inlines)

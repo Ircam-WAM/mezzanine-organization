@@ -8,3 +8,11 @@ def projects_form_field(context, field, private=False, left=True):
     Renders a single field of the Projects form while keeping the forms context
     """
     return {"field": field, "private": private, "left": left}
+
+
+@register.inclusion_tag("projects/inc/projects_form_field_keyword.html", takes_context=True)
+def projects_form_field_keyword(context, field, private=False, left=True):
+    """
+    Renders a single field of the Projects form while keeping the forms context
+    """
+    return {"field": field, "private": private, "left": left}
