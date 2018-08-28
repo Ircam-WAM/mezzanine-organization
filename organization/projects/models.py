@@ -28,7 +28,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
-from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
+from mezzanine.core.models import RichText, Displayable, Slugged, Orderable, Ownable
 from django.core.files.images import get_image_dimensions
 
 from organization.core.models import *
@@ -70,7 +70,7 @@ FUNDING_CHOICES = (
 )
 
 
-class Project(Displayable, Period, RichText, OwnableOrNot):
+class Project(Displayable, Period, RichText, Ownable):
     """(Project description)"""
 
     type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES)

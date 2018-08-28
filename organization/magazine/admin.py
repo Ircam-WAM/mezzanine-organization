@@ -39,7 +39,7 @@ class ArticlePlaylistInline(TabularDynamicInlineAdmin):
     model = ArticlePlaylist
 
 
-class ArticleAdmin(admin.ModelAdmin):
+class ArticleAdmin(OwnableAdmin):
 
     model = Article
 

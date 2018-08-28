@@ -321,7 +321,7 @@ TEMPLATES = [{
                                                   'organization.core.context_processors.organization_settings',
                                                   ),
                             'loaders': [
-                                #'mezzanine.template.loaders.host_themes.Loader',
+                                'mezzanine.template.loaders.host_themes.Loader',
                                 'django.template.loaders.filesystem.Loader',
                                 'django.template.loaders.app_directories.Loader',
                                 ],
@@ -448,7 +448,7 @@ TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 
 ADMIN_MENU_ORDER = (
     (_('Pages'), ('pages.Page', 'organization-pages.Home',
-                 'organization-core.LinkType')),
+                 'organization-core.LinkType',),),
     (_('Media'), ('organization-media.Media',
                   'organization-media.Playlist',
                   'organization-media.LiveStreaming',
@@ -677,3 +677,5 @@ AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 
 ANONYMOUS_USER_NAME = None
 LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
+
+OWNABLE_MODELS_ALL_EDITABLE = []

@@ -91,7 +91,7 @@ class ProjectContactInline(StackedDynamicInlineAdmin):
     model = ProjectContact
 
 
-class ProjectAdmin(admin.ModelAdmin):
+class ProjectAdmin(OwnableAdmin):
 
     model = Project
 
@@ -189,7 +189,7 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
     get_producers.short_description = "producers"
 
 
-class ProjectAdminDisplayable(DisplayableAdmin):
+class ProjectAdminDisplayable(DisplayableAdmin, OwnableAdmin):
 
     fieldsets = deepcopy(ProjectAdmin.fieldsets)
     inlines = [ ProjectBlockInline,
