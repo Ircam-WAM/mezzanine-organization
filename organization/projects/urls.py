@@ -34,7 +34,7 @@ urlpatterns = [
     url("^dynamic-content-project/$",  permission_required('project.can_edit')(DynamicContentProjectView.as_view()), name='dynamic-content-project'),
 
     # Old URLs
-    url("^ict-projects/list/$", ProjectTechListView.as_view(), name='organization-ict-project-list'),
+    url("^ict-projects/list/$", ProjectListView.as_view(), name='organization-ict-project-list'),
     url("^ict-projects/(?P<slug>.*)/detail/$", ProjectTechDetailView.as_view(), name='organization-ict-project-detail'),
     # due to this commit 73743f67f1d1574dbeff6cc22aae37986d257a92, redirect to old patterns 'project' without 's'
     url("^project/detail/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-detail'), name="redirect-project-detail"),
@@ -48,7 +48,7 @@ urlpatterns = [
     url("^projects/(?P<slug>.*)/blog/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
 
     # Call projects
-    url("^calls/(?P<call_slug>.*)/projects/$", ProjectTechListView.as_view(), name='organization-call-project-list'),
+    url("^calls/(?P<call_slug>.*)/projects/$", ProjectTechListCallView.as_view(), name='organization-call-project-list'),
     url("^calls/(?P<call_slug>.*)/projects/(?P<slug>.*)/detail/$", ProjectTechDetailView.as_view(), name='organization-call-project-detail'),
     url("^calls/(?P<call_slug>.*)/projects/(?P<funding>.*)/create/$", ProjectTechCreateView.as_view(), name='organization-call-project-create'),
     url("^calls/(?P<call_slug>.*)/projects/(?P<slug>.*)/update/$", ProjectTechUpdateView.as_view(), name="organization-call-project-update"),
