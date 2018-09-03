@@ -53,8 +53,10 @@ PROJECT_STATUS_CHOICES = (
     (0, _('rejected')),
     (1, _('draft')),
     (2, _('pending')),
-    (3, _('accepted')),
+    (3, _('validated')),
     (4, _('copied')),
+    (5, _('implemented')),
+    (6, _('closed')),
 )
 
 DIMENSION_CHOICES = (
@@ -208,7 +210,7 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
     class Meta:
         verbose_name = _('project call')
         verbose_name_plural = _("project calls")
-        ordering = ['title',]
+        ordering = ['-date_from', 'title',]
 
     def __str__(self):
         return self.title
@@ -242,6 +244,11 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
         else:
             profile = 'artist'
         return profile
+
+    @property
+    def validated_projects(self):
+        return self.projects.filter(validation_status=3).order_by('title')
+    
 
 
 class ProjectCallBlock(Block):
