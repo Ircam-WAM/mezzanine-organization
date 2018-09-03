@@ -103,6 +103,12 @@ class ProjectListView(ListView):
     model = Project
     template_name='projects/project_list.html'
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProjectListView, self).get_context_data(*args, **kwargs)
+        context['available_projects'] = Project.objects.filter(validation_status=3).order_by('title')
+        context['implemented_projects'] = Project.objects.filter(validation_status=3).order_by('title')
+        return context
+
 
 class DynamicContentProjectView(Select2QuerySetSequenceView):
 
@@ -298,7 +304,7 @@ class ProjectTechValidateView(ProjectCallMixin, TemplateView):
         return context
 
 
-class ProjectTechListView(ListView):
+class ProjectTechListCallView(ListView):
 
     model = Project
     template_name='projects/project_ict_list.html'
