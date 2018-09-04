@@ -49,14 +49,14 @@ REPOSITORY_ACCESS_CHOICES = [
     ('private', _('private')),
 ]
 
-PROJECT_STATUS_CHOICES = (
+PROJECT_VALIDATION_STATUS_CHOICES = (
     (0, _('rejected')),
     (1, _('draft')),
-    (2, _('pending')),
+    (2, _('submitted')),
     (3, _('validated')),
-    (4, _('copied')),
-    (5, _('implemented')),
-    (6, _('closed')),
+    (4, _('implemented')),
+    (5, _('closed')),
+    (6, _('copied')),
 )
 
 DIMENSION_CHOICES = (
@@ -88,7 +88,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     referring_person = models.ManyToManyField('organization-network.Person', verbose_name=_('Referring Person'), related_name='projects_referring_person', blank=True)
     manager =  models.ManyToManyField('organization-network.Person', verbose_name=_('Manager'), related_name='projects_manager', blank=True)
     is_archive = models.BooleanField(verbose_name=_('Is Archive'), help_text='Hide project in Team Page', default=False)
-    validation_status = models.IntegerField(_('validation status'), choices=PROJECT_STATUS_CHOICES, default=1)
+    validation_status = models.IntegerField(_('validation status'), choices=PROJECT_VALIDATION_STATUS_CHOICES, default=1)
     funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
 
     class Meta:
@@ -249,6 +249,13 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
     def validated_projects(self):
         return self.projects.filter(validation_status=3).order_by('title')
     
+    @property
+    def implemented_projects(self):
+        return self.projects.filter(validation_status=4).order_by('title')
+
+    @property
+    def closed_projects(self):
+        return self.projects.filter(validation_status=5).order_by('title')
 
 
 class ProjectCallBlock(Block):
