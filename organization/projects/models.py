@@ -138,10 +138,10 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         ret = []  # TODO: must set a schema for simple, clear format in the templates
                   #       example: { version, platform, url, featured } or even more abstract
 
-        direct_url = self.get_link('download')[0]  # First we try to get the "download" link type
-        if direct_url:
+        direct_url = self.get_links('download')  # First we try to get the "download" link type
+        if len(direct_url) > 0:
             ret.append({
-                'url': direct_url.url,
+                'url': direct_url[0].url,
                 'featured': True
             })
 
@@ -158,7 +158,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
     @property
     def documentation_url(self):
-        return self.get_link('documentation')[0]
+        links = self.get_links('documentation')
+        return links[0] if len(links) > 0 else ''
 
     @property
     def repositories(self):
