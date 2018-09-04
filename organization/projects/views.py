@@ -550,8 +550,8 @@ class ProjectCollectionDetailView(DetailView):
     # Ordering by project title
     def get_context_data(self, *args, **kwargs):
         context = super(ProjectCollectionDetailView, self).get_context_data(*args, **kwargs)
-        collection = context['object']
-        pp = collection.projects_pivot.all().order_by('project__title')
+        context['collection'] = context['object']
+        pp = context['collection'].projects_pivot.all().order_by('project__title')
         context['projects'] = [p.project for p in pp]
         return context
 
