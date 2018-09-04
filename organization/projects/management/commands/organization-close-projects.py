@@ -37,13 +37,18 @@ class Command(BaseCommand):
     help = "close implemented projects"
 
     def handle(self, *args, **options):
-        today = datetime.datetime.today()
+        today = datetime.date.today()
         projects = Project.objects.all()
 
         for project in projects:
-            if project.call.date_to < today and project.residencies.all():
-                project.validation_status = 5
+            if project.call:
+                if project.call.date_to < today and project.residencies.all():
+                    project.validation_status = 4
+                    project.save()
+                elif project.call.date_to < today and project.validation_status == 3 and not project.residencies.all():
+                    project.validation_status = 5
+                    project.save()
+            else:
+                project.validation_status = 0
                 project.save()
-            elif project.call.date_to < today and not project.residencies.all():
-                project.validation_status = 6
-                project.save()
+
