@@ -88,13 +88,9 @@ class ProjectTechDetailView(SlugMixin, ProjectMixin, DetailView):
             raise Http404()
         #TODO: Check if user is project reviewer or creator to allow other status values
         user = self.request.user
-        if not user.is_superuser:
-            if not user.is_staff:
-                if project.validation_status != 3:
-                    raise Http404()
-            else:
-                if not ((project.validation_status == 2) or (project.validation_status == 3)):
-                    raise Http404()
+        if not user.is_superuser or not user.is_staff:
+            if project.validation_status != 3 and project.user != user:
+               raise Http404()
         return project
 
 
