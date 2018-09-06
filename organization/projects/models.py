@@ -138,12 +138,15 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         ret = []  # TODO: must set a schema for simple, clear format in the templates
                   #       example: { version, platform, url, featured } or even more abstract
 
-        direct_url = self.get_links('download')  # First we try to get the "download" link type
-        if len(direct_url) > 0:
-            ret.append({
-                'url': direct_url[0].url,
-                'featured': True
-            })
+        direct_urls = self.get_links('download')  # First we try to get the "download" link type
+        # TODO: make Project links orderables?
+        if len(direct_urls) > 0:
+            for direct_url in direct_urls:
+                ret.insert(0, {
+                    'url': direct_url.url,
+                    'title': direct_url.title,
+                    #'featured': True
+                })
 
         # If no 'download' link is found, fallback to the latest tag from the first repository
         # TODO: what about multiple repositories?
@@ -151,7 +154,9 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             if pr.repository.api:
                 ret.append({
                     'url': pr.repository.api.get_archive_url(),
-                    'featured': (not direct_url and i == 0)  # Only the first repository URL is featured,
+                    'title': 'Repository files',
+                    'subtitle': 'Branch `master` — ZIP archive',
+                    #'featured': (not direct_url and i == 0)  # Only the first repository URL is featured,
                                                              # if and only if no direct link has been set up
                 })
         return ret
