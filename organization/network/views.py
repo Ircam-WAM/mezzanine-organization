@@ -51,6 +51,7 @@ from django.views.generic.base import RedirectView
 from django.utils import six
 from django.core.exceptions import PermissionDenied
 import pandas as pd
+from ulysses.competitions.models import Competition, Call, ApplicationDraft, Candidate, JuryMember, Evaluation
 
 
 def create_ulysses_user(user):
@@ -146,9 +147,6 @@ class PersonDetailView(PersonMixin, SlugMixin, DetailView):
         return context
 
 
-
-
-
 class PersonFollowingListView(PersonDetailView):
 
     model = Person
@@ -200,6 +198,12 @@ class PersonApplicationListView(PersonMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(PersonApplicationListView, self).get_context_data(**kwargs)
         context['projects'] = Project.objects.filter(user=self.request.user)
+        context["draft_applications"] = ApplicationDraft.objects.filter(
+                composer__user=self.request.user
+            ).order_by('-creation_date')
+        context["submitted_applications"] = Candidate.objects.filter(
+                composer__user=self.request.user
+            ).order_by('-application_date')
         return context
 
 
