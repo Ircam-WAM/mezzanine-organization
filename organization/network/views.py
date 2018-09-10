@@ -51,8 +51,17 @@ from django.views.generic.base import RedirectView
 from django.utils import six
 from django.core.exceptions import PermissionDenied
 import pandas as pd
+from ulysses.competitions.models import Competition, Call, ApplicationDraft, Candidate, JuryMember, Evaluation
 
 
+def create_ulysses_user(user):
+    
+    from ulysses.profiles.models import Individual
+    from ulysses.composers.models import Composer
+
+    individual = Individual.objects.get_or_create(user=user)
+    composer = Composer.objects.get_or_create(user=user)
+            
 
 class PersonMixin(object):
 
@@ -67,6 +76,11 @@ class PersonMixin(object):
                 person = Person(first_name=user.first_name, last_name=user.last_name, user=user)
                 person.save()
             person = user.person
+
+            try:
+                create_ulysses_user(user)
+            except:
+                pass
 
         elif 'username' in self.kwargs:
             user = User.objects.get(username=self.kwargs['username'])
@@ -133,9 +147,6 @@ class PersonDetailView(PersonMixin, SlugMixin, DetailView):
         return context
 
 
-
-
-
 class PersonFollowingListView(PersonDetailView):
 
     model = Person
@@ -162,6 +173,10 @@ class UserSettingsView(UpdateView):
 
     def get_object(self):
         if self.request.user.is_authenticated():
+            try:
+                create_ulysses_user(user)
+            except:
+                pass
             return self.request.user
         else:
             raise Http404()
@@ -183,6 +198,12 @@ class PersonApplicationListView(PersonMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(PersonApplicationListView, self).get_context_data(**kwargs)
         context['projects'] = Project.objects.filter(user=self.request.user)
+        context["draft_applications"] = ApplicationDraft.objects.filter(
+                composer__user=self.request.user
+            ).order_by('-creation_date')
+        context["submitted_applications"] = Candidate.objects.filter(
+                composer__user=self.request.user
+            ).order_by('-application_date')
         return context
 
 

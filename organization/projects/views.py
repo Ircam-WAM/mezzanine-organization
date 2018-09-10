@@ -103,8 +103,8 @@ class ProjectListView(ListView):
         context = super(ProjectListView, self).get_context_data(*args, **kwargs)
         project_list = []
         project_list.append({'title': 'Available projects', 'objects': Project.objects.filter(validation_status=3).order_by('title')})
-        project_list.append({'title': 'Implemented projects', 'objects': Project.objects.filter(validation_status=4).order_by('title')})
-        project_list.append({'title': 'Closed projects', 'objects': Project.objects.filter(validation_status=5).order_by('title')})
+        project_list.append({'title': 'Ongoing projects', 'objects': Project.objects.filter(validation_status=4).order_by('title')})
+        project_list.append({'title': 'Other projects', 'objects': Project.objects.filter(validation_status=5).order_by('title')})
         context['project_list'] = project_list
         return context
 
