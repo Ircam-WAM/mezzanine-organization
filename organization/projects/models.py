@@ -234,6 +234,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         # - Discussion rooms (participants)
         # - Forum project members
 
+        from django.core.urlresolvers import reverse
         from discussion import discussion as d
         from ircamforum import utils  # SMELL: makes the method forum-specific, move logic elsewhere?
 
@@ -295,14 +296,22 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
                             tmp['source'] = source  # IDEA: also include which repository, in case of multiple repositories
 
                             if c['email']:
+
                                 tmp['oauth_id'] = utils.get_oauth_id(email=c['email'])
+
                                 if tmp['oauth_id']:
-                                    # Build display_name from the OAuth profile
-                                    pass
+
+                                    u = utils.get_user_by_oauth_id(tmp['oauth_id'])
+
+                                    # Consumed by the API client, so we cannot build to URL with Django
+                                    # in the template, we must give the client the full URLs
+                                    tmp['profile_url'] = reverse('ircam-forum-profile',
+                                                                 kwargs={'username': u.username})
+                                    tmp['avatar_url'] = u.forum_user.avatar_url
+
+                                    # TODO: build display_name from the OAuth profile ?
                             else:
                                 tmp['oauth_id'] = None
-
-                            # TODO: add avatar URL
 
                             contributors.append(tmp)
 
