@@ -525,14 +525,25 @@ class Repository(models.Model):
     @property
     def api(self):
 
+        s = {}
+        s.update(settings.REPOSITORY)
+
         try:
             from repository import repository as r
-            instance = r.Repository(self.url,
-                                    self.vendor,
-                                    settings=settings.REPOSITORY,
-                                    debug=settings.DEBUG)
         except ImportError:
             instance = None
+        else:
+
+            import re
+
+            for host in settings.REPOSITORY_HOSTS:
+                if re.search(host['regex'], self.url) is not None:
+                    s.update(host['credentials'])
+
+            instance = r.Repository(self.url,
+                                    self.vendor,
+                                    settings=s,
+                                    debug=settings.DEBUG)
 
         return instance
 
