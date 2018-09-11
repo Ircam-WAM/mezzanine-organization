@@ -162,6 +162,22 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         return ret
 
     @property
+    def purchase_urls(self):
+
+        ret = []
+        direct_urls = self.get_links('purchase')
+
+        if len(direct_urls) > 0:
+            for direct_url in direct_urls:
+                ret.insert(0, {
+                    'url': direct_url.url,
+                    'title': direct_url.title,
+                    #'featured': True
+                })
+
+        return ret
+
+    @property
     def documentation_url(self):
         links = self.get_links('documentation')
         return links[0] if len(links) > 0 else ''
