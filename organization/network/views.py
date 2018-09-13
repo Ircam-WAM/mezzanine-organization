@@ -172,15 +172,16 @@ class UserSettingsView(UpdateView):
     template_name='accounts/account_profile_update_settings.html'
 
     def get_object(self):
-        if self.request.user.is_authenticated():
+        user = self.request.user
+        if user.is_authenticated():
             try:
                 create_ulysses_user(user)
             except:
                 pass
-            return self.request.user
+            return user
         else:
             raise Http404()
-        
+    
 
 class PersonSettingsView(PersonMixin, UpdateView):
 
