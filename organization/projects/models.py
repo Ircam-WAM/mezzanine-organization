@@ -57,6 +57,7 @@ REPOSITORY_ACCESS_CHOICES = [
 
 REPOSITORY_VENDORS = [
     ('gitlab', _('Gitlab')),
+    ('github', _('Github')),
 ]
 
 PROJECT_STATUS_CHOICES = (
@@ -536,6 +537,7 @@ class Repository(models.Model):
 
             import re
 
+            # Injecting the custom API key if the repo URL matches the regex
             for host in settings.REPOSITORY_HOSTS:
                 if re.search(host['regex'], self.url) is not None:
                     s.update(host['credentials'])
