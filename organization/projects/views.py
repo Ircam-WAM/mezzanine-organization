@@ -196,14 +196,12 @@ class ProjectTechCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInli
 
     def get_success_url(self):
         if 'save' in self.request.POST:
-            return reverse_lazy('organization-network-profile-applications', 
-                kwargs={'username': self.request.user.username})
+            return reverse_lazy('organization-network-profile-applications')
         elif 'submit' in self.request.POST:
             return reverse_lazy('organization-call-project-validate', 
                 kwargs={'call_slug': self.object.call.slug, 'slug': self.object.slug})
         else:
-            return reverse_lazy('organization-network-profile-applications', 
-                kwargs={'username': self.request.user.username})
+            return reverse_lazy('organization-network-profile-applications')
 
 
 class ProjectTechUpdateView(LoginRequiredMixin, ProjectCallMixin, UpdateWithInlinesView):
