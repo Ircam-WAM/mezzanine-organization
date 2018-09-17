@@ -181,7 +181,7 @@ class UserSettingsView(UpdateView):
             return user
         else:
             raise Http404()
-    
+
 
 class PersonSettingsView(PersonMixin, UpdateView):
 

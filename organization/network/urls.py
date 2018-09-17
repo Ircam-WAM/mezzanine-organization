@@ -25,6 +25,7 @@ import django.views.i18n
 from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib.auth.decorators import permission_required
+from django.core.urlresolvers import reverse_lazy
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
@@ -47,7 +48,7 @@ urlpatterns = [
     url('^profiles/(?P<username>.*)/following/$', PersonFollowingListView.as_view(), name='organization-network-profile-following'),
     url('^profiles/(?P<username>.*)/followers/$', PersonFollowersListView.as_view(), name='organization-network-profile-followers'),
     url('^profiles/applications/$', PersonApplicationListView.as_view(), name='organization-network-profile-applications'),
-    url('^profiles/settings/$', UserSettingsView.as_view(), name='organization-network-profile-settings'),
+    url('^profiles/settings/$', UserSettingsView.as_view(success_url=reverse_lazy('profile_update')), name='organization-network-profile-settings'),
     # url('^messages/', include('postman.urls')),
 
     # Person autocomplete
