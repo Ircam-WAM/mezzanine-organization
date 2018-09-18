@@ -34,4 +34,5 @@ lxml==4.2.0
 git+https://github.com/Ircam-Web/django-rdf-io.git@master#egg=django-rdf-io
 git+https://github.com/Ircam-Web/django-skosxl.git@master#egg=django-skosxl
 django-postman==3.6.1
+coverage==4.5.1
 -e .
