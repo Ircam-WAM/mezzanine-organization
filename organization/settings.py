@@ -206,9 +206,9 @@ LANGUAGES = (
     ('en', _('English')),
 )
 
-LOCALE_PATHS = (
-    os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
-)
+# LOCALE_PATHS = (
+#     os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
+# )
 
 #############
 # DATABASES #
@@ -232,7 +232,8 @@ DATABASES = {
 
 INSTALLED_APPS = [
     "organization_themes",
-    # the current theme has to be defined in main local_settings as THEME_APP
+    'organization_themes.ircam-www-theme',
+    # the current theme has to be defined in main local_settings as HOST_THEMES
     "modeltranslation",
     "dal",
     "dal_select2",
@@ -677,3 +678,8 @@ AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 
 ANONYMOUS_USER_NAME = None
 LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
+
+# Themes
+HOST_THEMES = [
+    ('example.com', 'organization_themes.ircam-www-theme'),
+]
