@@ -533,10 +533,13 @@ class Repository(models.Model):
                 if re.search(host['regex'], self.url) is not None:
                     s.update(host['credentials'])
 
-            instance = r.Repository(self.url,
+            try:
+                instance = r.Repository(self.url,
                                     self.vendor,
                                     settings=s,
                                     debug=settings.DEBUG)
+            except Exception:
+                instance = None  # Must be fail-safe to allow "if repo.api" form of check in the code
 
         return instance
 
