@@ -208,21 +208,12 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         return list(urls)
 
     def get_discussion_rooms(self):
-
         from discussion import discussion as d
-
-        rooms_urls = []
         discussion_rooms = []
-
-        # Room URLs are stored as ProjectLink's
-        discussion_link_type = LinkType.objects.get(slug="discussion")
-        for project_link in self.links.filter(link_type=discussion_link_type):
-            rooms_urls.append(project_link.url)
-
-        for room_url in rooms_urls:
+        for project_link in self.get_links(link_type_slug='discussion'):
             tmp = {}
-            tmp['url'] = room_url
-            tmp['summary'] = d.Discussion(room_url, 'discourse').get_summary()
+            tmp['url'] = project_link.url
+            tmp['summary'] = d.Discussion(project_link.url, 'discourse').get_summary()
             discussion_rooms.append(tmp)
 
         return discussion_rooms
