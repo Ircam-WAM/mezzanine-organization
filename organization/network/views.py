@@ -263,7 +263,7 @@ class TimesheetAbstractView(LoginRequiredMixin):
         abstract = True
 
 
-class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
+class TimeSheetCreateView(TimesheetAbstractView, FormSetView): # pragma: no cover
     model = PersonActivityTimeSheet
     template_name='network/person_activity_timesheet/person_activity_timesheet_create.html'
     context_object_name = 'timesheet'
@@ -373,7 +373,7 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):
         return redirect
 
 
-class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView):
+class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView): # pragma: no cover
     model = PersonActivityTimeSheet
     template_name='network/person_activity_timesheet/person_activity_timesheet_list.html'
     context_object_name = 'timesheets_by_year'
@@ -486,7 +486,7 @@ class JuryListView(ListView):
     template_name="network/organization_jury_list.html"
     context_object_name = "jury"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs): 
         context = super(JuryListView, self).get_context_data(**kwargs)
         context["description"] = ""
         jury_list = PersonListBlock.objects.filter(title__in=["Jury", "jury"])

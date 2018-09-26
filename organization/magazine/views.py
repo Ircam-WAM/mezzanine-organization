@@ -84,7 +84,10 @@ class ArticleDetailView(SlugMixin, DetailView):
         context = split_events_from_other_related_content(context, related_content)
 
         if self.object.department:
-            context['department_weaving_css_class'] = self.object.department.pages.first().weaving_css_class
+            context['department_weaving_css_class'] = ''
+            page = self.object.department.pages.first()
+            if page:
+                context['department_weaving_css_class'] = page.weaving_css_class
             context['department_name'] = self.object.department.name
         return context
 
