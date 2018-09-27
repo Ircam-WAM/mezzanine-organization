@@ -408,3 +408,18 @@ def proccess_total_prod_hours(prod_hours_dict):
     for month, hours in prod_hours_dict.items():
         total += hours
     return total    
+
+
+def flatten_activities(activities, fields):
+    flat = []
+    for activity in activities:
+        for field in fields:
+            data = getattr(activity, field)
+            if type(data).__name__ == 'ManyRelatedManager':
+                data = data.all()
+                data2 = []
+                for d in data :
+                    data2.append(d.name)
+                data = ",".join(data2)
+            flat.append(data)
+    return flat
