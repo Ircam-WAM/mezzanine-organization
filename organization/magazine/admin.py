@@ -78,7 +78,7 @@ class ArticleAdminDisplayable(DisplayableAdmin):
               ArticleRelatedTitleAdmin,
               DynamicContentArticleInline,
               ArticlePlaylistInline]
-    list_filter = [ 'status', 'keywords', 'department', ]
+    list_filter = [ 'status', 'department', ]
 
 
 class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline
