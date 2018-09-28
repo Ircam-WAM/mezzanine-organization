@@ -54,6 +54,9 @@ class ArticleAdminCustomDisplayable(ArticleAdminDisplayable):
         (None, {
             "fields": ["title", "description", "slug", "status", "publish_date", "expiry_date"],
         }),
+        (None, {
+            "fields": ["content"],
+        }),
         (_("Meta data"), {
             "fields": ["_meta_title",
                        ("gen_description"),
@@ -62,7 +65,7 @@ class ArticleAdminCustomDisplayable(ArticleAdminDisplayable):
         }),
     )
 
-    inlines = [ProjectTopicInline]
+    inlines = [ArticleImageInline, ProjectTopicInline]
 
 
 admin.site.unregister(Project)
