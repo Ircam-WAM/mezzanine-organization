@@ -29,6 +29,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.conf import settings
+from django.core.cache import cache
 
 from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
 from django.core.files.images import get_image_dimensions
@@ -332,25 +333,42 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     @property
     def language_group(self):
 
-        # WARNING: only implemented for one repository (the first)
-        repository = self.project_repositories.first().repository
+        # TODO: cache the API endpoint instead when possible
+        cache_key = 'project_{}_language_group'.format(self.pk)
+        cached = cache.get(cache_key)
 
-        if not repository.api:
-            return None
+        from pprint import pprint
+        print('-' * 10)
+        pprint('[dump] {0} ({1}) ='.format('cache_key', type(cache_key)))
+        print(cache_key)
+        print('-' * 10)
+        pprint('[dump] {0} ({1}) ='.format('cached', type(cached)))
+        print(cached)
 
-        languages = repository.api.get_languages()
-        group = None
+        if not cached:
+            # WARNING: only implemented for one repository (the first)
+            repository = self.project_repositories.first().repository
 
-        if len(languages) > 0:
-            languages_sorted = sorted(languages.items(), key=lambda t: (t[1], t[0]), reverse=True)
-            main_language = languages_sorted[0]  # -> (name, %)
-            main_language = main_language[0]  # -> name
+            group = None
 
-            for (key, value) in settings.REPOSITORY['LANGUAGES']['GROUPS'].items():
-                if main_language.lower() in value:
-                    group = key
+            if repository.api:
+                languages = repository.api.get_languages()
+                if len(languages) > 0:
+                    languages_sorted = sorted(languages.items(), key=lambda t: (t[1], t[0]), reverse=True)
+                    main_language = languages_sorted[0]  # -> (name, %)
+                    main_language = main_language[0]  # -> name
 
-        return group or 'unknown'
+                    for (key, value) in settings.REPOSITORY['LANGUAGES']['GROUPS'].items():
+                        if main_language.lower() in value:
+                            group = key
+
+            ret = group or 'unknown'
+            cache.set(cache_key, ret, settings.CACHE_PROJECT_LANGUAGE_GROUP)
+
+        else:
+            ret = cached
+
+        return ret
 
 
 class ProjectTopic(Named):
