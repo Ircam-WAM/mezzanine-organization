@@ -339,14 +339,16 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             return None
 
         languages = repository.api.get_languages()
-        languages_sorted = sorted(languages.items(), key=lambda t: (t[1], t[0]), reverse=True)
-        main_language = languages_sorted[0]  # -> (name, %)
-        main_language = main_language[0]  # -> name
         group = None
 
-        for (key, value) in settings.REPOSITORY['LANGUAGES']['GROUPS'].items():
-            if main_language.lower() in value:
-                group = key
+        if len(languages) > 0:
+            languages_sorted = sorted(languages.items(), key=lambda t: (t[1], t[0]), reverse=True)
+            main_language = languages_sorted[0]  # -> (name, %)
+            main_language = main_language[0]  # -> name
+
+            for (key, value) in settings.REPOSITORY['LANGUAGES']['GROUPS'].items():
+                if main_language.lower() in value:
+                    group = key
 
         return group or 'unknown'
 
