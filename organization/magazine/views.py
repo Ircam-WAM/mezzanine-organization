@@ -67,7 +67,7 @@ class ArticleDetailView(SlugMixin, DetailView):
         articles_related = []
         for a in articles:
             if a.article:
-                articles_related.append(a.article) 
+                articles_related.append(a.article)
 
         # manual relation : get dynamic contents of current article
         dynamic_content_related = []
@@ -80,7 +80,7 @@ class ArticleDetailView(SlugMixin, DetailView):
         related_content += articles_related
         related_content += dynamic_content_related
         related_content.sort(key=lambda x: x.created, reverse=True)
-        
+
         context = split_events_from_other_related_content(context, related_content)
 
         if self.object.department:
