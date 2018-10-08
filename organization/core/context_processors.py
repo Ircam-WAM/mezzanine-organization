@@ -30,6 +30,7 @@ from django.contrib.sites.models import Site
 
 def organization_settings(request):
     date_now = datetime.now()
+
     # SEASON
     current_season, created = Season.objects.get_or_create(
         start__year=date_now.year,
@@ -65,7 +66,6 @@ def organization_settings(request):
     linked_org_content = organization_lists[0] if len(organization_lists) > 0 else None
     linked_org_footer = organization_lists[1] if len(organization_lists) > 1 else None
     linked_org_footer_2 = organization_lists[2] if len(organization_lists) > 2 else None
-
     research_slug = "recherche"
     return {'current_season_year': current_season.start.year,
             'current_season_styled': current_season_styled,
@@ -79,3 +79,4 @@ def organization_settings(request):
             'debug_mode' : settings.DEBUG,
             'http_host' :  request.environ['HTTP_HOST']
             }
+

@@ -20,9 +20,11 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from re import match
-from django.contrib import messages
 from pprint import pprint
-from calendar import monthrange
+from collections import OrderedDict
+from datetime import date, timedelta, datetime
+
+from django.contrib import messages
 from django.db.models.fields.related import ForeignKey
 from django.http import Http404
 from django.db.utils import IntegrityError
@@ -32,36 +34,31 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import View
 from django.forms import formset_factory, BaseFormSet
-from extra_views import FormSetView
 from django.http import HttpResponse
 from django.db.models.fields.related import ForeignKey
 from django.utils.translation import ugettext_lazy as _
-from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from dal import autocomplete
-from organization.network.models import *
-from organization.core.views import *
-from datetime import date, timedelta, datetime
-from organization.network.forms import *
-from organization.projects.models import ProjectWorkPackage
-from collections import OrderedDict
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
 from django.utils import six
 from django.core.exceptions import PermissionDenied
+
+from extra_views import FormSetView
+from mezzanine.conf import settings
+from calendar import monthrange
+
+from dal import autocomplete
+
+from organization.network.models import *
+from organization.core.views import *
+from organization.network.forms import *
+from organization.projects.models import ProjectWorkPackage
+
 import pandas as pd
+
 from ulysses.competitions.models import Competition, Call, ApplicationDraft, Candidate, JuryMember, Evaluation
 
-
-def create_ulysses_user(user):
-    
-    from ulysses.profiles.models import Individual
-    from ulysses.composers.models import Composer
-
-    individual = Individual.objects.get_or_create(user=user)
-    composer = Composer.objects.get_or_create(user=user)
-            
 
 class PersonMixin(object):
 
@@ -76,11 +73,6 @@ class PersonMixin(object):
                 person = Person(first_name=user.first_name, last_name=user.last_name, user=user)
                 person.save()
             person = user.person
-
-            try:
-                create_ulysses_user(user)
-            except:
-                pass
 
         elif 'username' in self.kwargs:
             user = User.objects.get(username=self.kwargs['username'])
@@ -173,11 +165,7 @@ class UserSettingsView(UpdateView):
 
     def get_object(self):
         user = self.request.user
-        if user.is_authenticated():
-            try:
-                create_ulysses_user(user)
-            except:
-                pass
+        if user.is_authenticated:
             return user
         else:
             raise Http404()

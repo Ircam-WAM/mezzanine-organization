@@ -51,6 +51,12 @@ from django.utils.encoding import force_text
 from django.views.decorators.csrf import requires_csrf_token
 from organization.core.decorators import ajax_required
 from string import punctuation
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from ulysses.profiles.models import Individual
+from ulysses.composers.models import Composer
+
 
 
 class SlugMixin(object):
@@ -310,3 +316,10 @@ def front_keywords_submit(request):
                 titles.append(title)
     return HttpResponse("%s|%s" % (",".join(keyword_ids), ", ".join(titles)),
         content_type='text/plain')
+
+
+@receiver(post_save, sender=User)
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        individual = Individual.objects.get_or_create(user=instance)
+        composer = Composer.objects.get_or_create(user=instance)
