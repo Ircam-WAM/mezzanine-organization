@@ -453,6 +453,7 @@ class ProjectAdminDisplayable(DisplayableAdmin):
     actions = [export_projects_as_csv, copy_projects]
 
 
+
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
 
     model = ProjectTopic

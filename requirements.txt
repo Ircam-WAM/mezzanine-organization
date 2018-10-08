@@ -30,6 +30,8 @@ django-guardian==1.4.9
 pyldap
 django-auth-ldap==1.2.10
 selenium==3.11.0
-lxml==4.2.0
+lxml==4.2.0 
+git+https://github.com/Ircam-Web/django-rdf-io.git@master#egg=django-rdf-io
+git+https://github.com/Ircam-Web/django-skosxl.git@master#egg=django-skosxl
 django-postman==3.6.1
 -e .

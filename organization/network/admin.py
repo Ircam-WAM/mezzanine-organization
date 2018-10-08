@@ -18,6 +18,7 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+import csv
 from django.contrib import admin
 from django import forms
 from django.http import HttpResponse
@@ -33,7 +34,7 @@ from organization.pages.models import *
 from organization.core.admin import *
 from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline, DynamicContentPageInline, PageRelatedTitleAdmin
 from organization.shop.models import PageProductList
-from organization.network.utils import TimesheetXLS, set_timesheets_validation_date
+from organization.network.utils import TimesheetXLS, set_timesheets_validation_date, flatten_activities
 from organization.network.translation import *
 import csv
 from django.http import HttpResponse
@@ -92,7 +93,6 @@ def export_organizations_as_csv(modeladmin, request, queryset):
 
 
 export_organizations_as_csv.short_description = "Export selected Organizations as CSV"
-
 
 class OrganizationAdminInline(StackedDynamicInlineAdmin):
 
@@ -276,6 +276,8 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
                     'activities__status', 'activities__teams',
                     'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
+    actions = ['export_as_csv', ]
+
 
     def last_weekly_hour_volume(self, instance):
         last_activity = instance.activities.first()
@@ -284,6 +286,28 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
             if last_activity.weekly_hour_volume.__str__() != 'None':
                 weekly_hour_volume = last_activity.weekly_hour_volume.__str__()
         return weekly_hour_volume
+
+    def export_as_csv(self, request, queryset):
+        
+            meta = self.model._meta
+            field_names = ['first_name', 'last_name', 'gender', 'birthday']
+            activity_fields = ['date_from', 'date_to', 'framework', 'function', 'organizations', 'teams']
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+            response.write(u'\ufeff'.encode('utf8'))
+            writer = csv.writer(response, delimiter=';', dialect='excel')
+            activity_fields_all = []
+            for i in range(10):
+                activity_fields_all += activity_fields
+            writer.writerow(field_names + activity_fields_all)
+            for obj in queryset:
+                data = [getattr(obj, field) for field in field_names]
+                data += flatten_activities(obj.activities.all(), activity_fields)
+                row = writer.writerow(data)
+
+            return response
+
+    export_as_csv.short_description = "Export Selected"
 
 
 class ProjectActivityAdmin(BaseTranslationModelAdmin):
