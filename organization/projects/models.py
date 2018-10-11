@@ -42,6 +42,8 @@ from mezzanine_agenda.models import *
 
 from skosxl.models import Concept
 
+from urllib.parse import urlunparse, urlparse
+
 
 PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
@@ -337,14 +339,6 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         cache_key = 'project_{}_language_group'.format(self.pk)
         cached = cache.get(cache_key)
 
-        from pprint import pprint
-        print('-' * 10)
-        pprint('[dump] {0} ({1}) ='.format('cache_key', type(cache_key)))
-        print(cache_key)
-        print('-' * 10)
-        pprint('[dump] {0} ({1}) ='.format('cached', type(cached)))
-        print(cached)
-
         if not cached:
             # WARNING: only implemented for one repository (the first)
             repository = self.project_repositories.first().repository
@@ -569,16 +563,32 @@ class Repository(models.Model):
 
             import re
 
+            url = self.url
+
             # Injecting the custom API key if the repo URL matches the regex
             for host in settings.REPOSITORY_HOSTS:
-                if re.search(host['regex'], self.url) is not None:
+
+                if re.search(host['regex'], url) is not None:
+                    
                     s.update(host['credentials'])
 
+                    # In dev environment, the browser-accessible URL (aka external) is often different than
+                    # the docker-accessible URL. This parameter tells the repository module to use this URL
+                    # instead of the parsed one from the repository full URL (which is its external URL by design)
+                    if 'replace_netloc' in host:  # See comment in local_settings.py
+                        parsed_replacement = list(urlparse(host['replace_netloc']))
+                        target_scheme = parsed_replacement[0]
+                        target_netloc = parsed_replacement[1]
+                        u = list(urlparse(url))
+                        u[0] = target_scheme
+                        u[1] = target_netloc
+                        url = urlunparse(tuple(u))
+
             try:
-                instance = r.Repository(self.url,
-                                    self.vendor,
-                                    settings=s,
-                                    debug=settings.DEBUG)
+                instance = r.Repository(url,
+                                        self.vendor,
+                                        settings=s,
+                                        debug=settings.DEBUG)
             except Exception:
                 instance = None  # Must be fail-safe to allow "if repo.api" form of check in the code
 
