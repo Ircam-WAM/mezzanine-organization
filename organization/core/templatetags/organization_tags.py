@@ -23,6 +23,7 @@
 import datetime
 import calendar
 import ast
+import re
 from re import match
 from django.http import QueryDict
 from mezzanine.pages.models import Page
@@ -42,6 +43,8 @@ from itertools import chain
 from django.db.models import Q
 from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
 from django.core import serializers
+from django.utils.functional import allow_lazy
+from django.utils import six
 
 register = Library()
 
@@ -388,6 +391,28 @@ def tag_is_in_menu(page, tag):
     if tag and page :
         if page.slug.lower().find(tag.slug.lower()) != -1:
             is_in_menu = True
+    return is_in_menu
+
+@register.filter(is_safe=True)
+def removetags(value, tags):
+    """Removes a space separated list of [X]HTML tags from the output."""
+    return remove_tags(value, tags)
+
+def remove_tags(html, tags):
+    """Returns the given HTML with given tags removed."""
+    warnings.warn(
+        "django.utils.html.remove_tags() and the removetags template filter "
+        "are deprecated. Consider using the bleach library instead.",
+        RemovedInDjango110Warning, stacklevel=3
+    )
+    tags = [re.escape(tag) for tag in tags.split()]
+    tags_re = '(%s)' % '|'.join(tags)
+    starttag_re = re.compile(r'<%s(/?>|(\s+[^>]*>))' % tags_re, re.U)
+    endtag_re = re.compile('</%s>' % tags_re)
+    html = starttag_re.sub('', html)
+    html = endtag_re.sub('', html)
+    return html
+remove_tags = allow_lazy(remove_tags, six.text_type)
 
 @register.filter
 def serialize(value, serializer="json"):

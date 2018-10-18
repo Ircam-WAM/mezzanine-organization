@@ -34,8 +34,8 @@ def organization_settings(request):
     current_season, created = Season.objects.get_or_create(
         start__year=date_now.year,
         defaults={'title' : 'Season ' + str(date_now.year) + '-' + str(date_now.year + 1),
-                  'start' : date(date_now.year, 7, 31),
-                  'end' : date(date_now.year + 1, 8, 1)})
+                  'start' : date(date_now.year, settings.SEASON_START_MONTH, settings.SEASON_START_DAY),
+                  'end' : date(date_now.year + 1, settings.SEASON_END_MONTH, settings.SEASON_END_DAY)})
     current_season_styled = str(current_season.start.year)[-2:]+"."+str(current_season.end.year)[-2:]
 
     # NEWSLETTER
@@ -55,12 +55,12 @@ def organization_settings(request):
             host_org = Organization.objects.first()
 
     organization_lists = []
-
-    for orga_linked_block in host_org.organization_linked_block.all():
-        organizations = []
-        for orga_list in OrganizationLinkedInline.objects.filter(organization_list_id=orga_linked_block.organization_linked_id):
-            organizations.append(orga_list.organization)
-        organization_lists.append(organizations)
+    if hasattr(host_org, 'organization_linked_block'):
+        for orga_linked_block in host_org.organization_linked_block.all():
+            organizations = []
+            for orga_list in OrganizationLinkedInline.objects.filter(organization_list_id=orga_linked_block.organization_linked_id):
+                organizations.append(orga_list.organization)
+            organization_lists.append(organizations)
 
     linked_org_content = organization_lists[0] if len(organization_lists) > 0 else None
     linked_org_footer = organization_lists[1] if len(organization_lists) > 1 else None
@@ -77,7 +77,7 @@ def organization_settings(request):
             'research_slug' : research_slug,
             'menu_person_id': settings.MENU_PERSON_ID,
             'debug_mode' : settings.DEBUG,
-            'http_host' :  request.environ['HTTP_HOST']
+            'http_host' :  request.environ['HTTP_HOST'] if 'HTTP_HOST' in request.environ else ''
             }
 
     if settings.TEMPLATE:

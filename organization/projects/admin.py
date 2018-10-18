@@ -33,6 +33,7 @@ from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm, Pivot_Project_ProjectCollection_Form
 from organization.core.admin import null_filter
+# from organization.projects.translation import *
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
