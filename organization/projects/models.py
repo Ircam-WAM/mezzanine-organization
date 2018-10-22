@@ -341,11 +341,14 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
         if not cached:
             # WARNING: only implemented for one repository (the first)
-            repository = self.project_repositories.first().repository
+            if len(self.project_repositories.all()) < 1:
+                repository = None
+            else:
+                repository = self.project_repositories.first().repository
 
             group = None
 
-            if repository.api:
+            if repository and repository.api:
                 languages = repository.api.get_languages()
                 if len(languages) > 0:
                     languages_sorted = sorted(languages.items(), key=lambda t: (t[1], t[0]), reverse=True)
