@@ -397,13 +397,10 @@ def removetags(value, tags):
     """Removes a space separated list of [X]HTML tags from the output."""
     return remove_tags(value, tags)
 
+# @Todo : Replace this method
+# https://www.djangoproject.com/weblog/2014/aug/11/remove-tags-advisory/
 def remove_tags(html, tags):
     """Returns the given HTML with given tags removed."""
-    warnings.warn(
-        "django.utils.html.remove_tags() and the removetags template filter "
-        "are deprecated. Consider using the bleach library instead.",
-        RemovedInDjango110Warning, stacklevel=3
-    )
     tags = [re.escape(tag) for tag in tags.split()]
     tags_re = '(%s)' % '|'.join(tags)
     starttag_re = re.compile(r'<%s(/?>|(\s+[^>]*>))' % tags_re, re.U)
