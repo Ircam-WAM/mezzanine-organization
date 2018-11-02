@@ -62,7 +62,7 @@ class Command(BaseCommand):
         print(attribute_keys)
 
         for project in project_call.projects.filter(validation_status=3):
-            if not project.slug in attribute_keys:
+            if not project.slug[:99] in attribute_keys:
                 # print(competition_attribute, project.slug, project.title)
                 CompetitionAttributeValue.objects.create(attribute=competition_attribute, key=project.slug[:99], acronym=project.title[:24], value=project.title[:99])
             
