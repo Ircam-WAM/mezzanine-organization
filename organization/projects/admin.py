@@ -89,7 +89,7 @@ def export_projects_as_csv(modeladmin, request, queryset):
         call = obj.call.name if obj.call else ""
         call_slug = obj.call.slug if obj.call else ""
         created = obj.created.strftime("%Y-%m-%d %H:%M:%S") if obj.created else ""
-        validation_status = str(dict(PROJECT_STATUS_CHOICES).get(obj.validation_status)) if obj.validation_status else ""
+        validation_status = str(dict(PROJECT_VALIDATION_STATUS_CHOICES).get(obj.validation_status)) if obj.validation_status else ""
         topic = obj.topic.name if obj.topic else ""
         public_data = obj.public_data.all().first() if obj.public_data.all().first() else ProjectPublicData()
         private_data = obj.private_data.all().first() if obj.private_data.all().first() else ProjectPrivateData()
