@@ -43,6 +43,7 @@ from mezzanine_agenda.models import *
 from skosxl.models import Concept
 
 from urllib.parse import urlunparse, urlparse
+import pydash as dsh
 
 
 PROJECT_TYPE_CHOICES = [
@@ -201,8 +202,19 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             item.pop('email')
             return item
 
+        def strip_owner(contributors):
+            try:
+                from ircamforum import utils  # SMELL
+            except ImportError:
+                return contributors
+            else:
+                owner_oauth_id = utils.get_oauth_id(user=self.owner)
+                contributors = dsh.filter_(contributors, lambda c: c['oauth_id'] != owner_oauth_id)
+                return contributors
+
         contributors = self.get_contributors()
         contributors = list(map(strip_emails, contributors))
+        contributors = strip_owner(contributors)
         return contributors
 
     def get_links(self, link_type_slug=None):
