@@ -27,7 +27,7 @@ from __future__ import unicode_literals
 # The *_FORMAT strings use the Django date format syntax,
 # see http://docs.djangoproject.com/en/dev/ref/templates/builtins/#date
 DATE_FORMAT = 'N j, Y'
-DATE_EVENT_FORMAT = 'F j'
+DATE_EVENT_FORMAT = 'F j Y'
 WEEK_DAY_FORMAT = 'F j'
 TIME_FORMAT = 'P'
 DATETIME_FORMAT = 'N j, Y, P'
