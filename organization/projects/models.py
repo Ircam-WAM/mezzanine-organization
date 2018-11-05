@@ -39,6 +39,8 @@ from mezzanine_agenda.models import *
 
 from skosxl.models import Concept
 
+import ulysses.competitions
+
 
 PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
@@ -219,7 +221,7 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("organization-call-detail", kwargs={"slug": self.slug})
+        return reverse("organization-project-call-detail", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):
         if not self.name and self.title:
@@ -251,7 +253,7 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
     @property
     def validated_projects(self):
         return self.projects.filter(validation_status=3).order_by('title')
-    
+
     @property
     def implemented_projects(self):
         return self.projects.filter(validation_status=4).order_by('title')
@@ -552,3 +554,55 @@ class ProjectResidencyEvent(models.Model):
 class ProjectCallBlock(Block):
 
     call = models.ForeignKey('ProjectCall', verbose_name=_('project call blocks'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProducerCall(Displayable, Period, RichText, NamedOnly):
+
+    class Meta:
+        verbose_name = _('producer call')
+        verbose_name_plural = _("producer calls")
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse("organization-producer-call-detail", kwargs={"slug": self.slug})
+
+    @property
+    def is_closed(self):
+        """Return if the current date between 'from' and 'to' dates."""
+        try:
+            current_date = datetime.date.today()
+            if current_date >= self.date_from and current_date <= self.date_to:
+                return False
+        except:
+            pass
+        return True
+
+
+class Call(Displayable, Period, RichText, NamedOnly):
+
+    project_call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='calls', blank=True, null=True, on_delete=models.SET_NULL)
+    producer_call = models.ForeignKey('ProducerCall', verbose_name=_('producer call'), related_name='calls', blank=True, null=True, on_delete=models.SET_NULL)
+    residency_call = models.ForeignKey('ulysses_competitions.Competition', verbose_name=_('residency call'), related_name='calls', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _('call')
+        verbose_name_plural = _("calls")
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse("organization-call-detail", kwargs={"slug": self.slug})
+
+    @property
+    def is_closed(self):
+        """Return if the current date between 'from' and 'to' dates."""
+        try:
+            current_date = datetime.date.today()
+            if current_date >= self.date_from and current_date <= self.date_to:
+                return False
+        except:
+            pass
+        return True

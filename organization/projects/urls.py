@@ -40,7 +40,7 @@ urlpatterns = [
     url("^project/detail/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-detail'), name="redirect-project-detail"),
     url("^project/demo/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-demo-detail'), name="redirect-project-demo"),
     url("^project/blog/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-blogpage-detail'), name="redirect-project-blog"),
-    
+
     # Projects
     url("^projects/$", ProjectListView.as_view(), name='organization-project-list'),
     url("^projects/(?P<slug>.*)/detail/$", ProjectDetailView.as_view(), name='organization-project-detail'),
@@ -63,6 +63,6 @@ urlpatterns = [
     # Calls
     url("^calls/$", ProjectCallListView.as_view(), name='organization-call-list'),
     url("^calls/as_events/$", ProjectCallListAsEventsView.as_view(), name='organization-call-list-as-events'),
-    url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-call-detail'),
+    url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-project-call-detail'),
 
 ]
