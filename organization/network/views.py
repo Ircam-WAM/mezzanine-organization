@@ -67,19 +67,23 @@ class PersonMixin(object):
     def get_object(self):
         person = None
         user = self.request.user
+        
+        if 'username' in self.kwargs:
+            user = User.objects.filter(username=self.kwargs['username'])
+            if users:
+                user = users[0]
+                person = user.person
 
-        if user.is_authenticated():
+        elif 'slug' in self.kwargs:
+            persons = Person.objects.filter(slug=self.kwargs['slug'])
+            if persons:
+                person = persons[0]
+
+        elif user.is_authenticated():
             if not Person.objects.filter(user=user):
                 person = Person(first_name=user.first_name, last_name=user.last_name, user=user)
                 person.save()
-            person = user.person
-
-        elif 'username' in self.kwargs:
-            user = User.objects.get(username=self.kwargs['username'])
-            person = user.person
-
-        elif 'slug' in self.kwargs:
-            person = Person.objects.get(slug=self.kwargs['slug'])
+            person = user.person            
 
         return person
 
