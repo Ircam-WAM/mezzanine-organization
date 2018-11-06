@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('sites', '0002_alter_domain_unique'),
-        ('ulysses_competitions', '0032_auto_20181105_2349'),
+        ('ulysses_competitions', '0031_auto_20181025_1430'),
         ('organization-projects', '0076_merge_20181009_0004'),
     ]
 
