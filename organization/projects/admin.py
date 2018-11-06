@@ -480,6 +480,7 @@ class ProjectWorkPackageAdmin(BaseTranslationModelAdmin):
     list_display = ['title', 'project', 'date_from', 'date_to', 'number', 'lead_organization' ]
     list_filter = ['project', 'date_from', 'date_to', 'lead_organization' ]
 
+
 class ProjectCallAdmin(admin.ModelAdmin):
 
     model = ProjectCall
@@ -519,6 +520,16 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
     search_fields = ['title', 'project__title',]
 
 
+class CallAdmin(admin.ModelAdmin):
+
+    model = Call
+
+
+class CallAdminDisplayable(DisplayableAdmin):
+
+    fieldsets = deepcopy(ProjectCallAdmin.fieldsets)
+
+
 admin.site.register(Project, ProjectAdminDisplayable)
 admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)
 admin.site.register(ProjectPrivateData, ProjectPrivateDataAdmin)
@@ -533,3 +544,4 @@ admin.site.register(RepositorySystem)
 admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
 admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
 admin.site.register(ProjectResidency, ProjectResidencyAdmin)
+admin.site.register(Call, CallAdminDisplayable)

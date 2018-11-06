@@ -58,11 +58,11 @@ class Command(BaseCommand):
         competition = Competition.objects.get(id=1)
         competition_attribute = CompetitionAttribute.objects.get(competition=competition, key=self.competition_attribute_key)
         attributes = competition_attribute.competitionattributevalue_set.all()
-        attribute_keys = [attribute.key for attribute in attributes if attribute.value] 
+        attribute_keys = [attribute.key for attribute in attributes if attribute.value]
         print(attribute_keys)
 
         for project in project_call.projects.filter(validation_status=3):
             if not project.slug[:99] in attribute_keys:
                 # print(competition_attribute, project.slug, project.title)
                 CompetitionAttributeValue.objects.create(attribute=competition_attribute, key=project.slug[:99], acronym=project.title[:24], value=project.title[:99])
-            
+
