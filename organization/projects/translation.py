@@ -194,3 +194,9 @@ class ProjectContactTranslationOptions(TranslationOptions):
 class ProjectTopicTranslationOptions(TranslationOptions):
 
     fields = ('name', 'description')
+
+@register(Call)
+class CallTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description', 'content',)
+
