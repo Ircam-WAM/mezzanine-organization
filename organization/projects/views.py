@@ -86,11 +86,6 @@ class ProjectTechDetailView(SlugMixin, ProjectMixin, DetailView):
         project = super(ProjectTechDetailView, self).get_object()
         if project.topic != topic:
             raise Http404()
-        #TODO: Check if user is project reviewer or creator to allow other status values
-        user = self.request.user
-        if not user.is_superuser or not user.is_staff:
-            if project.validation_status != 3 and project.user != user:
-               raise Http404()
         return project
 
 
@@ -174,10 +169,10 @@ class ProjectTechCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInli
 
     def get_inlines(self):
         if self.kwargs['funding'] == 'public':
-            return [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, 
+            return [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline,
                 ProjectUserImageInline, ProjectContactInline]
         elif self.kwargs['funding'] == 'private':
-            return [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline, 
+            return [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline,
                 ProjectUserImageInline, ProjectContactInline]
 
     def get_template_names(self):
@@ -198,7 +193,7 @@ class ProjectTechCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInli
         if 'save' in self.request.POST:
             return reverse_lazy('organization-network-profile-applications')
         elif 'submit' in self.request.POST:
-            return reverse_lazy('organization-call-project-validate', 
+            return reverse_lazy('organization-call-project-validate',
                 kwargs={'call_slug': self.object.call.slug, 'slug': self.object.slug})
         else:
             return reverse_lazy('organization-network-profile-applications')
@@ -208,13 +203,13 @@ class ProjectTechUpdateView(LoginRequiredMixin, ProjectCallMixin, UpdateWithInli
 
     model = Project
     form_class = ProjectForm
-    
+
     def get_inlines(self):
         if self.object.funding == 'public':
-            return [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, 
+            return [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline,
                 ProjectUserImageInline, ProjectContactInline]
         elif self.object.funding == 'private':
-            return [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline, 
+            return [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline,
                 ProjectUserImageInline, ProjectContactInline]
 
     def get_template_names(self):
@@ -257,7 +252,7 @@ class ProjectTechUpdateView(LoginRequiredMixin, ProjectCallMixin, UpdateWithInli
         if 'save' in self.request.POST:
             return reverse_lazy('organization-network-profile-applications')
         elif 'submit' in self.request.POST:
-            return reverse_lazy('organization-call-project-validate', 
+            return reverse_lazy('organization-call-project-validate',
                 kwargs={'call_slug': self.object.call.slug, 'slug': self.object.slug})
         else:
             return reverse_lazy('organization-network-profile-applications')
@@ -307,7 +302,7 @@ class ProjectTechListCallView(ListView):
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         call = ProjectCall.objects.get(slug=self.kwargs['call_slug'])
-        qs = Project.objects.filter(topic=topic, validation_status=3, 
+        qs = Project.objects.filter(topic=topic, validation_status=3,
                 call=call).select_related().order_by('title')
         return qs
 
@@ -339,7 +334,7 @@ class ProjectCallListAsEventsView(ProjectCallListView):
 class ProjectResidencyDetailView(SlugMixin, DetailView):
 
     model = ProjectResidency
-    template_name='projects/project_residency_detail.html'    
+    template_name='projects/project_residency_detail.html'
 
     def get_context_data(self,  *args, **kwargs):
         context = super(ProjectResidencyDetailView, self).get_context_data(*args, **kwargs)
@@ -365,7 +360,7 @@ class ProjectResidencyListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProjectResidencyListView, self).get_context_data(**kwargs)
-        
+
         # Add the Call to the context
         if 'call_slug' in self.kwargs:
             context["call"] = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
@@ -382,7 +377,7 @@ class ProjectResidencyListView(ListView):
     def get_queryset(self):
         if 'call_slug' in self.kwargs:
             call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
-            projects = Project.objects.filter(call=call) 
+            projects = Project.objects.filter(call=call)
         else:
             projects = Project.objects.all()
         qs = ProjectResidency.objects.filter(project__in=projects, validated=True).select_related().order_by("id")
