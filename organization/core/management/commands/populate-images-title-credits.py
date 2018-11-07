@@ -37,9 +37,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for model in Image.__subclasses__():
-            print("model", model)
-            # objs = model.objects.all()
-            # for obj in objs:
-            #     obj.title_en = obj.title
-            #     obj.credits_en = obj.credits
-            #     obj.save()
+            objs = model.objects.all()
+            for obj in objs:
+                obj.title_en = obj.title
+                obj.credits_en = obj.credits
+                obj.save()
