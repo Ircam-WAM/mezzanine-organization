@@ -174,7 +174,8 @@ class CustomEventAdmin(EventAdmin):
         return event_is_parent
 
     fieldsets = deepcopy(EventAdminBase.fieldsets)
-    exclude = ("short_url", )
+    exclude = ("short_url",)
+    readonly_fields = ('user',)
     is_parent.allow_tags = True
     list_display = ["title", "start", "end", "rank", "user", "status", "is_parent","admin_link"]
     if settings.EVENT_USE_FEATURED_IMAGE:
