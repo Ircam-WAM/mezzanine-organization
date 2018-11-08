@@ -58,9 +58,11 @@ class EventDepartmentInline(TabularDynamicInlineAdmin):
     model = EventDepartment
 
 
-class EventPersonInline(TabularDynamicInlineAdmin):
-
-    model = EventPerson
+class EventPersonAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
+    
+    model = EventPersonListBlockInline
+    exclude = ("title", "description")
+    form = EventPersonListForm
 
 
 class EventLinkInline(TabularDynamicInlineAdmin):
@@ -182,7 +184,7 @@ class CustomEventAdmin(EventAdmin):
         list_display.insert(0, "admin_thumb")
     list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location", "category", EventParentFilter, SeasonFilter)
     inlines = [EventPeriodInline, EventBlockInline, EventImageInline, EventDepartmentInline,
-                EventPersonInline, EventLinkInline, EventPlaylistInline, EventTrainingInline,
+                EventPersonAutocompleteInlineAdmin, EventLinkInline, EventPlaylistInline, EventTrainingInline,
                 EventRelatedTitleAdmin, DynamicContentEventInline]
 
 
