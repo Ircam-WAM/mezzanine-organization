@@ -48,10 +48,10 @@ class EventDepartmentTranslationOptions(TranslationOptions):
     fields = ()
 
 
-@register(EventPerson)
-class EventPersonTranslationOptions(TranslationOptions):
+@register(EventPersonListBlockInline)
+class EventPersonListBlockInlineTranslationOptions(TranslationOptions):
 
-    fields = ()
+    pass
 
 
 @register(EventLink)

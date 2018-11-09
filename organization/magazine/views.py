@@ -80,7 +80,11 @@ class ArticleDetailView(SlugMixin, DetailView):
         related_content += articles_related
         related_content += dynamic_content_related
         related_content.sort(key=lambda x: x.created, reverse=True)
+        
+        # all mixed related content
+        context['related_content'] = related_content
 
+        # classify related content to display it in another way (cf Manifeste)
         context = split_events_from_other_related_content(context, related_content)
 
         if self.object.department:
