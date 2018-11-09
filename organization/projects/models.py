@@ -121,6 +121,13 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         else:
             return _('pending')
 
+    def save(self, *args, **kwargs):
+        if self.validation_status in [3, 4, 5]:
+            self.status = 2
+        else:
+            self.status = 1
+        super(SiteRelated, self).save(*args, **kwargs)
+
 
 class ProjectTopic(Named):
 
