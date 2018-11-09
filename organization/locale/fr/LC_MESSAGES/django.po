@@ -457,7 +457,7 @@ msgid "candidacy"
 msgstr ""
 
 #: job/models.py:88
-msgid "candidacies"
+msgid "Apply"
 msgstr "Candidatures"
 
 #: job/views.py:74
