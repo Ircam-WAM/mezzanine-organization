@@ -85,7 +85,7 @@ class Candidacy(Displayable, RichText, Period):
 
     class Meta:
         verbose_name = _('candidacy')
-        verbose_name_plural = _("candidacies")
+        verbose_name_plural = _("Apply")
 
 
 class CandidacyImage(Image):
