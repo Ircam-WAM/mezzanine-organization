@@ -25,6 +25,7 @@ from copy import deepcopy
 from modeltranslation.admin import TranslationTabularInline
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
+from mezzanine.blog.admin import BlogPostAdmin
 from organization.magazine.models import *
 from organization.magazine.forms import *
 from organization.magazine.translation import *
@@ -40,7 +41,7 @@ class ArticlePlaylistInline(TabularDynamicInlineAdmin):
 
 
 class ArticleAdmin(admin.ModelAdmin):
-
+    
     model = Article
 
 
@@ -67,11 +68,12 @@ class ArticleRelatedTitleAdmin(TranslationTabularInline):
     model = ArticleRelatedTitle
 
 
-class ArticleAdminDisplayable(DisplayableAdmin):
+class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
-    list_display = ('title', 'department', 'publish_date', 'status', )
-    exclude = ('related_posts',)
+    list_display = ('title', 'department', 'publish_date', 'status', 'user')
+    exclude = ('related_posts', )
+    readonly_fields = ('user',)
     filter_horizontal = ['categories',]
     inlines = [ArticleImageInline,
               ArticlePersonAutocompleteInlineAdmin,
@@ -79,6 +81,14 @@ class ArticleAdminDisplayable(DisplayableAdmin):
               DynamicContentArticleInline,
               ArticlePlaylistInline]
     list_filter = [ 'status', 'department', ]
+
+    def save_form(self, request, form, change):
+        """
+        Super class ordering is important here - user must get saved first.
+        """
+        OwnableAdmin.save_form(self, request, form, change)
+        return DisplayableAdmin.save_form(self, request, form, change)
+
 
 
 class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline
