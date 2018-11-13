@@ -231,8 +231,7 @@ DATABASES = {
 ################
 
 INSTALLED_APPS = [
-    "organization_themes",
-    'organization_themes.ircam-www-theme',
+    'ircam-www-theme',
     # the current theme has to be defined in main local_settings as HOST_THEMES
     "modeltranslation",
     "dal",
