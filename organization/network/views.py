@@ -93,11 +93,15 @@ class PersonDetailView(SlugMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
         context["related"] = {}
-        # Person events : this type is separated from the other because
-        # this is not managed by list of person by person in inlines directly
-        person_events = self.object.events.all()
-        events = [item.event for item in person_events]
+        
+        # Related Events when you add PersonList in Events
+        events = []
+        person_list_block_inlines = self.object.person_list_block_inlines.all()
+        for plbi in person_list_block_inlines:
+            for eventPersonListBlockInline in plbi.person_list_block.events.all():
+                events.append(eventPersonListBlockInline.event)
         context["related"]["event"] = events
+
         # All other related models
         person_list_block_inlines = self.object.person_list_block_inlines.all()
         context["related"]["other"] = []
