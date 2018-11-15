@@ -446,7 +446,6 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 DynamicContentProjectInline,
                 ProjectBlogPageInline,
                 ]
-<<<<<<< HEAD
     filter_horizontal = ['teams', 'organizations']
     list_filter = ['validation_status', 'call', 'topic']
     list_editable = ["status", 'validation_status']
@@ -454,12 +453,6 @@ class ProjectAdminDisplayable(DisplayableAdmin):
     actions = [export_projects_as_csv, copy_projects]
 
 
-=======
-    filter_horizontal = ['teams', 'organizations', 'concepts']
-    list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status', 'call']
-    list_display = ['title', 'date_from', 'date_to', 'created', 'lead_organization',
-        'program', 'status', 'is_archive', 'topic', 'external_id', 'validation_status', 'admin_link']
->>>>>>> dev
 
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):

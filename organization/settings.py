@@ -206,15 +206,9 @@ LANGUAGES = (
     ('en', _('English')),
 )
 
-<<<<<<< HEAD
-LOCALE_PATHS = (
-    os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
-)
-=======
 # LOCALE_PATHS = (
 #     os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
 # )
->>>>>>> dev
 
 #############
 # DATABASES #
@@ -238,12 +232,7 @@ DATABASES = {
 
 INSTALLED_APPS = [
     "organization_themes",
-<<<<<<< HEAD
     # the current theme has to be defined in main local_settings as THEME_APP
-=======
-    'organization_themes.ircam-www-theme',
-    # the current theme has to be defined in main local_settings as HOST_THEMES
->>>>>>> dev
     "modeltranslation",
     "dal",
     "dal_select2",
@@ -516,11 +505,8 @@ ADMIN_MENU_ORDER = (
                     'organization-projects.Repository',
                     'organization-projects.RepositorySystem',
                     'organization-projects.ProjectDemo',
-<<<<<<< HEAD
                     'organization-projects.Call',
                     'organization-projects.ProducerCall',
-=======
->>>>>>> dev
                     )),
     (_('Shop'), ('shop.Product',
                     'organization-shop.ProductList',
@@ -692,13 +678,4 @@ AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 ##################
 
 ANONYMOUS_USER_NAME = None
-<<<<<<< HEAD
 LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
-=======
-LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
-
-# Themes
-HOST_THEMES = [
-    ('example.com', 'organization_themes.ircam-www-theme'),
-]
->>>>>>> dev
