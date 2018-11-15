@@ -27,18 +27,23 @@ from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import connections
 
+
 class Command(BaseCommand):
     help = "Build the front with bower and gulp"
 
     def handle(self, *args, **options):
-        for ht in settings.HOST_THEMES:
-            # search for theme name in INSTALLED_APPS
-            # to get the ones that are used
-            if ht[1] in settings.INSTALLED_APPS:
-                theme = ht[1]
-                if theme :
-                    theme_path = apps.get_app_config(theme.split('.')[-1]).path
-                    os.chdir(theme_path)
-                    subprocess.run(["npm", "install"])
-                    subprocess.run(["bower", "--allow-root", "install"])
-                    subprocess.run(["gulp", "build"])
+        print('Building front...')
+        if not settings.HOST_THEMES:
+            print('No settings.HOST_THEMES defined')
+        else:
+            for ht in settings.HOST_THEMES:
+                # search for theme name in INSTALLED_APPS
+                # to get the ones that are used
+                if ht[1] in settings.INSTALLED_APPS:
+                    theme = ht[1]
+                    if theme :
+                        theme_path = apps.get_app_config(theme.split('.')[-1]).path
+                        os.chdir(theme_path)
+                        subprocess.run(["npm", "install"])
+                        subprocess.run(["bower", "--allow-root", "install"])
+                        subprocess.run(["gulp", "build"])
