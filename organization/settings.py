@@ -231,8 +231,7 @@ DATABASES = {
 ################
 
 INSTALLED_APPS = [
-    "organization_themes",
-    'organization_themes.ircam-www-theme',
+    'ircam_www_theme',
     # the current theme has to be defined in main local_settings as HOST_THEMES
     "modeltranslation",
     "dal",
@@ -681,5 +680,5 @@ LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
 
 # Themes
 HOST_THEMES = [
-    ('example.com', 'organization_themes.ircam-www-theme'),
+    ('example.com', 'ircam_www_theme'),
 ]
