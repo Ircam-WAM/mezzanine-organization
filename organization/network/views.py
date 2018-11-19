@@ -98,8 +98,9 @@ class PersonDetailView(SlugMixin, DetailView):
         events = []
         person_list_block_inlines = self.object.person_list_block_inlines.all()
         for plbi in person_list_block_inlines:
-            for eventPersonListBlockInline in plbi.person_list_block.events.all():
-                events.append(eventPersonListBlockInline.event)
+            if hasattr(plbi.person_list_block, 'events'):
+                for eventPersonListBlockInline in plbi.person_list_block.events.all():
+                    events.append(eventPersonListBlockInline.event)
         context["related"]["event"] = events
 
         # All other related models
