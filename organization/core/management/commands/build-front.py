@@ -31,19 +31,43 @@ from django.db import connections
 class Command(BaseCommand):
     help = "Build the front with bower and gulp"
 
+    def add_arguments(self, parser):
+
+        parser.add_argument(
+            '--force-npm',
+            action='store_true',
+            dest='force_npm',
+            default=False,
+            help='force npm install',
+        )
+
+        parser.add_argument(
+            '--force-bower',
+            action='store_true',
+            dest='force_bower',
+            default=False,
+            help='force bower install',
+        )
+
     def handle(self, *args, **options):
-        print('Building front...')
+        self.force_npm = options['force_npm']
+        self.force_bower = options['force_bower']
+        themes_modules = []
+
         if not settings.HOST_THEMES:
             print('No settings.HOST_THEMES defined')
         else:
-            for ht in settings.HOST_THEMES:
-                # search for theme name in INSTALLED_APPS
-                # to get the ones that are used
-                if ht[1] in settings.INSTALLED_APPS:
-                    theme = ht[1]
-                    if theme :
-                        theme_path = apps.get_app_config(theme.split('.')[-1]).path
-                        os.chdir(theme_path)
-                        subprocess.run(["npm", "install"])
-                        subprocess.run(["bower", "--allow-root", "install"])
-                        subprocess.run(["gulp", "build"])
+            print('Building front...')
+            for host_theme in settings.HOST_THEMES:
+                themes_module = host_theme[1]
+                if not themes_module in themes_modules and themes_module in settings.INSTALLED_APPS:
+                    themes_modules.append(themes_module)
+            for theme in themes_modules:
+                theme_path = apps.get_app_config(theme.split('.')[-1]).path
+                os.chdir(theme_path)
+                print('Building ' + theme)
+                if not os.path.exists('node_modules') or self.force_npm:
+                    subprocess.run(["npm", "install"])
+                if not os.path.exists('static/vendors') or self.force_bower:
+                    subprocess.run(["bower", "--allow-root", "install"])
+                subprocess.run(["gulp", "build"])
