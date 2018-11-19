@@ -93,11 +93,15 @@ class PersonDetailView(SlugMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
         context["related"] = {}
-        # Person events : this type is separated from the other because
-        # this is not managed by list of person by person in inlines directly
-        person_events = self.object.events.all()
-        events = [item.event for item in person_events]
+        
+        # Related Events when you add PersonList in Events
+        events = []
+        person_list_block_inlines = self.object.person_list_block_inlines.all()
+        for plbi in person_list_block_inlines:
+            for eventPersonListBlockInline in plbi.person_list_block.events.all():
+                events.append(eventPersonListBlockInline.event)
         context["related"]["event"] = events
+
         # All other related models
         person_list_block_inlines = self.object.person_list_block_inlines.all()
         context["related"]["other"] = []
@@ -380,12 +384,12 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView): # pragma
 
     def get_queryset(self):
 
-        # get list of months / years  
+        # get list of months / years
         dt1 = date.today().replace(day=1)
         prev_month = dt1 - timedelta(days=1)
         timesheet_range = pd.date_range(settings.TIMESHEET_START, prev_month, freq="MS")
         timesheets = PersonActivityTimeSheet.objects.filter(activity__person=self.request.user.person).order_by('-year', 'month', 'project')
-        
+
         # construct timesheets table
         t_dict = {}
 
@@ -400,10 +404,10 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView): # pragma
             if not month in t_dict[year]['timesheets']:
                 t_dict[year]['timesheets'][month] = []
 
-            timesheet = [t for t in timesheets if t.month == timesheet_date.month and t.year == timesheet_date.year]    
+            timesheet = [t for t in timesheets if t.month == timesheet_date.month and t.year == timesheet_date.year]
             if timesheet:
                 t_dict[year]['timesheets'][month] += timesheet
-            
+
             t_dict[year]['project_count'] = max(t_dict[year]['project_count'], len(t_dict[year]['timesheets'][month]))
 
         return OrderedDict(sorted(t_dict.items(), key=lambda t: -t[0]))
@@ -486,7 +490,7 @@ class JuryListView(ListView):
     template_name="network/organization_jury_list.html"
     context_object_name = "jury"
 
-    def get_context_data(self, **kwargs): 
+    def get_context_data(self, **kwargs):
         context = super(JuryListView, self).get_context_data(**kwargs)
         context["description"] = ""
         jury_list = PersonListBlock.objects.filter(title__in=["Jury", "jury"])
