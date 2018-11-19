@@ -57,7 +57,7 @@ class PersonMixin(object):
 
     model = Person
 
-    def get_object(self, queryset):
+    def get_object(self, queryset=None):
         person = None
         user = self.request.user
 
@@ -105,7 +105,7 @@ class PersonDetailView(PersonMixin, SlugMixin, DetailView):
     def get(self, request, *args, **kwargs):
         # if not hasattr(self.request.user, 'ldap_user') or not self.request.user.person:
         #     response = redirect('organization-home')
-        self.object = self.get_object(self.queryset)
+        self.object = super(PersonMixin, self).get_object()
         context = self.get_context_data(object=self.object)
         response = self.render_to_response(context)
         return response
@@ -129,18 +129,17 @@ class PersonDetailView(PersonMixin, SlugMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
         context["related"] = {}
-
         # Related Events when you add PersonList in Events
         events = []
-        person_list_block_inlines = self.object.person_list_block_inlines.all()
-        for plbi in person_list_block_inlines:
-            if hasattr(plbi.person_list_block, 'events'):
-                for eventPersonListBlockInline in plbi.person_list_block.events.all():
-                    events.append(eventPersonListBlockInline.event)
+        if hasattr(self.object, "person_list_block_inlines"):
+            person_list_block_inlines = self.object.person_list_block_inlines.all()
+            for plbi in person_list_block_inlines:
+                if hasattr(plbi.person_list_block, 'events'):
+                    for eventPersonListBlockInline in plbi.person_list_block.events.all():
+                        events.append(eventPersonListBlockInline.event)
         context["related"]["event"] = events
-
+        
         # All other related models
-        person_list_block_inlines = self.object.person_list_block_inlines.all()
         context["related"]["other"] = []
         # for each person list to which the person belongs to...
         for person_list_block_inline in person_list_block_inlines:
