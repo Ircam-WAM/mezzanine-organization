@@ -35,6 +35,7 @@ from organization.pages.models import Home
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
 from organization.network.models import Person, Organization
+from organization.projects.models import Project
 from django.shortcuts import redirect
 
 
@@ -50,14 +51,28 @@ class HomeView(SlugMixin, DetailView):
             return homes.latest("publish_date")
         return None
 
+    def get_single_body(self, model_type):
+        for body in self.bodys:
+            if body.content_type.model == model_type:
+                return body.content_object
+        return
+
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['briefs'] = Brief.objects.published().order_by('-publish_date')[:8]
+
         try:
             from mezzanine_agenda.forms import EventCalendarForm
             context['event_calendar_form'] = EventCalendarForm()
         except:
             pass
+
+        self.bodys = self.object.dynamiccontenthomebody_set.all()
+        context['person'] = self.get_single_body('person')
+        context['article'] = self.get_single_body('article')
+        context['project'] = self.get_single_body('project')
+        context['event'] = self.get_single_body('event')
+        # # context['blogpost'] = self.get_single_body('blogpost')
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -119,6 +134,7 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
         briefs = Brief.objects.all()
         medias = Media.objects.all()
         persons = Person.objects.all()
+        projects = Project.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
@@ -127,8 +143,9 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
             briefs = briefs.filter(title__icontains=self.q)
             medias = medias.filter(title__icontains=self.q)
             persons = persons.filter(title__icontains=self.q)
+            projects = projects.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons)
+        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons, projects)
 
         if self.q:
             # This would apply the filter on all the querysets
@@ -172,7 +189,7 @@ class NewsletterView(TemplateView):
 
 
 class InformationView(ListView):
-    
+
     model = Organization
     context_object_name = 'organizations'
     template_name = "pages/informations.html"
