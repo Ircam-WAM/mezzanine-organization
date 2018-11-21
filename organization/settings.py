@@ -600,7 +600,7 @@ if DEBUG:
     OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
-INTERNAL_IPS = ['127.0.0.1', '172.17.0.1']
+INTERNAL_IPS = ['127.0.0.1', '172.17.0.1', '172.20.0.1']
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 DEBUG_TOOLBAR_PANELS = [
