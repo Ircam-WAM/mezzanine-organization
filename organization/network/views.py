@@ -54,7 +54,7 @@ import pandas as pd
 
 
 class PersonMixin(object):
-    
+
     model = Person
 
     def get_object(self, queryset=None):
@@ -96,7 +96,7 @@ class PersonListView(PublishedMixin, ListView):
     context_object_name = 'persons'
 
 
-class PersonDetailView(SlugMixin, DetailView):
+class PersonDetailView(PersonMixin, SlugMixin, DetailView):
 
     model = Person
     template_name='network/person_detail.html'
@@ -110,7 +110,10 @@ class PersonDetailView(SlugMixin, DetailView):
         response = self.render_to_response(context)
         return response
 
-    def get_object(self, queryset):
+    def get_object(self, queryset=None):
+        return super(PersonDetailView).get_object(queryset)
+
+    def get_object_old(self, queryset):
         obj = None
         if 'slug' in self.kwargs:
             slug = self.kwargs['slug']
@@ -138,7 +141,7 @@ class PersonDetailView(SlugMixin, DetailView):
                     for eventPersonListBlockInline in plbi.person_list_block.events.all():
                         events.append(eventPersonListBlockInline.event)
         context["related"]["event"] = events
-        
+
         # All other related models
         context["related"]["other"] = []
         # for each person list to which the person belongs to...
