@@ -110,9 +110,6 @@ class PersonDetailView(PersonMixin, SlugMixin, DetailView):
         response = self.render_to_response(context)
         return response
 
-    def get_object(self, queryset=None):
-        return super(PersonDetailView).get_object(queryset)
-
     def get_object_old(self, queryset):
         obj = None
         if 'slug' in self.kwargs:
