@@ -63,7 +63,8 @@ class PersonMixin(object):
 
         if user.is_authenticated():
             if not Person.objects.filter(user=user):
-                person = Person(first_name=user.first_name, last_name=user.last_name, user=user, email=user.email)
+                person = Person(first_name=user.first_name, last_name=user.last_name, user=user,
+                                email=user.email, title=' '.join([user.first_name, user.last_name])
                 person.save()
             person = user.person
 
