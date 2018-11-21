@@ -50,6 +50,13 @@ class HomeView(SlugMixin, DetailView):
             return homes.latest("publish_date")
         return None
 
+    def get_single_body(self, model_type):
+        for body in self.bodys:
+            if body.content_type:
+                if body.content_type.model == model_type:
+                    return body.content_object
+        return
+
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['briefs'] = Brief.objects.published().order_by('-publish_date')[:8]
@@ -172,7 +179,7 @@ class NewsletterView(TemplateView):
 
 
 class InformationView(ListView):
-    
+
     model = Organization
     context_object_name = 'organizations'
     template_name = "pages/informations.html"
