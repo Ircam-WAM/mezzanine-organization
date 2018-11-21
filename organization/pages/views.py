@@ -53,8 +53,9 @@ class HomeView(SlugMixin, DetailView):
 
     def get_single_body(self, model_type):
         for body in self.bodys:
-            if body.content_type.model == model_type:
-                return body.content_object
+            if body.content_type:
+                if body.content_type.model == model_type:
+                    return body.content_object
         return
 
     def get_context_data(self, **kwargs):
