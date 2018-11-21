@@ -4,6 +4,7 @@ from pprint import pprint
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 
+
 class OrganizationLDAPBackend(LDAPBackend):
 
     def get_user(self, user_id):

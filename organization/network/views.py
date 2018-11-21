@@ -63,12 +63,12 @@ class PersonMixin(object):
 
         if user.is_authenticated():
             if not Person.objects.filter(user=user):
-                person = Person(first_name=user.first_name, last_name=user.last_name, user=user)
+                person = Person(first_name=user.first_name, last_name=user.last_name, user=user, email=user.email)
                 person.save()
             person = user.person
 
         elif 'username' in self.kwargs:
-            user = User.objects.filter(username=self.kwargs['username'])
+            users = User.objects.filter(username=self.kwargs['username'])
             if users:
                 user = users[0]
                 person = user.person
@@ -81,7 +81,7 @@ class PersonMixin(object):
         return person
 
     @property
-    def person():
+    def person(self):
         if 'username' in self.kwargs:
             user = User.objects.get_object_or_404(username=self.kwargs['username'])
         else:
@@ -101,30 +101,6 @@ class PersonDetailView(PersonMixin, SlugMixin, DetailView):
     model = Person
     template_name='network/person_detail.html'
     context_object_name = 'person'
-
-    def get(self, request, *args, **kwargs):
-        # if not hasattr(self.request.user, 'ldap_user') or not self.request.user.person:
-        #     response = redirect('organization-home')
-        self.object = super(PersonMixin, self).get_object()
-        context = self.get_context_data(object=self.object)
-        response = self.render_to_response(context)
-        return response
-
-    def get_object_old(self, queryset):
-        obj = None
-        if 'slug' in self.kwargs:
-            slug = self.kwargs['slug']
-        else:
-            slug = None
-
-        if hasattr(self.request.user, 'person') and not slug and self.request.user.is_authenticated() and not 'username' in self.kwargs:
-            obj = self.request.user.person
-        elif 'username' in self.kwargs:
-            user = User.objects.get(username=self.kwargs['username'])
-            obj = Person.objects.get(user=user)
-        else:
-            obj = super().get_object()
-        return obj
 
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
