@@ -587,6 +587,7 @@ class Call(Displayable, Period, RichText, NamedOnly):
     project_call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='calls', blank=True, null=True, on_delete=models.SET_NULL)
     producer_call = models.ForeignKey('ProducerCall', verbose_name=_('producer call'), related_name='calls', blank=True, null=True, on_delete=models.SET_NULL)
     residency_call = models.ForeignKey('ulysses_competitions.Competition', verbose_name=_('residency call'), related_name='calls', blank=True, null=True, on_delete=models.SET_NULL)
+    manager = models.ForeignKey(User, verbose_name=_('call manager'), related_name='call_managers', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('call')
