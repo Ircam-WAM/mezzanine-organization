@@ -58,9 +58,11 @@ class EventDepartmentInline(TabularDynamicInlineAdmin):
     model = EventDepartment
 
 
-class EventPersonInline(TabularDynamicInlineAdmin):
-
-    model = EventPerson
+class EventPersonAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
+    
+    model = EventPersonListBlockInline
+    exclude = ("title", "description")
+    form = EventPersonListForm
 
 
 class EventLinkInline(TabularDynamicInlineAdmin):
@@ -174,14 +176,15 @@ class CustomEventAdmin(EventAdmin):
         return event_is_parent
 
     fieldsets = deepcopy(EventAdminBase.fieldsets)
-    exclude = ("short_url", )
+    exclude = ("short_url",)
+    readonly_fields = ('user',)
     is_parent.allow_tags = True
     list_display = ["title", "start", "end", "rank", "user", "status", "is_parent","admin_link"]
     if settings.EVENT_USE_FEATURED_IMAGE:
         list_display.insert(0, "admin_thumb")
     list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location", "category", EventParentFilter, SeasonFilter)
     inlines = [EventPeriodInline, EventBlockInline, EventImageInline, EventDepartmentInline,
-                EventPersonInline, EventLinkInline, EventPlaylistInline, EventTrainingInline,
+                EventPersonAutocompleteInlineAdmin, EventLinkInline, EventPlaylistInline, EventTrainingInline,
                 EventRelatedTitleAdmin, DynamicContentEventInline]
 
 

@@ -654,7 +654,7 @@ class PersonActivity(Period):
             return ' - '.join((str(self.date_from), str(self.date_to)))
 
     def save(self, *args, **kwargs):
-        super(PersonActivity, self).save(args, kwargs)
+        super(PersonActivity, self).save(*args, **kwargs)
         update_activity(self)
 
 

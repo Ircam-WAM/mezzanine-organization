@@ -454,6 +454,7 @@ class ProjectAdminDisplayable(DisplayableAdmin):
 
 
 
+
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
 
     model = ProjectTopic

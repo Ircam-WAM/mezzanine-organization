@@ -37,6 +37,8 @@ from organization.media.models import Playlist, Media
 from organization.network.models import Person, Organization
 from organization.projects.models import Project
 from django.shortcuts import redirect
+from django.contrib.contenttypes.models import ContentType
+import random
 
 
 class HomeView(SlugMixin, DetailView):
@@ -44,6 +46,7 @@ class HomeView(SlugMixin, DetailView):
     model = Home
     template_name = 'index.html'
     context_object_name = 'home'
+    body_model_list = ['person', 'article', 'project', 'event', 'projectresidency', 'organization']
 
     def get_object(self, **kwargs):
         homes = self.model.objects.published()
@@ -51,11 +54,16 @@ class HomeView(SlugMixin, DetailView):
             return homes.latest("publish_date")
         return None
 
-    def get_single_body(self, model_type):
-        for body in self.bodys:
-            if body.content_type:
-                if body.content_type.model == model_type:
-                    return body.content_object
+    def get_body(self, model_type):
+        if self.request.user.is_authenticated():
+            ct = ContentType.objects.filter(model=model_type)[0]
+            model = ct.model_class()
+            return random.sample(list(model.objects.all()), k=1)[0]
+        else:
+            for body in self.bodys:
+                if body.content_type:
+                    if body.content_type.model == model_type:
+                        return body.content_object
         return
 
     def get_context_data(self, **kwargs):
@@ -69,11 +77,9 @@ class HomeView(SlugMixin, DetailView):
             pass
 
         self.bodys = self.object.dynamiccontenthomebody_set.all()
-        context['person'] = self.get_single_body('person')
-        context['article'] = self.get_single_body('article')
-        context['project'] = self.get_single_body('project')
-        context['event'] = self.get_single_body('event')
-        # # context['blogpost'] = self.get_single_body('blogpost')
+        for body_model in self.body_model_list:
+            context[body_model] = self.get_body(body_model)
+            # print(context)
         return context
 
     def dispatch(self, request, *args, **kwargs):

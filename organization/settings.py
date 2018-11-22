@@ -206,9 +206,9 @@ LANGUAGES = (
     ('en', _('English')),
 )
 
-LOCALE_PATHS = (
-    os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
-)
+# LOCALE_PATHS = (
+#     os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
+# )
 
 #############
 # DATABASES #
@@ -551,7 +551,7 @@ DAL_MAX_RESULTS = 100
 # EVENTS
 
 EVENT_SLUG = 'agenda'
-EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
+EVENT_GOOGLE_MAPS_DOMAIN = 'maps.googleapis.com'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
 EVENT_EXCLUDE_TAG_LIST = [ ]
@@ -600,7 +600,7 @@ if DEBUG:
     OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
-INTERNAL_IPS = ['127.0.0.1', '172.17.0.1']
+INTERNAL_IPS = ['127.0.0.1', '172.17.0.1', '172.20.0.1']
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 DEBUG_TOOLBAR_PANELS = [
