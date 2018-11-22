@@ -33,7 +33,7 @@ from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import View
 from django.forms import formset_factory, BaseFormSet
 from extra_views import FormSetView
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.db.models.fields.related import ForeignKey
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
@@ -78,6 +78,11 @@ class PersonMixin(object):
             persons = Person.objects.filter(slug=self.kwargs['slug'])
             if persons:
                 person = persons[0]
+
+        try:
+            person.title
+        except AttributeError:
+            raise Http404("This person does not exist")
 
         return person
 
