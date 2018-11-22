@@ -58,7 +58,7 @@ class HomeView(SlugMixin, DetailView):
         if self.request.user.is_authenticated():
             ct = ContentType.objects.filter(model=model_type)[0]
             model = ct.model_class()
-            return random.sample(list(model.objects.all()), k=1)
+            return random.sample(list(model.objects.all()), k=1)[0]
         else:
             for body in self.bodys:
                 if body.content_type:
@@ -79,7 +79,7 @@ class HomeView(SlugMixin, DetailView):
         self.bodys = self.object.dynamiccontenthomebody_set.all()
         for body_model in self.body_model_list:
             context[body_model] = self.get_body(body_model)
-            # print(context[body_model])
+            # print(context)
         return context
 
     def dispatch(self, request, *args, **kwargs):
