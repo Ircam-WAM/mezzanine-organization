@@ -35,7 +35,7 @@ from organization.pages.models import Home
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
 from organization.network.models import Person, Organization
-from organization.projects.models import Project
+from organization.projects.models import Project, ProjectResidency
 from django.shortcuts import redirect
 from django.contrib.contenttypes.models import ContentType
 import random
@@ -58,7 +58,12 @@ class HomeView(SlugMixin, DetailView):
         if self.request.user.is_authenticated():
             ct = ContentType.objects.filter(model=model_type)[0]
             model = ct.model_class()
-            return random.sample(list(model.objects.all()), k=1)[0]
+            if model_type == 'person':
+                residencies = ProjectResidency.objects.filter(validated=True)
+                objects = [residency.artist for residency in residencies]
+            else:
+                objects = list(model.objects.all())
+            return random.sample(objects, k=1)[0]
         else:
             for body in self.bodys:
                 if body.content_type:
