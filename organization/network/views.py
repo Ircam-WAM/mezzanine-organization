@@ -34,7 +34,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import View
 from django.forms import formset_factory, BaseFormSet
-from django.http import HttpResponse
+from extra_views import FormSetView
+from django.http import HttpResponse, HttpResponseNotFound
 from django.db.models.fields.related import ForeignKey
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
@@ -64,54 +65,19 @@ class PersonMixin(object):
 
     model = Person
 
-    def get_object(self):
+    def get_object(self, queryset=None):
         person = None
         user = self.request.user
 
-        if 'username' in self.kwargs:
-            user = User.objects.filter(username=self.kwargs['username'])
-            if users:
-                user = users[0]
-                person = user.person
-
-        elif 'slug' in self.kwargs:
-            persons = Person.objects.filter(slug=self.kwargs['slug'])
-            if persons:
-                person = persons[0]
-
-        elif user.is_authenticated():
+        if user.is_authenticated() and not 'slug' in self.kwargs:
             if not Person.objects.filter(user=user):
-                person = Person(first_name=user.first_name, last_name=user.last_name, user=user)
-                person.save()
-            person = user.person
-
-        return person
-
-    @property
-    def person():
-        if 'username' in self.kwargs:
-            user = User.objects.get_object_or_404(username=self.kwargs['username'])
-        else:
-            user = self.request.user
-        return user.person
-
-
-class PersonMixin(object):
-
-    model = Person
-
-    def get_object(self, queryset):
-        person = None
-        user = self.request.user
-
-        if user.is_authenticated():
-            if not Person.objects.filter(user=user):
-                person = Person(first_name=user.first_name, last_name=user.last_name, user=user)
+                person = Person(first_name=user.first_name, last_name=user.last_name, user=user,
+                                email=user.email, title=' '.join([user.first_name, user.last_name]))
                 person.save()
             person = user.person
 
         elif 'username' in self.kwargs:
-            user = User.objects.filter(username=self.kwargs['username'])
+            users = User.objects.filter(username=self.kwargs['username'])
             if users:
                 user = users[0]
                 person = user.person
@@ -121,10 +87,15 @@ class PersonMixin(object):
             if persons:
                 person = persons[0]
 
+        try:
+            person.title
+        except AttributeError:
+            raise Http404("This person does not exist")
+
         return person
 
     @property
-    def person():
+    def person(self):
         if 'username' in self.kwargs:
             user = User.objects.get_object_or_404(username=self.kwargs['username'])
         else:
@@ -144,44 +115,20 @@ class PersonDetailView(PersonMixin, SlugMixin, DetailView):
     template_name='network/person_detail.html'
     context_object_name = 'person'
 
-    def get(self, request, *args, **kwargs):
-        # if not hasattr(self.request.user, 'ldap_user') or not self.request.user.person:
-        #     response = redirect('organization-home')
-        self.object = self.get_object(self.queryset)
-        context = self.get_context_data(object=self.object)
-        response = self.render_to_response(context)
-        return response
-
-    def get_object_old(self, queryset):
-        obj = None
-        if 'slug' in self.kwargs:
-            slug = self.kwargs['slug']
-        else:
-            slug = None
-
-        if hasattr(self.request.user, 'person') and not slug and self.request.user.is_authenticated() and not 'username' in self.kwargs:
-            obj = self.request.user.person
-        elif 'username' in self.kwargs:
-            user = User.objects.get(username=self.kwargs['username'])
-            obj = Person.objects.get(user=user)
-        else:
-            obj = super().get_object()
-        return obj
-
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
         context["related"] = {}
-
         # Related Events when you add PersonList in Events
         events = []
-        person_list_block_inlines = self.object.person_list_block_inlines.all()
-        for plbi in person_list_block_inlines:
-            for eventPersonListBlockInline in plbi.person_list_block.events.all():
-                events.append(eventPersonListBlockInline.event)
+        if hasattr(self.object, "person_list_block_inlines"):
+            person_list_block_inlines = self.object.person_list_block_inlines.all()
+            for plbi in person_list_block_inlines:
+                if hasattr(plbi.person_list_block, 'events'):
+                    for eventPersonListBlockInline in plbi.person_list_block.events.all():
+                        events.append(eventPersonListBlockInline.event)
         context["related"]["event"] = events
 
         # All other related models
-        person_list_block_inlines = self.object.person_list_block_inlines.all()
         context["related"]["other"] = []
         # for each person list to which the person belongs to...
         for person_list_block_inline in person_list_block_inlines:
