@@ -44,6 +44,7 @@ from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
 from django.utils import six
 from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse
 
 from extra_views import FormSetView
 from mezzanine.conf import settings
@@ -597,3 +598,29 @@ class JuryListView(ListView):
         else:
             qs = Person.objects.none()
 
+
+def public_network_data(request):
+    data = {}
+
+    def get_object_dict(object):
+        images = object.images.filter(type='logo')
+        image = images.first().file.url if images else None
+        css_class = object.type.css_class if object.type else None
+        return { 'name': object.name,
+                'description': object.description,
+                'url': object.url,
+                'image': image,
+                'city': object.country.name,
+                'css_class': css_class,
+                'lat': object.lat,
+                'lon': object.lon,
+                }
+
+    organizations = Organization.objects.filter(is_on_map=True)
+    data['organizations'] = [get_object_dict(object) for object in organizations]
+
+    role, c = OrganizationRole.objects.get_or_create(key='Producer')
+    producers = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
+    data['producers'] = [get_object_dict(object) for object in producers]
+
+    return JsonResponse(data)
