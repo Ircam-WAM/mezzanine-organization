@@ -19,8 +19,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from itertools import chain
 from django.shortcuts import render
-from django.views.generic.detail import SingleObjectMixin
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.template import Context
@@ -32,18 +32,24 @@ from mezzanine.conf import settings
 from organization.projects.models import *
 from organization.projects.forms import *
 from organization.network.forms import *
+from organization.network.models import Organization
 from organization.core.views import *
 from organization.magazine.views import Article
 from organization.pages.models import CustomPage
 from datetime import datetime, date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
 
 
-class ProjectMixin(SingleObjectMixin):
+EXCLUDED_MODELS = ()
+
+
+class ProjectMixin(DynamicContentView):
 
     def get_context_data(self, **kwargs):
         context = super(ProjectMixin, self).get_context_data(**kwargs)
-        self.object = self.get_object()
+
         if not isinstance(self.object, Project):
             self.project = self.object.project
         else:
@@ -113,20 +119,23 @@ class DynamicContentProjectView(Select2QuerySetSequenceView):
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
+        persons = Person.objects.all()
+        organizations = Organization.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
+            persons = persons.filter(title__icontains=self.q)
+            organizations = organizations.filter(name__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, events,)
+        qs1 = autocomplete.QuerySetSequence(articles, custompage, events, persons)
+        qs2 = autocomplete.QuerySetSequence(organizations)
 
         if self.q:
-            qs = qs.filter(title__icontains=self.q)
+            qs1 = list(chain(qs1.filter(title__icontains=self.q),  qs2.filter(name__icontains=self.q)))
 
-        qs = self.mixup_querysets(qs)
-
-        return qs
+        return qs1
 
     def get_results(self, context):
         results = autocomplete_result_formatting(self, context)
