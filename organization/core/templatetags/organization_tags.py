@@ -26,9 +26,11 @@ import ast
 import re
 from re import match
 from django.http import QueryDict
+from django import template 
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from mezzanine.template import Library
+from django.template.defaultfilters import stringfilter
 from mezzanine_agenda.models import Event
 from mezzanine.conf import settings
 from random import shuffle
@@ -409,3 +411,13 @@ def remove_tags(html, tags):
     html = endtag_re.sub('', html)
     return html
 remove_tags = allow_lazy(remove_tags, six.text_type)
+
+
+@register.filter
+@stringfilter
+def template_exists(value):
+    try:
+        template.loader.get_template(value)
+        return True
+    except template.TemplateDoesNotExist:
+        return False
