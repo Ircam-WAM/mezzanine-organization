@@ -32,6 +32,7 @@ from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
 from organization.agenda.models import Event, DynamicContentEvent
 from organization.media.models import Playlist
+from organization.network.models import Organization
 from organization.projects.models import *
 from extra_views import InlineFormSet
 
@@ -42,7 +43,8 @@ class DynamicContentProjectForm(autocomplete.FutureModelForm):
             Article.objects.all(),
             CustomPage.objects.all(),
             Event.objects.all(),
-            Person.objects.all()
+            Person.objects.all(),
+            Organization.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-project'),
