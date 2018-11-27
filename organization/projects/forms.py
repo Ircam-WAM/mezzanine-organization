@@ -42,7 +42,8 @@ class DynamicContentProjectForm(autocomplete.FutureModelForm):
         queryset=autocomplete.QuerySetSequence(
             Article.objects.all(),
             CustomPage.objects.all(),
-            Event.objects.all()
+            Event.objects.all(),
+            Person.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-project'),

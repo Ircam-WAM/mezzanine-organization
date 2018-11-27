@@ -20,7 +20,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from django.shortcuts import render
-from django.views.generic.detail import SingleObjectMixin
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.template import Context
@@ -37,13 +36,16 @@ from organization.magazine.views import Article
 from organization.pages.models import CustomPage
 from datetime import datetime, date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.contenttypes.models import ContentType
+
+EXCLUDED_MODELS = ()
 
 
-class ProjectMixin(SingleObjectMixin):
+class ProjectMixin(DynamicContentView):
 
     def get_context_data(self, **kwargs):
         context = super(ProjectMixin, self).get_context_data(**kwargs)
-        self.object = self.get_object()
+
         if not isinstance(self.object, Project):
             self.project = self.object.project
         else:
@@ -113,13 +115,15 @@ class DynamicContentProjectView(Select2QuerySetSequenceView):
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
+        persons = Person.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
+            persons = persons.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, events,)
+        qs = autocomplete.QuerySetSequence(articles, custompage, events, persons)
 
         if self.q:
             qs = qs.filter(title__icontains=self.q)

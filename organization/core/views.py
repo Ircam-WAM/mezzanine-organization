@@ -22,6 +22,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.base import View, RedirectView
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView
+from django.views.generic.detail import SingleObjectMixin
 from django.apps import apps
 from django.utils import six, timezone, formats
 from django.utils.translation import ugettext_lazy as _
@@ -57,6 +58,7 @@ from django.dispatch import receiver
 from ulysses.profiles.models import Individual
 from ulysses.composers.models import Composer
 
+from django.db.models.fields.reverse_related import ManyToOneRel
 
 
 class SlugMixin(object):
@@ -67,7 +69,7 @@ class SlugMixin(object):
 
 
 class PublishedMixin(object):
-    
+
     def get_queryset(self, **kwargs):
         return self.model.objects.published()
 
@@ -271,6 +273,31 @@ class UserProducerView(LoginRequiredMixin, ListView):
         user = self.request.user
         qs = Organization.objects.filter(user=user).select_related().order_by('name')
         return qs
+
+
+class DynamicContentView(SingleObjectMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super(DynamicContentView, self).get_context_data(**kwargs)
+
+        context['concrete_objects'] = []
+        dynamic_content = []
+
+        # get dynamic content field of an object, based on class
+        for f in self.object._meta.get_fields():
+            if isinstance(f, ManyToOneRel) and DynamicContent in f.related_model.__bases__:
+                dynamic_content = getattr(self.object, f.related_name).all()
+
+        # get all concrete objects from dynamic content and append
+        for dc in dynamic_content:
+            if not isinstance(dc, int) and dc != self.object :
+                for c_field in dc._meta.get_fields():
+                    if hasattr(dc, c_field.name):
+                        attr = getattr(dc, c_field.name)
+                        if not isinstance(attr, int) and attr != self.object and not isinstance(attr, ContentType) :
+                            context['concrete_objects'].append(attr)
+
+        return context
 
 
 # This can be called when CsrfViewMiddleware.process_view has not run,
