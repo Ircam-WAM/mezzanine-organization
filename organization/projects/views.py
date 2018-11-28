@@ -45,7 +45,7 @@ from django.db import models
 EXCLUDED_MODELS = ()
 
 
-class ProjectMixin(DynamicContentView):
+class ProjectMixin(DynamicContentMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ProjectMixin, self).get_context_data(**kwargs)
