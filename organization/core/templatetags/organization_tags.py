@@ -24,6 +24,7 @@ import datetime
 import calendar
 import ast
 import re
+import copy
 from re import match
 from django.http import QueryDict
 from django import template 
@@ -421,3 +422,20 @@ def template_exists(value):
         return True
     except template.TemplateDoesNotExist:
         return False
+
+
+@register.filter
+def filter_content_model(content_list, model_name):
+    # pop contents from list, based on model name 
+    # example call in template : new_content=related_content|filter_content_model:"Article"
+    # {{ new_content.0 }} : list of poped contents
+    # {{ new_content.1 }} : list of remains contents
+    model_name = model_name.lower()
+    filtered_cards = []
+    content_list_filtered = []
+    for i, rc in enumerate(content_list):
+        if rc._meta.model_name == model_name: 
+            filtered_cards.append(rc)
+        else :
+            content_list_filtered.append(rc)
+    return filtered_cards, content_list_filtered
