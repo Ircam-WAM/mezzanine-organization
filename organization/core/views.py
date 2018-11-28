@@ -271,7 +271,6 @@ class DynamicContentMixin(SingleObjectMixin):
     
     def get_context_data(self, **kwargs):
         context = super(DynamicContentMixin, self).get_context_data(**kwargs)
-
         context['concrete_objects'] = []
         dynamic_content = []
 
