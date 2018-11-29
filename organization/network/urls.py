@@ -37,7 +37,7 @@ urlpatterns = [
     url('^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
     url('^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name='organization-network-timesheet-create-view'),
     url('^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name='organization-network-timesheet-list-view' ),
-    
+
     # Persons
     url('^persons/list/$', PersonListView.as_view(), name='organization-network-person-list'),
     url('^person/(?P<slug>.*)/detail/$', PersonDetailView.as_view(), name='organization-network-person-detail'),
@@ -63,16 +63,18 @@ urlpatterns = [
     # Organizations
     url('^organization-linked-list-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
     url('^organization-linked-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
-    
+
     # Producers
     url('^producers/$', ProducerListView.as_view(), name='organization-producer-list'),
     url('^producers/create/$', ProducerCreateView.as_view(), name='organization-producer-create'),
     url('^producers/update/$', ProducerUpdateView.as_view(), name='organization-producer-update'),
     url('^producers/(?P<slug>.*)/validate/$', ProducerValidationView.as_view(), name='organization-producer-validate'),
     url('^producers/(?P<slug>.*)/detail/$', ProducerDetailView.as_view(), name='organization-producer-detail'),
-    
+
     # Jurys
     url('^jurys/$', JuryListView.as_view(), name='organization-jury-list'),
-    
+
+    # Map
+    url('^public-network-data/$', public_network_data, name='organization-public-network-data'),
 
 ]

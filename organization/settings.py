@@ -23,6 +23,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import os
+from datetime import date
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
 import ldap, logging
@@ -679,3 +680,18 @@ AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 
 ANONYMOUS_USER_NAME = None
 LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
+
+# Themes
+HOST_THEMES = [
+    ('example.com', 'ircam_www_theme'),
+]
+
+# TIMESHEET
+TIMESHEET_USER_TEST = 1
+TIMESHEET_LOG_PATH = "/var/log/cron/"
+TIMESHEET_START = date(2015, 1, 1) # arbitrary timesheet start due to missing data
+IRCAM_EMPLOYER = 1
+if DEBUG:
+    TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+else:
+    TIMESHEET_MASTER_MAIL = "foo@bar.fr"
