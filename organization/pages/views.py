@@ -160,7 +160,6 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
             organizations = organizations.filter(name__icontains=self.q)
 
         qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons, projects, organizations)
-
         return qs
 
     def get_results(self, context):
