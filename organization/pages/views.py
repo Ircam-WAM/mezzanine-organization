@@ -157,20 +157,11 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
             medias = medias.filter(title__icontains=self.q)
             persons = persons.filter(title__icontains=self.q)
             projects = projects.filter(title__icontains=self.q)
-            organizations = organizations.filter(title__icontains=self.q)
+            organizations = organizations.filter(name__icontains=self.q)
 
         qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons, projects, organizations)
 
-        if self.q:
-            # This would apply the filter on all the querysets
-            qs = qs.filter(title__icontains=self.q)
-
-        # This will limit each queryset so that they show an equal number
-        # of results.
-        qs = self.mixup_querysets(qs)
-
         return qs
-
 
     def get_results(self, context):
         results = autocomplete_result_formatting(self, context)

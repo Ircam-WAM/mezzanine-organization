@@ -307,7 +307,7 @@ class ProjectTechListCallView(ListView):
 
     model = Project
     template_name='projects/project_ict_list.html'
-    
+
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         call = ProjectCall.objects.get(slug=self.kwargs['call_slug'])

@@ -33,7 +33,7 @@ from organization.pages.models import CustomPage
 from organization.pages.models import *
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
-from organization.network.models import Person
+from organization.network.models import Person, Organization
 from organization.projects.models import Project
 
 
@@ -66,7 +66,8 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
             Event.objects.all(),
             Media.objects.all(),
             Person.objects.all(),
-            Project.objects.all()
+            Project.objects.all(),
+            Organization.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-body'),
