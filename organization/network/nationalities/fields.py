@@ -39,7 +39,7 @@ class Nationality(object):
         """
         self.code = code
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.code or '')
 
     def __eq__(self, other):

@@ -129,13 +129,8 @@ class DynamicContentProjectView(Select2QuerySetSequenceView):
             persons = persons.filter(title__icontains=self.q)
             organizations = organizations.filter(name__icontains=self.q)
 
-        qs1 = autocomplete.QuerySetSequence(articles, custompage, events, persons)
-        qs2 = autocomplete.QuerySetSequence(organizations)
-
-        if self.q:
-            qs1 = list(chain(qs1.filter(title__icontains=self.q),  qs2.filter(name__icontains=self.q)))
-
-        return qs1
+        qs = autocomplete.QuerySetSequence(articles, custompage, events, persons, organizations)
+        return qs
 
     def get_results(self, context):
         results = autocomplete_result_formatting(self, context)
@@ -307,7 +302,7 @@ class ProjectTechListCallView(ListView):
 
     model = Project
     template_name='projects/project_ict_list.html'
-    
+
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         call = ProjectCall.objects.get(slug=self.kwargs['call_slug'])
