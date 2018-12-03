@@ -36,13 +36,13 @@ from mezzanine.conf import settings
 from organization.magazine.models import *
 from organization.network.models import DepartmentPage, Person
 from organization.pages.models import CustomPage, DynamicContentPage
-from organization.core.views import SlugMixin, autocomplete_result_formatting
+from organization.core.views import SlugMixin, autocomplete_result_formatting, DynamicContentMixin
 from organization.core.utils import split_events_from_other_related_content
 from django.template.defaultfilters import slugify
 from itertools import chain
 
 
-class ArticleDetailView(SlugMixin, DetailView):
+class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
 
     model = Article
     template_name='magazine/article/article_detail.html'
@@ -69,23 +69,14 @@ class ArticleDetailView(SlugMixin, DetailView):
             if a.article:
                 articles_related.append(a.article)
 
-        # manual relation : get dynamic contents of current article
-        dynamic_content_related = []
-        for dca in self.object.dynamic_content_articles.all():
-            if dca.content_object:
-                dynamic_content_related.append(dca.content_object)
-
         # gather all and order by creation date
-        related_content = pages_related
-        related_content += articles_related
-        related_content += dynamic_content_related
-        related_content.sort(key=lambda x: x.created, reverse=True)
-        
-        # all mixed related content
-        context['related_content'] = related_content
+        context['concrete_objects'] += pages_related
+        context['concrete_objects'] += articles_related
+        context['concrete_objects'].sort(key=lambda x: x.created, reverse=True)
 
         # classify related content to display it in another way (cf Manifeste)
-        context = split_events_from_other_related_content(context, related_content)
+        # @Todo : use tempalte tags filter_content_model instead the method below
+        # context = split_events_from_other_related_content(context, related_content)
 
         if self.object.department:
             first_page = self.object.department.pages.first()
