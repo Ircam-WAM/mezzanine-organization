@@ -29,8 +29,6 @@ import urllib
 import string
 import datetime
 import mimetypes
-from geopy.geocoders import GoogleV3 as GoogleMaps
-from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _

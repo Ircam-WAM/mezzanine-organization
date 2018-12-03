@@ -26,6 +26,9 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
+from geopy.geocoders import GoogleV3 as GoogleMaps
+from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded
+
 from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.core.models import Displayable, Slugged, Orderable
