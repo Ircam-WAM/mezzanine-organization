@@ -19,6 +19,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from itertools import chain
 from django.shortcuts import render
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
@@ -31,12 +32,15 @@ from mezzanine.conf import settings
 from organization.projects.models import *
 from organization.projects.forms import *
 from organization.network.forms import *
+from organization.network.models import Organization
 from organization.core.views import *
 from organization.magazine.views import Article
 from organization.pages.models import CustomPage
 from datetime import datetime, date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
+
 
 EXCLUDED_MODELS = ()
 
@@ -116,20 +120,16 @@ class DynamicContentProjectView(Select2QuerySetSequenceView):
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
         persons = Person.objects.all()
+        organizations = Organization.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
             persons = persons.filter(title__icontains=self.q)
+            organizations = organizations.filter(name__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, events, persons)
-
-        if self.q:
-            qs = qs.filter(title__icontains=self.q)
-
-        qs = self.mixup_querysets(qs)
-
+        qs = autocomplete.QuerySetSequence(articles, custompage, events, persons, organizations)
         return qs
 
     def get_results(self, context):
@@ -302,7 +302,7 @@ class ProjectTechListCallView(ListView):
 
     model = Project
     template_name='projects/project_ict_list.html'
-    
+
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         call = ProjectCall.objects.get(slug=self.kwargs['call_slug'])
