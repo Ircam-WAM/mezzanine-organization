@@ -122,13 +122,8 @@ class DynamicContentProjectView(Select2QuerySetSequenceView):
             persons = persons.filter(title__icontains=self.q)
             organizations = organizations.filter(name__icontains=self.q)
 
-        qs1 = autocomplete.QuerySetSequence(articles, custompage, events, persons)
-        qs2 = autocomplete.QuerySetSequence(organizations)
-
-        if self.q:
-            qs1 = list(chain(qs1.filter(title__icontains=self.q),  qs2.filter(name__icontains=self.q)))
-
-        return qs1
+        qs = autocomplete.QuerySetSequence(articles, custompage, events, persons, organizations)
+        return qs
 
     def get_results(self, context):
         results = autocomplete_result_formatting(self, context)
@@ -436,7 +431,7 @@ class ProjectICTListView(ListView):
 
     model = Project
     template_name='projects/project_ict_list.html'
-    
+
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         #TODO: Filter by Call
@@ -472,7 +467,7 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
 
     model = ProjectResidency
     template_name='projects/project_residency_detail.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super(ProjectResidencyDetailView, self).get_context_data(**kwargs)
         # Add the previous and next residencies to the context
