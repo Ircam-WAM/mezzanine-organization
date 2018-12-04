@@ -380,7 +380,7 @@ class Address(models.Model):
     postal_code = models.CharField(_('postal code'), max_length=16, null=True, blank=True)
     city = models.CharField(_('city'), max_length=255, null=True, blank=True)
     country = CountryField(_('country'), null=True, blank=True)
-    mappable_location = models.CharField(max_length=128, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
+    mappable_location = models.CharField(max_length=512, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
     lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
     lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
 
