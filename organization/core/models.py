@@ -26,7 +26,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
-from geopy.geocoders import GoogleV3 as GoogleMaps
+from geopy.geocoders import GoogleV3, Nominatim
 from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded
 
 from mezzanine.pages.models import Page, RichText
@@ -407,15 +407,21 @@ class Address(models.Model):
                 self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
 
         if self.mappable_location and not (self.lat and self.lon): #location should always override lat/long if set
-            g = GoogleMaps(domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
             try:
-                mappable_location, (lat, lon) = g.geocode(self.mappable_location)
+                if settings.EVENT_GOOGLE_MAPS_DOMAIN:
+                    service = 'googlemaps'
+                    geolocator = GoogleV3(domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
+                else:
+                    service = "openstreetmap"
+                    geolocator = Nominatim(user_agent='mezzo')
+                mappable_location, (lat, lon) = geolocator.geocode(self.mappable_location)
             except GeocoderQueryError as e:
-                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
+                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service=service, error=e.message))
             except ValueError as e:
-                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
+                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service=service, error=e.message))
             except TypeError as e:
                 raise ValidationError("The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.")
+
             self.mappable_location = mappable_location
             self.lat = lat
             self.lon = lon
