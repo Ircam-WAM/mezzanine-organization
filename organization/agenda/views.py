@@ -30,7 +30,7 @@ from organization.pages.models import CustomPage
 from organization.media.models import Playlist, Media
 from mezzanine_agenda.models import Event
 from mezzanine_agenda.views import EventListView
-from organization.core.views import autocomplete_result_formatting, SlugMixin
+from organization.core.views import autocomplete_result_formatting, SlugMixin, DynamicContentMixin
 from django.db.models import Q
 
 
@@ -63,7 +63,7 @@ class DynamicContentEventView(Select2QuerySetSequenceView):
         return results
 
 
-class EventDetailView(SlugMixin, DetailView):
+class EventDetailView(SlugMixin, DetailView, DynamicContentMixin):
     
     model = Event
     template_name = "agenda/event_detail.html"
