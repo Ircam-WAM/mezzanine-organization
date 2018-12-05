@@ -694,25 +694,3 @@ if DEBUG:
 else:
     TIMESHEET_MASTER_MAIL = "foo@bar.fr"
 
-##################
-#### LOGGING ####
-##################
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': '/var/log/app/debug.log',
-        },
-    },
-    'loggers': {
-        'organization': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
