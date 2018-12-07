@@ -47,6 +47,8 @@ from django.db.models import Q
 from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
 from django.utils.functional import allow_lazy
 from django.utils import six
+from django.contrib.contenttypes.models import ContentType
+from django.apps import apps
 
 register = Library()
 
@@ -107,6 +109,15 @@ def featured_breaking_news_content(*args):
 @register.filter
 def get_class(obj):
     return obj.__class__.__name__
+
+@register.filter
+def get_content_type(content_type_id):
+    return ContentType.objects.get(id=content_type_id)
+
+@register.filter
+def get_object(content_type, object__id):
+    model = apps.get_model(content_type.app_label, content_type.model)
+    return model.objects.get(id=object__id)
 
 @register.filter
 def unique_posts(events):

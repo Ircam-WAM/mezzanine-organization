@@ -42,7 +42,6 @@ from mezzanine.pages.models import Page
 from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
-
 from organization.core.models import *
 from organization.media.models import *
 from organization.pages.models import CustomPage
@@ -225,6 +224,22 @@ class OrganizationLinkedInline(Titled, Orderable):
 class OrganizationPlaylist(PlaylistRelated):
 
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class DynamicMultimediaOrganization(DynamicContent, Orderable):
+    
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
+
+
+class DynamicMultimediaPerson(DynamicContent, Orderable):
+    
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
 
 
 class OrganizationLink(Link):

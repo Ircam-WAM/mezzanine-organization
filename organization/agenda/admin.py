@@ -101,15 +101,17 @@ class CustomEventPriceAdmin(BaseTranslationModelAdmin):
             desc = instance.event_price_description.description
         return desc
 
+
 class DynamicContentEventInline(TabularDynamicInlineAdmin):
 
     model = DynamicContentEvent
     form = DynamicContentEventForm
 
-    class Media:
-        js = (
-            static("mezzanine/js/admin/dynamic_inline.js"),
-        )
+
+class DynamicMultimediaEventInline(TabularDynamicInlineAdmin):
+    
+    model = DynamicMultimediaEvent
+    form = DynamicMultimediaEventForm
 
 
 class EventParentFilter(admin.SimpleListFilter):
@@ -184,7 +186,7 @@ class CustomEventAdmin(EventAdmin):
         list_display.insert(0, "admin_thumb")
     list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location", "category", EventParentFilter, SeasonFilter)
     inlines = [EventPeriodInline, EventBlockInline, EventImageInline, EventDepartmentInline,
-                EventPersonAutocompleteInlineAdmin, EventLinkInline, EventPlaylistInline, EventTrainingInline,
+                EventPersonAutocompleteInlineAdmin, EventLinkInline, EventPlaylistInline, DynamicMultimediaEventInline, EventTrainingInline,
                 EventRelatedTitleAdmin, DynamicContentEventInline]
 
 
@@ -194,6 +196,11 @@ class CustomEventAdmin(EventAdmin):
         """
         OwnableAdmin.save_form(self, request, form, change)
         return DisplayableAdmin.save_form(self, request, form, change)
+
+    class Media:
+        js = (
+        static("mezzanine/js/admin/dynamic_inline.js"),
+    )
 
 
 class CustomEventCategoryAdmin(BaseTranslationModelAdmin):

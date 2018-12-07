@@ -103,12 +103,19 @@ class ProducerDataInline(StackedDynamicInlineAdmin):
     model = ProducerData
 
 
+class DynamicMultimediaOrganizationInline(TabularDynamicInlineAdmin):
+    
+    model = DynamicMultimediaOrganization
+    form = DynamicMultimediaOrganizationForm
+
+
 class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Organization
     inlines = [ OrganizationEventLocationInline,
                 OrganizationServiceInline,
                 OrganizationPlaylistInline,
+                DynamicMultimediaOrganizationInline,
                 OrganizationImageInline,
                 OrganizationBlockInline,
                 OrganizationLinkInline,
@@ -204,12 +211,19 @@ class PersonBlockInline(StackedDynamicInlineAdmin):
     model = PersonBlock
 
 
+class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
+    
+    model = DynamicMultimediaPerson
+    form = DynamicMultimediaPersonForm
+
+
 class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Person
     inlines = [PersonImageInline,
                PersonBlockInline,
                PersonPlaylistInline,
+               DynamicMultimediaPersonInline,
                PersonLinkInline,
                PersonFileInline,
                PersonActivityInline,]

@@ -100,11 +100,18 @@ class PageRelatedTitleAdmin(TranslationTabularInline):
     model = PageRelatedTitle
 
 
+class DynamicMultimediaPageInline(TabularDynamicInlineAdmin):
+    
+    model = DynamicMultimediaPage
+    form = DynamicMultimediaPageForm
+
+
 class CustomPageAdmin(PageAdmin):
 
     inlines = [PageBlockInline,
             PageImageInline,
             PagePlaylistInline,
+            DynamicMultimediaPageInline,
             PageLinkInline,
             PersonListBlockAutocompleteInlineAdmin,
             PageProductListInline,

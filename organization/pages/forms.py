@@ -32,7 +32,7 @@ from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
 from organization.pages.models import *
 from organization.agenda.models import Event
-from organization.media.models import Playlist, Media
+from organization.media.forms import DynamicMultimediaForm
 from organization.network.models import Person
 
 
@@ -106,3 +106,9 @@ class DynamicContentPageForm(autocomplete.FutureModelForm):
     class Meta:
         model = DynamicContentPage
         fields = ('content_object',)
+
+
+class DynamicMultimediaPageForm(DynamicMultimediaForm):
+    
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaPage
