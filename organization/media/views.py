@@ -197,11 +197,6 @@ class DynamicMultimediaView(Select2QuerySetSequenceView):
 
         qs = autocomplete.QuerySetSequence(medias, playlists, )
 
-        if self.q:
-            qs = qs.filter(title__icontains=self.q)
-
-        qs = self.mixup_querysets(qs)
-
         return qs
 
     def get_results(self, context):
