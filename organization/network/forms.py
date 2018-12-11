@@ -28,20 +28,12 @@ from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
 from mezzanine.core.models import Orderable
 from organization.projects.models import ProjectWorkPackage
-from organization.network.models import (Person,
-                                PersonListBlock,
-                                PersonListBlockInline,
-                                PageCustomPersonListBlockInline,
-                                OrganizationLinked,
-                                OrganizationLinkedInline,
-                                OrganizationLinkedBlockInline,
-                                Organization,
-                                PersonActivityTimeSheet,
-                                ProjectActivity)
+from organization.network.models import *
 from organization.pages.models import Page, CustomPage
 from organization.network.utils import timesheet_master_notification_for_validation
 from organization.network.models import *
 from organization.pages.models import Page, CustomPage
+from organization.media.forms import DynamicMultimediaForm
 from extra_views import InlineFormSet
 
 
@@ -205,3 +197,15 @@ class ProducerForm(ModelForm):
         super(ProducerForm, self).__init__(*args, **kwargs)
         for key in self.fields:
             self.fields[key].required = True
+
+
+class DynamicMultimediaOrganizationForm(DynamicMultimediaForm):
+    
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaOrganization
+
+
+class DynamicMultimediaPersonForm(DynamicMultimediaForm):
+    
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaPerson

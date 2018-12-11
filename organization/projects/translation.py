@@ -185,12 +185,20 @@ class ProjectCallFileTranslationOptions(TranslationOptions):
 
     pass
 
+
 @register(ProjectContact)
 class ProjectContactTranslationOptions(TranslationOptions):
 
     pass
 
+
 @register(ProjectTopic)
 class ProjectTopicTranslationOptions(TranslationOptions):
 
     fields = ('name', 'description')
+
+
+@register(DynamicMultimediaProject)
+class DynamicMultimediaProjectTranslationOptions(TranslationOptions):
+
+    fields = ()

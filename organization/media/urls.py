@@ -41,4 +41,5 @@ urlpatterns = [
     url("^playlists/overlay/(?P<slug>.*)/$", PlaylistOverlayView.as_view(), name="organization-playlist-overlay"),
     url("^playlist-media-autocomplete/$",  permission_required('playlist.can_edit')(PlayListMediaView.as_view()), name='media-autocomplete'),
     url("^streams/(?P<slug>.*)/(?P<type>.*)/detail/$", LiveStreamingDetailView.as_view(), name="organization-streaming-detail"),
+    url("^dynamic-multimedia-event/$",  permission_required('event.can_edit')(DynamicMultimediaView.as_view()), name='dynamic-multimedia-event'),
 ]

@@ -354,6 +354,14 @@ class DynamicContentProject(DynamicContent, Orderable):
         verbose_name = 'Dynamic Content Project'
 
 
+class DynamicMultimediaProject(DynamicContent, Orderable):
+    
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
+
+
 class ProjectBlogPage(Displayable, RichText):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='blog_pages', blank=True, null=True, on_delete=models.SET_NULL)

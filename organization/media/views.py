@@ -26,6 +26,7 @@ from organization.media.models import *
 from organization.core.views import *
 from organization.core.utils import split_events_from_other_related_content
 from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.core.exceptions import FieldDoesNotExist
 from datetime import datetime
 from django.db.models import Q
@@ -179,4 +180,26 @@ class LiveStreamingDetailView(SlugMixin, DetailView):
 
         context['json_event'] = json.dumps(events_data)
         return context
+
+
+class DynamicMultimediaView(Select2QuerySetSequenceView):
+    
+    paginate_by = settings.DAL_MAX_RESULTS
+
+    def get_queryset(self):
+
+        medias = Media.objects.all()
+        playlists = Playlist.objects.all()
+
+        if self.q:
+            medias = medias.filter(title__icontains=self.q)
+            playlists = playlists.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(medias, playlists, )
+
+        return qs
+
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results
 

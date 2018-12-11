@@ -31,9 +31,8 @@ from organization.projects.models import *
 from organization.pages.models import *
 from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
-from organization.projects.forms import DynamicContentProjectForm
+from organization.projects.forms import DynamicContentProjectForm, DynamicMultimediaProjectForm
 from organization.core.admin import null_filter
-# from organization.projects.translation import *
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
@@ -141,6 +140,12 @@ class DynamicContentProjectInline(TabularDynamicInlineAdmin):
         )
 
 
+class DynamicMultimediaProjectInline(TabularDynamicInlineAdmin):
+    
+    model = DynamicMultimediaProject
+    form = DynamicMultimediaProjectForm
+
+
 class ProjectResidencyProducerInline(TabularDynamicInlineAdmin):
 
     model = ProjectResidencyProducer
@@ -201,6 +206,7 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 ProjectPrivateDataInline,
                 ProjectWorkPackageInline,
                 ProjectPlaylistInline,
+                DynamicMultimediaProjectInline,
                 ProjectLinkInline,
                 ProjectFileInline,
                 ProjectRelatedTitleAdmin,

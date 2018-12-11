@@ -27,6 +27,8 @@ from organization.magazine.models import *
 from organization.pages.models import CustomPage
 from organization.network.models import PersonListBlock, Person
 from mezzanine_agenda.models import Event
+from organization.media.forms import DynamicMultimediaForm
+
 
 class BriefForm(autocomplete.FutureModelForm):
 
@@ -73,3 +75,9 @@ class DynamicContentArticleForm(autocomplete.FutureModelForm):
     class Meta:
         model = DynamicContentArticle
         fields = ('content_object',)
+
+
+class DynamicMultimediaArticleForm(DynamicMultimediaForm):
+    
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaArticle

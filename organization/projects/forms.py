@@ -32,6 +32,7 @@ from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
 from organization.agenda.models import Event, DynamicContentEvent
 from organization.media.models import Playlist
+from organization.media.forms import DynamicMultimediaForm
 from organization.network.models import Organization
 from organization.projects.models import *
 from extra_views import InlineFormSet
@@ -158,3 +159,8 @@ class ProjectResidencyForm(ModelForm):
         model = ProjectResidency
         fields = '__all__'
 
+
+class DynamicMultimediaProjectForm(DynamicMultimediaForm):
+    
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaProject

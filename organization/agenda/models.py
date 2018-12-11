@@ -144,6 +144,14 @@ class DynamicContentEvent(DynamicContent, Orderable):
         verbose_name = 'Dynamic Content Event'
 
 
+class DynamicMultimediaEvent(DynamicContent, Orderable):
+    
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
+
+
 class EventPriceDescription(models.Model):
 
     event_price = models.OneToOneField(EventPrice, verbose_name=_('event_price_description'), related_name='event_price_description', blank=True, null=True, on_delete=models.SET_NULL)

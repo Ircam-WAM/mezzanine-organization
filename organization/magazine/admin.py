@@ -57,10 +57,11 @@ class DynamicContentArticleInline(TabularDynamicInlineAdmin):
     model = DynamicContentArticle
     form = DynamicContentArticleForm
 
-    class Media:
-        js = (
-            static("mezzanine/js/admin/dynamic_inline.js"),
-        )
+
+class DynamicMultimediaArticleInline(TabularDynamicInlineAdmin):
+    
+    model = DynamicMultimediaArticle
+    form = DynamicMultimediaArticleForm
 
 
 class ArticleRelatedTitleAdmin(TranslationTabularInline):
@@ -77,6 +78,7 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin):
     filter_horizontal = ['categories',]
     inlines = [ArticleImageInline,
               ArticlePersonAutocompleteInlineAdmin,
+              DynamicMultimediaArticleInline,
               ArticleRelatedTitleAdmin,
               DynamicContentArticleInline,
               ArticlePlaylistInline]
@@ -89,6 +91,10 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin):
         OwnableAdmin.save_form(self, request, form, change)
         return DisplayableAdmin.save_form(self, request, form, change)
 
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
 
 
 class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline
