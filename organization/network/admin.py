@@ -169,9 +169,15 @@ class TeamAdmin(BaseTranslationModelAdmin):
     inlines = [TeamLinkInline,]
 
 
+class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
+    
+    model = DynamicMultimediaPage
+    form = DynamicMultimediaPageForm
+
+
 class TeamPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline,
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaTeamPageInline,
                 PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]
 
 
