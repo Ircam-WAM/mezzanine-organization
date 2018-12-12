@@ -30,6 +30,7 @@ from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from organization.network.models import *
 from organization.network.forms import *
+from organization.pages.forms import DynamicMultimediaPageForm
 from organization.pages.models import *
 from organization.core.admin import *
 from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline, DynamicContentPageInline, PageRelatedTitleAdmin
@@ -138,9 +139,15 @@ class PageProductListInline(TabularDynamicInlineAdmin):
     model = PageProductList
 
 
+class DynamicMultimediaDepartmentInline(TabularDynamicInlineAdmin):
+    
+    model = DynamicMultimediaPage
+    form = DynamicMultimediaPageForm
+
+
 class DepartmentPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, PageProductListInline, ]
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaDepartmentInline, PageProductListInline, ]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -162,9 +169,15 @@ class TeamAdmin(BaseTranslationModelAdmin):
     inlines = [TeamLinkInline,]
 
 
+class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
+    
+    model = DynamicMultimediaPage
+    form = DynamicMultimediaPageForm
+
+
 class TeamPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline,
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaTeamPageInline,
                 PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]
 
 

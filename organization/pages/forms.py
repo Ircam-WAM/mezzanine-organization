@@ -34,6 +34,7 @@ from organization.pages.models import *
 from organization.agenda.models import Event
 from organization.media.forms import DynamicMultimediaForm
 from organization.network.models import Person
+from organization.projects.models import Project
 
 
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
@@ -64,7 +65,8 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
             Brief.objects.all(),
             Event.objects.all(),
             Media.objects.all(),
-            Person.objects.all()
+            Person.objects.all(),
+            Project.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-body'),
