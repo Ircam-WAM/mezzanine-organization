@@ -35,6 +35,7 @@ from organization.pages.models import Home
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
 from organization.network.models import Person, Organization
+from organization.projects.models import Project
 from django.shortcuts import redirect
 
 
@@ -126,6 +127,7 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
         briefs = Brief.objects.all()
         medias = Media.objects.all()
         persons = Person.objects.all()
+        projects = Project.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
@@ -134,12 +136,10 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
             briefs = briefs.filter(title__icontains=self.q)
             medias = medias.filter(title__icontains=self.q)
             persons = persons.filter(title__icontains=self.q)
+            projects = projects.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons)
 
-        if self.q:
-            # This would apply the filter on all the querysets
-            qs = qs.filter(title__icontains=self.q)
+        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons, projects)
 
         # This will limit each queryset so that they show an equal number
         # of results.
