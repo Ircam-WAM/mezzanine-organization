@@ -32,9 +32,10 @@ from mezzanine.conf import settings
 from organization.core.views import *
 from organization.agenda.views import *
 
+_slash = "/" if settings.APPEND_SLASH else ""
 
 urlpatterns = [
+    url("^agenda/(?P<slug>.*)/detail%s$" % _slash, EventDetailView.as_view(), name='event_detail'),
     url("^%s/" % settings.EVENT_SLUG, include("mezzanine_agenda.urls")),
     url("^dynamic-content-event/$",  permission_required('event.can_edit')(DynamicContentEventView.as_view()), name='dynamic-content-event'),
 ]
-#

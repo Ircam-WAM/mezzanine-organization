@@ -63,7 +63,11 @@ class HomeView(SlugMixin, DetailView):
                 objects = [residency.artist for residency in residencies]
             else:
                 objects = list(model.objects.all())
-            return random.sample(objects, k=1)[0]
+
+            if objects:
+                return random.sample(objects, k=1)[0]
+            else:
+                return None
         else:
             for body in self.bodys:
                 if body.content_type:

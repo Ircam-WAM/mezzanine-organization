@@ -75,6 +75,6 @@ urlpatterns = [
     url('^jurys/$', JuryListView.as_view(), name='organization-jury-list'),
 
     # Map
-    url('^public-network-data/$', public_network_data, name='organization-public-network-data'),
+    url('^public-network-data/$', PublicNetworkData.as_view(), name='organization-public-network-data'),
 
 ]

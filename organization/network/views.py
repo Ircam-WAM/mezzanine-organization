@@ -599,28 +599,68 @@ class JuryListView(ListView):
             qs = Person.objects.none()
 
 
-def public_network_data(request):
-    data = {}
 
-    def get_object_dict(object):
-        images = object.images.filter(type='logo')
-        image = images.first().file.url if images else None
-        css_class = object.type.css_class if object.type else None
-        return { 'name': object.name,
-                'description': object.description,
-                'url': object.url,
-                'image': image,
-                'city': object.country.name,
-                'css_class': css_class,
-                'lat': object.lat,
-                'lon': object.lon,
-                }
+from django.http import JsonResponse
 
-    organizations = Organization.objects.filter(is_on_map=True)
-    data['organizations'] = [get_object_dict(object) for object in organizations]
+class JSONResponseMixin:
+    """
+    A mixin that can be used to render a JSON response.
+    """
+    def render_to_json_response(self, context, **response_kwargs):
+        """
+        Returns a JSON response, transforming 'context' to make the payload.
+        """
+        return JsonResponse(
+            self.get_data(context),
+            **response_kwargs
+        )
 
-    role, c = OrganizationRole.objects.get_or_create(key='Producer')
-    producers = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
-    data['producers'] = [get_object_dict(object) for object in producers]
+    def get_data(self, context):
+        """
+        Returns an object that will be serialized as JSON by json.dumps().
+        """
+        # Note: This is *EXTREMELY* naive; in reality, you'll need
+        # to do much more complex handling to ensure that arbitrary
+        # objects -- such as Django model instances or querysets
+        # -- can be serialized as JSON.
+        return context
 
-    return JsonResponse(data)
+
+class PublicNetworkData(JSONResponseMixin, TemplateView):
+
+    attributes = ['name', 'title', 'description', 'mappable_location',
+                    'image', 'type', 'url', 'lat', 'lon']
+
+    def get_object_dict(self, object):
+        data = {}
+        for attribute in self.attributes:
+            if hasattr(object, attribute):
+                if attribute == 'type':
+                    value = ''
+                    if object.type and hasattr(object.type, 'name'):
+                        value = object.type.name
+                elif attribute == 'image':
+                    images = object.images.filter(type='logo')
+                    value = images.first().file.url if images else ''
+                else:
+                    value = getattr(object, attribute)
+                data[attribute] = value
+        return data
+
+    def get_context_data(self, **kwargs):
+        context = {}
+
+        organizations = Organization.objects.filter(is_on_map=True)
+        context['organizations'] = [self.get_object_dict(object) for object in organizations]
+
+        role, c = OrganizationRole.objects.get_or_create(key='Producer')
+        producers = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
+        context['producers'] = [self.get_object_dict(object) for object in producers]
+
+        persons = Person.objects.exclude(mappable_location__isnull=True)
+        context['persons'] = [self.get_object_dict(object) for object in persons]
+
+        return context
+
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)

@@ -25,6 +25,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.core.exceptions import ValidationError
+
+from geopy.geocoders import GoogleV3, Nominatim
+from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded
 
 from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
@@ -377,12 +381,57 @@ class Address(models.Model):
     postal_code = models.CharField(_('postal code'), max_length=16, null=True, blank=True)
     city = models.CharField(_('city'), max_length=255, null=True, blank=True)
     country = CountryField(_('country'), null=True, blank=True)
+    mappable_location = models.CharField(max_length=512, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
+    lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
+    lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
 
     def __str__(self):
         return ' '.join((self.address, self.postal_code))
 
     class Meta:
         abstract = True
+
+    def clean(self):
+        """
+        Validate set/validate mappable_location, longitude and latitude.
+        """
+        super(Address, self).clean()
+
+        if self.lat and not self.lon:
+            raise ValidationError("Longitude required if specifying latitude.")
+
+        if self.lon and not self.lat:
+            raise ValidationError("Latitude required if specifying longitude.")
+
+        if not (self.lat and self.lon) and not self.mappable_location:
+            if self.address:
+                self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
+
+        if self.mappable_location and not (self.lat and self.lon):
+            mappable_location = None
+            try:
+                if settings.EVENT_GOOGLE_MAPS_DOMAIN:
+                    service = 'googlemaps'
+                    geolocator = GoogleV3(api_key=settings.GOOGLE_API_KEY,domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
+                else:
+                    service = "openstreetmap"
+                    geolocator = Nominatim(user_agent='mezzo')
+                mappable_location, (lat, lon) = geolocator.geocode(self.mappable_location)
+            except GeocoderQueryError as e:
+                # raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service=service, error=e.message))
+                #FIXME: should logging rather than raising
+                pass
+            except ValueError as e:
+                # raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service=service, error=e.message))
+                pass
+            except TypeError as e:
+                # raise ValidationError("The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.")
+                pass
+
+            if mappable_location:
+                self.mappable_location = mappable_location
+                self.lat = lat
+                self.lon = lon
 
 
 class RelatedTitle(models.Model):
