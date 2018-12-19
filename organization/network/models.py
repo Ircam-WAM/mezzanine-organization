@@ -337,7 +337,7 @@ class DepartmentPage(Page, SubTitled, RichText):
         verbose_name = _('department page')
 
 
-class Team(Named, URL):
+class Team(NamedSlugged):
     """(Team description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
