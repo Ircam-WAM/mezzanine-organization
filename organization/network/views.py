@@ -102,6 +102,37 @@ class PersonListView(PublishedMixin, ListView):
     context_object_name = 'persons'
 
 
+class PersonDirectoryView(ListView):
+    
+    model = Person
+    template_name='network/person/directory.html'
+    context_object_name = 'persons'
+    ordering = "last_name"
+    letter = "letter"
+    # def get_ordering(self):
+    #     return self.last_name
+
+    def get_queryset(self):
+        self.queryset = super(PersonDirectoryView, self).get_queryset()
+        if not self.kwargs['letter']:
+            self.kwargs['letter'] = "a"
+        self.queryset = self.queryset.filter(Q(last_name__istartswith=self.kwargs['letter'])
+                                            & Q(activities__date_to__gte=datetime.date.today())
+                                            & Q(activities__umr=1))
+        return self.queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(PersonDirectoryView, self).get_context_data(**kwargs)
+        letters_pagination = OrderedDict()
+
+        # list all letters from a (97) to z (123)
+        for c in range(97, 123):
+            letters_pagination[chr(c)] = reverse_lazy('person-directory', kwargs={'letter': chr(c)})
+
+        context['letters_pagination'] = letters_pagination
+        return context
+
+
 class PersonDetailView(PersonMixin, SlugMixin, DetailView):
 
     model = Person
