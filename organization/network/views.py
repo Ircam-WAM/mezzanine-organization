@@ -102,15 +102,13 @@ class PersonListView(PublishedMixin, ListView):
     context_object_name = 'persons'
 
 
-class PersonDirectoryView(ListView):
+class PersonDirectoryView(PublishedMixin, ListView):
     
     model = Person
     template_name='network/person/directory.html'
     context_object_name = 'persons'
     ordering = "last_name"
     letter = "letter"
-    # def get_ordering(self):
-    #     return self.last_name
 
     def get_queryset(self):
         self.queryset = super(PersonDirectoryView, self).get_queryset()
@@ -118,7 +116,7 @@ class PersonDirectoryView(ListView):
             self.kwargs['letter'] = "a"
         self.queryset = self.queryset.filter(Q(last_name__istartswith=self.kwargs['letter'])
                                             & Q(activities__date_to__gte=datetime.date.today())
-                                            & Q(activities__umr=1))
+                                            & Q(activities__umr=1)).distinct()
         return self.queryset
 
     def get_context_data(self, **kwargs):
@@ -130,6 +128,57 @@ class PersonDirectoryView(ListView):
             letters_pagination[chr(c)] = reverse_lazy('person-directory', kwargs={'letter': chr(c)})
 
         context['letters_pagination'] = letters_pagination
+        return context
+
+
+class TeamMembersView(ListView):
+    
+    model = PersonActivity
+    template_name='network/team/members.html'
+    context_object_name = 'activities'
+    permanents = set()
+    non_permanents = set()
+    old_members = set()
+
+    def get_queryset(self):
+        self.queryset = super(TeamMembersView, self).get_queryset()
+
+        self.queryset = self.queryset.filter(teams__slug=self.kwargs['slug'])
+        active_activities = self.queryset.filter(Q(date_to__gte=datetime.date.today()))
+
+        # permanent persons
+        permanent_activities = active_activities.filter(is_permanent=True)
+        manager = ""
+        for a in permanent_activities:
+            if a.person.status == 6 :
+                manager = a.person
+            else :
+                self.permanents.add(a.person)
+        self.permanents = sorted(self.permanents, key=lambda instance: instance.last_name)
+        self.permanents.insert(0, manager)
+
+        # non permanent persons
+        non_permanent_activities = active_activities.filter(is_permanent=False).prefetch_related('person')
+        for a in non_permanent_activities:
+            self.non_permanents.add(a.person)
+        self.non_permanents = sorted(self.non_permanents, key=lambda instance: instance.last_name)
+
+        # old colleagues
+        active_persons = set()
+        active_persons = self.permanents + self.non_permanents
+        old_activities = self.queryset.filter(date_to__lt=datetime.date.today())
+        for a in old_activities:
+            if not a.person in active_persons: 
+                self.old_members.add(a.person)
+        self.old_members = sorted(self.old_members, key=lambda instance: instance.last_name)
+        
+        return self.queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(TeamMembersView, self).get_context_data(**kwargs)
+        context['permanents'] = self.permanents
+        context['non_permanents'] = self.non_permanents
+        context['old_members'] = self.old_members  
         return context
 
 
