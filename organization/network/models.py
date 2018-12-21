@@ -167,6 +167,7 @@ class Person(Displayable, AdminThumbMixin, Address):
     bio = RichTextField(_('biography'), blank=True)
     role = models.CharField(_('role'), max_length=256, blank=True, null=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
+    hal_url = models.URLField(_('HAL url'), max_length=512, blank=True)
     karma = models.IntegerField(default=0, editable=False)
     search_fields = {"title": 1}
 

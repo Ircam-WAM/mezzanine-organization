@@ -395,8 +395,12 @@ def hal_1(hal_tutelage, hal_researche_structure):
     return settings.HAL_URL_PART_1 % (hal_researche_structure.replace(' ', '+'), hal_tutelage.replace(' ', '+'))
 
 @register.filter
-def hal_2(url_part, http_host):
-    return url_part + settings.HAL_URL_PART_2 % http_host
+def hal_2(url_part):
+    return url_part + settings.HAL_URL_PART_2
+
+@register.filter
+def hal_css(url_part, http_host):
+    return url_part + settings.HAL_URL_CSS % http_host
 
 @register.filter
 def tag_is_in_menu(page, tag):
