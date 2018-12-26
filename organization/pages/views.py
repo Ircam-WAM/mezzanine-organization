@@ -32,11 +32,13 @@ from organization.pages.models import CustomPage, ExtendedCustomPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import Home
+from organization.pages.forms import YearForm
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
 from organization.network.models import Person, Organization
 from organization.projects.models import Project
 from django.shortcuts import redirect
+from django.views.generic.edit import FormView
 
 
 class HomeView(SlugMixin, DetailView):
@@ -66,6 +68,8 @@ class HomeView(SlugMixin, DetailView):
             context['event_calendar_form'] = EventCalendarForm()
         except:
             pass
+
+        context['hal_url'] = settings.HAL_LABO
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -176,6 +180,34 @@ class DynamicContentHomeMediaView(Select2QuerySetSequenceView):
 class NewsletterView(TemplateView):
 
     template_name = "pages/newsletter.html"
+
+
+class PublicationsView(FormView):
+    
+    template_name = "pages/publications.html"
+    form_class = YearForm
+    success_url = "."
+
+    def form_valid(self, form):
+        # Ajax
+        if self.request.is_ajax():
+            context = {}
+            context['hal_url'] = settings.HAL_LABO + "&annee_publideb=%s&annee_publifin=%s" % (form.cleaned_data['year'], form.cleaned_data['year'])
+            return render(self.request, 'core/inc/hal.html', context)
+        else :
+            self.request.session['year'] = form.cleaned_data['year']
+            return super(PublicationsView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(PublicationsView, self).get_context_data(**kwargs)
+        context['hal_url'] = settings.HAL_LABO
+        if 'year' in self.request.session:
+            # set year filter
+            context['hal_url'] += "&annee_publideb=%s&annee_publifin=%s" % (self.request.session['year'], self.request.session['year'])
+            context['form'].initial['year'] = self.request.session['year']
+            # repopulate form
+            self.request.session.pop('year', None)
+        return context
 
 
 class InformationView(ListView):

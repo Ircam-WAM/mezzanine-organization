@@ -19,6 +19,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import datetime
 from dal import autocomplete
 
 import dal_queryset_sequence
@@ -114,3 +115,14 @@ class DynamicMultimediaPageForm(DynamicMultimediaForm):
     
     class Meta(DynamicMultimediaForm.Meta):
         model = DynamicMultimediaPage
+
+
+class YearForm(forms.Form):
+    
+    curr_year = datetime.datetime.today().year
+    year_list = reversed(range(settings.HAL_YEAR_BEGIN, curr_year + 1))
+    YEARS = []
+    for year in year_list:
+        YEARS.append((str(year), str(year)))
+    
+    year = forms.ChoiceField(choices=YEARS)

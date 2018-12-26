@@ -403,6 +403,10 @@ def hal_css(url_part, http_host):
     return url_part + settings.HAL_URL_CSS % http_host
 
 @register.filter
+def hal_limit(url_part, nb):
+    return url_part + settings.HAL_LIMIT_PUB + str(nb)
+
+@register.filter
 def tag_is_in_menu(page, tag):
     is_in_menu = False
     if tag and page :
