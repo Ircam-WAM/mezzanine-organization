@@ -69,7 +69,7 @@ class HomeView(SlugMixin, DetailView):
         except:
             pass
 
-        context['hal_url'] = settings.HAL_LABO
+        context['hal_url'] = settings.HAL_URL
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -187,12 +187,13 @@ class PublicationsView(FormView):
     template_name = "pages/publications.html"
     form_class = YearForm
     success_url = "."
+    hal_url = settings.HAL_URL
 
     def form_valid(self, form):
         # Ajax
         if self.request.is_ajax():
             context = {}
-            context['hal_url'] = settings.HAL_LABO + "&annee_publideb=%s&annee_publifin=%s" % (form.cleaned_data['year'], form.cleaned_data['year'])
+            context['hal_url'] = self.hal_url + "&annee_publideb=%s&annee_publifin=%s" % (form.cleaned_data['year'], form.cleaned_data['year'])
             return render(self.request, 'core/inc/hal.html', context)
         else :
             self.request.session['year'] = form.cleaned_data['year']
@@ -200,7 +201,7 @@ class PublicationsView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(PublicationsView, self).get_context_data(**kwargs)
-        context['hal_url'] = settings.HAL_LABO
+        context['hal_url'] = self.hal_url
         if 'year' in self.request.session:
             # set year filter
             context['hal_url'] += "&annee_publideb=%s&annee_publifin=%s" % (self.request.session['year'], self.request.session['year'])

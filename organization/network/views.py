@@ -27,7 +27,7 @@ from django.db.models.fields.related import ForeignKey
 from django.http import Http404
 from django.db.utils import IntegrityError
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import View
@@ -50,6 +50,9 @@ from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
 from django.utils import six
 from django.core.exceptions import PermissionDenied
+from organization.pages.forms import YearForm
+from organization.pages.views import PublicationsView
+
 import pandas as pd
 
 
@@ -180,6 +183,17 @@ class TeamMembersView(ListView):
         context['non_permanents'] = self.non_permanents
         context['old_members'] = self.old_members  
         return context
+
+
+class TeamPublicationsView(PublicationsView):
+    
+    template_name = "network/team/publications.html"
+    team = None
+
+    def get(self, request, *args, **kwargs):
+        self.team = get_object_or_404(Team, slug=kwargs['slug'])
+        self.hal_url += "&" + settings.HAL_LABOS_EXP + "%s" % self.team.hal_researche_structure.replace(' ', '+')
+        return super(TeamPublicationsView, self).get(request, *args, **kwargs)
 
 
 class PersonDetailView(PersonMixin, SlugMixin, DetailView):
@@ -605,3 +619,4 @@ class JuryListView(ListView):
             qs = Person.objects.filter(person_list_block_inlines__person_list_block=jury).order_by("last_name")
         else:
             qs = Person.objects.none()
+

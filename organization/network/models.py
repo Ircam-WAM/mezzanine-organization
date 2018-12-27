@@ -135,6 +135,7 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
     site = models.ForeignKey("sites.Site", blank=True, null=True, on_delete=models.SET_NULL)
     admin_thumb_type = 'logo'
     validation_status = models.IntegerField(_('validation status'), choices=ORGANIZATION_STATUS_CHOICES, default=1)
+    hal_id = models.CharField(_('HAL id'), max_length=10, blank=True, null=True)
 
     class Meta:
         verbose_name = _('organization')
