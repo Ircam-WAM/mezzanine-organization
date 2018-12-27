@@ -694,3 +694,13 @@ if DEBUG:
 else:
     TIMESHEET_MASTER_MAIL = "foo@bar.fr"
 
+# HAL
+
+HAL_URL = PROTOCOLE + "haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?affi_exp=Ircam&CB_auteur=oui&CB_titre=oui" \
+                        "&CB_article=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=typdoc&tri_exp3=date_publi" \
+                        "&ordre_aff=TA&Fen=Aff&Formate=Oui"
+
+HAL_LABOS_EXP = "labos_exp="
+HAL_URL_CSS = "&css=" + PROTOCOLE + "%s/static/css/index.min.css"
+HAL_LIMIT_PUB = "&NbAffiche="
+HAL_YEAR_BEGIN = 1977
