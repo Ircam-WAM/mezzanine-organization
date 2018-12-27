@@ -105,7 +105,7 @@ class ProducerDataInline(StackedDynamicInlineAdmin):
 
 
 class DynamicMultimediaOrganizationInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaOrganization
     form = DynamicMultimediaOrganizationForm
 
@@ -140,7 +140,7 @@ class PageProductListInline(TabularDynamicInlineAdmin):
 
 
 class DynamicMultimediaDepartmentInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaPage
     form = DynamicMultimediaPageForm
 
@@ -170,7 +170,7 @@ class TeamAdmin(BaseTranslationModelAdmin):
 
 
 class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaPage
     form = DynamicMultimediaPageForm
 
@@ -225,7 +225,7 @@ class PersonBlockInline(StackedDynamicInlineAdmin):
 
 
 class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaPerson
     form = DynamicMultimediaPersonForm
 
@@ -259,7 +259,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
         return weekly_hour_volume
 
     def export_as_csv(self, request, queryset):
-        
+
             meta = self.model._meta
             field_names = ['first_name', 'last_name', 'gender', 'birthday']
             activity_fields = ['date_from', 'date_to', 'framework', 'function', 'organizations', 'teams']

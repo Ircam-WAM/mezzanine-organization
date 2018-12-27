@@ -32,7 +32,7 @@ from organization.pages.models import *
 from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm, DynamicMultimediaProjectForm
-from organization.core.admin import null_filter
+from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
@@ -91,11 +91,6 @@ class ProjectContactInline(StackedDynamicInlineAdmin):
     model = ProjectContact
 
 
-class ProjectAdmin(admin.ModelAdmin):
-
-    model = Project
-
-
 class ProjectPublicDataAdmin(admin.ModelAdmin):
 
     model = ProjectPublicData
@@ -141,7 +136,7 @@ class DynamicContentProjectInline(TabularDynamicInlineAdmin):
 
 
 class DynamicMultimediaProjectInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaProject
     form = DynamicMultimediaProjectForm
 
@@ -195,9 +190,11 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
     get_producers.short_description = "producers"
 
 
-class ProjectAdminDisplayable(DisplayableAdmin):
 
-    fieldsets = deepcopy(ProjectAdmin.fieldsets)
+class ProjectAdmin(BaseTranslationOrderedModelAdmin):
+
+    model = Project
+
     inlines = [ ProjectBlockInline,
                 ProjectContactInline,
                 ProjectUserImageInline,
@@ -216,7 +213,8 @@ class ProjectAdminDisplayable(DisplayableAdmin):
     filter_horizontal = ['teams', 'organizations', 'concepts']
     list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status', 'call']
     list_display = ['title', 'date_from', 'date_to', 'created', 'lead_organization',
-        'program', 'status', 'is_archive', 'topic', 'external_id', 'validation_status', 'admin_link']
+        'program', 'is_archive', 'topic', 'external_id', 'validation_status']
+    first_fields = ['title',]
 
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
@@ -284,7 +282,7 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
     search_fields = ['title', 'project__title',]
 
 
-admin.site.register(Project, ProjectAdminDisplayable)
+admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)
 admin.site.register(ProjectPrivateData, ProjectPrivateDataAdmin)
 admin.site.register(ProjectContact, ProjectContactAdmin)

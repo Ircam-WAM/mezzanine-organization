@@ -28,7 +28,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
-from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
+from mezzanine.core.models import RichText, Displayable, Slugged, Orderable, MetaData, TimeStamped
 from django.core.files.images import get_image_dimensions
 
 from organization.core.models import *
@@ -70,10 +70,10 @@ FUNDING_CHOICES = (
 )
 
 
-class Project(Displayable, Period, RichText, OwnableOrNot):
+class Project(TitledSlugged, MetaData, TimeStamped, Period, RichText, OwnableOrNot):
     """(Project description)"""
 
-    type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES)
+    type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES, blank=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     program = models.ForeignKey('ProjectProgram', verbose_name=_('project program'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
     program_type = models.ForeignKey('ProjectProgramType', verbose_name=_('project program type'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
@@ -151,7 +151,7 @@ class ProjectProgramType(Named):
         ordering = ['name',]
 
 
-class ProjectWorkPackage(Titled, Period):
+class ProjectWorkPackage(Titled, Description, Period):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='work_packages')
     number = models.IntegerField(_('number'))
@@ -355,7 +355,7 @@ class DynamicContentProject(DynamicContent, Orderable):
 
 
 class DynamicMultimediaProject(DynamicContent, Orderable):
-    
+
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:

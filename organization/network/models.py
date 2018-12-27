@@ -118,7 +118,7 @@ ORGANIZATION_STATUS_CHOICES = (
 )
 
 
-class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
+class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -203,12 +203,12 @@ class Person(Displayable, AdminThumbMixin, Address):
             update_activity(activity)
 
 
-class OrganizationLinkedBlockInline(Titled, Orderable):
+class OrganizationLinkedBlockInline(Titled, Description, Orderable):
     organization_linked = models.ForeignKey('OrganizationLinked', verbose_name=_('organization list'), related_name='organization_linked_block_inline_list', blank=True, null=True)
     organization_main = models.ForeignKey('Organization', verbose_name=_('organization'), related_name='organization_linked_block', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-class OrganizationLinked(Titled):
+class OrganizationLinked(Titled, Description):
 
     class Meta:
         verbose_name = _('Organization Linked')
@@ -217,7 +217,7 @@ class OrganizationLinked(Titled):
         return self.title
 
 
-class OrganizationLinkedInline(Titled, Orderable):
+class OrganizationLinkedInline(Titled, Description, Orderable):
 
     organization_list = models.ForeignKey('OrganizationLinked', verbose_name=_('organization linked'), related_name='organization_linked_inline_linked', blank=True, null=True, on_delete=models.SET_NULL)
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name='organization_linked_inline_from', blank=True, null=True, on_delete=models.SET_NULL)
@@ -229,7 +229,7 @@ class OrganizationPlaylist(PlaylistRelated):
 
 
 class DynamicMultimediaOrganization(DynamicContent, Orderable):
-    
+
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
@@ -237,7 +237,7 @@ class DynamicMultimediaOrganization(DynamicContent, Orderable):
 
 
 class DynamicMultimediaPerson(DynamicContent, Orderable):
-    
+
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
@@ -339,7 +339,7 @@ class DepartmentPage(Page, SubTitled, RichText):
         verbose_name = _('department page')
 
 
-class Team(NamedSlugged):
+class Team(NamedSlugged, Description):
     """(Team description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
@@ -448,7 +448,7 @@ class PageCustomPersonListBlockInline(Titled):
         return self.title
 
 
-class PersonListBlock(Titled, Label, Dated, SiteRelated):
+class PersonListBlock(Titled, Description, Label, Dated, SiteRelated):
 
     style = models.CharField(_('style'), max_length=16, choices=PERSON_LIST_STYLE_CHOICES)
 
@@ -540,7 +540,7 @@ class UMR(Named):
         verbose_name = _('UMR')
 
 
-class ActivityWeeklyHourVolume(Titled):
+class ActivityWeeklyHourVolume(Titled, Description):
 
     monday_am = models.FloatField(_('monday AM'), validators=[validate_positive])
     monday_pm = models.FloatField(_('monday PM'), validators=[validate_positive])
@@ -655,7 +655,7 @@ class PersonActivityTimeSheet(models.Model):
         unique_together = (("activity", "project", "month", "year"),)
 
 
-class ProjectActivity(Titled, Orderable):
+class ProjectActivity(Titled, Description, Orderable):
 
     activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='project_activity')
     project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='project_activity', blank=True, null=True, on_delete=models.SET_NULL)
