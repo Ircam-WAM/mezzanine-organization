@@ -696,6 +696,11 @@ else:
 
 # HAL
 
+if DEBUG:
+    PROTOCOLE = "http://"
+else:
+    PROTOCOLE = "https://"
+
 HAL_URL = PROTOCOLE + "haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?affi_exp=Ircam&CB_auteur=oui&CB_titre=oui" \
                         "&CB_article=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=typdoc&tri_exp3=date_publi" \
                         "&ordre_aff=TA&Fen=Aff&Formate=Oui"
