@@ -21,6 +21,7 @@
 
 from django.contrib import admin
 from django import forms
+from django.contrib.sites.models import Site
 from copy import deepcopy
 from modeltranslation.admin import TranslationTabularInline
 from mezzanine.core.admin import *
@@ -29,6 +30,7 @@ from mezzanine.blog.admin import BlogPostAdmin
 from organization.magazine.models import *
 from organization.magazine.forms import *
 from organization.magazine.translation import *
+from organization.core.utils import actions_to_duplicate, get_other_sites
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
 
@@ -82,7 +84,23 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin):
               ArticleRelatedTitleAdmin,
               DynamicContentArticleInline,
               ArticlePlaylistInline]
-    list_filter = [ 'status', 'keywords', 'department', ]
+    list_filter = [ 'status', 'department', ] #'keywords'
+
+    actions = actions_to_duplicate()
+    func_template = """def duplicate_content_to_%s(self, request, queryset):
+                            import inspect
+                            import copy
+                            from pprint import pprint
+                            domain = inspect.stack()[0][3].replace('duplicate_content_to_', '').replace('_', '.')
+                            site = Site.objects.get(domain=domain)
+                            
+                            for obj in queryset:
+                                clone = copy.copy(obj)
+                                clone.pk = None
+                                clone.site = site
+                                clone.save(force_insert=True)"""
+
+    for site in get_other_sites(): exec(func_template % (site.domain.replace(".", "_")))
 
     def save_form(self, request, form, change):
         """

@@ -39,6 +39,7 @@ from django.utils.translation import ugettext_lazy as _
 from organization.agenda.models import EventPeriod
 from organization.magazine.models import *
 from organization.projects.models import *
+from organization.network.utils import get_users_of_team
 from django.utils.formats import get_format
 from django.utils.dateformat import DateFormat
 from organization.core.models import *
@@ -456,3 +457,9 @@ def filter_content_model(content_list, model_name):
         else :
             content_list_filtered.append(rc)
     return filtered_cards, content_list_filtered
+
+
+@register.filter
+def get_team_articles(team):
+    users = get_users_of_team(team)
+    return Article.objects.filter(user__in=users)
