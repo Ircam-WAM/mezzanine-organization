@@ -39,12 +39,19 @@ from mezzanine.utils.models import base_concrete_model, get_user_model_name
 from django_countries.fields import CountryField
 
 
-COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')), ('white', _('white')), ('blue', _('blue')), ('purple', _('purple')),)
+COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')),
+    ('red', _('red')), ('white', _('white')), ('blue', _('blue')),
+    ('purple', _('purple')),)
 
-ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
+ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')),
+    ('right', _('right')))
 
 
-IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('logo_white', _('logo white')), ('logo_black', _('logo black')), ('logo_header', _('logo header')), ('logo_footer', _('logo footer')), ('slider', _('slider')), ('card', _('card')), ('page_slider', _('page - slider')), ('page_featured', _('page - featured')))
+IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('logo_white', _('logo white')),
+    ('logo_black', _('logo black')), ('logo_header', _('logo header')),
+    ('logo_footer', _('logo footer')), ('slider', _('slider')),
+    ('card', _('card')), ('page_slider', _('page - slider')),
+    ('page_featured', _('page - featured')))
 
 
 class Description(models.Model):
@@ -403,9 +410,16 @@ class Address(models.Model):
     postal_code = models.CharField(_('postal code'), max_length=16, null=True, blank=True)
     city = models.CharField(_('city'), max_length=255, null=True, blank=True)
     country = CountryField(_('country'), null=True, blank=True)
-    mappable_location = models.CharField(max_length=512, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
-    lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
-    lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
+    mappable_location = models.CharField(max_length=512, blank=True, null=True,
+        help_text=("This address will be used to calculate latitude and longitude. "
+            "Leave blank and set Latitude and Longitude to specify the location yourself, "
+            "or leave all three blank to auto-fill from the Location field."))
+    lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True,
+        verbose_name="Latitude",
+        help_text="Calculated automatically if mappable location is set.")
+    lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True,
+        null=True, verbose_name="Longitude",
+        help_text="Calculated automatically if mappable location is set.")
 
     def __str__(self):
         return ' '.join((self.address, self.postal_code))

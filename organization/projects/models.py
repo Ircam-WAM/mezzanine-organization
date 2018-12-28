@@ -240,22 +240,22 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
 
 class ProjectCallBlock(Block):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call blocks'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallImage(Image):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call image'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallFile(File):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call file'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallLink(Link):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call link'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectDemo(Displayable, RichText, URL):
@@ -497,3 +497,29 @@ class ProjectResidencyEvent(models.Model):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='residency_events', blank=True, null=True, on_delete=models.SET_NULL)
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+
+class ProjectPage(Displayable, RichText):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='pages', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectPageImage(Image):
+
+    project_page = models.ForeignKey(ProjectPage, verbose_name=_('project page'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectPageBlock(Block):
+
+    project_page = models.ForeignKey(ProjectPage, verbose_name=_('project page'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class DynamicContentProjectPage(DynamicContent, Orderable):
+
+    project_page = models.ForeignKey(ProjectPage, verbose_name=_('project page'), related_name='dynamic_content_project_pages', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Project Page'
+
+
