@@ -31,7 +31,7 @@ from organization.projects.models import *
 from organization.pages.models import *
 from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
-from organization.projects.forms import DynamicContentProjectForm, DynamicMultimediaProjectForm
+from organization.projects.forms import DynamicContentProjectForm, DynamicMultimediaProjectForm, DynamicContentProjectPageForm
 from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin
 
 
@@ -282,6 +282,48 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
     search_fields = ['title', 'project__title',]
 
 
+
+class ProjectPageAdmin(BaseTranslationModelAdmin):
+
+    model = ProjectPage
+    list_display = ['title', 'project', ]
+    list_filter = ['project', ]
+
+
+class ProjectPageBlockInline(StackedDynamicInlineAdmin):
+
+    model = ProjectPageBlock
+
+
+class ProjectPageImageInline(StackedDynamicInlineAdmin):
+
+    model = ProjectPageImage
+
+
+class DynamicContentProjectPageInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentProjectPage
+    form = DynamicContentProjectPageForm
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+class ProjectPageAdminDisplayable(DisplayableAdmin):
+
+    fieldsets = deepcopy(ProjectPageAdmin.fieldsets)
+    inlines = [ ProjectPageBlockInline,
+                ProjectPageImageInline,
+                DynamicContentProjectPageInline,
+                ]
+    # list_filter = ['type', 'program', 'program_type', null_filter('external_id')]
+    # list_display = ['title', 'date_from', 'date_to', 'status', 'admin_link']
+
+    search_fields = ['title', 'project__title',]
+
+
+
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)
 admin.site.register(ProjectPrivateData, ProjectPrivateDataAdmin)
@@ -296,3 +338,4 @@ admin.site.register(RepositorySystem)
 admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
 admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
 admin.site.register(ProjectResidency, ProjectResidencyAdmin)
+admin.site.register(ProjectPage, ProjectPageAdminDisplayable)

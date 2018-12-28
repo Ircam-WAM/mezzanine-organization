@@ -143,6 +143,12 @@ class ProjectBlogPageView(SlugMixin, ProjectMixin, DetailView):
     template_name='projects/project_blogpage_detail.html'
 
 
+class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
+
+    model = ProjectPage
+    template_name='projects/project_page_detail.html'
+
+
 class ProjectCallMixin(object):
 
     def get_context_data(self, **kwargs):

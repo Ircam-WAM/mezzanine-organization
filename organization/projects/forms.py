@@ -37,6 +37,7 @@ from organization.network.models import Organization
 from organization.projects.models import *
 from extra_views import InlineFormSet
 
+
 class DynamicContentProjectForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
@@ -161,6 +162,26 @@ class ProjectResidencyForm(ModelForm):
 
 
 class DynamicMultimediaProjectForm(DynamicMultimediaForm):
-    
+
     class Meta(DynamicMultimediaForm.Meta):
         model = DynamicMultimediaProject
+
+
+class DynamicContentProjectPageForm(autocomplete.FutureModelForm):
+
+    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
+        queryset=autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            CustomPage.objects.all(),
+            Event.objects.all(),
+            Person.objects.all(),
+            Organization.objects.all()
+        ),
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-project'),
+    )
+
+    class Meta:
+        model = DynamicContentProjectPage
+        fields = ('content_object',)
+

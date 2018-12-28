@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2016-2017 Ircam
-# Copyright (c) 2016-2017 Guillaume Pellerin
+# Copyright (c) 2016-2019 Ircam
+# Copyright (c) 2016-2019 Guillaume Pellerin
 # Copyright (c) 2016-2017 Emilie Zawadzki
 
 # This file is part of mezzanine-organization.
@@ -18,6 +18,8 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
 import csv
 from django.contrib import admin
 from django import forms
