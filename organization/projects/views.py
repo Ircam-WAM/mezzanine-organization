@@ -592,10 +592,12 @@ class Pivot_Project_ProjectCollection_View(Select2QuerySetSequenceView):
     #     return results
 
 
-class ProjectCreateView(LoginRequiredMixin, TemplateView):
+class ProjectCreateView(PermissionRequiredMixin, LoginRequiredMixin, TemplateView):
 
     template_name = 'projects/project_creation.html'
     permission_required = 'organization-projects.add_project'
+    raise_exception = True
+    return_403 = True
 
 
 class ProjectEditView(PermissionRequiredMixin, LoginRequiredMixin, SlugMixin, DetailView):
