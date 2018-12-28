@@ -552,7 +552,6 @@ class ProjectCollectionDetailView(DetailView):
         return context
 
 
-
 class ProjectCollectionListView(ListView):
 
     model = ProjectCollection
@@ -596,6 +595,16 @@ class Pivot_Project_ProjectCollection_View(Select2QuerySetSequenceView):
 class ProjectCreateView(LoginRequiredMixin, TemplateView):
 
     template_name = 'projects/project_creation.html'
+    permission_required = 'organization-projects.add_project'
+
+
+class ProjectEditView(PermissionRequiredMixin, LoginRequiredMixin, SlugMixin, DetailView):
+
+    model = Project
+    template_name = 'projects/project_edit.html'
+    permission_required = 'organization-projects.change_project'
+    raise_exception = True
+    return_403 = True
 
 
 class ProjectTopicAutocompleteView(autocomplete.Select2QuerySetView):
