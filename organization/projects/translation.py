@@ -27,7 +27,7 @@ from organization.projects.models import *
 @register(Project)
 class ProjectTranslationOptions(TranslationOptions):
 
-    fields = ('title', 'description', 'content')
+    pass
 
 
 @register(ProjectPlaylist)
