@@ -209,8 +209,10 @@ def slice_ng(qs, indexes):
         index_2 = int(index_split[1])
     if index_1 >= 0 and index_2:
         return list[index_1:index_2]
-    else:
+    elif index_1 >= 0 & index_1 < len(list):
         return [list[index_1]]
+    else :
+        return list
 
 @register.filter
 def date_year_higher_than(date, years):
