@@ -196,6 +196,16 @@ class TeamPublicationsView(PublicationsView):
         return super(TeamPublicationsView, self).get(request, *args, **kwargs)
 
 
+class TeamHomeView(TemplateView):
+    
+    template_name = "network/team/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(TeamHomeView, self).get_context_data(**kwargs)
+        context['hal_url'] = settings.HAL_URL + settings.HAL_LIMIT_PUB + "3" + settings.HAL_URL_CSS % self.request.META['HTTP_HOST']
+        return context
+
+
 class PersonDetailView(PersonMixin, SlugMixin, DetailView):
 
     model = Person

@@ -19,7 +19,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf import settings # import the settings file
+from mezzanine.conf import settings # import the settings file
 from datetime import datetime, date
 from organization.pages.models import Page
 from organization.network.models import Organization, OrganizationLinkedInline, Person

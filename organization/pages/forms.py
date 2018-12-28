@@ -28,6 +28,7 @@ import dal_select2_queryset_sequence
 from django import forms
 from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
+from mezzanine.conf import settings
 from mezzanine.core.models import Orderable
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
