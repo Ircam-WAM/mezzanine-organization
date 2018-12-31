@@ -242,7 +242,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             repository = project_repository.repository
             if repository.api:
                 tmp['url'] = repository.url
-                tmp['readme_html'] = repository.api.get_readme()
+                tmp['readme'] = {}
+                _, tmp['readme']['html'] = repository.api.get_readme()
                 tmp['summary'] = repository.api.get_summary()
                 repositories.append(tmp)
 
@@ -353,10 +354,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
         if not cached:
             # WARNING: only implemented for one repository (the first)
-            if len(self.project_repositories.all()) < 1:
-                repository = None
-            else:
-                repository = self.project_repositories.first().repository
+            repository = self.main_repository
 
             group = None
 
@@ -378,6 +376,16 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             ret = cached
 
         return ret
+
+    @property
+    def main_repository(self):
+        # Later we might want to allow multiple repositories
+        # but there will always be a "main" one
+        if len(self.project_repositories.all()) < 1:
+            repository = None
+        else:
+            repository = self.project_repositories.first().repository
+        return repository
 
 
 class ProjectTopic(Named):
