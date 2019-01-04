@@ -35,6 +35,34 @@ try:
 except ImportError:
     pass
 from pprint import pprint
+from django.contrib.admin import helpers
+
+
+class PreventLastRecordDeletionMixin():
+    """
+    Prevents the deletion of a record if it is the last one (or the last `min_objects` ones)
+    """
+    def has_delete_permission(self, request, obj=None):
+
+        if not hasattr(self, 'min_objects'):
+            self.min_objects = 1
+
+        queryset = self.model.objects.all()
+
+        # If we're running the bulk delete action, estimate the number
+        # of objects after we delete the selected items
+        selected = request.POST.getlist(helpers.ACTION_CHECKBOX_NAME)
+        if selected:
+            queryset = queryset.exclude(pk__in=selected)
+
+        if queryset.count() <= self.min_objects:
+            message = 'There should be at least {} object(s) left.'
+            self.message_user(request, message.format(self.min_objects))
+            # FIX: it returns a 401/403 and thus quits the admin... not perfect.
+            return False
+
+        return super().has_delete_permission(request, obj)
+
 
 class KeywordAdmin(BaseTranslationModelAdmin):
 
