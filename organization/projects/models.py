@@ -224,11 +224,16 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
     def get_discussion_rooms(self):
         from discussion import discussion as d
+        s = {}
+        s.update(settings.DISCUSSION)
         discussion_rooms = []
         for project_link in self.get_links(link_type_slug='discussion'):
             tmp = {}
             tmp['url'] = project_link.url
-            tmp['summary'] = d.Discussion(project_link.url, 'discourse').get_summary()
+            tmp['summary'] = d.Discussion(project_link.url,
+                                          'discourse',
+                                          settings=s,
+                                          debug=settings.DEBUG).get_summary()
             discussion_rooms.append(tmp)
 
         return discussion_rooms
