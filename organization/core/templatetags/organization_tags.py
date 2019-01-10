@@ -39,6 +39,7 @@ from django.utils.translation import ugettext_lazy as _
 from organization.agenda.models import EventPeriod
 from organization.magazine.models import *
 from organization.projects.models import *
+from organization.network.utils import get_users_of_team
 from django.utils.formats import get_format
 from django.utils.dateformat import DateFormat
 from organization.core.models import *
@@ -209,8 +210,10 @@ def slice_ng(qs, indexes):
         index_2 = int(index_split[1])
     if index_1 >= 0 and index_2:
         return list[index_1:index_2]
-    else:
+    elif index_1 >= 0 & index_1 < len(list):
         return [list[index_1]]
+    else :
+        return list
 
 @register.filter
 def date_year_higher_than(date, years):
@@ -392,7 +395,7 @@ def extended_custompage_extra_content(extra_content):
 
 @register.filter
 def hal_labos_exp(hal_url, hal_researche_structure):
-    return hal_url + '&' + settings.HAL_LABOS_EXP + hal_researche_structure.replace(' ', '+')
+    return hal_url + settings.HAL_LABOS_EXP + hal_researche_structure.replace(' ', '+')
 
 @register.filter
 def hal_css(url_part, http_host):
@@ -454,3 +457,9 @@ def filter_content_model(content_list, model_name):
         else :
             content_list_filtered.append(rc)
     return filtered_cards, content_list_filtered
+
+
+@register.filter
+def get_team_articles(team):
+    users = get_users_of_team(team)
+    return Article.objects.filter(user__in=users)

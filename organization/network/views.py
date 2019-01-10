@@ -422,7 +422,7 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView): # pragma: no cove
         )
         # gather projects of all current activities
         for activity in activities:
-            for project_activity in activity.project_activity.filter(project__date_to__gt=date.today()) :
+            for project_activity in activity.project_activity.filter(project__date_to__gte=last_day_in_month) :
                 project_list.append({
                     'activity' : activity,
                     'project' : project_activity.project,
