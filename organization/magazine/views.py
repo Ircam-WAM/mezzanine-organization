@@ -59,14 +59,14 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
         pages = DynamicContentPage.objects.filter(object_id=self.object.id).all()
         pages_related = []
         for p in pages :
-            if p.page :
+            if hasattr(p, 'page'):
                 pages_related.append(p.page)
 
         # automatic relation : dynamic content article
         articles = DynamicContentArticle.objects.filter(object_id=self.object.id).all()
         articles_related = []
         for a in articles:
-            if a.article:
+            if hasattr(a, 'article'):
                 articles_related.append(a.article)
 
         # gather all and order by creation date
