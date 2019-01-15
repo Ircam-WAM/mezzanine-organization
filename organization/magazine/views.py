@@ -226,3 +226,34 @@ class ArticleListView(SlugMixin, ListView):
         if 'type' in self.kwargs:
             context['current_keyword'] = self.kwargs['type'];
         return context
+
+
+class ArticleEventView(SlugMixin, ListView):
+    
+    model = Article
+    template_name='magazine/article/article_event_list.html'
+    context_object_name = 'objects'
+    keywords = OrderedDict()
+
+    def get_queryset(self):
+        self.qs = super(ArticleEventView, self).get_queryset()
+        self.qs = self.qs.filter(status=2).order_by('-created')
+        events = Event.objects.published().order_by('-created').distinct()
+
+        self.qs = sorted(
+            chain( self.qs, events),
+            key=lambda instance: instance.created,
+            reverse=True)
+
+        return self.qs
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleEventView, self).get_context_data(**kwargs)
+        #context['keywords'] = settings.ARTICLE_KEYWORDS
+        context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
+                              settings.MEDIA_PER_PAGE,
+                              settings.MAX_PAGING_LINKS)
+        if 'type' in self.kwargs:
+            context['current_keyword'] = self.kwargs['type'];
+        return context
+
