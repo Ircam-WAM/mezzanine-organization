@@ -39,10 +39,10 @@ class MediaDetailView(SlugMixin, DetailView):
 
     model = Media
     context_object_name = 'media'
+    template_name='media/media/media_detail.html'
 
     def get_template_names(self):
         templates = super(MediaDetailView, self).get_template_names()
-        templates.insert(0,'media/'+self.kwargs['type'].lower()+'/'+self.kwargs['type'].lower()+'_detail.html')
         return templates
 
     def get_context_data(self, **kwargs):
@@ -60,7 +60,7 @@ class MediaDetailView(SlugMixin, DetailView):
 class PlaylistDetailView(SlugMixin, DetailView):
 
     model = Playlist
-    template_name='media/playlist_detail.html'
+    template_name='media/playlist/playlist_detail.html'
     context_object_name = 'playlist'
     def get_context_data(self, **kwargs):
         context = super(PlaylistDetailView, self).get_context_data(**kwargs)
@@ -92,7 +92,7 @@ class PlaylistDetailView(SlugMixin, DetailView):
 class PlaylistListView(ListView):
 
     model = Playlist
-    template_name='media/playlist_list.html'
+    template_name='media/playlist/playlist_list.html'
     context_object_name = 'playlists'
 
     def get_queryset(self):
