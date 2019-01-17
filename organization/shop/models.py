@@ -23,10 +23,9 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
 from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
 from cartridge.shop.models import Product
-
+from organization.network.models import Team
 from organization.core.models import *
 
 
@@ -86,3 +85,14 @@ class ProductPrestashopProduct(models.Model):
 
     def __str__(self):
         return ' - '.join((self.product.title, str(self.external_id)))
+
+
+class TeamProduct(models.Model):
+    
+    product = models.ForeignKey(Product, verbose_name=_('product'), related_name='team')
+    teams = models.ForeignKey(Team, verbose_name=_('team'), null=True, blank=True, related_name='products')
+
+    class Meta:
+        verbose_name = _("team")
+        verbose_name_plural = _("teams")
+
