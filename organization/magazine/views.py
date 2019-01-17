@@ -255,8 +255,8 @@ class ArticleEventView(SlugMixin, FormView, ListView):
         events = Event.objects.published().order_by('-created').distinct()
 
         if 'categories' in self.request.session:
-            events = events.filter(category__name=self.request.session['categories'])
-            self.qs = self.qs.filter(categories__title=self.request.session['categories'])
+            events = events.filter(category__name__in=self.request.session['categories'])
+            self.qs = self.qs.filter(categories__title__in=self.request.session['categories'])
             self.request.session.pop('categories', None)
 
         self.qs = sorted(
@@ -268,11 +268,8 @@ class ArticleEventView(SlugMixin, FormView, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleEventView, self).get_context_data(**kwargs)
-        #context['keywords'] = settings.ARTICLE_KEYWORDS
         context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
                               settings.MEDIA_PER_PAGE,
                               settings.MAX_PAGING_LINKS)
-        if 'type' in self.kwargs:
-            context['current_keyword'] = self.kwargs['type'];
         return context
 

@@ -97,4 +97,4 @@ class CategoryFilterForm(forms.Form):
     for category in event_categories:
         CATEGORIES.append((category, category))
     
-    categories = forms.ChoiceField(choices=CATEGORIES)
+    categories = forms.MultipleChoiceField(choices=CATEGORIES)
