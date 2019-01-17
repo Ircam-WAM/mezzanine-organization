@@ -57,7 +57,7 @@ from django.db.models.fields.reverse_related import ManyToOneRel
 class SlugMixin(object):
 
     def get_object(self):
-        objects = self.model.objects.all()
+        objects = self.get_queryset()
         return get_object_or_404(objects, slug=self.kwargs['slug'])
 
 
