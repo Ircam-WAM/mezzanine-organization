@@ -60,8 +60,8 @@ class EventDepartment(models.Model):
         verbose_name_plural = _("departments")
 
 
-class EventPersonListBlockInline(Titled):
-    
+class EventPersonListBlockInline(Titled, Description):
+
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='persons_list', blank=True, null=True, on_delete=models.SET_NULL)
     person_list_block = models.ForeignKey(PersonListBlock, related_name='events', verbose_name=_('Person List Block'), blank=True, null=True)
 
@@ -145,7 +145,7 @@ class DynamicContentEvent(DynamicContent, Orderable):
 
 
 class DynamicMultimediaEvent(DynamicContent, Orderable):
-    
+
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:

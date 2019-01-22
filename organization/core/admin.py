@@ -50,6 +50,7 @@ class BaseTranslationOrderedModelAdmin(BaseTranslationModelAdmin):
             lang = settings.LANGUAGE_CODE
             lang_fields = []
             for field in fields:
+                lang_fields.append(field)
                 lang_fields.append(field + '_' + lang)
             fields = lang_fields
         for field in fields:

@@ -38,6 +38,7 @@ from organization.network.models import PageCustomPersonListBlockInline
 from organization.shop.models import *
 from organization.pages.translation import *
 
+
 class PageBlockInline(StackedDynamicInlineAdmin):
 
     model = PageBlock
@@ -64,8 +65,8 @@ class LinkImageInline(StackedDynamicInlineAdmin):
 
 
 class LinkStyleInline(TabularDynamicInlineAdmin):
-    
-    model = LinkStyle    
+
+    model = LinkStyle
 
 
 class LinkImageAdmin(LinkAdmin):
@@ -101,7 +102,7 @@ class PageRelatedTitleAdmin(TranslationTabularInline):
 
 
 class DynamicMultimediaPageInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaPage
     form = DynamicMultimediaPageForm
 

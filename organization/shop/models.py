@@ -36,7 +36,7 @@ PRODUCT_LIST_STYLE_CHOICES = [
 ]
 
 
-class ProductList(Titled, RichText):
+class ProductList(Titled, Description, RichText):
 
     style = models.CharField(_('style'), max_length=16, choices=PRODUCT_LIST_STYLE_CHOICES)
 
