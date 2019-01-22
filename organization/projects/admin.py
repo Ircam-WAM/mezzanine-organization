@@ -65,6 +65,11 @@ class ProjectDemoInline(TabularDynamicInlineAdmin):
     model = ProjectDemo
 
 
+class ProjectPageInline(StackedDynamicInlineAdmin):
+
+    model = ProjectPage
+
+
 class ProjectWorkPackageInline(TabularDynamicInlineAdmin):
 
     model = ProjectWorkPackage
@@ -202,6 +207,7 @@ class ProjectAdmin(BaseTranslationOrderedModelAdmin):
                 ProjectPublicDataInline,
                 ProjectPrivateDataInline,
                 ProjectWorkPackageInline,
+                ProjectPageInline,
                 ProjectPlaylistInline,
                 DynamicMultimediaProjectInline,
                 ProjectLinkInline,

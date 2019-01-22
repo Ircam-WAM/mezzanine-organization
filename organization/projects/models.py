@@ -71,6 +71,7 @@ FUNDING_CHOICES = (
 
 
 class Project(TitledSlugged, MetaData, TimeStamped, Period, RichText, OwnableOrNot):
+# class Project(Displayable, Period, RichText, OwnableOrNot):
     """(Project description)"""
 
     type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES, blank=True)
@@ -499,13 +500,16 @@ class ProjectResidencyEvent(models.Model):
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-
 class ProjectPage(Displayable, RichText):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='pages', blank=True, null=True, on_delete=models.SET_NULL)
 
     def get_absolute_url(self):
         return reverse("organization-project-projectpage-detail", kwargs={'slug': self.slug})
+
+    # def __str__(self):
+    #     return self.project.title
+
 
 class ProjectPageImage(Image):
 
