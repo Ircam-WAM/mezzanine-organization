@@ -63,7 +63,6 @@ class PersonMixin(object):
     def get_object(self, queryset=None):
         person = None
         user = self.request.user
-
         if user.is_authenticated():
             if not Person.objects.filter(user=user):
                 person = Person(first_name=user.first_name, last_name=user.last_name, user=user,
@@ -71,7 +70,7 @@ class PersonMixin(object):
                 person.save()
             person = user.person
 
-        elif 'username' in self.kwargs:
+        if 'username' in self.kwargs:
             users = User.objects.filter(username=self.kwargs['username'])
             if users:
                 user = users[0]
