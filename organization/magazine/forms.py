@@ -28,6 +28,8 @@ from organization.pages.models import CustomPage
 from organization.network.models import PersonListBlock, Person
 from mezzanine_agenda.models import Event
 from organization.media.forms import DynamicMultimediaForm
+from mezzanine.blog.models import BlogCategory
+from mezzanine_agenda.models import EventCategory
 
 
 class BriefForm(autocomplete.FutureModelForm):
@@ -81,3 +83,18 @@ class DynamicMultimediaArticleForm(DynamicMultimediaForm):
     
     class Meta(DynamicMultimediaForm.Meta):
         model = DynamicMultimediaArticle
+
+
+class CategoryFilterForm(forms.Form):
+    
+    
+    blog_categories = BlogCategory.objects.all()
+    event_categories = EventCategory.objects.all()
+    CATEGORIES = []
+    for category in blog_categories:
+        CATEGORIES.append((category, category))
+    
+    for category in event_categories:
+        CATEGORIES.append((category, category))
+    
+    categories = forms.ChoiceField(choices=CATEGORIES)

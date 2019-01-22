@@ -40,6 +40,8 @@ from organization.core.views import SlugMixin, autocomplete_result_formatting, D
 from organization.core.utils import split_events_from_other_related_content
 from django.template.defaultfilters import slugify
 from itertools import chain
+from django.views.generic.edit import FormView
+from .forms import CategoryFilterForm
 
 
 class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
@@ -59,14 +61,14 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
         pages = DynamicContentPage.objects.filter(object_id=self.object.id).all()
         pages_related = []
         for p in pages :
-            if p.page :
+            if hasattr(p, 'page'):
                 pages_related.append(p.page)
 
         # automatic relation : dynamic content article
         articles = DynamicContentArticle.objects.filter(object_id=self.object.id).all()
         articles_related = []
         for a in articles:
-            if a.article:
+            if hasattr(a, 'article'):
                 articles_related.append(a.article)
 
         # gather all and order by creation date
@@ -226,3 +228,48 @@ class ArticleListView(SlugMixin, ListView):
         if 'type' in self.kwargs:
             context['current_keyword'] = self.kwargs['type'];
         return context
+
+
+class ArticleEventView(SlugMixin, FormView, ListView):
+    
+    model = Article
+    template_name='magazine/article/article_event_list.html'
+    context_object_name = 'objects'
+    success_url = "."
+    form_class = CategoryFilterForm
+    keywords = OrderedDict()
+
+    def form_valid(self, form):
+        # Ajax
+        self.request.session['categories'] = form.cleaned_data['categories']
+        if self.request.is_ajax():
+            context = {}
+            context["concrete_objects"] = self.get_queryset()
+            return render(self.request, 'core/inc/cards.html', context)
+        else :
+            return super(ArticleEventView, self).form_valid(form)
+
+    def get_queryset(self):
+        self.qs = super(ArticleEventView, self).get_queryset()
+        self.qs = self.qs.filter(status=2).order_by('-created')
+        events = Event.objects.published().order_by('-created').distinct()
+
+        if 'categories' in self.request.session:
+            events = events.filter(category__name=self.request.session['categories'])
+            self.qs = self.qs.filter(categories__title=self.request.session['categories'])
+            self.request.session.pop('categories', None)
+
+        self.qs = sorted(
+            chain( self.qs, events),
+            key=lambda instance: instance.created,
+            reverse=True)
+
+        return self.qs
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleEventView, self).get_context_data(**kwargs)
+        context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
+                              settings.MEDIA_PER_PAGE,
+                              settings.MAX_PAGING_LINKS)
+        return context
+
