@@ -217,6 +217,7 @@ class ProjectAdmin(BaseTranslationOrderedModelAdmin):
                 ProjectBlogPageInline,
                 ]
     filter_horizontal = ['teams', 'organizations', 'concepts']
+    search_fields = ['title', ]
     list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status', 'call']
     list_display = ['title', 'date_from', 'date_to', 'created', 'lead_organization',
         'program', 'is_archive', 'topic', 'external_id', 'validation_status']
