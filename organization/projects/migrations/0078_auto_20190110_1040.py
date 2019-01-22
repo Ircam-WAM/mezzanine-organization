@@ -15,15 +15,10 @@ def copy_project_to_project_page(apps, schema_editor):
     DynamicContentProjectPage = apps.get_model('organization-projects', 'DynamicContentProjectPage')
 
     for project in Project.objects.all():
-        project_page = ProjectPage(project=project,
-                                    expiry_date=project.expiry_date,
-                                    in_sitemap=project.in_sitemap,
-                                    publish_date=project.publish_date,
-                                    short_url=project.short_url,
-                                    site=project.site,
-                                    status=project.status,
-                                    title=project.title,
-                                    )
+        project_page = ProjectPage(project=project)
+        for field in project_page._meta.fields:
+            if hasattr(project, field.name) and not field.name == 'id' :
+                setattr(project_page, field.name, getattr(project, field.name))
         project_page.save()
 
         for project_block in project.blocks.all():
