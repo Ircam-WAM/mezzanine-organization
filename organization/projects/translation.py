@@ -202,3 +202,27 @@ class ProjectTopicTranslationOptions(TranslationOptions):
 class DynamicMultimediaProjectTranslationOptions(TranslationOptions):
 
     fields = ()
+
+
+@register(ProjectPage)
+class ProjectPageTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description')
+
+
+@register(ProjectPageBlock)
+class ProjectPageBlockTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description', 'content')
+
+
+@register(ProjectPageImage)
+class ProjectPageImageTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(DynamicContentProjectPage)
+class DynamicContentProjectPageTranslationOptions(TranslationOptions):
+
+    fields = ()

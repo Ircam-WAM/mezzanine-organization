@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2016-2017 Ircam
-# Copyright (c) 2016-2017 Guillaume Pellerin
+# Copyright (c) 2016-2019 Ircam
+# Copyright (c) 2016-2019 Guillaume Pellerin
 # Copyright (c) 2016-2017 Emilie Zawadzki
 
 # This file is part of mezzanine-organization.
@@ -18,6 +18,8 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
 import csv
 from django.contrib import admin
 from django import forms
@@ -105,7 +107,7 @@ class ProducerDataInline(StackedDynamicInlineAdmin):
 
 
 class DynamicMultimediaOrganizationInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaOrganization
     form = DynamicMultimediaOrganizationForm
 
@@ -140,7 +142,7 @@ class PageProductListInline(TabularDynamicInlineAdmin):
 
 
 class DynamicMultimediaDepartmentInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaPage
     form = DynamicMultimediaPageForm
 
@@ -170,7 +172,7 @@ class TeamAdmin(BaseTranslationModelAdmin):
 
 
 class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaPage
     form = DynamicMultimediaPageForm
 
@@ -225,7 +227,7 @@ class PersonBlockInline(StackedDynamicInlineAdmin):
 
 
 class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaPerson
     form = DynamicMultimediaPersonForm
 
@@ -259,7 +261,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
         return weekly_hour_volume
 
     def export_as_csv(self, request, queryset):
-        
+
             meta = self.model._meta
             field_names = ['first_name', 'last_name', 'gender', 'birthday']
             activity_fields = ['date_from', 'date_to', 'framework', 'function', 'organizations', 'teams']
