@@ -463,3 +463,8 @@ def filter_content_model(content_list, model_name):
 def get_team_articles(team):
     users = get_users_of_team(team)
     return Article.objects.filter(user__in=users)
+
+
+@register.filter
+def get_content_objects(dynamic_content):
+    return [dc.content_object for dc in dynamic_content]
