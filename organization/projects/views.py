@@ -547,7 +547,7 @@ class ProjectListView(FormView, ListView):
         self.qs = super(ProjectListView, self).get_queryset()
         self.qs = self.qs.filter(status=2).order_by('-created')
 
-        if self.request.session['topic']:
+        if 'topic' in self.request.session and self.request.session['topic']:
             self.qs = self.qs.filter(project__topic__id=int(self.request.session['topic']))
             self.request.session.pop('topic', None)
 
