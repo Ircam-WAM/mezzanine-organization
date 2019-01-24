@@ -468,3 +468,12 @@ def get_team_articles(team):
 @register.filter
 def get_content_objects(dynamic_content):
     return [dc.content_object for dc in dynamic_content]
+
+
+@register.filter
+def has_element(objects_list, el):
+    b = False
+    for o in objects_list:
+        if el == o.__str__():
+            b = True
+    return b
