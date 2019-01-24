@@ -254,7 +254,7 @@ class ArticleEventView(SlugMixin, FormView, ListView):
         self.qs = self.qs.filter(status=2).order_by('-created')
         events = Event.objects.published().order_by('-created').distinct()
 
-        if 'categories' in self.request.session:
+        if 'categories' in self.request.session and self.request.session['categories']:
             events = events.filter(category__name=self.request.session['categories'])
             self.qs = self.qs.filter(categories__title=self.request.session['categories'])
             self.request.session.pop('categories', None)
