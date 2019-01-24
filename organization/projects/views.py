@@ -146,7 +146,7 @@ class ProjectBlogPageView(SlugMixin, ProjectMixin, DetailView):
 class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
 
     model = ProjectPage
-    template_name='projects/project_page_detail.html'
+    template_name='projects/project/project_detail.html'
 
 
 class ProjectCallMixin(object):
