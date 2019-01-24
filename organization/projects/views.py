@@ -25,6 +25,7 @@ from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.template import Context
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.edit import FormView
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
@@ -522,3 +523,39 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     form_class = ProjectResidencyForm
     template_name='projects/project_residency_create.html'
     inlines = []
+
+
+class ProjectListView(FormView, ListView):
+    
+    model = ProjectPage
+    template_name='projects/project/project_list.html'
+    context_object_name = 'objects'
+    form_class = TopicFilterForm
+    success_url = "."
+
+    def form_valid(self, form):
+        # Ajax
+        self.request.session['topic'] = form.cleaned_data['topics']
+        if self.request.is_ajax():
+            context = {}
+            context["concrete_objects"] = self.get_queryset()
+            return render(self.request, 'core/inc/cards.html', context)
+        else :
+            return super(ProjectListView, self).form_valid(form)
+
+    def get_queryset(self):
+        self.qs = super(ProjectListView, self).get_queryset()
+        self.qs = self.qs.filter(status=2).order_by('-created')
+
+        if self.request.session['topic']:
+            self.qs = self.qs.filter(project__topic__id=int(self.request.session['topic']))
+            self.request.session.pop('topic', None)
+
+        return self.qs
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListView, self).get_context_data(**kwargs)
+        context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
+                              settings.MEDIA_PER_PAGE,
+                              settings.MAX_PAGING_LINKS)
+        return context

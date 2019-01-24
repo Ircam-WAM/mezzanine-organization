@@ -185,3 +185,13 @@ class DynamicContentProjectPageForm(autocomplete.FutureModelForm):
         model = DynamicContentProjectPage
         fields = ('content_object',)
 
+
+class TopicFilterForm(forms.Form):
+        
+    topics = ProjectTopic.objects.all()
+    TOPICS = []
+    
+    for topic in topics:
+        TOPICS.append((topic.id, topic.name))
+
+    topics = forms.ChoiceField(choices=TOPICS, required=False)

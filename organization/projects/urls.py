@@ -34,7 +34,7 @@ urlpatterns = [
     url("^dynamic-content-project/$",  permission_required('project.can_edit')(DynamicContentProjectView.as_view()), name='dynamic-content-project'),
 
     url("^projects/detail/(?P<slug>.*)/$", ProjectDetailView.as_view(), name='organization-project-detail'),
-    url("^projects/list/(?P<slug>.*)/$", ProjectListView.as_view(), name='organization-project-list'),
+    url("^projects/list/$", ProjectListView.as_view(), name='organization-project-list'),
     url("^projects/demo/(?P<slug>.*)/$", ProjectDemoDetailView.as_view(), name='organization-project-demo-detail'),
     url("^projects/blog/(?P<slug>.*)/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
     url("^projects/pages/(?P<slug>.*)/$", ProjectPageView.as_view(), name='organization-project-projectpage-detail'),

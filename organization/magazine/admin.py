@@ -30,6 +30,7 @@ from mezzanine.blog.admin import BlogPostAdmin
 from organization.magazine.models import *
 from organization.magazine.forms import *
 from organization.magazine.translation import *
+from organization.core.admin import DuplicateAdmin
 from organization.core.utils import actions_to_duplicate, get_other_sites
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
@@ -71,7 +72,7 @@ class ArticleRelatedTitleAdmin(TranslationTabularInline):
     model = ArticleRelatedTitle
 
 
-class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin):
+class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin, DuplicateAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     list_display = ('title', 'department', 'publish_date', 'status', 'user')
@@ -87,20 +88,6 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin):
     list_filter = [ 'status', 'department', ] #'keywords'
 
     actions = actions_to_duplicate()
-    func_template = """def duplicate_content_to_%s(self, request, queryset):
-                            import inspect
-                            import copy
-                            from pprint import pprint
-                            domain = inspect.stack()[0][3].replace('duplicate_content_to_', '').replace('_', '.')
-                            site = Site.objects.get(domain=domain)
-                            
-                            for obj in queryset:
-                                clone = copy.copy(obj)
-                                clone.pk = None
-                                clone.site = site
-                                clone.save(force_insert=True)"""
-
-    for site in get_other_sites(): exec(func_template % (site.domain.replace(".", "_")))
 
     def save_form(self, request, form, change):
         """
