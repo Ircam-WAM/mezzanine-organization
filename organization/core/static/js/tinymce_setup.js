@@ -69,6 +69,10 @@ jQuery(function($) {
         style_formats: [
             {
                 title: 'Boutons', items: [
+                    { title: 'STMS Black S', selector: 'a', classes: 'c-button'},
+                    { title: 'STMS Red S', selector: 'a', classes: 'c-button c-button--primary'},
+                    { title: 'STMS Black L', selector: 'a', classes: 'c-button c-button--large'},
+                    { title: 'STMS Red L', selector: 'a', classes: 'c-button c-button--primary c-button--large'},
                     { title: 'Boutons Jaune', selector: 'a', classes: 'wys-button'},
                     { title: 'Boutons Jaune Small', selector: 'a', classes: 'wys-button-small'},
                     { title: 'Boutons Jaune XSmall', selector: 'a', classes: 'wys-button-xsmall'},

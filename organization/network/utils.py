@@ -8,6 +8,7 @@ import datetime
 from django.utils import timezone
 from django.http import QueryDict
 from organization.network.api import *
+from organization.network.models import PersonActivity
 from collections import defaultdict, OrderedDict
 from pprint import pprint
 from workalendar.europe import France
@@ -423,3 +424,13 @@ def flatten_activities(activities, fields):
                 data = ",".join(data2)
             flat.append(data)
     return flat
+    
+
+def get_users_of_team(team):
+    users = set()
+    activities = PersonActivity.objects.filter(teams=team)
+    for activity in activities:
+        users.add(activity.person.user)
+
+    print("users", users)
+    return users

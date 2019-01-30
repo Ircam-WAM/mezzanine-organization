@@ -96,6 +96,12 @@ class DynamicContentEventTranslationOptions(TranslationOptions):
     fields = ()
 
 
+@register(DynamicMultimediaEvent)
+class DynamicMultimediaEventTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
 @register(EventPriceDescription)
 class EventPriceDescriptionTranslationOptions(TranslationOptions):
 

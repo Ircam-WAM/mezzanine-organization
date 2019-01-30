@@ -21,6 +21,7 @@
 
 from django.contrib import admin
 from django import forms
+from django.contrib.sites.models import Site
 from copy import deepcopy
 from modeltranslation.admin import TranslationTabularInline
 from mezzanine.core.admin import *
@@ -29,6 +30,8 @@ from mezzanine.blog.admin import BlogPostAdmin
 from organization.magazine.models import *
 from organization.magazine.forms import *
 from organization.magazine.translation import *
+from organization.core.admin import DuplicateAdmin
+from organization.core.utils import actions_to_duplicate, get_other_sites
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
 
@@ -57,10 +60,11 @@ class DynamicContentArticleInline(TabularDynamicInlineAdmin):
     model = DynamicContentArticle
     form = DynamicContentArticleForm
 
-    class Media:
-        js = (
-            static("mezzanine/js/admin/dynamic_inline.js"),
-        )
+
+class DynamicMultimediaArticleInline(TabularDynamicInlineAdmin):
+    
+    model = DynamicMultimediaArticle
+    form = DynamicMultimediaArticleForm
 
 
 class ArticleRelatedTitleAdmin(TranslationTabularInline):
@@ -68,7 +72,7 @@ class ArticleRelatedTitleAdmin(TranslationTabularInline):
     model = ArticleRelatedTitle
 
 
-class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin):
+class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin, DuplicateAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     list_display = ('title', 'department', 'publish_date', 'status', 'user')
@@ -77,10 +81,13 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin):
     filter_horizontal = ['categories',]
     inlines = [ArticleImageInline,
               ArticlePersonAutocompleteInlineAdmin,
+              DynamicMultimediaArticleInline,
               ArticleRelatedTitleAdmin,
               DynamicContentArticleInline,
               ArticlePlaylistInline]
-    list_filter = [ 'status', 'keywords', 'department', ]
+    list_filter = [ 'status', 'department', ] #'keywords'
+
+    actions = actions_to_duplicate()
 
     def save_form(self, request, form, change):
         """
@@ -89,6 +96,10 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin):
         OwnableAdmin.save_form(self, request, form, change)
         return DisplayableAdmin.save_form(self, request, form, change)
 
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
 
 
 class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline

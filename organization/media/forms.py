@@ -41,3 +41,19 @@ class PlaylistMediaForm(forms.ModelForm):
     class Meta:
         model = PlaylistMedia
         fields = ('__all__')
+
+
+class DynamicMultimediaForm(autocomplete.FutureModelForm):
+    
+    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
+        queryset=autocomplete.QuerySetSequence(
+            Media.objects.all(),
+            Playlist.objects.all()
+        ),
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-multimedia-event'),
+    )
+
+    class Meta:
+        abstract = True
+        fields = ('content_object',)

@@ -32,9 +32,11 @@ from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
 from organization.agenda.models import Event, DynamicContentEvent
 from organization.media.models import Playlist
+from organization.media.forms import DynamicMultimediaForm
 from organization.network.models import Organization
 from organization.projects.models import *
 from extra_views import InlineFormSet
+
 
 class DynamicContentProjectForm(autocomplete.FutureModelForm):
 
@@ -158,3 +160,38 @@ class ProjectResidencyForm(ModelForm):
         model = ProjectResidency
         fields = '__all__'
 
+
+class DynamicMultimediaProjectForm(DynamicMultimediaForm):
+
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaProject
+
+
+class DynamicContentProjectPageForm(autocomplete.FutureModelForm):
+
+    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
+        queryset=autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            CustomPage.objects.all(),
+            Event.objects.all(),
+            Person.objects.all(),
+            Organization.objects.all()
+        ),
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-project'),
+    )
+
+    class Meta:
+        model = DynamicContentProjectPage
+        fields = ('content_object',)
+
+
+class TopicFilterForm(forms.Form):
+        
+    topics = ProjectTopic.objects.all()
+    TOPICS = []
+    
+    for topic in topics:
+        TOPICS.append((topic.id, topic.name))
+
+    topics = forms.ChoiceField(choices=TOPICS, required=False)

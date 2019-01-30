@@ -39,6 +39,7 @@ from django.utils.translation import ugettext_lazy as _
 from organization.agenda.models import EventPeriod
 from organization.magazine.models import *
 from organization.projects.models import *
+from organization.network.utils import get_users_of_team
 from django.utils.formats import get_format
 from django.utils.dateformat import DateFormat
 from organization.core.models import *
@@ -47,6 +48,8 @@ from django.db.models import Q
 from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
 from django.utils.functional import allow_lazy
 from django.utils import six
+from django.contrib.contenttypes.models import ContentType
+from django.apps import apps
 
 register = Library()
 
@@ -109,6 +112,15 @@ def get_class(obj):
     return obj.__class__.__name__
 
 @register.filter
+def get_content_type(content_type_id):
+    return ContentType.objects.get(id=content_type_id)
+
+@register.filter
+def get_object(content_type, object__id):
+    model = apps.get_model(content_type.app_label, content_type.model)
+    return model.objects.get(id=object__id)
+
+@register.filter
 def unique_posts(events):
     post_list = []
     for event in events:
@@ -160,13 +172,15 @@ def classname(obj):
 
 @register.filter
 def app_label_short(obj):
-    app_label = obj._meta.app_config.label
-    if app_label.find("_") > 0:
-        app_label_short = app_label.split("_")[1]
-    elif app_label.find("-") > 0:
-        app_label_short = app_label.split("-")[1]
-    else :
-        app_label_short = app_label
+    app_label_short = None
+    if obj:
+        app_label = obj._meta.app_config.label
+        if app_label.find("_") > 0:
+            app_label_short = app_label.split("_")[1]
+        elif app_label.find("-") > 0:
+            app_label_short = app_label.split("-")[1]
+        else :
+            app_label_short = app_label
     return app_label_short
 
 @register.as_tag
@@ -198,8 +212,10 @@ def slice_ng(qs, indexes):
         index_2 = int(index_split[1])
     if index_1 >= 0 and index_2:
         return list[index_1:index_2]
-    else:
+    elif index_1 >= 0 & index_1 < len(list):
         return [list[index_1]]
+    else :
+        return list
 
 @register.filter
 def date_year_higher_than(date, years):
@@ -380,12 +396,16 @@ def extended_custompage_extra_content(extra_content):
     return context
 
 @register.filter
-def hal_1(hal_tutelage, hal_researche_structure):
-    return settings.HAL_URL_PART_1 % (hal_researche_structure.replace(' ', '+'), hal_tutelage.replace(' ', '+'))
+def hal_labos_exp(hal_url, hal_researche_structure):
+    return hal_url + settings.HAL_LABOS_EXP + hal_researche_structure.replace(' ', '+')
 
 @register.filter
-def hal_2(url_part, http_host):
-    return url_part + settings.HAL_URL_PART_2 % http_host
+def hal_css(url_part, http_host):
+    return url_part + settings.HAL_URL_CSS % http_host
+
+@register.filter
+def hal_limit(url_part, nb):
+    return url_part + settings.HAL_LIMIT_PUB + str(nb)
 
 @register.filter
 def tag_is_in_menu(page, tag):
@@ -439,3 +459,37 @@ def filter_content_model(content_list, model_name):
         else :
             content_list_filtered.append(rc)
     return filtered_cards, content_list_filtered
+
+
+@register.filter
+def get_team_articles(team):
+    users = get_users_of_team(team)
+    return Article.objects.filter(user__in=users)
+
+
+@register.filter
+def get_content_objects(dynamic_content):
+    return [dc.content_object for dc in dynamic_content]
+
+
+@register.filter
+def has_str(objects_list, strg):
+    b = False
+    for o in objects_list:
+        if strg == o.__str__():
+            b = True
+    return b
+
+
+@register.filter
+def has_id(objects_list, id):
+    b = False
+    print("id", id, type(id))
+    for o in objects_list:
+        if id == o.id:
+            b = True
+    return b
+
+@register.filter
+def reverse(objects_list):
+    return  list(reversed(objects_list))

@@ -19,6 +19,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import re
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from django.views.generic.base import View, RedirectView
@@ -56,7 +57,7 @@ from django.db.models.fields.reverse_related import ManyToOneRel
 class SlugMixin(object):
 
     def get_object(self):
-        objects = self.model.objects.all()
+        objects = self.get_queryset()
         return get_object_or_404(objects, slug=self.kwargs['slug'])
 
 
@@ -276,8 +277,8 @@ class DynamicContentMixin(SingleObjectMixin):
 
         # get dynamic content field of an object, based on class
         for f in self.object._meta.get_fields():
-            if isinstance(f, ManyToOneRel) and DynamicContent in f.related_model.__bases__:
-                dynamic_content = getattr(self.object, f.related_name).all()
+            if re.match(r"^dynamic_content_", f.name):
+                dynamic_content = getattr(self.object, f.name).all()
 
         # get all concrete objects from dynamic content and append 
         for dc in dynamic_content:
