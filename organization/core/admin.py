@@ -20,6 +20,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from copy import deepcopy
+import re
 from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
 from django.contrib.auth.admin import UserAdmin
@@ -61,7 +62,7 @@ class DuplicateAdmin(object):
                                 clone.site = site
                                 clone.save(force_insert=True)"""
 
-    for site in get_other_sites(): exec(func_template % (site.domain.replace(".", "_")))
+    for site in get_other_sites(): exec(func_template % (re.sub(r'(\.|-)', '_', site.domain)))
 
 
 class BaseTranslationOrderedModelAdmin(BaseTranslationModelAdmin):
