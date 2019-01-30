@@ -172,13 +172,15 @@ def classname(obj):
 
 @register.filter
 def app_label_short(obj):
-    app_label = obj._meta.app_config.label
-    if app_label.find("_") > 0:
-        app_label_short = app_label.split("_")[1]
-    elif app_label.find("-") > 0:
-        app_label_short = app_label.split("-")[1]
-    else :
-        app_label_short = app_label
+    app_label_short = None
+    if obj:
+        app_label = obj._meta.app_config.label
+        if app_label.find("_") > 0:
+            app_label_short = app_label.split("_")[1]
+        elif app_label.find("-") > 0:
+            app_label_short = app_label.split("-")[1]
+        else :
+            app_label_short = app_label
     return app_label_short
 
 @register.as_tag
