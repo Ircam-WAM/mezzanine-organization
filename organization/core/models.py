@@ -49,6 +49,7 @@ ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')),
 
 IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('logo_white', _('logo white')),
     ('logo_black', _('logo black')), ('logo_header', _('logo header')),
+    ('logo_back', _('logo back')),
     ('logo_footer', _('logo footer')), ('slider', _('slider')),
     ('card', _('card')), ('page_slider', _('page - slider')),
     ('page_featured', _('page - featured')))
