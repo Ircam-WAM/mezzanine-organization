@@ -471,9 +471,23 @@ def get_content_objects(dynamic_content):
 
 
 @register.filter
-def has_element(objects_list, el):
+def has_str(objects_list, strg):
     b = False
     for o in objects_list:
-        if el == o.__str__():
+        if strg == o.__str__():
             b = True
     return b
+
+
+@register.filter
+def has_id(objects_list, id):
+    b = False
+    print("id", id, type(id))
+    for o in objects_list:
+        if id == o.id:
+            b = True
+    return b
+
+@register.filter
+def reverse(objects_list):
+    return  list(reversed(objects_list))
