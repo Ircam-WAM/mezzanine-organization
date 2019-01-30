@@ -24,11 +24,14 @@ import datetime
 import calendar
 import ast
 import re
+import copy
 from re import match
 from django.http import QueryDict
+from django import template 
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from mezzanine.template import Library
+from django.template.defaultfilters import stringfilter
 from mezzanine_agenda.models import Event
 from mezzanine.conf import settings
 from random import shuffle
@@ -36,6 +39,7 @@ from django.utils.translation import ugettext_lazy as _
 from organization.agenda.models import EventPeriod
 from organization.magazine.models import *
 from organization.projects.models import *
+from organization.network.utils import get_users_of_team
 from django.utils.formats import get_format
 from django.utils.dateformat import DateFormat
 from organization.core.models import *
@@ -44,6 +48,8 @@ from django.db.models import Q
 from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
 from django.utils.functional import allow_lazy
 from django.utils import six
+from django.contrib.contenttypes.models import ContentType
+from django.apps import apps
 
 register = Library()
 
@@ -104,6 +110,15 @@ def featured_breaking_news_content(*args):
 @register.filter
 def get_class(obj):
     return obj.__class__.__name__
+
+@register.filter
+def get_content_type(content_type_id):
+    return ContentType.objects.get(id=content_type_id)
+
+@register.filter
+def get_object(content_type, object__id):
+    model = apps.get_model(content_type.app_label, content_type.model)
+    return model.objects.get(id=object__id)
 
 @register.filter
 def unique_posts(events):
@@ -195,8 +210,10 @@ def slice_ng(qs, indexes):
         index_2 = int(index_split[1])
     if index_1 >= 0 and index_2:
         return list[index_1:index_2]
-    else:
+    elif index_1 >= 0 & index_1 < len(list):
         return [list[index_1]]
+    else :
+        return list
 
 @register.filter
 def date_year_higher_than(date, years):
@@ -377,12 +394,16 @@ def extended_custompage_extra_content(extra_content):
     return context
 
 @register.filter
-def hal_1(hal_tutelage, hal_researche_structure):
-    return settings.HAL_URL_PART_1 % (hal_researche_structure.replace(' ', '+'), hal_tutelage.replace(' ', '+'))
+def hal_labos_exp(hal_url, hal_researche_structure):
+    return hal_url + settings.HAL_LABOS_EXP + hal_researche_structure.replace(' ', '+')
 
 @register.filter
-def hal_2(url_part, http_host):
-    return url_part + settings.HAL_URL_PART_2 % http_host
+def hal_css(url_part, http_host):
+    return url_part + settings.HAL_URL_CSS % http_host
+
+@register.filter
+def hal_limit(url_part, nb):
+    return url_part + settings.HAL_LIMIT_PUB + str(nb)
 
 @register.filter
 def tag_is_in_menu(page, tag):
@@ -409,3 +430,64 @@ def remove_tags(html, tags):
     html = endtag_re.sub('', html)
     return html
 remove_tags = allow_lazy(remove_tags, six.text_type)
+
+
+@register.filter
+@stringfilter
+def template_exists(value):
+    try:
+        template.loader.get_template(value)
+        return True
+    except template.TemplateDoesNotExist:
+        return False
+
+
+@register.filter
+def filter_content_model(content_list, model_name):
+    # pop contents from list, based on model name 
+    # example call in template : new_content=related_content|filter_content_model:"Article"
+    # {{ new_content.0 }} : list of poped contents
+    # {{ new_content.1 }} : list of remains contents
+    model_name = model_name.lower()
+    filtered_cards = []
+    content_list_filtered = []
+    for i, rc in enumerate(content_list):
+        if rc._meta.model_name == model_name: 
+            filtered_cards.append(rc)
+        else :
+            content_list_filtered.append(rc)
+    return filtered_cards, content_list_filtered
+
+
+@register.filter
+def get_team_articles(team):
+    users = get_users_of_team(team)
+    return Article.objects.filter(user__in=users)
+
+
+@register.filter
+def get_content_objects(dynamic_content):
+    return [dc.content_object for dc in dynamic_content]
+
+
+@register.filter
+def has_str(objects_list, strg):
+    b = False
+    for o in objects_list:
+        if strg == o.__str__():
+            b = True
+    return b
+
+
+@register.filter
+def has_id(objects_list, id):
+    b = False
+    print("id", id, type(id))
+    for o in objects_list:
+        if id == o.id:
+            b = True
+    return b
+
+@register.filter
+def reverse(objects_list):
+    return  list(reversed(objects_list))

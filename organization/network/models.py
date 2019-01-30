@@ -29,8 +29,6 @@ import urllib
 import string
 import datetime
 import mimetypes
-from geopy.geocoders import GoogleV3 as GoogleMaps
-from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -44,7 +42,6 @@ from mezzanine.pages.models import Page
 from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
-
 from organization.core.models import *
 from organization.media.models import *
 from organization.pages.models import CustomPage
@@ -121,12 +118,9 @@ ORGANIZATION_STATUS_CHOICES = (
 )
 
 
-class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
+class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
     """(Organization description)"""
 
-    mappable_location = models.CharField(max_length=128, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
-    lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
-    lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
     role = models.ForeignKey('OrganizationRole', verbose_name=_('organization role'), blank=True, null=True, on_delete=models.SET_NULL)
     email = models.EmailField(_('email'), blank=True, null=True)
@@ -141,46 +135,11 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
     site = models.ForeignKey("sites.Site", blank=True, null=True, on_delete=models.SET_NULL)
     admin_thumb_type = 'logo'
     validation_status = models.IntegerField(_('validation status'), choices=ORGANIZATION_STATUS_CHOICES, default=1)
+    hal_id = models.CharField(_('HAL id'), max_length=10, blank=True, null=True)
 
     class Meta:
         verbose_name = _('organization')
         ordering = ['name',]
-
-    def clean(self):
-        """
-        Validate set/validate mappable_location, longitude and latitude.
-        """
-        super(Organization, self).clean()
-
-        lat = None
-        lon = None
-        mappable_location = ''
-
-        if self.lat and not self.lon:
-            raise ValidationError("Longitude required if specifying latitude.")
-
-        if self.lon and not self.lat:
-            raise ValidationError("Latitude required if specifying longitude.")
-
-        if not (self.lat and self.lon) and not self.mappable_location:
-            if self.address and self.postal_code and self.city:
-                self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
-
-        if self.mappable_location and not (self.lat and self.lon): #location should always override lat/long if set
-            g = GoogleMaps(domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
-            try:
-                mappable_location, (lat, lon) = g.geocode(self.mappable_location)
-            except GeocoderQueryError as e:
-                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
-            except ValueError as e:
-                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
-            except TypeError as e:
-                raise ValidationError("The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.")
-            except GeocoderQuotaExceeded as e:
-                pass
-            self.mappable_location = mappable_location
-            self.lat = lat
-            self.lon = lon
 
     def save(self, **kwargs):
         self.clean()
@@ -209,6 +168,7 @@ class Person(Displayable, AdminThumbMixin, Address):
     bio = RichTextField(_('biography'), blank=True)
     role = models.CharField(_('role'), max_length=256, blank=True, null=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
+    hal_url = models.URLField(_('HAL url'), max_length=512, blank=True)
     karma = models.IntegerField(default=0, editable=False)
     search_fields = {"title": 1}
 
@@ -235,6 +195,7 @@ class Person(Displayable, AdminThumbMixin, Address):
             self.last_name = ' '.join(names[1:])
 
     def save(self, *args, **kwargs):
+        self.clean()
         if self.first_name and self.last_name and (not self.title or self.title == '-'):
             self.title = self.first_name + ' ' + self.last_name
         super(Person, self).save(args, kwargs)
@@ -242,12 +203,12 @@ class Person(Displayable, AdminThumbMixin, Address):
             update_activity(activity)
 
 
-class OrganizationLinkedBlockInline(Titled, Orderable):
+class OrganizationLinkedBlockInline(Titled, Description, Orderable):
     organization_linked = models.ForeignKey('OrganizationLinked', verbose_name=_('organization list'), related_name='organization_linked_block_inline_list', blank=True, null=True)
     organization_main = models.ForeignKey('Organization', verbose_name=_('organization'), related_name='organization_linked_block', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-class OrganizationLinked(Titled):
+class OrganizationLinked(Titled, Description):
 
     class Meta:
         verbose_name = _('Organization Linked')
@@ -256,7 +217,7 @@ class OrganizationLinked(Titled):
         return self.title
 
 
-class OrganizationLinkedInline(Titled, Orderable):
+class OrganizationLinkedInline(Titled, Description, Orderable):
 
     organization_list = models.ForeignKey('OrganizationLinked', verbose_name=_('organization linked'), related_name='organization_linked_inline_linked', blank=True, null=True, on_delete=models.SET_NULL)
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name='organization_linked_inline_from', blank=True, null=True, on_delete=models.SET_NULL)
@@ -265,6 +226,22 @@ class OrganizationLinkedInline(Titled, Orderable):
 class OrganizationPlaylist(PlaylistRelated):
 
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class DynamicMultimediaOrganization(DynamicContent, Orderable):
+
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
+
+
+class DynamicMultimediaPerson(DynamicContent, Orderable):
+
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
 
 
 class OrganizationLink(Link):
@@ -362,7 +339,7 @@ class DepartmentPage(Page, SubTitled, RichText):
         verbose_name = _('department page')
 
 
-class Team(Named, URL):
+class Team(NamedSlugged, Description):
     """(Team description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
@@ -471,7 +448,7 @@ class PageCustomPersonListBlockInline(Titled):
         return self.title
 
 
-class PersonListBlock(Titled, Label, Dated, SiteRelated):
+class PersonListBlock(Titled, Description, Label, Dated, SiteRelated):
 
     style = models.CharField(_('style'), max_length=16, choices=PERSON_LIST_STYLE_CHOICES)
 
@@ -563,7 +540,7 @@ class UMR(Named):
         verbose_name = _('UMR')
 
 
-class ActivityWeeklyHourVolume(Titled):
+class ActivityWeeklyHourVolume(Titled, Description):
 
     monday_am = models.FloatField(_('monday AM'), validators=[validate_positive])
     monday_pm = models.FloatField(_('monday PM'), validators=[validate_positive])
@@ -678,7 +655,7 @@ class PersonActivityTimeSheet(models.Model):
         unique_together = (("activity", "project", "month", "year"),)
 
 
-class ProjectActivity(Titled, Orderable):
+class ProjectActivity(Titled, Description, Orderable):
 
     activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='project_activity')
     project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='project_activity', blank=True, null=True, on_delete=models.SET_NULL)

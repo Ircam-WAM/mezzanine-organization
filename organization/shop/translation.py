@@ -53,3 +53,9 @@ class ProductLinkTranslationOptions(TranslationOptions):
 class ProductPrestashopProductTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(TeamProduct)
+class TeamProductTranslationOptions(TranslationOptions):
+
+    pass

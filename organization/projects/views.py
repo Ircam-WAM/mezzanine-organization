@@ -19,12 +19,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from itertools import chain
 from django.shortcuts import render
-from django.views.generic.detail import SingleObjectMixin
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.template import Context
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.edit import FormView
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
@@ -32,18 +33,24 @@ from mezzanine.conf import settings
 from organization.projects.models import *
 from organization.projects.forms import *
 from organization.network.forms import *
+from organization.network.models import Organization
 from organization.core.views import *
 from organization.magazine.views import Article
 from organization.pages.models import CustomPage
 from datetime import datetime, date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
 
 
-class ProjectMixin(SingleObjectMixin):
+EXCLUDED_MODELS = ()
+
+
+class ProjectMixin(DynamicContentMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ProjectMixin, self).get_context_data(**kwargs)
-        self.object = self.get_object()
+
         if not isinstance(self.object, Project):
             self.project = self.object.project
         else:
@@ -106,19 +113,17 @@ class DynamicContentProjectView(Select2QuerySetSequenceView):
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
+        persons = Person.objects.all()
+        organizations = Organization.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
+            persons = persons.filter(title__icontains=self.q)
+            organizations = organizations.filter(name__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, events,)
-
-        if self.q:
-            qs = qs.filter(title__icontains=self.q)
-
-        qs = self.mixup_querysets(qs)
-
+        qs = autocomplete.QuerySetSequence(articles, custompage, events, persons, organizations)
         return qs
 
     def get_results(self, context):
@@ -137,6 +142,12 @@ class ProjectBlogPageView(SlugMixin, ProjectMixin, DetailView):
 
     model = ProjectBlogPage
     template_name='projects/project_blogpage_detail.html'
+
+
+class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
+
+    model = ProjectPage
+    template_name='projects/project/project_detail.html'
 
 
 class ProjectCallMixin(object):
@@ -427,7 +438,7 @@ class ProjectICTListView(ListView):
 
     model = Project
     template_name='projects/project_ict_list.html'
-    
+
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         #TODO: Filter by Call
@@ -463,7 +474,7 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
 
     model = ProjectResidency
     template_name='projects/project_residency_detail.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super(ProjectResidencyDetailView, self).get_context_data(**kwargs)
         # Add the previous and next residencies to the context
@@ -512,3 +523,39 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     form_class = ProjectResidencyForm
     template_name='projects/project_residency_create.html'
     inlines = []
+
+
+class ProjectListView(FormView, ListView):
+    
+    model = ProjectPage
+    template_name='projects/project/project_list.html'
+    context_object_name = 'objects'
+    form_class = TopicFilterForm
+    success_url = "."
+
+    def form_valid(self, form):
+        # Ajax
+        self.request.session['topic'] = form.cleaned_data['topics']
+        if self.request.is_ajax():
+            context = {}
+            context["concrete_objects"] = self.get_queryset()
+            return render(self.request, 'core/inc/cards.html', context)
+        else :
+            return super(ProjectListView, self).form_valid(form)
+
+    def get_queryset(self):
+        self.qs = super(ProjectListView, self).get_queryset()
+        self.qs = self.qs.filter(status=2).order_by('-created')
+
+        if 'topic' in self.request.session and self.request.session['topic']:
+            self.qs = self.qs.filter(project__topic__id=int(self.request.session['topic']))
+            self.request.session.pop('topic', None)
+
+        return self.qs
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListView, self).get_context_data(**kwargs)
+        context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
+                              settings.MEDIA_PER_PAGE,
+                              settings.MAX_PAGING_LINKS)
+        return context

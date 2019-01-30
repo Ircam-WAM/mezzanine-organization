@@ -19,10 +19,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import re
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from django.views.generic.base import View, RedirectView
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView
+from django.views.generic.detail import SingleObjectMixin
 from django.apps import apps
 from django.utils import six, timezone, formats
 from django.utils.translation import ugettext_lazy as _
@@ -49,12 +51,13 @@ from django.template import Context, Engine, TemplateDoesNotExist, loader
 from django.utils import six
 from django.utils.encoding import force_text
 from django.views.decorators.csrf import requires_csrf_token
- 
+from django.db.models.fields.reverse_related import ManyToOneRel
+
 
 class SlugMixin(object):
 
     def get_object(self):
-        objects = self.model.objects.all()
+        objects = self.get_queryset()
         return get_object_or_404(objects, slug=self.kwargs['slug'])
 
 
@@ -263,6 +266,30 @@ class UserProducerView(LoginRequiredMixin, ListView):
         user = self.request.user
         qs = Organization.objects.filter(user=user).select_related().order_by('name')
         return qs
+
+
+class DynamicContentMixin(SingleObjectMixin):
+    
+    def get_context_data(self, **kwargs):
+        context = super(DynamicContentMixin, self).get_context_data(**kwargs)
+        context['concrete_objects'] = []
+        dynamic_content = []
+
+        # get dynamic content field of an object, based on class
+        for f in self.object._meta.get_fields():
+            if re.match(r"^dynamic_content_", f.name):
+                dynamic_content = getattr(self.object, f.name).all()
+
+        # get all concrete objects from dynamic content and append 
+        for dc in dynamic_content:
+            if not isinstance(dc, int) and dc != self.object :
+                for c_field in dc._meta.get_fields():
+                    if hasattr(dc, c_field.name):
+                        attr = getattr(dc, c_field.name)
+                        if not isinstance(attr, int) and attr != self.object and not isinstance(attr, ContentType) :
+                            context['concrete_objects'].append(attr)
+
+        return context
 
 
 # This can be called when CsrfViewMiddleware.process_view has not run,

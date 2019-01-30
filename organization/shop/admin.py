@@ -54,9 +54,14 @@ class ProductPrestashopProductInline(TabularDynamicInlineAdmin):
     model = ProductPrestashopProduct
 
 
+class TeamProductInline(TabularDynamicInlineAdmin):
+    
+    model = TeamProduct
+
+
 class CustomProductAdmin(ProductAdmin):
 
-    inlines = [ProductImageAdmin, ProductVariationAdmin, ProductLinkInline,
+    inlines = [TeamProductInline, ProductImageAdmin, ProductVariationAdmin, ProductLinkInline,
                 ProductPrestashopProductInline]
 
 

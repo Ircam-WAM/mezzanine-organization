@@ -27,7 +27,7 @@ from django.db.models.fields.related import ForeignKey
 from django.http import Http404
 from django.db.utils import IntegrityError
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import View
@@ -50,6 +50,9 @@ from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
 from django.utils import six
 from django.core.exceptions import PermissionDenied
+from organization.pages.forms import YearForm
+from organization.pages.views import PublicationsView
+
 import pandas as pd
 
 
@@ -99,6 +102,97 @@ class PersonListView(PublishedMixin, ListView):
     model = Person
     template_name='network/person_list.html'
     context_object_name = 'persons'
+
+
+class PersonDirectoryView(PublishedMixin, ListView):
+    
+    model = Person
+    template_name='network/person/directory.html'
+    context_object_name = 'persons'
+    ordering = "last_name"
+    letter = "letter"
+
+    def get_queryset(self):
+        self.queryset = super(PersonDirectoryView, self).get_queryset()
+        if not self.kwargs['letter']:
+            self.kwargs['letter'] = "a"
+        self.queryset = self.queryset.filter(Q(last_name__istartswith=self.kwargs['letter'])
+                                            & Q(activities__date_to__gte=datetime.date.today())
+                                            & Q(activities__umr=1)).distinct()
+        return self.queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(PersonDirectoryView, self).get_context_data(**kwargs)
+        letters_pagination = OrderedDict()
+
+        # list all letters from a (97) to z (123)
+        for c in range(97, 123):
+            letters_pagination[chr(c)] = reverse_lazy('person-directory', kwargs={'letter': chr(c)})
+
+        context['letters_pagination'] = letters_pagination
+        return context
+
+
+class TeamMembersView(ListView):
+    
+    model = PersonActivity
+    template_name='network/team/members.html'
+    context_object_name = 'activities'
+    permanents = set()
+    non_permanents = set()
+    old_members = set()
+
+    def get_queryset(self):
+        self.queryset = super(TeamMembersView, self).get_queryset()
+
+        self.queryset = self.queryset.filter(teams__slug=self.kwargs['slug'])
+        active_activities = self.queryset.filter(Q(date_to__gte=datetime.date.today()))
+
+        # permanent persons
+        permanent_activities = active_activities.filter(is_permanent=True)
+        manager = ""
+        for a in permanent_activities:
+            if a.person.status == 6 :
+                manager = a.person
+            else :
+                self.permanents.add(a.person)
+        self.permanents = sorted(self.permanents, key=lambda instance: instance.last_name)
+        self.permanents.insert(0, manager)
+
+        # non permanent persons
+        non_permanent_activities = active_activities.filter(is_permanent=False).prefetch_related('person')
+        for a in non_permanent_activities:
+            self.non_permanents.add(a.person)
+        self.non_permanents = sorted(self.non_permanents, key=lambda instance: instance.last_name)
+
+        # old colleagues
+        active_persons = set()
+        active_persons = self.permanents + self.non_permanents
+        old_activities = self.queryset.filter(date_to__lt=datetime.date.today())
+        for a in old_activities:
+            if not a.person in active_persons: 
+                self.old_members.add(a.person)
+        self.old_members = sorted(self.old_members, key=lambda instance: instance.last_name)
+        
+        return self.queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(TeamMembersView, self).get_context_data(**kwargs)
+        context['permanents'] = self.permanents
+        context['non_permanents'] = self.non_permanents
+        context['old_members'] = self.old_members  
+        return context
+
+
+class TeamPublicationsView(PublicationsView):
+    
+    template_name = "network/team/publications.html"
+    team = None
+
+    def get(self, request, *args, **kwargs):
+        self.team = get_object_or_404(Team, slug=kwargs['slug'])
+        self.hal_url += "&" + settings.HAL_LABOS_EXP + "%s" % self.team.hal_researche_structure.replace(' ', '+')
+        return super(TeamPublicationsView, self).get(request, *args, **kwargs)
 
 
 class PersonDetailView(PersonMixin, SlugMixin, DetailView):
@@ -524,3 +618,4 @@ class JuryListView(ListView):
             qs = Person.objects.filter(person_list_block_inlines__person_list_block=jury).order_by("last_name")
         else:
             qs = Person.objects.none()
+

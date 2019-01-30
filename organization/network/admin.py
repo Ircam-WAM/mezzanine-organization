@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2016-2017 Ircam
-# Copyright (c) 2016-2017 Guillaume Pellerin
+# Copyright (c) 2016-2019 Ircam
+# Copyright (c) 2016-2019 Guillaume Pellerin
 # Copyright (c) 2016-2017 Emilie Zawadzki
 
 # This file is part of mezzanine-organization.
@@ -18,6 +18,8 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
 import csv
 from django.contrib import admin
 from django import forms
@@ -30,6 +32,7 @@ from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from organization.network.models import *
 from organization.network.forms import *
+from organization.pages.forms import DynamicMultimediaPageForm
 from organization.pages.models import *
 from organization.core.admin import *
 from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline, DynamicContentPageInline, PageRelatedTitleAdmin
@@ -103,12 +106,19 @@ class ProducerDataInline(StackedDynamicInlineAdmin):
     model = ProducerData
 
 
+class DynamicMultimediaOrganizationInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaOrganization
+    form = DynamicMultimediaOrganizationForm
+
+
 class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Organization
     inlines = [ OrganizationEventLocationInline,
                 OrganizationServiceInline,
                 OrganizationPlaylistInline,
+                DynamicMultimediaOrganizationInline,
                 OrganizationImageInline,
                 OrganizationBlockInline,
                 OrganizationLinkInline,
@@ -131,9 +141,15 @@ class PageProductListInline(TabularDynamicInlineAdmin):
     model = PageProductList
 
 
+class DynamicMultimediaDepartmentInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaPage
+    form = DynamicMultimediaPageForm
+
+
 class DepartmentPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, PageProductListInline, ]
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaDepartmentInline, PageProductListInline, ]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -155,9 +171,15 @@ class TeamAdmin(BaseTranslationModelAdmin):
     inlines = [TeamLinkInline,]
 
 
+class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaPage
+    form = DynamicMultimediaPageForm
+
+
 class TeamPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline,
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaTeamPageInline,
                 PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]
 
 
@@ -204,12 +226,19 @@ class PersonBlockInline(StackedDynamicInlineAdmin):
     model = PersonBlock
 
 
+class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaPerson
+    form = DynamicMultimediaPersonForm
+
+
 class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Person
     inlines = [PersonImageInline,
                PersonBlockInline,
                PersonPlaylistInline,
+               DynamicMultimediaPersonInline,
                PersonLinkInline,
                PersonFileInline,
                PersonActivityInline,]
@@ -232,7 +261,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
         return weekly_hour_volume
 
     def export_as_csv(self, request, queryset):
-        
+
             meta = self.model._meta
             field_names = ['first_name', 'last_name', 'gender', 'birthday']
             activity_fields = ['date_from', 'date_to', 'framework', 'function', 'organizations', 'teams']
