@@ -576,7 +576,6 @@ SHOP_USE_VARIATIONS = False
 SHOP_USE_RATINGS = False
 
 PROJECT_DEMOS_DIR = '/srv/media/projects/demos/'
-TEAM_PAGE_ID = 276
 
 if not os.path.exists(PROJECT_DEMOS_DIR):
     os.makedirs(PROJECT_DEMOS_DIR)
