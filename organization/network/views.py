@@ -152,7 +152,7 @@ class TeamMembersView(ListView):
         permanent_activities = active_activities.filter(is_permanent=True)
         manager = ""
         for a in permanent_activities:
-            if a.person.status == 6 :
+            if a.status.id == 6 : #Head Researcher
                 manager = a.person
             else :
                 self.permanents.add(a.person)

@@ -46,7 +46,7 @@ class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
             Article.objects.all(),
             CustomPage.objects.all(),
             Event.objects.all(),
-            Person.objects.published(),
+            Person.objects.all(),
             Media.objects.all()
         ),
         required=False,

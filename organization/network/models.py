@@ -39,7 +39,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils.text import slugify
 from mezzanine.pages.models import Page
-from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated
+from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Orderable, MetaData, TimeStamped
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 from organization.core.models import *
@@ -153,7 +153,7 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
         return reverse("network")
 
 
-class Person(Displayable, AdminThumbMixin, Address):
+class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
     """(Person description)"""
 
     user = models.OneToOneField(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
