@@ -56,6 +56,7 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        sorting = False
 
         # automatic relation : dynamic content page
         pages = DynamicContentPage.objects.filter(object_id=self.object.id).all()
@@ -63,6 +64,9 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
         for p in pages :
             if hasattr(p, 'page'):
                 pages_related.append(p.page)
+        if pages_related:
+            context['concrete_objects'] += pages_relatedi
+            sorting = True
 
         # automatic relation : dynamic content article
         articles = DynamicContentArticle.objects.filter(object_id=self.object.id).all()
@@ -70,11 +74,13 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
         for a in articles:
             if hasattr(a, 'article'):
                 articles_related.append(a.article)
+        if articles_related:
+            context['concrete_objects'] += articles_related
+            sorting = True
 
         # gather all and order by creation date
-        context['concrete_objects'] += pages_related
-        context['concrete_objects'] += articles_related
-        context['concrete_objects'].sort(key=lambda x: x.created, reverse=True)
+        if sorting:
+            context['concrete_objects'].sort(key=lambda x: x.created, reverse=True)
 
         # classify related content to display it in another way (cf Manifeste)
         # @Todo : use tempalte tags filter_content_model instead the method below
