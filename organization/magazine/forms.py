@@ -68,7 +68,7 @@ class DynamicContentArticleForm(autocomplete.FutureModelForm):
             Article.objects.all(),
             Event.objects.all(),
             CustomPage.objects.all(),
-            Person.objects.published()
+            Person.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-article'),
