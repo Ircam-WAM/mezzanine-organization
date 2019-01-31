@@ -132,7 +132,6 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
     opening_times = models.TextField(_('opening times'), blank=True)
     subway_access = models.TextField(_('subway access'), blank=True)
     bio = models.TextField(_('bio'), blank=True)
-    site = models.ForeignKey("sites.Site", blank=True, null=True, on_delete=models.SET_NULL)
     admin_thumb_type = 'logo'
     validation_status = models.IntegerField(_('validation status'), choices=ORGANIZATION_STATUS_CHOICES, default=1)
     hal_id = models.CharField(_('HAL id'), max_length=10, blank=True, null=True)
