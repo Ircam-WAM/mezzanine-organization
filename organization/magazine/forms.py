@@ -87,14 +87,18 @@ class DynamicMultimediaArticleForm(DynamicMultimediaForm):
 
 class CategoryFilterForm(forms.Form):
     
-    
-    blog_categories = BlogCategory.objects.all()
-    event_categories = EventCategory.objects.all()
     CATEGORIES = []
+    blog_categories = BlogCategory.objects.all()
     for category in blog_categories:
         CATEGORIES.append((category, category))
     
-    for category in event_categories:
-        CATEGORIES.append((category, category))
-    
+    # try / except > for passing migration mezzanine_agenda-0031
+    from django.db import DatabaseError
+    try:
+        event_categories = EventCategory.objects.all()
+        for category in event_categories:
+            CATEGORIES.append((category, category))
+    except DatabaseError:
+        pass
+
     categories = forms.ChoiceField(choices=CATEGORIES, required=False)
