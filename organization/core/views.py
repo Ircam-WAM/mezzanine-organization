@@ -39,7 +39,7 @@ from operator import ior, iand
 from organization.media.models import Playlist
 from mezzanine_agenda.models import Event
 from organization.pages.models import CustomPage
-from organization.projects.models import Project
+from organization.projects.models import Project, ProjectPage
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
 from organization.network.models import Person
 from organization.magazine.models import Article
@@ -98,7 +98,7 @@ class CustomSearchView(TemplateView):
         results_media_count = len(Playlist.objects.search(query, for_user=request.user))
         results_page_count = len(CustomPage.objects.search(query, for_user=request.user))
         results_event_count = len(Event.objects.search(query, for_user=request.user))
-        results_project_count = len(Project.objects.search(query, for_user=request.user))
+        results_project_count = len(ProjectPage.objects.search(query, for_user=request.user))
         results_article_count = len(Article.objects.search(query, for_user=request.user))
 
         # count objects
