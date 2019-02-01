@@ -33,6 +33,7 @@ from mezzanine.blog.models import BlogPost
 from mezzanine.template import Library
 from django.template.defaultfilters import stringfilter
 from mezzanine_agenda.models import Event
+from mezzanine.utils.sites import current_site_id
 from mezzanine.conf import settings
 from random import shuffle
 from django.utils.translation import ugettext_lazy as _
@@ -401,7 +402,8 @@ def hal_labos_exp(hal_url, hal_researche_structure):
 
 @register.filter
 def hal_css(url_part, http_host):
-    return url_part + settings.HAL_URL_CSS % http_host
+    curr_site = Site.objects.get(id=current_site_id())
+    return url_part + settings.HAL_URL_CSS[curr_site.name] % http_host
 
 @register.filter
 def hal_limit(url_part, nb):
