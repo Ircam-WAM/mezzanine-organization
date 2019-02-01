@@ -76,12 +76,6 @@ class ProjectMixin(DynamicContentMixin):
         return context
 
 
-class ProjectDetailView(SlugMixin, ProjectMixin, DetailView):
-
-    model = Project
-    template_name='projects/project_detail.html'
-
-
 class ProjectICTDetailView(SlugMixin, ProjectMixin, DetailView):
 
     model = Project
