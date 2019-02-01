@@ -104,7 +104,7 @@ class PersonListView(PublishedMixin, ListView):
     context_object_name = 'persons'
 
 
-class PersonDirectoryView(PublishedMixin, ListView):
+class PersonDirectoryView(ListView):
     
     model = Person
     template_name='network/person/directory.html'
@@ -138,6 +138,7 @@ class TeamMembersView(ListView):
     model = PersonActivity
     template_name='network/team/members.html'
     context_object_name = 'activities'
+    # these unique lists are persons to display
     permanents = set()
     non_permanents = set()
     old_members = set()
