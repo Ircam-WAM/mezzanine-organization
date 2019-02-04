@@ -20,31 +20,28 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import unicode_literals
+
+import copy
 import datetime
 import os
-import copy
+from urllib.parse import urlparse, urlunparse
 
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
-from django.utils.safestring import mark_safe
-from django.conf import settings
-from django.core.cache import cache
-
-from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
-from django.core.files.images import get_image_dimensions
-
-from organization.core.models import *
-from organization.pages.models import *
-from organization.network.models import *
-from organization.magazine.models import Article
-from mezzanine_agenda.models import *
-
-from skosxl.models import Concept
-
-from urllib.parse import urlunparse, urlparse
 import pydash as dsh
-
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.contrib.postgres.fields import JSONField
+from django.core.cache import cache
+from django.core.files.images import get_image_dimensions
+from django.db import models
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
+from mezzanine.core.models import Displayable, Orderable, RichText, Slugged
+from mezzanine_agenda.models import *
+from organization.core.models import *
+from organization.magazine.models import Article
+from organization.network.models import *
+from organization.pages.models import *
+from skosxl.models import Concept
 
 PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
@@ -106,7 +103,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
     concepts = models.ManyToManyField('skosxl.Concept', verbose_name=_('concepts'), blank=True)
     owner = models.ForeignKey(User, verbose_name=_('project owner'), related_name='owned_projects', blank=True, null=True, on_delete=models.SET_NULL)
-
+    configuration = JSONField(null=True, blank=True)  # A generic-use field for storing simple mixed values/schema
+                                 # Example: project preferences, UI toggles, etc.
 
     class Meta:
         verbose_name = _('project')
