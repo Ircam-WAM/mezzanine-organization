@@ -48,7 +48,7 @@ PROJECT_TYPE_CHOICES = [
     ('external', _('external')),
 ]
 if hasattr(settings, 'PROJECT_TYPE_CHOICES'):
-    PROJECT_TYPE_CHOICES.extend(settings.PROJECT_TYPE_CHOICES)
+    PROJECT_TYPE_CHOICES.extend(getattr(settings, 'PROJECT_TYPE_CHOICES', {}))
 
 REPOSITORY_ACCESS_CHOICES = [
     ('public', _('public')),
@@ -79,6 +79,8 @@ FUNDING_CHOICES = (
     ('private', _('Privately Funded'))
 )
 
+DEFAULT_PROJECT_CONFIGURATION = getattr(settings, 'PROJECT_DEFAULT_CONFIGURATION', {})
+
 
 class Project(Displayable, Period, RichText, OwnableOrNot):
     """(Project description)"""
@@ -103,8 +105,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
     concepts = models.ManyToManyField('skosxl.Concept', verbose_name=_('concepts'), blank=True)
     owner = models.ForeignKey(User, verbose_name=_('project owner'), related_name='owned_projects', blank=True, null=True, on_delete=models.SET_NULL)
-    configuration = JSONField(null=True, blank=True)  # A generic-use field for storing simple mixed values/schema
-                                 # Example: project preferences, UI toggles, etc.
+    configuration = JSONField(default=DEFAULT_PROJECT_CONFIGURATION, null=True, blank=True)  # A generic-use field for storing simple mixed values/schema
+                                                      # Example: project preferences, UI toggles, etc.
 
     class Meta:
         verbose_name = _('project')
