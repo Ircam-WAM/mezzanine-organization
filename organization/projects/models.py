@@ -79,7 +79,8 @@ FUNDING_CHOICES = (
     ('private', _('Privately Funded'))
 )
 
-DEFAULT_PROJECT_CONFIGURATION = getattr(settings, 'PROJECT_DEFAULT_CONFIGURATION', {})
+# NOTE: dict() not {} because https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#django.contrib.postgres.fields.JSONField
+DEFAULT_PROJECT_CONFIGURATION = getattr(settings, 'PROJECT_DEFAULT_CONFIGURATION', dict())
 
 
 class Project(Displayable, Period, RichText, OwnableOrNot):
