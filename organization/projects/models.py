@@ -23,6 +23,7 @@ from __future__ import unicode_literals
 
 import copy
 import datetime
+import logging
 import os
 from urllib.parse import urlparse, urlunparse
 
@@ -42,6 +43,8 @@ from organization.magazine.models import Article
 from organization.network.models import *
 from organization.pages.models import *
 from skosxl.models import Concept
+
+logger = logging.getLogger()
 
 PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
@@ -137,11 +140,19 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     @property
     def download_urls(self):
 
+        """
+        /! OBSOLETE !\
+        Now handled by ircamforum.templatetags.project_download_links
+        Also it should return ProjectLinks, not primitives!
+        SMELL: make it return ProjectLink, but for that rewrite get_links and dependencies
+        """
+
+
         ret = []  # TODO: must set a schema for simple, clear format in the templates
                   #       example: { version, platform, url, featured } or even more abstract
 
         direct_urls = self.get_links('download')  # First we try to get the "download" link type
-        # TODO: make Project links orderables?
+
         if len(direct_urls) > 0:
             for direct_url in direct_urls:
                 ret.insert(0, {
@@ -149,18 +160,18 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
                     'title': direct_url.title,
                     #'featured': True
                 })
-
-        # If no 'download' link is found, fallback to the latest tag from the first repository
-        # TODO: what about multiple repositories?
-        for i, pr in enumerate(self.project_repositories.all()):
-            if pr.repository.api:
-                ret.append({
-                    'url': pr.repository.api.get_archive_url(),
-                    'title': 'Repository files',
-                    'subtitle': 'Branch `master` — ZIP archive',
-                    #'featured': (not direct_url and i == 0)  # Only the first repository URL is featured,
-                                                             # if and only if no direct link has been set up
-                })
+        else:
+            # If no 'download' link is found, fallback to the latest tag from the first repository
+            # TODO: what about multiple repositories?
+            for i, pr in enumerate(self.project_repositories.all()):
+                if pr.repository.api:
+                    ret.append({
+                        'url': pr.repository.api.get_archive_url(),
+                        'title': 'Repository files',
+                        'subtitle': 'Branch `master` — ZIP archive',
+                        #'featured': (not direct_url and i == 0)  # Only the first repository URL is featured,
+                                                                 # if and only if no direct link has been set up
+                    })
         return ret
 
     @property
@@ -583,6 +594,7 @@ class Repository(models.Model):
         try:
             from repository import repository as r
         except ImportError:
+            logger.warning("Couldn't import repository module")
             instance = None
         else:
 
