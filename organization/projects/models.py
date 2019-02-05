@@ -79,10 +79,6 @@ FUNDING_CHOICES = (
     ('private', _('Privately Funded'))
 )
 
-# NOTE: dict() not {} because https://docs.djangoproject.com/en/1.11/ref/contrib/postgres/fields/#django.contrib.postgres.fields.JSONField
-DEFAULT_PROJECT_CONFIGURATION = getattr(settings, 'PROJECT_DEFAULT_CONFIGURATION', dict())
-
-
 class Project(Displayable, Period, RichText, OwnableOrNot):
     """(Project description)"""
 
@@ -106,7 +102,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
     concepts = models.ManyToManyField('skosxl.Concept', verbose_name=_('concepts'), blank=True)
     owner = models.ForeignKey(User, verbose_name=_('project owner'), related_name='owned_projects', blank=True, null=True, on_delete=models.SET_NULL)
-    configuration = JSONField(default=DEFAULT_PROJECT_CONFIGURATION, null=True, blank=True)  # A generic-use field for storing simple mixed values/schema
+    configuration = JSONField(default=dict(), null=True, blank=True)  # A generic-use field for storing simple mixed values/schema
                                                       # Example: project preferences, UI toggles, etc.
 
     class Meta:
