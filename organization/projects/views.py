@@ -340,8 +340,8 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
     model = ProjectResidency
     template_name='projects/project_residency_detail.html'
 
-    def get_context_data(self,  *args, **kwargs):
-        context = super(ProjectResidencyDetailView, self).get_context_data(*args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super(ProjectResidencyDetailView, self).get_context_data(**kwargs)
         # Add the previous and next residencies to the context
         call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
         projects = Project.objects.filter(call=call)
