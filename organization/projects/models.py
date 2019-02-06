@@ -218,7 +218,7 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
     project_form_content = RichTextField(_("Project form content"), blank=True, null=True)
     residency_form_content = RichTextField(_("Residency form content"), blank=True, null=True)
     producer_form_content = RichTextField(_("Producer form content"), blank=True, null=True)
-    manager = models.ForeignKey(User, verbose_name=_('project call manager'), related_name='project_call_managers', blank=True, null=True, on_delete=models.SET_NULL)
+    # manager = models.ForeignKey(User, verbose_name=_('project call manager'), related_name='project_call_managers', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('project call')
