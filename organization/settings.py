@@ -532,6 +532,9 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'organization-projects.ProjectPage',
                         'shop.Product',
                         'organization-magazine.Article')
+                        
+# authorize models which does not heritate from Displayable
+SEARCH_MODEL_NO_DISPLAYABLE = ('organization-network.Person',)
 
 PAGES_MODELS = ('organization-pages.CustomPage',
                 'organization-magazine.Topic',

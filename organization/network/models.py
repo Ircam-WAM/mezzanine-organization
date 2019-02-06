@@ -39,9 +39,10 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils.text import slugify
 from mezzanine.pages.models import Page
-from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Orderable, MetaData, TimeStamped
+from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Orderable, MetaData, TimeStamped, wrapped_manager
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
+from mezzanine.core.managers import SearchableManager
 from organization.core.models import *
 from organization.media.models import *
 from organization.pages.models import CustomPage
@@ -154,6 +155,9 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
 
 class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
     """(Person description)"""
+
+    objects = SearchableManager()
+    search_fields = {"title": 5}
 
     user = models.OneToOneField(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
     person_title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
