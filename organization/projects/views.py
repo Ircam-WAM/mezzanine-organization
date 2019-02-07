@@ -539,11 +539,13 @@ class ProjectListView(FormView, ListView):
 
     def get_queryset(self):
         self.qs = super(ProjectListView, self).get_queryset()
-        self.qs = self.qs.filter(status=2).order_by('-created')
+        self.qs = self.qs.filter(project__is_archive=False).order_by('-created')
 
         if 'topic' in self.request.session and self.request.session['topic']:
             self.qs = self.qs.filter(project__topic__id=int(self.request.session['topic']))
             self.request.session.pop('topic', None)
+
+        self.qs = self.qs.order_by('title')
 
         return self.qs
 
