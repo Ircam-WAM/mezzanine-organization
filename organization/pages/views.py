@@ -92,7 +92,7 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
-        persons = Person.objects.published()
+        persons = Person.objects.all()
         medias = Media.objects.all()
 
         if self.q:
