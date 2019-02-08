@@ -398,7 +398,7 @@ def extended_custompage_extra_content(extra_content):
 
 @register.filter
 def hal_labos_exp(hal_url, hal_researche_structure):
-    return hal_url + settings.HAL_LABOS_EXP + hal_researche_structure.replace(' ', '+')
+    return hal_url + "&" + settings.HAL_LABOS_EXP + hal_researche_structure.replace(' ', '+')
 
 @register.filter
 def hal_css(url_part, http_host):
