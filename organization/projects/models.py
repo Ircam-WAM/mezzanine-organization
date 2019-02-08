@@ -254,10 +254,10 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             tmp = {}
             repository = project_repository.repository
             if repository.api:
-                tmp['url'] = repository.url
                 tmp['readme'] = {}
                 _, tmp['readme']['html'] = repository.api.get_readme()
                 tmp['summary'] = repository.api.get_summary()
+                tmp['url'] = repository.url if not repository.api.private else None
                 repositories.append(tmp)
 
         return repositories
