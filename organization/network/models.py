@@ -661,7 +661,7 @@ class PersonActivityTimeSheet(models.Model):
 class ProjectActivity(Titled, Description, Orderable):
 
     activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='project_activity')
-    project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='project_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='project_activity', null=True, on_delete=models.SET_NULL)
     default_percentage = models.IntegerField(_('default %'), validators=[is_percent], blank=True, null=True, help_text="Percentage has to be an integer between 0 and 100")
     work_packages = models.ManyToManyField('organization-projects.ProjectWorkPackage', verbose_name=_('work package'), related_name='project_activity', blank=True)
     work_packages.widget = forms.CheckboxSelectMultiple()
