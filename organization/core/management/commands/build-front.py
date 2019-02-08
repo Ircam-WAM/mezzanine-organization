@@ -67,7 +67,7 @@ class Command(BaseCommand):
                 os.chdir(theme_path)
                 print('Building ' + theme)
                 if not os.path.exists('node_modules') or self.force_npm:
-                    subprocess.run(["npm", "install"])
+                    subprocess.run(["npm", "ci"])
                 if not os.path.exists('static/vendors') or self.force_bower:
                     subprocess.run(["bower", "--allow-root", "install"])
                 subprocess.run(["gulp", "build"])
