@@ -629,7 +629,7 @@ class JSONResponseMixin:
 class PublicNetworkData(JSONResponseMixin, TemplateView):
 
     attributes = ['name', 'title', 'description', 'mappable_location',
-                    'image', 'type', 'url', 'lat', 'lon']
+                    'image', 'type', 'url', 'lat', 'lon', 'keywords']
 
     def get_object_dict(self, object):
         data = {}
@@ -642,6 +642,9 @@ class PublicNetworkData(JSONResponseMixin, TemplateView):
                 elif attribute == 'image':
                     images = object.images.filter(type='logo')
                     value = images.first().file.url if images else ''
+                elif attribute == 'keywords':
+                    keywords = object.keywords.all()
+                    value = [keyword.keyword.title for keyword in keywords]
                 else:
                     value = getattr(object, attribute)
                 data[attribute] = value
