@@ -405,11 +405,11 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 class ProjectTopic(Named):
 
     key = models.CharField(_('key'), unique=True, max_length=128)
-    parent = models.ForeignKey('ProjectTopic', verbose_name=_('parent topic'), related_name='topics', blank=True, null=True)
+    parent = models.ForeignKey('ProjectTopic', verbose_name=_('parent tag'), related_name='topics', blank=True, null=True)
 
     class Meta:
-        verbose_name = _('project topic')
-        verbose_name_plural = _("project topics")
+        verbose_name = _('tag')
+        verbose_name_plural = _('tags')
         ordering = ['key',]
 
     def __str__(self):

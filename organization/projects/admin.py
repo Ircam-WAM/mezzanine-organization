@@ -281,12 +281,16 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
 class ProjectCollectionImageInline(TabularDynamicInlineAdmin):
 
     model = ProjectCollectionImage
+    verbose_name = _('Image')
+    verbose_name_plural = _('Images')
 
 
 class ProjectCollectionProjectInline(TabularDynamicInlineAdmin):
 
     model = Pivot_Project_ProjectCollection
     form = Pivot_Project_ProjectCollection_Form
+    verbose_name = _('Projet')
+    verbose_name_plural = _('Projets')
 
     class Media:
         js = (
@@ -302,8 +306,8 @@ class ProjectCollectionAdmin(admin.ModelAdmin):
 class ProjectCollectionAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectCollectionAdmin.fieldsets)
-    inlines = [ ProjectCollectionImageInline,
-                ProjectCollectionProjectInline ]
+    inlines = [ ProjectCollectionProjectInline,
+                ProjectCollectionImageInline ]
 
 admin.site.register(Project, ProjectAdminDisplayable)
 admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)
