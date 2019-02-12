@@ -464,6 +464,7 @@ class ProjectContact(Person):
         self.title = ' '.join([self.first_name, self.last_name])
         super(ProjectContact, self).save(*args, **kwargs)
 
+
 class ProjectResidency(Displayable, Period, Address, RichText):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
@@ -471,13 +472,11 @@ class ProjectResidency(Displayable, Period, Address, RichText):
     validated = models.BooleanField(default=False)
     producer_commitment = models.TextField(_('producer commitment'), help_text="")
 
-
     @property
     def articles(self):
         #TODO: Any way to avoid magic number in status filter?
         articles = Article.objects.filter(residencies__residency=self).filter(status=2).filter(publish_date__lte=datetime.date.today()).order_by("-publish_date")
         return articles
-
 
     @property
     def events(self):
@@ -485,13 +484,16 @@ class ProjectResidency(Displayable, Period, Address, RichText):
         events = Event.objects.filter(residencies__residency=self).filter(status=2).filter(publish_date__lte=datetime.date.today()).order_by("-publish_date")
         return events
 
-
     class Meta:
         verbose_name = 'Project residency'
         verbose_name_plural = 'Project residencies'
 
     def get_absolute_url(self):
         return reverse("organization-residency-detail", kwargs={"call_slug": self.project.call.slug, "slug": self.slug})
+
+    def save(self, **kwargs):
+        self.clean()
+        super(ProjectResidency, self).save()
 
 
 class ProjectResidencyProducer(models.Model):

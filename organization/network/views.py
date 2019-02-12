@@ -55,7 +55,7 @@ from dal import autocomplete
 from organization.network.models import *
 from organization.core.views import *
 from organization.network.forms import *
-from organization.projects.models import ProjectWorkPackage
+from organization.projects.models import *
 
 import pandas as pd
 
@@ -659,6 +659,9 @@ class PublicNetworkData(JSONResponseMixin, TemplateView):
 
         persons = Person.objects.exclude(mappable_location__isnull=True)
         context['persons'] = [self.get_object_dict(object) for object in persons]
+
+        residencies = ProjectResidency.objects.exclude(mappable_location__isnull=True)
+        context['residencies'] = [self.get_object_dict(object) for object in residencies]
 
         return context
 
