@@ -45,24 +45,24 @@ class KeywordAdmin(BaseTranslationModelAdmin):
     model = Keyword
 
 
-class DuplicateAdmin(object):
+# class DuplicateAdmin(object):
 
-    func_template = """def duplicate_content_to_%s(self, request, queryset):
-                            import inspect
-                            import copy
-                            from pprint import pprint
-                            domain = inspect.stack()[0][3].replace('duplicate_content_to_', '').replace('_', '.')
-                            site = Site.objects.get(domain=domain)
+#     func_template = """def duplicate_content_to_%s(self, request, queryset):
+#                             import inspect
+#                             import copy
+#                             from pprint import pprint
+#                             domain = inspect.stack()[0][3].replace('duplicate_content_to_', '').replace('_', '.')
+#                             site = Site.objects.get(domain=domain)
                             
-                            for obj in queryset:
-                                clone = copy.copy(obj)
-                                if hasattr(clone, 'blogpost_ptr_id'):
-                                    blogpost_ptr_id = None
-                                clone.pk = None
-                                clone.site = site
-                                clone.save(force_insert=True)"""
+#                             for obj in queryset:
+#                                 clone = copy.copy(obj)
+#                                 if hasattr(clone, 'blogpost_ptr_id'):
+#                                     blogpost_ptr_id = None
+#                                 clone.pk = None
+#                                 clone.site = site
+#                                 clone.save(force_insert=True)"""
 
-    for site in get_other_sites(): exec(func_template % (re.sub(r'(\.|-)', '_', site.domain)))
+#     for site in get_other_sites(): exec(func_template % (re.sub(r'(\.|-)', '_', site.domain)))
 
 
 class BaseTranslationOrderedModelAdmin(BaseTranslationModelAdmin):
