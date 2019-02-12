@@ -49,9 +49,9 @@ logger = logging.getLogger()
 PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
     ('external', _('external')),
+    ('tutorial', _('tutorial')),
+    ('project', _('project')),
 ]
-if hasattr(settings, 'PROJECT_TYPE_CHOICES'):
-    PROJECT_TYPE_CHOICES.extend(getattr(settings, 'PROJECT_TYPE_CHOICES', {}))
 
 REPOSITORY_ACCESS_CHOICES = [
     ('public', _('public')),
@@ -82,10 +82,11 @@ FUNDING_CHOICES = (
     ('private', _('Privately Funded'))
 )
 
+
 class Project(Displayable, Period, RichText, OwnableOrNot):
     """(Project description)"""
 
-    type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES)
+    type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES, default='project')
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     program = models.ForeignKey('ProjectProgram', verbose_name=_('project program'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
     program_type = models.ForeignKey('ProjectProgramType', verbose_name=_('project program type'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
