@@ -519,7 +519,7 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     inlines = []
 
 
-class ProjectListView(FormView, ListView):
+class AbstractProjectListView(FormView, ListView):
     
     model = ProjectPage
     template_name='projects/project/project_list.html'
@@ -535,23 +535,50 @@ class ProjectListView(FormView, ListView):
             context["concrete_objects"] = self.get_queryset()
             return render(self.request, 'core/inc/cards.html', context)
         else :
-            return super(ProjectListView, self).form_valid(form)
+            return super(AbstractProjectListView, self).form_valid(form)
 
     def get_queryset(self):
-        self.qs = super(ProjectListView, self).get_queryset()
-        self.qs = self.qs.filter(project__is_archive=False).order_by('-created')
+        self.qs = super(AbstractProjectListView, self).get_queryset()
 
         if 'topic' in self.request.session and self.request.session['topic']:
             self.qs = self.qs.filter(project__topic__id=int(self.request.session['topic']))
             self.request.session.pop('topic', None)
-
+        
         self.qs = self.qs.order_by('title')
 
         return self.qs
 
     def get_context_data(self, **kwargs):
-        context = super(ProjectListView, self).get_context_data(**kwargs)
+        context = super(AbstractProjectListView, self).get_context_data(**kwargs)
         context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
                               settings.MEDIA_PER_PAGE,
                               settings.MAX_PAGING_LINKS)
+        return context
+
+
+class ProjectListView(AbstractProjectListView):
+    
+    def get_queryset(self):
+        self.qs = super(ProjectListView, self).get_queryset()
+        self.qs = self.qs.filter(project__is_archive=False)
+        return self.qs
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListView, self).get_context_data(**kwargs)
+        context['is_archive'] = False      
+        context['title'] = _('Projects')                     
+        return context
+
+
+class ProjectArchivesListView(AbstractProjectListView):
+    
+    def get_queryset(self):
+        self.qs = super(ProjectArchivesListView, self).get_queryset()
+        self.qs = self.qs.filter(project__is_archive=True)
+        return self.qs
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectArchivesListView, self).get_context_data(**kwargs)
+        context['is_archive'] = True         
+        context['title'] = _('Archived Projects')                         
         return context
