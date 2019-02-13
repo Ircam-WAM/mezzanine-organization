@@ -32,7 +32,7 @@ from organization.pages.models import *
 from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm, DynamicMultimediaProjectForm, DynamicContentProjectPageForm
-from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin, DuplicateAdmin
+from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin #, DuplicateAdmin
 from organization.core.utils import actions_to_duplicate, get_other_sites
 
 
@@ -318,7 +318,7 @@ class DynamicContentProjectPageInline(TabularDynamicInlineAdmin):
             static("mezzanine/js/admin/dynamic_inline.js"),
         )
 
-class ProjectPageAdminDisplayable(DisplayableAdmin, DuplicateAdmin):
+class ProjectPageAdminDisplayable(DisplayableAdmin): #, DuplicateAdmin
 
     fieldsets = deepcopy(ProjectPageAdmin.fieldsets)
     inlines = [ ProjectPageBlockInline,

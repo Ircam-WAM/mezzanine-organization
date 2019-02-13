@@ -192,6 +192,12 @@ class TopicFilterForm(forms.Form):
     TOPICS = []
     
     for topic in topics:
-        TOPICS.append((topic.id, topic.name))
+        if topic.projects.count():
+            TOPICS.append((topic.id, topic.name))
 
-    topics = forms.ChoiceField(choices=TOPICS, required=False)
+    filter = forms.ChoiceField(choices=TOPICS, required=False)
+
+
+class TypeFilterForm(forms.Form):
+        
+    filter = forms.ChoiceField(choices=PROJECT_TYPE_CHOICES, required=False)
