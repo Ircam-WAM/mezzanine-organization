@@ -37,6 +37,10 @@ urlpatterns = [
     url("^projects/pages/(?P<slug>.*)/$", ProjectPageView.as_view(), name='organization-project-projectpage-detail'),
     url("^projects/list/$", ProjectListView.as_view(), name='organization-project-list'),
     url("^projects/archives/list/$", ProjectArchivesListView.as_view(), name='organization-project-archive-list'),
+
+    url("^team/(?P<slug>.*)/projects/list/$", ProjectTeamListView.as_view(), name='organization-project-team-list'),
+    url("^team/(?P<slug>.*)/projects/archives/list/$", ProjectArchivesTeamListView.as_view(), name='organization-project-archive-team-list'),
+
     url("^projects/demo/(?P<slug>.*)/$", ProjectDemoDetailView.as_view(), name='organization-project-demo-detail'),
     url("^projects/blog/(?P<slug>.*)/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
 

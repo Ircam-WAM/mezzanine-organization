@@ -524,12 +524,12 @@ class AbstractProjectListView(FormView, ListView):
     model = ProjectPage
     template_name='projects/project/project_list.html'
     context_object_name = 'objects'
-    form_class = TopicFilterForm
     success_url = "."
+    item_to_filter = "filter"
 
     def form_valid(self, form):
         # Ajax
-        self.request.session['topic'] = form.cleaned_data['topics']
+        self.request.session[self.item_to_filter] = form.cleaned_data[self.item_to_filter]
         if self.request.is_ajax():
             context = {}
             context["concrete_objects"] = self.get_queryset()
@@ -539,11 +539,17 @@ class AbstractProjectListView(FormView, ListView):
 
     def get_queryset(self):
         self.qs = super(AbstractProjectListView, self).get_queryset()
+        if 'slug' in self.kwargs:
+            self.qs = self.qs.filter(project__teams__slug=self.kwargs['slug'])
 
-        if 'topic' in self.request.session and self.request.session['topic']:
-            self.qs = self.qs.filter(project__topic__id=int(self.request.session['topic']))
-            self.request.session.pop('topic', None)
+        if self.item_to_filter in self.request.session and self.request.session[self.item_to_filter]:
+            kwargs = {
+                '{0}'.format(self.property_query_filter): self.request.session[self.item_to_filter],
+            }
+            self.qs = self.qs.filter(**kwargs)
+            self.request.session.pop(self.item_to_filter, None)
         
+        self.qs = self.qs.filter(project__is_archive=self.archived)
         self.qs = self.qs.order_by('title')
 
         return self.qs
@@ -553,32 +559,39 @@ class AbstractProjectListView(FormView, ListView):
         context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
                               settings.MEDIA_PER_PAGE,
                               settings.MAX_PAGING_LINKS)
+        context['is_archive'] = self.archived
+        if self.archived:
+            context['title'] = _('Archived Projects')
+        else :
+            context['title'] = _('Projects')
+        if 'slug' in self.kwargs:     
+            context['slug'] = self.kwargs['slug']       
+
         return context
 
 
 class ProjectListView(AbstractProjectListView):
     
-    def get_queryset(self):
-        self.qs = super(ProjectListView, self).get_queryset()
-        self.qs = self.qs.filter(project__is_archive=False)
-        return self.qs
-
-    def get_context_data(self, **kwargs):
-        context = super(ProjectListView, self).get_context_data(**kwargs)
-        context['is_archive'] = False      
-        context['title'] = _('Projects')                     
-        return context
-
+    form_class = TopicFilterForm
+    property_query_filter = "project__topic__id"
+    archived = False
 
 class ProjectArchivesListView(AbstractProjectListView):
     
-    def get_queryset(self):
-        self.qs = super(ProjectArchivesListView, self).get_queryset()
-        self.qs = self.qs.filter(project__is_archive=True)
-        return self.qs
+    form_class = TopicFilterForm
+    property_query_filter = "project__topic__id"
+    archived = True
 
-    def get_context_data(self, **kwargs):
-        context = super(ProjectArchivesListView, self).get_context_data(**kwargs)
-        context['is_archive'] = True         
-        context['title'] = _('Archived Projects')                         
-        return context
+
+class ProjectTeamListView(AbstractProjectListView):
+    
+    form_class = TypeFilterForm
+    property_query_filter = "project__type"
+    archived = False
+
+
+class ProjectArchivesTeamListView(AbstractProjectListView):
+    
+    form_class = TypeFilterForm
+    property_query_filter = "project__type"
+    archived = True
