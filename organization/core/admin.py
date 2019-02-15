@@ -47,7 +47,7 @@ class PreventLastRecordDeletionMixin():
         if not hasattr(self, 'min_objects'):
             self.min_objects = 1
 
-        queryset = self.model.objects.all()
+        queryset = super().get_queryset(request)
 
         # If we're running the bulk delete action, estimate the number
         # of objects after we delete the selected items
@@ -56,8 +56,10 @@ class PreventLastRecordDeletionMixin():
             queryset = queryset.exclude(pk__in=selected)
 
         if queryset.count() <= self.min_objects:
-            message = 'There should be at least {} object(s) left.'
-            self.message_user(request, message.format(self.min_objects))
+            # Commented because has_delete_permission() is called multiple times (to render the admin templates) and causes a message flood
+            #message = 'There should be at least {} object(s) left.'
+            #self.message_user(request, message.format(self.min_objects))
+
             # FIX: it returns a 401/403 and thus quits the admin... not perfect.
             return False
 
