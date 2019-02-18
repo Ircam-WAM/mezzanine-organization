@@ -77,7 +77,7 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin): #, DuplicateAdmin
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     list_display = ('title', 'department', 'publish_date', 'status', 'user')
     exclude = ('related_posts', )
-    readonly_fields = ('user',)
+    
     filter_horizontal = ['categories',]
     inlines = [ArticleImageInline,
               ArticlePersonAutocompleteInlineAdmin,
@@ -95,6 +95,12 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin): #, DuplicateAdmin
         """
         OwnableAdmin.save_form(self, request, form, change)
         return DisplayableAdmin.save_form(self, request, form, change)
+
+    def get_readonly_fields(self, request, obj=None):
+        self.readonly_fields = super(ArticleAdminDisplayable, self).get_readonly_fields(request, obj=None)
+        if not request.user.is_superuser and not 'user' in self.readonly_fields:
+            self.readonly_fields += ('user',)
+        return self.readonly_fields
 
     class Media:
         js = (

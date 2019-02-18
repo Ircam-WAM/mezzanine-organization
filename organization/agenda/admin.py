@@ -179,7 +179,6 @@ class CustomEventAdmin(EventAdmin):
 
     fieldsets = deepcopy(EventAdminBase.fieldsets)
     exclude = ("short_url",)
-    readonly_fields = ('user',)
     is_parent.allow_tags = True
     list_display = ["title", "start", "end", "rank", "user", "status", "is_parent","admin_link"]
     if settings.EVENT_USE_FEATURED_IMAGE:
@@ -196,6 +195,12 @@ class CustomEventAdmin(EventAdmin):
         """
         OwnableAdmin.save_form(self, request, form, change)
         return DisplayableAdmin.save_form(self, request, form, change)
+
+    def get_readonly_fields(self, request, obj=None):
+        self.readonly_fields = super(CustomEventAdmin, self).get_readonly_fields(request, obj=None)
+        if not request.user.is_superuser and not 'user' in self.readonly_fields:
+            self.readonly_fields += ('user',)
+        return self.readonly_fields
 
     class Media:
         js = (
