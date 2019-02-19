@@ -63,9 +63,12 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
         pages = DynamicContentPage.objects.filter(object_id=self.object.id).all()
         pages_related = []
         for p in pages :
-            if hasattr(p, 'page'):
-                if p.page:
-                    pages_related.append(p.page)
+            try:
+                if hasattr(p, 'page'):
+                    if p.page:
+                        pages_related.append(p.page)
+            except ObjectDoesNotExist:
+                continue
         if pages_related:
             context['concrete_objects'] += pages_related
             sorting = True
