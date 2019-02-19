@@ -83,7 +83,7 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
             sorting = True
 
         # gather all and order by creation date
-        if sorting:
+        if sorting and context['concrete_objects']:
             context['concrete_objects'].sort(key=lambda x: x.created, reverse=True)
 
         # classify related content to display it in another way (cf Manifeste)
