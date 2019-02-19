@@ -74,7 +74,7 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
         articles_related = []
         for a in articles:
             if hasattr(a, 'article'):
-                if a.articles:
+                if a.article:
                     articles_related.append(a.article)
         if articles_related:
             context['concrete_objects'] += articles_related
