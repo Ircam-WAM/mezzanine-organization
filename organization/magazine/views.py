@@ -63,7 +63,8 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
         pages_related = []
         for p in pages :
             if hasattr(p, 'page'):
-                pages_related.append(p.page)
+                if p.page:
+                    pages_related.append(p.page)
         if pages_related:
             context['concrete_objects'] += pages_related
             sorting = True
@@ -73,13 +74,14 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
         articles_related = []
         for a in articles:
             if hasattr(a, 'article'):
-                articles_related.append(a.article)
+                if a.articles:
+                    articles_related.append(a.article)
         if articles_related:
             context['concrete_objects'] += articles_related
             sorting = True
 
         # gather all and order by creation date
-        if sorting and context['concrete_objects']:
+        if sorting:
             context['concrete_objects'].sort(key=lambda x: x.created, reverse=True)
 
         # classify related content to display it in another way (cf Manifeste)
