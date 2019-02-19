@@ -28,6 +28,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import *
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
@@ -72,8 +73,11 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
         articles = DynamicContentArticle.objects.filter(object_id=self.object.id).all()
         articles_related = []
         for a in articles:
-            if hasattr(a, 'article'):
-                articles_related.append(a.article)
+            try:
+                if hasattr(a, 'article'):
+                    articles_related.append(a.article)
+            except ObjectDoesNotExist:
+                continue
         if articles_related:
             context['concrete_objects'] += articles_related
             sorting = True
