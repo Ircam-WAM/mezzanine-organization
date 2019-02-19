@@ -128,8 +128,8 @@ class PersonDirectoryView(ListView):
         # list all letters from a (97) to z (123)
         for c in range(97, 123):
             letters_pagination[chr(c)] = reverse_lazy('person-directory', kwargs={'letter': chr(c)})
-
         context['letters_pagination'] = letters_pagination
+        context['curr_letter'] = self.kwargs['letter']
         return context
 
 
