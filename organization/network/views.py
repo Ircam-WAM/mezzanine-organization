@@ -149,8 +149,12 @@ class TeamMembersView(ListView):
         self.queryset = super(TeamMembersView, self).get_queryset()
         self.queryset = self.queryset.filter(activities__teams__slug=self.kwargs['slug']).order_by("last_name", "first_name").distinct("last_name", "first_name")
 
+        print("self.queryset", self.queryset)
+        for p in self.queryset:
+            if p.last_name == "Aucouturier":
+                print(p.last_name)
         # filter active persons
-        active_persons = self.queryset.filter(Q(activities__date_to__gte=datetime.date.today()))
+        active_persons = self.queryset.filter(activities__date_to__gte=datetime.date.today())
         # permanent persons
         permanent_person = active_persons.filter(activities__is_permanent=True)
         manager = ""
@@ -163,7 +167,8 @@ class TeamMembersView(ListView):
         self.permanents.insert(0, manager)
 
         # non permanent persons
-        self.non_permanents = active_persons.filter(activities__is_permanent=False)
+        permanent_persons_id = [p.id for p in self.permanents]
+        self.non_permanents = active_persons.filter(activities__is_permanent=False).exclude(id__in=permanent_persons_id)
 
         # former persons  
         active_persons_id = [p.id for p in active_persons]
