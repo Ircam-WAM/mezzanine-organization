@@ -135,55 +135,47 @@ class PersonDirectoryView(ListView):
 
 class TeamMembersView(ListView):
     
-    model = PersonActivity
+    model = Person
     template_name='network/team/members.html'
-    context_object_name = 'activities'
-    # these unique lists are persons to display
-    permanents = set()
-    non_permanents = set()
-    old_members = set()
+    context_object_name = 'persons'
+    permanents = []
+    non_permanents = []
+    old_members = [] 
 
     def get_queryset(self):
-        self.permanents = set()
-        self.non_permanents = set()
-        self.old_members = set()
+        self.permanents = []
+        self.non_permanents = []
+        self.old_members = []
         self.queryset = super(TeamMembersView, self).get_queryset()
-        self.queryset = self.queryset.filter(teams__slug=self.kwargs['slug'])
-        active_activities = self.queryset.filter(Q(date_to__gte=datetime.date.today()))
+        self.queryset = self.queryset.filter(activities__teams__slug=self.kwargs['slug']).order_by("last_name", "first_name").distinct("last_name", "first_name")
 
+        # filter active persons
+        active_persons = self.queryset.filter(Q(activities__date_to__gte=datetime.date.today()))
         # permanent persons
-        permanent_activities = active_activities.filter(is_permanent=True)
+        permanent_person = active_persons.filter(activities__is_permanent=True)
         manager = ""
-        for a in permanent_activities:
-            if a.status.id == 6 : #Head Researcher
-                manager = a.person
+        for p in permanent_person:
+            if p.activities.first().status.id == 6 : #Head Researcher
+                manager = p
             else :
-                self.permanents.add(a.person)
-        self.permanents = sorted(self.permanents, key=lambda instance: instance.last_name)
+                self.permanents.append(p)
+        # add Head Researcher at first place
         self.permanents.insert(0, manager)
 
         # non permanent persons
-        non_permanent_activities = active_activities.filter(is_permanent=False)
-        for a in non_permanent_activities:
-            self.non_permanents.add(a.person)
-        self.non_permanents = sorted(self.non_permanents, key=lambda instance: instance.last_name)
+        self.non_permanents = active_persons.filter(activities__is_permanent=False)
 
-        # old colleagues
-        active_persons = set()
-        active_persons = self.permanents + self.non_permanents
-        old_activities = self.queryset.filter(date_to__lt=datetime.date.today())
-        for a in old_activities:
-            if not a.person in active_persons: 
-                self.old_members.add(a.person)
-        self.old_members = sorted(self.old_members, key=lambda instance: instance.last_name)
-        
+        # former persons  
+        active_persons_id = [p.id for p in active_persons]
+        self.old_members = self.queryset.filter(activities__date_to__lt=datetime.date.today()).exclude(id__in=active_persons_id)
+
         return self.queryset
 
     def get_context_data(self, **kwargs):
         context = super(TeamMembersView, self).get_context_data(**kwargs)
         context['permanents'] = self.permanents
         context['non_permanents'] = self.non_permanents
-        context['old_members'] = self.old_members  
+        context['old_members'] = self.old_members
         return context
 
 
