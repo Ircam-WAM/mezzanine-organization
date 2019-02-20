@@ -144,8 +144,10 @@ class TeamMembersView(ListView):
     old_members = set()
 
     def get_queryset(self):
+        self.permanents = set()
+        self.non_permanents = set()
+        self.old_members = set()
         self.queryset = super(TeamMembersView, self).get_queryset()
-
         self.queryset = self.queryset.filter(teams__slug=self.kwargs['slug'])
         active_activities = self.queryset.filter(Q(date_to__gte=datetime.date.today()))
 
@@ -161,7 +163,7 @@ class TeamMembersView(ListView):
         self.permanents.insert(0, manager)
 
         # non permanent persons
-        non_permanent_activities = active_activities.filter(is_permanent=False).prefetch_related('person')
+        non_permanent_activities = active_activities.filter(is_permanent=False)
         for a in non_permanent_activities:
             self.non_permanents.add(a.person)
         self.non_permanents = sorted(self.non_permanents, key=lambda instance: instance.last_name)
