@@ -397,7 +397,7 @@ class TrainingTopicAdmin(BaseTranslationModelAdmin):
     model = TrainingTopic
 
 
-class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin, OwnableAdmin):
+class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
     model = PersonActivityTimeSheet
     search_fields = ['year', 'month', 'activity__person__last_name', "project__title"]
     list_display = ['person', 'activity', 'year', 'month', 'project', 'work_package', 'percentage',  'accounting', 'validation']

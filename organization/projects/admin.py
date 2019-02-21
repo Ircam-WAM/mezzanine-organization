@@ -291,7 +291,7 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
 
 
 
-class ProjectPageAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
+class ProjectPageAdmin(BaseTranslationModelAdmin):
 
     model = ProjectPage
     list_display = ['title', 'project', ]
