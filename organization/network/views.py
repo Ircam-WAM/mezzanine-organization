@@ -147,32 +147,46 @@ class TeamMembersView(ListView):
         self.non_permanents = []
         self.old_members = []
         self.queryset = super(TeamMembersView, self).get_queryset()
-        self.queryset = self.queryset.filter(activities__teams__slug=self.kwargs['slug']).order_by("last_name", "first_name").distinct("last_name", "first_name")
+        
+        # Filter by Team, distinct on Person
+        lookup = Q(activities__teams__slug=self.kwargs['slug'])
+        self.queryset = self.queryset.filter(lookup) \
+                                        .order_by("last_name", "first_name") \
+                                        .distinct("last_name", "first_name")
 
-        print("self.queryset", self.queryset)
-        for p in self.queryset:
-            if p.last_name == "Aucouturier":
-                print(p.last_name)
-        # filter active persons
-        active_persons = self.queryset.filter(activities__date_to__gte=datetime.date.today())
+        # Filter active persons
+        lookup = lookup & Q(activities__date_to__gte=datetime.date.today())
+        active_persons = self.queryset.filter(lookup)
+
         # permanent persons
-        permanent_person = active_persons.filter(activities__is_permanent=True)
-        manager = ""
+        permanent_person = active_persons.filter(lookup & Q(activities__is_permanent=True))
+
+        # Filter Head Researcher
+        # head_researcher = self.permanents.filter(lookup
+        #                                         & Q(activities__is_permanent=True)
+        #                                         & Q(activities__status__id=6)) # Head Researcher
+        head_researcher = ""
         for p in permanent_person:
-            if p.activities.first().status.id == 6 : #Head Researcher
-                manager = p
+            if p.activities.first().status:
+                if p.activities.first().status.id == 6 : #Head Researcher
+                    head_researcher = p
             else :
                 self.permanents.append(p)
         # add Head Researcher at first place
-        self.permanents.insert(0, manager)
+        if head_researcher:
+            self.permanents.insert(0, head_researcher)
 
         # non permanent persons
-        permanent_persons_id = [p.id for p in self.permanents]
-        self.non_permanents = active_persons.filter(activities__is_permanent=False).exclude(id__in=permanent_persons_id)
+        permanent_persons_id = [p.id for p in permanent_person]
+        self.non_permanents = active_persons.filter(lookup & Q(activities__is_permanent=False)) \
+                                            .exclude(id__in=permanent_persons_id)
 
+        
         # former persons  
         active_persons_id = [p.id for p in active_persons]
-        self.old_members = self.queryset.filter(activities__date_to__lt=datetime.date.today()).exclude(id__in=active_persons_id)
+        self.old_members = self.queryset.filter(Q(activities__teams__slug=self.kwargs['slug']) \
+                                                & Q(activities__date_to__lt=datetime.date.today())) \
+                                        .exclude(id__in=active_persons_id)
 
         return self.queryset
 
@@ -181,6 +195,7 @@ class TeamMembersView(ListView):
         context['permanents'] = self.permanents
         context['non_permanents'] = self.non_permanents
         context['old_members'] = self.old_members
+        context['team'] = Team.objects.get(slug=self.kwargs['slug'])
         return context
 
 

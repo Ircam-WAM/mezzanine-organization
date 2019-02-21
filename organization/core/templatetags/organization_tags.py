@@ -492,6 +492,12 @@ def has_id(objects_list, id):
             b = True
     return b
 
+
 @register.filter
 def reverse(objects_list):
     return  list(reversed(objects_list))
+
+
+@register.filter
+def latest(query):
+    return query.latest('date_to')
