@@ -57,6 +57,6 @@ urlpatterns = [
 
     url('^jury/list/$', JuryListView.as_view(), name='organization-jury-list'),
 
-    url('^team/(?P<slug>.*)/members$', TeamMembersView.as_view(), name='team-members'),
+    url('^team/(?P<slug>.*)/members/$', TeamMembersView.as_view(), name='team-members'),
     url('^team/(?P<slug>.*)/publications/$', TeamPublicationsView.as_view(), name='team-publications'),
     ]

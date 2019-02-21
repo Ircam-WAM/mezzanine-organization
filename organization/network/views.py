@@ -128,60 +128,71 @@ class PersonDirectoryView(ListView):
         # list all letters from a (97) to z (123)
         for c in range(97, 123):
             letters_pagination[chr(c)] = reverse_lazy('person-directory', kwargs={'letter': chr(c)})
-
         context['letters_pagination'] = letters_pagination
+        context['curr_letter'] = self.kwargs['letter']
         return context
 
 
 class TeamMembersView(ListView):
     
-    model = PersonActivity
+    model = Person
     template_name='network/team/members.html'
-    context_object_name = 'activities'
-    # these unique lists are persons to display
-    permanents = set()
-    non_permanents = set()
-    old_members = set()
+    context_object_name = 'persons'
+    permanents = []
+    non_permanents = []
+    old_members = [] 
 
     def get_queryset(self):
+        self.permanents = []
+        self.non_permanents = []
+        self.old_members = []
         self.queryset = super(TeamMembersView, self).get_queryset()
+        
+        # Filter by Team, distinct on Person
+        lookup = Q(activities__teams__slug=self.kwargs['slug'])
+        self.queryset = self.queryset.filter(lookup) \
+                                        .order_by("last_name", "first_name") \
+                                        .distinct("last_name", "first_name")
 
-        self.queryset = self.queryset.filter(teams__slug=self.kwargs['slug'])
-        active_activities = self.queryset.filter(Q(date_to__gte=datetime.date.today()))
+        # Filter active persons
+        lookup = lookup & Q(activities__date_to__gte=datetime.date.today())
+        active_persons = self.queryset.filter(lookup)
 
         # permanent persons
-        permanent_activities = active_activities.filter(is_permanent=True)
-        manager = ""
-        for a in permanent_activities:
-            if a.status.id == 6 : #Head Researcher
-                manager = a.person
+        permanent_person = active_persons.filter(lookup & Q(activities__is_permanent=True))
+        # Filter Head Researcher
+        head_researcher = ""
+        for p in permanent_person:
+            if hasattr(p.activities.first().status, 'id') and p.activities.first().status.id == 6 : #Head Researcher
+                head_researcher = p
             else :
-                self.permanents.add(a.person)
-        self.permanents = sorted(self.permanents, key=lambda instance: instance.last_name)
-        self.permanents.insert(0, manager)
+                self.permanents.append(p)
+
+        # add Head Researcher at first place
+        if head_researcher:
+            self.permanents.insert(0, head_researcher)
+        
 
         # non permanent persons
-        non_permanent_activities = active_activities.filter(is_permanent=False).prefetch_related('person')
-        for a in non_permanent_activities:
-            self.non_permanents.add(a.person)
-        self.non_permanents = sorted(self.non_permanents, key=lambda instance: instance.last_name)
+        permanent_persons_id = [p.id for p in permanent_person]
+        self.non_permanents = active_persons.filter(lookup & Q(activities__is_permanent=False)) \
+                                            .exclude(id__in=permanent_persons_id)
 
-        # old colleagues
-        active_persons = set()
-        active_persons = self.permanents + self.non_permanents
-        old_activities = self.queryset.filter(date_to__lt=datetime.date.today())
-        for a in old_activities:
-            if not a.person in active_persons: 
-                self.old_members.add(a.person)
-        self.old_members = sorted(self.old_members, key=lambda instance: instance.last_name)
         
+        # former persons  
+        active_persons_id = [p.id for p in active_persons]
+        self.old_members = self.queryset.filter(Q(activities__teams__slug=self.kwargs['slug']) \
+                                                & Q(activities__date_to__lt=datetime.date.today())) \
+                                        .exclude(id__in=active_persons_id)
+
         return self.queryset
 
     def get_context_data(self, **kwargs):
         context = super(TeamMembersView, self).get_context_data(**kwargs)
         context['permanents'] = self.permanents
         context['non_permanents'] = self.non_permanents
-        context['old_members'] = self.old_members  
+        context['old_members'] = self.old_members
+        context['team'] = Team.objects.get(slug=self.kwargs['slug'])
         return context
 
 
