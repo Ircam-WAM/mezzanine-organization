@@ -431,6 +431,4 @@ def get_users_of_team(team):
     activities = PersonActivity.objects.filter(teams=team)
     for activity in activities:
         users.add(activity.person.user)
-
-    print("users", users)
     return users
