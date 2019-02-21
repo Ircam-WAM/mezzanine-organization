@@ -49,9 +49,10 @@ from collections import OrderedDict
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
 from django.utils import six
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from organization.pages.forms import YearForm
 from organization.pages.views import PublicationsView
+from organization.network.utils import get_users_of_team
 
 import pandas as pd
 
@@ -631,3 +632,16 @@ class JuryListView(ListView):
         else:
             qs = Person.objects.none()
 
+
+class AbstractTeamOwnableListView(ListView):
+
+    def get_queryset(self):
+        self.queryset = super(AbstractTeamOwnableListView, self).get_queryset()
+        if 'slug' in self.kwargs:
+            try :
+                team = Team.objects.get(slug=self.kwargs['slug'])
+                self.queryset = self.queryset.filter(user__in=get_users_of_team(team))
+            except ObjectDoesNotExist:
+                pass
+
+        return self.queryset

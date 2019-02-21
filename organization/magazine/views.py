@@ -36,6 +36,7 @@ from mezzanine.utils.views import paginate
 from mezzanine.conf import settings
 from organization.magazine.models import *
 from organization.network.models import DepartmentPage, Person
+from organization.network.views import AbstractTeamOwnableListView
 from organization.pages.models import CustomPage, DynamicContentPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting, DynamicContentMixin
 from organization.core.utils import split_events_from_other_related_content
@@ -288,3 +289,7 @@ class ArticleEventView(SlugMixin, FormView, ListView):
                               settings.MAX_PAGING_LINKS)
         return context
 
+
+class ArticleEventTeamView(ArticleEventView, AbstractTeamOwnableListView):
+    
+    pass
