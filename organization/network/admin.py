@@ -39,8 +39,30 @@ from organization.pages.admin import PageImageInline, PageBlockInline, PagePlayl
 from organization.shop.models import PageProductList
 from organization.network.utils import TimesheetXLS, set_timesheets_validation_date, flatten_activities
 from organization.network.translation import *
+from organization.network.utils import getUsersListOfSameTeams
 
 
+class TeamOwnableAdmin(OwnableAdmin):
+    
+    def get_queryset(self, request):
+        """
+        Filter the change list by currently logged in user if not a
+        superuser. We also skip filtering if the model for this admin
+        class has been added to the sequence in the setting
+        ``OWNABLE_MODELS_ALL_EDITABLE``, which contains models in the
+        format ``app_label.object_name``, and allows models subclassing
+        ``Ownable`` to be excluded from filtering, eg: ownership should
+        not imply permission to edit.
+        """
+        opts = self.model._meta
+        model_name = ("%s.%s" % (opts.app_label, opts.object_name)).lower()
+        models_all_editable = settings.OWNABLE_MODELS_ALL_EDITABLE
+        models_all_editable = [m.lower() for m in models_all_editable]
+        qs = super(OwnableAdmin, self).get_queryset(request)
+        if request.user.is_superuser or model_name in models_all_editable:
+            return qs
+        list_users = getUsersListOfSameTeams(request.user)
+        return qs.filter(user__id=123)
 
 class OrganizationAdminInline(StackedDynamicInlineAdmin):
 
@@ -172,12 +194,12 @@ class TeamAdmin(BaseTranslationModelAdmin):
 
 
 class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
-
+    
     model = DynamicMultimediaPage
     form = DynamicMultimediaPageForm
 
 
-class TeamPageAdmin(PageAdmin):
+class TeamPageAdmin(PageAdmin, TeamOwnableAdmin):
 
     inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaTeamPageInline,
                 PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]
@@ -402,6 +424,7 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
         set_timesheets_validation_date(queryset)
 
     export_xls.short_description = "Export person timesheets"
+
 
 
 admin.site.register(OrganizationLinked, OrganizationLinkedAdmin)

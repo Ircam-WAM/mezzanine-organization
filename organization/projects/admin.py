@@ -34,6 +34,7 @@ from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm, DynamicMultimediaProjectForm, DynamicContentProjectPageForm
 from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin #, DuplicateAdmin
 from organization.core.utils import actions_to_duplicate, get_other_sites
+from organization.network.admin import TeamOwnableAdmin
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
@@ -194,7 +195,6 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
         return producers
 
     get_producers.short_description = "producers"
-
 
 
 class ProjectAdmin(BaseTranslationOrderedModelAdmin):

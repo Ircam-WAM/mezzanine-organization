@@ -449,7 +449,7 @@ TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 
 ADMIN_MENU_ORDER = (
     (_('Pages'), ('pages.Page', 'organization-pages.Home',
-                 'organization-core.LinkType')),
+                 'organization-core.LinkType',),),
     (_('Media'), ('organization-media.Media',
                   'organization-media.Playlist',
                   'organization-media.LiveStreaming',
@@ -709,3 +709,6 @@ HAL_LABOS_EXP = "labos_exp="
 HAL_URL_CSS = "&css=//%s/static/css/index.min.css"
 HAL_LIMIT_PUB = "&NbAffiche="
 HAL_YEAR_BEGIN = 1977
+
+# Ownable
+OWNABLE_MODELS_ALL_EDITABLE = []

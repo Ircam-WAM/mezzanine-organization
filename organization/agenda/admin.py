@@ -25,6 +25,7 @@ from copy import deepcopy
 
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.sites.models import Site
 from modeltranslation.admin import TranslationTabularInline
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
@@ -188,6 +189,22 @@ class CustomEventAdmin(EventAdmin):
                 EventPersonAutocompleteInlineAdmin, EventLinkInline, EventPlaylistInline, DynamicMultimediaEventInline, EventTrainingInline,
                 EventRelatedTitleAdmin, DynamicContentEventInline]
 
+    #actions = actions_to_duplicate()
+    # func_template = """def duplicate_content_to_%s(self, request, queryset):
+    #                         import inspect
+    #                         import copy
+    #                         from pprint import pprint
+
+    #                         domain = inspect.stack()[0][3].replace('duplicate_content_to_', '').replace('_', '.')
+    #                         site = Site.objects.get(domain=domain)
+                            
+    #                         for obj in queryset:
+    #                             clone = copy.copy(obj)
+    #                             clone.pk = None
+    #                             clone.site = site
+    #                             clone.update(force_insert=True)"""
+
+    # for site in get_other_sites(): exec(func_template % (site.domain.replace(".", "_")))
 
     def save_form(self, request, form, change):
         """
