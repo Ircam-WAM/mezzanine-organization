@@ -160,21 +160,18 @@ class TeamMembersView(ListView):
 
         # permanent persons
         permanent_person = active_persons.filter(lookup & Q(activities__is_permanent=True))
-
         # Filter Head Researcher
-        # head_researcher = self.permanents.filter(lookup
-        #                                         & Q(activities__is_permanent=True)
-        #                                         & Q(activities__status__id=6)) # Head Researcher
         head_researcher = ""
         for p in permanent_person:
-            if p.activities.first().status:
-                if p.activities.first().status.id == 6 : #Head Researcher
-                    head_researcher = p
+            if hasattr(p.activities.first().status, 'id') and p.activities.first().status.id == 6 : #Head Researcher
+                head_researcher = p
             else :
                 self.permanents.append(p)
+
         # add Head Researcher at first place
         if head_researcher:
             self.permanents.insert(0, head_researcher)
+        
 
         # non permanent persons
         permanent_persons_id = [p.id for p in permanent_person]
