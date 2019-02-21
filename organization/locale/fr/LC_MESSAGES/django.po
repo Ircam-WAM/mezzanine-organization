@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-20 10:30+0000\n"
+"POT-Creation-Date: 2019-01-11 14:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,52 +18,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: agenda/admin.py:115
+#: agenda/admin.py:120
 msgid "is parent"
 msgstr ""
 
-#: agenda/admin.py:129
+#: agenda/admin.py:134
 msgid "True"
 msgstr ""
 
-#: agenda/admin.py:130
+#: agenda/admin.py:135
 msgid "False"
 msgstr ""
 
-#: agenda/admin.py:147
+#: agenda/admin.py:152
 #, fuzzy
 #| msgid "persons"
 msgid "Seasons"
 msgstr "personnes"
 
 #: agenda/models.py:36 agenda/models.py:45 agenda/models.py:55
-#: agenda/models.py:65 agenda/models.py:75 agenda/models.py:84
-#: agenda/models.py:94 agenda/models.py:118 agenda/models.py:130
-#: agenda/models.py:139 projects/models.py:520
+#: agenda/models.py:65 agenda/models.py:77 agenda/models.py:86
+#: agenda/models.py:96 agenda/models.py:120 agenda/models.py:132
+#: agenda/models.py:141 agenda/models.py:149 projects/models.py:499
 msgid "event"
 msgstr "événement"
 
-#: agenda/models.py:39 pages/models.py:95
+#: agenda/models.py:39 pages/models.py:96
 msgid "block"
 msgstr ""
 
-#: agenda/models.py:40 pages/models.py:96
+#: agenda/models.py:40 pages/models.py:97
 msgid "blocks"
 msgstr ""
 
 #: agenda/models.py:48 magazine/models.py:64 media/models.py:128
-#: pages/models.py:106 pages/models.py:197
+#: pages/models.py:107 pages/models.py:206
 msgid "image"
 msgstr ""
 
 #: agenda/models.py:49 magazine/models.py:65 media/models.py:129
-#: pages/models.py:107 pages/models.py:198
+#: pages/models.py:108 pages/models.py:207
 msgid "images"
 msgstr "images"
 
 #: agenda/models.py:56 agenda/models.py:59 magazine/models.py:48
-#: network/models.py:338 network/models.py:350 network/models.py:361
-#: network/models.py:727
+#: network/models.py:323 network/models.py:335 network/models.py:346
+#: network/models.py:712
 msgid "department"
 msgstr "département"
 
@@ -71,336 +71,340 @@ msgstr "département"
 msgid "departments"
 msgstr "départements"
 
-#: agenda/models.py:66 agenda/models.py:69 network/models.py:208
-#: network/models.py:431 network/models.py:436 network/models.py:441
-#: network/models.py:446 network/models.py:451 network/models.py:579
-msgid "person"
-msgstr "personne"
+#: agenda/models.py:66 magazine/models.py:125 network/models.py:442
+#: network/models.py:464
+msgid "Person List Block"
+msgstr ""
 
-#: agenda/models.py:70 projects/models.py:409
-msgid "persons"
-msgstr "personnes"
+#: agenda/models.py:69 magazine/models.py:128 network/models.py:445
+#: network/models.py:456
+msgid "Person List"
+msgstr "Liste de personnes"
 
-#: agenda/models.py:78 core/models.py:308 pages/models.py:126
-#: pages/models.py:150 pages/models.py:161
+#: agenda/models.py:80 core/models.py:311 pages/models.py:127
+#: pages/models.py:159 pages/models.py:170
 msgid "link"
 msgstr "lien"
 
-#: agenda/models.py:79 core/models.py:309 pages/models.py:127
+#: agenda/models.py:81 core/models.py:312 pages/models.py:128
 msgid "links"
 msgstr "liens"
 
-#: agenda/models.py:87 media/models.py:150 media/models.py:163
-#: media/models.py:174 media/models.py:177 pages/models.py:116
+#: agenda/models.py:89 media/models.py:150 media/models.py:163
+#: media/models.py:174 media/models.py:177 pages/models.py:117
 msgid "playlist"
 msgstr "playlist"
 
-#: agenda/models.py:88 media/models.py:151 media/models.py:178
-#: pages/models.py:117
+#: agenda/models.py:90 media/models.py:151 media/models.py:178
+#: pages/models.py:118
 msgid "playlists"
 msgstr "playlists"
 
-#: agenda/models.py:97
+#: agenda/models.py:99
 msgid "period"
 msgstr "période"
 
-#: agenda/models.py:98
+#: agenda/models.py:100
 msgid "periods"
 msgstr "périodes"
 
-#: agenda/models.py:105 agenda/models.py:120
+#: agenda/models.py:107 agenda/models.py:122
 msgid "public type"
 msgstr "type public"
 
-#: agenda/models.py:106
+#: agenda/models.py:108
 msgid "public types"
 msgstr "types publics"
 
-#: agenda/models.py:112 network/models.py:537 network/models.py:608
+#: agenda/models.py:114 network/models.py:522 network/models.py:593
 msgid "training level"
 msgstr ""
 
-#: agenda/models.py:113 network/models.py:538
+#: agenda/models.py:115 network/models.py:523
 msgid "training levels"
 msgstr ""
 
-#: agenda/models.py:119
+#: agenda/models.py:121
 msgid "language"
 msgstr "langue"
 
-#: agenda/models.py:121
+#: agenda/models.py:123
 msgid "level"
 msgstr "niveau"
 
-#: agenda/models.py:124
+#: agenda/models.py:126
 msgid "training"
 msgstr ""
 
-#: agenda/models.py:125
+#: agenda/models.py:127
 msgid "trainings"
 msgstr ""
 
-#: agenda/models.py:133 magazine/models.py:74 pages/models.py:136
-#: projects/models.py:342
+#: agenda/models.py:135 magazine/models.py:74 pages/models.py:137
+#: projects/models.py:345
 msgid "related title"
 msgstr "titre de contenu lié"
 
-#: agenda/models.py:147
+#: agenda/models.py:157
 msgid "event_price_description"
 msgstr ""
 
-#: agenda/models.py:148 core/models.py:49 core/models.py:71 core/models.py:92
-#: core/models.py:146
+#: agenda/models.py:158 core/models.py:52 core/models.py:74 core/models.py:95
+#: core/models.py:149
 msgid "description"
 msgstr "description"
 
-#: core/models.py:38 magazine/models.py:43
+#: core/models.py:41 magazine/models.py:43
 msgid "black"
 msgstr ""
 
-#: core/models.py:38 magazine/models.py:42
+#: core/models.py:41 magazine/models.py:42
 msgid "yellow"
 msgstr ""
 
-#: core/models.py:38
+#: core/models.py:41
 msgid "red"
 msgstr ""
 
-#: core/models.py:38
+#: core/models.py:41
 msgid "white"
 msgstr ""
 
-#: core/models.py:38 network/models.py:102
+#: core/models.py:41 network/models.py:99
 msgid "blue"
 msgstr ""
 
-#: core/models.py:38
+#: core/models.py:41
 msgid "purple"
 msgstr ""
 
-#: core/models.py:40 network/models.py:98
+#: core/models.py:43 network/models.py:95
 msgid "left"
 msgstr "gauche"
 
-#: core/models.py:40
+#: core/models.py:43
 msgid "center"
 msgstr "centre"
 
-#: core/models.py:40 network/models.py:98
+#: core/models.py:43 network/models.py:95
 msgid "right"
 msgstr "droite"
 
-#: core/models.py:43
+#: core/models.py:46
 msgid "logo"
 msgstr ""
 
-#: core/models.py:43
+#: core/models.py:46
 msgid "logo white"
 msgstr ""
 
-#: core/models.py:43
+#: core/models.py:46
 msgid "logo black"
 msgstr ""
 
-#: core/models.py:43
+#: core/models.py:46
 msgid "logo header"
 msgstr ""
 
-#: core/models.py:43
+#: core/models.py:46
 msgid "logo footer"
 msgstr ""
 
-#: core/models.py:43
+#: core/models.py:46
 msgid "slider"
 msgstr ""
 
-#: core/models.py:43
+#: core/models.py:46
 msgid "card"
 msgstr ""
 
-#: core/models.py:43
+#: core/models.py:46
 msgid "page - slider"
 msgstr ""
 
-#: core/models.py:43
+#: core/models.py:46
 msgid "page - featured"
 msgstr "page- à la une"
 
-#: core/models.py:58 core/models.py:70 core/models.py:91 core/models.py:283
+#: core/models.py:61 core/models.py:73 core/models.py:94 core/models.py:286
 msgid "name"
 msgstr "nom"
 
-#: core/models.py:93 core/models.py:268 media/models.py:110
-#: projects/models.py:294
+#: core/models.py:96 core/models.py:271 media/models.py:110
+#: projects/models.py:297
 msgid "URL"
 msgstr ""
 
-#: core/models.py:94
+#: core/models.py:97
 msgid "Leave blank to have the URL auto-generated from the name."
 msgstr ""
 
-#: core/models.py:137
+#: core/models.py:140
 msgid "View on site"
 msgstr ""
 
-#: core/models.py:145 core/models.py:303 core/models.py:384
-#: network/models.py:193
+#: core/models.py:148 core/models.py:306 core/models.py:426
+#: network/models.py:160
 msgid "title"
 msgstr "titre"
 
-#: core/models.py:157
+#: core/models.py:160
 msgid "sub title"
 msgstr "sous-titre"
 
-#: core/models.py:165
+#: core/models.py:168
 msgid "label"
 msgstr ""
 
-#: core/models.py:175
+#: core/models.py:178
 msgid "custom category"
 msgstr "catégorie personnalisé"
 
-#: core/models.py:184
+#: core/models.py:187
 msgid "background color"
 msgstr ""
 
-#: core/models.py:185
+#: core/models.py:188
 msgid "login required"
 msgstr ""
 
-#: core/models.py:193 core/models.py:211 network/models.py:280
-#: pages/models.py:151 projects/models.py:379
+#: core/models.py:196 core/models.py:214 network/models.py:265
+#: pages/models.py:160 projects/models.py:390
 msgid "Image"
 msgstr ""
 
-#: core/models.py:194 core/models.py:212
+#: core/models.py:197 core/models.py:215
 msgid "credits"
 msgstr "crédits"
 
-#: core/models.py:195 media/models.py:147 media/models.py:186
-#: projects/models.py:74
+#: core/models.py:198 media/models.py:147 media/models.py:186
+#: projects/models.py:76
 msgid "type"
 msgstr "type"
 
-#: core/models.py:228
+#: core/models.py:231
 msgid "document"
 msgstr "document"
 
-#: core/models.py:247
+#: core/models.py:250
 msgid "content type"
 msgstr "type de contenu"
 
-#: core/models.py:255 job/models.py:76 magazine/models.py:100
+#: core/models.py:258 job/models.py:76 magazine/models.py:100
 msgid "related object"
 msgstr "contenu lié"
 
-#: core/models.py:284 shop/models.py:80
+#: core/models.py:287 shop/models.py:80
 msgid "slug"
 msgstr ""
 
-#: core/models.py:285
+#: core/models.py:288
 msgid ""
 "Use this field to define a simple identifier that can be used to style the "
 "different link types (i.e. assign social media icons to them)"
 msgstr ""
 
-#: core/models.py:290
+#: core/models.py:293
 msgid "ordering"
 msgstr ""
 
-#: core/models.py:291
+#: core/models.py:294
 msgid "fontawesome icon name option"
 msgstr ""
 
-#: core/models.py:304
+#: core/models.py:307
 msgid "link type"
 msgstr "type de lien"
 
-#: core/models.py:317
+#: core/models.py:320
 #, fuzzy
 #| msgid "add date"
 msgid "start date"
 msgstr "ajouter une date"
 
-#: core/models.py:318 core/models.py:327
+#: core/models.py:321 core/models.py:330
 msgid "end date"
 msgstr "date de fin"
 
-#: core/models.py:326
+#: core/models.py:329
 msgid "begin date"
 msgstr "date de début"
 
-#: core/models.py:360
+#: core/models.py:363
 msgid "creation date"
 msgstr "date de création"
 
-#: core/models.py:361
+#: core/models.py:364
 msgid "last modification date"
 msgstr ""
 
-#: core/models.py:370
+#: core/models.py:373
 msgid "address"
 msgstr "adresse"
 
-#: core/models.py:371
+#: core/models.py:374
 msgid "postal code"
 msgstr "code postal"
 
-#: core/models.py:372
+#: core/models.py:375
 msgid "city"
 msgstr ""
 
-#: core/models.py:373
+#: core/models.py:376
 msgid "country"
 msgstr "pays"
 
-#: core/models.py:395
+#: core/models.py:437
 #, fuzzy
 #| msgid "Authors"
 msgid "Author"
 msgstr "Auteurs"
 
-#: core/templatetags/organization_tags.py:284
+#: core/models.py:447
+msgid "sites"
+msgstr ""
+
+#: core/templatetags/organization_tags.py:305
 msgid "through"
 msgstr "au"
 
-#: core/templatetags/organization_tags.py:287
+#: core/templatetags/organization_tags.py:308
 msgid "and"
 msgstr "et"
 
-#: core/views.py:88
+#: core/views.py:91
 msgid "Everything"
 msgstr "Tout"
 
-#: core/views.py:129 network/models.py:456
+#: core/views.py:132 network/models.py:441
 msgid "Page"
 msgstr "Page"
 
-#: core/views.py:134 magazine/models.py:124
+#: core/views.py:137 magazine/models.py:124
 msgid "Article"
 msgstr "Article"
 
-#: core/views.py:139
+#: core/views.py:142 settings.py:453
 msgid "Media"
 msgstr "Média"
 
-#: core/views.py:144
+#: core/views.py:147
 msgid "Project"
 msgstr "Projet"
 
-#: core/views.py:149
+#: core/views.py:152
 msgid "Event"
 msgstr "Événement"
 
-#: job/models.py:32 network/models.py:195
+#: job/models.py:32 network/models.py:162
 msgid "first name"
 msgstr ""
 
-#: job/models.py:33 network/models.py:196
+#: job/models.py:33 network/models.py:163
 msgid "last name"
 msgstr ""
 
-#: job/models.py:34 network/models.py:132 network/models.py:197
+#: job/models.py:34 network/models.py:126 network/models.py:164
 msgid "email"
 msgstr ""
 
@@ -481,11 +485,12 @@ msgid "topics"
 msgstr "rubriques"
 
 #: magazine/models.py:56 magazine/models.py:61 magazine/models.py:71
-#: magazine/models.py:80 magazine/models.py:136 projects/models.py:514
+#: magazine/models.py:80 magazine/models.py:136 magazine/models.py:144
+#: projects/models.py:493
 msgid "article"
 msgstr "article"
 
-#: magazine/models.py:85 network/models.py:468 shop/models.py:41
+#: magazine/models.py:85 network/models.py:453 shop/models.py:41
 msgid "style"
 msgstr ""
 
@@ -497,18 +502,9 @@ msgstr ""
 msgid "brief"
 msgstr "brève"
 
-#: magazine/models.py:119 projects/models.py:84
+#: magazine/models.py:119 projects/models.py:86
 msgid "topic"
 msgstr "rubrique"
-
-#: magazine/models.py:125 network/models.py:457 network/models.py:479
-msgid "Person List Block"
-msgstr ""
-
-#: magazine/models.py:128 network/models.py:460 network/models.py:471
-#: pages/models.py:211
-msgid "Person List"
-msgstr "Liste de personnes"
 
 #: media/models.py:42
 msgid "audio"
@@ -539,7 +535,7 @@ msgid "category"
 msgstr "catégorie"
 
 #: media/models.py:108 media/models.py:125 media/models.py:164
-#: media/models.py:167 network/models.py:726
+#: media/models.py:167 network/models.py:711
 msgid "media"
 msgstr ""
 
@@ -577,593 +573,613 @@ msgstr ""
 msgid "Event Location"
 msgstr "Lieux"
 
-#: network/models.py:57
+#: network/models.py:54
 msgid "Mr"
 msgstr "Mr"
 
-#: network/models.py:58
+#: network/models.py:55
 msgid "Ms"
 msgstr "Mme"
 
-#: network/models.py:61
+#: network/models.py:58
 msgid "male"
 msgstr "homme"
 
-#: network/models.py:62
+#: network/models.py:59
 msgid "female"
 msgstr "femme"
 
-#: network/models.py:66 shop/models.py:34
+#: network/models.py:63 shop/models.py:34
 msgid "square"
 msgstr ""
 
-#: network/models.py:67 shop/models.py:35
+#: network/models.py:64 shop/models.py:35
 msgid "circle"
 msgstr ""
 
-#: network/models.py:71
+#: network/models.py:68
 msgid "Dr"
 msgstr ""
 
-#: network/models.py:72
+#: network/models.py:69
 msgid "Prof"
 msgstr ""
 
-#: network/models.py:73
+#: network/models.py:70
 msgid "Prof Dr"
 msgstr ""
 
-#: network/models.py:77
+#: network/models.py:74
 msgid "circles"
 msgstr "cercles"
 
-#: network/models.py:78
+#: network/models.py:75
 msgid "squares"
 msgstr ""
 
-#: network/models.py:79
+#: network/models.py:76
 msgid "stripes"
 msgstr ""
 
-#: network/models.py:80
+#: network/models.py:77
 msgid "triangles"
 msgstr ""
 
-#: network/models.py:84
+#: network/models.py:81
 msgid "January"
 msgstr ""
 
-#: network/models.py:85
+#: network/models.py:82
 msgid "February"
 msgstr ""
 
-#: network/models.py:86
+#: network/models.py:83
 #, fuzzy
 #| msgid "Search"
 msgid "March"
 msgstr "Rechercher"
 
-#: network/models.py:87
+#: network/models.py:84
 msgid "April"
 msgstr ""
 
-#: network/models.py:88
+#: network/models.py:85
 msgid "May"
 msgstr ""
 
-#: network/models.py:89
+#: network/models.py:86
 msgid "June"
 msgstr ""
 
-#: network/models.py:90
+#: network/models.py:87
 msgid "July"
 msgstr ""
 
-#: network/models.py:91
+#: network/models.py:88
 msgid "August"
 msgstr ""
 
-#: network/models.py:92
+#: network/models.py:89
 msgid "September"
 msgstr ""
 
-#: network/models.py:93
+#: network/models.py:90
 msgid "October"
 msgstr ""
 
-#: network/models.py:94
+#: network/models.py:91
 msgid "November"
 msgstr ""
 
-#: network/models.py:95
+#: network/models.py:92
 msgid "December"
 msgstr ""
 
-#: network/models.py:101
+#: network/models.py:98
 msgid "orange"
 msgstr ""
 
-#: network/models.py:103
+#: network/models.py:100
 msgid "green"
 msgstr ""
 
-#: network/models.py:117 projects/models.py:53
+#: network/models.py:114 projects/models.py:55 projects/test/tests.py:35
 #, fuzzy
 #| msgid "Project"
 msgid "rejected"
 msgstr "Projet"
 
-#: network/models.py:118 projects/models.py:54 projects/models.py:111
-#: projects/models.py:115
+#: network/models.py:115 projects/models.py:56 projects/models.py:114
+#: projects/models.py:118 projects/test/tests.py:36 projects/test/tests.py:154
+#: projects/test/tests.py:155
 msgid "pending"
 msgstr ""
 
-#: network/models.py:119 projects/models.py:55
+#: network/models.py:116 projects/models.py:57 projects/test/tests.py:37
 #, fuzzy
 #| msgid "in progress"
 msgid "in process"
 msgstr "en cours"
 
-#: network/models.py:120 projects/models.py:56
+#: network/models.py:117 projects/models.py:58 projects/test/tests.py:38
 msgid "accepted"
 msgstr ""
 
-#: network/models.py:130 network/models.py:292
+#: network/models.py:124 network/models.py:277
 msgid "organization type"
 msgstr "type d'organisation"
 
-#: network/models.py:131 network/models.py:311
+#: network/models.py:125 network/models.py:296
 #, fuzzy
 #| msgid "organization type"
 msgid "organization role"
 msgstr "type d'organisation"
 
-#: network/models.py:133
+#: network/models.py:127
 msgid "initials"
 msgstr ""
 
-#: network/models.py:134
+#: network/models.py:128
 msgid "is on map"
 msgstr ""
 
-#: network/models.py:135
+#: network/models.py:129
 msgid "is host"
 msgstr ""
 
-#: network/models.py:136 network/models.py:198
+#: network/models.py:130
+msgid "is main"
+msgstr ""
+
+#: network/models.py:131 network/models.py:165
 msgid "telephone"
 msgstr ""
 
-#: network/models.py:137
+#: network/models.py:132
 msgid "opening times"
 msgstr "horaires d'ouverture"
 
-#: network/models.py:138
+#: network/models.py:133
 msgid "subway access"
 msgstr "accès en transports"
 
-#: network/models.py:139
+#: network/models.py:134
 msgid "bio"
 msgstr ""
 
-#: network/models.py:142 projects/models.py:88
+#: network/models.py:137 projects/models.py:90
 msgid "validation status"
 msgstr ""
 
-#: network/models.py:145 network/models.py:239 network/models.py:254
-#: network/models.py:259 network/models.py:264 network/models.py:269
-#: network/models.py:274 network/models.py:279 network/models.py:320
-#: network/models.py:329 network/models.py:335 network/models.py:360
-#: network/models.py:411
+#: network/models.py:138
+msgid "HAL id"
+msgstr ""
+
+#: network/models.py:141 network/models.py:208 network/models.py:223
+#: network/models.py:228 network/models.py:233 network/models.py:249
+#: network/models.py:254 network/models.py:259 network/models.py:264
+#: network/models.py:305 network/models.py:314 network/models.py:320
+#: network/models.py:345 network/models.py:396
 msgid "organization"
 msgstr "organisation"
 
-#: network/models.py:192
+#: network/models.py:159
 msgid "user"
 msgstr ""
 
-#: network/models.py:194
+#: network/models.py:161
 msgid "gender"
 msgstr "genre"
 
-#: network/models.py:199
+#: network/models.py:166
 msgid "register ID"
 msgstr "matricule"
 
-#: network/models.py:200
+#: network/models.py:167
 msgid "birthday"
 msgstr "déte de naissance"
 
-#: network/models.py:201
+#: network/models.py:168
 msgid "biography"
 msgstr "biographie"
 
-#: network/models.py:202
+#: network/models.py:169
 msgid "role"
 msgstr "rôle"
 
-#: network/models.py:203 network/models.py:620 projects/models.py:75
+#: network/models.py:170 network/models.py:605 projects/models.py:77
 msgid "external ID"
 msgstr "ID externe"
 
-#: network/models.py:238
+#: network/models.py:171
+msgid "HAL url"
+msgstr ""
+
+#: network/models.py:176 network/models.py:241 network/models.py:416
+#: network/models.py:421 network/models.py:426 network/models.py:431
+#: network/models.py:436 network/models.py:564
+msgid "person"
+msgstr "personne"
+
+#: network/models.py:207
 #, fuzzy
 #| msgid "organizations"
 msgid "organization list"
 msgstr "organisations"
 
-#: network/models.py:245
+#: network/models.py:214
 #, fuzzy
 #| msgid "Organization"
 msgid "Organization Linked"
 msgstr "Organisation"
 
-#: network/models.py:253
+#: network/models.py:222
 #, fuzzy
 #| msgid "organization type"
 msgid "organization linked"
 msgstr "type d'organisation"
 
-#: network/models.py:281
+#: network/models.py:266
 msgid "css color"
 msgstr ""
 
-#: network/models.py:282
+#: network/models.py:267
 msgid "css banner type"
 msgstr ""
 
-#: network/models.py:283
+#: network/models.py:268
 msgid "box size"
 msgstr ""
 
-#: network/models.py:289
+#: network/models.py:274
 msgid "class css"
 msgstr ""
 
-#: network/models.py:298
+#: network/models.py:283
 msgid "Organization"
 msgstr "Organisation"
 
-#: network/models.py:299
+#: network/models.py:284
 #, fuzzy
 #| msgid "Recent Actions"
 msgid "Event location"
 msgstr "Actions récentes"
 
-#: network/models.py:308 projects/models.py:120
+#: network/models.py:293 projects/models.py:123
 msgid "key"
 msgstr ""
 
-#: network/models.py:351
+#: network/models.py:336
 msgid "background pattern"
 msgstr ""
 
-#: network/models.py:354
+#: network/models.py:339
 msgid "department page"
 msgstr "page de département"
 
-#: network/models.py:362
+#: network/models.py:347
 msgid "code"
 msgstr ""
 
-#: network/models.py:363
+#: network/models.py:348
 msgid "is legacy"
 msgstr ""
 
-#: network/models.py:364
+#: network/models.py:349
 msgid "parent team"
 msgstr ""
 
-#: network/models.py:365
+#: network/models.py:350
 msgid "HAL Tutelage"
 msgstr ""
 
-#: network/models.py:366
+#: network/models.py:351
 msgid "HAL Researche Structure"
 msgstr ""
 
-#: network/models.py:369 network/models.py:397 network/models.py:405
+#: network/models.py:354 network/models.py:382 network/models.py:390
 msgid "team"
 msgstr "équipe"
 
-#: network/models.py:400
+#: network/models.py:385
 msgid "team page"
 msgstr "page d'équipe"
 
-#: network/models.py:413
+#: network/models.py:398
 #, fuzzy
 #| msgid "description"
 msgid "experience description"
 msgstr "description"
 
-#: network/models.py:414
+#: network/models.py:399
 #, fuzzy
 #| msgid "description"
 msgid "producer description"
 msgstr "description"
 
-#: network/models.py:480
+#: network/models.py:465
 msgid "Person"
 msgstr "Personne"
 
-#: network/models.py:483
+#: network/models.py:468
 msgid "Person autocomplete"
 msgstr ""
 
-#: network/models.py:488
+#: network/models.py:473
 msgid "order number"
 msgstr ""
 
-#: network/models.py:489
+#: network/models.py:474
 msgid "display on team page"
 msgstr "afficher sur la page d'équipe"
 
-#: network/models.py:490
+#: network/models.py:475
 msgid "parent"
 msgstr ""
 
-#: network/models.py:493 network/models.py:582
+#: network/models.py:478 network/models.py:567
 msgid "status"
 msgstr ""
 
-#: network/models.py:500 network/models.py:585
+#: network/models.py:485 network/models.py:570
 msgid "grade"
 msgstr ""
 
-#: network/models.py:501
+#: network/models.py:486
 msgid "grades"
 msgstr ""
 
-#: network/models.py:507 network/models.py:584
+#: network/models.py:492 network/models.py:569
 msgid "framework"
 msgstr "cadre"
 
-#: network/models.py:508
+#: network/models.py:493
 msgid "frameworks"
 msgstr "corps"
 
-#: network/models.py:513 network/models.py:586
+#: network/models.py:498 network/models.py:571
 msgid "function"
 msgstr "fonction"
 
-#: network/models.py:514
+#: network/models.py:499
 msgid "functions"
 msgstr "fonctions"
 
-#: network/models.py:519
+#: network/models.py:504
 msgid "budget code"
 msgstr ""
 
-#: network/models.py:520
+#: network/models.py:505
 msgid "budget codes"
 msgstr ""
 
-#: network/models.py:525
+#: network/models.py:510
 msgid "record piece"
 msgstr ""
 
-#: network/models.py:526
+#: network/models.py:511
 msgid "record pieces"
 msgstr ""
 
-#: network/models.py:531 network/models.py:607
+#: network/models.py:516 network/models.py:592
 msgid "training type"
 msgstr "type de formation"
 
-#: network/models.py:532
+#: network/models.py:517
 msgid "training types"
 msgstr "type de formation"
 
-#: network/models.py:543 network/models.py:609
+#: network/models.py:528 network/models.py:594
 msgid "training topic"
 msgstr ""
 
-#: network/models.py:544
+#: network/models.py:529
 msgid "training topics"
 msgstr "sujets de formation"
 
-#: network/models.py:549 network/models.py:610
+#: network/models.py:534 network/models.py:595
 msgid "training speciality"
 msgstr ""
 
-#: network/models.py:550
+#: network/models.py:535
 msgid "training specialities"
 msgstr "spécialités de formation"
 
-#: network/models.py:555 network/models.py:590
+#: network/models.py:540 network/models.py:575
 msgid "UMR"
 msgstr ""
 
-#: network/models.py:560 network/models.py:624
+#: network/models.py:545 network/models.py:609
 msgid "monday AM"
 msgstr ""
 
-#: network/models.py:561 network/models.py:625
+#: network/models.py:546 network/models.py:610
 msgid "monday PM"
 msgstr ""
 
-#: network/models.py:562 network/models.py:626
+#: network/models.py:547 network/models.py:611
 msgid "tuesday AM"
 msgstr ""
 
-#: network/models.py:563 network/models.py:627
+#: network/models.py:548 network/models.py:612
 msgid "tuesday PM"
 msgstr ""
 
-#: network/models.py:564 network/models.py:628
+#: network/models.py:549 network/models.py:613
 msgid "wednesday AM"
 msgstr ""
 
-#: network/models.py:565 network/models.py:629
+#: network/models.py:550 network/models.py:614
 msgid "wednesday PM"
 msgstr ""
 
-#: network/models.py:566 network/models.py:630
+#: network/models.py:551 network/models.py:615
 msgid "thursday AM"
 msgstr ""
 
-#: network/models.py:567 network/models.py:631
+#: network/models.py:552 network/models.py:616
 msgid "thursday PM"
 msgstr ""
 
-#: network/models.py:568 network/models.py:632
+#: network/models.py:553 network/models.py:617
 msgid "friday AM"
 msgstr ""
 
-#: network/models.py:569 network/models.py:633
+#: network/models.py:554 network/models.py:618
 msgid "friday PM"
 msgstr ""
 
-#: network/models.py:572
+#: network/models.py:557
 msgid "Activity Weekly Hour Volume"
 msgstr ""
 
-#: network/models.py:573
+#: network/models.py:558
 msgid "Activity Weekly Hour Volumes"
 msgstr ""
 
-#: network/models.py:581
+#: network/models.py:566
 msgid "number of weeks"
 msgstr ""
 
-#: network/models.py:583
+#: network/models.py:568
 msgid "permanent"
 msgstr ""
 
-#: network/models.py:588
+#: network/models.py:573
 msgid "organizations (attachment or subscribed)"
 msgstr ""
 
-#: network/models.py:589
+#: network/models.py:574
 msgid "employers"
 msgstr ""
 
-#: network/models.py:591 projects/models.py:81
+#: network/models.py:576 projects/models.py:83
 msgid "teams"
 msgstr "équipes"
 
-#: network/models.py:592
+#: network/models.py:577
 msgid "other team text"
 msgstr ""
 
-#: network/models.py:593
+#: network/models.py:578
 msgid "R&D quota (float)"
 msgstr ""
 
-#: network/models.py:594
+#: network/models.py:579
 msgid "R&D quota (text)"
 msgstr ""
 
-#: network/models.py:595
+#: network/models.py:580
 msgid "R&D program"
 msgstr "Programme"
 
-#: network/models.py:598
+#: network/models.py:583
 msgid "supervisors"
 msgstr ""
 
-#: network/models.py:600
+#: network/models.py:585
 msgid "doctoral school"
 msgstr ""
 
-#: network/models.py:601
+#: network/models.py:586
 msgid "PhD directors"
 msgstr ""
 
-#: network/models.py:602
+#: network/models.py:587
 msgid "PhD defense date"
 msgstr ""
 
-#: network/models.py:603
+#: network/models.py:588
 msgid "PhD title"
 msgstr "titre de docteur"
 
-#: network/models.py:604
+#: network/models.py:589
 msgid "post-doctoral situation"
 msgstr ""
 
-#: network/models.py:605
+#: network/models.py:590
 msgid "HDR"
 msgstr ""
 
-#: network/models.py:611
+#: network/models.py:596
 msgid "Training title"
 msgstr ""
 
-#: network/models.py:615
+#: network/models.py:600
 msgid "add date"
 msgstr "ajouter une date"
 
-#: network/models.py:616
+#: network/models.py:601
 msgid "modification date"
 msgstr ""
 
-#: network/models.py:617
+#: network/models.py:602
 msgid "manual modification date"
 msgstr ""
 
-#: network/models.py:619
+#: network/models.py:604
 msgid "comments"
 msgstr "commentaires"
 
-#: network/models.py:636 network/models.py:653 network/models.py:675
-#: network/models.py:694
+#: network/models.py:621 network/models.py:638 network/models.py:660
+#: network/models.py:679
 msgid "activity"
 msgstr "activité"
 
-#: network/models.py:637
+#: network/models.py:622
 msgid "activities"
 msgstr "activités"
 
-#: network/models.py:654 network/models.py:676 projects/models.py:92
-#: projects/models.py:153 projects/models.py:165 projects/models.py:170
-#: projects/models.py:175 projects/models.py:180 projects/models.py:185
-#: projects/models.py:190 projects/models.py:260 projects/models.py:339
-#: projects/models.py:348 projects/models.py:356 projects/models.py:369
-#: projects/models.py:403 projects/models.py:419 projects/models.py:430
+#: network/models.py:639 network/models.py:661 projects/models.py:95
+#: projects/models.py:156 projects/models.py:168 projects/models.py:173
+#: projects/models.py:178 projects/models.py:183 projects/models.py:188
+#: projects/models.py:193 projects/models.py:263 projects/models.py:342
+#: projects/models.py:351 projects/models.py:359 projects/models.py:367
+#: projects/models.py:380 projects/models.py:414 projects/models.py:430
+#: projects/models.py:441
 msgid "project"
 msgstr "projets"
 
-#: network/models.py:655 network/models.py:678 projects/models.py:158
+#: network/models.py:640 network/models.py:663 projects/models.py:161
 msgid "work package"
 msgstr ""
 
-#: network/models.py:656
+#: network/models.py:641
 #, python-format
 msgid "% of work time on the project"
 msgstr ""
 
-#: network/models.py:657
+#: network/models.py:642
 msgid "month"
 msgstr ""
 
-#: network/models.py:658
+#: network/models.py:643
 msgid "year"
 msgstr ""
 
-#: network/models.py:667
+#: network/models.py:652
 #, fuzzy
 #| msgid "activities"
 msgid "activity timesheet"
 msgstr "activités"
 
-#: network/models.py:668
+#: network/models.py:653
 #, fuzzy
 #| msgid "activity status"
 msgid "activity timesheets"
 msgstr "status de l'activité"
 
-#: network/models.py:677
+#: network/models.py:662
 msgid "default %"
 msgstr ""
 
-#: network/models.py:682
+#: network/models.py:667
 #, fuzzy
 #| msgid "activity"
 msgid "project activity"
 msgstr "activité"
 
-#: network/models.py:683
+#: network/models.py:668
 #, fuzzy
 #| msgid "activities"
 msgid "project activities"
@@ -1366,7 +1382,7 @@ msgstr ""
 msgid "Salvadorean"
 msgstr ""
 
-#: network/nationalities/nationalities.py:77
+#: network/nationalities/nationalities.py:77 settings.py:207
 msgid "English"
 msgstr ""
 
@@ -1390,7 +1406,7 @@ msgstr ""
 msgid "Finnish"
 msgstr ""
 
-#: network/nationalities/nationalities.py:83
+#: network/nationalities/nationalities.py:83 settings.py:206
 msgid "French"
 msgstr ""
 
@@ -1849,410 +1865,500 @@ msgstr ""
 msgid "menu alinea"
 msgstr ""
 
-#: pages/models.py:92 pages/models.py:103 pages/models.py:113
-#: pages/models.py:123 pages/models.py:133 pages/models.py:142
-#: shop/models.py:63
+#: pages/models.py:36 pages/models.py:171
+#, fuzzy
+#| msgid "weaving CSS class"
+msgid "CSS class"
+msgstr "classe de trame CSS"
+
+#: pages/models.py:93 pages/models.py:104 pages/models.py:114
+#: pages/models.py:124 pages/models.py:134 pages/models.py:143
+#: pages/models.py:151 shop/models.py:63
 msgid "page"
 msgstr "page"
 
-#: pages/models.py:154
+#: pages/models.py:163
 msgid "link image"
 msgstr "lien d'image"
 
-#: pages/models.py:155
+#: pages/models.py:164
 msgid "link images"
 msgstr "lien d'images"
 
-#: pages/models.py:165
+#: pages/models.py:174
 msgid "css class"
 msgstr ""
 
-#: pages/models.py:170 pages/models.py:178 pages/models.py:186
-#: pages/models.py:194 pages/models.py:205
+#: pages/models.py:179 pages/models.py:187 pages/models.py:195
+#: pages/models.py:203 pages/models.py:214
 msgid "home"
 msgstr ""
 
-#: pages/models.py:181
+#: pages/models.py:190
 msgid "Body"
 msgstr ""
 
-#: pages/models.py:206
+#: pages/models.py:215
 msgid "homes"
 msgstr ""
 
-#: projects/models.py:42
+#: projects/models.py:44
 msgid "internal"
 msgstr ""
 
-#: projects/models.py:43
+#: projects/models.py:45
 msgid "external"
 msgstr ""
 
-#: projects/models.py:47
+#: projects/models.py:49
 msgid "public"
 msgstr "public"
 
-#: projects/models.py:48
+#: projects/models.py:50
 msgid "shared"
 msgstr ""
 
-#: projects/models.py:49
+#: projects/models.py:51
 msgid "private"
 msgstr ""
 
-#: projects/models.py:60
+#: projects/models.py:62
 msgid "Start-up / Micro"
 msgstr ""
 
-#: projects/models.py:61
+#: projects/models.py:63
 msgid "SME"
 msgstr ""
 
-#: projects/models.py:62
+#: projects/models.py:64
 msgid "Large"
 msgstr ""
 
-#: projects/models.py:66
+#: projects/models.py:68
 msgid "EU / National Program"
 msgstr ""
 
-#: projects/models.py:67
+#: projects/models.py:69
 msgid "Privately Funded"
 msgstr ""
 
-#: projects/models.py:76
+#: projects/models.py:78
 msgid "project program"
 msgstr "programme du projet"
 
-#: projects/models.py:77
+#: projects/models.py:79
 msgid "project program type"
 msgstr ""
 
-#: projects/models.py:78 projects/models.py:209
+#: projects/models.py:80 projects/models.py:212
 #, fuzzy
 #| msgid "project"
 msgid "project call"
 msgstr "projets"
 
-#: projects/models.py:79
+#: projects/models.py:81
 msgid "lead team"
 msgstr "équipe principale"
 
-#: projects/models.py:80 projects/models.py:155
+#: projects/models.py:82 projects/models.py:158
 msgid "lead organization"
 msgstr "organisation principale"
 
-#: projects/models.py:82
+#: projects/models.py:84
 msgid "organizations"
 msgstr "organisations"
 
-#: projects/models.py:83
+#: projects/models.py:85
 msgid "website"
 msgstr ""
 
-#: projects/models.py:85
+#: projects/models.py:87
 msgid "Referring Person"
 msgstr ""
 
-#: projects/models.py:86
+#: projects/models.py:88
 msgid "Manager"
 msgstr ""
 
-#: projects/models.py:87
+#: projects/models.py:89
 #, fuzzy
 #| msgid "Archive"
 msgid "Is Archive"
 msgstr "Archive"
 
-#: projects/models.py:89
+#: projects/models.py:91
 msgid "funding"
 msgstr ""
 
-#: projects/models.py:93
+#: projects/models.py:92
+msgid "concepts"
+msgstr ""
+
+#: projects/models.py:96
 msgid "projects"
 msgstr "projets"
 
-#: projects/models.py:109
+#: projects/models.py:112 projects/test/tests.py:152
 msgid "in progress"
 msgstr "en cours"
 
-#: projects/models.py:113
+#: projects/models.py:116 projects/test/tests.py:153
 msgid "completed"
 msgstr "terminé"
 
-#: projects/models.py:121
+#: projects/models.py:124
 msgid "parent topic"
 msgstr ""
 
-#: projects/models.py:124 projects/models.py:195
+#: projects/models.py:127 projects/models.py:198
 msgid "project topic"
 msgstr ""
 
-#: projects/models.py:125
+#: projects/models.py:128
 msgid "project topics"
 msgstr "rubrique d'un projet"
 
-#: projects/models.py:138
+#: projects/models.py:141
 msgid "program"
 msgstr "programme"
 
-#: projects/models.py:139
+#: projects/models.py:142
 msgid "programs"
 msgstr "programmes"
 
-#: projects/models.py:146
+#: projects/models.py:149
 msgid "program type"
 msgstr "Type de programme"
 
-#: projects/models.py:147
+#: projects/models.py:150
 msgid "program types"
 msgstr "Types de programme"
 
-#: projects/models.py:154
+#: projects/models.py:157
 msgid "number"
 msgstr ""
 
-#: projects/models.py:159
+#: projects/models.py:162
 msgid "work packages"
 msgstr ""
 
-#: projects/models.py:198
+#: projects/models.py:201
 msgid "project topic page"
 msgstr "page rubrique d'un projet"
 
-#: projects/models.py:199
+#: projects/models.py:202
 msgid "project topic pages"
 msgstr "pages de rubrique d'un projet"
 
-#: projects/models.py:204
+#: projects/models.py:207
 msgid "Project form content"
 msgstr ""
 
-#: projects/models.py:205
+#: projects/models.py:208
 msgid "Residency form content"
 msgstr ""
 
-#: projects/models.py:206
+#: projects/models.py:209
 msgid "Producer form content"
 msgstr ""
 
-#: projects/models.py:210
+#: projects/models.py:213
 #, fuzzy
 #| msgid "projects"
 msgid "project calls"
 msgstr "projets"
 
-#: projects/models.py:240
+#: projects/models.py:243
 #, fuzzy
 #| msgid "projects"
 msgid "project call blocks"
 msgstr "projets"
 
-#: projects/models.py:245
+#: projects/models.py:248
 #, fuzzy
 #| msgid "project"
 msgid "project call image"
 msgstr "projets"
 
-#: projects/models.py:250
+#: projects/models.py:253
 #, fuzzy
 #| msgid "project"
 msgid "project call file"
 msgstr "projets"
 
-#: projects/models.py:255
+#: projects/models.py:258
 #, fuzzy
 #| msgid "project"
 msgid "project call link"
 msgstr "projets"
 
-#: projects/models.py:261
+#: projects/models.py:264
 msgid "authors"
 msgstr "auteurs"
 
-#: projects/models.py:262 projects/models.py:297
+#: projects/models.py:265 projects/models.py:300
 msgid "repository"
 msgstr ""
 
-#: projects/models.py:263
+#: projects/models.py:266
 msgid "build commands"
 msgstr ""
 
-#: projects/models.py:264
+#: projects/models.py:267
 msgid "directory"
 msgstr ""
 
-#: projects/models.py:267
+#: projects/models.py:270
 msgid "project demo"
 msgstr "projet demo"
 
-#: projects/models.py:268
+#: projects/models.py:271
 msgid "project demos"
 msgstr "projets demo"
 
-#: projects/models.py:291
+#: projects/models.py:294
 msgid "system"
 msgstr ""
 
-#: projects/models.py:292
-msgid "access"
+#: projects/models.py:295
+#, fuzzy
+#| msgid "access"
+msgid "access rights"
 msgstr "accès en transports"
 
-#: projects/models.py:293
+#: projects/models.py:296
 msgid "branch"
 msgstr ""
 
-#: projects/models.py:298
+#: projects/models.py:301
 msgid "repositories"
 msgstr ""
 
-#: projects/models.py:327
+#: projects/models.py:330
 msgid "clone command"
 msgstr ""
 
-#: projects/models.py:328
+#: projects/models.py:331
 msgid "pull command"
 msgstr ""
 
-#: projects/models.py:329
+#: projects/models.py:332
 msgid "checkout command"
 msgstr ""
 
-#: projects/models.py:330
+#: projects/models.py:333
 msgid "branch command"
 msgstr ""
 
-#: projects/models.py:333
+#: projects/models.py:336
 msgid "repository system"
 msgstr ""
 
-#: projects/models.py:334
+#: projects/models.py:337
 msgid "repository systems"
 msgstr ""
 
-#: projects/models.py:357
+#: projects/models.py:368
 msgid "Login required content"
 msgstr ""
 
-#: projects/models.py:371
+#: projects/models.py:382
 #, fuzzy
 #| msgid "description"
 msgid "brief description"
 msgstr "description"
 
-#: projects/models.py:372
+#: projects/models.py:383
 #, fuzzy
 #| msgid "description"
 msgid "challenges description"
 msgstr "description"
 
-#: projects/models.py:373
+#: projects/models.py:384
 #, fuzzy
 #| msgid "description"
 msgid "technology description"
 msgstr "description"
 
-#: projects/models.py:374
+#: projects/models.py:385
 #, fuzzy
 #| msgid "description"
 msgid "objectives description"
 msgstr "description"
 
-#: projects/models.py:375
+#: projects/models.py:386
 #, fuzzy
 #| msgid "description"
 msgid "resource description"
 msgstr "description"
 
-#: projects/models.py:376
+#: projects/models.py:387
 msgid "residency start date"
 msgstr ""
 
-#: projects/models.py:377
+#: projects/models.py:388
 msgid "period for direct cooperation"
 msgstr ""
 
-#: projects/models.py:378
+#: projects/models.py:389
 msgid "residency duration"
 msgstr ""
 
-#: projects/models.py:380
+#: projects/models.py:391
 #, fuzzy
 #| msgid "credits"
 msgid "Image credits"
 msgstr "crédits"
 
-#: projects/models.py:405
+#: projects/models.py:416
 #, fuzzy
 #| msgid "description"
 msgid "project description"
 msgstr "description"
 
-#: projects/models.py:406
+#: projects/models.py:417
 #, fuzzy
 #| msgid "in progress"
 msgid "funding programme"
 msgstr "en cours"
 
-#: projects/models.py:407
+#: projects/models.py:418
 msgid "letter of commitment by the project coordinator"
 msgstr ""
 
-#: projects/models.py:408
+#: projects/models.py:419
 msgid "letter of recommendations from investor (e.g VC)"
 msgstr ""
 
-#: projects/models.py:410
+#: projects/models.py:420
+msgid "persons"
+msgstr "personnes"
+
+#: projects/models.py:421
 msgid "dimension"
 msgstr ""
 
-#: projects/models.py:420
+#: projects/models.py:431
 #, fuzzy
 #| msgid "organization type"
 msgid "organization name"
 msgstr "type d'organisation"
 
-#: projects/models.py:421
+#: projects/models.py:432
 #, fuzzy
 #| msgid "description"
 msgid "position"
 msgstr "description"
 
-#: projects/models.py:431
+#: projects/models.py:442
 msgid "artist"
 msgstr "artiste"
 
-#: projects/models.py:433
+#: projects/models.py:444
 msgid "producer commitment"
 msgstr ""
 
-#: projects/models.py:492 projects/models.py:513 projects/models.py:519
+#: projects/models.py:471 projects/models.py:492 projects/models.py:498
 msgid "residency"
 msgstr ""
 
-#: projects/models.py:493
+#: projects/models.py:472
 #, fuzzy
 #| msgid "Products"
 msgid "producer"
 msgstr "Produits"
 
-#: projects/models.py:498
+#: projects/models.py:477
 #, fuzzy
 #| msgid "project topic page"
 msgid "project residency file"
 msgstr "page rubrique d'un projet"
 
-#: projects/models.py:503
+#: projects/models.py:482
 #, fuzzy
 #| msgid "project topic page"
 msgid "project residency image"
 msgstr "page rubrique d'un projet"
 
-#: projects/models.py:508
+#: projects/models.py:487
 #, fuzzy
 #| msgid "project topic page"
 msgid "project residency user image"
 msgstr "page rubrique d'un projet"
+
+#: settings.py:81
+msgid "Action"
+msgstr "Action"
+
+#: settings.py:82
+msgid "Departement"
+msgstr "Département"
+
+#: settings.py:83
+msgid "Footer vertical"
+msgstr ""
+
+#: settings.py:84
+msgid "Footer horizontal"
+msgstr ""
+
+#: settings.py:85 settings.py:469
+msgid "Magazine"
+msgstr "Magazine"
+
+#: settings.py:86
+msgid "Vous êtes"
+msgstr ""
+
+#: settings.py:87
+#, fuzzy
+#| msgid "Persons"
+msgid "Personnes"
+msgstr "Personnes"
+
+#: settings.py:451
+msgid "Pages"
+msgstr "Pages"
+
+#: settings.py:457
+msgid "Media Library"
+msgstr "Librairie media"
+
+#: settings.py:459
+msgid "Events"
+msgstr "Événements"
+
+#: settings.py:471
+msgid "Network"
+msgstr "Réseaux"
+
+#: settings.py:481
+msgid "Activity"
+msgstr "Activité"
+
+#: settings.py:493
+msgid "Timesheet"
+msgstr ""
+
+#: settings.py:496
+msgid "Projects"
+msgstr "Projets"
+
+#: settings.py:510
+msgid "Shop"
+msgstr ""
+
+#: settings.py:516
+msgid "Jobs"
+msgstr "Offres d'emplois et stages"
+
+#: settings.py:517
+msgid "Users"
+msgstr ""
+
+#: settings.py:518
+msgid "Site"
+msgstr ""
 
 #: shop/models.py:44 shop/models.py:53 shop/models.py:64 shop/models.py:67
 msgid "product list"
@@ -2285,41 +2391,6 @@ msgstr ""
 #: shop/models.py:85
 msgid "prestashop products"
 msgstr ""
-
-#~ msgid "Pages"
-#~ msgstr "Pages"
-
-#~ msgid "Media Library"
-#~ msgstr "Librairie media"
-
-#~ msgid "Events"
-#~ msgstr "Événements"
-
-#~ msgid "Magazine"
-#~ msgstr "Magazine"
-
-#~ msgid "Network"
-#~ msgstr "Réseaux"
-
-#~ msgid "Activity"
-#~ msgstr "Activité"
-
-#~ msgid "Projects"
-#~ msgstr "Projets"
-
-#~ msgid "Jobs"
-#~ msgstr "Offres d'emplois et stages"
-
-#~ msgid "Action"
-#~ msgstr "Action"
-
-#~ msgid "Departement"
-#~ msgstr "Département"
-
-#, fuzzy
-#~| msgid "Persons"
-#~ msgid "Personnes"
-#~ msgstr "Personnes"
 
 #~ msgid "Add"
 #~ msgstr "Ajouter"
@@ -2692,9 +2763,6 @@ msgstr ""
 
 #~ msgid "video category"
 #~ msgstr "catégorie de vidéo"
-
-#~ msgid "weaving CSS class"
-#~ msgstr "classe de trame CSS"
 
 #~ msgid "All"
 #~ msgstr "Tous les"

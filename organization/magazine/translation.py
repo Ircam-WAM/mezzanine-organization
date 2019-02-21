@@ -64,6 +64,12 @@ class DynamicContentArticleTranslationOptions(TranslationOptions):
     pass
 
 
+@register(DynamicMultimediaArticle)
+class DynamicMultimediaArticleTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
 @register(ArticlePlaylist)
 class ArticlePlaylistTranslationOptions(TranslationOptions):
 

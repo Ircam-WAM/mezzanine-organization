@@ -23,6 +23,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import os
+from datetime import date
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
 import ldap, logging
@@ -206,9 +207,9 @@ LANGUAGES = (
     ('en', _('English')),
 )
 
-LOCALE_PATHS = (
-    os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
-)
+# LOCALE_PATHS = (
+#     os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
+# )
 
 #############
 # DATABASES #
@@ -231,8 +232,8 @@ DATABASES = {
 ################
 
 INSTALLED_APPS = [
-    "organization_themes",
-    # the current theme has to be defined in main local_settings as THEME_APP
+    'ircam_www_theme',
+    # the current theme has to be defined in main local_settings as HOST_THEMES
     "modeltranslation",
     "dal",
     "dal_select2",
@@ -493,6 +494,7 @@ ADMIN_MENU_ORDER = (
                      'organization-network.PersonActivityTimeSheet'
                     )),
     (_('Projects'), ('organization-projects.Project',
+                    'organization-projects.ProjectPage',
                     'organization-projects.ProjectCall',
                     'organization-projects.ProjectContact',
                     'organization-projects.ProjectProgram',
@@ -527,9 +529,12 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'pages.Page',
                         'organization-media.Playlist',
                         'mezzanine_agenda.Event',
-                        'organization-projects.Project',
+                        'organization-projects.ProjectPage',
                         'shop.Product',
                         'organization-magazine.Article')
+                        
+# authorize models which does not heritate from Displayable
+SEARCH_MODEL_NO_DISPLAYABLE = ('organization-network.Person',)
 
 PAGES_MODELS = ('organization-pages.CustomPage',
                 'organization-magazine.Topic',
@@ -549,7 +554,7 @@ DAL_MAX_RESULTS = 100
 # EVENTS
 
 EVENT_SLUG = 'agenda'
-EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
+EVENT_GOOGLE_MAPS_DOMAIN = 'maps.googleapis.com'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
 EVENT_EXCLUDE_TAG_LIST = [ ]
@@ -574,6 +579,7 @@ SHOP_USE_VARIATIONS = False
 SHOP_USE_RATINGS = False
 
 PROJECT_DEMOS_DIR = '/srv/media/projects/demos/'
+
 if not os.path.exists(PROJECT_DEMOS_DIR):
     os.makedirs(PROJECT_DEMOS_DIR)
 
@@ -678,4 +684,31 @@ AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 ANONYMOUS_USER_NAME = None
 LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
 
+# Themes
+HOST_THEMES = [
+    ('example.com', 'ircam_www_theme'),
+]
+
+# TIMESHEET
+TIMESHEET_USER_TEST = 1
+TIMESHEET_LOG_PATH = "/var/log/cron/"
+TIMESHEET_START = date(2015, 1, 1) # arbitrary timesheet start due to missing data
+IRCAM_EMPLOYER = 1
+if DEBUG:
+    TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+else:
+    TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+
+# HAL
+
+HAL_URL = "//haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?affi_exp=Ircam&CB_auteur=oui&CB_titre=oui" \
+                        "&CB_article=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=typdoc&tri_exp3=date_publi" \
+                        "&ordre_aff=TA&Fen=Aff&Formate=Oui"
+
+HAL_LABOS_EXP = "labos_exp="
+HAL_URL_CSS = "&css=//%s/static/css/index.min.css"
+HAL_LIMIT_PUB = "&NbAffiche="
+HAL_YEAR_BEGIN = 1977
+
+# Ownable
 OWNABLE_MODELS_ALL_EDITABLE = []

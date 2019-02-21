@@ -87,6 +87,7 @@ class ExtendedCustomPageDynamicContent(models.Model):
             temp = ""
         return temp
 
+
 class PageBlock(Block):
 
     page = models.ForeignKey(Page, verbose_name=_('page'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
@@ -143,6 +144,14 @@ class DynamicContentPage(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Dynamic Content Page'
+
+
+class DynamicMultimediaPage(DynamicContent, Orderable):
+    
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
 
 
 class LinkImage(models.Model):

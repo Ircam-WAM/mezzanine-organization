@@ -32,10 +32,13 @@ from organization.pages.models import CustomPage, ExtendedCustomPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import Home
+from organization.pages.forms import YearForm
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
 from organization.network.models import Person, Organization
+from organization.projects.models import Project
 from django.shortcuts import redirect
+from django.views.generic.edit import FormView
 
 
 class HomeView(SlugMixin, DetailView):
@@ -50,6 +53,13 @@ class HomeView(SlugMixin, DetailView):
             return homes.latest("publish_date")
         return None
 
+    def get_single_body(self, model_type):
+        for body in self.bodys:
+            if body.content_type:
+                if body.content_type.model == model_type:
+                    return body.content_object
+        return
+
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['briefs'] = Brief.objects.published().order_by('-publish_date')[:8]
@@ -58,6 +68,8 @@ class HomeView(SlugMixin, DetailView):
             context['event_calendar_form'] = EventCalendarForm()
         except:
             pass
+
+        context['hal_url'] = settings.HAL_URL
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -80,7 +92,7 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
-        persons = Person.objects.published()
+        persons = Person.objects.all()
         medias = Media.objects.all()
 
         if self.q:
@@ -119,6 +131,7 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
         briefs = Brief.objects.all()
         medias = Media.objects.all()
         persons = Person.objects.all()
+        projects = Project.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
@@ -127,12 +140,10 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
             briefs = briefs.filter(title__icontains=self.q)
             medias = medias.filter(title__icontains=self.q)
             persons = persons.filter(title__icontains=self.q)
+            projects = projects.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons)
 
-        if self.q:
-            # This would apply the filter on all the querysets
-            qs = qs.filter(title__icontains=self.q)
+        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons, projects)
 
         # This will limit each queryset so that they show an equal number
         # of results.
@@ -171,8 +182,37 @@ class NewsletterView(TemplateView):
     template_name = "pages/newsletter.html"
 
 
-class InformationView(ListView):
+class PublicationsView(FormView):
     
+    template_name = "pages/publications.html"
+    form_class = YearForm
+    success_url = "."
+    hal_url = settings.HAL_URL
+
+    def form_valid(self, form):
+        # Ajax
+        if self.request.is_ajax():
+            context = {}
+            context['hal_url'] = self.hal_url + "&annee_publideb=%s&annee_publifin=%s" % (form.cleaned_data['year'], form.cleaned_data['year'])
+            return render(self.request, 'core/inc/hal.html', context)
+        else :
+            self.request.session['year'] = form.cleaned_data['year']
+            return super(PublicationsView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(PublicationsView, self).get_context_data(**kwargs)
+        context['hal_url'] = self.hal_url
+        if 'year' in self.request.session:
+            # set year filter
+            context['hal_url'] += "&annee_publideb=%s&annee_publifin=%s" % (self.request.session['year'], self.request.session['year'])
+            context['form'].initial['year'] = self.request.session['year']
+            # repopulate form
+            self.request.session.pop('year', None)
+        return context
+
+
+class InformationView(ListView):
+
     model = Organization
     context_object_name = 'organizations'
     template_name = "pages/informations.html"

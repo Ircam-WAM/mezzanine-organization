@@ -30,8 +30,11 @@ from django.forms import ModelForm
 from mezzanine.core.models import Orderable
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
-from organization.agenda.models import Event, DynamicContentEvent
-from organization.media.models import Playlist
+from organization.agenda.models import Event, DynamicContentEvent, EventPersonListBlockInline, DynamicMultimediaEvent
+from organization.media.models import Playlist, Media
+from organization.media.forms import DynamicMultimediaForm
+from organization.network.models import PersonListBlock
+
 
 class DynamicContentEventForm(autocomplete.FutureModelForm):
 
@@ -48,3 +51,21 @@ class DynamicContentEventForm(autocomplete.FutureModelForm):
     class Meta:
         model = DynamicContentEvent
         fields = ('content_object',)
+
+
+class DynamicMultimediaEventForm(DynamicMultimediaForm):
+    
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaEvent
+    
+
+class EventPersonListForm(forms.ModelForm):
+    
+    person_list_block = forms.ModelChoiceField(
+        queryset=PersonListBlock.objects.all(),
+        widget=autocomplete.ModelSelect2(url='person-list-block-autocomplete')
+    )
+
+    class Meta:
+        model = EventPersonListBlockInline
+        fields = ('person_list_block',)

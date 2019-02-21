@@ -27,6 +27,10 @@ from organization.magazine.models import *
 from organization.pages.models import CustomPage
 from organization.network.models import PersonListBlock, Person
 from mezzanine_agenda.models import Event
+from organization.media.forms import DynamicMultimediaForm
+from mezzanine.blog.models import BlogCategory
+from mezzanine_agenda.models import EventCategory
+
 
 class BriefForm(autocomplete.FutureModelForm):
 
@@ -64,7 +68,7 @@ class DynamicContentArticleForm(autocomplete.FutureModelForm):
             Article.objects.all(),
             Event.objects.all(),
             CustomPage.objects.all(),
-            Person.objects.published()
+            Person.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-article'),
@@ -73,3 +77,28 @@ class DynamicContentArticleForm(autocomplete.FutureModelForm):
     class Meta:
         model = DynamicContentArticle
         fields = ('content_object',)
+
+
+class DynamicMultimediaArticleForm(DynamicMultimediaForm):
+    
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaArticle
+
+
+class CategoryFilterForm(forms.Form):
+    
+    CATEGORIES = []
+    blog_categories = BlogCategory.objects.all()
+    for category in blog_categories:
+        CATEGORIES.append((category, category))
+    
+    # try / except > for passing migration mezzanine_agenda-0031
+    from django.db import DatabaseError
+    try:
+        event_categories = EventCategory.objects.all()
+        for category in event_categories:
+            CATEGORIES.append((category, category))
+    except DatabaseError:
+        pass
+
+    categories = forms.ChoiceField(choices=CATEGORIES, required=False)

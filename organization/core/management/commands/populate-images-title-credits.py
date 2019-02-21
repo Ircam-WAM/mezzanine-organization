@@ -18,7 +18,27 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+import re
 
-from django.test import TestCase
+from datetime import datetime, timedelta
+from optparse import make_option
+from django.apps import apps
 
-# Create your tests here.
+from django.conf import settings
+from django.core.management.base import BaseCommand, CommandError
+from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.apps import apps
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.contenttypes.models import ContentType
+from organization.core.models import Image
+
+class Command(BaseCommand):
+
+    def handle(self, *args, **options):
+        for model in Image.__subclasses__():
+            objs = model.objects.all()
+            for obj in objs:
+                obj.title_en = obj.title
+                obj.credits_en = obj.credits
+                obj.save()

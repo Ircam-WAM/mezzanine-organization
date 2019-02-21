@@ -32,6 +32,7 @@ from organization.network.views import *
 
 
 urlpatterns = [
+    url('^directory(?:/(?P<letter>.*))?/$', PersonDirectoryView.as_view(letter="a"), name='person-directory'),
     url('^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
     url('^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name='organization-network-timesheet-create-view'),
     url('^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name='organization-network-timesheet-list-view' ),
@@ -40,6 +41,7 @@ urlpatterns = [
     url('^persons/$', PersonListView.as_view(), name='organization-network-person-list'),
     url('^person-list-block-autocomplete/$', permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
     url('^person-autocomplete/$', permission_required('person.can_edit')(PersonAutocompleteView.as_view()), name='person-autocomplete'),
+
     url('^network/$', OrganizationListView.as_view(), name='network'),
 
     url('^organization-linked-list-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
@@ -55,4 +57,6 @@ urlpatterns = [
 
     url('^jury/list/$', JuryListView.as_view(), name='organization-jury-list'),
 
-]
+    url('^team/(?P<slug>.*)/members/$', TeamMembersView.as_view(), name='team-members'),
+    url('^team/(?P<slug>.*)/publications/$', TeamPublicationsView.as_view(), name='team-publications'),
+    ]
