@@ -23,7 +23,9 @@ from re import match
 from django.contrib import messages
 from pprint import pprint
 from calendar import monthrange
-from django.db.models.fields.related import ForeignKey
+from django.db.models import Q
+from django.db.models.query import QuerySet
+from django.db.models.fields.related import ForeignKey 
 from django.http import Http404
 from django.db.utils import IntegrityError
 from django.shortcuts import render, redirect
@@ -38,7 +40,6 @@ from django.db.models.fields.related import ForeignKey
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
-from django.db.models import Q
 from dal import autocomplete
 from organization.network.models import *
 from organization.core.views import *
@@ -635,12 +636,15 @@ class JuryListView(ListView):
 
 class AbstractTeamOwnableListView(ListView):
 
-    def get_queryset(self):
-        self.queryset = super(AbstractTeamOwnableListView, self).get_queryset()
+    def filter_by_team(self):
         if 'slug' in self.kwargs:
             try :
                 team = Team.objects.get(slug=self.kwargs['slug'])
-                self.queryset = self.queryset.filter(user__in=get_users_of_team(team))
+                users_in_team = get_users_of_team(team)
+                if type(self.queryset) == QuerySet:
+                    self.queryset = self.queryset.filter(user__in=users_in_team)
+                if type(self.queryset) == list:
+                    self.queryset = list(filter(lambda x: x.user in users_in_team, self.queryset))
             except ObjectDoesNotExist:
                 pass
 
