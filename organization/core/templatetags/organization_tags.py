@@ -466,7 +466,14 @@ def filter_content_model(content_list, model_name):
 @register.filter
 def get_team_articles(team):
     users = get_users_of_team(team)
-    return Article.objects.filter(user__in=users)
+    articles = Article.objects.filter(user__in=users)
+    events = Event.objects.published().filter(user__in=users)
+
+    q = sorted(
+        chain(articles, events),
+        key=lambda instance: instance.created,
+        reverse=True)
+    return q
 
 
 @register.filter
