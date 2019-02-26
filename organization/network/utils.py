@@ -5,10 +5,10 @@ from django.http import HttpResponse
 from xlwt import *
 import calendar
 import datetime
+from django.apps import apps
 from django.utils import timezone
 from django.http import QueryDict
 from organization.network.api import *
-from organization.network.models import Person, PersonActivity
 from collections import defaultdict, OrderedDict
 from pprint import pprint
 from workalendar.europe import France
@@ -420,8 +420,9 @@ def usersTeamsIntersection(userA, userB):
 def getUsersListOfSameTeams(user):
     teams = {x.teams.all() for x in user.person.activities.all()}
     person_list = []
+    person_model = apps.get_model('organization-network.Person')
     for team in teams:
-        person_list.extend(Person.objects.filter(activities__teams=team).all())
+        person_list.extend(person_model.objects.filter(activities__teams=team).all())
     user_list = []
     for person in person_list:
         if hasattr(person, 'user') and person.user:
@@ -447,7 +448,8 @@ def flatten_activities(activities, fields):
 
 def get_users_of_team(team):
     users = set()
-    activities = PersonActivity.objects.filter(teams=team)
+    person_activity_model = apps.get_model('organization-network.PersonActivity')
+    activities = person_activity_model.objects.filter(teams=team)
     for activity in activities:
         users.add(activity.person.user)
     return users

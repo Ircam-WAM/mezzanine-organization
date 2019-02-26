@@ -48,6 +48,7 @@ from organization.media.models import *
 from organization.pages.models import CustomPage
 from organization.media.models import Media
 from organization.network.validators import *
+from organization.network.utils import usersTeamsIntersection
 
 # from .nationalities.fields import NationalityField
 
@@ -132,7 +133,7 @@ class TeamOwnable(Ownable):
         Restrict in-line editing to the objects's owner team and superusers.
         """
         ownable_is_editable = super(TeamOwnable, self).is_editable(request)
-        return ownable_is_editable or usersTeamsIntersection(self.user, self.request.user)
+        return ownable_is_editable or usersTeamsIntersection(self.user, request.user)
 
 
 class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
