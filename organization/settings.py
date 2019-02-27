@@ -584,6 +584,8 @@ FORMAT_MODULE_PATH = [
     'organization.formats',
 ]
 
+# authorize models which does not heritate from Displayable
+SEARCH_MODEL_NO_DISPLAYABLE = ('organization-network.Person',)
 
 #########################
 # OPTIONAL APPLICATIONS #
