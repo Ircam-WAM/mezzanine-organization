@@ -649,6 +649,7 @@ class PublicNetworkData(JSONResponseMixin, TemplateView):
                 images = object.images.filter(type=attribute)
                 value = images.first().file.url if images else ''
                 data[attribute] = value
+        data['url'] = object.get_absolute_url()
         return data
 
     def get_context_data(self, **kwargs):
