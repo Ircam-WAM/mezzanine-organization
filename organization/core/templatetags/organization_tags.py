@@ -507,4 +507,5 @@ def reverse(objects_list):
 
 @register.filter
 def latest(query):
-    return query.latest('date_to')
+    if query:
+        return query.latest('date_to')
