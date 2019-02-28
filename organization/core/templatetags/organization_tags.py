@@ -482,10 +482,10 @@ def get_content_objects(dynamic_content):
 
 
 @register.filter
-def has_str(objects_list, strg):
+def has_title_en(objects_list, strg):
     b = False
     for o in objects_list:
-        if strg == o.__str__():
+        if strg == o.title_en:
             b = True
     return b
 
