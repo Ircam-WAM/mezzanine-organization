@@ -40,4 +40,6 @@ urlpatterns = [
     url("^object-autocomplete/$", ObjectAutocomplete.as_view(), name='object-autocomplete'),
     url("^dynamic-content-article/$",  DynamicContentArticleView.as_view(), name='dynamic-content-article'),
     url("^article-event-list/$",  ArticleEventView.as_view(), name='article-event-list'),
+    url("^team/article-event-list/$",  ArticleEventView.as_view(), name='article-event-list'),
+    url('^team/(?P<slug>.*)/article-event-list/$', ArticleEventTeamView.as_view(), name='team-members'),
 ]

@@ -23,7 +23,9 @@ from re import match
 from django.contrib import messages
 from pprint import pprint
 from calendar import monthrange
-from django.db.models.fields.related import ForeignKey
+from django.db.models import Q
+from django.db.models.query import QuerySet
+from django.db.models.fields.related import ForeignKey 
 from django.http import Http404
 from django.db.utils import IntegrityError
 from django.shortcuts import render, redirect
@@ -38,7 +40,6 @@ from django.db.models.fields.related import ForeignKey
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
-from django.db.models import Q
 from dal import autocomplete
 from organization.network.models import *
 from organization.core.views import *
@@ -49,9 +50,10 @@ from collections import OrderedDict
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
 from django.utils import six
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from organization.pages.forms import YearForm
 from organization.pages.views import PublicationsView
+from organization.network.utils import get_users_of_team
 
 import pandas as pd
 
@@ -631,3 +633,19 @@ class JuryListView(ListView):
         else:
             qs = Person.objects.none()
 
+
+class AbstractTeamOwnableListView(ListView):
+
+    def filter_by_team(self):
+        if 'slug' in self.kwargs:
+            try :
+                team = Team.objects.get(slug=self.kwargs['slug'])
+                users_in_team = get_users_of_team(team)
+                if type(self.queryset) == QuerySet:
+                    self.queryset = self.queryset.filter(user__in=users_in_team)
+                if type(self.queryset) == list:
+                    self.queryset = list(filter(lambda x: x.user in users_in_team, self.queryset))
+            except ObjectDoesNotExist:
+                pass
+
+        return self.queryset

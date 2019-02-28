@@ -39,7 +39,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils.text import slugify
 from mezzanine.pages.models import Page
-from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Orderable, MetaData, TimeStamped, wrapped_manager
+from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Ownable, Orderable, MetaData, TimeStamped, wrapped_manager
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 from mezzanine.core.managers import SearchableManager
@@ -48,6 +48,7 @@ from organization.media.models import *
 from organization.pages.models import CustomPage
 from organization.media.models import Media
 from organization.network.validators import *
+from organization.network.utils import usersTeamsIntersection
 
 # from .nationalities.fields import NationalityField
 
@@ -117,6 +118,22 @@ ORGANIZATION_STATUS_CHOICES = (
     (2, _('in process')),
     (3, _('accepted')),
 )
+
+
+class TeamOwnable(Ownable):
+    """
+    Abstract model that provides ownership of an object for a user.
+    """
+
+    class Meta:
+        abstract = True
+
+    def is_editable(self, request):
+        """
+        Restrict in-line editing to the objects's owner team and superusers.
+        """
+        ownable_is_editable = super(TeamOwnable, self).is_editable(request)
+        return ownable_is_editable or usersTeamsIntersection(self.user, request.user)
 
 
 class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
@@ -379,7 +396,7 @@ class Team(NamedSlugged, Description):
         return self.name
 
 
-class TeamPage(Page, SubTitled, RichText):
+class TeamPage(Page, SubTitled, RichText, TeamOwnable):
     """(Team description)"""
 
     team = models.ForeignKey('Team', verbose_name=_('team'), related_name="pages", blank=True, null=True, on_delete=models.SET_NULL)
@@ -713,3 +730,4 @@ class MediaDepartment(models.Model):
 
     media = models.ForeignKey(Media, verbose_name=_('media'), related_name='department')
     department = models.ForeignKey(Department, verbose_name=_('department'), related_name='medias', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
+

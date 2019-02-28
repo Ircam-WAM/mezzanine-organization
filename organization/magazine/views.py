@@ -36,6 +36,7 @@ from mezzanine.utils.views import paginate
 from mezzanine.conf import settings
 from organization.magazine.models import *
 from organization.network.models import DepartmentPage, Person
+from organization.network.views import AbstractTeamOwnableListView
 from organization.pages.models import CustomPage, DynamicContentPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting, DynamicContentMixin
 from organization.core.utils import split_events_from_other_related_content
@@ -265,26 +266,32 @@ class ArticleEventView(SlugMixin, FormView, ListView):
             return super(ArticleEventView, self).form_valid(form)
 
     def get_queryset(self):
-        self.qs = super(ArticleEventView, self).get_queryset()
-        self.qs = self.qs.filter(status=2).order_by('-created')
+        self.queryset = super(ArticleEventView, self).get_queryset()
+        self.queryset = self.queryset.filter(status=2).order_by('-created')
         events = Event.objects.published().order_by('-created').distinct()
 
         if 'categories' in self.request.session and self.request.session['categories']:
             events = events.filter(category__name=self.request.session['categories'])
-            self.qs = self.qs.filter(categories__title=self.request.session['categories'])
+            self.queryset = self.queryset.filter(categories__title=self.request.session['categories'])
             self.request.session.pop('categories', None)
 
-        self.qs = sorted(
-            chain( self.qs, events),
+        self.queryset = sorted(
+            chain( self.queryset, events),
             key=lambda instance: instance.created,
             reverse=True)
 
-        return self.qs
+        return self.queryset
 
     def get_context_data(self, **kwargs):
         context = super(ArticleEventView, self).get_context_data(**kwargs)
-        context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
+        context['objects'] = paginate(self.queryset, self.request.GET.get("page", 1),
                               settings.MEDIA_PER_PAGE,
                               settings.MAX_PAGING_LINKS)
         return context
 
+
+class ArticleEventTeamView(ArticleEventView, AbstractTeamOwnableListView):
+    
+    def get_queryset(self):
+        self.queryset = super(ArticleEventTeamView, self).get_queryset()
+        return self.filter_by_team()

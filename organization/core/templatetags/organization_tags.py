@@ -466,7 +466,14 @@ def filter_content_model(content_list, model_name):
 @register.filter
 def get_team_articles(team):
     users = get_users_of_team(team)
-    return Article.objects.filter(user__in=users)
+    articles = Article.objects.filter(user__in=users)
+    events = Event.objects.published().filter(user__in=users)
+
+    q = sorted(
+        chain(articles, events),
+        key=lambda instance: instance.created,
+        reverse=True)
+    return q
 
 
 @register.filter
@@ -475,10 +482,10 @@ def get_content_objects(dynamic_content):
 
 
 @register.filter
-def has_str(objects_list, strg):
+def has_title_en(objects_list, strg):
     b = False
     for o in objects_list:
-        if strg == o.__str__():
+        if strg == o.title_en:
             b = True
     return b
 
@@ -500,4 +507,5 @@ def reverse(objects_list):
 
 @register.filter
 def latest(query):
-    return query.latest('date_to')
+    if query:
+        return query.latest('date_to')

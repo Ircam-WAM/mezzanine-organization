@@ -5,10 +5,10 @@ from django.http import HttpResponse
 from xlwt import *
 import calendar
 import datetime
+from django.apps import apps
 from django.utils import timezone
 from django.http import QueryDict
 from organization.network.api import *
-from organization.network.models import PersonActivity
 from collections import defaultdict, OrderedDict
 from pprint import pprint
 from workalendar.europe import France
@@ -411,6 +411,26 @@ def proccess_total_prod_hours(prod_hours_dict):
     return total    
 
 
+def usersTeamsIntersection(userA, userB):
+    teamsUserA = {x.teams for x in userA.person.activities.all()}
+    teamsUserB = {x.teams for x in userA.person.activities.all()}
+    return teamsUserA & teamsUserB
+
+
+def getUsersListOfSameTeams(user):
+    teams = {x.teams.all() for x in user.person.activities.all()}
+    person_list = []
+    person_model = apps.get_model('organization-network.Person')
+    for team in teams:
+        person_list.extend(person_model.objects.filter(activities__teams=team).all())
+    user_list = []
+    for person in person_list:
+        if hasattr(person, 'user') and person.user:
+            user_list.append(person.user.id)
+    user_list.append(user.id)
+    return user_list
+
+
 def flatten_activities(activities, fields):
     flat = []
     for activity in activities:
@@ -428,9 +448,8 @@ def flatten_activities(activities, fields):
 
 def get_users_of_team(team):
     users = set()
-    activities = PersonActivity.objects.filter(teams=team)
+    person_activity_model = apps.get_model('organization-network.PersonActivity')
+    activities = person_activity_model.objects.filter(teams=team)
     for activity in activities:
         users.add(activity.person.user)
-
-    print("users", users)
     return users

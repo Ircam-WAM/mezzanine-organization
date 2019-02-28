@@ -27,15 +27,13 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
-
-from mezzanine.core.models import RichText, Displayable, Slugged, Orderable, MetaData, TimeStamped
 from django.core.files.images import get_image_dimensions
-
 from organization.core.models import *
 from organization.pages.models import *
 from organization.network.models import *
 from organization.magazine.models import *
 from mezzanine_agenda.models import *
+from mezzanine.core.models import RichText, Displayable, Slugged, Orderable, Ownable, MetaData, TimeStamped
 
 from skosxl.models import Concept
 
