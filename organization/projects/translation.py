@@ -207,7 +207,7 @@ class DynamicMultimediaProjectTranslationOptions(TranslationOptions):
 @register(ProjectPage)
 class ProjectPageTranslationOptions(TranslationOptions):
 
-    fields = ('title', 'description')
+    fields = ('title', 'description', 'content')
 
 
 @register(ProjectPageBlock)
