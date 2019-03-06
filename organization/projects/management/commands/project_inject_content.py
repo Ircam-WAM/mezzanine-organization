@@ -37,7 +37,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        old_projects = self.read_json('projects.json')
+        json_path = '/srv/lib/mezzanine-organization/organization/projects/management/commands/projects.json'
+        old_projects = self.read_json(json_path)
 
         project_pages = ProjectPage.objects.all()
 
