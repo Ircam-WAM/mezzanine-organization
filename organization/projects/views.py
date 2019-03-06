@@ -566,7 +566,6 @@ class AbstractProjectListView(FormView, ListView):
             context['title'] = _('Projects')
         if 'slug' in self.kwargs:     
             context['slug'] = self.kwargs['slug']       
-
         return context
 
 
@@ -575,12 +574,18 @@ class ProjectListView(AbstractProjectListView):
     form_class = TopicFilterForm
     property_query_filter = "project__topic__id"
     archived = False
+    
 
 class ProjectArchivesListView(AbstractProjectListView):
     
     form_class = TopicFilterForm
     property_query_filter = "project__topic__id"
     archived = True
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectArchivesListView, self).get_context_data(**kwargs)
+        context['project_list_url'] = reverse_lazy('organization-project-list') 
+        return context
 
 
 class ProjectTeamListView(AbstractProjectListView):
@@ -595,3 +600,9 @@ class ProjectArchivesTeamListView(AbstractProjectListView):
     form_class = TypeFilterForm
     property_query_filter = "project__type"
     archived = True
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectArchivesTeamListView, self).get_context_data(**kwargs)
+        context['project_list_url'] = reverse_lazy('organization-project-team-list', kwargs={'slug' : self.kwargs['slug']})
+        context['team'] = Team.objects.get(slug=self.kwargs['slug'])
+        return context
