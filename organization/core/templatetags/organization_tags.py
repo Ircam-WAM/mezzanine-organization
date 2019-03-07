@@ -40,7 +40,7 @@ from django.utils.translation import ugettext_lazy as _
 from organization.agenda.models import EventPeriod
 from organization.magazine.models import *
 from organization.projects.models import *
-from organization.network.utils import get_users_of_team
+from organization.network.utils import get_users_of_team, get_team_from_user
 from django.utils.formats import get_format
 from django.utils.dateformat import DateFormat
 from organization.core.models import *
@@ -509,3 +509,10 @@ def reverse(objects_list):
 def latest(query):
     if query:
         return query.latest('date_to')
+
+
+@register.filter
+def get_team_code_from_user(user):
+    team = get_team_from_user(user)
+    if team :
+        return get_team_from_user(user).code
