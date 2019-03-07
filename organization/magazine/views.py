@@ -36,7 +36,7 @@ from mezzanine.utils.views import paginate
 from mezzanine.conf import settings
 from organization.magazine.models import *
 from organization.network.models import DepartmentPage, Person
-from organization.network.views import AbstractTeamOwnableListView
+from organization.network.views import TeamOwnableMixin
 from organization.pages.models import CustomPage, DynamicContentPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting, DynamicContentMixin
 from organization.core.utils import split_events_from_other_related_content
@@ -279,7 +279,6 @@ class ArticleEventView(SlugMixin, FormView, ListView):
             chain( self.queryset, events),
             key=lambda instance: instance.created,
             reverse=True)
-
         return self.queryset
 
     def get_context_data(self, **kwargs):
@@ -290,8 +289,26 @@ class ArticleEventView(SlugMixin, FormView, ListView):
         return context
 
 
-class ArticleEventTeamView(ArticleEventView, AbstractTeamOwnableListView):
+class ArticleEventTeamView(ArticleEventView, TeamOwnableMixin):
     
     def get_queryset(self):
         self.queryset = super(ArticleEventTeamView, self).get_queryset()
-        return self.filter_by_team()
+        if 'slug' in self.kwargs: 
+            self.queryset = self.filter_by_team(self.queryset, self.kwargs['slug'])
+        return self.queryset
+
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if 'slug' in self.kwargs: 
+            form.process_choices(self.kwargs['slug'])
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleEventTeamView, self).get_context_data(**kwargs)
+        context['form'].process_choices(self.kwargs['slug'])
+        return context

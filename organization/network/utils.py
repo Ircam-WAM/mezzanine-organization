@@ -453,3 +453,10 @@ def get_users_of_team(team):
     for activity in activities:
         users.add(activity.person.user)
     return users
+
+
+def get_team_from_user(user):
+    team = user.person.activities.latest('date_from').teams.first()
+    if team.department.id == 1: # Research Department
+        return team
+     

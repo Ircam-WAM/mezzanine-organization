@@ -23,9 +23,11 @@ from dal import autocomplete
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
 from django import forms
+from django.forms.utils import ErrorList
 from organization.magazine.models import *
 from organization.pages.models import CustomPage
 from organization.network.models import PersonListBlock, Person
+from organization.network.views import TeamOwnableMixin
 from mezzanine_agenda.models import Event
 from organization.media.forms import DynamicMultimediaForm
 from mezzanine.blog.models import BlogCategory
@@ -85,20 +87,44 @@ class DynamicMultimediaArticleForm(DynamicMultimediaForm):
         model = DynamicMultimediaArticle
 
 
-class CategoryFilterForm(forms.Form):
-    
-    CATEGORIES = []
-    blog_categories = BlogCategory.objects.all()
-    for category in blog_categories:
-        CATEGORIES.append((category, category))
-    
-    # try / except > for passing migration mezzanine_agenda-0031
-    from django.db import DatabaseError
-    try:
-        event_categories = EventCategory.objects.all()
-        for category in event_categories:
-            CATEGORIES.append((category, category))
-    except DatabaseError:
-        pass
+class CategoryFilterForm(forms.Form, TeamOwnableMixin):
 
-    categories = forms.ChoiceField(choices=CATEGORIES, required=False)
+    categories = forms.ChoiceField(required=False)
+
+    def __init__(self, *args, **kwargs):
+
+        super(CategoryFilterForm, self).__init__(*args, **kwargs)
+        self.process_choices()
+
+    def process_choices(self, team=None):
+        CATEGORIES = []
+        articles = Article.objects.published()
+        if team:
+            articles = self.filter_by_team(articles, team)
+
+        used_art_cat = articles.values_list('categories__id', flat=True) \
+                        .order_by('categories__id') \
+                        .distinct('categories__id') \
+
+        blog_categories = BlogCategory.objects.filter(id__in=used_art_cat)
+        for category in blog_categories:
+            CATEGORIES.append((category, category))
+        
+        # try / except > for passing migration mezzanine_agenda-0031
+        from django.db import DatabaseError
+        try:
+            events = Event.objects.published()
+            if team :
+                events = self.filter_by_team(events, team)
+            used_evt_cat = events.values_list('category__id', flat=True) \
+                                .order_by('category__id') \
+                                .distinct('category__id')
+            if team :
+                used_evt_cat = self.filter_by_team(used_evt_cat, team)
+            event_categories = EventCategory.objects.filter(id__in=used_evt_cat)
+            for category in event_categories:
+                CATEGORIES.append((category, category))
+        except DatabaseError:
+            pass
+
+        self.fields['categories'].choices = CATEGORIES

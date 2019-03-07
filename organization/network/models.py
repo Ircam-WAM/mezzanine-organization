@@ -395,6 +395,9 @@ class Team(NamedSlugged, Description):
                 return ' - '.join((self.department.name, self.name))
         return self.name
 
+    def get_absolute_url(self):
+        return '/team/' + self.slug
+
 
 class TeamPage(Page, SubTitled, RichText, TeamOwnable):
     """(Team description)"""

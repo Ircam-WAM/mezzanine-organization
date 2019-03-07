@@ -634,18 +634,24 @@ class JuryListView(ListView):
             qs = Person.objects.none()
 
 
-class AbstractTeamOwnableListView(ListView):
+class TeamOwnableMixin(object):
+    
+    def filter_by_team(self, query, team_slug):
+        try :
+            team = Team.objects.get(slug=team_slug)
+            users_in_team = get_users_of_team(team)
+            if type(query) == QuerySet or query.__class__.__name__ == 'MultilingualSearchableQuerySet':
+                query = query.filter(user__in=users_in_team)
+            if type(query) == list:
+                tmp_query = []
+                for q in query:
+                    t = q
+                    if type(t) == tuple:
+                        t = t[0]
+                    if t.user in users_in_team:
+                        tmp_query.append(q) 
+                query = tmp_query
+        except ObjectDoesNotExist:
+            pass
 
-    def filter_by_team(self):
-        if 'slug' in self.kwargs:
-            try :
-                team = Team.objects.get(slug=self.kwargs['slug'])
-                users_in_team = get_users_of_team(team)
-                if type(self.queryset) == QuerySet:
-                    self.queryset = self.queryset.filter(user__in=users_in_team)
-                if type(self.queryset) == list:
-                    self.queryset = list(filter(lambda x: x.user in users_in_team, self.queryset))
-            except ObjectDoesNotExist:
-                pass
-
-        return self.queryset
+        return query
