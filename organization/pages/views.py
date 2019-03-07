@@ -85,6 +85,9 @@ class HomeView(SlugMixin, DetailView):
         except:
             pass
 
+        if self.object is None:
+            return context
+
         self.bodys = self.object.dynamiccontenthomebody_set.all()
         for body_model in self.body_model_list:
             context[body_model] = self.get_body(body_model)
