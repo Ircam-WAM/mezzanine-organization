@@ -63,7 +63,7 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
             if p.page :
                 pages_related.append(p.page)
         if pages_related:
-            context['concrete_objects'] += pages_relatedi
+            context['concrete_objects'] += pages_related
             sorting = True
 
         # automatic relation : dynamic content article
