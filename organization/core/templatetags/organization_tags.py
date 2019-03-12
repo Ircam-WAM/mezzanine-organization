@@ -402,8 +402,10 @@ def hal_labos_exp(hal_url, hal_researche_structure):
 
 @register.filter
 def hal_css(url_part, http_host):
-    curr_site = Site.objects.get(id=current_site_id())
-    return url_part + settings.HAL_URL_CSS[curr_site.name] % http_host
+    site = current_site_id()
+    if site:
+        curr_site = Site.objects.get(id=site)
+        return url_part + settings.HAL_URL_CSS[curr_site.name] % http_host
 
 @register.filter
 def hal_limit(url_part, nb):
@@ -516,3 +518,25 @@ def get_team_code_from_user(user):
     team = get_team_from_user(user)
     if team :
         return get_team_from_user(user).code
+
+
+@register.assignment_tag
+def increment(i):
+    return i + 1
+
+
+@register.assignment_tag
+def previous(val):
+    return val
+
+
+@register.filter
+def menu_length(pages, id):
+    return len(list(filter(lambda x: str(id) in x.in_menus, pages)))
+
+
+@register.filter
+def get_menu_id(template_path):
+    for i, l, t in settings.PAGE_MENU_TEMPLATES:
+        if t == template_path:
+            return i
