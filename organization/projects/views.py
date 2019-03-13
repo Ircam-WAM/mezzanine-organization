@@ -527,6 +527,12 @@ class AbstractProjectListView(FormView, ListView):
     success_url = "."
     item_to_filter = "filter"
 
+    def get_form(self, form_class=None):
+        form = super(AbstractProjectListView, self).get_form()
+        if self.item_to_filter in self.request.session and self.request.session[self.item_to_filter]:
+            form.fields['filter'].initial = [ int(self.request.session[self.item_to_filter]), ]
+        return form
+
     def form_valid(self, form):
         # Ajax
         self.request.session[self.item_to_filter] = form.cleaned_data[self.item_to_filter]
@@ -547,7 +553,6 @@ class AbstractProjectListView(FormView, ListView):
                 '{0}'.format(self.property_query_filter): self.request.session[self.item_to_filter],
             }
             self.qs = self.qs.filter(**kwargs)
-            self.request.session.pop(self.item_to_filter, None)
         
         self.qs = self.qs.filter(project__is_archive=self.archived)
         self.qs = self.qs.order_by('title')
@@ -565,7 +570,7 @@ class AbstractProjectListView(FormView, ListView):
         else :
             context['title'] = _('Projects')
         if 'slug' in self.kwargs:     
-            context['slug'] = self.kwargs['slug']       
+            context['slug'] = self.kwargs['slug']
         return context
 
 
@@ -574,7 +579,7 @@ class ProjectListView(AbstractProjectListView):
     form_class = TopicFilterForm
     property_query_filter = "project__topic__id"
     archived = False
-    
+
 
 class ProjectArchivesListView(AbstractProjectListView):
     
