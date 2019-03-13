@@ -23,7 +23,6 @@ from copy import deepcopy
 import re
 from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
-from django.contrib.auth.admin import UserAdmin
 from django.contrib.sites.models import Site
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
@@ -100,7 +99,7 @@ class NullListFilter(SimpleListFilter):
         return queryset
 
 if settings.DEBUG :
-    class UserAdminCustom(HijackUserAdmin, UserAdmin):
+    class UserAdminCustom(HijackUserAdmin, SitePermissionUserAdmin):
 
         list_display = UserAdmin.list_display + ('is_active',  'is_superuser', 'last_login', 'date_joined', 'person_link', 'my_groups', 'hijack_field' )
 

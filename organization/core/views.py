@@ -213,7 +213,9 @@ def autocomplete_result_formatting(self, context):
                 if not result.parent:
                     is_parent =  " ♦ -"
                 text = "%s -%s%s" % (six.text_type(result), is_parent, formats.date_format(event_date, "d-m-y H:i"))
-
+            if model.__name__ == "Article":
+                article_date = timezone.localtime(result.publish_date)
+                text = "%s - %s" % (six.text_type(result), formats.date_format(article_date, "d-m-y H:i"))
             children.append({
                 'id': self.get_result_value(result),
                 'text': text,
