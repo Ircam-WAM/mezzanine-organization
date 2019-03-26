@@ -99,7 +99,7 @@ class PersonMixin(object):
         return user.person
 
 
-class PersonListView(PublishedMixin, ListView):
+class PersonListView(ListView):
 
     model = Person
     template_name='network/person_list.html'
