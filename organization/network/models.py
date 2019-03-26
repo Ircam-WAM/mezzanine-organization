@@ -223,6 +223,14 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
             update_activity(activity)
 
 
+class DynamicContentPerson(DynamicContent, Orderable):
+
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='dynamic_content_person', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Person'
+
+
 class OrganizationLinkedBlockInline(Titled, Description, Orderable):
     organization_linked = models.ForeignKey('OrganizationLinked', verbose_name=_('organization list'), related_name='organization_linked_block_inline_list', blank=True, null=True)
     organization_main = models.ForeignKey('Organization', verbose_name=_('organization'), related_name='organization_linked_block', blank=True, null=True, on_delete=models.SET_NULL)

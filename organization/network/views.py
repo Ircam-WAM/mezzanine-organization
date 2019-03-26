@@ -41,6 +41,7 @@ from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
 from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from organization.network.models import *
 from organization.core.views import *
 from datetime import date, timedelta, datetime
@@ -54,6 +55,7 @@ from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from organization.pages.forms import YearForm
 from organization.pages.views import PublicationsView
 from organization.network.utils import get_users_of_team
+
 
 import pandas as pd
 
@@ -655,3 +657,24 @@ class TeamOwnableMixin(object):
             pass
 
         return query
+
+
+class DynamicContentPersonView(Select2QuerySetSequenceView):
+    
+    paginate_by = settings.DAL_MAX_RESULTS
+
+    def get_queryset(self):
+
+        articles = Article.objects.all()
+
+        if self.q:
+            articles = articles.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(articles,)
+        qs = self.mixup_querysets(qs)
+
+        return qs
+
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results

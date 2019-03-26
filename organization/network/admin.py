@@ -254,6 +254,12 @@ class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
     form = DynamicMultimediaPersonForm
 
 
+class DynamicContentPersonInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentPerson
+    form = DynamicContentPersonForm
+
+
 class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Person
@@ -261,6 +267,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
                PersonBlockInline,
                PersonPlaylistInline,
                DynamicMultimediaPersonInline,
+               DynamicContentPersonInline,
                PersonLinkInline,
                PersonFileInline,
                PersonActivityInline,]
