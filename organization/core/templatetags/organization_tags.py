@@ -540,3 +540,27 @@ def get_menu_id(template_path):
     for i, l, t in settings.PAGE_MENU_TEMPLATES:
         if t == template_path:
             return i
+
+
+@register.filter
+def index(List, i):
+    return List[int(i)]
+
+
+@register.filter
+def subtract(a, b):
+    return str(int(a) - int(b))
+
+
+@register.filter
+def to_int(a):
+    return int(a)
+
+
+@register.filter
+def to_str(a):
+    return str(a)
+
+@register.filter
+def get_object_type(obj):
+    return type(obj)
