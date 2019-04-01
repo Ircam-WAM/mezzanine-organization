@@ -396,3 +396,24 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     form_class = ProjectResidencyForm
     template_name='projects/project_residency_create.html'
     inlines = []
+
+class ResidencyBlogArticleListView(SlugMixin, ListView):
+    model = ProjectResidencyArticle
+    template_name = 'magazine/residency-blog/article_list.html'
+    context_object_name = 'objects'
+
+    def get_queryset(self):
+        self.qs = super(ResidencyBlogArticleListView, self).get_queryset()
+        filter = 'all'
+        if 'filter' in self.kwargs:
+            filter = self.kwargs['filter']
+
+        if filter == 'all':
+            self.qs = ProjectResidencyArticle.objects.all()
+        else:
+            person = Person.objects.get(user = self.request.user)
+            following_ids = person.following.all().values_list('id', flat=True)
+            articles = Article.objects.filter(user__in = following_ids)
+            self.qs = ProjectResidencyArticle.objects.filter(article__in = articles)
+
+        return self.qs

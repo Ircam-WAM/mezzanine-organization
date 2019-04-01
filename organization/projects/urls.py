@@ -65,4 +65,8 @@ urlpatterns = [
     url("^calls/as_events/$", ProjectCallListAsEventsView.as_view(), name='organization-call-list-as-events'),
     url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-project-call-detail'),
 
+    # Residency Blog
+    url("^residency-blog/list/(?P<filter>((all)|(followed))?)$",
+        ResidencyBlogArticleListView.as_view(),
+        name='residency-blog-article-list-view'),
 ]
