@@ -99,7 +99,7 @@ class Media(Displayable):
         for source in sources:
             mime_type = source.attrib['type']
             transcoded, c = MediaTranscoded.objects.get_or_create(media=self, mime_type=mime_type)        
-            transcoded.url = 'https:' + source.attrib['src'].replace('int', 'ext')
+            transcoded.url = 'https:' + source.attrib['src']
             transcoded.save()
 
 
