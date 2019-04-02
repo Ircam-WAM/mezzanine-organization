@@ -281,14 +281,13 @@ class DynamicContentMixin(SingleObjectMixin):
         for f in self.object._meta.get_fields():
             if re.match(r"^dynamic_content_", f.name):
                 dynamic_content = getattr(self.object, f.name).all()
-
         # get all concrete objects from dynamic content and append 
         for dc in dynamic_content:
             if not isinstance(dc, int) and dc != self.object :
                 for c_field in dc._meta.get_fields():
                     if hasattr(dc, c_field.name):
                         attr = getattr(dc, c_field.name)
-                        if not isinstance(attr, int) and attr != self.object and not isinstance(attr, ContentType) :
+                        if not isinstance(attr, int) and attr != self.object and not isinstance(attr, ContentType) and attr != None:
                             context['concrete_objects'].append(attr)
 
         return context
