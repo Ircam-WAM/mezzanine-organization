@@ -28,6 +28,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import *
 from django.shortcuts import get_object_or_404
+from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
@@ -312,3 +313,42 @@ class ArticleEventTeamView(ArticleEventView, TeamOwnableMixin):
         context = super(ArticleEventTeamView, self).get_context_data(**kwargs)
         context['form'].process_choices(self.kwargs['slug'])
         return context
+
+
+class DynamicContentMagazineContentView(Select2QuerySetSequenceView):
+
+    paginate_by = settings.DAL_MAX_RESULTS
+
+    def get_queryset(self):
+
+        articles = Article.objects.all()
+        playlists = Playlist.objects.all()
+        medias = Media.objects.all()
+
+        if self.q:
+            articles = articles.filter(title__icontains=self.q)
+            playlists = playlists.filter(title__icontains=self.q)
+            medias = medias.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(articles, medias, playlists)
+        qs = self.mixup_querysets(qs)
+
+        return qs
+
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results
+
+
+class MagazineDetailView(DetailView):
+    
+    model = Magazine
+    template_name='magazine/magazine/magazine_detail.html'
+    context_object_name = 'magazine'
+
+    def get_object(self):
+        try:
+            obj = Magazine.objects.published().latest('publish_date')
+        except Magazine.DoesNotExist:
+            raise Http404("Magazine does not exist")
+        return obj

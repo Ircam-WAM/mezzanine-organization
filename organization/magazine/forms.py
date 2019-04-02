@@ -128,3 +128,20 @@ class CategoryFilterForm(forms.Form, TeamOwnableMixin):
             pass
 
         self.fields['categories'].choices = CATEGORIES
+
+
+class DynamicContentMagazineContentForm(autocomplete.FutureModelForm):
+    
+    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
+        queryset=autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            Playlist.objects.all(),
+            Media.objects.all()
+        ),
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-magazine'),
+    )
+
+    class Meta:
+        model = DynamicContentMagazineContent
+        fields = ('content_object',)
