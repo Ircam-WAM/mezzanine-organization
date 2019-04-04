@@ -51,7 +51,7 @@ class DynamicMultimediaForm(autocomplete.FutureModelForm):
             Playlist.objects.all()
         ),
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-multimedia-event'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-multimedia'),
     )
 
     class Meta:
