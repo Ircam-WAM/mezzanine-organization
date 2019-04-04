@@ -223,6 +223,14 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
             update_activity(activity)
 
 
+class PersonRelatedTitle(RelatedTitle):
+
+    person = models.OneToOneField("Person", verbose_name=_('person'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("related title")
+
+
 class DynamicContentPerson(DynamicContent, Orderable):
 
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='dynamic_content_person', blank=True, null=True, on_delete=models.CASCADE)
