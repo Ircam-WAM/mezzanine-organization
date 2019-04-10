@@ -501,7 +501,7 @@ class PersonListBlock(Titled, Description, Label, Dated, SiteRelated):
 class PersonListBlockInline(SiteRelated):
 
     person_list_block = models.ForeignKey(PersonListBlock, verbose_name=_('Person List Block'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
-    person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inlines', null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('Person autocomplete')
