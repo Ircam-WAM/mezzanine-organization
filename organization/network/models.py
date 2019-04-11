@@ -218,7 +218,7 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
         self.clean()
         if self.first_name and self.last_name and (not self.title or self.title == '-'):
             self.title = self.first_name + ' ' + self.last_name
-        super(Person, self).save(args, kwargs)
+        super(Person, self).save(*args, **kwargs)
         for activity in self.activities.all():
             update_activity(activity)
 
