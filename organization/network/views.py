@@ -212,7 +212,7 @@ class TeamPublicationsView(PublicationsView):
         return super(TeamPublicationsView, self).get(request, *args, **kwargs)
 
 
-class PersonDetailView(PersonMixin, SlugMixin, DetailView, DynamicContentMixin):
+class PersonDetailView(PersonMixin, SlugMixin, DynamicContentMixin, DetailView, DynamicReverseMixin):
 
     model = Person
     template_name='network/person_detail.html'
