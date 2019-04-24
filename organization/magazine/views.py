@@ -268,8 +268,8 @@ class ArticleEventView(SlugMixin, FormView, ListView):
 
     def get_queryset(self):
         self.queryset = super(ArticleEventView, self).get_queryset()
-        self.queryset = self.queryset.filter(status=2).order_by('-created')
-        events = Event.objects.published().order_by('-created').distinct()
+        self.queryset = self.queryset.filter(status=2).order_by('-publish_date')
+        events = Event.objects.published().order_by('-start').distinct()
 
         if 'categories' in self.request.session and self.request.session['categories']:
             events = events.filter(category__name=self.request.session['categories'])
@@ -277,9 +277,10 @@ class ArticleEventView(SlugMixin, FormView, ListView):
             self.request.session.pop('categories', None)
 
         self.queryset = sorted(
-            chain( self.queryset, events),
-            key=lambda instance: instance.created,
+            chain(self.queryset, events),
+            key=lambda instance:instance.publish_date,
             reverse=True)
+
         return self.queryset
 
     def get_context_data(self, **kwargs):
