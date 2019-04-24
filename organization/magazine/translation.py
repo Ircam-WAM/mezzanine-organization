@@ -80,3 +80,15 @@ class ArticlePlaylistTranslationOptions(TranslationOptions):
 class ArticleRelatedTitleTranslationOptions(TranslationOptions):
 
     fields = ('title', )
+
+
+@register(Magazine)
+class MagazineTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description', )
+
+
+@register(DynamicContentMagazineContent)
+class DynamicContentMagazineContentTranslationOptions(TranslationOptions):
+
+    pass

@@ -273,24 +273,47 @@ class UserProducerView(LoginRequiredMixin, ListView):
 class DynamicContentMixin(SingleObjectMixin):
     
     def get_context_data(self, **kwargs):
-        context = super(DynamicContentMixin, self).get_context_data(**kwargs)
-        context['concrete_objects'] = []
+        context = super().get_context_data(**kwargs)
+        if not 'concrete_objects' in context.keys():
+            context['concrete_objects'] = []
         dynamic_content = []
 
         # get dynamic content field of an object, based on class
+        # @Todo : rename all related as 'dynamic_content' and delete
+        # the further paragraph
         for f in self.object._meta.get_fields():
             if re.match(r"^dynamic_content_", f.name):
                 dynamic_content = getattr(self.object, f.name).all()
-
         # get all concrete objects from dynamic content and append 
         for dc in dynamic_content:
-            if not isinstance(dc, int) and dc != self.object :
-                for c_field in dc._meta.get_fields():
-                    if hasattr(dc, c_field.name):
-                        attr = getattr(dc, c_field.name)
-                        if not isinstance(attr, int) and attr != self.object and not isinstance(attr, ContentType) :
-                            context['concrete_objects'].append(attr)
+            if dc.content_object:
+                context['concrete_objects'].append(dc.content_object)
 
+        return context
+
+
+class DynamicReverseMixin(SingleObjectMixin):
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not 'concrete_objects' in context.keys():
+            context['concrete_objects'] = []
+        reverse_object = set()
+        keys = [m for m in apps.all_models.keys() if re.match(r'organization-[a-z]*', m)]
+        content_type = ContentType.objects.get_for_model(self.object._meta.model)
+        for key in keys:
+            for model_str, model_class in apps.all_models[key].items():
+                if re.match(r'dynamiccontent[a-z]*', model_str):
+                    queryset = model_class.objects.filter(content_type_id=content_type.id, object_id=self.object.id)
+                    for dynamic_content in queryset:
+                        for field in dynamic_content._meta.get_fields():
+                            if field.remote_field.__class__.__name__ == 'ManyToOneRel' \
+                                and field.name != "field.name":
+                                parent_instance = getattr(dynamic_content, field.name)
+                                if parent_instance.__class__.__name__ != 'ContentType':
+                                    print(parent_instance, type(parent_instance), parent_instance.id)
+                                    reverse_object.add(parent_instance)
+        context['concrete_objects'] += reverse_object
         return context
 
 

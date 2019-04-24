@@ -145,3 +145,21 @@ class DynamicMultimediaArticle(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Multimedia'
+
+
+class DynamicContentMagazineContent(DynamicContent, Orderable):
+    
+    magazine = models.ForeignKey("magazine", verbose_name=_('magazine'), related_name='dynamic_content', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Content'
+
+
+class Magazine(Displayable):
+    
+    class Meta:
+        verbose_name = _('magazine')
+        verbose_name_plural = _("magazines")
+
+    def get_absolute_url(self):
+        return reverse("magazine")

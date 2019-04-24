@@ -103,13 +103,6 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
             medias = medias.filter(title__icontains=self.q)
 
         qs = autocomplete.QuerySetSequence(articles, custompage, events, persons, medias)
-
-        if self.q:
-            # This would apply the filter on all the querysets
-            qs = qs.filter(title__icontains=self.q)
-
-        # This will limit each queryset so that they show an equal number
-        # of results.
         qs = self.mixup_querysets(qs)
 
         return qs
@@ -132,6 +125,7 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
         medias = Media.objects.all()
         persons = Person.objects.all()
         projects = Project.objects.all()
+        playlists = Playlist.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
@@ -141,12 +135,10 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
             medias = medias.filter(title__icontains=self.q)
             persons = persons.filter(title__icontains=self.q)
             projects = projects.filter(title__icontains=self.q)
+            playlists = playlists.filter(title__icontains=self.q)
 
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons, projects)
-
-        # This will limit each queryset so that they show an equal number
-        # of results.
+        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons, projects, playlists)
         qs = self.mixup_querysets(qs)
 
         return qs

@@ -64,6 +64,7 @@ class TeamOwnableAdmin(OwnableAdmin):
         list_users = getUsersListOfSameTeams(request.user)
         return qs.filter(user__id=123)
 
+
 class OrganizationAdminInline(StackedDynamicInlineAdmin):
 
     model = OrganizationLinkedInline
@@ -254,6 +255,17 @@ class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
     form = DynamicMultimediaPersonForm
 
 
+class PersonRelatedTitleAdmin(TranslationTabularInline):
+    
+    model = PersonRelatedTitle
+
+
+class DynamicContentPersonInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentPerson
+    form = DynamicContentPersonForm
+
+
 class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Person
@@ -261,6 +273,8 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
                PersonBlockInline,
                PersonPlaylistInline,
                DynamicMultimediaPersonInline,
+               PersonRelatedTitleAdmin,
+               DynamicContentPersonInline,
                PersonLinkInline,
                PersonFileInline,
                PersonActivityInline,]

@@ -125,7 +125,25 @@ class BriefAdminDisplayable(BaseTranslationModelAdmin,): #, OrderableAdmin
         return instance.external_content[:100] + "..."
 
 
+class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
+    
+    model = DynamicContentMagazineContent
+    form = DynamicContentMagazineContentForm
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+
+class MagazineAdmin(BaseTranslationModelAdmin):
+
+    model = Magazine
+    inlines = [DynamicContentHomeSliderInline,]
+
 
 admin.site.register(Article, ArticleAdminDisplayable)
 admin.site.register(Brief, BriefAdminDisplayable)
 admin.site.register(Topic, PageAdmin)
+admin.site.register(Magazine, MagazineAdmin)
+

@@ -21,6 +21,7 @@
 
 from re import match
 from django.contrib import messages
+from django.utils.timezone import now
 from pprint import pprint
 from calendar import monthrange
 from django.db.models import Q
@@ -41,6 +42,7 @@ from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
 from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from organization.network.models import *
 from organization.core.views import *
 from datetime import date, timedelta, datetime
@@ -54,6 +56,7 @@ from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from organization.pages.forms import YearForm
 from organization.pages.views import PublicationsView
 from organization.network.utils import get_users_of_team
+
 
 import pandas as pd
 
@@ -99,7 +102,7 @@ class PersonMixin(object):
         return user.person
 
 
-class PersonListView(PublishedMixin, ListView):
+class PersonListView(ListView):
 
     model = Person
     template_name='network/person_list.html'
@@ -209,7 +212,7 @@ class TeamPublicationsView(PublicationsView):
         return super(TeamPublicationsView, self).get(request, *args, **kwargs)
 
 
-class PersonDetailView(PersonMixin, SlugMixin, DetailView):
+class PersonDetailView(PersonMixin, SlugMixin, DynamicContentMixin, DetailView, DynamicReverseMixin):
 
     model = Person
     template_name='network/person_detail.html'
@@ -217,39 +220,35 @@ class PersonDetailView(PersonMixin, SlugMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
-        context["related"] = {}
+        reverse_related = []
         # Related Events when you add PersonList in Events
-        events = []
         if hasattr(self.object, "person_list_block_inlines"):
+            # Get all PersonListBlockInline where the Person is referenced to
             person_list_block_inlines = self.object.person_list_block_inlines.all()
-            for plbi in person_list_block_inlines:
-                if hasattr(plbi.person_list_block, 'events'):
-                    for eventPersonListBlockInline in plbi.person_list_block.events.all():
-                        events.append(eventPersonListBlockInline.event)
-        context["related"]["event"] = events
+            for person_list_block_inline in person_list_block_inlines:
+                # PersonListBlock has ForeignKey with Aritcle, Event, Page...
+                if hasattr(person_list_block_inline, 'person_list_block') :
+                    # get field name of Article, Event, Page...
+                    related_fields = person_list_block_inline.person_list_block._meta.get_fields()
+                    for related_field in related_fields:
+                        attr = getattr(person_list_block_inline.person_list_block, related_field.name)
+                        if attr and attr.__class__.__name__ == "RelatedManager":
+                            related_inlines = attr.all()
+                            for related_inline in related_inlines:
+                                if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                    fields = related_inline._meta.get_fields()
+                                    for field in fields:
+                                        # check if it is a ForeignKey
+                                        if isinstance(field, ForeignKey) :
+                                            instance = getattr(related_inline, field.name)
+                                            # get only article, custom page etc...
+                                            if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                                reverse_related.append(instance)
 
-        # All other related models
-        context["related"]["other"] = []
-        # for each person list to which the person belongs to...
-        for person_list_block_inline in person_list_block_inlines:
-            if hasattr(person_list_block_inline, 'person_list_block_inline') :
-                related_objects = person_list_block_inline.person_list_block._meta.get_all_related_objects()
-                for related_object in related_objects:
-                    if hasattr(person_list_block_inline.person_list_block, related_object.name):
-                        # getting relating inlines like ArticlePersonListBlockInline, PageCustomPersonListBlockInline etc...
-                        related_inlines = getattr(person_list_block_inline.person_list_block, related_object.name).all()
-                        for related_inline in related_inlines:
-                            if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
-                                fields = related_inline._meta.get_fields()
-                                for field in fields:
-                                    # check if it is a ForeignKey
-                                    if isinstance(field, ForeignKey) :
-                                        instance = getattr(related_inline, field.name)
-                                        # get only article, custom page etc...
-                                        if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
-                                            context["related"]["other"].append(instance)
-
-        context["related"]["other"].sort(key=lambda x: x.created, reverse=True)
+            reverse_related.sort(key=lambda x: x.created if hasattr(x, 'created') else now(), reverse=True)
+            context["concrete_objects"] += reverse_related
+            # concat list as a set to get list of unique objects
+            context["concrete_objects"] = set(context["concrete_objects"])
         context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
         return context
 
@@ -655,3 +654,24 @@ class TeamOwnableMixin(object):
             pass
 
         return query
+
+
+class DynamicContentPersonView(Select2QuerySetSequenceView):
+    
+    paginate_by = settings.DAL_MAX_RESULTS
+
+    def get_queryset(self):
+
+        articles = Article.objects.all()
+
+        if self.q:
+            articles = articles.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(articles,)
+        qs = self.mixup_querysets(qs)
+
+        return qs
+
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results

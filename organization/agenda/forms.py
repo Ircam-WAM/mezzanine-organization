@@ -33,7 +33,7 @@ from organization.pages.models import CustomPage
 from organization.agenda.models import Event, DynamicContentEvent, EventPersonListBlockInline, DynamicMultimediaEvent
 from organization.media.models import Playlist, Media
 from organization.media.forms import DynamicMultimediaForm
-from organization.network.models import PersonListBlock
+from organization.network.models import PersonListBlock, Person
 
 
 class DynamicContentEventForm(autocomplete.FutureModelForm):
@@ -42,7 +42,8 @@ class DynamicContentEventForm(autocomplete.FutureModelForm):
         queryset=autocomplete.QuerySetSequence(
             Article.objects.all(),
             CustomPage.objects.all(),
-            Event.objects.all()
+            Event.objects.all(),
+            Person.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-event'),

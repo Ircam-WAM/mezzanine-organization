@@ -466,7 +466,8 @@ ADMIN_MENU_ORDER = (
                   'organization-agenda.EventTrainingLevel',
                   'generic.Keyword',
                   )),
-    (_('Magazine'), ('organization-magazine.Article',
+    (_('Magazine'), ('organization-magazine.Magazine',
+                    'organization-magazine.Article',
                     'organization-magazine.Brief',)),
     (_('Network'), ('organization-network.Organization',
                     'organization-network.OrganizationLinked',
@@ -554,7 +555,7 @@ DAL_MAX_RESULTS = 100
 # EVENTS
 
 EVENT_SLUG = 'agenda'
-EVENT_GOOGLE_MAPS_DOMAIN = 'maps.googleapis.com'
+EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
 EVENT_EXCLUDE_TAG_LIST = [ ]

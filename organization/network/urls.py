@@ -59,4 +59,6 @@ urlpatterns = [
 
     url('^team/(?P<slug>.*)/members/$', TeamMembersView.as_view(), name='team-members'),
     url('^team/(?P<slug>.*)/publications/$', TeamPublicationsView.as_view(), name='team-publications'),
+
+    url("^dynamic-content-person/$",  DynamicContentPersonView.as_view(), name='dynamic-content-person'),
     ]
