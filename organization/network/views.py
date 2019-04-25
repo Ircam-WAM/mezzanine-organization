@@ -204,13 +204,12 @@ class TeamMembersView(ListView):
 class TeamPublicationsView(PublicationsView):
     
     template_name = "network/team/publications.html"
-    team = None
 
-    def get(self, request, *args, **kwargs):
-        self.team = get_object_or_404(Team, slug=kwargs['slug'])
-        self.hal_url += "&" + settings.HAL_LABOS_EXP + "%s" % self.team.hal_researche_structure.replace(' ', '+')
-        return super(TeamPublicationsView, self).get(request, *args, **kwargs)
-
+    def get_context_data(self, **kwargs):
+        self.team = get_object_or_404(Team, slug=self.kwargs['slug'])
+        self._hal_url += "&" + settings.HAL_LABOS_EXP + "%s" % self.team.hal_researche_structure.replace(' ', '+')
+        return super().get_context_data(**kwargs)
+        
 
 class PersonDetailView(PersonMixin, SlugMixin, DynamicContentMixin, DetailView, DynamicReverseMixin):
 
