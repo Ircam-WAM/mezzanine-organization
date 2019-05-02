@@ -31,6 +31,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import QueryDict
 from django.template.defaultfilters import capfirst
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from mezzanine.conf import settings
 from mezzanine.utils.views import paginate
 from organization.core.models import *
@@ -309,9 +310,15 @@ class DynamicReverseMixin(SingleObjectMixin):
                         for field in dynamic_content._meta.get_fields():
                             if field.remote_field.__class__.__name__ == 'ManyToOneRel' \
                                 and field.name != "field.name":
-                                parent_instance = getattr(dynamic_content, field.name)
-                                if parent_instance.__class__.__name__ != 'ContentType':
-                                    print(parent_instance, type(parent_instance), parent_instance.id)
+                                parent_instance = None
+                                try:
+                                    parent_instance = getattr(dynamic_content, field.name)
+                                except ObjectDoesNotExist:
+                                    # The object exists but in the other site_id
+                                    # For the moment, we don't display it
+                                    # @Todo : update Queryset Manager to display cards of the other sites
+                                    pass
+                                if parent_instance.__class__.__name__ != 'ContentType' and parent_instance != None:
                                     reverse_object.add(parent_instance)
         context['concrete_objects'] += reverse_object
         return context
