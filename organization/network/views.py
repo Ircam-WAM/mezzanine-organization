@@ -226,7 +226,7 @@ class PersonDetailView(PersonMixin, SlugMixin, DynamicContentMixin, DetailView, 
             person_list_block_inlines = self.object.person_list_block_inlines.all()
             for person_list_block_inline in person_list_block_inlines:
                 # PersonListBlock has ForeignKey with Aritcle, Event, Page...
-                if hasattr(person_list_block_inline, 'person_list_block') :
+                if hasattr(person_list_block_inline, 'person_list_block') and person_list_block_inline.person_list_block != None :
                     # get field name of Article, Event, Page...
                     related_fields = person_list_block_inline.person_list_block._meta.get_fields()
                     for related_field in related_fields:
