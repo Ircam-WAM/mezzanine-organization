@@ -210,8 +210,9 @@ class ProducerForm(ModelForm):
 class PersonForm(ModelForm):
 
     class Meta:
-        model = Person
-        fields = ('__all__')
+        model = Person #'images', 'links', 
+        fields = ('role', 'bio', 'address', 'address_2', 'postal_code',
+                'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender')
 
 
 class UserForm(ModelForm):

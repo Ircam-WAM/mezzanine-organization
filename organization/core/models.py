@@ -377,7 +377,8 @@ class Dated(models.Model):
 class Address(models.Model):
     """(Address description)"""
 
-    address = models.TextField(_('address'), blank=True)
+    address = models.TextField(_('address 1'), blank=True)
+    address_2 = models.TextField(_('address 2'), blank=True)
     postal_code = models.CharField(_('postal code'), max_length=16, null=True, blank=True)
     city = models.CharField(_('city'), max_length=255, null=True, blank=True)
     country = CountryField(_('country'), null=True, blank=True)

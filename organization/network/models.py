@@ -162,7 +162,8 @@ class Person(Displayable, AdminThumbMixin, Address):
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     email = models.EmailField(_('email'), blank=True, null=True)
-    telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
+    telephone = models.CharField(_('telephone 1'), max_length=64, blank=True, null=True)
+    telephone_2 = models.CharField(_('telephone 2'), max_length=64, blank=True, null=True)
     register_id = models.CharField(_('register ID'), blank=True, null=True, max_length=128)
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
@@ -201,6 +202,14 @@ class Person(Displayable, AdminThumbMixin, Address):
         super(Person, self).save(args, kwargs)
         for activity in self.activities.all():
             update_activity(activity)
+
+
+class UserSettings(models.Model):
+    
+    newsletter = models.BooleanField(_('newsletter'), default=False)
+    user_organization_notifications = models.BooleanField(_('Users and Organizations email notifications'), default=False)
+    on_map = models.BooleanField(_('Appear on the Artistic Network Map'), default=False)
+    user = models.OneToOneField(User, verbose_name=_('user'))
 
 
 class OrganizationLinkedBlockInline(Titled, Orderable):

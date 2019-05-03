@@ -46,6 +46,9 @@ from django.utils import six
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 
+from shapeshifter.views import MultiModelFormView
+from shapeshifter.mixins import MultiSuccessMessageMixin
+
 from extra_views import FormSetView
 from mezzanine.conf import settings
 from calendar import monthrange
@@ -173,25 +176,20 @@ class PersonFollowersListView(PersonDetailView):
         return self.person.followers.all()
 
 
-class UserSettingsView(UpdateView):
+class ProfileSettingsView(LoginRequiredMixin, MultiSuccessMessageMixin, MultiModelFormView):
 
-    model = User
-    form_class = UserForm
-    template_name='accounts/account_profile_update_settings.html'
+    form_classes = (PersonForm, UserForm)
+    template_name = 'network/person/profile_settings.html'
+    #success_url = reverse_lazy('home')
+    success_message = 'Your profile has been updated.'
 
-    def get_object(self):
-        user = self.request.user
-        if user.is_authenticated:
-            return user
-        else:
-            raise Http404()
+    def get_instances(self):
+        instances = {
+            'userform': self.request.user,
+            'personform': self.request.user.person,
+        }
 
-
-class PersonSettingsView(PersonMixin, UpdateView):
-
-    model = Person
-    form_class = PersonForm
-    template_name='accounts/account_profile_update_settings.html'
+        return instances
 
 
 class PersonApplicationListView(PersonMixin, DetailView):
