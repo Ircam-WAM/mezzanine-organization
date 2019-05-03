@@ -40,6 +40,7 @@ from organization.core.views import SlugMixin, autocomplete_result_formatting, D
 from organization.core.utils import split_events_from_other_related_content
 from django.template.defaultfilters import slugify
 from itertools import chain
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
@@ -70,8 +71,11 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
         articles = DynamicContentArticle.objects.filter(object_id=self.object.id).all()
         articles_related = []
         for a in articles:
-            if a.article:
-                articles_related.append(a.article)
+            try:
+                if a.article:
+                    articles_related.append(a.article)
+            except ObjectDoesNotExist:
+                pass
         if articles_related:
             context['concrete_objects'] += articles_related
             sorting = True
