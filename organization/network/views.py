@@ -180,7 +180,7 @@ class ProfileSettingsView(LoginRequiredMixin, MultiSuccessMessageMixin, MultiMod
 
     form_classes = (PersonForm, UserForm)
     template_name = 'network/person/profile_settings.html'
-    #success_url = reverse_lazy('home')
+    success_url = reverse_lazy('organization-network-profile-settings')
     success_message = 'Your profile has been updated.'
 
     def get_instances(self):
