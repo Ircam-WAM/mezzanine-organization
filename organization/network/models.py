@@ -404,6 +404,7 @@ class ProducerMixin(object):
         self.producer = Organization.objects.get(slug=self.kwargs['slug'])
         context['producer'] = self.producer
         return context
+        
 
 class PersonPlaylist(PlaylistRelated):
 

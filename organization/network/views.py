@@ -178,25 +178,49 @@ class PersonFollowersListView(PersonDetailView):
 
 class ProfileSettingsView(LoginRequiredMixin, MultiSuccessMessageMixin, MultiModelFormView):
 
-    form_classes = (PersonForm, UserForm)
+    form_classes = (PersonForm, UserForm,
+        PersonLinkForm, PersonFacebookForm, PersonTwitterForm,
+        PersonLinkedinForm, PersonYoutubeForm, PersonInstagramForm) #PersonImageForm
     template_name = 'network/person/profile_settings.html'
     success_url = reverse_lazy('organization-network-profile-settings')
     success_message = 'Your profile has been updated.'
 
+    def forms_valid(self):
+        for form in self.get_forms().values():
+            if hasattr(form.instance, 'person_id'):
+                form.instance.person_id =  self.request.user.person.id
+            form.save()
+        return super(MultiModelFormView, self).forms_valid()
+
     def get_instances(self):
+
         instances = {
             'userform': self.request.user,
             'personform': self.request.user.person,
+            # 'personimageform': self.request.user.person,
+            'personlinkform': self._get_person_link('link'),
+            'personfacebookform': self._get_person_link('facebook'),
+            'persontwitterform': self._get_person_link('twitter'),
+            'personlinkedinform': self._get_person_link('linkedin'),
+            'personyoutubeform': self._get_person_link('youtube'),
+            'personinstagramform': self._get_person_link('instagram'),
         }
 
         return instances
 
+    def _get_person_link(self, slug) -> PersonLink:
+        person_link, created = PersonLink.objects.get_or_create(
+            person=self.request.user.person,
+            link_type=LinkType.objects.get(slug=slug),
+        )
+
+        return person_link
+      
 
 class PersonApplicationListView(PersonMixin, DetailView):
 
     model = Person
     template_name='accounts/account_profile_update_app_form.html'
-
 
     def get_context_data(self, **kwargs):
         context = super(PersonApplicationListView, self).get_context_data(**kwargs)

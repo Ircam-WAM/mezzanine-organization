@@ -207,10 +207,49 @@ class ProducerForm(ModelForm):
             self.fields[key].required = True
 
 
+class PersonLinkForm(ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'instance' in kwargs:
+            self.fields['url'].label = LinkType.objects.get(id=kwargs['instance'].link_type_id).name
+
+    class Meta:
+        model = PersonLink
+        fields = ('url', )
+
+
+class PersonFacebookForm(PersonLinkForm):
+    pass
+
+
+class PersonTwitterForm(PersonLinkForm):
+    pass
+
+
+class PersonLinkedinForm(PersonLinkForm):
+    pass
+
+
+class PersonYoutubeForm(PersonLinkForm):
+    pass
+
+
+class PersonInstagramForm(PersonLinkForm):
+    pass
+
+
+class PersonImageForm(ModelForm):
+
+    class Meta:
+        model = PersonImage
+        fields = ('file', 'credits', 'type')
+
+
 class PersonForm(ModelForm):
 
     class Meta:
-        model = Person #'images', 'links', 
+        model = Person
         fields = ('role', 'bio', 'address', 'address_2', 'postal_code',
                 'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender')
 
