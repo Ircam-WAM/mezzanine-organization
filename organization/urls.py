@@ -25,6 +25,7 @@ import django.views.i18n
 from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
+import debug_toolbar
 
 admin.autodiscover()
 
@@ -39,6 +40,7 @@ if "drum.links" in settings.INSTALLED_APPS:
     ]
 
 urlpatterns += [
+    url(r'^__debug__/', include(debug_toolbar.urls)),
     url("^", include('organization.core.urls')),
     url("^", include('organization.pages.urls')),
     url("^", include('organization.magazine.urls')),
