@@ -220,6 +220,7 @@ class UserImage(Titled, Orderable):
 
     file = models.FileField(_("Image"), max_length=1024, upload_to="user/images/%Y/%m/%d/")
     credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
+    type = models.CharField(_('type'), max_length=64, choices=IMAGE_TYPE_CHOICES, null=True)
 
     class Meta:
         abstract = True
@@ -464,3 +465,14 @@ class Sites(models.Model):
         abstract = True
         verbose_name = 'Sites'
         verbose_name_plural = 'Sites'
+
+
+class Citizenship(models.Model):
+    """citizenship"""
+    name = models.CharField(max_length=200, verbose_name=_('name'))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name', ]

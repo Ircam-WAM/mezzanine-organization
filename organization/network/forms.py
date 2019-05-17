@@ -19,12 +19,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
 from django.utils import timezone
 from dal import autocomplete
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
 from django import forms
-from django.forms.widgets import HiddenInput
+from django.forms.widgets import HiddenInput, ClearableFileInput
 from django.forms import ModelForm
 from mezzanine.core.models import Orderable
 from organization.projects.models import ProjectWorkPackage
@@ -207,43 +208,101 @@ class ProducerForm(ModelForm):
             self.fields[key].required = True
 
 
-class PersonLinkForm(ModelForm):
+# class PersonLinkForm(ModelForm):
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if 'instance' in kwargs:
-            self.fields['url'].label = LinkType.objects.get(id=kwargs['instance'].link_type_id).name
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         if 'instance' in kwargs:
+#             self.fields['url'].label = LinkType.objects.get(id=kwargs['instance'].link_type_id).name
 
-    class Meta:
-        model = PersonLink
-        fields = ('url', )
+#     class Meta:
+#         model = PersonLink
+#         fields = ('url', )
+class ClearableFileInputCustom(ClearableFileInput):
+    # initial_text = ugettext_lazy('Currently')
+    # input_text = ugettext_lazy('Change')
+    # clear_checkbox_label = ugettext_lazy('Clear')
 
+    template_with_initial = (
+        '%(initial_text)s coucou: <a href="%(initial_url)s">%(initial)s</a> '
+        '%(clear_template)s<br />%(input_text)s: %(input)s'
+    )
 
-class PersonFacebookForm(PersonLinkForm):
-    pass
-
-
-class PersonTwitterForm(PersonLinkForm):
-    pass
-
-
-class PersonLinkedinForm(PersonLinkForm):
-    pass
-
-
-class PersonYoutubeForm(PersonLinkForm):
-    pass
+    template_with_clear = '%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label>'
 
 
-class PersonInstagramForm(PersonLinkForm):
-    pass
+class PersonImageInline(InlineFormSet):
+    
+    # extra = 1
+    max_num = 2
+    model = PersonUserImage
+    can_delete = False
+    fields = ('file', )
+    # def __init__(self, *args, **kwargs):
+    #     super(PersonImageInline, self).__init__(*args, **kwargs)
+    #     from django.forms.widgets import ClearableFileInput
+    #     print("self", vars(self))
+    #     # print("widget", self.fields['file'].widget)
+    #     # self.fields['file'].widget = ClearableFileInput()
+
+    # widgets = {
+    #     'file': ClearableFileInputCustom(),
+    # }
+
+
+class PersonLinkInline(InlineFormSet):
+
+    model = PersonLink
+    # extra = 3
+    max_num = 3
+    fields = ('url', 'link_type' )
+
+
+class PersonOptionsInline(InlineFormSet):
+    
+    model = PersonOptions
+    max_num = 1
+    can_delete = False
+    fields = ('newsletter', 'user_organization_notifications', 'on_map' )
+    
+
+class PersonInline(InlineFormSet):
+    
+    model = Person
+    fields = ('role', 'bio', 'address', 'address_2', 'postal_code',
+        'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender',)
+
+
+# class PersonFacebookForm(PersonLinkForm):
+#     pass
+
+
+# class PersonTwitterForm(PersonLinkForm):
+#     pass
+
+
+# class PersonLinkedinForm(PersonLinkForm):
+#     pass
+
+
+# class PersonYoutubeForm(PersonLinkForm):
+#     pass
+
+
+# class PersonInstagramForm(PersonLinkForm):
+#     pass
 
 
 class PersonImageForm(ModelForm):
 
+    # def __init__(self, *args, **kwargs):
+    #     super(PersonImageForm, self).__init__(*args, **kwargs)
+    #     from django.forms.widgets import ClearableFileInput
+    #     self.fields['file'].widget = ClearableFileInput()
+
     class Meta:
         model = PersonImage
-        fields = ('file', 'credits', 'type')
+        fields = ('file', )
 
 
 class PersonForm(ModelForm):
@@ -251,11 +310,27 @@ class PersonForm(ModelForm):
     class Meta:
         model = Person
         fields = ('role', 'bio', 'address', 'address_2', 'postal_code',
-                'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender')
-
+                'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender',
+                'citizenship')
+        widgets = {
+            'address': forms.Textarea(attrs={'rows':2,}),
+            'address_2': forms.Textarea(attrs={'rows':2,})
+        }
+        
 
 class UserForm(ModelForm):
 
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
+
+
+class TestEmilieForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(TestEmilieForm, self).__init__(*args, **kwargs)
+        from django.forms.widgets import ClearableFileInput
+        self.fields['file'].widget = ClearableFileInput()
+
+    class Meta:
+        model = TestEmilie
+        fields = ('__all__')

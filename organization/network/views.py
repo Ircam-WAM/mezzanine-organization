@@ -18,7 +18,6 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-
 from re import match
 from pprint import pprint
 from collections import OrderedDict
@@ -176,11 +175,13 @@ class PersonFollowersListView(PersonDetailView):
         return self.person.followers.all()
 
 
-class ProfileSettingsView(LoginRequiredMixin, MultiSuccessMessageMixin, MultiModelFormView):
+class ProfileSettingsView(LoginRequiredMixin, MultiSuccessMessageMixin, UpdateWithInlinesView, MultiModelFormView ):
 
-    form_classes = (PersonForm, UserForm,
-        PersonLinkForm, PersonFacebookForm, PersonTwitterForm,
-        PersonLinkedinForm, PersonYoutubeForm, PersonInstagramForm) #PersonImageForm
+    model = Person
+    form_class = PersonForm
+    form_classes = (PersonForm, UserForm,)
+        # PersonLinkForm, PersonFacebookForm, PersonImageForm, PersonTwitterForm,
+        # PersonLinkedinForm, PersonYoutubeForm, PersonInstagramForm) #PersonImageForm
     template_name = 'network/person/profile_settings.html'
     success_url = reverse_lazy('organization-network-profile-settings')
     success_message = 'Your profile has been updated.'
@@ -197,25 +198,95 @@ class ProfileSettingsView(LoginRequiredMixin, MultiSuccessMessageMixin, MultiMod
         instances = {
             'userform': self.request.user,
             'personform': self.request.user.person,
-            # 'personimageform': self.request.user.person,
-            'personlinkform': self._get_person_link('link'),
-            'personfacebookform': self._get_person_link('facebook'),
-            'persontwitterform': self._get_person_link('twitter'),
-            'personlinkedinform': self._get_person_link('linkedin'),
-            'personyoutubeform': self._get_person_link('youtube'),
-            'personinstagramform': self._get_person_link('instagram'),
+            # 'personimageform': self._get_person_image('page_featured'),
+            # 'personlinkform': self._get_person_link('link'),
+            # 'personfacebookform': self._get_person_link('facebook'),
+            # 'persontwitterform': self._get_person_link('twitter'),
+            # 'personlinkedinform': self._get_person_link('linkedin'),
+            # 'personyoutubeform': self._get_person_link('youtube'),
+            # 'personinstagramform': self._get_person_link('instagram'),
         }
 
         return instances
+
+    def get_object(self, queryset=None):
+    
+        return self.request.user.person
+
+    def _get_person_image(self, type) -> PersonImage:
+        person_img, created = PersonImage.objects.get_or_create(
+            person=self.request.user.person,
+            type=type,
+        )
+        return person_img
 
     def _get_person_link(self, slug) -> PersonLink:
         person_link, created = PersonLink.objects.get_or_create(
             person=self.request.user.person,
             link_type=LinkType.objects.get(slug=slug),
         )
-
         return person_link
       
+
+class ProfileSettingsView2(LoginRequiredMixin, UpdateWithInlinesView):
+
+    model = Person
+    form_class = PersonForm
+    inlines = [PersonImageInline, PersonLinkInline, PersonOptionsInline]
+    template_name = 'network/person/profile_settings.html'
+    success_url = reverse_lazy('organization-network-profile-settings')
+
+    # def forms_valid(self, form, inlines):
+    #     # print("----------- forms_valid", self.request.POST)
+    #     user_form = UserForm(initial=self.request.POST, instance=self.request.user)
+    #     # print("user_form", user_form)
+    #     print("----------" , user_form.is_valid())
+        
+    #     if user_form.is_valid():
+    #         print("---- valid")
+    #         user_form.save()
+    #     else:
+    #         print("---- invalid")
+    #         form_validated = False
+    #     return super().forms_valid(form, inlines)
+
+    # def get_success_url(self):
+    #     return self.object.get_absolute_url()
+
+    # def post(self, request, *args, **kwargs):
+    #     """
+    #     Handles POST requests, instantiating a form and formset instances with the passed
+    #     POST variables and then checked for validity.
+    #     """
+    #     form_class = self.get_form_class()
+    #     form = self.get_form(form_class)
+
+    #     if form.is_valid():
+    #         self.object = form.save(commit=False)
+    #         form_validated = True
+    #     else:
+    #         form_validated = False
+
+    #     inlines = self.construct_inlines()
+
+    #     print("inlines", vars(inlines[0]))
+
+    #     from django.forms.formsets import all_valid
+    #     if all_valid(inlines) and form_validated:
+    #         return self.forms_valid(form, inlines)
+    #     return self.forms_invalid(form, inlines)
+
+
+    def get_object(self, queryset=None):
+        return self.request.user.person
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     # context['user_form'] = UserForm(instance=self.request.user)
+    #     # context['links_forms'] = context['inlines'][0]
+    #     # context['settings_form'] = context['inlines'][1][0]
+    #     return context
+    
 
 class PersonApplicationListView(PersonMixin, DetailView):
 
@@ -694,3 +765,10 @@ class PublicNetworkData(JSONResponseMixin, TemplateView):
 
     def render_to_response(self, context, **response_kwargs):
         return self.render_to_json_response(context, **response_kwargs)
+
+from django.views.generic.edit import FormView
+class EmilieView(FormView):
+    template_name = 'emilie.html'
+    form_class = TestEmilieForm
+    success_url = '/thanks/'
+
