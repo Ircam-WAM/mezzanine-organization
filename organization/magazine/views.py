@@ -209,7 +209,7 @@ class DynamicContentArticleView(Select2QuerySetSequenceView):
         return results
 
 
-class ArticleListView(SlugMixin, ListView):
+class ArticleListView(ListView):
 
     model = Article
     template_name='magazine/article/article_list.html'
@@ -217,8 +217,7 @@ class ArticleListView(SlugMixin, ListView):
     keywords = OrderedDict()
 
     def get_queryset(self):
-        self.qs = super(ArticleListView, self).get_queryset()
-        self.qs = self.qs.filter(status=2).order_by('-created')
+        self.qs = self.model.objects.published(for_user=self.request.user).order_by('-created')
         playlists = Playlist.objects.published().order_by('-created').distinct()
 
         if 'type' in self.kwargs:
