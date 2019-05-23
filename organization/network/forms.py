@@ -21,6 +21,7 @@
 
 
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from dal import autocomplete
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
@@ -208,24 +209,10 @@ class ProducerForm(ModelForm):
             self.fields[key].required = True
 
 
-# class PersonLinkForm(ModelForm):
-    
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         if 'instance' in kwargs:
-#             self.fields['url'].label = LinkType.objects.get(id=kwargs['instance'].link_type_id).name
-
-#     class Meta:
-#         model = PersonLink
-#         fields = ('url', )
 class ClearableFileInputCustom(ClearableFileInput):
-    # initial_text = ugettext_lazy('Currently')
-    # input_text = ugettext_lazy('Change')
-    # clear_checkbox_label = ugettext_lazy('Clear')
 
     template_with_initial = (
-        '%(initial_text)s coucou: <a href="%(initial_url)s">%(initial)s</a> '
-        '%(clear_template)s<br />%(input_text)s: %(input)s'
+        '<div class="row"><div class="col-md-13 change_file_field">%(input_text)s: %(input)s</div><div class="col-md-3">%(clear_template)s</div></div>'
     )
 
     template_with_clear = '%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label>'
@@ -233,28 +220,16 @@ class ClearableFileInputCustom(ClearableFileInput):
 
 class PersonImageInline(InlineFormSet):
     
-    # extra = 1
     max_num = 2
     model = PersonUserImage
     can_delete = False
     fields = ('file', )
-    # def __init__(self, *args, **kwargs):
-    #     super(PersonImageInline, self).__init__(*args, **kwargs)
-    #     from django.forms.widgets import ClearableFileInput
-    #     print("self", vars(self))
-    #     # print("widget", self.fields['file'].widget)
-    #     # self.fields['file'].widget = ClearableFileInput()
-
-    # widgets = {
-    #     'file': ClearableFileInputCustom(),
-    # }
 
 
 class PersonLinkInline(InlineFormSet):
 
     model = PersonLink
-    # extra = 3
-    max_num = 3
+    extra = 1
     fields = ('url', 'link_type' )
 
 
@@ -264,41 +239,10 @@ class PersonOptionsInline(InlineFormSet):
     max_num = 1
     can_delete = False
     fields = ('newsletter', 'user_organization_notifications', 'on_map' )
+    exclude = ('id', 'person')
     
-
-class PersonInline(InlineFormSet):
-    
-    model = Person
-    fields = ('role', 'bio', 'address', 'address_2', 'postal_code',
-        'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender',)
-
-
-# class PersonFacebookForm(PersonLinkForm):
-#     pass
-
-
-# class PersonTwitterForm(PersonLinkForm):
-#     pass
-
-
-# class PersonLinkedinForm(PersonLinkForm):
-#     pass
-
-
-# class PersonYoutubeForm(PersonLinkForm):
-#     pass
-
-
-# class PersonInstagramForm(PersonLinkForm):
-#     pass
-
 
 class PersonImageForm(ModelForm):
-
-    # def __init__(self, *args, **kwargs):
-    #     super(PersonImageForm, self).__init__(*args, **kwargs)
-    #     from django.forms.widgets import ClearableFileInput
-    #     self.fields['file'].widget = ClearableFileInput()
 
     class Meta:
         model = PersonImage
@@ -307,16 +251,20 @@ class PersonImageForm(ModelForm):
 
 class PersonForm(ModelForm):
 
+    birthday = forms.DateField(localize=True, help_text=_('Please format yyyy-mm-dd'))
+
     class Meta:
         model = Person
-        fields = ('role', 'bio', 'address', 'address_2', 'postal_code',
+        fields = ('profile_image', 'background_image', 'role', 'bio', 'address', 'address_2', 'postal_code',
                 'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender',
                 'citizenship')
         widgets = {
+            'profile_image' : ClearableFileInputCustom(),     
+            'background_image' : ClearableFileInputCustom(),
             'address': forms.Textarea(attrs={'rows':2,}),
             'address_2': forms.Textarea(attrs={'rows':2,})
         }
-        
+
 
 class UserForm(ModelForm):
 
@@ -324,13 +272,3 @@ class UserForm(ModelForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
 
-
-class TestEmilieForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(TestEmilieForm, self).__init__(*args, **kwargs)
-        from django.forms.widgets import ClearableFileInput
-        self.fields['file'].widget = ClearableFileInput()
-
-    class Meta:
-        model = TestEmilie
-        fields = ('__all__')

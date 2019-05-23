@@ -173,6 +173,8 @@ class Person(Displayable, AdminThumbMixin, Address):
     search_fields = {"title": 1}
     following = models.ManyToManyField(User, verbose_name='following', related_name='followers', blank=True)
     citizenship = models.ForeignKey(Citizenship, verbose_name=_("citizenship"), blank=True, default=None, null=True)
+    profile_image = models.ImageField(upload_to="person/profile/%Y/%m/%d", max_length=100, blank=True, null=True)
+    background_image = models.ImageField(upload_to="person/background/%Y/%m/%d", max_length=100, blank=True, null=True)
 
     class Meta:
         verbose_name = _('person')
