@@ -156,13 +156,14 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
 class Person(Displayable, AdminThumbMixin, Address):
     """(Person description)"""
 
-    user = models.OneToOneField(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
+    user = models.OneToOneField(User, verbose_name=_('user'), related_name='person', blank=True, null=True, on_delete=models.SET_NULL)
     person_title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
     gender = models.CharField(_('gender'), max_length=16, choices=GENDER_CHOICES, blank=True)
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
     email = models.EmailField(_('email'), blank=True, null=True)
-    telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
+    telephone = models.CharField(_('telephone 1'), max_length=64, blank=True, null=True)
+    telephone_2 = models.CharField(_('telephone 2'), max_length=64, blank=True, null=True)
     register_id = models.CharField(_('register ID'), blank=True, null=True, max_length=128)
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
@@ -171,6 +172,9 @@ class Person(Displayable, AdminThumbMixin, Address):
     karma = models.IntegerField(default=0, editable=False)
     search_fields = {"title": 1}
     following = models.ManyToManyField(User, verbose_name='following', related_name='followers', blank=True)
+    citizenship = models.ForeignKey(Citizenship, verbose_name=_("citizenship"), blank=True, default=None, null=True)
+    profile_image = models.ImageField(upload_to="person/profile/%Y/%m/%d", max_length=100, blank=True, null=True)
+    background_image = models.ImageField(upload_to="person/background/%Y/%m/%d", max_length=100, blank=True, null=True)
 
     class Meta:
         verbose_name = _('person')
@@ -201,6 +205,14 @@ class Person(Displayable, AdminThumbMixin, Address):
         super(Person, self).save(args, kwargs)
         for activity in self.activities.all():
             update_activity(activity)
+
+
+class PersonOptions(models.Model):
+    
+    newsletter = models.BooleanField(_('newsletter'), default=False)
+    user_organization_notifications = models.BooleanField(_('Users and Organizations email notifications'), default=False)
+    on_map = models.BooleanField(_('Appear on the Artistic Network Map'), default=False)
+    person = models.OneToOneField(Person, verbose_name=_('person'))
 
 
 class OrganizationLinkedBlockInline(Titled, Orderable):
@@ -396,6 +408,7 @@ class ProducerMixin(object):
         context['producer'] = self.producer
         return context
 
+
 class PersonPlaylist(PlaylistRelated):
 
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
@@ -409,6 +422,11 @@ class PersonLink(Link):
 class PersonImage(Image):
 
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class PersonUserImage(UserImage):
+    
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='user_images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class PersonFile(File):
@@ -695,3 +713,8 @@ class MediaDepartment(models.Model):
 
     media = models.ForeignKey(Media, verbose_name=_('media'), related_name='department')
     department = models.ForeignKey(Department, verbose_name=_('department'), related_name='medias', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class TestEmilie(Image):
+    
+    image2 = models.FileField(_("Image"), max_length=1024, upload_to="images")

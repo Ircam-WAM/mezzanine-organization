@@ -19,12 +19,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from dal import autocomplete
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
 from django import forms
-from django.forms.widgets import HiddenInput
+from django.forms.widgets import HiddenInput, ClearableFileInput
 from django.forms import ModelForm
 from mezzanine.core.models import Orderable
 from organization.projects.models import ProjectWorkPackage
@@ -207,11 +209,61 @@ class ProducerForm(ModelForm):
             self.fields[key].required = True
 
 
+class ClearableFileInputCustom(ClearableFileInput):
+
+    template_with_initial = (
+        '<div class="row"><div class="col-md-13 change_file_field">%(input_text)s: %(input)s</div><div class="col-md-3">%(clear_template)s</div></div>'
+    )
+
+    template_with_clear = '%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label>'
+
+
+class PersonImageInline(InlineFormSet):
+    
+    max_num = 2
+    model = PersonUserImage
+    can_delete = False
+    fields = ('file', )
+
+
+class PersonLinkInline(InlineFormSet):
+
+    model = PersonLink
+    extra = 1
+    fields = ('url', 'link_type' )
+
+
+class PersonOptionsInline(InlineFormSet):
+    
+    model = PersonOptions
+    max_num = 1
+    can_delete = False
+    fields = ('newsletter', 'user_organization_notifications', 'on_map' )
+    exclude = ('id', 'person')
+    
+
+class PersonImageForm(ModelForm):
+
+    class Meta:
+        model = PersonImage
+        fields = ('file', )
+
+
 class PersonForm(ModelForm):
+
+    birthday = forms.DateField(localize=True, help_text=_('Please format yyyy-mm-dd'))
 
     class Meta:
         model = Person
-        fields = ('__all__')
+        fields = ('profile_image', 'background_image', 'role', 'bio', 'address', 'address_2', 'postal_code',
+                'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender',
+                'citizenship')
+        widgets = {
+            'profile_image' : ClearableFileInputCustom(),     
+            'background_image' : ClearableFileInputCustom(),
+            'address': forms.Textarea(attrs={'rows':2,}),
+            'address_2': forms.Textarea(attrs={'rows':2,})
+        }
 
 
 class UserForm(ModelForm):
@@ -219,3 +271,4 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
+

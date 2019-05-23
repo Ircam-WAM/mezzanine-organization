@@ -443,3 +443,8 @@ def filter_content_model(content_list, model_name):
         else :
             content_list_filtered.append(rc)
     return filtered_cards, content_list_filtered
+
+
+@register.filter
+def get_object_type(obj):
+    return type(obj)
