@@ -48,7 +48,7 @@ urlpatterns = [
     url('^profiles/(?P<username>.*)/following/$', PersonFollowingListView.as_view(), name='organization-network-profile-following'),
     url('^profiles/(?P<username>.*)/followers/$', PersonFollowersListView.as_view(), name='organization-network-profile-followers'),
     url('^profiles/applications/$', PersonApplicationListView.as_view(), name='organization-network-profile-applications'),
-    url('^profiles/settings/$', ProfileSettingsView.as_view(), name='organization-network-profile-settings'),
+    url('^profiles/edit/$', ProfileSettingsView.as_view(), name='organization-network-profile-edit'),
     # url('^messages/', include('postman.urls')),
 
     # Person autocomplete
