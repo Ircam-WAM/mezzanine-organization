@@ -50,6 +50,8 @@ app/themes/base/static/js
 app/themes/base/static/css
 app/themes/base/static/img
 app/themes/base/static/vendors
+*.swp
+.ropeproject
 
 ### SublimeText ###
 ###################
