@@ -461,8 +461,8 @@ class ProjectAdmin(BaseTranslationOrderedModelAdmin):
                 ]
     filter_horizontal = ['teams', 'organizations']
     list_filter = ['validation_status', 'call', 'topic']
-    list_editable = ["status", 'validation_status']
-    list_display = ['title', 'created', 'updated', 'call', 'validation_status', 'topic', 'date_from', 'date_to', 'status', 'admin_link']
+    list_editable = ['validation_status']
+    list_display = ['title', 'created', 'updated', 'call', 'validation_status', 'topic', 'date_from', 'date_to', 'admin_link']
     actions = [export_projects_as_csv, copy_projects]
 
 
@@ -543,8 +543,6 @@ class CallAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectCallAdmin.fieldsets)
 
-
-admin.site.register(Project, ProjectAdminDisplayable)
 
 class ProjectPageAdmin(BaseTranslationModelAdmin):
 

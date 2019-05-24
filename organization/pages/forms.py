@@ -71,7 +71,7 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
             Media.objects.all(),
             Person.objects.all(),
             Project.objects.all(),
-            Organization.objects.all()
+            Organization.objects.all(),
             Playlist.objects.all(),
         ),
         required=False,
