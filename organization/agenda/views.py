@@ -63,7 +63,7 @@ class DynamicContentEventView(Select2QuerySetSequenceView):
 
 
 class EventDetailView(SlugMixin, DetailView, DynamicContentMixin):
-    
+
     model = Event
     template_name = "agenda/event_detail.html"
     context_object_name = 'event'
