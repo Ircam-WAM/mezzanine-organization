@@ -31,11 +31,19 @@ admin.autodiscover()
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
+if settings.DEBUG:
+    import debug_toolbar
+
 urlpatterns = []
 
 if "drum.links" in settings.INSTALLED_APPS:
     urlpatterns += [
         url("^%s/" % settings.DRUM_SLUG, include("drum.links.urls")),
+    ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
     ]
 
 urlpatterns += [

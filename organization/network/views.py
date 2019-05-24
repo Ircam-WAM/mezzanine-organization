@@ -18,7 +18,6 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-
 from re import match
 from pprint import pprint
 from collections import OrderedDict
@@ -173,32 +172,22 @@ class PersonFollowersListView(PersonDetailView):
         return self.person.followers.all()
 
 
-class UserSettingsView(UpdateView):
-
-    model = User
-    form_class = UserForm
-    template_name='accounts/account_profile_update_settings.html'
-
-    def get_object(self):
-        user = self.request.user
-        if user.is_authenticated:
-            return user
-        else:
-            raise Http404()
-
-
-class PersonSettingsView(PersonMixin, UpdateView):
+class ProfileSettingsView(LoginRequiredMixin, UpdateWithInlinesView):
 
     model = Person
     form_class = PersonForm
-    template_name='accounts/account_profile_update_settings.html'
+    inlines = [PersonLinkInline, PersonOptionsInline]
+    template_name = 'network/person/profile_settings.html'
+    success_url = reverse_lazy('organization-network-profile-edit')
+
+    def get_object(self, queryset=None):
+        return self.request.user.person
 
 
 class PersonApplicationListView(PersonMixin, DetailView):
 
     model = Person
     template_name='accounts/account_profile_update_app_form.html'
-
 
     def get_context_data(self, **kwargs):
         context = super(PersonApplicationListView, self).get_context_data(**kwargs)
@@ -672,3 +661,4 @@ class PublicNetworkData(JSONResponseMixin, TemplateView):
 
     def render_to_response(self, context, **response_kwargs):
         return self.render_to_json_response(context, **response_kwargs)
+

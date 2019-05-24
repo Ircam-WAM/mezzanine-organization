@@ -220,6 +220,7 @@ class UserImage(Titled, Orderable):
 
     file = models.FileField(_("Image"), max_length=1024, upload_to="user/images/%Y/%m/%d/")
     credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
+    type = models.CharField(_('type'), max_length=64, choices=IMAGE_TYPE_CHOICES, null=True)
 
     class Meta:
         abstract = True
@@ -377,7 +378,8 @@ class Dated(models.Model):
 class Address(models.Model):
     """(Address description)"""
 
-    address = models.TextField(_('address'), blank=True)
+    address = models.TextField(_('address 1'), blank=True)
+    address_2 = models.TextField(_('address 2'), blank=True)
     postal_code = models.CharField(_('postal code'), max_length=16, null=True, blank=True)
     city = models.CharField(_('city'), max_length=255, null=True, blank=True)
     country = CountryField(_('country'), null=True, blank=True)
@@ -463,3 +465,14 @@ class Sites(models.Model):
         abstract = True
         verbose_name = 'Sites'
         verbose_name_plural = 'Sites'
+
+
+class Citizenship(models.Model):
+    """citizenship"""
+    name = models.CharField(max_length=200, verbose_name=_('name'))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name', ]

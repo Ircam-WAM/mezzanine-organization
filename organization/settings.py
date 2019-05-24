@@ -601,9 +601,18 @@ OPTIONAL_APPS = (
 
 if DEBUG:
     OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    MIDDLEWARE_CLASSES = (
+            'debug_toolbar.middleware.DebugToolbarMiddleware',
+            ) + MIDDLEWARE_CLASSES
 
 INTERNAL_IPS = ['127.0.0.1', '172.17.0.1', '172.20.0.1']
+
+def show_toolbar(request):
+    return DEBUG
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+}
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 DEBUG_TOOLBAR_PANELS = [
