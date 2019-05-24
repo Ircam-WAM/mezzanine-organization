@@ -32,6 +32,7 @@ from organization.pages.models import CustomPage, ExtendedCustomPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting
 from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import Home
+from organization.pages.forms import YearForm
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
 from organization.network.models import Person, Organization
@@ -39,6 +40,8 @@ from organization.projects.models import Project, ProjectResidency
 from django.shortcuts import redirect
 from django.contrib.contenttypes.models import ContentType
 import random
+from django.shortcuts import redirect
+from django.views.generic.edit import FormView
 
 
 class HomeView(SlugMixin, DetailView):
@@ -114,7 +117,7 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
-        persons = Person.objects.published()
+        persons = Person.objects.all()
         medias = Media.objects.all()
 
         if self.q:
@@ -125,13 +128,6 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
             medias = medias.filter(title__icontains=self.q)
 
         qs = autocomplete.QuerySetSequence(articles, custompage, events, persons, medias)
-
-        if self.q:
-            # This would apply the filter on all the querysets
-            qs = qs.filter(title__icontains=self.q)
-
-        # This will limit each queryset so that they show an equal number
-        # of results.
         qs = self.mixup_querysets(qs)
 
         return qs
@@ -197,6 +193,39 @@ class DynamicContentHomeMediaView(Select2QuerySetSequenceView):
 class NewsletterView(TemplateView):
 
     template_name = "pages/newsletter.html"
+
+
+class PublicationsView(FormView):
+
+    template_name = "pages/publications.html"
+    form_class = YearForm
+    success_url = "."
+    hal_url = settings.HAL_URL
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._hal_url = PublicationsView.hal_url
+
+    def form_valid(self, form):
+        # Ajax
+        if self.request.is_ajax():
+            context = {}
+            context['hal_url'] = self._hal_url + "&annee_publideb=%s&annee_publifin=%s" % (form.cleaned_data['year'], form.cleaned_data['year'])
+            return render(self.request, 'core/inc/hal.html', context)
+        else :
+            self.request.session['year'] = form.cleaned_data['year']
+            return super(PublicationsView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(PublicationsView, self).get_context_data(**kwargs)
+        context['hal_url'] = self._hal_url
+        if 'year' in self.request.session:
+            # set year filter
+            context['hal_url'] += "&annee_publideb=%s&annee_publifin=%s" % (self.request.session['year'], self.request.session['year'])
+            context['form'].initial['year'] = self.request.session['year']
+            # repopulate form
+            self.request.session.pop('year', None)
+        return context
 
 
 class InformationView(ListView):

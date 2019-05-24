@@ -34,6 +34,10 @@ from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm
 from organization.core.admin import null_filter
 from organization.projects.translation import *
+from organization.projects.forms import DynamicContentProjectForm, DynamicMultimediaProjectForm, DynamicContentProjectPageForm
+from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin #, DuplicateAdmin
+from organization.core.utils import actions_to_duplicate, get_other_sites
+from organization.network.admin import TeamOwnableAdmin
 import csv
 from django.http import HttpResponse
 from django.core.files.base import ContentFile
@@ -304,6 +308,11 @@ class ProjectDemoInline(TabularDynamicInlineAdmin):
     model = ProjectDemo
 
 
+class ProjectPageInline(StackedDynamicInlineAdmin):
+
+    model = ProjectPage
+
+
 class ProjectWorkPackageInline(TabularDynamicInlineAdmin):
 
     model = ProjectWorkPackage
@@ -328,11 +337,6 @@ class ProjectUserImageInline(StackedDynamicInlineAdmin):
 class ProjectContactInline(StackedDynamicInlineAdmin):
 
     model = ProjectContact
-
-
-class ProjectAdmin(admin.ModelAdmin):
-
-    model = Project
 
 
 class ProjectPublicDataAdmin(admin.ModelAdmin):
@@ -377,6 +381,12 @@ class DynamicContentProjectInline(TabularDynamicInlineAdmin):
         js = (
             static("mezzanine/js/admin/dynamic_inline.js"),
         )
+
+
+class DynamicMultimediaProjectInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaProject
+    form = DynamicMultimediaProjectForm
 
 
 class ProjectResidencyProducerInline(TabularDynamicInlineAdmin):
@@ -429,9 +439,10 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
     get_producers.short_description = "producers"
 
 
-class ProjectAdminDisplayable(DisplayableAdmin):
+class ProjectAdmin(BaseTranslationOrderedModelAdmin):
 
-    fieldsets = deepcopy(ProjectAdmin.fieldsets)
+    model = Project
+
     inlines = [ ProjectBlockInline,
                 ProjectContactInline,
                 ProjectUserImageInline,
@@ -439,7 +450,9 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 ProjectPublicDataInline,
                 ProjectPrivateDataInline,
                 ProjectWorkPackageInline,
+                ProjectPageInline,
                 ProjectPlaylistInline,
+                DynamicMultimediaProjectInline,
                 ProjectLinkInline,
                 ProjectFileInline,
                 ProjectRelatedTitleAdmin,
@@ -532,6 +545,49 @@ class CallAdminDisplayable(DisplayableAdmin):
 
 
 admin.site.register(Project, ProjectAdminDisplayable)
+
+class ProjectPageAdmin(BaseTranslationModelAdmin):
+
+    model = ProjectPage
+    list_display = ['title', 'project', ]
+    list_filter = ['project', ]
+
+
+class ProjectPageBlockInline(StackedDynamicInlineAdmin):
+
+    model = ProjectPageBlock
+
+
+class ProjectPageImageInline(StackedDynamicInlineAdmin):
+
+    model = ProjectPageImage
+
+
+class DynamicContentProjectPageInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentProjectPage
+    form = DynamicContentProjectPageForm
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+class ProjectPageAdminDisplayable(DisplayableAdmin): #, DuplicateAdmin
+
+    fieldsets = deepcopy(ProjectPageAdmin.fieldsets)
+    inlines = [ ProjectPageBlockInline,
+                ProjectPageImageInline,
+                DynamicContentProjectPageInline,
+                ]
+    # list_filter = ['type', 'program', 'program_type', null_filter('external_id')]
+    # list_display = ['title', 'date_from', 'date_to', 'status', 'admin_link']
+    actions = actions_to_duplicate()
+    search_fields = ['title', 'project__title',]
+
+
+
+admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)
 admin.site.register(ProjectPrivateData, ProjectPrivateDataAdmin)
 admin.site.register(ProjectContact, ProjectContactAdmin)
@@ -546,3 +602,4 @@ admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
 admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
 admin.site.register(ProjectResidency, ProjectResidencyAdmin)
 admin.site.register(Call, CallAdminDisplayable)
+admin.site.register(ProjectPage, ProjectPageAdminDisplayable)

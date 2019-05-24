@@ -48,7 +48,7 @@ class Article(BlogPost, SubTitled):
     department = models.ForeignKey(Department, verbose_name=_('department'), related_name='articles', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
     topics = models.ManyToManyField("Topic", verbose_name=_('topics'), related_name="articles", blank=True)
     search_fields = {"title" : 20, "content": 15}
-    
+
     def get_absolute_url(self):
         return reverse("magazine-article-detail", kwargs={"slug": self.slug})
 
@@ -119,7 +119,7 @@ class Topic(Page, RichText):
         verbose_name = _('topic')
 
 
-class ArticlePersonListBlockInline(Titled):
+class ArticlePersonListBlockInline(Titled, Description):
 
     article = models.ForeignKey(Article, verbose_name=_('Article'), related_name='article_person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
     person_list_block = models.ForeignKey(PersonListBlock, related_name='article_person_list_block_inlines', verbose_name=_('Person List Block'), blank=True, null=True)
@@ -137,3 +137,29 @@ class DynamicContentArticle(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Dynamic Content Article'
+
+
+class DynamicMultimediaArticle(DynamicContent, Orderable):
+
+    article = models.ForeignKey(Article, verbose_name=_('article'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
+
+
+class DynamicContentMagazineContent(DynamicContent, Orderable):
+    
+    magazine = models.ForeignKey("magazine", verbose_name=_('magazine'), related_name='dynamic_content', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Content'
+
+
+class Magazine(Displayable):
+    
+    class Meta:
+        verbose_name = _('magazine')
+        verbose_name_plural = _("magazines")
+
+    def get_absolute_url(self):
+        return reverse("magazine")

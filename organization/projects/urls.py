@@ -33,9 +33,17 @@ from organization.projects.views import *
 urlpatterns = [
     url("^dynamic-content-project/$",  permission_required('project.can_edit')(DynamicContentProjectView.as_view()), name='dynamic-content-project'),
 
-    # Old URLs
-    url("^ict-projects/list/$", ProjectListView.as_view(), name='organization-ict-project-list'),
-    url("^ict-projects/(?P<slug>.*)/detail/$", ProjectTechDetailView.as_view(), name='organization-ict-project-detail'),
+    url("^projects/detail/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-projectpage-detail'), name='organization-project-detail'),
+    url("^projects/pages/(?P<slug>.*)/$", ProjectPageView.as_view(), name='organization-project-projectpage-detail'),
+    url("^projects/list/$", ProjectListView.as_view(), name='organization-project-list'),
+    url("^projects/archives/list/$", ProjectArchivesListView.as_view(), name='organization-project-archive-list'),
+
+    url("^team/(?P<slug>.*)/projects/list/$", ProjectTeamListView.as_view(), name='organization-project-team-list'),
+    url("^team/(?P<slug>.*)/projects/archives/list/$", ProjectArchivesTeamListView.as_view(), name='organization-project-archive-team-list'),
+
+    url("^projects/demo/(?P<slug>.*)/$", ProjectDemoDetailView.as_view(), name='organization-project-demo-detail'),
+    url("^projects/blog/(?P<slug>.*)/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
+
     # due to this commit 73743f67f1d1574dbeff6cc22aae37986d257a92, redirect to old patterns 'project' without 's'
     url("^project/detail/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-detail'), name="redirect-project-detail"),
     url("^project/demo/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-demo-detail'), name="redirect-project-demo"),

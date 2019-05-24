@@ -27,18 +27,20 @@ import re
 import copy
 from re import match
 from django.http import QueryDict
-from django import template 
+from django import template
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from mezzanine.template import Library
 from django.template.defaultfilters import stringfilter
 from mezzanine_agenda.models import Event
+from mezzanine.utils.sites import current_site_id
 from mezzanine.conf import settings
 from random import shuffle
 from django.utils.translation import ugettext_lazy as _
 from organization.agenda.models import EventPeriod
 from organization.magazine.models import *
 from organization.projects.models import *
+from organization.network.utils import get_users_of_team, get_team_from_user
 from django.utils.formats import get_format
 from django.utils.dateformat import DateFormat
 from organization.core.models import *
@@ -47,6 +49,8 @@ from django.db.models import Q
 from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
 from django.utils.functional import allow_lazy
 from django.utils import six
+from django.contrib.contenttypes.models import ContentType
+from django.apps import apps
 
 register = Library()
 
@@ -109,6 +113,15 @@ def get_class(obj):
     return obj.__class__.__name__
 
 @register.filter
+def get_content_type(content_type_id):
+    return ContentType.objects.get(id=content_type_id)
+
+@register.filter
+def get_object(content_type, object__id):
+    model = apps.get_model(content_type.app_label, content_type.model)
+    return model.objects.get(id=object__id)
+
+@register.filter
 def unique_posts(events):
     post_list = []
     for event in events:
@@ -160,13 +173,15 @@ def classname(obj):
 
 @register.filter
 def app_label_short(obj):
-    app_label = obj._meta.app_config.label
-    if app_label.find("_") > 0:
-        app_label_short = app_label.split("_")[1]
-    elif app_label.find("-") > 0:
-        app_label_short = app_label.split("-")[1]
-    else :
-        app_label_short = app_label
+    app_label_short = None
+    if obj:
+        app_label = obj._meta.app_config.label
+        if app_label.find("_") > 0:
+            app_label_short = app_label.split("_")[1]
+        elif app_label.find("-") > 0:
+            app_label_short = app_label.split("-")[1]
+        else :
+            app_label_short = app_label
     return app_label_short
 
 @register.as_tag
@@ -198,8 +213,10 @@ def slice_ng(qs, indexes):
         index_2 = int(index_split[1])
     if index_1 >= 0 and index_2:
         return list[index_1:index_2]
-    else:
+    elif index_1 >= 0 & index_1 < len(list):
         return [list[index_1]]
+    else :
+        return list
 
 @register.filter
 def date_year_higher_than(date, years):
@@ -384,12 +401,19 @@ def extended_custompage_extra_content(extra_content):
     return context
 
 @register.filter
-def hal_1(hal_tutelage, hal_researche_structure):
-    return settings.HAL_URL_PART_1 % (hal_researche_structure.replace(' ', '+'), hal_tutelage.replace(' ', '+'))
+def hal_labos_exp(hal_url, hal_researche_structure):
+    return hal_url + "&" + settings.HAL_LABOS_EXP + hal_researche_structure.replace(' ', '+')
 
 @register.filter
-def hal_2(url_part, http_host):
-    return url_part + settings.HAL_URL_PART_2 % http_host
+def hal_css(url_part, http_host):
+    site = current_site_id()
+    if site:
+        curr_site = Site.objects.get(id=site)
+        return url_part + settings.HAL_URL_CSS[curr_site.name] % http_host
+
+@register.filter
+def hal_limit(url_part, nb):
+    return url_part + settings.HAL_LIMIT_PUB + str(nb)
 
 @register.filter
 def tag_is_in_menu(page, tag):
@@ -430,7 +454,7 @@ def template_exists(value):
 
 @register.filter
 def filter_content_model(content_list, model_name):
-    # pop contents from list, based on model name 
+    # pop contents from list, based on model name
     # example call in template : new_content=related_content|filter_content_model:"Article"
     # {{ new_content.0 }} : list of poped contents
     # {{ new_content.1 }} : list of remains contents
@@ -438,12 +462,108 @@ def filter_content_model(content_list, model_name):
     filtered_cards = []
     content_list_filtered = []
     for i, rc in enumerate(content_list):
-        if rc._meta.model_name == model_name: 
+        if rc._meta.model_name == model_name:
             filtered_cards.append(rc)
         else :
             content_list_filtered.append(rc)
     return filtered_cards, content_list_filtered
 
+
+@register.filter
+def get_team_articles(team):
+    users = get_users_of_team(team)
+    articles = Article.objects.filter(user__in=users)
+    events = Event.objects.published().filter(user__in=users)
+
+    q = sorted(
+        chain(articles, events),
+        key=lambda instance: instance.created,
+        reverse=True)
+    return q
+
+
+@register.filter
+def get_content_objects(dynamic_content):
+    return [dc.content_object for dc in dynamic_content]
+
+
+@register.filter
+def has_title_en(objects_list, strg):
+    b = False
+    for o in objects_list:
+        if strg == o.title_en:
+            b = True
+    return b
+
+
+@register.filter
+def has_id(objects_list, id):
+    b = False
+    print("id", id, type(id))
+    for o in objects_list:
+        if id == o.id:
+            b = True
+    return b
+
+
+@register.filter
+def reverse(objects_list):
+    return  list(reversed(objects_list))
+
+
+@register.filter
+def latest(query):
+    if query:
+        return query.latest('date_to')
+
+
+@register.filter
+def get_team_code_from_user(user):
+    team = get_team_from_user(user)
+    if team :
+        return get_team_from_user(user).code
+
+
+@register.assignment_tag
+def increment(i):
+    return i + 1
+
+
+@register.assignment_tag
+def previous(val):
+    return val
+
+
+@register.filter
+def menu_length(pages, id):
+    return len(list(filter(lambda x: str(id) in x.in_menus, pages)))
+
+
+@register.filter
+def get_menu_id(template_path):
+    for i, l, t in settings.PAGE_MENU_TEMPLATES:
+        if t == template_path:
+            return i
+
+
+@register.filter
+def index(List, i):
+    return List[int(i)]
+
+
+@register.filter
+def subtract(a, b):
+    return str(int(a) - int(b))
+
+
+@register.filter
+def to_int(a):
+    return int(a)
+
+
+@register.filter
+def to_str(a):
+    return str(a)
 
 @register.filter
 def get_object_type(obj):

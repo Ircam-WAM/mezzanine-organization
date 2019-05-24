@@ -25,6 +25,7 @@ from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.template import Context
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.edit import FormView
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
@@ -148,6 +149,12 @@ class ProjectBlogPageView(SlugMixin, ProjectMixin, DetailView):
 
     model = ProjectBlogPage
     template_name='projects/project_blogpage_detail.html'
+
+
+class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
+
+    model = ProjectPage
+    template_name='projects/project/project_detail.html'
 
 
 class ProjectCallMixin(object):
@@ -417,3 +424,96 @@ class ResidencyBlogArticleListView(SlugMixin, ListView):
             self.qs = ProjectResidencyArticle.objects.filter(article__in = articles)
 
         return self.qs
+
+class AbstractProjectListView(FormView, ListView):
+
+    model = ProjectPage
+    template_name='projects/project/project_list.html'
+    context_object_name = 'objects'
+    success_url = "."
+    item_to_filter = "filter"
+
+    def get_form(self, form_class=None):
+        form = super(AbstractProjectListView, self).get_form()
+        if self.item_to_filter in self.request.session and self.request.session[self.item_to_filter]:
+            form.fields['filter'].initial = [ int(self.request.session[self.item_to_filter]), ]
+        return form
+
+    def form_valid(self, form):
+        # Ajax
+        self.request.session[self.item_to_filter] = form.cleaned_data[self.item_to_filter]
+        if self.request.is_ajax():
+            context = {}
+            context["concrete_objects"] = self.get_queryset()
+            return render(self.request, 'core/inc/cards.html', context)
+        else :
+            return super(AbstractProjectListView, self).form_valid(form)
+
+    def get_queryset(self):
+        self.qs = super(AbstractProjectListView, self).get_queryset()
+        if 'slug' in self.kwargs:
+            self.qs = self.qs.filter(project__teams__slug=self.kwargs['slug'])
+
+        if self.item_to_filter in self.request.session and self.request.session[self.item_to_filter]:
+            kwargs = {
+                '{0}'.format(self.property_query_filter): self.request.session[self.item_to_filter],
+            }
+            self.qs = self.qs.filter(**kwargs)
+
+        self.qs = self.qs.filter(project__is_archive=self.archived)
+        self.qs = self.qs.order_by('title')
+
+        return self.qs
+
+    def get_context_data(self, **kwargs):
+        context = super(AbstractProjectListView, self).get_context_data(**kwargs)
+        context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
+                              settings.MEDIA_PER_PAGE,
+                              settings.MAX_PAGING_LINKS)
+        context['is_archive'] = self.archived
+        if self.archived:
+            context['title'] = _('Archived Projects')
+        else :
+            context['title'] = _('Projects')
+        if 'slug' in self.kwargs:
+            context['slug'] = self.kwargs['slug']
+        return context
+
+
+class ProjectListView(AbstractProjectListView):
+
+    form_class = TopicFilterForm
+    property_query_filter = "project__topic__id"
+    archived = False
+
+
+class ProjectArchivesListView(AbstractProjectListView):
+
+    form_class = TopicFilterForm
+    property_query_filter = "project__topic__id"
+    archived = True
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectArchivesListView, self).get_context_data(**kwargs)
+        context['project_list_url'] = reverse_lazy('organization-project-list')
+        return context
+
+
+class ProjectTeamListView(AbstractProjectListView):
+
+    form_class = TypeFilterForm
+    property_query_filter = "project__type"
+    archived = False
+
+
+class ProjectArchivesTeamListView(AbstractProjectListView):
+
+    form_class = TypeFilterForm
+    property_query_filter = "project__type"
+    archived = True
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectArchivesTeamListView, self).get_context_data(**kwargs)
+        context['project_list_url'] = reverse_lazy('organization-project-team-list', kwargs={'slug' : self.kwargs['slug']})
+        context['team'] = Team.objects.get(slug=self.kwargs['slug'])
+        return context

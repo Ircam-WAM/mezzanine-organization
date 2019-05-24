@@ -35,7 +35,7 @@ class JobResponse(models.Model):
     message = models.TextField(max_length=800, verbose_name=_('message'))
     #@TODO validate type format
     curriculum_vitae = models.FileField(_("curriculum vitae"), max_length=1024, upload_to="job_responses/%Y/%m/%d/")
-    cover_letter = models.FileField(_("cover letter"), max_length=1024, upload_to="job_responses/%Y/%m/%d/")
+    cover_letter = models.FileField(max_length=1024, upload_to="job_responses/%Y/%m/%d/", verbose_name=_('cover letter'))
     job_offer = models.ForeignKey("JobOffer", verbose_name=_('job offer'), related_name='job_response', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:

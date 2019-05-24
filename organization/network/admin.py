@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2016-2017 Ircam
-# Copyright (c) 2016-2017 Guillaume Pellerin
+# Copyright (c) 2016-2019 Ircam
+# Copyright (c) 2016-2019 Guillaume Pellerin
 # Copyright (c) 2016-2017 Emilie Zawadzki
 
 # This file is part of mezzanine-organization.
@@ -18,6 +18,8 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
 import csv
 from django.contrib import admin
 from django import forms
@@ -30,6 +32,7 @@ from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from organization.network.models import *
 from organization.network.forms import *
+from organization.pages.forms import DynamicMultimediaPageForm
 from organization.pages.models import *
 from organization.core.admin import *
 from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline, DynamicContentPageInline, PageRelatedTitleAdmin
@@ -39,6 +42,30 @@ from organization.network.translation import *
 import csv
 from django.http import HttpResponse
 
+from organization.network.utils import getUsersListOfSameTeams
+
+
+class TeamOwnableAdmin(OwnableAdmin):
+
+    def get_queryset(self, request):
+        """
+        Filter the change list by currently logged in user if not a
+        superuser. We also skip filtering if the model for this admin
+        class has been added to the sequence in the setting
+        ``OWNABLE_MODELS_ALL_EDITABLE``, which contains models in the
+        format ``app_label.object_name``, and allows models subclassing
+        ``Ownable`` to be excluded from filtering, eg: ownership should
+        not imply permission to edit.
+        """
+        opts = self.model._meta
+        model_name = ("%s.%s" % (opts.app_label, opts.object_name)).lower()
+        models_all_editable = settings.OWNABLE_MODELS_ALL_EDITABLE
+        models_all_editable = [m.lower() for m in models_all_editable]
+        qs = super(OwnableAdmin, self).get_queryset(request)
+        if request.user.is_superuser or model_name in models_all_editable:
+            return qs
+        list_users = getUsersListOfSameTeams(request.user)
+        return qs.filter(user__id=123)
 
 def export_organizations_as_csv(modeladmin, request, queryset):
     # Create the HttpResponse object with the appropriate CSV header.
@@ -158,12 +185,19 @@ class ProducerDataInline(StackedDynamicInlineAdmin):
     model = ProducerData
 
 
+class DynamicMultimediaOrganizationInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaOrganization
+    form = DynamicMultimediaOrganizationForm
+
+
 class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Organization
     inlines = [ OrganizationEventLocationInline,
                 OrganizationServiceInline,
                 OrganizationPlaylistInline,
+                DynamicMultimediaOrganizationInline,
                 OrganizationImageInline,
                 OrganizationBlockInline,
                 OrganizationLinkInline,
@@ -187,9 +221,15 @@ class PageProductListInline(TabularDynamicInlineAdmin):
     model = PageProductList
 
 
+class DynamicMultimediaDepartmentInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaPage
+    form = DynamicMultimediaPageForm
+
+
 class DepartmentPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, PageProductListInline, ]
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaDepartmentInline, PageProductListInline, ]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -211,9 +251,15 @@ class TeamAdmin(BaseTranslationModelAdmin):
     inlines = [TeamLinkInline,]
 
 
-class TeamPageAdmin(PageAdmin):
+class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline,
+    model = DynamicMultimediaPage
+    form = DynamicMultimediaPageForm
+
+
+class TeamPageAdmin(PageAdmin, TeamOwnableAdmin):
+
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaTeamPageInline,
                 PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]
 
 
@@ -260,12 +306,32 @@ class PersonBlockInline(StackedDynamicInlineAdmin):
     model = PersonBlock
 
 
+class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaPerson
+    form = DynamicMultimediaPersonForm
+
+
+class PersonRelatedTitleAdmin(TranslationTabularInline):
+
+    model = PersonRelatedTitle
+
+
+class DynamicContentPersonInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentPerson
+    form = DynamicContentPersonForm
+
+
 class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Person
     inlines = [PersonImageInline,
                PersonBlockInline,
                PersonPlaylistInline,
+               DynamicMultimediaPersonInline,
+               PersonRelatedTitleAdmin,
+               DynamicContentPersonInline,
                PersonLinkInline,
                PersonFileInline,
                PersonActivityInline,]
@@ -288,7 +354,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
         return weekly_hour_volume
 
     def export_as_csv(self, request, queryset):
-        
+
             meta = self.model._meta
             field_names = ['first_name', 'last_name', 'gender', 'birthday']
             activity_fields = ['date_from', 'date_to', 'framework', 'function', 'organizations', 'teams']
@@ -429,6 +495,7 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
         set_timesheets_validation_date(queryset)
 
     export_xls.short_description = "Export person timesheets"
+
 
 
 admin.site.register(OrganizationLinked, OrganizationLinkedAdmin)

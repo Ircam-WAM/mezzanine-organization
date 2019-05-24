@@ -322,7 +322,7 @@ TEMPLATES = [{
                                                   'organization.core.context_processors.organization_settings',
                                                   ),
                             'loaders': [
-                                #'mezzanine.template.loaders.host_themes.Loader',
+                                'mezzanine.template.loaders.host_themes.Loader',
                                 'django.template.loaders.filesystem.Loader',
                                 'django.template.loaders.app_directories.Loader',
                                 ],
@@ -449,7 +449,7 @@ TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 
 ADMIN_MENU_ORDER = (
     (_('Pages'), ('pages.Page', 'organization-pages.Home',
-                 'organization-core.LinkType')),
+                 'organization-core.LinkType',),),
     (_('Media'), ('organization-media.Media',
                   'organization-media.Playlist',
                   'organization-media.LiveStreaming',
@@ -466,7 +466,8 @@ ADMIN_MENU_ORDER = (
                   'organization-agenda.EventTrainingLevel',
                   'generic.Keyword',
                   )),
-    (_('Magazine'), ('organization-magazine.Article',
+    (_('Magazine'), ('organization-magazine.Magazine',
+                    'organization-magazine.Article',
                     'organization-magazine.Brief',)),
     (_('Network'), ('organization-network.Organization',
                     'organization-network.OrganizationLinked',
@@ -494,6 +495,7 @@ ADMIN_MENU_ORDER = (
                      'organization-network.PersonActivityTimeSheet'
                     )),
     (_('Projects'), ('organization-projects.Project',
+                    'organization-projects.ProjectPage',
                     'organization-projects.ProjectCall',
                     'organization-projects.ProjectContact',
                     'organization-projects.ProjectProgram',
@@ -530,9 +532,12 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'pages.Page',
                         'organization-media.Playlist',
                         'mezzanine_agenda.Event',
-                        'organization-projects.Project',
+                        'organization-projects.ProjectPage',
                         'shop.Product',
                         'organization-magazine.Article')
+                        
+# authorize models which does not heritate from Displayable
+SEARCH_MODEL_NO_DISPLAYABLE = ('organization-network.Person',)
 
 PAGES_MODELS = ('organization-pages.CustomPage',
                 'organization-magazine.Topic',
@@ -552,7 +557,7 @@ DAL_MAX_RESULTS = 100
 # EVENTS
 
 EVENT_SLUG = 'agenda'
-EVENT_GOOGLE_MAPS_DOMAIN = 'maps.googleapis.com'
+EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
 EVENT_EXCLUDE_TAG_LIST = [ ]
@@ -577,6 +582,7 @@ SHOP_USE_VARIATIONS = False
 SHOP_USE_RATINGS = False
 
 PROJECT_DEMOS_DIR = '/srv/media/projects/demos/'
+
 if not os.path.exists(PROJECT_DEMOS_DIR):
     os.makedirs(PROJECT_DEMOS_DIR)
 
@@ -706,3 +712,17 @@ if DEBUG:
     TIMESHEET_MASTER_MAIL = "foo@bar.fr"
 else:
     TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+
+# HAL
+
+HAL_URL = "//haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?affi_exp=Ircam&CB_auteur=oui&CB_titre=oui" \
+                        "&CB_article=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=typdoc&tri_exp3=date_publi" \
+                        "&ordre_aff=TA&Fen=Aff&Formate=Oui"
+
+HAL_LABOS_EXP = "labos_exp="
+HAL_URL_CSS = "&css=//%s/static/css/index.min.css"
+HAL_LIMIT_PUB = "&NbAffiche="
+HAL_YEAR_BEGIN = 1977
+
+# Ownable
+OWNABLE_MODELS_ALL_EDITABLE = []

@@ -27,15 +27,13 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
-
-from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
 from django.core.files.images import get_image_dimensions
-
 from organization.core.models import *
 from organization.pages.models import *
 from organization.network.models import *
 from organization.magazine.models import *
 from mezzanine_agenda.models import *
+from mezzanine.core.models import RichText, Displayable, Slugged, Orderable, Ownable, MetaData, TimeStamped
 
 from skosxl.models import Concept
 
@@ -75,10 +73,11 @@ FUNDING_CHOICES = (
 )
 
 
-class Project(Displayable, Period, RichText, OwnableOrNot):
+class Project(TitledSlugged, MetaData, TimeStamped, Period, RichText, OwnableOrNot):
+# class Project(Displayable, Period, RichText, OwnableOrNot):
     """(Project description)"""
 
-    type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES)
+    type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES, blank=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     program = models.ForeignKey('ProjectProgram', verbose_name=_('project program'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
     program_type = models.ForeignKey('ProjectProgramType', verbose_name=_('project program type'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
@@ -162,7 +161,7 @@ class ProjectProgramType(Named):
         ordering = ['name',]
 
 
-class ProjectWorkPackage(Titled, Period):
+class ProjectWorkPackage(Titled, Description, Period):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='work_packages')
     number = models.IntegerField(_('number'))
@@ -273,22 +272,22 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
 
 class ProjectCallBlock(Block):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call blocks'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallImage(Image):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call image'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallFile(File):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call file'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallLink(Link):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call link'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectDemo(Displayable, RichText, URL):
@@ -385,6 +384,14 @@ class DynamicContentProject(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Dynamic Content Project'
+
+
+class DynamicMultimediaProject(DynamicContent, Orderable):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
 
 
 class ProjectBlogPage(Displayable, RichText):
@@ -580,3 +587,32 @@ class Call(Displayable, Period, RichText, NamedOnly):
         except:
             pass
         return True
+class ProjectPage(Displayable, RichText):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='pages', blank=True, null=True, on_delete=models.SET_NULL)
+
+    def get_absolute_url(self):
+        return reverse("organization-project-projectpage-detail", kwargs={'slug': self.slug})
+
+    # def __str__(self):
+    #     return self.project.title
+
+
+class ProjectPageImage(Image):
+
+    project_page = models.ForeignKey(ProjectPage, verbose_name=_('project page'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectPageBlock(Block):
+
+    project_page = models.ForeignKey(ProjectPage, verbose_name=_('project page'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class DynamicContentProjectPage(DynamicContent, Orderable):
+
+    project_page = models.ForeignKey(ProjectPage, verbose_name=_('project page'), related_name='dynamic_content_project_pages', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Project Page'
+
+

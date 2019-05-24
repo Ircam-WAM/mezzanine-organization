@@ -39,15 +39,16 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils.text import slugify
 from mezzanine.pages.models import Page
-from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated
+from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Ownable, Orderable, MetaData, TimeStamped, wrapped_manager
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
-
+from mezzanine.core.managers import SearchableManager
 from organization.core.models import *
 from organization.media.models import *
 from organization.pages.models import CustomPage
 from organization.media.models import Media
 from organization.network.validators import *
+from organization.network.utils import usersTeamsIntersection
 
 # from .nationalities.fields import NationalityField
 
@@ -119,7 +120,23 @@ ORGANIZATION_STATUS_CHOICES = (
 )
 
 
-class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
+class TeamOwnable(Ownable):
+    """
+    Abstract model that provides ownership of an object for a user.
+    """
+
+    class Meta:
+        abstract = True
+
+    def is_editable(self, request):
+        """
+        Restrict in-line editing to the objects's owner team and superusers.
+        """
+        ownable_is_editable = super(TeamOwnable, self).is_editable(request)
+        return ownable_is_editable or usersTeamsIntersection(self.user, request.user)
+
+
+class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -133,9 +150,9 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
     opening_times = models.TextField(_('opening times'), blank=True)
     subway_access = models.TextField(_('subway access'), blank=True)
     bio = models.TextField(_('bio'), blank=True)
-    site = models.ForeignKey("sites.Site", blank=True, null=True, on_delete=models.SET_NULL)
     admin_thumb_type = 'logo'
     validation_status = models.IntegerField(_('validation status'), choices=ORGANIZATION_STATUS_CHOICES, default=1)
+    hal_id = models.CharField(_('HAL id'), max_length=10, blank=True, null=True)
 
     class Meta:
         verbose_name = _('organization')
@@ -153,10 +170,13 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
         return reverse("network")
 
 
-class Person(Displayable, AdminThumbMixin, Address):
+class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
     """(Person description)"""
 
     user = models.OneToOneField(User, verbose_name=_('user'), related_name='person', blank=True, null=True, on_delete=models.SET_NULL)
+    objects = SearchableManager()
+    search_fields = {"title": 5}
+
     person_title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
     gender = models.CharField(_('gender'), max_length=16, choices=GENDER_CHOICES, blank=True)
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
@@ -169,6 +189,7 @@ class Person(Displayable, AdminThumbMixin, Address):
     bio = RichTextField(_('biography'), blank=True)
     role = models.CharField(_('role'), max_length=256, blank=True, null=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
+    hal_url = models.URLField(_('HAL url'), max_length=512, blank=True)
     karma = models.IntegerField(default=0, editable=False)
     search_fields = {"title": 1}
     following = models.ManyToManyField(User, verbose_name='following', related_name='followers', blank=True)
@@ -202,26 +223,42 @@ class Person(Displayable, AdminThumbMixin, Address):
         self.clean()
         if self.first_name and self.last_name and (not self.title or self.title == '-'):
             self.title = self.first_name + ' ' + self.last_name
-        super(Person, self).save(args, kwargs)
+        super(Person, self).save(*args, **kwargs)
         for activity in self.activities.all():
             update_activity(activity)
 
 
 class PersonOptions(models.Model):
-    
+
     newsletter = models.BooleanField(_('newsletter'), default=False)
     user_organization_notifications = models.BooleanField(_('Users and Organizations email notifications'), default=False)
     on_map = models.BooleanField(_('Appear on the Artistic Network Map'), default=False)
     person = models.OneToOneField(Person, verbose_name=_('person'))
 
 
-class OrganizationLinkedBlockInline(Titled, Orderable):
+class PersonRelatedTitle(RelatedTitle):
+
+    person = models.OneToOneField("Person", verbose_name=_('person'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("related title")
+
+
+class DynamicContentPerson(DynamicContent, Orderable):
+
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='dynamic_content_person', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Person'
+
+
+class OrganizationLinkedBlockInline(Titled, Description, Orderable):
 
     organization_linked = models.ForeignKey('OrganizationLinked', verbose_name=_('organization list'), related_name='organization_linked_block_inline_list', blank=True, null=True)
     organization_main = models.ForeignKey('Organization', verbose_name=_('organization'), related_name='organization_linked_block', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-class OrganizationLinked(Titled):
+class OrganizationLinked(Titled, Description):
 
     class Meta:
         verbose_name = _('Organization Linked')
@@ -230,7 +267,7 @@ class OrganizationLinked(Titled):
         return self.title
 
 
-class OrganizationLinkedInline(Titled, Orderable):
+class OrganizationLinkedInline(Titled, Description, Orderable):
 
     organization_list = models.ForeignKey('OrganizationLinked', verbose_name=_('organization linked'), related_name='organization_linked_inline_linked', blank=True, null=True, on_delete=models.SET_NULL)
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name='organization_linked_inline_from', blank=True, null=True, on_delete=models.SET_NULL)
@@ -239,6 +276,22 @@ class OrganizationLinkedInline(Titled, Orderable):
 class OrganizationPlaylist(PlaylistRelated):
 
     organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class DynamicMultimediaOrganization(DynamicContent, Orderable):
+
+    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
+
+
+class DynamicMultimediaPerson(DynamicContent, Orderable):
+
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
 
 
 class OrganizationLink(Link):
@@ -336,7 +389,7 @@ class DepartmentPage(Page, SubTitled, RichText):
         verbose_name = _('department page')
 
 
-class Team(Named, URL):
+class Team(NamedSlugged, Description):
     """(Team description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
@@ -372,8 +425,11 @@ class Team(Named, URL):
                 return ' - '.join((self.department.name, self.name))
         return self.name
 
+    def get_absolute_url(self):
+        return '/team/' + self.slug
 
-class TeamPage(Page, SubTitled, RichText):
+
+class TeamPage(Page, SubTitled, RichText, TeamOwnable):
     """(Team description)"""
 
     team = models.ForeignKey('Team', verbose_name=_('team'), related_name="pages", blank=True, null=True, on_delete=models.SET_NULL)
@@ -425,7 +481,7 @@ class PersonImage(Image):
 
 
 class PersonUserImage(UserImage):
-    
+
     person = models.ForeignKey(Person, verbose_name=_('person'), related_name='user_images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
@@ -451,7 +507,7 @@ class PageCustomPersonListBlockInline(Titled):
         return self.title
 
 
-class PersonListBlock(Titled, Label, Dated, SiteRelated):
+class PersonListBlock(Titled, Description, Label, Dated, SiteRelated):
 
     style = models.CharField(_('style'), max_length=16, choices=PERSON_LIST_STYLE_CHOICES)
 
@@ -465,7 +521,7 @@ class PersonListBlock(Titled, Label, Dated, SiteRelated):
 class PersonListBlockInline(SiteRelated):
 
     person_list_block = models.ForeignKey(PersonListBlock, verbose_name=_('Person List Block'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
-    person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inlines', null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('Person autocomplete')
@@ -543,7 +599,7 @@ class UMR(Named):
         verbose_name = _('UMR')
 
 
-class ActivityWeeklyHourVolume(Titled):
+class ActivityWeeklyHourVolume(Titled, Description):
 
     monday_am = models.FloatField(_('monday AM'), validators=[validate_positive])
     monday_pm = models.FloatField(_('monday PM'), validators=[validate_positive])
@@ -658,10 +714,10 @@ class PersonActivityTimeSheet(models.Model):
         unique_together = (("activity", "project", "month", "year"),)
 
 
-class ProjectActivity(Titled, Orderable):
+class ProjectActivity(Titled, Description, Orderable):
 
     activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='project_activity')
-    project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='project_activity', blank=True, null=True, on_delete=models.SET_NULL)
+    project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='project_activity', null=True, on_delete=models.SET_NULL)
     default_percentage = models.IntegerField(_('default %'), validators=[is_percent], blank=True, null=True, help_text="Percentage has to be an integer between 0 and 100")
     work_packages = models.ManyToManyField('organization-projects.ProjectWorkPackage', verbose_name=_('work package'), related_name='project_activity', blank=True)
     work_packages.widget = forms.CheckboxSelectMultiple()
@@ -714,7 +770,3 @@ class MediaDepartment(models.Model):
     media = models.ForeignKey(Media, verbose_name=_('media'), related_name='department')
     department = models.ForeignKey(Department, verbose_name=_('department'), related_name='medias', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
 
-
-class TestEmilie(Image):
-    
-    image2 = models.FileField(_("Image"), max_length=1024, upload_to="images")

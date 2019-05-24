@@ -19,6 +19,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import re
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.base import View, RedirectView
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView
@@ -29,6 +30,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import QueryDict, HttpResponse, Http404
 from django.template.defaultfilters import capfirst
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from mezzanine.conf import settings
 from mezzanine.utils.views import paginate
 from mezzanine.generic.models import Keyword
@@ -38,7 +40,7 @@ from operator import ior, iand
 from organization.media.models import Playlist
 from mezzanine_agenda.models import Event
 from organization.pages.models import CustomPage
-from organization.projects.models import Project
+from organization.projects.models import Project, ProjectPage
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
 from organization.network.models import Person
 from organization.magazine.models import Article
@@ -64,7 +66,7 @@ from django.db.models.fields.reverse_related import ManyToOneRel
 class SlugMixin(object):
 
     def get_object(self):
-        objects = self.model.objects.all()
+        objects = self.get_queryset()
         return get_object_or_404(objects, slug=self.kwargs['slug'])
 
 
@@ -105,7 +107,7 @@ class CustomSearchView(TemplateView):
         results_media_count = len(Playlist.objects.search(query, for_user=request.user))
         results_page_count = len(CustomPage.objects.search(query, for_user=request.user))
         results_event_count = len(Event.objects.search(query, for_user=request.user))
-        results_project_count = len(Project.objects.search(query, for_user=request.user))
+        results_project_count = len(ProjectPage.objects.search(query, for_user=request.user))
         results_article_count = len(Article.objects.search(query, for_user=request.user))
 
         # count objects
@@ -220,7 +222,9 @@ def autocomplete_result_formatting(self, context):
                 if not result.parent:
                     is_parent =  " ♦ -"
                 text = "%s -%s%s" % (six.text_type(result), is_parent, formats.date_format(event_date, "d-m-y H:i"))
-
+            if model.__name__ == "Article":
+                article_date = timezone.localtime(result.publish_date)
+                text = "%s - %s" % (six.text_type(result), formats.date_format(article_date, "d-m-y H:i"))
             children.append({
                 'id': self.get_result_value(result),
                 'text': text,
@@ -278,24 +282,53 @@ class UserProducerView(LoginRequiredMixin, ListView):
 class DynamicContentMixin(SingleObjectMixin):
 
     def get_context_data(self, **kwargs):
-        context = super(DynamicContentMixin, self).get_context_data(**kwargs)
-        context['concrete_objects'] = []
+        context = super().get_context_data(**kwargs)
+        if not 'concrete_objects' in context.keys():
+            context['concrete_objects'] = []
         dynamic_content = []
 
         # get dynamic content field of an object, based on class
+        # @Todo : rename all related as 'dynamic_content' and delete
+        # the further paragraph
         for f in self.object._meta.get_fields():
-            if isinstance(f, ManyToOneRel) and DynamicContent in f.related_model.__bases__:
-                dynamic_content = getattr(self.object, f.related_name).all()
-
+            if re.match(r"^dynamic_content_", f.name):
+                dynamic_content = getattr(self.object, f.name).all()
         # get all concrete objects from dynamic content and append
         for dc in dynamic_content:
-            if not isinstance(dc, int) and dc != self.object :
-                for c_field in dc._meta.get_fields():
-                    if hasattr(dc, c_field.name):
-                        attr = getattr(dc, c_field.name)
-                        if not isinstance(attr, int) and attr != self.object and not isinstance(attr, ContentType) :
-                            context['concrete_objects'].append(attr)
+            if dc.content_object:
+                context['concrete_objects'].append(dc.content_object)
 
+        return context
+
+
+class DynamicReverseMixin(SingleObjectMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not 'concrete_objects' in context.keys():
+            context['concrete_objects'] = []
+        reverse_object = set()
+        keys = [m for m in apps.all_models.keys() if re.match(r'organization-[a-z]*', m)]
+        content_type = ContentType.objects.get_for_model(self.object._meta.model)
+        for key in keys:
+            for model_str, model_class in apps.all_models[key].items():
+                if re.match(r'dynamiccontent[a-z]*', model_str):
+                    queryset = model_class.objects.filter(content_type_id=content_type.id, object_id=self.object.id)
+                    for dynamic_content in queryset:
+                        for field in dynamic_content._meta.get_fields():
+                            if field.remote_field.__class__.__name__ == 'ManyToOneRel' \
+                                and field.name != "field.name":
+                                parent_instance = None
+                                try:
+                                    parent_instance = getattr(dynamic_content, field.name)
+                                except ObjectDoesNotExist:
+                                    # The object exists but in the other site_id
+                                    # For the moment, we don't display it
+                                    # @Todo : update Queryset Manager to display cards of the other sites
+                                    pass
+                                if parent_instance.__class__.__name__ != 'ContentType' and parent_instance != None:
+                                    reverse_object.add(parent_instance)
+        context['concrete_objects'] += reverse_object
         return context
 
 

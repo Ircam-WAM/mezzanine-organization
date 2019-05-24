@@ -33,7 +33,7 @@ from organization.network.views import *
 
 
 urlpatterns = [
-    # Person timesheets
+    url('^directory(?:/(?P<letter>.*))?/$', PersonDirectoryView.as_view(letter="a"), name='person-directory'),
     url('^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
     url('^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name='organization-network-timesheet-create-view'),
     url('^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name='organization-network-timesheet-list-view' ),
@@ -76,4 +76,9 @@ urlpatterns = [
 
     # Map
     url('^public-network-data/$', PublicNetworkData.as_view(), name='organization-public-network-data'),
-]
+
+    url('^team/(?P<slug>.*)/members/$', TeamMembersView.as_view(), name='team-members'),
+    url('^team/(?P<slug>.*)/publications/$', TeamPublicationsView.as_view(), name='team-publications'),
+
+    url("^dynamic-content-person/$",  DynamicContentPersonView.as_view(), name='dynamic-content-person'),
+    ]

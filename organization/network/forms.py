@@ -30,20 +30,13 @@ from django.forms.widgets import HiddenInput, ClearableFileInput
 from django.forms import ModelForm
 from mezzanine.core.models import Orderable
 from organization.projects.models import ProjectWorkPackage
-from organization.network.models import (Person,
-                                PersonListBlock,
-                                PersonListBlockInline,
-                                PageCustomPersonListBlockInline,
-                                OrganizationLinked,
-                                OrganizationLinkedInline,
-                                OrganizationLinkedBlockInline,
-                                Organization,
-                                PersonActivityTimeSheet,
-                                ProjectActivity)
+from organization.network.models import *
 from organization.pages.models import Page, CustomPage
 from organization.network.utils import timesheet_master_notification_for_validation
 from organization.network.models import *
 from organization.pages.models import Page, CustomPage
+from organization.media.forms import DynamicMultimediaForm
+from organization.magazine.models import Article
 from extra_views import InlineFormSet
 
 
@@ -219,7 +212,7 @@ class ClearableFileInputCustom(ClearableFileInput):
 
 
 class PersonImageInline(InlineFormSet):
-    
+
     max_num = 2
     model = PersonUserImage
     can_delete = False
@@ -234,13 +227,13 @@ class PersonLinkInline(InlineFormSet):
 
 
 class PersonOptionsInline(InlineFormSet):
-    
+
     model = PersonOptions
     max_num = 1
     can_delete = False
     fields = ('newsletter', 'user_organization_notifications', 'on_map' )
     exclude = ('id', 'person')
-    
+
 
 class PersonImageForm(ModelForm):
 
@@ -259,7 +252,7 @@ class PersonForm(ModelForm):
                 'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender',
                 'citizenship')
         widgets = {
-            'profile_image' : ClearableFileInputCustom(),     
+            'profile_image' : ClearableFileInputCustom(),
             'background_image' : ClearableFileInputCustom(),
             'address': forms.Textarea(attrs={'rows':2,}),
             'address_2': forms.Textarea(attrs={'rows':2,})
@@ -272,3 +265,28 @@ class UserForm(ModelForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
 
+class DynamicMultimediaOrganizationForm(DynamicMultimediaForm):
+
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaOrganization
+
+
+class DynamicMultimediaPersonForm(DynamicMultimediaForm):
+
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaPerson
+
+
+class DynamicContentPersonForm(autocomplete.FutureModelForm):
+
+    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
+        queryset=autocomplete.QuerySetSequence(
+            Article.objects.all(),
+        ),
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-person'),
+    )
+
+    class Meta:
+        model = DynamicContentPerson
+        fields = ('content_object',)

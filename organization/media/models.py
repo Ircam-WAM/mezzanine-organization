@@ -92,14 +92,14 @@ class Media(Displayable):
         video = q('video')
         if len(video):
             if 'poster' in video[0].attrib.keys():
-                self.poster_url = video[0].attrib['poster']
+                self.poster_url = 'https:' + video[0].attrib['poster']
 
         super(Media, self).save(*args, **kwargs)
 
         for source in sources:
             mime_type = source.attrib['type']
-            transcoded, c = MediaTranscoded.objects.get_or_create(media=self, mime_type=mime_type)
-            transcoded.url = source.attrib['src']
+            transcoded, c = MediaTranscoded.objects.get_or_create(media=self, mime_type=mime_type)        
+            transcoded.url = 'https:' + source.attrib['src']
             transcoded.save()
 
 
