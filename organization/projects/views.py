@@ -480,7 +480,7 @@ class AbstractProjectListView(FormView, ListView):
         return context
 
 
-class ProjectListView(AbstractProjectListView):
+class ProjectListFilteredView(AbstractProjectListView):
 
     form_class = TopicFilterForm
     property_query_filter = "project__topic__id"
