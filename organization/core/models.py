@@ -145,7 +145,7 @@ class GenericSlugged(models.Model):
 
     def admin_link(self):
         return "<a href='%s'>%s</a>" % (self.get_absolute_url(),
-                                        ugettext("View on site"))
+                                        _("View on site"))
     admin_link.allow_tags = True
     admin_link.short_description = ""
 
