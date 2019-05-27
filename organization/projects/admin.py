@@ -464,8 +464,7 @@ class ProjectAdmin(BaseTranslationOrderedModelAdmin):
     list_editable = ['validation_status']
     list_display = ['title', 'created', 'updated', 'call', 'validation_status', 'topic', 'date_from', 'date_to', 'admin_link']
     actions = [export_projects_as_csv, copy_projects]
-
-
+    first_fields = ['title',]
 
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
