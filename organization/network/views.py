@@ -47,6 +47,7 @@ from django.views.generic import View
 from django.views.generic.base import RedirectView
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic.edit import CreateView, FormView
+from django.views.generic.detail import SingleObjectMixin
 from extra_views import FormSetView
 from mezzanine.conf import settings
 from organization.core.views import *
@@ -65,7 +66,7 @@ import pandas as pd
 from ulysses.competitions.models import Competition, Call, ApplicationDraft, Candidate, JuryMember, Evaluation
 
 
-class PersonMixin(object):
+class PersonMixin(SingleObjectMixin):
 
     model = Person
 
