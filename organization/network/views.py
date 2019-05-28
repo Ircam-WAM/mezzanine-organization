@@ -26,7 +26,7 @@ from pprint import pprint
 from calendar import monthrange
 from django.db.models import Q
 from django.db.models.query import QuerySet
-from django.db.models.fields.related import ForeignKey 
+from django.db.models.fields.related import ForeignKey
 from django.http import Http404
 from django.db.utils import IntegrityError
 from django.shortcuts import render, redirect
@@ -35,6 +35,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import View
 from django.forms import formset_factory, BaseFormSet
+from django.views.generic.detail import SingleObjectMixin
 from extra_views import FormSetView
 from django.http import HttpResponse, HttpResponseNotFound
 from django.db.models.fields.related import ForeignKey
@@ -61,7 +62,7 @@ from organization.network.utils import get_users_of_team
 import pandas as pd
 
 
-class PersonMixin(object):
+class PersonMixin(SingleObjectMixin):
 
     model = Person
 
@@ -110,7 +111,7 @@ class PersonListView(ListView):
 
 
 class PersonDirectoryView(ListView):
-    
+
     model = Person
     template_name='network/person/directory.html'
     context_object_name = 'persons'
@@ -139,20 +140,20 @@ class PersonDirectoryView(ListView):
 
 
 class TeamMembersView(ListView):
-    
+
     model = Person
     template_name='network/team/members.html'
     context_object_name = 'persons'
     permanents = []
     non_permanents = []
-    old_members = [] 
+    old_members = []
 
     def get_queryset(self):
         self.permanents = []
         self.non_permanents = []
         self.old_members = []
         self.queryset = super(TeamMembersView, self).get_queryset()
-        
+
         # Filter by Team, distinct on Person
         lookup = Q(activities__teams__slug=self.kwargs['slug'])
         self.queryset = self.queryset.filter(lookup) \
@@ -176,15 +177,15 @@ class TeamMembersView(ListView):
         # add Head Researcher at first place
         if head_researcher:
             self.permanents.insert(0, head_researcher)
-        
+
 
         # non permanent persons
         permanent_persons_id = [p.id for p in permanent_person]
         self.non_permanents = active_persons.filter(lookup & Q(activities__is_permanent=False)) \
                                             .exclude(id__in=permanent_persons_id)
 
-        
-        # former persons  
+
+        # former persons
         active_persons_id = [p.id for p in active_persons]
         self.old_members = self.queryset.filter(Q(activities__teams__slug=self.kwargs['slug']) \
                                                 & Q(activities__date_to__lt=datetime.date.today())) \
@@ -202,14 +203,14 @@ class TeamMembersView(ListView):
 
 
 class TeamPublicationsView(PublicationsView):
-    
+
     template_name = "network/team/publications.html"
 
     def get_context_data(self, **kwargs):
         self.team = get_object_or_404(Team, slug=self.kwargs['slug'])
         self._hal_url += "&" + settings.HAL_LABOS_EXP + "%s" % self.team.hal_researche_structure.replace(' ', '+')
         return super().get_context_data(**kwargs)
-        
+
 
 class PersonDetailView(PersonMixin, SlugMixin, DynamicContentMixin, DetailView, DynamicReverseMixin):
 
@@ -633,7 +634,7 @@ class JuryListView(ListView):
 
 
 class TeamOwnableMixin(object):
-    
+
     def filter_by_team(self, query, team_slug):
         try :
             team = Team.objects.get(slug=team_slug)
@@ -647,7 +648,7 @@ class TeamOwnableMixin(object):
                     if type(t) == tuple:
                         t = t[0]
                     if t.user in users_in_team:
-                        tmp_query.append(q) 
+                        tmp_query.append(q)
                 query = tmp_query
         except ObjectDoesNotExist:
             pass
@@ -656,7 +657,7 @@ class TeamOwnableMixin(object):
 
 
 class DynamicContentPersonView(Select2QuerySetSequenceView):
-    
+
     paginate_by = settings.DAL_MAX_RESULTS
 
     def get_queryset(self):
