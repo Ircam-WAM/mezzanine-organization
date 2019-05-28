@@ -530,7 +530,12 @@ class AbstractProjectListView(FormView, ListView):
     def get_form(self, form_class=None):
         form = super(AbstractProjectListView, self).get_form()
         if self.item_to_filter in self.request.session and self.request.session[self.item_to_filter]:
-            form.fields['filter'].initial = [ int(self.request.session[self.item_to_filter]), ]
+            try:
+                init_filter = int(self.request.session[self.item_to_filter])
+            except ValueError:
+                init_filter = self.request.session[self.item_to_filter]
+            form.fields['filter'].initial = [ init_filter, ]
+        
         return form
 
     def form_valid(self, form):
