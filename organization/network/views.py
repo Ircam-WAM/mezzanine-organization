@@ -273,16 +273,13 @@ class PersonFollowersListView(PersonDetailView):
         return self.person.followers.all()
 
 
-class ProfileSettingsView(LoginRequiredMixin, UpdateWithInlinesView):
+class ProfileSettingsView(PersonMixin, LoginRequiredMixin, UpdateWithInlinesView):
 
     model = Person
     form_class = PersonForm
     inlines = [PersonLinkInline, PersonOptionsInline]
     template_name = 'network/person/profile_settings.html'
     success_url = reverse_lazy('organization-network-profile-edit')
-
-    def get_object(self, queryset=None):
-        return self.request.user.person
 
 
 class PersonApplicationListView(PersonMixin, DetailView):
