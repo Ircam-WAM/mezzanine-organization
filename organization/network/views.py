@@ -73,7 +73,7 @@ class PersonMixin(SingleObjectMixin):
     def get_object(self, queryset=None):
         person = None
         user = self.request.user
-        if user.is_authenticated():
+        if user.is_authenticated() and not 'username' in self.kwargs:
             if not Person.objects.filter(user=user):
                 person = Person(first_name=user.first_name, last_name=user.last_name, user=user,
                                 email=user.email, title=' '.join([user.first_name, user.last_name]))
