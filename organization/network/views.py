@@ -20,6 +20,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from re import match
+from cartridge.shop.models import Product
 from django.contrib import messages
 from django.utils.timezone import now
 from pprint import pprint
@@ -48,7 +49,7 @@ from organization.network.models import *
 from organization.core.views import *
 from datetime import date, timedelta, datetime
 from organization.network.forms import *
-from organization.projects.models import ProjectWorkPackage
+from organization.projects.models import ProjectWorkPackage, ProjectPage
 from collections import OrderedDict
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
@@ -663,11 +664,17 @@ class DynamicContentPersonView(Select2QuerySetSequenceView):
     def get_queryset(self):
 
         articles = Article.objects.all()
+        projects = ProjectPage.objects.all()
+        events = Event.objects.all()
+        products = Product.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
+            projects = projects.filter(title__icontains=self.q)
+            events = events.filter(title__icontains=self.q)
+            products = products.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles,)
+        qs = autocomplete.QuerySetSequence(articles, projects, events, products)
         qs = self.mixup_querysets(qs)
 
         return qs
