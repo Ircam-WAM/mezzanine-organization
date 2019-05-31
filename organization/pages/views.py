@@ -36,7 +36,7 @@ from organization.pages.forms import YearForm
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
 from organization.network.models import Person, Organization
-from organization.projects.models import Project
+from organization.projects.models import Project, ProjectPage
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 
@@ -232,14 +232,16 @@ class DynamicContentPageView(Select2QuerySetSequenceView):
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
         extended_custompage = ExtendedCustomPage.objects.all()
+        projects = ProjectPage.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
             extended_custompage = extended_custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
+            projects = projects.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, extended_custompage, events)
+        qs = autocomplete.QuerySetSequence(articles, custompage, extended_custompage, events, projects)
 
         if self.q:
             qs = qs.filter(title__icontains=self.q)

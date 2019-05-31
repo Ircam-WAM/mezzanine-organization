@@ -36,7 +36,7 @@ from organization.pages.models import *
 from organization.agenda.models import Event
 from organization.media.forms import DynamicMultimediaForm
 from organization.network.models import Person
-from organization.projects.models import Project
+from organization.projects.models import Project, ProjectPage
 
 
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
@@ -102,7 +102,9 @@ class DynamicContentPageForm(autocomplete.FutureModelForm):
         queryset=autocomplete.QuerySetSequence(
             Article.objects.all(),
             CustomPage.objects.all(),
-            Event.objects.all()
+            Event.objects.all(),
+            ExtendedCustomPage.objects.all(),
+            ProjectPage.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-page'),
