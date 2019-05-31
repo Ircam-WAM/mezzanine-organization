@@ -24,7 +24,7 @@ from dal import autocomplete
 
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
-
+from cartridge.shop.models import Product
 from django import forms
 from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
@@ -104,7 +104,8 @@ class DynamicContentPageForm(autocomplete.FutureModelForm):
             CustomPage.objects.all(),
             Event.objects.all(),
             ExtendedCustomPage.objects.all(),
-            ProjectPage.objects.all()
+            ProjectPage.objects.all(),
+            Product.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-page'),
