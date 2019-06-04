@@ -25,7 +25,7 @@ import django.views.i18n
 from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib.auth.decorators import permission_required
-
+from django.contrib.admin.views.decorators import staff_member_required 
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
@@ -39,7 +39,7 @@ urlpatterns = [
     url("^playlists/list/$", PlaylistListView.as_view(), name="organization-playlist-list"),
     url("^playlists/list/(?P<type>.*)/$", PlaylistListView.as_view(), name="organization-playlist-list"),
     url("^playlists/overlay/(?P<slug>.*)/$", PlaylistOverlayView.as_view(), name="organization-playlist-overlay"),
-    url("^playlist-media-autocomplete/$",  permission_required('playlist.can_edit')(PlayListMediaView.as_view()), name='media-autocomplete'),
+    url("^playlist-media-autocomplete/$",  permission_required('organization-media.change_playlist')(PlayListMediaView.as_view()), name='media-autocomplete'),
     url("^streams/(?P<slug>.*)/(?P<type>.*)/detail/$", LiveStreamingDetailView.as_view(), name="organization-streaming-detail"),
-    url("^dynamic-multimedia/$", permission_required('is_staff')(DynamicMultimediaView.as_view()), name='dynamic-multimedia'),
+    url("^dynamic-multimedia/$", staff_member_required(DynamicMultimediaView.as_view()), name='dynamic-multimedia'),
 ]
