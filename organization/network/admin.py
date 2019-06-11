@@ -26,6 +26,8 @@ from django import forms
 from django.http import HttpResponse
 from copy import deepcopy
 from dal import autocomplete
+from guardian.admin import GuardedModelAdmin
+from guardian.shortcuts import get_objects_for_user
 from modeltranslation.admin import TranslationTabularInline
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine.core.admin import *
@@ -43,7 +45,7 @@ from organization.network.utils import getUsersListOfSameTeams
 
 
 class TeamOwnableAdmin(OwnableAdmin):
-    
+
     def get_queryset(self, request):
         """
         Filter the change list by currently logged in user if not a
@@ -54,6 +56,7 @@ class TeamOwnableAdmin(OwnableAdmin):
         ``Ownable`` to be excluded from filtering, eg: ownership should
         not imply permission to edit.
         """
+        print("------ TeamOwnableAdmin")
         opts = self.model._meta
         model_name = ("%s.%s" % (opts.app_label, opts.object_name)).lower()
         models_all_editable = settings.OWNABLE_MODELS_ALL_EDITABLE
@@ -62,7 +65,14 @@ class TeamOwnableAdmin(OwnableAdmin):
         if request.user.is_superuser or model_name in models_all_editable:
             return qs
         list_users = getUsersListOfSameTeams(request.user)
-        return qs.filter(user__id=123)
+        from pprint import pprint
+        pprint(User.objects.filter(id__in=list_users))
+        print("list_users", list_users)
+        print("request.user", request.user.id)
+        print("qs.filter(user__id__in=list_users)", qs.filter(user__id__in=list_users))
+        return qs.filter(user__id__in=list_users)
+        print("get_objects_for_user(request.user, 'organization-magazine.change_article')", get_objects_for_user(request.user, 'organization-magazine.change_article'))
+        # return get_objects_for_user(request.user, 'organization-magazine.change_article')
 
 
 class OrganizationAdminInline(StackedDynamicInlineAdmin):
@@ -200,7 +210,7 @@ class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
     form = DynamicMultimediaPageForm
 
 
-class TeamPageAdmin(PageAdmin, TeamOwnableAdmin):
+class TeamPageAdmin(PageAdmin, GuardedModelAdmin): #TeamOwnableAdmin
 
     inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaTeamPageInline,
                 PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]

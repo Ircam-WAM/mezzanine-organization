@@ -48,7 +48,6 @@ from organization.media.models import *
 from organization.pages.models import CustomPage
 from organization.media.models import Media
 from organization.network.validators import *
-from organization.network.utils import usersTeamsIntersection
 
 # from .nationalities.fields import NationalityField
 
@@ -118,22 +117,6 @@ ORGANIZATION_STATUS_CHOICES = (
     (2, _('in process')),
     (3, _('accepted')),
 )
-
-
-class TeamOwnable(Ownable):
-    """
-    Abstract model that provides ownership of an object for a user.
-    """
-
-    class Meta:
-        abstract = True
-
-    def is_editable(self, request):
-        """
-        Restrict in-line editing to the objects's owner team and superusers.
-        """
-        ownable_is_editable = super(TeamOwnable, self).is_editable(request)
-        return ownable_is_editable or usersTeamsIntersection(self.user, request.user)
 
 
 class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
@@ -415,7 +398,7 @@ class Team(NamedSlugged, Description):
         return '/team/' + self.slug
 
 
-class TeamPage(Page, SubTitled, RichText, TeamOwnable):
+class TeamPage(TeamOwnable, Page, SubTitled, RichText):
     """(Team description)"""
 
     team = models.ForeignKey('Team', verbose_name=_('team'), related_name="pages", blank=True, null=True, on_delete=models.SET_NULL)

@@ -30,7 +30,7 @@ from mezzanine.blog.admin import BlogPostAdmin
 from organization.magazine.models import *
 from organization.magazine.forms import *
 from organization.magazine.translation import *
-#from organization.core.admin import DuplicateAdmin
+from organization.network.admin import TeamOwnableAdmin
 from organization.core.utils import actions_to_duplicate, get_other_sites
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
@@ -43,7 +43,7 @@ class ArticlePlaylistInline(TabularDynamicInlineAdmin):
     model = ArticlePlaylist
 
 
-class ArticleAdmin(OwnableAdmin):
+class ArticleAdmin(TeamOwnableAdmin):
     
     model = Article
 
@@ -71,8 +71,8 @@ class ArticleRelatedTitleAdmin(TranslationTabularInline):
 
     model = ArticleRelatedTitle
 
-
-class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin): #, DuplicateAdmin
+from guardian.admin import GuardedModelAdmin
+class ArticleAdminDisplayable(DisplayableAdmin, TeamOwnableAdmin): #TeamOwnableAdmin
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     list_display = ('title', 'department', 'publish_date', 'status', 'user')

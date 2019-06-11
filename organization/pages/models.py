@@ -29,7 +29,7 @@ from organization.media.models import *
 from organization.core.managers import *
 
 
-class CustomPage(Page, SubTitled, RichText):
+class CustomPage(TeamOwnable, Page, SubTitled, RichText):
 
     objects = CustomSearchableManager()
     menu_alinea = models.BooleanField(_('menu alinea'), default=False)

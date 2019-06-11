@@ -26,17 +26,18 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.core.exceptions import ValidationError
+from django_countries.fields import CountryField
 
 from geopy.geocoders import GoogleV3, Nominatim
 from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded
 
 from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
-from mezzanine.core.models import Displayable, Slugged, Orderable
+from mezzanine.core.models import Displayable, Slugged, Orderable, Ownable
 from mezzanine.utils.urls import admin_url, slugify, unique_slug
 from mezzanine.utils.models import base_concrete_model, get_user_model_name
 
-from django_countries.fields import CountryField
+from organization.network.utils import usersTeamsIntersection
 
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')),
@@ -495,3 +496,23 @@ class Sites(models.Model):
         verbose_name = 'Sites'
         verbose_name_plural = 'Sites'
 
+
+class TeamOwnable(Ownable):
+    """
+    Abstract model that provides ownership of an object for a user.
+    """
+    class Meta:
+        abstract = True
+
+    def is_editable(self, request):
+        """
+        Restrict in-line editing to the objects's owner team and superusers.
+        """
+        ownable_is_editable = super(TeamOwnable, self).is_editable(request)
+        return ownable_is_editable or usersTeamsIntersection(self.user, request.user)
+
+    def can_change(self, request):
+        """
+        Dynamic ``change`` permission for content types to override.
+        """
+        return self.is_editable(request)

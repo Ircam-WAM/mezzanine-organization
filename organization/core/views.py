@@ -336,6 +336,7 @@ def permission_denied(request, exception, template_name='errors/403.html'):
     If the template does not exist, an Http403 response containing the text
     "403 Forbidden" (as per RFC 2616) will be returned.
     """
+    print("----- permission denied")
     try:
         template = loader.get_template(template_name)
     except TemplateDoesNotExist:
