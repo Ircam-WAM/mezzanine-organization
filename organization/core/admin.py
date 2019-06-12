@@ -31,7 +31,7 @@ from mezzanine.generic.models import ThreadedComment, Keyword
 from mezzanine.conf import settings
 from organization.core.models import *
 from organization.core.translation import *
-from organization.core.utils import get_other_sites
+from organization.core.utils import get_other_sites, getUsersListOfSameTeams
 
 try:
     from hijack_admin.admin import HijackUserAdmin
@@ -62,6 +62,36 @@ class KeywordAdmin(BaseTranslationModelAdmin):
 #                                 clone.save(force_insert=True)"""
 
 #     for site in get_other_sites(): exec(func_template % (re.sub(r'(\.|-)', '_', site.domain)))
+
+
+class TeamOwnableAdmin(OwnableAdmin):
+    
+    def get_queryset(self, request):
+        """
+        Filter the change list by currently logged in user if not a
+        superuser. We also skip filtering if the model for this admin
+        class has been added to the sequence in the setting
+        ``OWNABLE_MODELS_ALL_EDITABLE``, which contains models in the
+        format ``app_label.object_name``, and allows models subclassing
+        ``Ownable`` to be excluded from filtering, eg: ownership should
+        not imply permission to edit.
+        """
+
+        opts = self.model._meta
+        model_name = ("%s.%s" % (opts.app_label, opts.object_name)).lower()
+        models_all_editable = settings.OWNABLE_MODELS_ALL_EDITABLE
+        models_all_editable = [m.lower() for m in models_all_editable]
+
+        if request.user.has_perm(opts.app_label + '.user_edit'):
+            return super(TeamOwnableAdmin, self).get_queryset(request)
+
+        qs = super(OwnableAdmin, self).get_queryset(request)   
+        if request.user.has_perm(opts.app_label + '.team_edit'):
+            if request.user.is_superuser or model_name in models_all_editable:
+                return qs
+            list_users = getUsersListOfSameTeams(request.user)
+            return qs.filter(user__id__in=list_users)
+        return qs
 
 
 class BaseTranslationOrderedModelAdmin(BaseTranslationModelAdmin):

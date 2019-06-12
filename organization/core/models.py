@@ -503,6 +503,12 @@ class TeamOwnable(Ownable):
     """
     class Meta:
         abstract = True
+        permissions = (
+            ("user_edit", "User can edit its own content"),
+            ("user_delete", "User can delete its own content"),
+            ("team_edit", "User can edit his team's content"),
+            ("team_delete", "User can delete his team's content"),
+        )
 
     def is_editable(self, request):
         """

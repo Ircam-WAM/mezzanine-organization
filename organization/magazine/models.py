@@ -43,7 +43,7 @@ BRIEF_STYLE_CHOICES = [
     ('black', _('black'))
 ]
 
-class Article(BlogPost, SubTitled):
+class Article(BlogPost, SubTitled, TeamOwnable):
 
     department = models.ForeignKey(Department, verbose_name=_('department'), related_name='articles', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
     topics = models.ManyToManyField("Topic", verbose_name=_('topics'), related_name="articles", blank=True)
@@ -54,6 +54,7 @@ class Article(BlogPost, SubTitled):
 
     class Meta:
         verbose_name = _('article')
+        permissions = TeamOwnable.Meta.permissions
 
 
 class ArticleImage(Image):

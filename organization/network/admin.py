@@ -41,38 +41,7 @@ from organization.pages.admin import PageImageInline, PageBlockInline, PagePlayl
 from organization.shop.models import PageProductList
 from organization.network.utils import TimesheetXLS, set_timesheets_validation_date, flatten_activities
 from organization.network.translation import *
-from organization.network.utils import getUsersListOfSameTeams
-
-
-class TeamOwnableAdmin(OwnableAdmin):
-
-    def get_queryset(self, request):
-        """
-        Filter the change list by currently logged in user if not a
-        superuser. We also skip filtering if the model for this admin
-        class has been added to the sequence in the setting
-        ``OWNABLE_MODELS_ALL_EDITABLE``, which contains models in the
-        format ``app_label.object_name``, and allows models subclassing
-        ``Ownable`` to be excluded from filtering, eg: ownership should
-        not imply permission to edit.
-        """
-        print("------ TeamOwnableAdmin")
-        opts = self.model._meta
-        model_name = ("%s.%s" % (opts.app_label, opts.object_name)).lower()
-        models_all_editable = settings.OWNABLE_MODELS_ALL_EDITABLE
-        models_all_editable = [m.lower() for m in models_all_editable]
-        qs = super(OwnableAdmin, self).get_queryset(request)
-        if request.user.is_superuser or model_name in models_all_editable:
-            return qs
-        list_users = getUsersListOfSameTeams(request.user)
-        from pprint import pprint
-        pprint(User.objects.filter(id__in=list_users))
-        print("list_users", list_users)
-        print("request.user", request.user.id)
-        print("qs.filter(user__id__in=list_users)", qs.filter(user__id__in=list_users))
-        return qs.filter(user__id__in=list_users)
-        print("get_objects_for_user(request.user, 'organization-magazine.change_article')", get_objects_for_user(request.user, 'organization-magazine.change_article'))
-        # return get_objects_for_user(request.user, 'organization-magazine.change_article')
+from organization.core.utils import getUsersListOfSameTeams
 
 
 class OrganizationAdminInline(StackedDynamicInlineAdmin):

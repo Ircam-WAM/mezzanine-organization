@@ -32,9 +32,8 @@ from organization.pages.models import *
 from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm, DynamicMultimediaProjectForm, DynamicContentProjectPageForm
-from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin #, DuplicateAdmin
+from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin, TeamOwnableAdmin
 from organization.core.utils import actions_to_duplicate, get_other_sites
-from organization.network.admin import TeamOwnableAdmin
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):

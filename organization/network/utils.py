@@ -421,19 +421,6 @@ def usersTeamsIntersection(userA, userB):
     return teamsUserA & teamsUserB
 
 
-def getUsersListOfSameTeams(user):
-    teams = {x.teams.all() for x in user.person.activities.all()}
-    person_list = []
-    person_model = apps.get_model('organization-network.Person')
-    for team in teams:
-        person_list.extend(person_model.objects.filter(activities__teams=team).all().distinct())
-    user_list = []
-    for person in person_list:
-        if hasattr(person, 'user') and person.user:
-            user_list.append(person.user.id)
-    return user_list
-
-
 def flatten_activities(activities, fields):
     flat = []
     for activity in activities:

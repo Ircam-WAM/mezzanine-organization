@@ -27,10 +27,10 @@ from modeltranslation.admin import TranslationTabularInline
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from mezzanine.blog.admin import BlogPostAdmin
+from organization.core.admin import TeamOwnableAdmin
 from organization.magazine.models import *
 from organization.magazine.forms import *
 from organization.magazine.translation import *
-from organization.network.admin import TeamOwnableAdmin
 from organization.core.utils import actions_to_duplicate, get_other_sites
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
@@ -71,8 +71,8 @@ class ArticleRelatedTitleAdmin(TranslationTabularInline):
 
     model = ArticleRelatedTitle
 
-from guardian.admin import GuardedModelAdmin
-class ArticleAdminDisplayable(DisplayableAdmin, TeamOwnableAdmin): #TeamOwnableAdmin
+
+class ArticleAdminDisplayable(DisplayableAdmin, TeamOwnableAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     list_display = ('title', 'department', 'publish_date', 'status', 'user')
