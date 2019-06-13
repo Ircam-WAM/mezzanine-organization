@@ -37,6 +37,7 @@ class CustomPage(TeamOwnable, Page, SubTitled, RichText):
 
     class Meta:
         verbose_name = 'custom page'
+        permissions = TeamOwnable.Meta.permissions
 
 
 class ExtendedCustomPage(Page, SubTitled, RichText):

@@ -403,8 +403,9 @@ class TeamPage(TeamOwnable, Page, SubTitled, RichText):
 
     team = models.ForeignKey('Team', verbose_name=_('team'), related_name="pages", blank=True, null=True, on_delete=models.SET_NULL)
 
-    class Meta:
+    class Meta():
         verbose_name = _('team page')
+        permissions = TeamOwnable.Meta.permissions
 
 
 class TeamLink(Link):

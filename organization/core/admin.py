@@ -92,6 +92,24 @@ class TeamOwnableAdmin(OwnableAdmin):
             list_users = getUsersListOfSameTeams(request.user)
             return qs.filter(user__id__in=list_users)
         return qs
+    
+    def has_delete_permission(self, request, obj=None):
+        has_perm = super(TeamOwnableAdmin, self).has_delete_permission(request, obj=None)
+        opts = self.model._meta
+        if obj:
+            if request.user.has_perm(opts.app_label + '.user_delete'):
+                return has_perm and obj.user == request.user
+            if request.user.has_perm(opts.app_label + '.team_delete'):
+                return has_perm and obj.user.id in getUsersListOfSameTeams(request.user)
+        return has_perm
+
+    def get_actions(self, request):
+        actions = super(TeamOwnableAdmin, self).get_actions(request)
+        for action in actions :
+            print("action", action)
+            if action == "delete_selected":
+                del actions['delete_selected']
+        return actions
 
 
 class BaseTranslationOrderedModelAdmin(BaseTranslationModelAdmin):
@@ -128,6 +146,11 @@ class NullListFilter(SimpleListFilter):
             return queryset.filter(**kwargs)
         return queryset
 
+# class CustomLinkAdmin(LinkAdmin, TeamOwnableAdmin):
+    
+#     pass
+
+
 if settings.DEBUG :
     class UserAdminCustom(HijackUserAdmin, SitePermissionUserAdmin):
 
@@ -159,6 +182,10 @@ admin.site.register(LinkType)
 admin.site.unregister(BlogPost)
 admin.site.unregister(ThreadedComment)
 admin.site.register(Keyword, KeywordAdmin)
+
+# admin.site.unregister(LinkAdmin)
+# admin.site.register(Link, CustomLinkAdmin)
+
 
 if settings.DEBUG and settings.HIJACK_REGISTER_ADMIN:
     UserModel = get_user_model()
