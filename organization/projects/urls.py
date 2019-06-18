@@ -31,7 +31,7 @@ from mezzanine.conf import settings
 from organization.projects.views import *
 
 urlpatterns = [
-    url("^dynamic-content-project/$",  permission_required('organization-projects.change_project')(DynamicContentProjectView.as_view()), name='dynamic-content-project'),
+    url("^dynamic-content-project/$",  permission_required('organization-projects.change_projectpage')(DynamicContentProjectView.as_view()), name='dynamic-content-project'),
 
     url("^projects/detail/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-projectpage-detail'), name='organization-project-detail'),
     url("^projects/pages/(?P<slug>.*)/$", ProjectPageView.as_view(), name='organization-project-projectpage-detail'),
