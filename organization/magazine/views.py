@@ -30,6 +30,7 @@ from django.views.generic.base import *
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.translation import ugettext_lazy as _
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
@@ -287,6 +288,7 @@ class ArticleEventView(SlugMixin, FormView, ListView):
         context['objects'] = paginate(self.queryset, self.request.GET.get("page", 1),
                               settings.MEDIA_PER_PAGE,
                               settings.MAX_PAGING_LINKS)
+        context['title'] = _('Laboratory News')
         return context
 
 
@@ -312,6 +314,7 @@ class ArticleEventTeamView(ArticleEventView, TeamOwnableMixin):
     def get_context_data(self, **kwargs):
         context = super(ArticleEventTeamView, self).get_context_data(**kwargs)
         context['form'].process_choices(self.kwargs['slug'])
+        context['title'] = _('Team News')
         return context
 
 
