@@ -22,14 +22,14 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
-from mezzanine.core.models import Displayable, Slugged, Orderable
+from mezzanine.core.models import Displayable, Slugged, Orderable, TeamOwnable
 from mezzanine.pages.models import Link as MezzanineLink
 from organization.core.models import *
 from organization.media.models import *
 from organization.core.managers import *
 
 
-class CustomPage(TeamOwnable, Page, SubTitled, RichText):
+class CustomPage(Page, SubTitled, RichText):
 
     objects = CustomSearchableManager()
     menu_alinea = models.BooleanField(_('menu alinea'), default=False)

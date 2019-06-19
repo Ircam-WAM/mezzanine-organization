@@ -114,7 +114,7 @@ class DynamicMultimediaOrganizationInline(TabularDynamicInlineAdmin):
     form = DynamicMultimediaOrganizationForm
 
 
-class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
+class OrganizationAdmin(BaseTranslationOrderedModelAdmin, TeamOwnableAdmin):
 
     model = Organization
     inlines = [ OrganizationEventLocationInline,
@@ -164,7 +164,7 @@ class TeamLinkInline(StackedDynamicInlineAdmin):
     model = TeamLink
 
 
-class TeamAdmin(BaseTranslationModelAdmin):
+class TeamAdmin(BaseTranslationModelAdmin, TeamOwnableAdmin):
 
     model = Team
     search_fields = ['name', 'code']
@@ -245,7 +245,7 @@ class DynamicContentPersonInline(TabularDynamicInlineAdmin):
     form = DynamicContentPersonForm
 
 
-class PersonAdmin(BaseTranslationOrderedModelAdmin):
+class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
 
     model = Person
     inlines = [PersonImageInline,

@@ -409,17 +409,7 @@ def proccess_total_prod_hours(prod_hours_dict):
     for month, hours in prod_hours_dict.items():
         total += hours
     return total    
-
-
-def usersTeamsIntersection(userA, userB):
-    teamsUserA = set()
-    for activities in userA.person.activities.all():
-        teamsUserA.update(activities.teams.all())
-    teamsUserB = set()
-    for activities in userB.person.activities.all():
-        teamsUserB.update(activities.teams.all())
-    return teamsUserA & teamsUserB
-
+    
 
 def flatten_activities(activities, fields):
     flat = []

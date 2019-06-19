@@ -37,7 +37,6 @@ from mezzanine.core.models import Displayable, Slugged, Orderable, Ownable
 from mezzanine.utils.urls import admin_url, slugify, unique_slug
 from mezzanine.utils.models import base_concrete_model, get_user_model_name
 
-from organization.network.utils import usersTeamsIntersection
 
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')),
@@ -56,35 +55,6 @@ IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('logo_white', _('logo white')),
     ('page_featured', _('page - featured')))
 
 
-class TeamOwnable(Ownable):
-    """
-    Abstract model that provides ownership of an object for a user.
-    """
-    class Meta:
-        abstract = True
-        permissions = (
-            ("user_edit", "User can edit its own content"),
-            ("user_delete", "User can delete its own content"),
-            ("team_edit", "User can edit his team's content"),
-            ("team_delete", "User can delete his team's content"),
-        )
-
-    def is_editable(self, request):
-        """
-        Restrict in-line editing to the objects's owner team and superusers.
-        """
-        ownable_is_editable = super(TeamOwnable, self).is_editable(request)
-        if request.user.has_perm(self._meta.app_label + '.user_edit'):
-            return ownable_is_editable
-        if request.user.has_perm(self._meta.app_label + '.team_edit'):
-            return ownable_is_editable or usersTeamsIntersection(self.user, request.user)
-        return False
-
-    def can_change(self, request):
-        """
-        Dynamic ``change`` permission for content types to override.
-        """
-        return self.is_editable(request)
 
 
 class Description(models.Model):

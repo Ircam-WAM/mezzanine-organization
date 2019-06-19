@@ -196,7 +196,7 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
     get_producers.short_description = "producers"
 
 
-class ProjectAdmin(BaseTranslationOrderedModelAdmin):
+class ProjectAdmin(BaseTranslationOrderedModelAdmin, TeamOwnableAdmin):
 
     model = Project
 
@@ -290,7 +290,7 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
 
 
 
-class ProjectPageAdmin(BaseTranslationModelAdmin):
+class ProjectPageAdmin(BaseTranslationModelAdmin, TeamOwnableAdmin):
 
     model = ProjectPage
     list_display = ['title', 'project', ]

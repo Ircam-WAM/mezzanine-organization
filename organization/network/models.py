@@ -39,7 +39,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils.text import slugify
 from mezzanine.pages.models import Page
-from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Ownable, Orderable, MetaData, TimeStamped, wrapped_manager
+from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Ownable, Orderable, MetaData, TimeStamped, wrapped_manager, TeamOwnable
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 from mezzanine.core.managers import SearchableManager
@@ -119,7 +119,7 @@ ORGANIZATION_STATUS_CHOICES = (
 )
 
 
-class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
+class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable, TeamOwnable):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -140,6 +140,7 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
     class Meta:
         verbose_name = _('organization')
         ordering = ['name',]
+        permissions = TeamOwnable.Meta.permissions
 
     def save(self, **kwargs):
         self.clean()
@@ -153,7 +154,7 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
         return reverse("network")
 
 
-class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
+class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address, TeamOwnable):
     """(Person description)"""
 
     objects = SearchableManager()
@@ -178,6 +179,7 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
     class Meta:
         verbose_name = _('person')
         ordering = ['last_name',]
+        permissions = TeamOwnable.Meta.permissions
 
     def __str__(self):
         return self.title
@@ -358,7 +360,7 @@ class DepartmentPage(Page, SubTitled, RichText):
         verbose_name = _('department page')
 
 
-class Team(NamedSlugged, Description):
+class Team(NamedSlugged, Description, TeamOwnable):
     """(Team description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
@@ -372,6 +374,7 @@ class Team(NamedSlugged, Description):
     class Meta:
         verbose_name = _('team')
         ordering = ['name',]
+        permissions = TeamOwnable.Meta.permissions
 
     def __str__(self):
         if self.organization:
@@ -398,7 +401,7 @@ class Team(NamedSlugged, Description):
         return '/team/' + self.slug
 
 
-class TeamPage(TeamOwnable, Page, SubTitled, RichText):
+class TeamPage(Page, SubTitled, RichText):
     """(Team description)"""
 
     team = models.ForeignKey('Team', verbose_name=_('team'), related_name="pages", blank=True, null=True, on_delete=models.SET_NULL)

@@ -102,14 +102,14 @@ class TeamOwnableAdmin(OwnableAdmin):
             if request.user.has_perm(opts.app_label + '.team_delete'):
                 return has_perm and obj.user.id in getUsersListOfSameTeams(request.user)
         return has_perm
-
-    def get_actions(self, request):
-        actions = super(TeamOwnableAdmin, self).get_actions(request)
-        for action in actions :
-            print("action", action)
-            if action == "delete_selected":
-                del actions['delete_selected']
-        return actions
+    # @Todo : not working
+    # def get_actions(self, request):
+    #     actions = super(TeamOwnableAdmin, self).get_actions(request)
+    #     for action in actions :
+    #         print("action", action)
+    #         if action == "delete_selected":
+    #             del actions['delete_selected']
+    #     return actions
 
 
 class BaseTranslationOrderedModelAdmin(BaseTranslationModelAdmin):

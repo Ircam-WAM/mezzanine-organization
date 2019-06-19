@@ -113,7 +113,7 @@ class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline
     model = Brief
 
 
-class BriefAdminDisplayable(BaseTranslationModelAdmin,): #, OrderableAdmin
+class BriefAdminDisplayable(BaseTranslationModelAdmin, TeamOwnableAdmin): #, OrderableAdmin
 
     list_display = ('title', 'ext_content', 'content_object', 'publish_date', 'status')
     form = BriefForm

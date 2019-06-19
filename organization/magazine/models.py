@@ -29,7 +29,7 @@ from mezzanine.core.managers import SearchableManager
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
 
-from mezzanine.core.models import RichText, Displayable, Slugged
+from mezzanine.core.models import RichText, Displayable, Slugged, TeamOwnable
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from organization.network.models import Department, PersonListBlock
@@ -81,7 +81,7 @@ class ArticlePlaylist(PlaylistRelated):
     article = models.ForeignKey(Article, verbose_name=_('article'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-class Brief(Displayable, RichText):
+class Brief(Displayable, RichText, TeamOwnable):
 
     style = models.CharField(_('style'), max_length=16, choices=BRIEF_STYLE_CHOICES)
     text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'))
@@ -110,6 +110,7 @@ class Brief(Displayable, RichText):
 
     class Meta:
         verbose_name = _('brief')
+        permissions = TeamOwnable.Meta.permissions
         #ordering = ['sort_order']
 
 
