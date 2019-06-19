@@ -144,6 +144,12 @@ class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
     model = ProjectPage
     template_name='projects/project/project_detail.html'
 
+    def get_object(self):
+        obj = super(ProjectPageView, self).get_object()
+        if not obj.published():
+            raise Http404()
+        return obj
+
 
 class ProjectCallMixin(object):
 
