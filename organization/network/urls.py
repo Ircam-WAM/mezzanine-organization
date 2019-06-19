@@ -39,13 +39,13 @@ urlpatterns = [
     url('^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name='organization-network-person-detail'),    
     url('^profile/(?P<username>.*)/$', PersonDetailView.as_view(), name='profile'),
     url('^persons/$', PersonListView.as_view(), name='organization-network-person-list'),
-    url('^person-list-block-autocomplete/$', permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
-    url('^person-autocomplete/$', permission_required('person.can_edit')(PersonAutocompleteView.as_view()), name='person-autocomplete'),
+    url('^person-list-block-autocomplete/$', permission_required('organization-network.change_person')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
+    url('^person-autocomplete/$', permission_required('organization-network.change_person')(PersonAutocompleteView.as_view()), name='person-autocomplete'),
 
     url('^network/$', OrganizationListView.as_view(), name='network'),
 
-    url('^organization-linked-list-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
-    url('^organization-linked-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
+    url('^organization-linked-list-autocomplete/$',  permission_required('organization-network.change_organization')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
+    url('^organization-linked-autocomplete/$',  permission_required('organization-network.change_organization')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
     url('^person-activity-autocomplete/$', PersonActivityAutocompleteView.as_view(), name='person-activity-autocomplete'),
     url('^work-packages-autocomplete/$', WorkPackageAutocompleteView.as_view(), name='work-packages-autocomplete'),
 

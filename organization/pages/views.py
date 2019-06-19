@@ -19,12 +19,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from cartridge.shop.models import Product
+from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from dal import autocomplete
-from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
@@ -36,7 +37,7 @@ from organization.pages.forms import YearForm
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
 from organization.network.models import Person, Organization
-from organization.projects.models import Project
+from organization.projects.models import Project, ProjectPage
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 
@@ -232,14 +233,18 @@ class DynamicContentPageView(Select2QuerySetSequenceView):
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
         extended_custompage = ExtendedCustomPage.objects.all()
+        projects = ProjectPage.objects.all()
+        products = Product.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
             extended_custompage = extended_custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
+            projects = projects.filter(title__icontains=self.q)
+            products = products.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, extended_custompage, events)
+        qs = autocomplete.QuerySetSequence(articles, custompage, extended_custompage, events, projects, products)
 
         if self.q:
             qs = qs.filter(title__icontains=self.q)

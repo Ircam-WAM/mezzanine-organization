@@ -26,6 +26,7 @@ from django.core.mail import EmailMessage
 from django.template import Context
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import FormView
+from django.http import Http404
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
@@ -142,6 +143,12 @@ class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
 
     model = ProjectPage
     template_name='projects/project/project_detail.html'
+
+    def get_object(self):
+        obj = super(ProjectPageView, self).get_object()
+        if not obj.published():
+            raise Http404()
+        return obj
 
 
 class ProjectCallMixin(object):
@@ -526,49 +533,117 @@ class AbstractProjectListView(FormView, ListView):
     context_object_name = 'objects'
     success_url = "."
     item_to_filter = "filter"
+    filter_value = ""
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        form = self.get_form()
+        if form.is_valid():
+            context = {}
+
+            # get filter value from form
+            self.filter_value = form.cleaned_data[self.item_to_filter]
+            
+            # get current url query
+            qd = self.request.GET.copy()
+            if self.filter_value: 
+            
+            # add filter in query to be available in pagination if filter field is checked
+                value = self._get_choice_value(self.filter_value, form.fields[self.item_to_filter]._choices)
+                qd['filter'] = value
+            else :
+                # delete query filter if filter field is unchecked
+                if 'filter' in qd.keys():
+                    del qd['filter']
+            
+            # override de query
+            self.request.GET = qd
+            context['request'] = self.request
+            
+            # list object function of pagination
+            context['objects'] = paginate(self.get_queryset(), self.request.GET.get("page", 1),
+                        settings.MEDIA_PER_PAGE,
+                        settings.MAX_PAGING_LINKS)
+
+            # render only the list of cards + pagination with updated url
+            return render(self.request, 'projects/project/inc/project_list_results.html', context)
+        else:
+            return self.form_invalid(form)
+
+    def _get_choice_value(self, id, choices):
+        for item in choices:
+            if str(item[0]) == id:
+                return item[1]
+        raise Http404("Not corresponding value")
+    
+    def _get_choice_id(self, value, choices):
+        for item in choices:
+            if item[1] == value:
+                return item[0]
+        raise Http404("Not corresponding value")
 
     def get_form(self, form_class=None):
         form = super(AbstractProjectListView, self).get_form()
-        if self.item_to_filter in self.request.session and self.request.session[self.item_to_filter]:
-            form.fields['filter'].initial = [ int(self.request.session[self.item_to_filter]), ]
-        return form
 
-    def form_valid(self, form):
-        # Ajax
-        self.request.session[self.item_to_filter] = form.cleaned_data[self.item_to_filter]
-        if self.request.is_ajax():
-            context = {}
-            context["concrete_objects"] = self.get_queryset()
-            return render(self.request, 'core/inc/cards.html', context)
-        else :
-            return super(AbstractProjectListView, self).form_valid(form)
+        # init form value if filter exists in GET query
+        if self.request.GET and self.item_to_filter in self.request.GET.keys():
+            form.fields['filter'].initial = [ self._get_choice_id(self.request.GET[self.item_to_filter], form.fields[self.item_to_filter]._choices)]
+        return form
 
     def get_queryset(self):
         self.qs = super(AbstractProjectListView, self).get_queryset()
+        
+        # list all projects labo or filter functions of slug team
         if 'slug' in self.kwargs:
             self.qs = self.qs.filter(project__teams__slug=self.kwargs['slug'])
 
-        if self.item_to_filter in self.request.session and self.request.session[self.item_to_filter]:
+        v_filter = None
+
+        # Filter if GET
+        if self.request.GET:
+            if self.item_to_filter in self.request.GET.keys():
+                form = self.get_form()
+                v_filter = self._get_choice_id(self.request.GET[self.item_to_filter], form.fields[self.item_to_filter]._choices)
+
+        # Filter if POST
+        if self.filter_value:
+            v_filter = self.filter_value
+
+        # Do filter
+        if v_filter:
             kwargs = {
-                '{0}'.format(self.property_query_filter): self.request.session[self.item_to_filter],
+                '{0}'.format(self.property_query_filter): v_filter,
             }
             self.qs = self.qs.filter(**kwargs)
-        
+
+        # filter archived projects
         self.qs = self.qs.filter(project__is_archive=self.archived)
+
+        # order by title
         self.qs = self.qs.order_by('title')
 
         return self.qs
 
     def get_context_data(self, **kwargs):
-        context = super(AbstractProjectListView, self).get_context_data(**kwargs)
+        context = super(AbstractProjectListView, self).get_context_data(**kwargs)            
+        
+        # list object function of pagination
         context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
                               settings.MEDIA_PER_PAGE,
                               settings.MAX_PAGING_LINKS)
+
+        # set if project listed are archived
         context['is_archive'] = self.archived
         if self.archived:
             context['title'] = _('Archived Projects')
         else :
             context['title'] = _('Projects')
+
+        # slug of the team
+        # used to switch between all labo projects or a specific team
         if 'slug' in self.kwargs:     
             context['slug'] = self.kwargs['slug']
         return context

@@ -42,6 +42,6 @@ urlpatterns = [
     url("^article-event-list/$",  ArticleEventView.as_view(), name='article-event-list'),
     # url("^team/article-event-list/$",  ArticleEventView.as_view(), name='article-event-team-list'),
     url('^team/(?P<slug>.*)/article-event-list/$', ArticleEventTeamView.as_view(), name='article-event-team-list'),
-    url("^dynamic-content-magazine/$",  permission_required('magazine.can_edit')(DynamicContentMagazineContentView.as_view()), name='dynamic-content-magazine'),
+    url("^dynamic-content-magazine/$",  permission_required('organization-magazine.change_magazine')(DynamicContentMagazineContentView.as_view()), name='dynamic-content-magazine'),
     url("^magazine/$", MagazineDetailView.as_view(), name='magazine'),
 ]

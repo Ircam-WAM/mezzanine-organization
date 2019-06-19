@@ -206,11 +206,10 @@ LANGUAGES = (
     ('fr', _('French')),
     ('en', _('English')),
 )
-
-# LOCALE_PATHS = (
-#     os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
-# )
-
+LOCALE_PATHS = (
+    os.path.join(PROJECT_ROOT, 'organization/locale'),
+)
+# print("LOCALE_PATHS", LOCALE_PATHS)
 #############
 # DATABASES #
 #############
