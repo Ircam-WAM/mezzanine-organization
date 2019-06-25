@@ -44,7 +44,7 @@ from organization.network.models import *
 from organization.pages.models import *
 from skosxl.models import Concept
 
-logger = logging.getLogger()
+logger = logging.getLogger('app')
 
 PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
@@ -240,7 +240,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
             tmp = {}
             tmp['url'] = project_link.url
             tmp['summary'] = d.Discussion(project_link.url,
-                                          'discourse',
+                                          'discourse',  # SMELL: should be detected or specified in project_link,
+                                                        #        not hardcoded
                                           settings=s,
                                           debug=settings.DEBUG).get_summary()
             discussion_rooms.append(tmp)
@@ -607,7 +608,7 @@ class Repository(models.Model):
             for host in settings.REPOSITORY_HOSTS:
 
                 if re.search(host['regex'], url) is not None:
-                    
+
                     s.update(host['credentials'])
 
                     # In dev environment, the browser-accessible URL (aka external) is often different than
