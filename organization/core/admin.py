@@ -95,12 +95,8 @@ class TeamOwnableAdmin(OwnableAdmin):
     
     def has_delete_permission(self, request, obj=None):
         has_perm = super(TeamOwnableAdmin, self).has_delete_permission(request, obj=None)
-        opts = self.model._meta
         if obj:
-            if request.user.has_perm(opts.app_label + '.user_delete'):
-                return has_perm and obj.user == request.user
-            if request.user.has_perm(opts.app_label + '.team_delete'):
-                return has_perm and obj.user.id in getUsersListOfSameTeams(request.user)
+            return has_perm and obj.can_delete(request)
         return has_perm
     # @Todo : not working
     # def get_actions(self, request):
