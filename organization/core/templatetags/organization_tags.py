@@ -561,6 +561,17 @@ def to_int(a):
 def to_str(a):
     return str(a)
 
+
 @register.filter
 def get_object_type(obj):
     return type(obj)
+
+
+@register.filter
+def get_action_name(action_id):
+    if action_id == 1:
+        return 'pencil'
+    elif action_id == 2:
+        return 'edit'
+    elif action_id == 3:
+        return 'remove'
