@@ -119,7 +119,7 @@ ORGANIZATION_STATUS_CHOICES = (
 )
 
 
-class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable, TeamOwnable):
+class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -140,7 +140,6 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
     class Meta:
         verbose_name = _('organization')
         ordering = ['name',]
-        permissions = TeamOwnable.Meta.permissions
 
     def save(self, **kwargs):
         self.clean()

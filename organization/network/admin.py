@@ -114,7 +114,7 @@ class DynamicMultimediaOrganizationInline(TabularDynamicInlineAdmin):
     form = DynamicMultimediaOrganizationForm
 
 
-class OrganizationAdmin(BaseTranslationOrderedModelAdmin, TeamOwnableAdmin):
+class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Organization
     inlines = [ OrganizationEventLocationInline,
