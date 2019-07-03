@@ -509,6 +509,7 @@ class ProjectPage(Displayable, RichText, TeamOwnable):
     class Meta:
         permissions = TeamOwnable.Meta.permissions
 
+
 class ProjectPageImage(Image):
 
     project_page = models.ForeignKey(ProjectPage, verbose_name=_('project page'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)

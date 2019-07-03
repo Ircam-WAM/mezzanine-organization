@@ -196,7 +196,7 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
     get_producers.short_description = "producers"
 
 
-class ProjectAdmin(BaseTranslationOrderedModelAdmin, TeamOwnableAdmin):
+class ProjectAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Project
 
@@ -275,7 +275,7 @@ class ProjectCallFileInline(StackedDynamicInlineAdmin):
     model = ProjectCallFile
 
 
-class ProjectCallAdminDisplayable(DisplayableAdmin):
+class ProjectCallAdmin(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectCallAdmin.fieldsets)
     inlines = [ ProjectCallBlockInline,
@@ -317,7 +317,7 @@ class DynamicContentProjectPageInline(TabularDynamicInlineAdmin):
             static("mezzanine/js/admin/dynamic_inline.js"),
         )
 
-class ProjectPageAdminDisplayable(DisplayableAdmin): #, DuplicateAdmin
+class ProjectPageAdmin(DisplayableAdmin, TeamOwnableAdmin):
 
     fieldsets = deepcopy(ProjectPageAdmin.fieldsets)
     inlines = [ ProjectPageBlockInline,
@@ -343,6 +343,6 @@ admin.site.register(ProjectDemo, ProjectDemoAdmin)
 admin.site.register(Repository)
 admin.site.register(RepositorySystem)
 admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
-admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
+admin.site.register(ProjectCall, ProjectCallAdmin)
 admin.site.register(ProjectResidency, ProjectResidencyAdmin)
-admin.site.register(ProjectPage, ProjectPageAdminDisplayable)
+admin.site.register(ProjectPage, ProjectPageAdmin)
