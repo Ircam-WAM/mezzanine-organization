@@ -22,7 +22,6 @@
 from copy import deepcopy
 from django.contrib import admin
 from mezzanine.core.admin import *
-from organization.core.admin import TeamOwnableAdmin
 from organization.media.models import *
 from organization.media.forms import *
 from organization.media.translation import *
@@ -45,7 +44,7 @@ class MediaDepartmentInline(TabularDynamicInlineAdmin):
     max_num = 1
 
 
-class MediaAdmin(BaseTranslationModelAdmin, TeamOwnableAdmin):
+class MediaAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = Media
     inlines = (MediaTranscodedAdmin, MediaImageInline, MediaDepartmentInline)

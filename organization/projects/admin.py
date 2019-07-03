@@ -290,7 +290,7 @@ class ProjectCallAdmin(DisplayableAdmin):
 
 
 
-class ProjectPageAdmin(BaseTranslationModelAdmin, TeamOwnableAdmin):
+class ProjectPageAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = ProjectPage
     list_display = ['title', 'project', ]
@@ -317,7 +317,7 @@ class DynamicContentProjectPageInline(TabularDynamicInlineAdmin):
             static("mezzanine/js/admin/dynamic_inline.js"),
         )
 
-class ProjectPageAdmin(DisplayableAdmin, TeamOwnableAdmin):
+class ProjectPageAdmin(TeamOwnableAdmin, DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectPageAdmin.fieldsets)
     inlines = [ ProjectPageBlockInline,

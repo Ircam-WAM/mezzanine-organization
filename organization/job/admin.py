@@ -23,7 +23,6 @@ from django.contrib import admin
 from mezzanine.utils.static import static_lazy as static
 from copy import deepcopy
 from mezzanine.core.admin import *
-from organization.core.admin import TeamOwnableAdmin
 from organization.job.models import *
 from organization.job.forms import *
 from organization.job.translation import *
@@ -34,7 +33,7 @@ class JobResponseInline(TabularDynamicInlineAdmin):
     model = JobResponse
 
 
-class JobOfferAdminDisplayable(BaseTranslationModelAdmin, TeamOwnableAdmin):
+class JobOfferAdminDisplayable(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = JobOffer
     inlines = [JobResponseInline,]

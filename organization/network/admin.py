@@ -164,7 +164,7 @@ class TeamLinkInline(StackedDynamicInlineAdmin):
     model = TeamLink
 
 
-class TeamAdmin(BaseTranslationModelAdmin, TeamOwnableAdmin):
+class TeamAdmin(BaseTranslationModelAdmin):
 
     model = Team
     search_fields = ['name', 'code']
@@ -179,7 +179,7 @@ class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
     form = DynamicMultimediaPageForm
 
 
-class TeamPageAdmin(PageAdmin, GuardedModelAdmin): #TeamOwnableAdmin
+class TeamPageAdmin(PageAdmin, GuardedModelAdmin):
 
     inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaTeamPageInline,
                 PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]

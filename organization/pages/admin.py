@@ -33,8 +33,6 @@ from organization.pages.models import (
     Home,
 )
 
-from organization.core.admin import TeamOwnableAdmin
-
 from organization.pages.forms import *
 from organization.network.forms import *
 from organization.network.models import PageCustomPersonListBlockInline
@@ -110,7 +108,7 @@ class DynamicMultimediaPageInline(TabularDynamicInlineAdmin):
     form = DynamicMultimediaPageForm
 
 
-class CustomPageAdmin(PageAdmin, TeamOwnableAdmin):
+class CustomPageAdmin(PageAdmin):
 
     inlines = [PageBlockInline,
             PageImageInline,

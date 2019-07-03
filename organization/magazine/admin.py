@@ -27,7 +27,6 @@ from modeltranslation.admin import TranslationTabularInline
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from mezzanine.blog.admin import BlogPostAdmin
-from organization.core.admin import TeamOwnableAdmin
 from organization.magazine.models import *
 from organization.magazine.forms import *
 from organization.magazine.translation import *
@@ -72,7 +71,7 @@ class ArticleRelatedTitleAdmin(TranslationTabularInline):
     model = ArticleRelatedTitle
 
 
-class ArticleAdminDisplayable(DisplayableAdmin, TeamOwnableAdmin):
+class ArticleAdminDisplayable(TeamOwnableAdmin, DisplayableAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     list_display = ('title', 'department', 'publish_date', 'status', 'user')
@@ -108,12 +107,12 @@ class ArticleAdminDisplayable(DisplayableAdmin, TeamOwnableAdmin):
         )
 
 
-class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline
+class BriefAdmin(admin.ModelAdmin):
 
     model = Brief
 
 
-class BriefAdminDisplayable(BaseTranslationModelAdmin, TeamOwnableAdmin): #, OrderableAdmin
+class BriefAdminDisplayable(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     list_display = ('title', 'ext_content', 'content_object', 'publish_date', 'status')
     form = BriefForm

@@ -64,50 +64,6 @@ class KeywordAdmin(BaseTranslationModelAdmin):
 #     for site in get_other_sites(): exec(func_template % (re.sub(r'(\.|-)', '_', site.domain)))
 
 
-class TeamOwnableAdmin(OwnableAdmin):
-    
-    def get_queryset(self, request):
-        """
-        Filter the change list by currently logged in user if not a
-        superuser. We also skip filtering if the model for this admin
-        class has been added to the sequence in the setting
-        ``OWNABLE_MODELS_ALL_EDITABLE``, which contains models in the
-        format ``app_label.object_name``, and allows models subclassing
-        ``Ownable`` to be excluded from filtering, eg: ownership should
-        not imply permission to edit.
-        """
-
-        opts = self.model._meta
-        model_name = ("%s.%s" % (opts.app_label, opts.object_name)).lower()
-        models_all_editable = settings.OWNABLE_MODELS_ALL_EDITABLE
-        models_all_editable = [m.lower() for m in models_all_editable]
-
-        if request.user.has_perm(opts.app_label + '.user_edit'):
-            return super(TeamOwnableAdmin, self).get_queryset(request)
-
-        qs = super(OwnableAdmin, self).get_queryset(request)   
-        if request.user.has_perm(opts.app_label + '.team_edit'):
-            if request.user.is_superuser or model_name in models_all_editable:
-                return qs
-            list_users = getUsersListOfSameTeams(request.user)
-            return qs.filter(user__id__in=list_users)
-        return qs
-    
-    def has_delete_permission(self, request, obj=None):
-        has_perm = super(TeamOwnableAdmin, self).has_delete_permission(request, obj=None)
-        if obj:
-            return has_perm and obj.can_delete(request)
-        return has_perm
-    # @Todo : not working
-    # def get_actions(self, request):
-    #     actions = super(TeamOwnableAdmin, self).get_actions(request)
-    #     for action in actions :
-    #         print("action", action)
-    #         if action == "delete_selected":
-    #             del actions['delete_selected']
-    #     return actions
-
-
 class BaseTranslationOrderedModelAdmin(BaseTranslationModelAdmin):
 
     def get_fieldsets(self, request, obj = None):
@@ -141,10 +97,6 @@ class NullListFilter(SimpleListFilter):
             kwargs = { '{0}__isnull'.format(self.parameter_name) : self.value() == '1' }
             return queryset.filter(**kwargs)
         return queryset
-
-# class CustomLinkAdmin(LinkAdmin, TeamOwnableAdmin):
-    
-#     pass
 
 
 if settings.DEBUG :
