@@ -164,7 +164,7 @@ class TeamLinkInline(StackedDynamicInlineAdmin):
     model = TeamLink
 
 
-class TeamAdmin(BaseTranslationModelAdmin):
+class TeamAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = Team
     search_fields = ['name', 'code']
