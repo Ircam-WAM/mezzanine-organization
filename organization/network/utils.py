@@ -436,7 +436,10 @@ def get_users_of_team(team):
 
 
 def get_team_from_user(user):
-    team = user.person.activities.latest('date_from').teams.first()
-    if team.department.id == 1: # Research Department
-        return team
-     
+    try: 
+        team = user.person.activities.latest('date_from').teams.first()
+        if team.department.id == 1: # Research Department
+            return team
+    except :
+        pass
+
