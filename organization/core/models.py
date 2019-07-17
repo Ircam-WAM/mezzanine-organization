@@ -26,17 +26,17 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.core.exceptions import ValidationError
+from django_countries.fields import CountryField
 
 from geopy.geocoders import GoogleV3, Nominatim
 from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded
 
 from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
-from mezzanine.core.models import Displayable, Slugged, Orderable
+from mezzanine.core.models import Displayable, Slugged, Orderable, Ownable
 from mezzanine.utils.urls import admin_url, slugify, unique_slug
 from mezzanine.utils.models import base_concrete_model, get_user_model_name
 
-from django_countries.fields import CountryField
 
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')),
@@ -53,6 +53,8 @@ IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('logo_white', _('logo white')),
     ('logo_footer', _('logo footer')), ('slider', _('slider')),
     ('card', _('card')), ('page_slider', _('page - slider')),
     ('page_featured', _('page - featured')))
+
+
 
 
 class Description(models.Model):

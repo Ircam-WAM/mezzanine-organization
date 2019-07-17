@@ -33,7 +33,7 @@ class JobResponseInline(TabularDynamicInlineAdmin):
     model = JobResponse
 
 
-class JobOfferAdminDisplayable(BaseTranslationModelAdmin):
+class JobOfferAdminDisplayable(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = JobOffer
     inlines = [JobResponseInline,]

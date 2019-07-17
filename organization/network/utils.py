@@ -409,27 +409,7 @@ def proccess_total_prod_hours(prod_hours_dict):
     for month, hours in prod_hours_dict.items():
         total += hours
     return total    
-
-
-def usersTeamsIntersection(userA, userB):
-    teamsUserA = {x.teams for x in userA.person.activities.all()}
-    teamsUserB = {x.teams for x in userA.person.activities.all()}
-    return teamsUserA & teamsUserB
-
-
-def getUsersListOfSameTeams(user):
-    teams = {x.teams.all() for x in user.person.activities.all()}
-    person_list = []
-    person_model = apps.get_model('organization-network.Person')
-    for team in teams:
-        person_list.extend(person_model.objects.filter(activities__teams=team).all())
-    user_list = []
-    for person in person_list:
-        if hasattr(person, 'user') and person.user:
-            user_list.append(person.user.id)
-    user_list.append(user.id)
-    return user_list
-
+    
 
 def flatten_activities(activities, fields):
     flat = []

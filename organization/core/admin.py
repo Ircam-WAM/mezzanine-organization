@@ -31,7 +31,7 @@ from mezzanine.generic.models import ThreadedComment, Keyword
 from mezzanine.conf import settings
 from organization.core.models import *
 from organization.core.translation import *
-from organization.core.utils import get_other_sites
+from organization.core.utils import get_other_sites, getUsersListOfSameTeams
 
 try:
     from hijack_admin.admin import HijackUserAdmin
@@ -98,6 +98,7 @@ class NullListFilter(SimpleListFilter):
             return queryset.filter(**kwargs)
         return queryset
 
+
 if settings.DEBUG :
     class UserAdminCustom(HijackUserAdmin, SitePermissionUserAdmin):
 
@@ -129,6 +130,10 @@ admin.site.register(LinkType)
 admin.site.unregister(BlogPost)
 admin.site.unregister(ThreadedComment)
 admin.site.register(Keyword, KeywordAdmin)
+
+# admin.site.unregister(LinkAdmin)
+# admin.site.register(Link, CustomLinkAdmin)
+
 
 if settings.DEBUG and settings.HIJACK_REGISTER_ADMIN:
     UserModel = get_user_model()
