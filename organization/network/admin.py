@@ -201,7 +201,7 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
     fk_name = 'person'
     filter_horizontal = ['organizations', 'employers', 'teams',
                          'supervisors', 'phd_directors', ]
-
+    
 
 class PersonPlaylistInline(TabularDynamicInlineAdmin):
 
@@ -321,20 +321,38 @@ class ProjectActivityInline(TabularDynamicInlineAdmin):
 class PersonActivityAdmin(BaseTranslationModelAdmin):
 
     model = PersonActivity
-    list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to']
+    list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to', 'get_organizations', 'get_employers']
     filter_horizontal = ['organizations', 'employers', 'teams',
                          'supervisors', 'phd_directors', ] #project_activity__project
-    search_fields = ['person__title',]
+    search_fields = ['person__title', 'organizations__name', 'employers__name']
     list_filter = [ 'date_from', 'date_to',
                     'is_permanent', 'framework', 'grade',
                     'status', 'teams']
     inlines = [ProjectActivityInline,]
+
+
+    def get_organizations(self, instance):
+        org_str = []
+        for org in instance.organizations.all():
+            if org :
+                org_str.append(org.name)
+        return ", ".join(org_str)
+    get_organizations.short_description = 'organizations'
+
+    def get_employers(self, instance):
+        emp_str = []
+        for emp in instance.employers.all():
+            if emp :
+                emp_str.append(emp.name)
+        return ", ".join(emp_str)
+    get_employers.short_description = 'employers'
 
     def get_teams(self, instance):
         values = []
         for team in instance.teams.all():
             values.append(team.code)
         return ' - '.join(values)
+    get_teams.short_description = 'teams'
 
 
 class PersonListBlockInlineAdmin(TabularDynamicInlineAdmin):
