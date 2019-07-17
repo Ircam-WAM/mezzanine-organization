@@ -32,9 +32,8 @@ from organization.pages.models import *
 from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm, DynamicMultimediaProjectForm, DynamicContentProjectPageForm
-from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin #, DuplicateAdmin
+from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin, TeamOwnableAdmin
 from organization.core.utils import actions_to_duplicate, get_other_sites
-from organization.network.admin import TeamOwnableAdmin
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
@@ -276,7 +275,7 @@ class ProjectCallFileInline(StackedDynamicInlineAdmin):
     model = ProjectCallFile
 
 
-class ProjectCallAdminDisplayable(DisplayableAdmin):
+class ProjectCallAdmin(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectCallAdmin.fieldsets)
     inlines = [ ProjectCallBlockInline,
@@ -291,7 +290,7 @@ class ProjectCallAdminDisplayable(DisplayableAdmin):
 
 
 
-class ProjectPageAdmin(BaseTranslationModelAdmin):
+class ProjectPageAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = ProjectPage
     list_display = ['title', 'project', ]
@@ -318,7 +317,7 @@ class DynamicContentProjectPageInline(TabularDynamicInlineAdmin):
             static("mezzanine/js/admin/dynamic_inline.js"),
         )
 
-class ProjectPageAdminDisplayable(DisplayableAdmin): #, DuplicateAdmin
+class ProjectPageAdmin(TeamOwnableAdmin, DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectPageAdmin.fieldsets)
     inlines = [ ProjectPageBlockInline,
@@ -344,6 +343,6 @@ admin.site.register(ProjectDemo, ProjectDemoAdmin)
 admin.site.register(Repository)
 admin.site.register(RepositorySystem)
 admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
-admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
+admin.site.register(ProjectCall, ProjectCallAdmin)
 admin.site.register(ProjectResidency, ProjectResidencyAdmin)
-admin.site.register(ProjectPage, ProjectPageAdminDisplayable)
+admin.site.register(ProjectPage, ProjectPageAdmin)

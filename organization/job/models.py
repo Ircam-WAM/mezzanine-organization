@@ -43,7 +43,7 @@ class JobResponse(models.Model):
         verbose_name_plural = _("job_reponses")
 
 
-class JobOffer(Displayable, RichText):
+class JobOffer(Displayable, RichText, TeamOwnable):
 
     email = models.EmailField(max_length=255, null=False, verbose_name=_('Email to forward response'))
     type = models.CharField(blank=True, choices=[('internship', 'internship'), ('job', 'job')], max_length=32, verbose_name='Job offer type')
@@ -54,6 +54,7 @@ class JobOffer(Displayable, RichText):
     class Meta:
         verbose_name = _('job offer')
         verbose_name_plural = _("job offers")
+        permissions = TeamOwnable.Meta.permissions
 
 
 class Candidacy(Displayable, RichText, Period):
