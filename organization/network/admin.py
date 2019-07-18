@@ -295,6 +295,13 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
 
             return response
 
+    def save_form(self, request, form, change):
+        """
+        Avoid calling save_form() from OwnableAdmin to not erase user
+        by the current one is saving
+        """
+        return super(OwnableAdmin, self).save_form(request, form, change)
+
     export_as_csv.short_description = "Export Selected"
 
 
