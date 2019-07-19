@@ -40,7 +40,8 @@ from organization.magazine.models import *
 from organization.network.models import DepartmentPage, Person
 from organization.network.views import TeamOwnableMixin
 from organization.pages.models import CustomPage, DynamicContentPage
-from organization.core.views import SlugMixin, autocomplete_result_formatting, DynamicContentMixin
+from organization.core.views import SlugMixin, autocomplete_result_formatting, \
+                                    DynamicContentMixin, FilteredListView
 from organization.core.utils import split_events_from_other_related_content
 from django.template.defaultfilters import slugify
 from itertools import chain
@@ -247,45 +248,54 @@ class ArticleListView(ListView):
         return context
 
 
-class ArticleEventView(SlugMixin, FormView, ListView):
+class ArticleEventView(SlugMixin, ListView, FilteredListView):
 
     model = Article
     template_name='magazine/article/article_event_list.html'
-    context_object_name = 'objects'
-    success_url = "."
     form_class = CategoryFilterForm
     keywords = OrderedDict()
-
-    def form_valid(self, form):
-        # Ajax
-        self.request.session['categories'] = form.cleaned_data['categories']
-        if self.request.is_ajax():
-            context = {}
-            context["concrete_objects"] = self.get_queryset()
-            return render(self.request, 'core/inc/cards.html', context)
-        else :
-            return super(ArticleEventView, self).form_valid(form)
+    item_to_filter = "categories"
+    property_query_filter = "categories__id"
 
     def get_queryset(self):
-        self.queryset = super(ArticleEventView, self).get_queryset()
-        self.queryset = self.queryset.filter(status=2).order_by('-publish_date')
+        self.qs = super(ArticleEventView, self).get_queryset()
+        
+        # get only published Articles and ordered by publish date
+        self.qs = self.qs.filter(status=2).order_by('-publish_date')
+
+        # get published Events
         events = Event.objects.published().order_by('-start').distinct()
 
-        if 'categories' in self.request.session and self.request.session['categories']:
-            events = events.filter(category__name=self.request.session['categories'])
-            self.queryset = self.queryset.filter(categories__title=self.request.session['categories'])
-            self.request.session.pop('categories', None)
+        v_filter = None
 
-        self.queryset = sorted(
-            chain(self.queryset, events),
+        # Filter if GET
+        if self.request.GET:
+            if self.item_to_filter in self.request.GET.keys():
+                form = self.get_form()
+                v_filter = self._get_choice_id(self.request.GET[self.item_to_filter], form.fields[self.item_to_filter]._choices)
+
+        # Filter if POST
+        if self.filter_value:
+            v_filter = self.filter_value
+
+       # Apply filter
+        if v_filter:
+            kwargs = {
+                '{0}'.format(self.property_query_filter): v_filter,
+            }
+            self.qs = self.qs.filter(**kwargs)
+            events = events.filter(category__id=v_filter)
+
+        self.qs = sorted(
+            chain(self.qs, events),
             key=lambda instance:instance.publish_date,
             reverse=True)
 
-        return self.queryset
+        return self.qs
 
     def get_context_data(self, **kwargs):
         context = super(ArticleEventView, self).get_context_data(**kwargs)
-        context['objects'] = paginate(self.queryset, self.request.GET.get("page", 1),
+        context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
                               settings.MEDIA_PER_PAGE,
                               settings.MAX_PAGING_LINKS)
         context['title'] = _('Laboratory News')
@@ -295,21 +305,16 @@ class ArticleEventView(SlugMixin, FormView, ListView):
 class ArticleEventTeamView(ArticleEventView, TeamOwnableMixin):
     
     def get_queryset(self):
-        self.queryset = super(ArticleEventTeamView, self).get_queryset()
+        self.qs = super(ArticleEventTeamView, self).get_queryset()
         if 'slug' in self.kwargs: 
-            self.queryset = self.filter_by_team(self.queryset, self.kwargs['slug'])
-        return self.queryset
-
+            self.qs = self.filter_by_team(self.qs, self.kwargs['slug'])
+        return self.qs
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if 'slug' in self.kwargs: 
             form.process_choices(self.kwargs['slug'])
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
+        return super(ArticleEventTeamView, self).post(self, request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ArticleEventTeamView, self).get_context_data(**kwargs)

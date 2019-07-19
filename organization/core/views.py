@@ -25,6 +25,7 @@ from django.http import Http404
 from django.views.generic.base import View, RedirectView
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView
 from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.edit import FormView
 from django.apps import apps
 from django.utils import six, timezone, formats
 from django.utils.translation import ugettext_lazy as _
@@ -44,7 +45,6 @@ from organization.projects.models import Project, ProjectPage
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
 from organization.network.models import Person
 from organization.magazine.models import Article
-from pprint import pprint
 from django.contrib.auth.mixins import LoginRequiredMixin
 from organization.network.models import *
 from django import http
@@ -336,7 +336,6 @@ def permission_denied(request, exception, template_name='errors/403.html'):
     If the template does not exist, an Http403 response containing the text
     "403 Forbidden" (as per RFC 2616) will be returned.
     """
-    print("----- permission denied")
     try:
         template = loader.get_template(template_name)
     except TemplateDoesNotExist:
@@ -344,3 +343,68 @@ def permission_denied(request, exception, template_name='errors/403.html'):
     return http.HttpResponseForbidden(
         template.render(request=request, context={'exception': force_text(exception)})
     )
+
+
+class FilteredListView(FormView):
+
+    sub_template = 'core/inc/filtered_results.html'
+    context_object_name = 'objects'
+    success_url = "."
+    filter_value = ""
+    
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        form = self.get_form()
+        if form.is_valid():
+            context = {}
+
+            # get filter value from form
+            self.filter_value = form.cleaned_data[self.item_to_filter]
+            # get current url query
+            qd = self.request.GET.copy()
+
+            if self.filter_value: 
+            # add filter in query to be available in pagination if filter field is checked
+                value = self._get_choice_value(self.filter_value, form.fields[self.item_to_filter]._choices)
+                qd[self.item_to_filter] = value
+            else :
+                # delete query filter if filter field is unchecked
+                if self.item_to_filter in qd.keys():
+                    del qd[self.item_to_filter]
+            
+            # override de query
+            self.request.GET = qd
+            context['request'] = self.request
+            
+            # list object function of pagination
+            context['objects'] = paginate(self.get_queryset(), self.request.GET.get("page", 1),
+                        settings.MEDIA_PER_PAGE,
+                        settings.MAX_PAGING_LINKS)
+
+            # render only the list of cards + pagination with updated url
+            return render(self.request, self.sub_template, context)
+        else:
+            return self.form_invalid(form)
+
+    def _get_choice_value(self, id, choices):
+        for item in choices:
+            if str(item[0]) == id:
+                return item[1]
+        raise Http404("Not corresponding value")
+    
+    def _get_choice_id(self, value, choices):
+        for item in choices:
+            if item[1] == value:
+                return item[0]
+        raise Http404("Not corresponding value")
+
+    def get_form(self, form_class=None):
+        form = super(FilteredListView, self).get_form()
+
+        # init form value if filter exists in GET query
+        if self.request.GET and self.item_to_filter in self.request.GET.keys():
+            form.fields[self.item_to_filter].initial = [ self._get_choice_id(self.request.GET[self.item_to_filter], form.fields[self.item_to_filter]._choices)]
+        return form
