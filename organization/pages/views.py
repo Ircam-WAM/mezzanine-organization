@@ -181,30 +181,28 @@ class PublicationsView(FormView):
     form_class = YearForm
     success_url = "."
     hal_url = settings.HAL_URL
+    year = ""
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._hal_url = PublicationsView.hal_url
 
-    def form_valid(self, form):
-        # Ajax
-        if self.request.is_ajax():
-            context = {}
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        form = self.get_form()
+        context = {}
+        if form.is_valid():
             context['hal_url'] = self._hal_url + "&annee_publideb=%s&annee_publifin=%s" % (form.cleaned_data['year'], form.cleaned_data['year'])
-            return render(self.request, 'core/inc/hal.html', context)
-        else :
-            self.request.session['year'] = form.cleaned_data['year']
-            return super(PublicationsView, self).form_valid(form)
+        else:
+            context['hal_url'] = self._hal_url
+        return render(self.request, 'core/inc/hal.html', context)
 
     def get_context_data(self, **kwargs):
         context = super(PublicationsView, self).get_context_data(**kwargs)
         context['hal_url'] = self._hal_url
-        if 'year' in self.request.session:
-            # set year filter
-            context['hal_url'] += "&annee_publideb=%s&annee_publifin=%s" % (self.request.session['year'], self.request.session['year'])
-            context['form'].initial['year'] = self.request.session['year']
-            # repopulate form
-            self.request.session.pop('year', None)
         return context
 
 

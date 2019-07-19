@@ -207,6 +207,11 @@ class TeamPublicationsView(PublicationsView):
 
     template_name = "network/team/publications.html"
 
+    def post(self, request, *args, **kwargs):
+        self.team = get_object_or_404(Team, slug=self.kwargs['slug'])
+        self._hal_url += "&" + settings.HAL_LABOS_EXP + "%s" % self.team.hal_researche_structure.replace(' ', '+')
+        return super(TeamPublicationsView, self).post(self, request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         self.team = get_object_or_404(Team, slug=self.kwargs['slug'])
         self._hal_url += "&" + settings.HAL_LABOS_EXP + "%s" % self.team.hal_researche_structure.replace(' ', '+')
