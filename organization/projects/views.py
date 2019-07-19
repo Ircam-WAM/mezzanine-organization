@@ -526,72 +526,11 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     inlines = []
 
 
-class AbstractProjectListView(FormView, ListView):
+class AbstractProjectListView(ListView, FilteredListView):
     
     model = ProjectPage
     template_name='projects/project/project_list.html'
-    context_object_name = 'objects'
-    success_url = "."
     item_to_filter = "filter"
-    filter_value = ""
-
-    def post(self, request, *args, **kwargs):
-        """
-        Handles POST requests, instantiating a form instance with the passed
-        POST variables and then checked for validity.
-        """
-        form = self.get_form()
-        if form.is_valid():
-            context = {}
-
-            # get filter value from form
-            self.filter_value = form.cleaned_data[self.item_to_filter]
-            
-            # get current url query
-            qd = self.request.GET.copy()
-            if self.filter_value: 
-            
-            # add filter in query to be available in pagination if filter field is checked
-                value = self._get_choice_value(self.filter_value, form.fields[self.item_to_filter]._choices)
-                qd['filter'] = value
-            else :
-                # delete query filter if filter field is unchecked
-                if 'filter' in qd.keys():
-                    del qd['filter']
-            
-            # override de query
-            self.request.GET = qd
-            context['request'] = self.request
-            
-            # list object function of pagination
-            context['objects'] = paginate(self.get_queryset(), self.request.GET.get("page", 1),
-                        settings.MEDIA_PER_PAGE,
-                        settings.MAX_PAGING_LINKS)
-
-            # render only the list of cards + pagination with updated url
-            return render(self.request, 'projects/project/inc/project_list_results.html', context)
-        else:
-            return self.form_invalid(form)
-
-    def _get_choice_value(self, id, choices):
-        for item in choices:
-            if str(item[0]) == id:
-                return item[1]
-        raise Http404("Not corresponding value")
-    
-    def _get_choice_id(self, value, choices):
-        for item in choices:
-            if item[1] == value:
-                return item[0]
-        raise Http404("Not corresponding value")
-
-    def get_form(self, form_class=None):
-        form = super(AbstractProjectListView, self).get_form()
-
-        # init form value if filter exists in GET query
-        if self.request.GET and self.item_to_filter in self.request.GET.keys():
-            form.fields['filter'].initial = [ self._get_choice_id(self.request.GET[self.item_to_filter], form.fields[self.item_to_filter]._choices)]
-        return form
 
     def get_queryset(self):
         self.qs = super(AbstractProjectListView, self).get_queryset()
@@ -612,7 +551,7 @@ class AbstractProjectListView(FormView, ListView):
         if self.filter_value:
             v_filter = self.filter_value
 
-        # Do filter
+        # Apply filter
         if v_filter:
             kwargs = {
                 '{0}'.format(self.property_query_filter): v_filter,

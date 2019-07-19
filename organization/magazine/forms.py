@@ -108,7 +108,7 @@ class CategoryFilterForm(forms.Form, TeamOwnableMixin):
 
         blog_categories = BlogCategory.objects.filter(id__in=used_art_cat)
         for category in blog_categories:
-            CATEGORIES.append((category, category))
+            CATEGORIES.append((category.id, category.title))
         
         # try / except > for passing migration mezzanine_agenda-0031
         from django.db import DatabaseError
@@ -123,7 +123,7 @@ class CategoryFilterForm(forms.Form, TeamOwnableMixin):
                 used_evt_cat = self.filter_by_team(used_evt_cat, team)
             event_categories = EventCategory.objects.filter(id__in=used_evt_cat)
             for category in event_categories:
-                CATEGORIES.append((category, category))
+                CATEGORIES.append((category.id, category.name))
         except DatabaseError:
             pass
 
