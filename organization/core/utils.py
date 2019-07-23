@@ -33,7 +33,7 @@ def getUsersListOfSameTeams(user):
     person_list = []
     person_model = apps.get_model('organization-network.Person')
     for team in teams:
-        person_list.extend(person_model.objects.filter(activities__teams=team).all().distinct())
+        person_list.extend(person_model.objects.filter(activities__teams__in=team).all().distinct())
     user_list = []
     for person in person_list:
         if hasattr(person, 'user') and person.user:
