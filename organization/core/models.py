@@ -450,7 +450,7 @@ class Address(models.Model):
             try:
                 if settings.EVENT_GOOGLE_MAPS_DOMAIN:
                     service = 'googlemaps'
-                    geolocator = GoogleV3(domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
+                    geolocator = GoogleV3(api_key=settings.GOOGLE_API_KEY, domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
                 else:
                     service = "openstreetmap"
                     geolocator = Nominatim(user_agent='mezzo')
