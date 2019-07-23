@@ -258,7 +258,7 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
                PersonFileInline,
                PersonActivityInline,]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
-    search_fields = ['last_name', 'first_name', 'user__username',]
+    search_fields = ['last_name', 'first_name', 'user__username', 'user__email', 'email']
     list_display = [ 'last_name', 'first_name', 'register_id', 'external_id', 'email', 'user', 'last_weekly_hour_volume', 'gender', 'created']
     list_filter = ['person_title', 'activities__date_from', 'activities__date_to',
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
