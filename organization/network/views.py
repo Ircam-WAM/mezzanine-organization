@@ -274,7 +274,7 @@ class PersonFollowersListView(PersonDetailView):
         return self.person.followers.all()
 
 
-class ProfileSettingsView(PersonMixin, LoginRequiredMixin, UpdateWithInlinesView):
+class ProfileEditView(LoginRequiredMixin, PersonMixin, UpdateWithInlinesView):
 
     model = Person
     form_class = PersonForm
