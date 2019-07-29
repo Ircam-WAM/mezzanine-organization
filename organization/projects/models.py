@@ -236,6 +236,10 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         from discussion import discussion as d
         s = {}
         s.update(settings.DISCUSSION)
+
+        # Editable setting
+        s.update({'LATEST_POSTS_LIMIT': m_settings.DISCUSSION_LATEST_POSTS_LIMIT})
+
         discussion_rooms = []
         for project_link in self.get_links(link_type_slug='discussion'):
             tmp = {}
