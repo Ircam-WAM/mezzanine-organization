@@ -36,6 +36,7 @@ from django.core.files.images import get_image_dimensions
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from mezzanine.conf import settings as m_settings
 from mezzanine.core.models import Displayable, Orderable, RichText, Slugged
 from mezzanine_agenda.models import *
 from organization.core.models import *
@@ -592,6 +593,10 @@ class Repository(models.Model):
 
         s = {}
         s.update(settings.REPOSITORY)
+
+        # Those are editable settings -> picking them from the Mezzanine helper
+        s.update({'LATEST_COMMITS_LIMIT': m_settings.REPOSITORY_LATEST_COMMITS_LIMIT})
+        s.update({'LATEST_TAGS_LIMIT': m_settings.REPOSITORY_LATEST_TAGS_LIMIT})
 
         try:
             from repository import repository as r
