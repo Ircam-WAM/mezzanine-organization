@@ -24,7 +24,30 @@ from __future__ import unicode_literals
 from django.conf.urls import include, url
 from django.contrib.auth.decorators import permission_required
 from rest_framework.routers import DefaultRouter
-from organization.projects.views import *
+from organization.projects.views import (
+        # Rest Views
+        ResidencyBlogArticleViewSet, ResidencyViewSet,
+        # Monolith views
+        RedirectView,
+        ResidencyBlogFeedView, ResidencyBlogArticleProfileView,
+        DynamicContentProjectView, ProjectPageView,
+
+        # Project
+        ProjectListView, ProjectArchivesListView,
+        ProjectTeamListView, ProjectArchivesTeamListView,
+        ProjectDemoDetailView, ProjectBlogPageView,
+        ProjectDetailView,
+        # Tech
+        ProjectTechListCallView, ProjectTechCreateView,
+        ProjectTechUpdateView, ProjectTechValidateView,
+        ProjectTechDetailView,
+        # Residency
+        ProjectResidencyListView, ProjectResidencyCreateView,
+        ProjectResidencyDetailView,
+        # Calls
+        ProjectCallListView, ProjectCallListAsEventsView,
+        ProjectCallDetailView
+)
 
 router = DefaultRouter()
 router.register(
@@ -79,27 +102,16 @@ urlpatterns = [
     url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-project-call-detail'),
 
     url(
-        "^projects/residency-blog/create/$",
-        ResidencyBlogArticleCreateView.as_view(),
-        name="residency-blog-article-create-view",
+        "^profiles/residency-blog/$",
+        ResidencyBlogArticleProfileView.as_view(),
+        name="organization-project-profile-residency-blog",
     ),
 
-    # Residency Blog
-    # url(
-    # "^api/residency-blog/list/(?P<filter>((all)|(followed))?)$",
-    # ResidencyBlogArticlePublicViewSet.as_view(),
-    # name="residency-blog-article-list-view",
-    # ),
-    # url(
-    # "^api/profiles/residency-blog/$",
-    # ResidencyBlogArticlePrivateViewSet.as_view(),
-    # name="organization-residency-private-list",
-    # ),
-    # url(
-    # "^api/profiles/residency-blog/create/$",
-    # ResidencyBlogArticleCreateView.as_view(),
-    # name="organization-residency-blog-article-form",
-    # ),
+    url(
+        "^projects/residency-blog/$",
+        ResidencyBlogFeedView.as_view(),
+        name="organization-project-residency-blog-feed",
+    ),
 
     url(r"^api/", include((router.urls))),
 ]

@@ -413,8 +413,17 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     inlines = []
 
 
-class ResidencyBlogArticleCreateView(TemplateView):
-    template_name = 'projects/residency_blog_post_create.html'
+# Create, Update & List your blog posts
+class ResidencyBlogArticleProfileView(TemplateView):
+    template_name = 'projects/residency_blog_profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class ResidencyBlogFeedView(TemplateView):
+    template_name = 'projects/residency_blog_feed.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -427,6 +436,7 @@ class ResidencyViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return ProjectResidency.objects.all()
+
 
 class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ResidencyBlogPublicSerializer
