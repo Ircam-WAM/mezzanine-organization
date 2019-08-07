@@ -256,6 +256,15 @@ class PersonDetailView(PersonMixin, SlugMixin, DynamicContentMixin, DetailView, 
         return context
 
 
+class PersonAboutView(PersonMixin, SlugMixin, DetailView):
+
+    model = Person
+    template_name = 'network/person/about_detail.html'
+    # def get_context_data(self, **kwargs):
+    #     context = super(PersonAboutView, self).get_context_data(**kwargs)       
+    #     return context
+
+
 class PersonFollowingListView(PersonDetailView):
 
     model = Person
