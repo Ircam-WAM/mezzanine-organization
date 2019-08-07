@@ -21,14 +21,19 @@
 
 from __future__ import unicode_literals
 
-import django.views.i18n
 from django.conf.urls import include, url
-from django.conf.urls.i18n import i18n_patterns
 from django.contrib.auth.decorators import permission_required
-from mezzanine.core.views import direct_to_template
-from mezzanine.conf import settings
-
+from rest_framework.routers import DefaultRouter
 from organization.projects.views import *
+
+router = DefaultRouter()
+router.register(
+    r"residency-blog", ResidencyBlogArticleViewSet, base_name="residency-blog"
+)
+
+router.register(
+    r"residency", ResidencyViewSet, base_name="residency"
+)
 
 urlpatterns = [
     url("^dynamic-content-project/$",  permission_required('project.can_edit')(DynamicContentProjectView.as_view()), name='dynamic-content-project'),
@@ -73,8 +78,28 @@ urlpatterns = [
     url("^calls/as_events/$", ProjectCallListAsEventsView.as_view(), name='organization-call-list-as-events'),
     url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-project-call-detail'),
 
+    url(
+        "^projects/residency-blog/create/$",
+        ResidencyBlogArticleCreateView.as_view(),
+        name="residency-blog-article-create-view",
+    ),
+
     # Residency Blog
-    url("^residency-blog/list/(?P<filter>((all)|(followed))?)$",
-        ResidencyBlogArticleListView.as_view(),
-        name='residency-blog-article-list-view'),
+    # url(
+    # "^api/residency-blog/list/(?P<filter>((all)|(followed))?)$",
+    # ResidencyBlogArticlePublicViewSet.as_view(),
+    # name="residency-blog-article-list-view",
+    # ),
+    # url(
+    # "^api/profiles/residency-blog/$",
+    # ResidencyBlogArticlePrivateViewSet.as_view(),
+    # name="organization-residency-private-list",
+    # ),
+    # url(
+    # "^api/profiles/residency-blog/create/$",
+    # ResidencyBlogArticleCreateView.as_view(),
+    # name="organization-residency-blog-article-form",
+    # ),
+
+    url(r"^api/", include((router.urls))),
 ]

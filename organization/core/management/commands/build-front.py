@@ -71,3 +71,9 @@ class Command(BaseCommand):
                 if not os.path.exists('static/vendors') or self.force_bower:
                     subprocess.run(["bower", "--allow-root", "install"])
                 subprocess.run(["gulp", "build"])
+            for theme in settings.EXTRA_THEMES_BUILD:
+                theme_path = apps.get_app_config(theme[0].split('.')[-1]).path
+                os.chdir(theme_path)
+                print('Building ' + theme[0])
+                subprocess.run(["npm", "ci"])
+                subprocess.run(theme[1].split(' '))

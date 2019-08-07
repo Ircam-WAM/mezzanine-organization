@@ -41,6 +41,14 @@ from datetime import datetime, date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from organization.projects.serializers import (ResidencyBlogPublicSerializer,
+                                               ProjectResidencySerializer)
+
+from rest_framework import generics, viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import (IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
+from rest_framework.response import Response
 
 
 EXCLUDED_MODELS = ()
@@ -404,26 +412,61 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     template_name='projects/project_residency_create.html'
     inlines = []
 
-class ResidencyBlogArticleListView(SlugMixin, ListView):
-    model = ProjectResidencyArticle
-    template_name = 'magazine/residency-blog/article_list.html'
-    context_object_name = 'objects'
+
+class ResidencyBlogArticleCreateView(TemplateView):
+    template_name = 'projects/residency_blog_post_create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class ResidencyViewSet(viewsets.ModelViewSet):
+    serializer_class = ProjectResidencySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        self.qs = super(ResidencyBlogArticleListView, self).get_queryset()
-        filter = 'all'
-        if 'filter' in self.kwargs:
-            filter = self.kwargs['filter']
+        return ProjectResidency.objects.all()
 
-        if filter == 'all':
-            self.qs = ProjectResidencyArticle.objects.all()
-        else:
-            person = Person.objects.get(user = self.request.user)
-            following_ids = person.following.all().values_list('id', flat=True)
-            articles = Article.objects.filter(user__in = following_ids)
-            self.qs = ProjectResidencyArticle.objects.filter(article__in = articles)
+class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
+    serializer_class = ResidencyBlogPublicSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
-        return self.qs
+    def get_queryset(self):
+        return ProjectResidencyArticle.objects.all()
+
+    @action(detail=False, permission_classes=[IsAuthenticated], methods=["get"])
+    def followed(self, request):
+        """
+        List user's followed articles
+        """
+        person = Person.objects.get(user=self.request.user)
+        following_ids = person.following.all().values_list("id", flat=True)
+        articles = Article.objects.filter(user__in=following_ids)
+        queryset = self.get_queryset().filter(article__in=articles)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def list(self, request):
+        """
+        List all articles
+        If query param `username` is defined, filter by username
+        """
+        queryset = self.get_queryset()
+
+        username = self.request.query_params.get("username", None)
+        if username is not None:
+            queryset = queryset.filter(user=self.request.user)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 class AbstractProjectListView(FormView, ListView):
 
