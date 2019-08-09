@@ -34,6 +34,8 @@ from organization.projects.models import *
 from organization.projects.forms import *
 from organization.network.forms import *
 from organization.network.models import Organization
+from organization.core.views import SlugMixin
+from organization.network.views import PersonMixin
 from organization.core.views import *
 from organization.magazine.views import Article
 from organization.pages.models import CustomPage
@@ -49,6 +51,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import (IsAuthenticated,
                                         IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
+from rest_framework.exceptions import NotAuthenticated, ValidationError
 
 
 EXCLUDED_MODELS = ()
@@ -413,21 +416,14 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     inlines = []
 
 
-# Create, Update & List your blog posts
-class ResidencyBlogArticleProfileView(TemplateView):
+# Create, Update & List blog posts
+class ResidencyBlogArticleProfileView(PersonMixin, SlugMixin, DetailView):
+    model = Person
     template_name = 'projects/residency_blog_profile.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 
 class ResidencyBlogFeedView(TemplateView):
     template_name = 'projects/residency_blog_feed.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 
 class ResidencyViewSet(viewsets.ModelViewSet):
@@ -445,34 +441,38 @@ class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return ProjectResidencyArticle.objects.all()
 
-    @action(detail=False, permission_classes=[IsAuthenticated], methods=["get"])
-    def followed(self, request):
-        """
-        List user's followed articles
-        """
-        person = Person.objects.get(user=self.request.user)
-        following_ids = person.following.all().values_list("id", flat=True)
-        articles = Article.objects.filter(user__in=following_ids)
-        queryset = self.get_queryset().filter(article__in=articles)
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
     def list(self, request):
         """
         List all articles
-        If query param `username` is defined, filter by username
+        The following filters are available:
+            ?filter='all'
+            ?filter='followed' # List user's followed residencies's articles
+            ?filter='myposts' # List user's articles (the ones he wrotes)
+            ?filter='user'&filter.username='myusername' # List article of username provided
         """
         queryset = self.get_queryset()
 
-        username = self.request.query_params.get("username", None)
-        if username is not None:
-            queryset = queryset.filter(user=self.request.user)
+        filter_type = self.request.query_params.get("filter", None)
+        if filter_type == "followed":
+            if not request.user.is_authenticated():
+                raise NotAuthenticated("followed filter requires authentication")
+            person = Person.objects.get(user=self.request.user)
+            articles = Article.objects.filter(user__in=following_ids)
+            queryset = self.get_queryset().filter(article__in=articles)
+
+        elif filter_type == "myposts":
+            if not request.user.is_authenticated():
+                raise NotAuthenticated("myposts filter requires authentication")
+            queryset = queryset.filter(article__user=self.request.user)
+
+        elif filter_type == "user":
+            filter_username = self.request.query_params.get("filter.username", None)
+            if filter_username is None:
+                raise ValidationError("filter.username query parameter is mandatory")
+            queryset = queryset.filter(article__user__username=filter_username)
+
+        elif filter_type != "all" and filter_type is not None:
+            raise ValidationError("filter query parameter is invalid (%s)" % filter_type)
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)

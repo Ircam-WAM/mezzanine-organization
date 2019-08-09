@@ -102,7 +102,7 @@ urlpatterns = [
     url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-project-call-detail'),
 
     url(
-        "^profiles/residency-blog/$",
+        "^profiles/(?P<username>.*)/residency-blog/$",
         ResidencyBlogArticleProfileView.as_view(),
         name="organization-project-profile-residency-blog",
     ),
