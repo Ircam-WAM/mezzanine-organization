@@ -608,29 +608,13 @@ class Repository(models.Model):
             logger.warning("Couldn't import repository module")
             instance = None
         else:
-
             import re
-
             url = self.url
 
             # Injecting the custom API key if the repo URL matches the regex
             for host in settings.REPOSITORY_HOSTS:
-
                 if re.search(host['regex'], url) is not None:
-
                     s.update(host['credentials'])
-
-                    # In dev environment, the browser-accessible URL (aka external) is often different than
-                    # the docker-accessible URL. This parameter tells the repository module to use this URL
-                    # instead of the parsed one from the repository full URL (which is its external URL by design)
-                    if 'replace_netloc' in host:  # See comment in local_settings.py
-                        parsed_replacement = list(urlparse(host['replace_netloc']))
-                        target_scheme = parsed_replacement[0]
-                        target_netloc = parsed_replacement[1]
-                        u = list(urlparse(url))
-                        u[0] = target_scheme
-                        u[1] = target_netloc
-                        url = urlunparse(tuple(u))
 
             try:
                 instance = r.Repository(url,
@@ -661,6 +645,7 @@ class ProjectRepository(models.Model):
     class Meta:
         verbose_name = _('project repository')
         verbose_name_plural = _("project repositories")
+
 
 class ProjectRelatedTitle(RelatedTitle):
 
