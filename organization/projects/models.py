@@ -25,7 +25,6 @@ import copy
 import datetime
 import logging
 import os
-from urllib.parse import urlparse, urlunparse
 
 import pydash as dsh
 from django.conf import settings
