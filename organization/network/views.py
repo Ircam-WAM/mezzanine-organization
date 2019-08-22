@@ -256,7 +256,7 @@ class PersonDetailView(PersonMixin, SlugMixin, DynamicContentMixin, DetailView, 
         return context
 
 
-class PersonAboutView(PersonMixin, SlugMixin, DetailView):
+class PersonAboutView(DetailView, PersonMixin):
 
     model = Person
     template_name = 'network/person/about_detail.html'
