@@ -51,7 +51,7 @@ from .forms import CategoryFilterForm
 class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
 
     model = Article
-    template_name='magazine/article/article_detail.html'
+    template_name = 'magazine/article/article_detail.html'
     context_object_name = 'article'
 
     def get_object(self):
