@@ -552,7 +552,7 @@ def index(List, i):
 
 
 @register.filter
-def subtract(a, b):
+def subtract_str(a, b):
     return str(int(a) - int(b))
 
 
