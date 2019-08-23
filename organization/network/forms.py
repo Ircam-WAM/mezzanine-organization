@@ -205,7 +205,7 @@ class ProducerForm(ModelForm):
 class ClearableFileInputCustom(ClearableFileInput):
 
     template_with_initial = (
-        '<div class="row"><div class="col-md-13 change_file_field">%(input_text)s: %(input)s</div><div class="col-md-3">%(clear_template)s</div></div>'
+        '<div class="row"><div class="col-md-13 change_file_field">%(input_text)s:<br> %(input)s</div><div class="col-md-3">%(clear_template)s</div></div>'
     )
 
     template_with_clear = '%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label>'
