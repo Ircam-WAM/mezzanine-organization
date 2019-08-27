@@ -125,7 +125,7 @@ class Project(TitledSlugged, MetaData, TimeStamped, Period, RichText, OwnableOrN
             self.status = 2
         else:
             self.status = 1
-        super(SiteRelated, self).save(*args, **kwargs)
+        super(Project, self).save(*args, **kwargs)
 
 
 class ProjectTopic(Named):

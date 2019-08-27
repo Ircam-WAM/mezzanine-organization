@@ -560,7 +560,7 @@ def index(List, i):
 
 
 @register.filter
-def subtract(a, b):
+def subtract_str(a, b):
     return str(int(a) - int(b))
 
 
@@ -576,3 +576,14 @@ def to_str(a):
 @register.filter
 def get_object_type(obj):
     return type(obj)
+
+@register.filter
+def get_person(user):
+    if hasattr(user, 'person'):
+        return user.person
+    return None
+
+
+@register.filter
+def is_object(obj_a, obj_b):
+    return obj_a.__class__.__name__ == obj_b
