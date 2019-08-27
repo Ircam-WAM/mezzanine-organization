@@ -160,6 +160,14 @@ def get_type_link(objects, slug):
     return None
 
 @register.filter
+def get_image_link(obj):
+    try:
+        link_img = LinkImage.objects.get(link=obj)
+    except LinkImage.DoesNotExist:
+        return None
+    return link_img.image
+
+@register.filter
 def in_category(objects, category):
     return objects.filter(category=type)
 
