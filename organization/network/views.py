@@ -725,11 +725,13 @@ class JSONResponseMixin:
 
 class PublicNetworkData(JSONResponseMixin, TemplateView):
 
-    attributes = ['name', 'title', 'description', 'mappable_location',
-                    'card', 'logo', 'type', 'url', 'lat', 'lon', 'keywords']
+    attributes = ['slug', 'name', 'title', 'description', 'mappable_location',
+                    'card', 'logo', 'type', 'url', 'lat', 'lon', 'keywords',
+                    'categories']
 
-    def get_object_dict(self, object):
+    def get_object_dict(self, object, categories):
         data = {}
+
         for attribute in self.attributes:
             if hasattr(object, attribute):
                 if attribute == 'type':
@@ -746,24 +748,31 @@ class PublicNetworkData(JSONResponseMixin, TemplateView):
                 images = object.images.filter(type=attribute)
                 value = images.first().file.url if images else ''
                 data[attribute] = value
+            if attribute == 'categories':
+                data[attribute] = categories
+
         data['url'] = object.get_absolute_url()
         return data
 
     def get_context_data(self, **kwargs):
         context = {}
 
+        categories = ['organizations',]
         organizations = Organization.objects.filter(is_on_map=True)
-        context['organizations'] = [self.get_object_dict(object) for object in organizations]
+        context['objects'] = [self.get_object_dict(object, categories) for object in organizations]
 
+        categories = ['producers',]
         role, c = OrganizationRole.objects.get_or_create(key='Producer')
         producers = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
-        context['producers'] = [self.get_object_dict(object) for object in producers]
+        context['objects'] = [self.get_object_dict(object, categories) for object in producers]
 
+        categories = ['persons',]
         persons = Person.objects.exclude(mappable_location__isnull=True)
-        context['persons'] = [self.get_object_dict(object) for object in persons]
+        context['objects'] = [self.get_object_dict(object, categories) for object in persons]
 
+        categories = ['residencies',]
         residencies = ProjectResidency.objects.exclude(mappable_location__isnull=True)
-        context['residencies'] = [self.get_object_dict(object) for object in residencies]
+        context['objects'] = [self.get_object_dict(object, categories) for object in residencies]
 
         return context
 
