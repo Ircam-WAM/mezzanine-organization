@@ -260,9 +260,6 @@ class PersonAboutView(DetailView, PersonMixin):
 
     model = Person
     template_name = 'network/person/about_detail.html'
-    # def get_context_data(self, **kwargs):
-    #     context = super(PersonAboutView, self).get_context_data(**kwargs)       
-    #     return context
 
 
 class PersonFollowingListView(PersonDetailView):
@@ -283,13 +280,22 @@ class PersonFollowersListView(PersonDetailView):
         return self.person.followers.all()
 
 
-class ProfileEditView(LoginRequiredMixin, PersonMixin, UpdateWithInlinesView):
+class ProfileEditView(LoginRequiredMixin,
+                        PersonMixin,
+                        UpdateWithInlinesView):
 
     model = Person
     form_class = PersonForm
     inlines = [PersonLinkInline, PersonOptionsInline]
     template_name = 'network/person/profile_settings.html'
     success_url = reverse_lazy('organization-network-profile-edit')
+    success_message = _("Your profile has been updated")
+
+    def forms_valid(self, form, inlines):
+        response = super(ProfileEditView, self).forms_valid(form, inlines)
+        if self.success_message:
+            messages.success(self.request, self.success_message)
+        return response
 
 
 class PersonApplicationListView(PersonMixin, DetailView):
