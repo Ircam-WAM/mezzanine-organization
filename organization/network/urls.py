@@ -45,7 +45,7 @@ urlpatterns = [
     # Profiles
     url('^profiles/$', PersonDetailView.as_view(), name='organization-network-profile'),
     url('^profiles/(?P<username>.*)/detail/$', PersonDetailView.as_view(), name='organization-network-profile-detail'),
-    
+
     url('^profiles/(?P<username>.*)/about/$', PersonAboutView.as_view(), name='organization-network-profile-about'),
 
     url('^profiles/(?P<username>.*)/following/$', PersonFollowingListView.as_view(), name='organization-network-profile-following'),
@@ -79,6 +79,7 @@ urlpatterns = [
 
     # Map
     url('^public-network-data/$', PublicNetworkData.as_view(), name='organization-public-network-data'),
+    url('^public-network-data-new/$', PublicNetworkDataNew.as_view(), name='organization-public-network-data'),
 
     url('^team/(?P<slug>.*)/members/$', TeamMembersView.as_view(), name='team-members'),
     url('^team/(?P<slug>.*)/publications/$', TeamPublicationsView.as_view(), name='team-publications'),

@@ -731,6 +731,54 @@ class JSONResponseMixin:
 
 class PublicNetworkData(JSONResponseMixin, TemplateView):
 
+    attributes = ['name', 'title', 'description', 'mappable_location',
+                    'card', 'logo', 'type', 'url', 'lat', 'lon', 'keywords']
+
+    def get_object_dict(self, object):
+        data = {}
+        for attribute in self.attributes:
+            if hasattr(object, attribute):
+                if attribute == 'type':
+                    value = ''
+                    if object.type and hasattr(object.type, 'name'):
+                        value = object.type.name
+                elif attribute == 'keywords':
+                    keywords = object.keywords.all()
+                    value = [keyword.keyword.title for keyword in keywords]
+                else:
+                    value = getattr(object, attribute)
+                data[attribute] = value
+            if attribute == 'logo' or attribute == 'card':
+                images = object.images.filter(type=attribute)
+                value = images.first().file.url if images else ''
+                data[attribute] = value
+        data['url'] = object.get_absolute_url()
+        return data
+
+    def get_context_data(self, **kwargs):
+        context = {}
+
+        organizations = Organization.objects.filter(is_on_map=True)
+        context['organizations'] = [self.get_object_dict(object) for object in organizations]
+
+        role, c = OrganizationRole.objects.get_or_create(key='Producer')
+        producers = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
+        context['producers'] = [self.get_object_dict(object) for object in producers]
+
+        persons = Person.objects.exclude(mappable_location__isnull=True)
+        context['persons'] = [self.get_object_dict(object) for object in persons]
+
+        residencies = ProjectResidency.objects.exclude(mappable_location__isnull=True)
+        context['residencies'] = [self.get_object_dict(object) for object in residencies]
+
+        return context
+
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)
+
+
+class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
+
     attributes = ['slug', 'name', 'title', 'description', 'mappable_location',
                     'card', 'logo', 'type', 'url', 'lat', 'lon', 'keywords',
                     'categories']
@@ -784,6 +832,7 @@ class PublicNetworkData(JSONResponseMixin, TemplateView):
 
     def render_to_response(self, context, **response_kwargs):
         return self.render_to_json_response(context, **response_kwargs)
+
 
 class TeamOwnableMixin(object):
 
