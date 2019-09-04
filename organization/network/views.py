@@ -780,7 +780,7 @@ class PublicNetworkData(JSONResponseMixin, TemplateView):
 class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
 
     attributes = ['slug', 'name', 'title', 'description', 'mappable_location',
-                    'card', 'logo', 'type', 'url', 'lat', 'lon', 'keywords',
+                    'card', 'logo', 'url', 'lat', 'lon', 'keywords',
                     'categories']
 
     def get_object_dict(self, object, categories):
@@ -788,10 +788,9 @@ class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
 
         for attribute in self.attributes:
             if hasattr(object, attribute):
-                if attribute == 'type':
-                    value = ''
-                    if object.type and hasattr(object.type, 'name'):
-                        value = object.type.name
+                if attribute == 'name':
+                    attribute = 'title'
+                    value = object.name
                 elif attribute == 'keywords':
                     keywords = object.keywords.all()
                     value = [keyword.keyword.title for keyword in keywords]
