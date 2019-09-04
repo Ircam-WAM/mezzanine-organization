@@ -188,6 +188,7 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     bio = RichTextField(_('biography'), blank=True)
     role = models.CharField(_('role'), max_length=256, blank=True, null=True)
+    occupation = models.CharField(_('occupation'), max_length=256, blank=True, null=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     hal_url = models.URLField(_('HAL url'), max_length=512, blank=True)
     karma = models.IntegerField(default=0, editable=False)
@@ -230,9 +231,9 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
 
 class PersonOptions(models.Model):
 
-    newsletter = models.BooleanField(_('newsletter'), default=False)
-    user_organization_notifications = models.BooleanField(_('Users and Organizations email notifications'), default=False)
-    on_map = models.BooleanField(_('Appear on the Artistic Network Map'), default=False)
+    newsletter = models.BooleanField(_('newsletter'), default=False, help_text=_('You will receive a periodic Newsletter by email from the STARTS editorial team.'))
+    user_organization_notifications = models.BooleanField(_('Users and Organizations email notifications'), default=False, help_text=_('You will receive some email notifications when events concerning your profile and interactions occur.'))
+    on_map = models.BooleanField(_('Appear on the Artistic Network Map'), default=False, help_text=_('Your profile card will be displayed on the geographical community map if you add your own or professional address to your profile.'))
     person = models.OneToOneField(Person, verbose_name=_('person'))
 
 

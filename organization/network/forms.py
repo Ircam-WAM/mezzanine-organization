@@ -205,7 +205,7 @@ class ProducerForm(ModelForm):
 class ClearableFileInputCustom(ClearableFileInput):
 
     template_with_initial = (
-        '<div class="row"><div class="col-md-13 change_file_field">%(input_text)s: %(input)s</div><div class="col-md-3">%(clear_template)s</div></div>'
+        '<div class="row"><div class="col-md-13 change_file_field">%(input_text)s:<br> %(input)s</div><div class="col-md-3">%(clear_template)s</div></div>'
     )
 
     template_with_clear = '%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label>'
@@ -248,14 +248,14 @@ class PersonForm(ModelForm):
 
     class Meta:
         model = Person
-        fields = ('profile_image', 'background_image', 'role', 'bio', 'address', 'address_2', 'postal_code',
+        fields = ('profile_image', 'background_image', 'occupation', 'bio', 'address', 'address_2', 'postal_code',
                 'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender',
                 'citizenship')
         widgets = {
             'profile_image' : ClearableFileInputCustom(),
             'background_image' : ClearableFileInputCustom(),
             'address': forms.Textarea(attrs={'rows':2,}),
-            'address_2': forms.Textarea(attrs={'rows':2,})
+            'address_2': forms.Textarea(attrs={'rows':2,}),
         }
 
 
