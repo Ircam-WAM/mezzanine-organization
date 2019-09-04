@@ -818,15 +818,15 @@ class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
         categories = ['producers',]
         role, c = OrganizationRole.objects.get_or_create(key='Producer')
         producers = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
-        context['objects'] = [self.get_object_dict(object, categories) for object in producers]
+        context['objects'] += [self.get_object_dict(object, categories) for object in producers]
 
         categories = ['persons',]
         persons = Person.objects.exclude(mappable_location__isnull=True)
-        context['objects'] = [self.get_object_dict(object, categories) for object in persons]
+        context['objects'] += [self.get_object_dict(object, categories) for object in persons]
 
         categories = ['residencies',]
         residencies = ProjectResidency.objects.exclude(mappable_location__isnull=True)
-        context['objects'] = [self.get_object_dict(object, categories) for object in residencies]
+        context['objects'] += [self.get_object_dict(object, categories) for object in residencies]
 
         return context
 
