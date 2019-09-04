@@ -795,17 +795,23 @@ class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
                 elif attribute == 'keywords':
                     keywords = object.keywords.all()
                     value = [keyword.keyword.title for keyword in keywords]
+                elif attribute == 'url':
+                    if object.url:
+                        value = object.url
+                    else:
+                        value = object.get_absolute_url()
                 else:
                     value = getattr(object, attribute)
                 data[attribute] = value
-            if attribute == 'logo' or attribute == 'card':
+            elif attribute == 'logo' or attribute == 'card':
                 images = object.images.filter(type=attribute)
                 value = images.first().file.url if images else ''
                 data[attribute] = value
-            if attribute == 'categories':
+            elif attribute == 'categories':
                 data[attribute] = categories
+            elif attribute == 'url':
+                data['url'] = object.get_absolute_url()
 
-        data['url'] = object.get_absolute_url()
         return data
 
     def get_context_data(self, **kwargs):
