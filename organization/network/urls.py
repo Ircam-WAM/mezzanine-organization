@@ -46,7 +46,7 @@ urlpatterns = [
     url('^profiles/$', PersonDetailView.as_view(), name='organization-network-profile'),
     url('^profiles/(?P<username>.*)/detail/$', PersonDetailView.as_view(), name='organization-network-profile-detail'),
 
-    url('^profiles/(?P<username>.*)/about/$', PersonAboutView.as_view(), name='organization-network-profile-about'),
+    url('^profiles/(?P<slug>.*)/about/$', PersonAboutView.as_view(), name='organization-network-profile-about'),
 
     url('^profiles/(?P<username>.*)/following/$', PersonFollowingListView.as_view(), name='organization-network-profile-following'),
     url('^profiles/(?P<username>.*)/followers/$', PersonFollowersListView.as_view(), name='organization-network-profile-followers'),

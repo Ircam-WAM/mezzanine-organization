@@ -206,7 +206,7 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("organization-network-person-detail", kwargs={'slug': self.slug})
+        return reverse("organization-network-profile-about", kwargs={'slug': self.slug})
 
     def set_names(self):
         names = self.title.split(' ')
