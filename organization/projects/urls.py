@@ -21,14 +21,42 @@
 
 from __future__ import unicode_literals
 
-import django.views.i18n
 from django.conf.urls import include, url
-from django.conf.urls.i18n import i18n_patterns
 from django.contrib.auth.decorators import permission_required
-from mezzanine.core.views import direct_to_template
-from mezzanine.conf import settings
+from rest_framework.routers import DefaultRouter
+from organization.projects.views import (
+        # Rest Views
+        ResidencyBlogArticleViewSet, ResidencyViewSet,
+        # Monolith views
+        RedirectView,
+        ResidencyBlogFeedView, ResidencyBlogArticleProfileView,
+        DynamicContentProjectView, ProjectPageView,
 
-from organization.projects.views import *
+        # Project
+        ProjectListView, ProjectArchivesListView,
+        ProjectTeamListView, ProjectArchivesTeamListView,
+        ProjectDemoDetailView, ProjectBlogPageView,
+        ProjectDetailView,
+        # Tech
+        ProjectTechListCallView, ProjectTechCreateView,
+        ProjectTechUpdateView, ProjectTechValidateView,
+        ProjectTechDetailView,
+        # Residency
+        ProjectResidencyListView, ProjectResidencyCreateView,
+        ProjectResidencyDetailView,
+        # Calls
+        ProjectCallListView, ProjectCallListAsEventsView,
+        ProjectCallDetailView
+)
+
+router = DefaultRouter()
+router.register(
+    r"residency-blog", ResidencyBlogArticleViewSet, base_name="residency-blog"
+)
+
+router.register(
+    r"residency", ResidencyViewSet, base_name="residency"
+)
 
 urlpatterns = [
     url("^dynamic-content-project/$",  permission_required('project.can_edit')(DynamicContentProjectView.as_view()), name='dynamic-content-project'),
@@ -73,8 +101,17 @@ urlpatterns = [
     url("^calls/as_events/$", ProjectCallListAsEventsView.as_view(), name='organization-call-list-as-events'),
     url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-project-call-detail'),
 
-    # Residency Blog
-    url("^residency-blog/list/(?P<filter>((all)|(followed))?)$",
-        ResidencyBlogArticleListView.as_view(),
-        name='residency-blog-article-list-view'),
+    url(
+        "^profiles/(?P<username>.*)/residency-blog/$",
+        ResidencyBlogArticleProfileView.as_view(),
+        name="organization-project-profile-residency-blog",
+    ),
+
+    url(
+        "^projects/residency-blog/$",
+        ResidencyBlogFeedView.as_view(),
+        name="organization-project-residency-blog-feed",
+    ),
+
+    url(r"^api/", include((router.urls))),
 ]

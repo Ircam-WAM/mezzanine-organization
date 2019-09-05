@@ -45,10 +45,13 @@ urlpatterns = [
     # Profiles
     url('^profiles/$', PersonDetailView.as_view(), name='organization-network-profile'),
     url('^profiles/(?P<username>.*)/detail/$', PersonDetailView.as_view(), name='organization-network-profile-detail'),
+
+    url('^profiles/(?P<slug>.*)/about/$', PersonAboutView.as_view(), name='organization-network-profile-about'),
+
     url('^profiles/(?P<username>.*)/following/$', PersonFollowingListView.as_view(), name='organization-network-profile-following'),
     url('^profiles/(?P<username>.*)/followers/$', PersonFollowersListView.as_view(), name='organization-network-profile-followers'),
     url('^profiles/applications/$', PersonApplicationListView.as_view(), name='organization-network-profile-applications'),
-    url('^profiles/edit/$', ProfileSettingsView.as_view(), name='organization-network-profile-edit'),
+    url('^profiles/edit/$', ProfileEditView.as_view(), name='organization-network-profile-edit'),
     # url('^messages/', include('postman.urls')),
 
     # Person autocomplete
@@ -76,6 +79,7 @@ urlpatterns = [
 
     # Map
     url('^public-network-data/$', PublicNetworkData.as_view(), name='organization-public-network-data'),
+    url('^public-network-data-new/$', PublicNetworkDataNew.as_view(), name='organization-public-network-data'),
 
     url('^team/(?P<slug>.*)/members/$', TeamMembersView.as_view(), name='team-members'),
     url('^team/(?P<slug>.*)/publications/$', TeamPublicationsView.as_view(), name='team-publications'),

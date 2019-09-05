@@ -160,6 +160,14 @@ def get_type_link(objects, slug):
     return None
 
 @register.filter
+def get_image_link(obj):
+    try:
+        link_img = LinkImage.objects.get(link=obj)
+    except LinkImage.DoesNotExist:
+        return None
+    return link_img.image
+
+@register.filter
 def in_category(objects, category):
     return objects.filter(category=type)
 
@@ -568,3 +576,14 @@ def to_str(a):
 @register.filter
 def get_object_type(obj):
     return type(obj)
+
+@register.filter
+def get_person(user):
+    if hasattr(user, 'person'):
+        return user.person
+    return None
+
+
+@register.filter
+def is_object(obj_a, obj_b):
+    return obj_a.__class__.__name__ == obj_b

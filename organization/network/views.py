@@ -256,6 +256,12 @@ class PersonDetailView(PersonMixin, SlugMixin, DynamicContentMixin, DetailView, 
         return context
 
 
+class PersonAboutView(DetailView, PersonMixin):
+
+    model = Person
+    template_name = 'network/person/about_detail.html'
+
+
 class PersonFollowingListView(PersonDetailView):
 
     model = Person
@@ -274,13 +280,22 @@ class PersonFollowersListView(PersonDetailView):
         return self.person.followers.all()
 
 
-class ProfileSettingsView(PersonMixin, LoginRequiredMixin, UpdateWithInlinesView):
+class ProfileEditView(LoginRequiredMixin,
+                        PersonMixin,
+                        UpdateWithInlinesView):
 
     model = Person
     form_class = PersonForm
     inlines = [PersonLinkInline, PersonOptionsInline]
     template_name = 'network/person/profile_settings.html'
     success_url = reverse_lazy('organization-network-profile-edit')
+    success_message = _("Your profile has been updated")
+
+    def forms_valid(self, form, inlines):
+        response = super(ProfileEditView, self).forms_valid(form, inlines)
+        if self.success_message:
+            messages.success(self.request, self.success_message)
+        return response
 
 
 class PersonApplicationListView(PersonMixin, DetailView):
@@ -760,6 +775,69 @@ class PublicNetworkData(JSONResponseMixin, TemplateView):
 
     def render_to_response(self, context, **response_kwargs):
         return self.render_to_json_response(context, **response_kwargs)
+
+
+class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
+
+    attributes = ['slug', 'name', 'title', 'description', 'mappable_location',
+                    'card', 'logo', 'url', 'lat', 'lon', 'keywords',
+                    'categories']
+
+    def get_object_dict(self, object, categories):
+        data = {}
+
+        for attribute in self.attributes:
+            if hasattr(object, attribute):
+                if attribute == 'name':
+                    attribute = 'title'
+                    value = object.name
+                elif attribute == 'keywords':
+                    keywords = object.keywords.all()
+                    value = [keyword.keyword.title for keyword in keywords]
+                elif attribute == 'url':
+                    if object.url:
+                        value = object.url
+                    else:
+                        value = object.get_absolute_url()
+                else:
+                    value = getattr(object, attribute)
+                data[attribute] = value
+            elif attribute == 'logo' or attribute == 'card':
+                images = object.images.filter(type=attribute)
+                value = images.first().file.url if images else ''
+                data[attribute] = value
+            elif attribute == 'categories':
+                data[attribute] = categories
+            elif attribute == 'url':
+                data['url'] = object.get_absolute_url()
+
+        return data
+
+    def get_context_data(self, **kwargs):
+        context = {}
+
+        categories = ['organizations',]
+        organizations = Organization.objects.filter(is_on_map=True)
+        context['objects'] = [self.get_object_dict(object, categories) for object in organizations]
+
+        categories = ['producers',]
+        role, c = OrganizationRole.objects.get_or_create(key='Producer')
+        producers = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
+        context['objects'] += [self.get_object_dict(object, categories) for object in producers]
+
+        categories = ['persons',]
+        persons = Person.objects.exclude(mappable_location__isnull=True)
+        context['objects'] += [self.get_object_dict(object, categories) for object in persons]
+
+        categories = ['residencies',]
+        residencies = ProjectResidency.objects.exclude(mappable_location__isnull=True)
+        context['objects'] += [self.get_object_dict(object, categories) for object in residencies]
+
+        return context
+
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)
+
 
 class TeamOwnableMixin(object):
 
