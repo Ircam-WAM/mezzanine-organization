@@ -323,9 +323,11 @@ TEMPLATES = [{
                                                   ),
                             'loaders': [
                                 'mezzanine.template.loaders.host_themes.Loader',
+                                ('django.template.loaders.cached.Loader', [
                                 'django.template.loaders.filesystem.Loader',
                                 'django.template.loaders.app_directories.Loader',
-                                ],
+                                ])
+                            ],
                         }
             }]
 
@@ -535,7 +537,7 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'organization-projects.ProjectPage',
                         'shop.Product',
                         'organization-magazine.Article')
-                        
+
 # authorize models which does not heritate from Displayable
 SEARCH_MODEL_NO_DISPLAYABLE = ('organization-network.Person',)
 
