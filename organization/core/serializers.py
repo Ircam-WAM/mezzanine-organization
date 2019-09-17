@@ -9,7 +9,9 @@ class UserPublicSerializer(serializers.ModelSerializer):
         fields = ("first_name", "last_name", "profile_image", "username")
 
     def get_profile_image(self, obj):
-        if not obj.person or not obj.person.profile_image:
+        if (not hasattr(obj, "person") or
+                not hasattr(obj.person, "profile_image") or
+                not obj.person.profile_image):
             return None
         return obj.person.profile_image
 
@@ -22,6 +24,8 @@ class UserPrivateSerializer(serializers.ModelSerializer):
                   "username", "email")
 
     def get_profile_image(self, obj):
-        if not obj.person or not obj.person.profile_image:
+        if (not hasattr(obj, "person") or
+                not hasattr(obj.person, "profile_image") or
+                not obj.person.profile_image):
             return None
         return obj.person.profile_image
