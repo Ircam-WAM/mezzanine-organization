@@ -452,7 +452,7 @@ class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
         """
         queryset = self.get_queryset()
 
-        filter_type = self.request.query_params.get("filter", None)
+        filter_type = request.query_params.get("filter", None)
         if filter_type == "followed":
             if not request.user.is_authenticated():
                 raise NotAuthenticated("followed filter requires authentication")
@@ -466,7 +466,7 @@ class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(article__user=self.request.user)
 
         elif filter_type == "user":
-            filter_username = self.request.query_params.get("filter.username", None)
+            filter_username = request.query_params.get("filter.username", None)
             if filter_username is None:
                 raise ValidationError("filter.username query parameter is mandatory")
             queryset = queryset.filter(article__user__username=filter_username)

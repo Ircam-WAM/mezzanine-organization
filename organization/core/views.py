@@ -56,12 +56,18 @@ from organization.core.decorators import ajax_required
 from string import punctuation
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 
 from ulysses.profiles.models import Individual
 from ulysses.composers.models import Composer
 
 from django.db.models.fields.reverse_related import ManyToOneRel
 
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import NotAuthenticated
+from rest_framework.response import Response
+from organization.core.serializers import UserPrivateSerializer
 
 class SlugMixin(object):
 
@@ -382,3 +388,15 @@ def update_user_profile(sender, instance, created, **kwargs):
     if created:
         individual = Individual.objects.get_or_create(user=instance)
         composer = Composer.objects.get_or_create(user=instance)
+
+class UserDetailAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+    serializer_class = UserPrivateSerializer
+
+    def get(self, request):
+        user = request.user
+        if not user:
+            raise NotAuthenticated()
+        serializer = self.serializer_class(user)
+        return Response(serializer.data)
