@@ -7,7 +7,8 @@ The main module for Mezzo_, a complete CMS for organizations with complex workfl
 
 # Local install
 
-You may want to install the project on your local environment instead of docker to use different tools (linter etc..).
+You may want to install the project on your local environment instead of docker to use different tools (linter etc..).  
+If you're using OSX, you may want to avoid using Docker For Mac because of a [high CPU utilization issue](https://github.com/docker/for-mac/issues/1759)
 
 ## Dependencies
 
