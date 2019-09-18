@@ -457,7 +457,7 @@ class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
             if not request.user.is_authenticated():
                 raise NotAuthenticated("followed filter requires authentication")
             person = Person.objects.get(user=self.request.user)
-            articles = Article.objects.filter(user__in=following_ids)
+            articles = Article.objects.filter(user__in=person.following.all())
             queryset = self.get_queryset().filter(article__in=articles)
 
         elif filter_type == "myposts":
