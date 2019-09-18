@@ -1,0 +1,59 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "*"
+pylint = "*"
+black = "*"
+isort = "*"
+
+[packages]
+pyquery = "*"
+humanize = "*"
+django-modeltranslation = "==0.12.2"
+django-meta = "==1.3.1"
+django-bower = "==5.2.0"
+django-debug-toolbar = "==1.9.1"
+django-extensions = "==1.7.4"
+django-countries = "==5.3"
+django-querysetsequence = "==0.6.1"
+django-autocomplete-light = "==3.2.1"
+xlrd = "==1.0.0"
+ipython = "*"
+# pygraphviz = "*"
+sphinx-rtd-theme = "*"
+pandas = "*"
+xlwt = "==1.2.0"
+workalendar = "==1.0.0"
+django-instagram = {git = "https://github.com/marcopompili/django-instagram.git",ref = "master"}
+django-extra-views = "==0.8.0"
+bleach = "==2.1.3"
+django-hijack = "==2.1.4"
+django-hijack-admin = "==2.1.4"
+django-compat = "==1.0.14"
+django-guardian = "==1.4.9"
+pyldap = "*"
+django-auth-ldap = "==1.2.10"
+selenium = "==3.11.0"
+lxml = "==4.2.0"
+django-rdf-io = {git = "https://github.com/Ircam-Web/django-rdf-io.git",ref = "master"}
+django-skosxl = {git = "https://github.com/Ircam-Web/django-skosxl.git",ref = "master"}
+django-extended-choices = "==1.3.1"
+rdflib = "*"
+django-postman = "==3.6.1"
+coverage = "==4.5.1"
+django-taggit = "==0.22.2"
+djangorestframework = "==3.8.2"
+django-cors-middleware = "==1.3.1"
+mezzanine-organization = {editable = true,path = "."}
+Django = "==1.10.8"
+Mezzanine = "==4.2.3"
+GitPython = "*"
+Sphinx = "*"
+DateTimeRange = "==0.2.8"
+isort = "*"
+
+[requires]
+python_version = "3.7"
