@@ -115,7 +115,7 @@ class ProjectListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(ProjectListView, self).get_context_data(*args, **kwargs)
         project_list = []
-        project_list.append({'title': 'Available projects', 'objects': Project.objects.filter(validation_status=3).order_by('title')})
+        # project_list.append({'title': 'Available projects', 'objects': Project.objects.filter(validation_status=3).order_by('title')})
         project_list.append({'title': 'Ongoing projects', 'objects': Project.objects.filter(validation_status=4).order_by('title')})
         project_list.append({'title': 'Other projects', 'objects': Project.objects.filter(validation_status=5).order_by('title')})
         context['project_list'] = project_list
@@ -452,7 +452,7 @@ class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
         """
         queryset = self.get_queryset()
 
-        filter_type = self.request.query_params.get("filter", None)
+        filter_type = request.query_params.get("filter", None)
         if filter_type == "followed":
             if not request.user.is_authenticated():
                 raise NotAuthenticated("followed filter requires authentication")
@@ -466,7 +466,7 @@ class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(article__user=self.request.user)
 
         elif filter_type == "user":
-            filter_username = self.request.query_params.get("filter.username", None)
+            filter_username = request.query_params.get("filter.username", None)
             if filter_username is None:
                 raise ValidationError("filter.username query parameter is mandatory")
             queryset = queryset.filter(article__user__username=filter_username)
