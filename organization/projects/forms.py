@@ -187,17 +187,19 @@ class DynamicContentProjectPageForm(autocomplete.FutureModelForm):
 
 
 class TopicFilterForm(forms.Form):
-        
-    topics = ProjectTopic.objects.all()
-    TOPICS = []
-    
-    for topic in topics:
-        if topic.projects.count():
-            TOPICS.append((topic.id, topic.name))
 
-    filter = forms.ChoiceField(choices=TOPICS, required=False)
+    def get_topics():
+        topics = ProjectTopic.objects.all()
+        topics_list = []
+
+        for topic in topics_list:
+            if topic.projects.count():
+                topics_list.append((topic.id, topic.name))
+        return topics_list
+
+    filter = forms.ChoiceField(choices=get_topics(), required=False)
 
 
 class TypeFilterForm(forms.Form):
-        
+
     filter = forms.ChoiceField(choices=PROJECT_TYPE_CHOICES, required=False)

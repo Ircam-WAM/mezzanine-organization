@@ -326,7 +326,7 @@ class ProjectPageAdmin(TeamOwnableAdmin, DisplayableAdmin):
                 ]
     # list_filter = ['type', 'program', 'program_type', null_filter('external_id')]
     # list_display = ['title', 'date_from', 'date_to', 'status', 'admin_link']
-    actions = actions_to_duplicate()
+    # actions = actions_to_duplicate()
     search_fields = ['title', 'project__title',]
 
 
