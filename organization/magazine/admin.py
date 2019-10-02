@@ -43,7 +43,7 @@ class ArticlePlaylistInline(TabularDynamicInlineAdmin):
 
 
 class ArticleAdmin(TeamOwnableAdmin):
-    
+
     model = Article
 
 
@@ -61,7 +61,7 @@ class DynamicContentArticleInline(TabularDynamicInlineAdmin):
 
 
 class DynamicMultimediaArticleInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaArticle
     form = DynamicMultimediaArticleForm
 
@@ -76,7 +76,7 @@ class ArticleAdminDisplayable(TeamOwnableAdmin, DisplayableAdmin):
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     list_display = ('title', 'department', 'publish_date', 'status', 'user')
     exclude = ('related_posts', )
-    
+
     filter_horizontal = ['categories',]
     inlines = [ArticleImageInline,
               ArticlePersonAutocompleteInlineAdmin,
@@ -86,7 +86,7 @@ class ArticleAdminDisplayable(TeamOwnableAdmin, DisplayableAdmin):
               ArticlePlaylistInline]
     list_filter = [ 'status', 'department', ] #'keywords'
 
-    actions = actions_to_duplicate()
+    # actions = actions_to_duplicate()
 
     def save_form(self, request, form, change):
         """
@@ -125,7 +125,7 @@ class BriefAdminDisplayable(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
 
 class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicContentMagazineContent
     form = DynamicContentMagazineContentForm
 
