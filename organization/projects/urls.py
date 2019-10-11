@@ -102,15 +102,15 @@ urlpatterns = [
     url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-project-call-detail'),
 
     url(
-        "^profiles/(?P<username>.*)/residency-blog/$",
+        "^profiles/(?P<username>.*)/blog/$",
         ResidencyBlogArticleProfileView.as_view(),
-        name="organization-project-profile-residency-blog",
+        name="organization-project-profile-blog",
     ),
 
     url(
-        "^projects/residency-blog/$",
+        "^projects/blog/$",
         ResidencyBlogFeedView.as_view(),
-        name="organization-project-residency-blog-feed",
+        name="organization-project-blog-feed",
     ),
 
     url(r"^api/", include((router.urls))),

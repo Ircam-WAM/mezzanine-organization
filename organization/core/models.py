@@ -38,6 +38,8 @@ from mezzanine.utils.models import base_concrete_model, get_user_model_name
 
 from django_countries.fields import CountryField
 
+from versatileimagefield.fields import VersatileImageField
+
 
 COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')),
     ('red', _('red')), ('white', _('white')), ('blue', _('blue')),
@@ -168,7 +170,12 @@ class NamedSlugged(GenericSlugged):
 class Titled(models.Model):
     """Abstract model providing a title field"""
 
-    title = models.CharField(_('title'), max_length=1024)
+    title = models.CharField(
+        _('title'),
+        max_length=1024,
+        blank=True,
+        default=""
+    )
 
     class Meta:
         abstract = True
@@ -241,6 +248,35 @@ class Image(Titled, Description, Orderable):
         value = self.description
         if not value:
             value = self.file.name
+        if not value:
+            value = ""
+        return value
+
+
+class VersatileImage(Titled, Description):
+
+    image = VersatileImageField(
+        _("Image"),
+        upload_to="images",
+        blank=True,
+        null=True,
+        default=None
+    )
+    image_credits = models.CharField(
+        _('credits'),
+        max_length=256,
+        blank=True,
+        null=True,
+        default=""
+    )
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        value = self.description
+        if not value:
+            value = self.image.name
         if not value:
             value = ""
         return value
