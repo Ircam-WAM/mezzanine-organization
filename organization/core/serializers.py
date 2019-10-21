@@ -13,7 +13,7 @@ class UserPublicSerializer(serializers.ModelSerializer):
                 not hasattr(obj.person, "profile_image") or
                 not obj.person.profile_image):
             return None
-        return obj.person.profile_image
+        return obj.person.profile_image.url
 
 class UserPrivateSerializer(serializers.ModelSerializer):
     profile_image = serializers.SerializerMethodField()
@@ -28,4 +28,4 @@ class UserPrivateSerializer(serializers.ModelSerializer):
                 not hasattr(obj.person, "profile_image") or
                 not obj.person.profile_image):
             return None
-        return obj.person.profile_image
+        return obj.person.profile_image.url

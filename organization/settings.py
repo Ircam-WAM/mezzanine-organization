@@ -279,6 +279,7 @@ INSTALLED_APPS = [
     'extra_views',
     'rdf_io',
     'skosxl',
+    'versatileimagefield',
 ]
 
 CUSTOM_MODULES = False

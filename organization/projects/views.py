@@ -419,11 +419,11 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
 # Create, Update & List blog posts
 class ResidencyBlogArticleProfileView(PersonMixin, SlugMixin, DetailView):
     model = Person
-    template_name = 'projects/residency_blog_profile.html'
+    template_name = 'projects/blog_profile.html'
 
 
 class ResidencyBlogFeedView(TemplateView):
-    template_name = 'projects/residency_blog_feed.html'
+    template_name = 'projects/blog_feed.html'
 
 
 class ResidencyViewSet(viewsets.ModelViewSet):
@@ -457,8 +457,8 @@ class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
             if not request.user.is_authenticated():
                 raise NotAuthenticated("followed filter requires authentication")
             person = Person.objects.get(user=self.request.user)
-            articles = Article.objects.filter(user__in=following_ids)
-            queryset = self.get_queryset().filter(article__in=articles)
+            articles = Article.objects.filter(user__in=person.following.all())
+            queryset = queryset.filter(article__in=articles)
 
         elif filter_type == "myposts":
             if not request.user.is_authenticated():
@@ -473,6 +473,8 @@ class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
 
         elif filter_type != "all" and filter_type is not None:
             raise ValidationError("filter query parameter is invalid (%s)" % filter_type)
+
+        queryset = queryset.order_by('-article__publish_date')
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)

@@ -524,7 +524,7 @@ class ProjectResidencyUserImage(UserImage):
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('project residency user image'), related_name='user_images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-class ProjectResidencyArticle(models.Model):
+class ProjectResidencyArticle(VersatileImage):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='residency_articles', blank=True, null=True, on_delete=models.SET_NULL)
     article = models.ForeignKey(Article, verbose_name=_('article'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
