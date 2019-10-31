@@ -49,13 +49,19 @@ class ProductLinkTranslationOptions(TranslationOptions):
     fields = ('title',)
 
 
-@register(ProductPrestashopProduct)
-class ProductPrestashopProductTranslationOptions(TranslationOptions):
+@register(ProductExternalShop)
+class ProductExternalShopTranslationOptions(TranslationOptions):
 
     pass
 
 
 @register(TeamProduct)
 class TeamProductTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(CustomProductImage)
+class CustomProductImageranslationOptions(TranslationOptions):
 
     pass

@@ -72,16 +72,16 @@ class ProductLink(Link):
     product = models.ForeignKey(Product, verbose_name=_('product'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-class ProductPrestashopProduct(models.Model):
+class ProductExternalShop(models.Model):
 
-    product = models.OneToOneField(Product, verbose_name=_('product'), related_name='prestashop_products')
+    product = models.OneToOneField(Product, verbose_name=_('product'), related_name='product_external_shop')
     external_id = models.IntegerField(verbose_name=_('external id'), null=True, blank=True)
     slug = models.CharField(max_length=255, verbose_name=_('slug'), null=True, blank=True)
     url = models.CharField(max_length=512, verbose_name=_('url'), null=True, blank=True)
 
     class Meta:
-        verbose_name = _("prestashop product")
-        verbose_name_plural = _("prestashop products")
+        verbose_name = _("external shop")
+        verbose_name_plural = _("external shops")
 
     def __str__(self):
         return ' - '.join((self.product.title, str(self.external_id)))
@@ -96,3 +96,7 @@ class TeamProduct(models.Model):
         verbose_name = _("team")
         verbose_name_plural = _("teams")
 
+
+class CustomProductImage(Image):
+    
+    product = models.ForeignKey(Product, verbose_name=_('product'), related_name='custom_images')

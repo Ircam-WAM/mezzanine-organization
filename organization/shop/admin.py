@@ -49,9 +49,9 @@ class ProductLinkInline(TabularDynamicInlineAdmin):
 
     model = ProductLink
 
-class ProductPrestashopProductInline(TabularDynamicInlineAdmin):
+class ProductExternalShopInline(TabularDynamicInlineAdmin):
 
-    model = ProductPrestashopProduct
+    model = ProductExternalShop
 
 
 class TeamProductInline(TabularDynamicInlineAdmin):
@@ -59,10 +59,18 @@ class TeamProductInline(TabularDynamicInlineAdmin):
     model = TeamProduct
 
 
-class CustomProductAdmin(ProductAdmin):
+class ProductImageAdmin(TabularDynamicInlineAdmin):
 
-    inlines = [TeamProductInline, ProductImageAdmin, ProductVariationAdmin, ProductLinkInline,
-                ProductPrestashopProductInline]
+    model = CustomProductImage
+
+
+class CustomProductAdmin(ProductAdmin):
+    
+    exclude = ('Images',)
+    inlines = [ProductExternalShopInline, TeamProductInline, ProductImageAdmin,
+                ProductVariationAdmin, ProductLinkInline, ]
+
+
 
 
 admin.site.register(ProductList, ProductListAdmin)
