@@ -532,7 +532,7 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'organization-projects.ProjectPage',
                         'shop.Product',
                         'organization-magazine.Article')
-                        
+
 # authorize models which does not heritate from Displayable
 SEARCH_MODEL_NO_DISPLAYABLE = ('organization-network.Person',)
 
@@ -712,3 +712,7 @@ HAL_YEAR_BEGIN = 1977
 
 # Ownable
 OWNABLE_MODELS_ALL_EDITABLE = []
+
+# ARTICLE LIST
+ARTICLE_KEYWORDS = ['', ]
+
