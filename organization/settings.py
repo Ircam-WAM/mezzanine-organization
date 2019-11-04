@@ -458,7 +458,7 @@ ADMIN_MENU_ORDER = (
     (_('Events'), ('mezzanine_agenda.Event',
                   'mezzanine_agenda.Season',
                   'mezzanine_agenda.EventLocation',
-                  'mezzanine_agenda.EventShop',
+                  'mezzanine_agenda.ExternalShop',
                   'mezzanine_agenda.EventPrice',
                   'mezzanine_agenda.EventCategory',
                   'organization-agenda.EventPublicType',
