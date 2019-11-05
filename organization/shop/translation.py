@@ -61,7 +61,7 @@ class TeamProductTranslationOptions(TranslationOptions):
     pass
 
 
-@register(CustomProductImage)
-class CustomProductImageranslationOptions(TranslationOptions):
+# @register(CustomProductImage)
+# class CustomProductImageranslationOptions(TranslationOptions):
 
-    pass
+#     pass

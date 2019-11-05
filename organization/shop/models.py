@@ -24,6 +24,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
+from mezzanine_agenda.models import ExternalShop
 from cartridge.shop.models import Product
 from organization.network.models import Team
 from organization.core.models import *
@@ -76,8 +77,7 @@ class ProductExternalShop(models.Model):
 
     product = models.OneToOneField(Product, verbose_name=_('product'), related_name='product_external_shop')
     external_id = models.IntegerField(verbose_name=_('external id'), null=True, blank=True)
-    slug = models.CharField(max_length=255, verbose_name=_('slug'), null=True, blank=True)
-    url = models.CharField(max_length=512, verbose_name=_('url'), null=True, blank=True)
+    shop = models.OneToOneField(ExternalShop, verbose_name=_('shop'), related_name='product_external_shop', null=True, blank=True)
 
     class Meta:
         verbose_name = _("external shop")
@@ -97,6 +97,6 @@ class TeamProduct(models.Model):
         verbose_name_plural = _("teams")
 
 
-class CustomProductImage(Image):
+# class CustomProductImage(Image):
     
-    product = models.ForeignKey(Product, verbose_name=_('product'), related_name='custom_images')
+#     product = models.ForeignKey(Product, verbose_name=_('product'), related_name='custom_images')

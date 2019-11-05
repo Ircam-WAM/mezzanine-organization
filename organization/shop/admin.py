@@ -59,18 +59,15 @@ class TeamProductInline(TabularDynamicInlineAdmin):
     model = TeamProduct
 
 
-class ProductImageAdmin(TabularDynamicInlineAdmin):
+# class ProductImageAdmin(TabularDynamicInlineAdmin):
 
-    model = CustomProductImage
+#     model = CustomProductImage
 
 
 class CustomProductAdmin(ProductAdmin):
     
-    exclude = ('Images',)
     inlines = [ProductExternalShopInline, TeamProductInline, ProductImageAdmin,
                 ProductVariationAdmin, ProductLinkInline, ]
-
-
 
 
 admin.site.register(ProductList, ProductListAdmin)

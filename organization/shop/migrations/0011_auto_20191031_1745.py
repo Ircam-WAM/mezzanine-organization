@@ -15,26 +15,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='CustomProductImage',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('_order', mezzanine.core.fields.OrderField(null=True, verbose_name='Order')),
-                ('description', models.TextField(blank=True, verbose_name='description')),
-                ('title', models.CharField(max_length=1024, verbose_name='title')),
-                ('title_fr', models.CharField(max_length=1024, null=True, verbose_name='title')),
-                ('title_en', models.CharField(max_length=1024, null=True, verbose_name='title')),
-                ('file', mezzanine.core.fields.FileField(max_length=1024, verbose_name='Image')),
-                ('credits', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
-                ('credits_fr', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
-                ('credits_en', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
-                ('type', models.CharField(choices=[('logo', 'logo'), ('logo_white', 'logo white'), ('logo_black', 'logo black'), ('logo_header', 'logo header'), ('logo_back', 'logo back'), ('logo_footer', 'logo footer'), ('slider', 'slider'), ('card', 'card'), ('page_slider', 'page - slider'), ('page_featured', 'page - featured')], max_length=64, verbose_name='type')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='custom_images', to='shop.Product', verbose_name='product')),
-            ],
-            options={
-                'ordering': ('_order',),
-            },
-        ),
         migrations.RenameModel(
             old_name='ProductPrestashopProduct',
             new_name='ProductExternalShop'
