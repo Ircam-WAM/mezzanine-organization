@@ -575,3 +575,9 @@ def get_action_name(action_id):
         return 'edit'
     elif action_id == 3:
         return 'remove'
+
+
+# Limit queryset
+@register.filter
+def limit(q, nb):
+    return q[:nb]

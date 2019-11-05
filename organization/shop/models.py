@@ -77,7 +77,7 @@ class ProductExternalShop(models.Model):
 
     product = models.OneToOneField(Product, verbose_name=_('product'), related_name='product_external_shop')
     external_id = models.IntegerField(verbose_name=_('external id'), null=True, blank=True)
-    shop = models.OneToOneField(ExternalShop, verbose_name=_('shop'), related_name='product_external_shop', null=True, blank=True)
+    shop = models.ForeignKey(ExternalShop, verbose_name=_('shop'), related_name='product_external_shop', null=True, blank=True)
 
     class Meta:
         verbose_name = _("external shop")
