@@ -52,7 +52,7 @@ class ProductLinkTranslationOptions(TranslationOptions):
 @register(ProductExternalShop)
 class ProductExternalShopTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ['label', ]
 
 
 @register(TeamProduct)
@@ -65,3 +65,17 @@ class TeamProductTranslationOptions(TranslationOptions):
 # class CustomProductImageranslationOptions(TranslationOptions):
 
 #     pass
+
+
+@register(ProductKeyword)
+class ProductKeywordTranslationOptions(TranslationOptions):
+
+    fields = ['title', ]
+
+
+
+@register(Product.p_keywords.through)
+class ProductKeyword_productTranslationOptions(TranslationOptions):
+
+    pass
+
