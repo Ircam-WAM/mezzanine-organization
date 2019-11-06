@@ -32,6 +32,7 @@ from organization.magazine.forms import *
 from organization.magazine.translation import *
 #from organization.core.admin import DuplicateAdmin
 from organization.core.utils import actions_to_duplicate, get_other_sites
+from organization.projects.models import ProjectResidencyArticle
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
 
@@ -72,10 +73,59 @@ class ArticleRelatedTitleAdmin(TranslationTabularInline):
     model = ArticleRelatedTitle
 
 
+class BlogPostListFilter(admin.SimpleListFilter):
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = 'Blog Post'
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'blog-post'
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. The first element in each
+        tuple is the coded value for the option that will
+        appear in the URL query. The second element is the
+        human-readable name for the option that will appear
+        in the right sidebar.
+        """
+        return (
+            ('include', 'Only Blog Post'),
+            ('exclude', 'Not Blog Post'),
+        )
+
+    def queryset(self, request, queryset):
+        """
+        Returns the filtered queryset based on the value
+        provided in the query string and retrievable via
+        `self.value()`.
+        """
+        if self.value() != 'include' and self.value() != 'exclude':
+            return queryset
+
+        # Exclude articles referenced in ProjectResidencyArticle
+        # (where blog lives)
+        residency_articles = (ProjectResidencyArticle
+                              .objects
+                              .exclude(article__isnull=True)
+                              .values_list('article_id', flat=True))
+        if self.value() == 'include':
+            return queryset.filter(id__in=residency_articles)
+        else:
+            return queryset.exclude(id__in=residency_articles)
+
+
 class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin): #, DuplicateAdmin
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
-    list_display = ('title', 'department', 'publish_date', 'status', 'user')
+    list_display = (
+        'title',
+        'department',
+        'publish_date',
+        'status',
+        'user',
+        'is_blog_article'
+    )
     exclude = ('related_posts', )
 
     filter_horizontal = ['categories',]
@@ -85,9 +135,15 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin): #, DuplicateAdmin
               ArticleRelatedTitleAdmin,
               DynamicContentArticleInline,
               ArticlePlaylistInline]
-    list_filter = [ 'status', 'department', ] #'keywords'
+    list_filter = ['status', 'department', BlogPostListFilter] #'keywords'
 
     actions = actions_to_duplicate()
+
+    def is_blog_article(self, obj):
+        return not (ProjectResidencyArticle
+                    .objects
+                    .filter(article__id=obj.id)
+                    .exists())
 
     def save_form(self, request, form, change):
         """
