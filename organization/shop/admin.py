@@ -33,7 +33,6 @@ from organization.shop.models import *
 from organization.shop.translation import *
 from cartridge.shop.admin import *
 
-
 class ProductListProductInline(TabularDynamicInlineAdmin):
 
     model = ProductListProduct
