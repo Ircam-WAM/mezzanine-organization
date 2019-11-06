@@ -67,15 +67,15 @@ class TeamProductTranslationOptions(TranslationOptions):
 #     pass
 
 
-@register(ProductKeyword)
-class ProductKeywordTranslationOptions(TranslationOptions):
+# @register(ProductKeyword)
+# class ProductKeywordTranslationOptions(TranslationOptions):
 
-    fields = ['title', ]
+#     fields = ['title', ]
 
 
 
-@register(Product.p_keywords.through)
-class ProductKeyword_productTranslationOptions(TranslationOptions):
+# @register(Product.p_keywords.through)
+# class ProductKeyword_productTranslationOptions(TranslationOptions):
 
-    pass
+#     pass
 

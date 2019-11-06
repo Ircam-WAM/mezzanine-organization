@@ -64,9 +64,9 @@ class TeamProductInline(TabularDynamicInlineAdmin):
 #     model = CustomProductImage
 
 
-class ProductKeywordInline(TabularDynamicInlineAdmin):
+# class ProductKeywordInline(TabularDynamicInlineAdmin):
     
-    model = Product.p_keywords.through
+#     model = Product.p_keywords.through
 
 
 class CustomProductAdmin(ProductAdmin):
@@ -75,12 +75,12 @@ class CustomProductAdmin(ProductAdmin):
                 ProductImageAdmin, ProductVariationAdmin, ProductLinkInline, ]
 
 
-class ProductKeywordAdmin(BaseTranslationModelAdmin):
+# class ProductKeywordAdmin(BaseTranslationModelAdmin):
 
-    model = ProductKeyword
+#     model = ProductKeyword
 
 
 admin.site.register(ProductList, ProductListAdmin)
 admin.site.unregister(Product)
 admin.site.register(Product, CustomProductAdmin)
-admin.site.register(ProductKeyword, ProductKeywordAdmin)
+# admin.site.register(ProductKeyword, ProductKeywordAdmin)
