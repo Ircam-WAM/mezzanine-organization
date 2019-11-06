@@ -140,10 +140,10 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin): #, DuplicateAdmin
     actions = actions_to_duplicate()
 
     def is_blog_article(self, obj):
-        return not (ProjectResidencyArticle
-                    .objects
-                    .filter(article__id=obj.id)
-                    .exists())
+        return (ProjectResidencyArticle
+                .objects
+                .filter(article__id=obj.id)
+                .exists())
 
     def save_form(self, request, form, change):
         """
