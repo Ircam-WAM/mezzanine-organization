@@ -41,9 +41,9 @@ from organization.network.views import TeamOwnableMixin
 from organization.pages.models import CustomPage, DynamicContentPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting, DynamicContentMixin
 from organization.core.utils import split_events_from_other_related_content
+from organization.projects.models import ProjectResidencyArticle
 from django.template.defaultfilters import slugify
 from itertools import chain
-from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic.edit import FormView
 from .forms import CategoryFilterForm
 
@@ -218,7 +218,15 @@ class ArticleListView(ListView):
     keywords = OrderedDict()
 
     def get_queryset(self):
-        self.qs = self.model.objects.published(for_user=self.request.user).order_by('-created')
+        # Exclude articles referenced in ProjectResidencyArticle
+        # (where blog lives)
+        residency_articles = ProjectResidencyArticle.objects \
+                .exclude(article__isnull=True) \
+                .values_list('article_id', flat=True)
+        self.qs = self.model.objects \
+                            .published(for_user=self.request.user) \
+                            .exclude(id__in=residency_articles) \
+                            .order_by('-created')
         playlists = Playlist.objects.published().order_by('-created').distinct()
 
         if 'type' in self.kwargs:
