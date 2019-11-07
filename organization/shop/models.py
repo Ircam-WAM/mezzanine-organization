@@ -105,12 +105,12 @@ class TeamProduct(models.Model):
 #     product = models.ForeignKey(Product, verbose_name=_('product'), related_name='custom_images')
 
 
-# class ProductKeyword(Slugged):
+class ProductKeyword(Slugged):
 
-#     # objects = KeywordManager()
+    # objects = KeywordManager()
 
-#     product = models.ManyToManyField(Product, verbose_name=_('product'), related_name='p_keywords', blank=True)
+    product = models.ManyToManyField(Product, verbose_name=_('product'), related_name='p_keywords', blank=True)
 
-#     class Meta:
-#         verbose_name = _("Product Keyword")
-#         verbose_name_plural = _("Product Keywords")
+    class Meta:
+        verbose_name = _("Product Keyword")
+        verbose_name_plural = _("Product Keywords")

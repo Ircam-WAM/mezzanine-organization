@@ -510,7 +510,7 @@ ADMIN_MENU_ORDER = (
                     )),
     (_('Shop'), ('shop.Product',
                     'organization-shop.ProductList',
-                    # 'organization-shop.ProductKeyword',
+                    'organization-shop.ProductKeyword',
                     'shop.Order',
                     'shop.DiscountCode',
                     'shop.Sale',

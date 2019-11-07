@@ -63,23 +63,24 @@ class TeamProductInline(TabularDynamicInlineAdmin):
 #     model = CustomProductImage
 
 
-# class ProductKeywordInline(TabularDynamicInlineAdmin):
+class ProductKeywordInline(TabularDynamicInlineAdmin):
     
-#     model = Product.p_keywords.through
+    model = Product.p_keywords.through
+    # model = ProductKeyword # 'organization-shop.ProductKeyword' has no ForeignKey to 'shop.Product'.
 
 
 class CustomProductAdmin(ProductAdmin):
     
-    inlines = [ProductExternalShopInline, TeamProductInline,
+    inlines = [ProductExternalShopInline, TeamProductInline, ProductKeywordInline,
                 ProductImageAdmin, ProductVariationAdmin, ProductLinkInline, ]
 
 
-# class ProductKeywordAdmin(BaseTranslationModelAdmin):
+class ProductKeywordAdmin(BaseTranslationModelAdmin):
 
-#     model = ProductKeyword
+    model = ProductKeyword
 
 
 admin.site.register(ProductList, ProductListAdmin)
 admin.site.unregister(Product)
 admin.site.register(Product, CustomProductAdmin)
-# admin.site.register(ProductKeyword, ProductKeywordAdmin)
+admin.site.register(ProductKeyword, ProductKeywordAdmin)
