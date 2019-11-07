@@ -575,3 +575,19 @@ def get_action_name(action_id):
         return 'edit'
     elif action_id == 3:
         return 'remove'
+
+
+# Limit queryset
+@register.filter
+def limit(q, nb):
+    return q[:nb]
+
+
+@register.filter
+def has_shop(product):
+    if hasattr(product, 'product_external_shop'):
+        return product.product_external_shop.external_id and \
+                product.product_external_shop.shop and \
+                product.product_external_shop.label
+    else:
+        return False
