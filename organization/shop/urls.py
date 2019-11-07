@@ -30,6 +30,9 @@ from mezzanine.conf import settings
 
 from organization.shop.views import *
 
+_slash = "/" if settings.APPEND_SLASH else ""
+
 urlpatterns = [
     url("^shop/", include("cartridge.shop.urls")),
+    url("^product/(?P<slug>.*)%s$" % _slash, CustomProductDetailView.as_view(), name="custom_shop_product"),
 ]
