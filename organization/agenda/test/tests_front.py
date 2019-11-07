@@ -6,7 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 from organization.utils.tests_front import FrontTest
 from organization.network.models import Organization,Person,DepartmentPage
 from selenium.webdriver.common.keys import Keys
-from mezzanine_agenda.models import EventCategory,EventShop,EventPrice,Event,Season
+from mezzanine_agenda.models import EventCategory,ExternalShop,EventPrice,Event,Season
 from unittest import skip
 import requests
 
