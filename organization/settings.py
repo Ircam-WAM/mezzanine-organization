@@ -206,11 +206,10 @@ LANGUAGES = (
     ('fr', _('French')),
     ('en', _('English')),
 )
-
-# LOCALE_PATHS = (
-#     os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
-# )
-
+LOCALE_PATHS = (
+    os.path.join(PROJECT_ROOT, 'organization/locale'),
+)
+# print("LOCALE_PATHS", LOCALE_PATHS)
 #############
 # DATABASES #
 #############
@@ -466,7 +465,8 @@ ADMIN_MENU_ORDER = (
                   'organization-agenda.EventTrainingLevel',
                   'generic.Keyword',
                   )),
-    (_('Magazine'), ('organization-magazine.Article',
+    (_('Magazine'), ('organization-magazine.Magazine',
+                    'organization-magazine.Article',
                     'organization-magazine.Brief',)),
     (_('Network'), ('organization-network.Organization',
                     'organization-network.OrganizationLinked',

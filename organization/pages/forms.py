@@ -24,7 +24,7 @@ from dal import autocomplete
 
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
-
+from cartridge.shop.models import Product
 from django import forms
 from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
@@ -36,7 +36,7 @@ from organization.pages.models import *
 from organization.agenda.models import Event
 from organization.media.forms import DynamicMultimediaForm
 from organization.network.models import Person
-from organization.projects.models import Project
+from organization.projects.models import Project, ProjectPage
 
 
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
@@ -68,7 +68,8 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
             Event.objects.all(),
             Media.objects.all(),
             Person.objects.all(),
-            Project.objects.all()
+            Project.objects.all(),
+            Playlist.objects.all(),
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-body'),
@@ -101,7 +102,10 @@ class DynamicContentPageForm(autocomplete.FutureModelForm):
         queryset=autocomplete.QuerySetSequence(
             Article.objects.all(),
             CustomPage.objects.all(),
-            Event.objects.all()
+            Event.objects.all(),
+            ExtendedCustomPage.objects.all(),
+            ProjectPage.objects.all(),
+            Product.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-page'),

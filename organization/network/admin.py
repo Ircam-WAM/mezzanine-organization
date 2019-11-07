@@ -26,6 +26,8 @@ from django import forms
 from django.http import HttpResponse
 from copy import deepcopy
 from dal import autocomplete
+from guardian.admin import GuardedModelAdmin
+from guardian.shortcuts import get_objects_for_user
 from modeltranslation.admin import TranslationTabularInline
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine.core.admin import *
@@ -39,30 +41,8 @@ from organization.pages.admin import PageImageInline, PageBlockInline, PagePlayl
 from organization.shop.models import PageProductList
 from organization.network.utils import TimesheetXLS, set_timesheets_validation_date, flatten_activities
 from organization.network.translation import *
-from organization.network.utils import getUsersListOfSameTeams
+from organization.core.utils import getUsersListOfSameTeams
 
-
-class TeamOwnableAdmin(OwnableAdmin):
-    
-    def get_queryset(self, request):
-        """
-        Filter the change list by currently logged in user if not a
-        superuser. We also skip filtering if the model for this admin
-        class has been added to the sequence in the setting
-        ``OWNABLE_MODELS_ALL_EDITABLE``, which contains models in the
-        format ``app_label.object_name``, and allows models subclassing
-        ``Ownable`` to be excluded from filtering, eg: ownership should
-        not imply permission to edit.
-        """
-        opts = self.model._meta
-        model_name = ("%s.%s" % (opts.app_label, opts.object_name)).lower()
-        models_all_editable = settings.OWNABLE_MODELS_ALL_EDITABLE
-        models_all_editable = [m.lower() for m in models_all_editable]
-        qs = super(OwnableAdmin, self).get_queryset(request)
-        if request.user.is_superuser or model_name in models_all_editable:
-            return qs
-        list_users = getUsersListOfSameTeams(request.user)
-        return qs.filter(user__id=123)
 
 class OrganizationAdminInline(StackedDynamicInlineAdmin):
 
@@ -184,7 +164,7 @@ class TeamLinkInline(StackedDynamicInlineAdmin):
     model = TeamLink
 
 
-class TeamAdmin(BaseTranslationModelAdmin):
+class TeamAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = Team
     search_fields = ['name', 'code']
@@ -199,7 +179,7 @@ class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
     form = DynamicMultimediaPageForm
 
 
-class TeamPageAdmin(PageAdmin, TeamOwnableAdmin):
+class TeamPageAdmin(PageAdmin, GuardedModelAdmin):
 
     inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaTeamPageInline,
                 PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]
@@ -221,7 +201,7 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
     fk_name = 'person'
     filter_horizontal = ['organizations', 'employers', 'teams',
                          'supervisors', 'phd_directors', ]
-
+    
 
 class PersonPlaylistInline(TabularDynamicInlineAdmin):
 
@@ -254,20 +234,33 @@ class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
     form = DynamicMultimediaPersonForm
 
 
-class PersonAdmin(BaseTranslationOrderedModelAdmin):
+class PersonRelatedTitleAdmin(TranslationTabularInline):
+    
+    model = PersonRelatedTitle
+
+
+class DynamicContentPersonInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentPerson
+    form = DynamicContentPersonForm
+
+
+class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
 
     model = Person
     inlines = [PersonImageInline,
                PersonBlockInline,
                PersonPlaylistInline,
                DynamicMultimediaPersonInline,
+               PersonRelatedTitleAdmin,
+               DynamicContentPersonInline,
                PersonLinkInline,
                PersonFileInline,
                PersonActivityInline,]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
-    search_fields = ['last_name', 'first_name']
+    search_fields = ['last_name', 'first_name', 'user__username', 'user__email', 'email']
     list_display = [ 'last_name', 'first_name', 'register_id', 'external_id', 'email', 'user', 'last_weekly_hour_volume', 'gender', 'created']
-    list_filter = ['person_title', 'activities__date_from', 'activities__date_to', 'user',
+    list_filter = ['person_title', 'activities__date_from', 'activities__date_to',
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
                     'activities__status', 'activities__teams',
                     'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
@@ -302,6 +295,13 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
             return response
 
+    def save_form(self, request, form, change):
+        """
+        Avoid calling save_form() from OwnableAdmin to not erase user
+        by the current one is saving
+        """
+        return super(OwnableAdmin, self).save_form(request, form, change)
+
     export_as_csv.short_description = "Export Selected"
 
 
@@ -328,20 +328,38 @@ class ProjectActivityInline(TabularDynamicInlineAdmin):
 class PersonActivityAdmin(BaseTranslationModelAdmin):
 
     model = PersonActivity
-    list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to']
+    list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to', 'get_organizations', 'get_employers']
     filter_horizontal = ['organizations', 'employers', 'teams',
                          'supervisors', 'phd_directors', ] #project_activity__project
-    search_fields = ['person__title',]
+    search_fields = ['person__title', 'organizations__name', 'employers__name']
     list_filter = [ 'date_from', 'date_to',
                     'is_permanent', 'framework', 'grade',
                     'status', 'teams']
     inlines = [ProjectActivityInline,]
+
+
+    def get_organizations(self, instance):
+        org_str = []
+        for org in instance.organizations.all():
+            if org :
+                org_str.append(org.name)
+        return ", ".join(org_str)
+    get_organizations.short_description = 'organizations'
+
+    def get_employers(self, instance):
+        emp_str = []
+        for emp in instance.employers.all():
+            if emp :
+                emp_str.append(emp.name)
+        return ", ".join(emp_str)
+    get_employers.short_description = 'employers'
 
     def get_teams(self, instance):
         values = []
         for team in instance.teams.all():
             values.append(team.code)
         return ' - '.join(values)
+    get_teams.short_description = 'teams'
 
 
 class PersonListBlockInlineAdmin(TabularDynamicInlineAdmin):

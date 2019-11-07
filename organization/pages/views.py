@@ -19,12 +19,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from cartridge.shop.models import Product
+from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from dal import autocomplete
-from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
@@ -36,7 +37,7 @@ from organization.pages.forms import YearForm
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
 from organization.network.models import Person, Organization
-from organization.projects.models import Project
+from organization.projects.models import Project, ProjectPage
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 
@@ -103,13 +104,6 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
             medias = medias.filter(title__icontains=self.q)
 
         qs = autocomplete.QuerySetSequence(articles, custompage, events, persons, medias)
-
-        if self.q:
-            # This would apply the filter on all the querysets
-            qs = qs.filter(title__icontains=self.q)
-
-        # This will limit each queryset so that they show an equal number
-        # of results.
         qs = self.mixup_querysets(qs)
 
         return qs
@@ -132,6 +126,7 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
         medias = Media.objects.all()
         persons = Person.objects.all()
         projects = Project.objects.all()
+        playlists = Playlist.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
@@ -141,12 +136,10 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
             medias = medias.filter(title__icontains=self.q)
             persons = persons.filter(title__icontains=self.q)
             projects = projects.filter(title__icontains=self.q)
+            playlists = playlists.filter(title__icontains=self.q)
 
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons, projects)
-
-        # This will limit each queryset so that they show an equal number
-        # of results.
+        qs = autocomplete.QuerySetSequence(articles, custompage, briefs, events, medias, persons, projects, playlists)
         qs = self.mixup_querysets(qs)
 
         return qs
@@ -188,26 +181,28 @@ class PublicationsView(FormView):
     form_class = YearForm
     success_url = "."
     hal_url = settings.HAL_URL
+    year = ""
 
-    def form_valid(self, form):
-        # Ajax
-        if self.request.is_ajax():
-            context = {}
-            context['hal_url'] = self.hal_url + "&annee_publideb=%s&annee_publifin=%s" % (form.cleaned_data['year'], form.cleaned_data['year'])
-            return render(self.request, 'core/inc/hal.html', context)
-        else :
-            self.request.session['year'] = form.cleaned_data['year']
-            return super(PublicationsView, self).form_valid(form)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._hal_url = PublicationsView.hal_url
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests, instantiating a form instance with the passed
+        POST variables and then checked for validity.
+        """
+        form = self.get_form()
+        context = {}
+        if form.is_valid():
+            context['hal_url'] = self._hal_url + "&annee_publideb=%s&annee_publifin=%s" % (form.cleaned_data['year'], form.cleaned_data['year'])
+        else:
+            context['hal_url'] = self._hal_url
+        return render(self.request, 'core/inc/hal.html', context)
 
     def get_context_data(self, **kwargs):
         context = super(PublicationsView, self).get_context_data(**kwargs)
-        context['hal_url'] = self.hal_url
-        if 'year' in self.request.session:
-            # set year filter
-            context['hal_url'] += "&annee_publideb=%s&annee_publifin=%s" % (self.request.session['year'], self.request.session['year'])
-            context['form'].initial['year'] = self.request.session['year']
-            # repopulate form
-            self.request.session.pop('year', None)
+        context['hal_url'] = self._hal_url
         return context
 
 
@@ -236,14 +231,18 @@ class DynamicContentPageView(Select2QuerySetSequenceView):
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
         extended_custompage = ExtendedCustomPage.objects.all()
+        projects = ProjectPage.objects.all()
+        products = Product.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
             extended_custompage = extended_custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
+            projects = projects.filter(title__icontains=self.q)
+            products = products.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, extended_custompage, events)
+        qs = autocomplete.QuerySetSequence(articles, custompage, extended_custompage, events, projects, products)
 
         if self.q:
             qs = qs.filter(title__icontains=self.q)

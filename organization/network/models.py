@@ -39,7 +39,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils.text import slugify
 from mezzanine.pages.models import Page
-from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Ownable, Orderable, MetaData, TimeStamped, wrapped_manager
+from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Ownable, Orderable, MetaData, TimeStamped, wrapped_manager, TeamOwnable
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 from mezzanine.core.managers import SearchableManager
@@ -48,7 +48,6 @@ from organization.media.models import *
 from organization.pages.models import CustomPage
 from organization.media.models import Media
 from organization.network.validators import *
-from organization.network.utils import usersTeamsIntersection
 
 # from .nationalities.fields import NationalityField
 
@@ -120,23 +119,7 @@ ORGANIZATION_STATUS_CHOICES = (
 )
 
 
-class TeamOwnable(Ownable):
-    """
-    Abstract model that provides ownership of an object for a user.
-    """
-
-    class Meta:
-        abstract = True
-
-    def is_editable(self, request):
-        """
-        Restrict in-line editing to the objects's owner team and superusers.
-        """
-        ownable_is_editable = super(TeamOwnable, self).is_editable(request)
-        return ownable_is_editable or usersTeamsIntersection(self.user, request.user)
-
-
-class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable, OwnableOrNot):
+class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable):
     """(Organization description)"""
 
     type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -170,7 +153,7 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
         return reverse("network")
 
 
-class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
+class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address, TeamOwnable):
     """(Person description)"""
 
     objects = SearchableManager()
@@ -195,6 +178,7 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
     class Meta:
         verbose_name = _('person')
         ordering = ['last_name',]
+        permissions = TeamOwnable.Meta.permissions
 
     def __str__(self):
         return self.title
@@ -218,9 +202,25 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
         self.clean()
         if self.first_name and self.last_name and (not self.title or self.title == '-'):
             self.title = self.first_name + ' ' + self.last_name
-        super(Person, self).save(args, kwargs)
+        super(Person, self).save(*args, **kwargs)
         for activity in self.activities.all():
             update_activity(activity)
+
+
+class PersonRelatedTitle(RelatedTitle):
+
+    person = models.OneToOneField("Person", verbose_name=_('person'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("related title")
+
+
+class DynamicContentPerson(DynamicContent, Orderable):
+
+    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='dynamic_content_person', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Person'
 
 
 class OrganizationLinkedBlockInline(Titled, Description, Orderable):
@@ -359,7 +359,7 @@ class DepartmentPage(Page, SubTitled, RichText):
         verbose_name = _('department page')
 
 
-class Team(NamedSlugged, Description):
+class Team(NamedSlugged, Description, TeamOwnable):
     """(Team description)"""
 
     organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True, null=True, on_delete=models.SET_NULL)
@@ -373,6 +373,7 @@ class Team(NamedSlugged, Description):
     class Meta:
         verbose_name = _('team')
         ordering = ['name',]
+        permissions = TeamOwnable.Meta.permissions
 
     def __str__(self):
         if self.organization:
@@ -395,14 +396,18 @@ class Team(NamedSlugged, Description):
                 return ' - '.join((self.department.name, self.name))
         return self.name
 
+    def get_absolute_url(self):
+        return '/team/' + self.slug
 
-class TeamPage(Page, SubTitled, RichText, TeamOwnable):
+
+class TeamPage(Page, SubTitled, RichText):
     """(Team description)"""
 
     team = models.ForeignKey('Team', verbose_name=_('team'), related_name="pages", blank=True, null=True, on_delete=models.SET_NULL)
 
-    class Meta:
+    class Meta():
         verbose_name = _('team page')
+        permissions = TeamOwnable.Meta.permissions
 
 
 class TeamLink(Link):
@@ -482,7 +487,7 @@ class PersonListBlock(Titled, Description, Label, Dated, SiteRelated):
 class PersonListBlockInline(SiteRelated):
 
     person_list_block = models.ForeignKey(PersonListBlock, verbose_name=_('Person List Block'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
-    person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
+    person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inlines', null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('Person autocomplete')

@@ -23,7 +23,6 @@ from copy import deepcopy
 import re
 from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
-from django.contrib.auth.admin import UserAdmin
 from django.contrib.sites.models import Site
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
@@ -32,7 +31,7 @@ from mezzanine.generic.models import ThreadedComment, Keyword
 from mezzanine.conf import settings
 from organization.core.models import *
 from organization.core.translation import *
-from organization.core.utils import get_other_sites
+from organization.core.utils import get_other_sites, getUsersListOfSameTeams
 
 try:
     from hijack_admin.admin import HijackUserAdmin
@@ -99,8 +98,9 @@ class NullListFilter(SimpleListFilter):
             return queryset.filter(**kwargs)
         return queryset
 
+
 if settings.DEBUG :
-    class UserAdminCustom(HijackUserAdmin, UserAdmin):
+    class UserAdminCustom(HijackUserAdmin, SitePermissionUserAdmin):
 
         list_display = UserAdmin.list_display + ('is_active',  'is_superuser', 'last_login', 'date_joined', 'person_link', 'my_groups', 'hijack_field' )
 
@@ -130,6 +130,10 @@ admin.site.register(LinkType)
 admin.site.unregister(BlogPost)
 admin.site.unregister(ThreadedComment)
 admin.site.register(Keyword, KeywordAdmin)
+
+# admin.site.unregister(LinkAdmin)
+# admin.site.register(Link, CustomLinkAdmin)
+
 
 if settings.DEBUG and settings.HIJACK_REGISTER_ADMIN:
     UserModel = get_user_model()

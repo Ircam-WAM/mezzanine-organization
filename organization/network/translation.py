@@ -273,3 +273,15 @@ class DynamicMultimediaOrganizationTranslationOptions(TranslationOptions):
 class DynamicMultimediaPersonTranslationOptions(TranslationOptions):
 
     fields = ()
+
+
+@register(PersonRelatedTitle)
+class PersonRelatedTitleTranslationOptions(TranslationOptions):
+
+    fields = ('title', )
+
+
+@register(DynamicContentPerson)
+class DynamicContentPersonInlineTranslationOptions(TranslationOptions):
+
+    fields = ()

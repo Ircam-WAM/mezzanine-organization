@@ -20,16 +20,17 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import json
-from django.shortcuts import render
+from datetime import datetime
+from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from collections import defaultdict
+from django.db.models import Q
+from django.shortcuts import render
+from django.core.exceptions import FieldDoesNotExist
+from django.contrib.admin.views.decorators import staff_member_required
 from organization.media.models import *
 from organization.core.views import *
 from organization.core.utils import split_events_from_other_related_content
-from dal import autocomplete
-from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
-from django.core.exceptions import FieldDoesNotExist
-from datetime import datetime
-from django.db.models import Q
 
 # temporarily excluse not ready models
 EXCLUDED_MODELS = ("organizationplaylist", "personplaylist")

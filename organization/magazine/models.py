@@ -29,7 +29,7 @@ from mezzanine.core.managers import SearchableManager
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
 
-from mezzanine.core.models import RichText, Displayable, Slugged
+from mezzanine.core.models import RichText, Displayable, Slugged, TeamOwnable
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from organization.network.models import Department, PersonListBlock
@@ -43,7 +43,7 @@ BRIEF_STYLE_CHOICES = [
     ('black', _('black'))
 ]
 
-class Article(BlogPost, SubTitled):
+class Article(BlogPost, SubTitled, TeamOwnable):
 
     department = models.ForeignKey(Department, verbose_name=_('department'), related_name='articles', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
     topics = models.ManyToManyField("Topic", verbose_name=_('topics'), related_name="articles", blank=True)
@@ -54,6 +54,7 @@ class Article(BlogPost, SubTitled):
 
     class Meta:
         verbose_name = _('article')
+        permissions = TeamOwnable.Meta.permissions
 
 
 class ArticleImage(Image):
@@ -80,7 +81,7 @@ class ArticlePlaylist(PlaylistRelated):
     article = models.ForeignKey(Article, verbose_name=_('article'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
 
 
-class Brief(Displayable, RichText):
+class Brief(Displayable, RichText, TeamOwnable):
 
     style = models.CharField(_('style'), max_length=16, choices=BRIEF_STYLE_CHOICES)
     text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'))
@@ -109,6 +110,7 @@ class Brief(Displayable, RichText):
 
     class Meta:
         verbose_name = _('brief')
+        permissions = TeamOwnable.Meta.permissions
         #ordering = ['sort_order']
 
 
@@ -145,3 +147,21 @@ class DynamicMultimediaArticle(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Multimedia'
+
+
+class DynamicContentMagazineContent(DynamicContent, Orderable):
+    
+    magazine = models.ForeignKey("magazine", verbose_name=_('magazine'), related_name='dynamic_content', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Content'
+
+
+class Magazine(Displayable):
+    
+    class Meta:
+        verbose_name = _('magazine')
+        verbose_name_plural = _("magazines")
+
+    def get_absolute_url(self):
+        return reverse("magazine")

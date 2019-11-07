@@ -40,7 +40,7 @@ from django.utils.translation import ugettext_lazy as _
 from organization.agenda.models import EventPeriod
 from organization.magazine.models import *
 from organization.projects.models import *
-from organization.network.utils import get_users_of_team
+from organization.network.utils import get_users_of_team, get_team_from_user
 from django.utils.formats import get_format
 from django.utils.dateformat import DateFormat
 from organization.core.models import *
@@ -402,8 +402,10 @@ def hal_labos_exp(hal_url, hal_researche_structure):
 
 @register.filter
 def hal_css(url_part, http_host):
-    curr_site = Site.objects.get(id=current_site_id())
-    return url_part + settings.HAL_URL_CSS[curr_site.name] % http_host
+    site = current_site_id()
+    if site:
+        curr_site = Site.objects.get(id=site)
+        return url_part + settings.HAL_URL_CSS[curr_site.name] % http_host
 
 @register.filter
 def hal_limit(url_part, nb):
@@ -509,3 +511,67 @@ def reverse(objects_list):
 def latest(query):
     if query:
         return query.latest('date_to')
+
+
+@register.filter
+def get_team_code_from_user(user):
+    team = get_team_from_user(user)
+    if team :
+        return get_team_from_user(user).code
+
+
+@register.assignment_tag
+def increment(i):
+    return i + 1
+
+
+@register.assignment_tag
+def previous(val):
+    return val
+
+
+@register.filter
+def menu_length(pages, id):
+    return len(list(filter(lambda x: str(id) in x.in_menus, pages)))
+
+
+@register.filter
+def get_menu_id(template_path):
+    for i, l, t in settings.PAGE_MENU_TEMPLATES:
+        if t == template_path:
+            return i
+
+
+@register.filter
+def index(List, i):
+    return List[int(i)]
+
+
+@register.filter
+def subtract(a, b):
+    return str(int(a) - int(b))
+
+
+@register.filter
+def to_int(a):
+    return int(a)
+
+
+@register.filter
+def to_str(a):
+    return str(a)
+
+
+@register.filter
+def get_object_type(obj):
+    return type(obj)
+
+
+@register.filter
+def get_action_name(action_id):
+    if action_id == 1:
+        return 'pencil'
+    elif action_id == 2:
+        return 'edit'
+    elif action_id == 3:
+        return 'remove'

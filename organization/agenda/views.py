@@ -28,6 +28,7 @@ from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from organization.magazine.models import Article
 from organization.pages.models import CustomPage
 from organization.media.models import Playlist, Media
+from organization.network.models import Person
 from mezzanine_agenda.models import Event
 from mezzanine_agenda.views import EventListView
 from organization.core.views import autocomplete_result_formatting, SlugMixin, DynamicContentMixin
@@ -43,17 +44,15 @@ class DynamicContentEventView(Select2QuerySetSequenceView):
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
+        persons = Person.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
+            persons = persons.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, events,)
-
-        if self.q:
-            qs = qs.filter(title__icontains=self.q)
-
+        qs = autocomplete.QuerySetSequence(articles, custompage, events, persons)
         qs = self.mixup_querysets(qs)
 
         return qs

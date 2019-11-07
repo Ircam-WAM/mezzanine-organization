@@ -30,7 +30,6 @@ from mezzanine.blog.admin import BlogPostAdmin
 from organization.magazine.models import *
 from organization.magazine.forms import *
 from organization.magazine.translation import *
-#from organization.core.admin import DuplicateAdmin
 from organization.core.utils import actions_to_duplicate, get_other_sites
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
@@ -43,8 +42,8 @@ class ArticlePlaylistInline(TabularDynamicInlineAdmin):
     model = ArticlePlaylist
 
 
-class ArticleAdmin(OwnableAdmin):
-    
+class ArticleAdmin(TeamOwnableAdmin):
+
     model = Article
 
 
@@ -62,7 +61,7 @@ class DynamicContentArticleInline(TabularDynamicInlineAdmin):
 
 
 class DynamicMultimediaArticleInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaArticle
     form = DynamicMultimediaArticleForm
 
@@ -72,12 +71,12 @@ class ArticleRelatedTitleAdmin(TranslationTabularInline):
     model = ArticleRelatedTitle
 
 
-class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin): #, DuplicateAdmin
+class ArticleAdminDisplayable(TeamOwnableAdmin, DisplayableAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     list_display = ('title', 'department', 'publish_date', 'status', 'user')
     exclude = ('related_posts', )
-    
+
     filter_horizontal = ['categories',]
     inlines = [ArticleImageInline,
               ArticlePersonAutocompleteInlineAdmin,
@@ -87,7 +86,7 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin): #, DuplicateAdmin
               ArticlePlaylistInline]
     list_filter = [ 'status', 'department', ] #'keywords'
 
-    actions = actions_to_duplicate()
+    # actions = actions_to_duplicate()
 
     def save_form(self, request, form, change):
         """
@@ -108,12 +107,12 @@ class ArticleAdminDisplayable(DisplayableAdmin, OwnableAdmin): #, DuplicateAdmin
         )
 
 
-class BriefAdmin(admin.ModelAdmin): #OrderableTabularInline
+class BriefAdmin(admin.ModelAdmin):
 
     model = Brief
 
 
-class BriefAdminDisplayable(BaseTranslationModelAdmin,): #, OrderableAdmin
+class BriefAdminDisplayable(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     list_display = ('title', 'ext_content', 'content_object', 'publish_date', 'status')
     form = BriefForm
@@ -125,7 +124,25 @@ class BriefAdminDisplayable(BaseTranslationModelAdmin,): #, OrderableAdmin
         return instance.external_content[:100] + "..."
 
 
+class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentMagazineContent
+    form = DynamicContentMagazineContentForm
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+
+class MagazineAdmin(BaseTranslationModelAdmin):
+
+    model = Magazine
+    inlines = [DynamicContentHomeSliderInline,]
+
 
 admin.site.register(Article, ArticleAdminDisplayable)
 admin.site.register(Brief, BriefAdminDisplayable)
 admin.site.register(Topic, PageAdmin)
+admin.site.register(Magazine, MagazineAdmin)
+

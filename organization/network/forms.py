@@ -19,21 +19,23 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils import timezone
+from cartridge.shop.models import Product
 from dal import autocomplete
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
+from django.utils import timezone
 from django import forms
 from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
 from mezzanine.core.models import Orderable
-from organization.projects.models import ProjectWorkPackage
+from organization.projects.models import ProjectWorkPackage, ProjectPage
 from organization.network.models import *
 from organization.pages.models import Page, CustomPage
 from organization.network.utils import timesheet_master_notification_for_validation
 from organization.network.models import *
 from organization.pages.models import Page, CustomPage
 from organization.media.forms import DynamicMultimediaForm
+from organization.magazine.models import Article
 from extra_views import InlineFormSet
 
 
@@ -209,3 +211,21 @@ class DynamicMultimediaPersonForm(DynamicMultimediaForm):
     
     class Meta(DynamicMultimediaForm.Meta):
         model = DynamicMultimediaPerson
+
+
+class DynamicContentPersonForm(autocomplete.FutureModelForm):
+    
+    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
+        queryset=autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            ProjectPage.objects.all(),
+            Event.objects.all(),
+            Product.objects.all(),
+        ),
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-person'),
+    )
+
+    class Meta:
+        model = DynamicContentPerson
+        fields = ('content_object',)
