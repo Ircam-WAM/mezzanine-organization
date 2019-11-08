@@ -51,7 +51,9 @@ from organization.projects.views import (
 
 router = DefaultRouter()
 router.register(
-    r"residency-blog", ResidencyBlogArticleViewSet, base_name="residency-blog"
+    r"residency-blog",
+    ResidencyBlogArticleViewSet,
+    base_name="residency-blog"
 )
 
 router.register(

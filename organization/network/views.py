@@ -26,7 +26,7 @@ from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from datetime import date, timedelta, datetime
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
+from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -52,6 +52,8 @@ from extra_views import FormSetView
 from mezzanine.conf import settings
 from organization.core.views import *
 from organization.network.forms import *
+from organization.network.models import Person
+from organization.network.serializers import PersonFollowSerializer
 from organization.network.models import *
 from organization.network.utils import get_users_of_team
 from organization.pages.forms import YearForm
@@ -60,6 +62,13 @@ from organization.projects.models import *
 from organization.projects.models import ProjectWorkPackage
 from pprint import pprint
 from re import match
+
+from rest_framework import generics, viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import (IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
+from rest_framework.response import Response
+from rest_framework.exceptions import NotAuthenticated, ValidationError
 
 import pandas as pd
 
@@ -105,6 +114,41 @@ class PersonMixin(SingleObjectMixin):
         else:
             user = self.request.user
         return user.person
+
+
+class PersonViewSet(viewsets.GenericViewSet):
+    queryset = Person.objects.all()
+    serializer_class = PersonFollowSerializer
+    lookup_field = 'user__username'
+    permission_classes = []
+
+    def retrieve(self, request, user__username=None):
+        person = self.get_object()
+        serializer = self.get_serializer(person, many=False)
+        return Response(serializer.data)
+
+    @action(
+            detail=True,
+            methods=['post'],
+            permission_classes=[IsAuthenticated]
+    )
+    def follow(self, request, user__username=None):
+        person = self.get_object()
+        # User cannot follow itself
+        if self.request.user.person == person:
+            raise PermissionDenied
+        self.request.user.person.following_users.add(person.user)
+        return Response({'status': 'ok'})
+
+    @action(
+            detail=True,
+            methods=['post'],
+            permission_classes=[IsAuthenticated]
+    )
+    def unfollow(self, request, user__username=None):
+        person = self.get_object()
+        self.request.user.person.following_users.remove(person.user)
+        return Response({'status': 'ok'})
 
 
 class PersonListView(ListView):
@@ -265,7 +309,7 @@ class PersonAboutView(DetailView, PersonMixin):
 class PersonFollowingListView(PersonDetailView):
 
     model = Person
-    template_name='accounts/account_profile_update_following.html'
+    template_name = 'accounts/account_profile_update_following.html'
 
     def get_queryset(self):
         return self.person.following.all()
@@ -274,7 +318,7 @@ class PersonFollowingListView(PersonDetailView):
 class PersonFollowersListView(PersonDetailView):
 
     model = Person
-    template_name='accounts/account_profile_update_followers.html'
+    template_name = 'accounts/account_profile_update_followers.html'
 
     def get_queryset(self):
         return self.person.followers.all()

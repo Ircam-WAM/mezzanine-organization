@@ -29,8 +29,53 @@ from django.core.urlresolvers import reverse_lazy
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
-from organization.network.views import *
+from rest_framework.routers import DefaultRouter
 
+from organization.network.views import (
+        # REST Views
+        PersonViewSet,
+
+        # Monolithic views
+        PersonDirectoryView,
+        TimeSheetCreateCurrMonthView,
+        TimeSheetCreateView,
+        PersonActivityTimeSheetListView,
+        PersonListView,
+        PersonDetailView,
+        PersonAboutView,
+        PersonFollowingListView,
+        PersonFollowersListView,
+        PersonApplicationListView,
+        ProfileEditView,
+        PersonListBlockAutocompleteView,
+        PersonAutocompleteView,
+        PersonActivityAutocompleteView,
+        PersonListBlockAutocompleteView,
+        PersonAutocompleteView,
+        PersonActivityAutocompleteView,
+        WorkPackageAutocompleteView,
+        OrganizationListView,
+        OrganizationLinkedListView,
+        OrganizationLinkedView,
+        ProducerListView,
+        ProducerCreateView,
+        ProducerUpdateView,
+        ProducerValidationView,
+        ProducerDetailView,
+        JuryListView,
+        PublicNetworkData,
+        PublicNetworkDataNew,
+        TeamMembersView,
+        TeamPublicationsView,
+        DynamicContentPersonView,
+)
+
+router = DefaultRouter()
+router.register(
+    r"person",
+    PersonViewSet,
+    base_name="person"
+)
 
 urlpatterns = [
     url('^directory(?:/(?P<letter>.*))?/$', PersonDirectoryView.as_view(letter="a"), name='person-directory'),
@@ -85,4 +130,6 @@ urlpatterns = [
     url('^team/(?P<slug>.*)/publications/$', TeamPublicationsView.as_view(), name='team-publications'),
 
     url("^dynamic-content-person/$",  DynamicContentPersonView.as_view(), name='dynamic-content-person'),
-    ]
+
+    url(r"^api/", include((router.urls))),
+]
