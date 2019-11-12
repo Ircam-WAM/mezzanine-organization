@@ -178,10 +178,11 @@ class CustomEventAdmin(EventAdmin):
             event_is_parent = '<div style="width:100%%; height:100%%; background-color:orange;">True</div>'
         return event_is_parent
 
+    search_fields = ['title', 'external_id']
     fieldsets = deepcopy(EventAdminBase.fieldsets)
     exclude = ("short_url",)
     is_parent.allow_tags = True
-    list_display = ["title", "start", "end", "rank", "user", "status", "is_parent","admin_link"]
+    list_display = ["title", "start", "end", "external_id", "user", "status", "is_parent","admin_link"]
     if settings.EVENT_USE_FEATURED_IMAGE:
         list_display.insert(0, "admin_thumb")
     list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location", "category", EventParentFilter, SeasonFilter)
