@@ -458,7 +458,7 @@ ADMIN_MENU_ORDER = (
     (_('Events'), ('mezzanine_agenda.Event',
                   'mezzanine_agenda.Season',
                   'mezzanine_agenda.EventLocation',
-                  'mezzanine_agenda.EventShop',
+                  'mezzanine_agenda.ExternalShop',
                   'mezzanine_agenda.EventPrice',
                   'mezzanine_agenda.EventCategory',
                   'organization-agenda.EventPublicType',
@@ -510,6 +510,7 @@ ADMIN_MENU_ORDER = (
                     )),
     (_('Shop'), ('shop.Product',
                     'organization-shop.ProductList',
+                    'organization-shop.ProductKeyword',
                     'shop.Order',
                     'shop.DiscountCode',
                     'shop.Sale',
@@ -532,7 +533,7 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'organization-projects.ProjectPage',
                         'shop.Product',
                         'organization-magazine.Article')
-                        
+
 # authorize models which does not heritate from Displayable
 SEARCH_MODEL_NO_DISPLAYABLE = ('organization-network.Person',)
 
@@ -600,9 +601,9 @@ OPTIONAL_APPS = (
     PACKAGE_NAME_GRAPPELLI,
 )
 
-if DEBUG:
-    OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+# if DEBUG:
+    # OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
+    # MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 INTERNAL_IPS = ['127.0.0.1', '172.17.0.1']
 
@@ -712,3 +713,7 @@ HAL_YEAR_BEGIN = 1977
 
 # Ownable
 OWNABLE_MODELS_ALL_EDITABLE = []
+
+# ARTICLE LIST
+ARTICLE_KEYWORDS = ['', ]
+

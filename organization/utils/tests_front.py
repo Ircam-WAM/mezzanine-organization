@@ -5,7 +5,7 @@ from selenium import webdriver
 from django.contrib.auth import get_user_model
 import os
 from django.core.management import call_command
-from mezzanine_agenda.models import EventCategory,EventShop,EventPrice,Event,Season
+from mezzanine_agenda.models import EventCategory,ExternalShop,EventPrice,Event,Season
 from pprint import pprint
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
