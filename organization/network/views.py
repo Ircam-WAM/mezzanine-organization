@@ -60,7 +60,6 @@ from organization.pages.forms import YearForm
 from organization.pages.views import PublicationsView
 from organization.projects.models import *
 from organization.projects.models import ProjectWorkPackage
-from pprint import pprint
 from re import match
 
 from rest_framework import generics, viewsets
@@ -120,6 +119,12 @@ class PersonViewSet(viewsets.GenericViewSet):
     queryset = Person.objects.all()
     serializer_class = PersonFollowSerializer
     lookup_field = 'user__username'
+
+    # DRF default behavior does not match dot characters in URL
+    # This means that a username containing a '.' will return a 404
+    # e.g curl localhost:9122/api/person/firstname.lastname/ returns 404
+    # (when username exist)
+    lookup_value_regex = '[^/]+'
     permission_classes = []
 
     def retrieve(self, request, user__username=None):

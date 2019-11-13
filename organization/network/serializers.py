@@ -50,7 +50,10 @@ class PersonFollowSerializer(serializers.ModelSerializer):
         )
 
     def get_is_followed_by_me(self, obj):
-        current_person = self.context['request'].user.person
+        user = self.context['request'].user
+        if not hasattr(user, 'person'):
+            return False
+        current_person = user.person
         return obj.user \
                   .followers_users \
                   .filter(pk=current_person.pk) \
