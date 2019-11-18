@@ -123,7 +123,7 @@ class PersonViewSet(viewsets.GenericViewSet):
     # DRF default behavior does not match dot characters in URL
     # This means that a username containing a '.' will return a 404
     # e.g curl localhost:9122/api/person/firstname.lastname/ returns 404
-    # (when username exist)
+    # (where firstname.lastname is a valid existing username)
     lookup_value_regex = '[^/]+'
     permission_classes = []
 

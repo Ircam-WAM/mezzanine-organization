@@ -38,11 +38,10 @@ class UserPublicSerializer(serializers.ModelSerializer):
     def get_url(self, obj):
         if not hasattr(obj, "person"):
             return None
-        username = obj.username
         request = self.context.get("request")
         return reverse(
             'organization-network-profile-about',
-            kwargs={'slug': username},
+            kwargs={'slug': obj.person.slug},
             request=request,
         )
 
