@@ -57,7 +57,7 @@ class ResidencyBlogPublicSerializer(serializers.ModelSerializer):
     image = Base64VersatileImageFieldSerializer(
         sizes=[
             ('full_size', 'url'),
-            ('thumbnail', 'thumbnail__1000x500'),
+            ('thumbnail', 'thumbnail__1100x600'),
             # ('cropped', 'crop__400x400')
             # Other resize available:
             # https://django-versatileimagefield.readthedocs.io/en/latest/using_sizers_and_filters.html
