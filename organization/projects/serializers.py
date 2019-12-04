@@ -1,36 +1,12 @@
-import imghdr
-import uuid
-import io
-import base64
-import binascii
-
-from django.utils import six
-from django.core.files.base import ContentFile
-
 from drf_extra_fields.fields import Base64ImageField
-from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from django.contrib.sites.shortcuts import get_current_site
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 from organization.core.serializers import UserPublicSerializer
-from organization.projects.models import (Article, Person, Project,
+from organization.network.serializers import PersonPublicSerializer
+from organization.projects.models import (Article, Project,
                                           ProjectResidency,
                                           ProjectResidencyArticle)
-
-
-class PersonPublicSerializer(serializers.ModelSerializer):
-    # Instead of UserSerializer, we use a MethodField to avoid
-    # making another object in response (= flatten the response payload)
-    username = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Person
-        fields = ("first_name", "last_name", "profile_image", "username")
-
-    def get_username(self, obj):
-        if not obj.user:
-            return None
-        return obj.user.username
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -81,7 +57,7 @@ class ResidencyBlogPublicSerializer(serializers.ModelSerializer):
     image = Base64VersatileImageFieldSerializer(
         sizes=[
             ('full_size', 'url'),
-            ('thumbnail', 'thumbnail__1000x500'),
+            ('thumbnail', 'thumbnail__1100x600'),
             # ('cropped', 'crop__400x400')
             # Other resize available:
             # https://django-versatileimagefield.readthedocs.io/en/latest/using_sizers_and_filters.html

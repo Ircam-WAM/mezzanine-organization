@@ -43,7 +43,7 @@ from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, O
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 from mezzanine.core.managers import SearchableManager
-from organization.core.models import *
+from organization.core.models import * # contains Address
 from organization.media.models import *
 from organization.pages.models import CustomPage
 from organization.media.models import Media
@@ -193,7 +193,18 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
     hal_url = models.URLField(_('HAL url'), max_length=512, blank=True)
     karma = models.IntegerField(default=0, editable=False)
     search_fields = {"title": 1}
-    following = models.ManyToManyField(User, verbose_name='following', related_name='followers', blank=True)
+    following_users = models.ManyToManyField(
+            User,
+            verbose_name='following_users',
+            related_name='followers_users',
+            blank=True
+    )
+    following_organizations = models.ManyToManyField(
+            Organization,
+            verbose_name='following_organizations',
+            related_name='followers_organizations',
+            blank=True
+    )
     citizenship = models.ForeignKey(Citizenship, verbose_name=_("citizenship"), blank=True, default=None, null=True)
     profile_image = models.ImageField(upload_to="person/profile/%Y/%m/%d", max_length=100, blank=True, null=True)
     background_image = models.ImageField(upload_to="person/background/%Y/%m/%d", max_length=100, blank=True, null=True)
