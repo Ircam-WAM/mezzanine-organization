@@ -37,8 +37,10 @@ from organization.magazine.models import *
 from organization.network.models import DepartmentPage, Person
 from organization.pages.models import CustomPage, DynamicContentPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting
+from organization.core.utils import split_events_from_other_related_content
 from django.template.defaultfilters import slugify
 from itertools import chain
+
 
 class ArticleDetailView(SlugMixin, DetailView):
 
@@ -78,18 +80,14 @@ class ArticleDetailView(SlugMixin, DetailView):
         related_content += articles_related
         related_content += dynamic_content_related
         related_content.sort(key=lambda x: x.created, reverse=True)
-        context['related_content'] = related_content
-        context["related"] = {}
-        context["related"]["other"] = []
-        context["related"]["event"] = []
-        # for some theme, we need to distinct the event from other related content
-        for rc in related_content:
-            if rc.__class__.__name__ == "Event":
-                context["related"]["event"].append(rc)
-            else :
-                context["related"]["other"].append(rc)
+        
+        context = split_events_from_other_related_content(context, related_content)
+
         if self.object.department:
-            context['department_weaving_css_class'] = self.object.department.pages.first().weaving_css_class
+            context['department_weaving_css_class'] = ''
+            page = self.object.department.pages.first()
+            if page:
+                context['department_weaving_css_class'] = page.weaving_css_class
             context['department_name'] = self.object.department.name
         return context
 

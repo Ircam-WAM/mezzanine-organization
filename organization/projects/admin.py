@@ -33,6 +33,7 @@ from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm
 from organization.core.admin import null_filter
+# from organization.projects.translation import *
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
@@ -206,10 +207,11 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 DynamicContentProjectInline,
                 ProjectBlogPageInline,
                 ]
-    filter_horizontal = ['teams', 'organizations']
+    filter_horizontal = ['teams', 'organizations', 'concepts']
     list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status', 'call']
     list_display = ['title', 'date_from', 'date_to', 'created', 'lead_organization',
         'program', 'status', 'is_archive', 'topic', 'external_id', 'validation_status', 'admin_link']
+
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
 

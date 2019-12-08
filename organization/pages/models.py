@@ -33,6 +33,7 @@ class CustomPage(Page, SubTitled, RichText):
 
     objects = CustomSearchableManager()
     menu_alinea = models.BooleanField(_('menu alinea'), default=False)
+    class_css = models.CharField(_('CSS class'), max_length=32, blank=True, null=True)
 
     class Meta:
         verbose_name = 'custom page'
@@ -69,7 +70,7 @@ class ExtendedCustomPageDynamicContent(models.Model):
 
     page = models.ForeignKey(ExtendedCustomPage, verbose_name="extended custom page", related_name="extra_content", blank=True, null=True, on_delete=models.SET_NULL)
     extra_content = models.CharField(max_length=32, choices=EXTRA_CONTENT_CHOICES, default=NONE)
-    
+
     @property
     def choice(self):
         return self.extra_content
@@ -155,6 +156,15 @@ class LinkImage(models.Model):
         order_with_respect_to = "link"
 
 
+class LinkStyle(models.Model):
+
+    link = models.OneToOneField(MezzanineLink, verbose_name=_('link'), related_name='link_style', blank=True, null=True, on_delete=models.SET_NULL)
+    class_css = models.CharField(_('CSS class'), max_length=32, blank=True, null=True)
+
+    class Meta:
+        verbose_name = _("css class")
+
+
 class DynamicContentHomeSlider(DynamicContent, Orderable):
 
     home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.CASCADE)
@@ -197,5 +207,3 @@ class Home(Displayable):
 
     def get_absolute_url(self):
         return reverse("organization-home")
-
-        verbose_name = _('Person List')

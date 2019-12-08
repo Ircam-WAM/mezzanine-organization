@@ -25,6 +25,12 @@ from mezzanine.pages.translation import TranslatedRichText
 from organization.pages.models import *
 
 
+@register(LinkStyle)
+class LinkStyleTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(Home)
 class HomeTranslationOptions(TranslationOptions):
 

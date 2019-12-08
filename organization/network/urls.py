@@ -32,27 +32,26 @@ from organization.network.views import *
 
 
 urlpatterns = [
-    url(r'^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
-    url(r'^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name="organization-network-timesheet-create-view"),
-    url(r'^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name="organization-network-timesheet-list-view" ),
-    url(r'^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name="organization-network-person-detail"),    
-    url(r'profile/(?P<username>.*)/$', PersonDetailView.as_view(), name="profile"),
-    url(r'^person/list/$', PersonListView.as_view(), name="organization-network-person-list"),
-    url("^person-list-block-autocomplete/$", permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
-    url("^person-autocomplete/$", permission_required('person.can_edit')(PersonAutocompleteView.as_view()), name='person-autocomplete'),
-    url("^network/$", OrganizationListView.as_view(), name='network'),
+    url('^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
+    url('^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name='organization-network-timesheet-create-view'),
+    url('^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name='organization-network-timesheet-list-view' ),
+    url('^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name='organization-network-person-detail'),    
+    url('^profile/(?P<username>.*)/$', PersonDetailView.as_view(), name='profile'),
+    url('^persons/$', PersonListView.as_view(), name='organization-network-person-list'),
+    url('^person-list-block-autocomplete/$', permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
+    url('^person-autocomplete/$', permission_required('person.can_edit')(PersonAutocompleteView.as_view()), name='person-autocomplete'),
+    url('^network/$', OrganizationListView.as_view(), name='network'),
 
-    url("^organization-linked-list-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
-    url("^organization-linked-autocomplete/$",  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
-    url(r'^person-activity-autocomplete/$', PersonActivityAutocompleteView.as_view(), name='person-activity-autocomplete'),
-    url(r'^work-packages-autocomplete/$', WorkPackageAutocompleteView.as_view(), name='work-packages-autocomplete'),
+    url('^organization-linked-list-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
+    url('^organization-linked-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
+    url('^person-activity-autocomplete/$', PersonActivityAutocompleteView.as_view(), name='person-activity-autocomplete'),
+    url('^work-packages-autocomplete/$', WorkPackageAutocompleteView.as_view(), name='work-packages-autocomplete'),
 
-    url("^producers/submission/$", ProducerCreateView.as_view(), name='organization-producer-create'),
-    url("^producers/submission/(?P<slug>.*)/validation/$", ProducerValidationView.as_view(), name='organization-producer-validation'),
+    url('^producers/submission/$', ProducerCreateView.as_view(), name='organization-producer-create'),
+    url('^producers/submission/(?P<slug>.*)/validation/$', ProducerValidationView.as_view(), name='organization-producer-validation'),
 
-    url("^producers/(?P<slug>.*)/detail/$", ProducerDetailView.as_view(), name='organization-producer-detail'),
-    url("^producers/list/$", ProducerListView.as_view(), name='organization-producer-list'),
+    url('^producers/(?P<slug>.*)/detail/$', ProducerDetailView.as_view(), name='organization-producer-detail'),
+    url('^producers/list/$', ProducerListView.as_view(), name='organization-producer-list'),
 
-    url("^jury/list/$", JuryListView.as_view(), name='organization-jury-list'),
-
-]
+    url('^jury/list/$', JuryListView.as_view(), name='organization-jury-list'),
+    ]

@@ -24,6 +24,7 @@ from django.shortcuts import render
 from collections import defaultdict
 from organization.media.models import *
 from organization.core.views import *
+from organization.core.utils import split_events_from_other_related_content
 from dal import autocomplete
 from django.core.exceptions import FieldDoesNotExist
 from datetime import datetime
@@ -83,7 +84,7 @@ class PlaylistDetailView(SlugMixin, DetailView):
                         if not isinstance(attr, int) and attr != self.object and not isinstance(attr, PlaylistRelated):
                             self.concrete_objects.append(attr)
 
-        context['concrete_objects'] = self.concrete_objects
+        context = split_events_from_other_related_content(context, self.concrete_objects)
         return context
 
 

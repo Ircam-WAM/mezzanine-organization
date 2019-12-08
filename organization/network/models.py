@@ -133,6 +133,7 @@ class Organization(NamedSlugged, Address, URL, AdminThumbRelatedMixin, Orderable
     initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
     is_on_map = models.BooleanField(_('is on map'), default=False, blank=True)
     is_host = models.BooleanField(_('is host'), default=False, blank=True)
+    is_main = models.BooleanField(_('is main'), default=False, blank=True)
     telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
     opening_times = models.TextField(_('opening times'), blank=True)
     subway_access = models.TextField(_('subway access'), blank=True)
@@ -209,6 +210,7 @@ class Person(Displayable, AdminThumbMixin, Address):
     role = models.CharField(_('role'), max_length=256, blank=True, null=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     karma = models.IntegerField(default=0, editable=False)
+    search_fields = {"title": 1}
 
     class Meta:
         verbose_name = _('person')
@@ -650,7 +652,7 @@ class PersonActivity(Period):
             return ' - '.join((str(self.date_from), str(self.date_to)))
 
     def save(self, *args, **kwargs):
-        super(PersonActivity, self).save(args, kwargs)
+        super(PersonActivity, self).save(*args, **kwargs)
         update_activity(self)
 
 

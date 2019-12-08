@@ -21,7 +21,7 @@
 
 from __future__ import unicode_literals
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth.decorators import permission_required
@@ -39,4 +39,6 @@ urlpatterns = [
     url("^dynamic-content-page/$",  permission_required('page.can_edit')(DynamicContentPageView.as_view()), name='dynamic-content-page'),
     url("^home/$", HomeView.as_view(), name='organization-home'),
     url("^newsletter/$", NewsletterView.as_view(), name='organization-newsletter'),
+    url("^information/$", InformationView.as_view(), name='organization-information'),
+
 ]

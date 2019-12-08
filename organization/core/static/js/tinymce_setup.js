@@ -83,7 +83,10 @@ jQuery(function($) {
                     { title: 'Boutons Blanc (bleu) XSmall', selector: 'a', classes: 'wys-button-white-main-xsmall'},
                     { title: 'Boutons Blanc (violet)', selector: 'a', classes: 'wys-button-white-accent'},
                     { title: 'Boutons Blanc (violet) Small', selector: 'a', classes: 'wys-button-white-accent-small'},
-                    { title: 'Boutons Blanc (violet) XSmall', selector: 'a', classes: 'wys-button-white-accent-xsmall'}
+                    { title: 'Boutons Blanc (violet) XSmall', selector: 'a', classes: 'wys-button-white-accent-xsmall'},
+                    { title: 'Boutons Vertigo', selector: 'a', classes: 'wys-button-vertigo'},
+                    { title: 'Boutons Vertigo Small', selector: 'a', classes: 'wys-button-vertigo-small'},
+                    { title: 'Boutons Vertigo XSmall', selector: 'a', classes: 'wys-button-vertigo-xsmall'}
                 ]
 
             },
@@ -91,6 +94,7 @@ jQuery(function($) {
 
                 title: 'Paragraphs', items: [
                     { title: 'Highlighted paragraph', selector: 'p', classes: 'wys-highlighted-paragraph'},
+                    { title: 'Highlighted paragraph Vertigo', selector: 'p', classes: 'wys-highlighted-paragraph-vertigo'},
                     { title: 'Small paragraph', selector: 'p', classes: 'wys-small-text'}
                 ]
 
@@ -98,7 +102,8 @@ jQuery(function($) {
             {
 
                 title: 'Links', items: [
-                    { title: 'Unstyled link', selector: 'a', classes: 'wys-unstyled-link'}
+                    { title: 'Unstyled link', selector: 'a', classes: 'wys-unstyled-link'},
+                    { title: 'Lien Vertigo', selector: 'a', classes: 'wys-vertigo-link'}
                 ]
 
             }
