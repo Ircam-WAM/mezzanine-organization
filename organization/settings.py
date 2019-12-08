@@ -23,6 +23,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import os
+from datetime import date
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
 import ldap, logging
@@ -205,11 +206,10 @@ LANGUAGES = (
     ('fr', _('French')),
     ('en', _('English')),
 )
-
-# LOCALE_PATHS = (
-#     os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
-# )
-
+LOCALE_PATHS = (
+    os.path.join(PROJECT_ROOT, 'organization/locale'),
+)
+# print("LOCALE_PATHS", LOCALE_PATHS)
 #############
 # DATABASES #
 #############
@@ -231,8 +231,12 @@ DATABASES = {
 ################
 
 INSTALLED_APPS = [
+<<<<<<< HEAD
     #"organization_themes",
     #'organization_themes.ircam-www-theme',
+=======
+    'ircam_www_theme',
+>>>>>>> c5ea64fdb55fff695c0f63e18259dcb89634e27f
     # the current theme has to be defined in main local_settings as HOST_THEMES
     "modeltranslation",
     "dal",
@@ -322,7 +326,7 @@ TEMPLATES = [{
                                                   'organization.core.context_processors.organization_settings',
                                                   ),
                             'loaders': [
-                                #'mezzanine.template.loaders.host_themes.Loader',
+                                'mezzanine.template.loaders.host_themes.Loader',
                                 'django.template.loaders.filesystem.Loader',
                                 'django.template.loaders.app_directories.Loader',
                                 ],
@@ -449,7 +453,7 @@ TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 
 ADMIN_MENU_ORDER = (
     (_('Pages'), ('pages.Page', 'organization-pages.Home',
-                 'organization-core.LinkType')),
+                 'organization-core.LinkType',),),
     (_('Media'), ('organization-media.Media',
                   'organization-media.Playlist',
                   'organization-media.LiveStreaming',
@@ -459,14 +463,15 @@ ADMIN_MENU_ORDER = (
     (_('Events'), ('mezzanine_agenda.Event',
                   'mezzanine_agenda.Season',
                   'mezzanine_agenda.EventLocation',
-                  'mezzanine_agenda.EventShop',
+                  'mezzanine_agenda.ExternalShop',
                   'mezzanine_agenda.EventPrice',
                   'mezzanine_agenda.EventCategory',
                   'organization-agenda.EventPublicType',
                   'organization-agenda.EventTrainingLevel',
                   'generic.Keyword',
                   )),
-    (_('Magazine'), ('organization-magazine.Article',
+    (_('Magazine'), ('organization-magazine.Magazine',
+                    'organization-magazine.Article',
                     'organization-magazine.Brief',)),
     (_('Network'), ('organization-network.Organization',
                     'organization-network.OrganizationLinked',
@@ -494,6 +499,7 @@ ADMIN_MENU_ORDER = (
                      'organization-network.PersonActivityTimeSheet'
                     )),
     (_('Projects'), ('organization-projects.Project',
+                    'organization-projects.ProjectPage',
                     'organization-projects.ProjectCall',
                     'organization-projects.ProjectContact',
                     'organization-projects.ProjectProgram',
@@ -509,6 +515,7 @@ ADMIN_MENU_ORDER = (
                     )),
     (_('Shop'), ('shop.Product',
                     'organization-shop.ProductList',
+                    'organization-shop.ProductKeyword',
                     'shop.Order',
                     'shop.DiscountCode',
                     'shop.Sale',
@@ -528,9 +535,12 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'pages.Page',
                         'organization-media.Playlist',
                         'mezzanine_agenda.Event',
-                        'organization-projects.Project',
+                        'organization-projects.ProjectPage',
                         'shop.Product',
                         'organization-magazine.Article')
+
+# authorize models which does not heritate from Displayable
+SEARCH_MODEL_NO_DISPLAYABLE = ('organization-network.Person',)
 
 PAGES_MODELS = ('organization-pages.CustomPage',
                 'organization-magazine.Topic',
@@ -550,7 +560,7 @@ DAL_MAX_RESULTS = 100
 # EVENTS
 
 EVENT_SLUG = 'agenda'
-EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
+EVENT_GOOGLE_MAPS_DOMAIN = 'www.google.com'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
 EVENT_EXCLUDE_TAG_LIST = [ ]
@@ -575,6 +585,7 @@ SHOP_USE_VARIATIONS = False
 SHOP_USE_RATINGS = False
 
 PROJECT_DEMOS_DIR = '/srv/media/projects/demos/'
+
 if not os.path.exists(PROJECT_DEMOS_DIR):
     os.makedirs(PROJECT_DEMOS_DIR)
 
@@ -595,11 +606,11 @@ OPTIONAL_APPS = (
     PACKAGE_NAME_GRAPPELLI,
 )
 
-if DEBUG:
-    OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+# if DEBUG:
+    # OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
+    # MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
-INTERNAL_IPS = ['127.0.0.1', '172.17.0.1']
+INTERNAL_IPS = ['127.0.0.1', '172.17.0.1', '172.17.0.2']
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 DEBUG_TOOLBAR_PANELS = [
@@ -681,5 +692,33 @@ LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
 
 # Themes
 HOST_THEMES = [
-    ('example.com', 'organization_themes.ircam-www-theme'),
+    ('example.com', 'ircam_www_theme'),
 ]
+
+# TIMESHEET
+TIMESHEET_USER_TEST = 1
+TIMESHEET_LOG_PATH = "/var/log/cron/"
+TIMESHEET_START = date(2015, 1, 1) # arbitrary timesheet start due to missing data
+IRCAM_EMPLOYER = 1
+if DEBUG:
+    TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+else:
+    TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+
+# HAL
+
+HAL_URL = "//haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?affi_exp=Ircam&CB_auteur=oui&CB_titre=oui" \
+                        "&CB_article=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=typdoc&tri_exp3=date_publi" \
+                        "&ordre_aff=TA&Fen=Aff&Formate=Oui"
+
+HAL_LABOS_EXP = "labos_exp="
+HAL_URL_CSS = "&css=//%s/static/css/index.min.css"
+HAL_LIMIT_PUB = "&NbAffiche="
+HAL_YEAR_BEGIN = 1977
+
+# Ownable
+OWNABLE_MODELS_ALL_EDITABLE = []
+
+# ARTICLE LIST
+ARTICLE_KEYWORDS = ['', ]
+

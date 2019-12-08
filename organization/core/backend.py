@@ -4,6 +4,7 @@ from pprint import pprint
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 
+
 class OrganizationLDAPBackend(LDAPBackend):
 
     def get_user(self, user_id):
@@ -12,8 +13,8 @@ class OrganizationLDAPBackend(LDAPBackend):
         if user:
             try :
                 # get Person by mail
-                person, created = Person.objects.get_or_create(email=user.email)
-
+                person, created = Person.objects.get_or_create(email__iexact=user.email)
+                
                 person.user = user
                 # if the Person is the created default one
                 # if not user.person.first_name and not user.person.last_name:

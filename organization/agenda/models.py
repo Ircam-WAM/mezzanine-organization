@@ -60,14 +60,16 @@ class EventDepartment(models.Model):
         verbose_name_plural = _("departments")
 
 
-class EventPerson(models.Model):
+class EventPersonListBlockInline(Titled, Description):
 
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='persons', blank=True, null=True, on_delete=models.SET_NULL)
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='events', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='persons_list', blank=True, null=True, on_delete=models.SET_NULL)
+    person_list_block = models.ForeignKey(PersonListBlock, related_name='events', verbose_name=_('Person List Block'), blank=True, null=True)
 
     class Meta:
-        verbose_name = _("person")
-        verbose_name_plural = _("persons")
+        verbose_name = _('Person List')
+
+    def __str__(self):
+        return self.title
 
 
 class EventLink(Link):
@@ -140,6 +142,14 @@ class DynamicContentEvent(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Dynamic Content Event'
+
+
+class DynamicMultimediaEvent(DynamicContent, Orderable):
+
+    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
 
 
 class EventPriceDescription(models.Model):

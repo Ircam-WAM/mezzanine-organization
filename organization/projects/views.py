@@ -19,12 +19,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+from itertools import chain
 from django.shortcuts import render
-from django.views.generic.detail import SingleObjectMixin
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.template import Context
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.edit import FormView
+from django.http import Http404
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
@@ -32,18 +34,24 @@ from mezzanine.conf import settings
 from organization.projects.models import *
 from organization.projects.forms import *
 from organization.network.forms import *
+from organization.network.models import Organization
 from organization.core.views import *
 from organization.magazine.views import Article
 from organization.pages.models import CustomPage
 from datetime import datetime, date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
 
 
-class ProjectMixin(SingleObjectMixin):
+EXCLUDED_MODELS = ()
+
+
+class ProjectMixin(DynamicContentMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ProjectMixin, self).get_context_data(**kwargs)
-        self.object = self.get_object()
+
         if not isinstance(self.object, Project):
             self.project = self.object.project
         else:
@@ -67,12 +75,6 @@ class ProjectMixin(SingleObjectMixin):
             context['page'] = self.project.topic.pages.all().first()
 
         return context
-
-
-class ProjectDetailView(SlugMixin, ProjectMixin, DetailView):
-
-    model = Project
-    template_name='projects/project_detail.html'
 
 
 class ProjectICTDetailView(SlugMixin, ProjectMixin, DetailView):
@@ -106,19 +108,17 @@ class DynamicContentProjectView(Select2QuerySetSequenceView):
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
+        persons = Person.objects.all()
+        organizations = Organization.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
+            persons = persons.filter(title__icontains=self.q)
+            organizations = organizations.filter(name__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, events,)
-
-        if self.q:
-            qs = qs.filter(title__icontains=self.q)
-
-        qs = self.mixup_querysets(qs)
-
+        qs = autocomplete.QuerySetSequence(articles, custompage, events, persons, organizations)
         return qs
 
     def get_results(self, context):
@@ -137,6 +137,18 @@ class ProjectBlogPageView(SlugMixin, ProjectMixin, DetailView):
 
     model = ProjectBlogPage
     template_name='projects/project_blogpage_detail.html'
+
+
+class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
+
+    model = ProjectPage
+    template_name='projects/project/project_detail.html'
+
+    def get_object(self):
+        obj = super(ProjectPageView, self).get_object()
+        if not obj.published():
+            raise Http404()
+        return obj
 
 
 class ProjectCallMixin(object):
@@ -427,7 +439,7 @@ class ProjectICTListView(ListView):
 
     model = Project
     template_name='projects/project_ict_list.html'
-    
+
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         #TODO: Filter by Call
@@ -463,7 +475,7 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
 
     model = ProjectResidency
     template_name='projects/project_residency_detail.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super(ProjectResidencyDetailView, self).get_context_data(**kwargs)
         # Add the previous and next residencies to the context
@@ -512,3 +524,104 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
     form_class = ProjectResidencyForm
     template_name='projects/project_residency_create.html'
     inlines = []
+
+
+class AbstractProjectListView(ListView, FilteredListView):
+    
+    model = ProjectPage
+    template_name='projects/project/project_list.html'
+    item_to_filter = "filter"
+
+    def get_queryset(self):
+        self.qs = super(AbstractProjectListView, self).get_queryset()
+        
+        # list all projects labo or filter functions of slug team
+        if 'slug' in self.kwargs:
+            self.qs = self.qs.filter(project__teams__slug=self.kwargs['slug'])
+
+        v_filter = None
+
+        # Filter if GET
+        if self.request.GET:
+            if self.item_to_filter in self.request.GET.keys():
+                form = self.get_form()
+                v_filter = self._get_choice_id(self.request.GET[self.item_to_filter], form.fields[self.item_to_filter]._choices)
+
+        # Filter if POST
+        if self.filter_value:
+            v_filter = self.filter_value
+
+        # Apply filter
+        if v_filter:
+            kwargs = {
+                '{0}'.format(self.property_query_filter): v_filter,
+            }
+            self.qs = self.qs.filter(**kwargs)
+
+        # filter archived projects
+        self.qs = self.qs.filter(project__is_archive=self.archived)
+
+        # order by title
+        self.qs = self.qs.order_by('title')
+
+        return self.qs
+
+    def get_context_data(self, **kwargs):
+        context = super(AbstractProjectListView, self).get_context_data(**kwargs)            
+        
+        # list object function of pagination
+        context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
+                              settings.MEDIA_PER_PAGE,
+                              settings.MAX_PAGING_LINKS)
+
+        # set if project listed are archived
+        context['is_archive'] = self.archived
+        if self.archived:
+            context['title'] = _('Archived Projects')
+        else :
+            context['title'] = _('Projects')
+
+        # slug of the team
+        # used to switch between all labo projects or a specific team
+        if 'slug' in self.kwargs:     
+            context['slug'] = self.kwargs['slug']
+        return context
+
+
+class ProjectListView(AbstractProjectListView):
+    
+    form_class = TopicFilterForm
+    property_query_filter = "project__topic__id"
+    archived = False
+
+
+class ProjectArchivesListView(AbstractProjectListView):
+    
+    form_class = TopicFilterForm
+    property_query_filter = "project__topic__id"
+    archived = True
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectArchivesListView, self).get_context_data(**kwargs)
+        context['project_list_url'] = reverse_lazy('organization-project-list') 
+        return context
+
+
+class ProjectTeamListView(AbstractProjectListView):
+    
+    form_class = TypeFilterForm
+    property_query_filter = "project__type"
+    archived = False
+
+
+class ProjectArchivesTeamListView(AbstractProjectListView):
+    
+    form_class = TypeFilterForm
+    property_query_filter = "project__type"
+    archived = True
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectArchivesTeamListView, self).get_context_data(**kwargs)
+        context['project_list_url'] = reverse_lazy('organization-project-team-list', kwargs={'slug' : self.kwargs['slug']})
+        context['team'] = Team.objects.get(slug=self.kwargs['slug'])
+        return context

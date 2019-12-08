@@ -33,12 +33,13 @@ _slash = "/" if settings.APPEND_SLASH else ""
 
 urlpatterns = [
     url("^$", HomeView.as_view(), name="home"),
-    url("^dynamic-content-home-slider/$", permission_required('home.can_edit')(DynamicContentHomeSliderView.as_view()), name='dynamic-content-home-slider'),
-    url("^dynamic-content-home-body/$",  permission_required('home.can_edit')(DynamicContentHomeBodyView.as_view()), name='dynamic-content-home-body'),
-    url("^dynamic-content-home-media/$",  permission_required('page.can_edit')(DynamicContentHomeMediaView.as_view()), name='dynamic-content-home-media'),
-    url("^dynamic-content-page/$",  permission_required('page.can_edit')(DynamicContentPageView.as_view()), name='dynamic-content-page'),
+    url("^dynamic-content-home-slider/$", permission_required('organization-pages.change_home')(DynamicContentHomeSliderView.as_view()), name='dynamic-content-home-slider'),
+    url("^dynamic-content-home-body/$",  permission_required('organization-pages.change_home')(DynamicContentHomeBodyView.as_view()), name='dynamic-content-home-body'),
+    url("^dynamic-content-home-media/$",  permission_required('organization-pages.change_home')(DynamicContentHomeMediaView.as_view()), name='dynamic-content-home-media'),
+    url("^dynamic-content-page/$",  permission_required('organization-pages.change_custompage')(DynamicContentPageView.as_view()), name='dynamic-content-page'),
     url("^home/$", HomeView.as_view(), name='organization-home'),
     url("^newsletter/$", NewsletterView.as_view(), name='organization-newsletter'),
     url("^information/$", InformationView.as_view(), name='organization-information'),
+    url("^publications/$", PublicationsView.as_view(), name='publications'),
 
 ]

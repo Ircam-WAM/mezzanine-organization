@@ -26,7 +26,7 @@ from pyquery import PyQuery as pq
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.core.managers import SearchableManager
-from mezzanine.core.models import RichText, Displayable, Slugged
+from mezzanine.core.models import RichText, Displayable, Slugged, TeamOwnable
 from mezzanine.core.fields import RichTextField, OrderField, FileField
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 from organization.core.models import *
@@ -49,7 +49,7 @@ LIVE_STREAMING_TYPE_CHOICES = [
 ]
 
 
-class Media(Displayable):
+class Media(Displayable, TeamOwnable):
     """Media"""
 
     external_id = models.CharField(_('media id'), max_length=128)
@@ -63,6 +63,7 @@ class Media(Displayable):
         verbose_name = "media"
         verbose_name_plural = "medias"
         ordering = ('created',)
+        permissions = TeamOwnable.Meta.permissions
 
     def __str__(self):
         return self.title
@@ -92,14 +93,14 @@ class Media(Displayable):
         video = q('video')
         if len(video):
             if 'poster' in video[0].attrib.keys():
-                self.poster_url = video[0].attrib['poster']
+                self.poster_url = 'https:' + video[0].attrib['poster']
 
         super(Media, self).save(*args, **kwargs)
 
         for source in sources:
             mime_type = source.attrib['type']
-            transcoded, c = MediaTranscoded.objects.get_or_create(media=self, mime_type=mime_type)
-            transcoded.url = source.attrib['src']
+            transcoded, c = MediaTranscoded.objects.get_or_create(media=self, mime_type=mime_type)        
+            transcoded.url = 'https:' + source.attrib['src']
             transcoded.save()
 
 

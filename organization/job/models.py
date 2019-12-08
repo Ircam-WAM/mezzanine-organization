@@ -35,7 +35,7 @@ class JobResponse(models.Model):
     message = models.TextField(max_length=800, verbose_name=_('message'))
     #@TODO validate type format
     curriculum_vitae = models.FileField(_("curriculum vitae"), max_length=1024, upload_to="job_responses/%Y/%m/%d/")
-    cover_letter = models.FileField(_("cover letter"), max_length=1024, upload_to="job_responses/%Y/%m/%d/")
+    cover_letter = models.FileField(max_length=1024, upload_to="job_responses/%Y/%m/%d/", verbose_name=_('cover letter'))
     job_offer = models.ForeignKey("JobOffer", verbose_name=_('job offer'), related_name='job_response', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
@@ -43,7 +43,7 @@ class JobResponse(models.Model):
         verbose_name_plural = _("job_reponses")
 
 
-class JobOffer(Displayable, RichText):
+class JobOffer(Displayable, RichText, TeamOwnable):
 
     email = models.EmailField(max_length=255, null=False, verbose_name=_('Email to forward response'))
     type = models.CharField(blank=True, choices=[('internship', 'internship'), ('job', 'job')], max_length=32, verbose_name='Job offer type')
@@ -54,6 +54,7 @@ class JobOffer(Displayable, RichText):
     class Meta:
         verbose_name = _('job offer')
         verbose_name_plural = _("job offers")
+        permissions = TeamOwnable.Meta.permissions
 
 
 class Candidacy(Displayable, RichText, Period):
