@@ -23,6 +23,7 @@ from itertools import chain
 from django.shortcuts import render
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
+from django.core.exceptions import PermissionDenied
 from django.template import Context
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import FormView
@@ -46,10 +47,13 @@ from django.db import models
 from organization.projects.serializers import (ResidencyBlogPublicSerializer,
                                                ProjectResidencySerializer)
 
+from organization.network.models import Person
+from organization.projects.models import ProjectResidencyArticle
+
 from rest_framework import generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import (IsAuthenticated,
-                                        IsAuthenticatedOrReadOnly)
+                                        IsAuthenticatedOrReadOnly, IsAdminUser)
 from rest_framework.response import Response
 from rest_framework.exceptions import NotAuthenticated, ValidationError
 
@@ -478,6 +482,14 @@ class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+    # Users cannot update their articles
+    # They should delete it and recreate it like Tweets
+    def put(self, request, *args, **kwargs):
+        # Only admin can update
+        if not request.user or not request.user.is_staff:
+            raise PermissionDenied
+        return super().put(request, *args, **kwargs)
 
 
 class AbstractProjectListView(FormView, ListView):

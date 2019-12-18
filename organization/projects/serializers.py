@@ -53,7 +53,7 @@ class ResidencyBlogPublicSerializer(serializers.ModelSerializer):
         queryset=ProjectResidency.objects.all(),
         required=False
     )
-    article = ArticleSerializer()
+    article = ArticleSerializer(required=True)
     image = Base64VersatileImageFieldSerializer(
         sizes=[
             ('full_size', 'url'),
@@ -100,4 +100,20 @@ class ResidencyBlogPublicSerializer(serializers.ModelSerializer):
         return instance
 
     def update(self, instance, validated_data):
-        raise NotImplementedError
+        # Article nested model update
+        updated_article = validated_data.get('article', None)
+        if updated_article is not None:
+            instance.article.title = (
+                    updated_article.get('title', instance.article.title)
+            )
+            instance.article.content = (
+                    updated_article.get('content', instance.article.content)
+            )
+            instance.article.save()
+
+        instance.residency = validated_data.get('residency',
+                                                instance.residency)
+        instance.image = validated_data.get('image', instance.image)
+
+        instance.save()
+        return instance
