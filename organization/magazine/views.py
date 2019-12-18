@@ -23,6 +23,7 @@ from re import match
 from urllib.parse import urlparse
 from django.shortcuts import render
 from django.utils import timezone
+from django.urls import reverse_lazy 
 #from django.views.generic import *
 from django.views.generic import DetailView, ListView, TemplateView
 from django.contrib.contenttypes.models import ContentType
@@ -270,6 +271,10 @@ class ArticleListView(ListView):
         return context
 
 
+class ArticleListRedirect(RedirectView):
+
+    permanent = True
+    url = reverse_lazy('magazine-article-list')
 
 
 class ArticleEventView(SlugMixin, ListView, FilteredListView):

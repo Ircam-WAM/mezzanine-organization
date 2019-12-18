@@ -30,9 +30,16 @@ from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
 from organization.media.views import *
+from organization.magazine.views import ArticleListRedirect
 
+urlpatterns = []
 
-urlpatterns = [
+if getattr(settings, 'DEACTIVATE_MEDIA_DETAIL', False):
+    urlpatterns += [
+        url("^medias/(?P<type>.*)/(?P<slug>.*)/detail/$", ArticleListRedirect.as_view(), name="organization-media-detail"),
+    ]
+
+urlpatterns += [
     url("^medias/(?P<type>.*)/(?P<slug>.*)/detail/$", MediaDetailView.as_view(), name="organization-media-detail"),
     url("^medias/(?P<type>.*)/(?P<slug>.*)/overlay/$", MediaOverlayView.as_view(), name="organization-media-overlay"),
     url("^playlists/(?P<slug>.*)/detail/$", PlaylistDetailView.as_view(), name="organization-playlist-detail"),
@@ -43,3 +50,4 @@ urlpatterns = [
     url("^streams/(?P<slug>.*)/(?P<type>.*)/detail/$", LiveStreamingDetailView.as_view(), name="organization-streaming-detail"),
     url("^dynamic-multimedia/$", staff_member_required(DynamicMultimediaView.as_view()), name='dynamic-multimedia'),
 ]
+
