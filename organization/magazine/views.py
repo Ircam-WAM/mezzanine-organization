@@ -36,6 +36,7 @@ from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
 from mezzanine.utils.views import paginate
 from mezzanine.conf import settings
+from mezzanine.generic.models import AssignedKeyword
 from organization.magazine.models import *
 from organization.network.models import DepartmentPage, Person
 from organization.network.views import TeamOwnableMixin
@@ -212,40 +213,63 @@ class DynamicContentArticleView(Select2QuerySetSequenceView):
 
 
 class ArticleListView(ListView):
-
+    print("ArticleListView")
     model = Article
     template_name='magazine/article/article_list.html'
     context_object_name = 'objects'
-    keywords = OrderedDict()
+    keywords = None
 
     def get_queryset(self):
         self.qs = self.model.objects.published(for_user=self.request.user).order_by('-created')
-        playlists = Playlist.objects.published().order_by('-created').distinct()
+        if getattr(settings, 'ALLOW_PLAYLISTS_IN_ARTICLE', True):
+            playlists = Playlist.objects.published().order_by('-created').distinct()
 
-        if 'type' in self.kwargs:
-            if self.kwargs['type'] == "article":
-                playlists = []
+            if 'type' in self.kwargs:
+                if self.kwargs['type'] == "article":
+                    playlists = []
 
-            if self.kwargs['type'] == "video" or self.kwargs['type'] == "audio":
-                playlists = playlists.filter(type=self.kwargs['type'])
-                self.qs = []
+                if self.kwargs['type'] == "video" or self.kwargs['type'] == "audio":
+                    playlists = playlists.filter(type=self.kwargs['type'])
+                    self.qs = []
 
-        self.qs = sorted(
-            chain( self.qs, playlists),
-            key=lambda instance: instance.created,
-            reverse=True)
+            self.qs = sorted(
+                chain( self.qs, playlists),
+                key=lambda instance: instance.created,
+                reverse=True)
+        
+        if 'keyword' in self.kwargs:
+            keywords = AssignedKeyword.objects.filter(keyword__slug=self.kwargs['keyword'])
+            self.qs = self.qs.filter(keywords__in=keywords)
 
         return self.qs
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
-        context['keywords'] = settings.ARTICLE_KEYWORDS
+        context['keywords'] = settings.ARTICLE_KEYWORDS  
+
+        # keywords
+        assigned_keyword = AssignedKeyword()
+        self.keywords = assigned_keyword.get_keywords_of_content_type(self.model._meta.app_label, 
+                                                                    self.model.__name__.lower())
+        if self.keywords:
+            context['keywords'] = self.keywords
+
+        # pagination
         context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
-                              settings.MEDIA_PER_PAGE,
+                              settings.ARTICLE_PER_PAGE,
                               settings.MAX_PAGING_LINKS)
+
+        # keyword by AssignKeyword
+        if 'keyword' in self.kwargs:
+            context['current_keyword_slug'] = self.kwargs['keyword']
+
+        # keyword by MediaType: video, audio.....
         if 'type' in self.kwargs:
-            context['current_keyword'] = self.kwargs['type'];
+            context['current_keyword'] = self.kwargs['type'];    
+        
         return context
+
+
 
 
 class ArticleEventView(SlugMixin, ListView, FilteredListView):
