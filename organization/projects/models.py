@@ -527,7 +527,7 @@ class ProjectResidencyUserImage(UserImage):
 class ProjectResidencyArticle(VersatileImage):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='residency_articles', blank=True, null=True, on_delete=models.SET_NULL)
-    article = models.ForeignKey(Article, verbose_name=_('article'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
+    article = models.ForeignKey(ArticleMultiSite, verbose_name=_('article'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectResidencyEvent(models.Model):

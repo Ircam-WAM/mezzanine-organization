@@ -56,6 +56,15 @@ class Article(BlogPost, SubTitled):
         verbose_name = _('article')
 
 
+class ArticleMultiSite(Article):
+    # override objects value set by Mezzanine to CurrentSiteManager
+    # it allows using the Article model on every site
+    objects = models.Manager()  # default django manager
+
+    class Meta:
+        proxy = True
+
+
 class ArticleImage(Image):
 
     article = models.ForeignKey("Article", verbose_name=_('article'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
