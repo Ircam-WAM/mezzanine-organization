@@ -83,8 +83,9 @@ class JobOfferDetailView(CreateView):
         return super(JobOfferDetailView, self).form_valid(form)
 
     def render_to_response(self, context, **response_kwargs):
-        if self.job_offer.expiry_date < now():
-            raise Http404
+        if self.job_offer.expiry_date:
+            if self.job_offer.expiry_date < now():
+                raise Http404
         if self.job_offer.url:
             return redirect(self.job_offer.url)
         return super().render_to_response(context, **response_kwargs)
