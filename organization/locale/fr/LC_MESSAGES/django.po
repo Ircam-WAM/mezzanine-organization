@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-19 10:43+0000\n"
+"POT-Creation-Date: 2019-12-19 16:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -447,7 +447,7 @@ msgstr "curriculum vitae"
 msgid "cover letter"
 msgstr "lettre de motivation"
 
-#: job/models.py:39 job/models.py:61
+#: job/models.py:39 job/models.py:61 job/models.py:68
 msgid "job offer"
 msgstr ""
 
@@ -463,15 +463,15 @@ msgstr ""
 msgid "Email to forward response"
 msgstr ""
 
-#: job/models.py:51 job/models.py:68 magazine/models.py:87
+#: job/models.py:51 job/models.py:73 magazine/models.py:87
 msgid "text button"
 msgstr ""
 
 #: job/models.py:51
 msgid "View"
-msgstr "Vue"
+msgstr "Voir"
 
-#: job/models.py:52 job/models.py:69 magazine/models.py:88
+#: job/models.py:52 job/models.py:74 magazine/models.py:88
 #, fuzzy
 #| msgid "external ID"
 msgid "external content"
@@ -481,13 +481,13 @@ msgstr "ID externe"
 msgid "job offers"
 msgstr ""
 
-#: job/models.py:78 job/models.py:84
+#: job/models.py:83 job/models.py:89
 #, fuzzy
 #| msgid "candidacies"
 msgid "candidacy"
 msgstr "Candidatures"
 
-#: job/models.py:79
+#: job/models.py:84
 msgid "candidacies"
 msgstr "Candidatures"
 
@@ -534,14 +534,10 @@ msgid "topic"
 msgstr "rubrique"
 
 #: magazine/models.py:154 magazine/models.py:163
-#, fuzzy
-#| msgid "Magazine"
 msgid "magazine"
 msgstr "Magazine"
 
 #: magazine/models.py:164
-#, fuzzy
-#| msgid "Magazine"
 msgid "magazines"
 msgstr "Magazine"
 
@@ -558,10 +554,8 @@ msgid "audio"
 msgstr ""
 
 #: media/models.py:43
-#, fuzzy
-#| msgid "videos"
 msgid "video"
-msgstr "vidéos"
+msgstr "video"
 
 #: media/models.py:47
 msgid "html5"
@@ -572,10 +566,8 @@ msgid "youtube"
 msgstr ""
 
 #: media/models.py:55
-#, fuzzy
-#| msgid "Media"
 msgid "media id"
-msgstr "Média"
+msgstr "media id"
 
 #: media/models.py:56
 msgid "poster"
@@ -587,10 +579,8 @@ msgstr "catégorie"
 
 #: media/models.py:109 media/models.py:126 media/models.py:165
 #: media/models.py:168 network/models.py:736
-#, fuzzy
-#| msgid "Media"
 msgid "media"
-msgstr "Média"
+msgstr "Mémediadia"
 
 #: media/models.py:110
 msgid "file"

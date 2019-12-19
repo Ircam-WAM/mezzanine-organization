@@ -99,11 +99,7 @@ class JobOfferListView(ListView):
 
     def get_queryset(self, **kwargs):
         return self.model.objects.published()
-
-    def get_context_data(self, **kwargs):
-        context = super(JobOfferListView, self).get_context_data(**kwargs)
-        return context
-
+        
 
 def email_application_notification(request, job_offer, data):
     subject = "Candidature > " + job_offer.title

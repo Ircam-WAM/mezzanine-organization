@@ -28,7 +28,7 @@ from organization.job.models import *
 @register(JobOffer)
 class JobOfferTranslationOptions(TranslationOptions):
 
-    fields = ('title', 'description', 'content')
+    fields = ('title', 'description', 'content', 'text_button', )
 
 
 @register(JobResponse)
@@ -36,10 +36,17 @@ class JobResponseTranslationOptions(TranslationOptions):
 
     pass
 
+
+@register(JobOfferImage)
+class JobResponseTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(Candidacy)
 class JobResponseTranslationOptions(TranslationOptions):
 
-    fields = ('title', 'content', 'text_button', )
+    fields = ('title', 'description', 'content', 'text_button', )
 
 
 @register(CandidacyImage)

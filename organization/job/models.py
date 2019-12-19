@@ -63,6 +63,11 @@ class JobOffer(Displayable, RichText, TeamOwnable):
         permissions = TeamOwnable.Meta.permissions
 
 
+class JobOfferImage(Image):
+    
+    job_offer = models.ForeignKey(JobOffer, verbose_name=_('job offer'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
 class Candidacy(Displayable, RichText, Period):
 
     text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'))
