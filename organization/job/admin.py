@@ -37,7 +37,11 @@ class JobOfferAdminDisplayable(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = JobOffer
     inlines = [JobResponseInline,]
-
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'status', 'publish_date', 'expiry_date', 'content', 'email', 'type', 'text_button', 'url',),
+        }),
+    )
 
 class CandidacyImageInline(TabularDynamicInlineAdmin):
 
@@ -51,13 +55,12 @@ class CandidacyAdmin(admin.ModelAdmin):
 
 class CandidacyAdminDisplayable(BaseTranslationModelAdmin,):
 
-    list_display = ('title', 'external_content', 'content_object', )
-    form = CandidacyForm
+    list_display = ('title', 'url', )
     inlines = [CandidacyImageInline,]
     exclude = ("short_url", "keywords", "description", "slug", )
     fieldsets = (
         (None, {
-            'fields': ('title', 'status', 'publish_date', 'expiry_date', 'content', 'date_from', 'date_to', 'text_button_external', 'external_content', 'text_button_internal', 'content_object',),
+            'fields': ('title', 'status', 'publish_date', 'expiry_date', 'content', 'date_from', 'date_to', 'text_button', 'url',),
         }),
     )
 

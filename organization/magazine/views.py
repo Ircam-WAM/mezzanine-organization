@@ -21,14 +21,14 @@
 from collections import OrderedDict
 from re import match
 from urllib.parse import urlparse
-from django.shortcuts import render
 from django.utils import timezone
-from django.urls import reverse_lazy 
+from django.urls import reverse_lazy
 #from django.views.generic import *
 from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.detail import SingleObjectMixin
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import *
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
@@ -45,13 +45,15 @@ from organization.pages.models import CustomPage, DynamicContentPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting, \
                                     DynamicContentMixin, FilteredListView
 from organization.core.utils import split_events_from_other_related_content
+from organization.core.views import RedirectContentView
+
 from django.template.defaultfilters import slugify
 from itertools import chain
 from django.views.generic.edit import FormView
 from .forms import CategoryFilterForm
 
 
-class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
+class ArticleDetailView(RedirectContentView, SlugMixin, DetailView, DynamicContentMixin):
 
     model = Article
     template_name='magazine/article/article_detail.html'

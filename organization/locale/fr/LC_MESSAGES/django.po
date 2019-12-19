@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-16 10:40+0000\n"
+"POT-Creation-Date: 2019-12-19 10:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -319,7 +319,7 @@ msgstr "document"
 msgid "content type"
 msgstr "type de contenu"
 
-#: core/models.py:297 job/models.py:77 magazine/models.py:101
+#: core/models.py:297 magazine/models.py:101
 msgid "related object"
 msgstr "contenu lié"
 
@@ -409,7 +409,7 @@ msgstr "Page"
 msgid "Article"
 msgstr "Article"
 
-#: core/views.py:143 settings.py:452
+#: core/views.py:143 settings.py:455
 msgid "Media"
 msgstr "Média"
 
@@ -447,7 +447,7 @@ msgstr "curriculum vitae"
 msgid "cover letter"
 msgstr "lettre de motivation"
 
-#: job/models.py:39 job/models.py:55
+#: job/models.py:39 job/models.py:61
 msgid "job offer"
 msgstr ""
 
@@ -463,47 +463,43 @@ msgstr ""
 msgid "Email to forward response"
 msgstr ""
 
-#: job/models.py:56
-msgid "job offers"
+#: job/models.py:51 job/models.py:68 magazine/models.py:87
+msgid "text button"
 msgstr ""
 
-#: job/models.py:62
-msgid "external text button"
-msgstr ""
+#: job/models.py:51
+msgid "View"
+msgstr "Vue"
 
-#: job/models.py:63
-msgid "internal text button"
-msgstr ""
-
-#: job/models.py:64 magazine/models.py:88
+#: job/models.py:52 job/models.py:69 magazine/models.py:88
 #, fuzzy
 #| msgid "external ID"
 msgid "external content"
 msgstr "ID externe"
 
-#: job/models.py:69 magazine/models.py:93
-msgid "local content"
+#: job/models.py:62
+msgid "job offers"
 msgstr ""
 
-#: job/models.py:88 job/models.py:94
+#: job/models.py:78 job/models.py:84
 #, fuzzy
 #| msgid "candidacies"
 msgid "candidacy"
 msgstr "Candidatures"
 
-#: job/models.py:89
+#: job/models.py:79
 msgid "candidacies"
 msgstr "Candidatures"
 
-#: job/views.py:74
+#: job/views.py:75
 msgid "Only .pdf, .odt, .doc, .docx files allowed."
 msgstr ""
 
-#: job/views.py:78
+#: job/views.py:79
 msgid "Uploaded files cannot exceed "
 msgstr ""
 
-#: job/views.py:81
+#: job/views.py:82
 msgid "You have successfully submitted your application."
 msgstr ""
 
@@ -525,8 +521,8 @@ msgstr "article"
 msgid "style"
 msgstr ""
 
-#: magazine/models.py:87
-msgid "text button"
+#: magazine/models.py:93
+msgid "local content"
 msgstr ""
 
 #: magazine/models.py:112
@@ -549,11 +545,11 @@ msgstr "Magazine"
 msgid "magazines"
 msgstr "Magazine"
 
-#: magazine/views.py:301
+#: magazine/views.py:332
 msgid "Laboratory News"
 msgstr "Actualités du Labo"
 
-#: magazine/views.py:322
+#: magazine/views.py:353
 msgid "Team News"
 msgstr "Actualités de l'équipe"
 
@@ -1449,7 +1445,7 @@ msgstr ""
 msgid "Salvadorean"
 msgstr ""
 
-#: network/nationalities/nationalities.py:77 settings.py:207
+#: network/nationalities/nationalities.py:77 settings.py:210
 msgid "English"
 msgstr ""
 
@@ -1473,7 +1469,7 @@ msgstr ""
 msgid "Finnish"
 msgstr ""
 
-#: network/nationalities/nationalities.py:83 settings.py:206
+#: network/nationalities/nationalities.py:83 settings.py:209
 msgid "French"
 msgstr ""
 
@@ -2342,7 +2338,7 @@ msgstr "page rubrique d'un projet"
 msgid "Archived Projects"
 msgstr "Projets"
 
-#: projects/views.py:582 settings.py:496
+#: projects/views.py:582 settings.py:499
 msgid "Projects"
 msgstr "Projets"
 
@@ -2362,7 +2358,7 @@ msgstr ""
 msgid "Footer horizontal"
 msgstr ""
 
-#: settings.py:85 settings.py:468
+#: settings.py:85 settings.py:471
 msgid "Magazine"
 msgstr "Magazine"
 
@@ -2376,43 +2372,47 @@ msgstr ""
 msgid "Personnes"
 msgstr "Personne"
 
-#: settings.py:450
+#: settings.py:88
+msgid "Candidacies"
+msgstr "Candidatures"
+
+#: settings.py:453
 msgid "Pages"
 msgstr "Pages"
 
-#: settings.py:456
+#: settings.py:459
 msgid "Media Library"
 msgstr "Librairie media"
 
-#: settings.py:458
+#: settings.py:461
 msgid "Events"
 msgstr "Événements"
 
-#: settings.py:471
+#: settings.py:474
 msgid "Network"
 msgstr "Réseaux"
 
-#: settings.py:481
+#: settings.py:484
 msgid "Activity"
 msgstr "Activité"
 
-#: settings.py:493
+#: settings.py:496
 msgid "Timesheet"
 msgstr ""
 
-#: settings.py:511
+#: settings.py:514
 msgid "Shop"
 msgstr ""
 
-#: settings.py:518
+#: settings.py:521
 msgid "Jobs"
 msgstr "Offres d'emplois et stages"
 
-#: settings.py:519
+#: settings.py:522
 msgid "Users"
 msgstr ""
 
-#: settings.py:520
+#: settings.py:523
 msgid "Site"
 msgstr ""
 
@@ -2598,9 +2598,6 @@ msgstr ""
 #~ msgid "Briefs"
 #~ msgstr "Brèves"
 
-#~ msgid "Candidacies"
-#~ msgstr "Candidatures"
-
 #~ msgid "Please come back later. There is no candidacy at the moment."
 #~ msgstr ""
 #~ "Merci de revenir plus tard. Il n'y a pas de candidature pour le moment."
@@ -2613,9 +2610,6 @@ msgstr ""
 
 #~ msgid "Published on"
 #~ msgstr "Publié le"
-
-#~ msgid "View"
-#~ msgstr "Vue"
 
 #~ msgid "Please come back later. There is no job offer at the moment."
 #~ msgstr ""
