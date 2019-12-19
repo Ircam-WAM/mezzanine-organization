@@ -85,6 +85,8 @@ class JobOfferDetailView(CreateView):
     def render_to_response(self, context, **response_kwargs):
         if self.job_offer.expiry_date < now():
             raise Http404
+        if self.job_offer.url:
+            return redirect(self.job_offer.url)
         return super().render_to_response(context, **response_kwargs)
 
 
@@ -128,6 +130,11 @@ class CandidacyDetailView(DetailView):
         
     model = Candidacy
     template_name='job/candidacy/candidacy_detail.html'
+
+    def render_to_response(self, context, **response_kwargs):
+        if self.object.url:
+            return redirect(self.object.url)
+        return super().render_to_response(context, **response_kwargs)
 
 
 class CandidacyListView(ListView):
