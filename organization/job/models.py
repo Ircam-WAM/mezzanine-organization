@@ -48,8 +48,14 @@ class JobOffer(Displayable, RichText, TeamOwnable):
     email = models.EmailField(max_length=255, null=False, verbose_name=_('Email to forward response'))
     type = models.CharField(blank=True, choices=[('internship', 'internship'), ('job', 'job')], max_length=32, verbose_name='Job offer type')
 
+    text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'), default=_('View'))
+    url = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'), \
+                            help_text="If definied, it will redirect to this url, by default, it will display content of this page.")
+
     def get_absolute_url(self):
-        return reverse("organization-job-offer-detail", kwargs={"slug": self.slug})
+        if not self.url:
+            return reverse("organization-job-offer-detail", kwargs={"slug": self.slug})
+        return self.url
 
     class Meta:
         verbose_name = _('job offer')
@@ -57,32 +63,21 @@ class JobOffer(Displayable, RichText, TeamOwnable):
         permissions = TeamOwnable.Meta.permissions
 
 
+class JobOfferImage(Image):
+    
+    job_offer = models.ForeignKey(JobOffer, verbose_name=_('job offer'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
 class Candidacy(Displayable, RichText, Period):
 
-    text_button_external = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('external text button'))
-    text_button_internal = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('internal text button'))
-    external_content = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'))
-
-    # used for autocomplete but hidden in admin
-    content_type = models.ForeignKey(
-        ContentType,
-        verbose_name=_('local content'),
-        null=True,
-        blank=True,
-        editable=False,
-    )
-
-    # used for autocomplete but hidden in admin
-    object_id = models.PositiveIntegerField(
-        verbose_name=_('related object'),
-        null=True,
-        editable=False,
-    )
-
-    content_object = GenericForeignKey('content_type', 'object_id')
+    text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'))
+    url = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'), \
+                            help_text="If definied, it will redirect to this url, by default, it will display content of this page.")
 
     def get_absolute_url(self):
-        return self.external_content
+        if not self.url:
+            return reverse_lazy('organization-candidacy-detail', kwargs={'slug' : self.slug})
+        return self.url
 
     class Meta:
         verbose_name = _('candidacy')

@@ -85,7 +85,10 @@ PAGE_MENU_TEMPLATES = (
     (5, _("Magazine"), "pages/menus/magazine.html"),
     (6, _("Vous êtes"), "pages/menus/vous_etes.html"),
     (7, _("Personnes"), "pages/menus/tree.html"),
+    (8, _("Candidacies"), "pages/menus/candidacies.html"),
 )
+
+PAGE_MENU_TEMPLATES_DEFAULT = ()
 
 MENU_PERSON_ID = 7
 
@@ -559,6 +562,7 @@ EVENT_GOOGLE_MAPS_DOMAIN = 'www.google.com'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
 EVENT_EXCLUDE_TAG_LIST = [ ]
+EVENT_TAG_HIGHLIGHTED = 2
 PAST_EVENTS = True
 
 # SEASON

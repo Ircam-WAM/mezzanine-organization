@@ -40,20 +40,3 @@ class JobResponseForm(ModelForm):
     class Meta:
         model = JobResponse
         fields = ['first_name', 'last_name', 'email', 'message', 'curriculum_vitae', 'cover_letter', 'job_offer']
-
-
-class CandidacyForm(autocomplete.FutureModelForm):
-
-    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Article.objects.all(),
-            Event.objects.all(),
-            CustomPage.objects.all(),
-        ),
-        required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('candidacy-autocomplete'),
-    )
-
-    class Meta:
-        model = Candidacy
-        fields = ('__all__')
