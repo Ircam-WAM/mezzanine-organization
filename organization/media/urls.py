@@ -34,9 +34,12 @@ from organization.magazine.views import ArticleListRedirect
 
 urlpatterns = []
 
-if getattr(settings, 'DEACTIVATE_MEDIA_DETAIL', False):
+if getattr(settings, 'DEACTIVATE_MEDIA_PAGES', False):
     urlpatterns += [
         url("^medias/(?P<type>.*)/(?P<slug>.*)/detail/$", ArticleListRedirect.as_view(), name="organization-media-detail"),
+        url("^playlists/(?P<slug>.*)/detail/$", ArticleListRedirect.as_view(), name="organization-playlist-detail"),
+        url("^playlists/list/$", ArticleListRedirect.as_view(), name="organization-playlist-list"),
+        url("^playlists/list/(?P<type>.*)/$", ArticleListRedirect.as_view(), name="organization-playlist-list"),
     ]
 
 urlpatterns += [
