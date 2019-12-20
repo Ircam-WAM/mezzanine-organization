@@ -22,7 +22,7 @@
 import os
 import mimetypes
 import humanize
-from dal import autocomplete
+from django.utils.timezone import now
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from django import forms
 from django.shortcuts import redirect
@@ -35,9 +35,10 @@ from django.template import Context
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.utils.translation import ugettext_lazy as _
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from mezzanine.conf import settings
+from organization.core.views import RedirectContentView
 from organization.pages.models import CustomPage
 from organization.magazine.models import Article
 from organization.job.models import *
@@ -48,7 +49,7 @@ mime_types = ['pdf', 'msword', 'vnd.oasis.opendocument.text', 'vnd.openxmlformat
 class JobOfferDetailView(CreateView):
 
     model = JobResponse
-    template_name='job/job_offer_detail.html'
+    template_name='job/offer/job_offer_detail.html'
     context_object_name = 'job_offer'
     form_class = JobResponseForm
 
@@ -81,20 +82,24 @@ class JobOfferDetailView(CreateView):
         messages.info(self.request, _("You have successfully submitted your application."))
         return super(JobOfferDetailView, self).form_valid(form)
 
+    def render_to_response(self, context, **response_kwargs):
+        if self.job_offer.expiry_date:
+            if self.job_offer.expiry_date < now():
+                raise Http404
+        if self.job_offer.url:
+            return redirect(self.job_offer.url)
+        return super().render_to_response(context, **response_kwargs)
+
 
 class JobOfferListView(ListView):
 
     model = JobOffer
-    template_name='job/job_offer_list.html'
+    template_name='job/offer/job_offer_list.html'
     context_object_name = 'job_offer'
 
     def get_queryset(self, **kwargs):
         return self.model.objects.published()
-
-    def get_context_data(self, **kwargs):
-        context = super(JobOfferListView, self).get_context_data(**kwargs)
-        return context
-
+        
 
 def email_application_notification(request, job_offer, data):
     subject = "Candidature > " + job_offer.title
@@ -118,10 +123,21 @@ def email_application_notification(request, job_offer, data):
     return HttpResponse('email_application_notification')
 
 
+class CandidacyDetailView(DetailView):
+        
+    model = Candidacy
+    template_name='job/candidacy/candidacy_detail.html'
+
+    def render_to_response(self, context, **response_kwargs):
+        if self.object.url:
+            return redirect(self.object.url)
+        return super().render_to_response(context, **response_kwargs)
+
+
 class CandidacyListView(ListView):
 
     model = Candidacy
-    template_name='job/candidacy_list.html'
+    template_name='job/candidacy/candidacy_list.html'
     context_object_name = 'candidacy'
 
     def get_queryset(self, **kwargs):
