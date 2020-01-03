@@ -55,7 +55,7 @@ class CustomSearchableManager(DisplayableManager):
             # No choices defined - build a list of leaf models (those
             # without subclasses) that inherit from Displayable.
             models = [m for m in apps.get_models()
-                      if issubclass(m, self.model)]
+                      if issubclass(m, self.model) and not m._meta.proxy]
             parents = reduce(ior, [set(m._meta.get_parent_list())
                                    for m in models])
             models = [m for m in models if m not in parents]
@@ -85,6 +85,11 @@ class CustomSearchableManager(DisplayableManager):
                         % ", ".join(errors))
 
             for model in apps.get_models():
+
+                # Skip proxy models because we want to get the parent model
+                if model._meta.proxy:
+                    continue
+
                 # Model is actually a subclasses of what we're
                 # searching (eg Displayabale)
                 is_subclass = issubclass(model, self.model)
