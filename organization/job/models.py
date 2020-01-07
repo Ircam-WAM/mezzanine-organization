@@ -76,7 +76,7 @@ class Candidacy(Displayable, RichText, Period):
 
     def get_absolute_url(self):
         if not self.url:
-            return reverse_lazy('organization-candidacy-detail', kwargs={'slug' : self.slug})
+            return reverse('organization-candidacy-detail', kwargs={'slug' : self.slug})
         return self.url
 
     class Meta:
