@@ -480,6 +480,7 @@ ADMIN_MENU_ORDER = (
                     'organization-network.Team',
                     'organization-network.Person',
                     'organization-network.Activity',
+                    'organization-network.PersonProfessionalCategory',
                     'organization-network.PersonListBlock',
                     )),
     (_('Activity'), ('organization-network.PersonActivity',
