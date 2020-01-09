@@ -53,7 +53,7 @@ from mezzanine.conf import settings
 from organization.core.views import *
 from organization.network.forms import *
 from organization.network.models import Person
-from organization.network.serializers import PersonFollowSerializer
+from organization.network.serializers import PersonPublicSerializer
 from organization.network.models import *
 from organization.network.utils import get_users_of_team
 from organization.pages.forms import YearForm
@@ -117,7 +117,7 @@ class PersonMixin(SingleObjectMixin):
 
 class PersonViewSet(viewsets.GenericViewSet):
     queryset = Person.objects.all()
-    serializer_class = PersonFollowSerializer
+    serializer_class = PersonPublicSerializer
     lookup_field = 'user__username'
 
     # DRF default behavior does not match dot characters in URL

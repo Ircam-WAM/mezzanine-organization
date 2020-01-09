@@ -10,33 +10,6 @@ class PersonPublicSerializer(serializers.ModelSerializer):
     # Instead of UserSerializer, we use a MethodField to avoid
     # making another object in response (= flatten the response payload)
     username = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Person
-        fields = (
-            "first_name",
-            "last_name",
-            "profile_image",
-            "background_image",
-            "username",
-            "occupation"
-        )
-
-    def get_username(self, obj):
-        if not obj.user:
-            return None
-        return obj.user.username
-
-
-class OrganizationPublicSerializer(serializers.ModelSerializer):
-    type = serializers.ReadOnlyField(default='organization')
-
-    class Meta:
-        model = Organization
-        fields = ("name", "images", "type")
-
-
-class PersonFollowSerializer(serializers.ModelSerializer):
     following = serializers.SerializerMethodField()
     followers = serializers.SerializerMethodField()
     is_followed_by_me = serializers.SerializerMethodField()
@@ -44,10 +17,24 @@ class PersonFollowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
         fields = (
+            # Model
+            "first_name",
+            "last_name",
+            "profile_image",
+            "background_image",
+            "occupation",
+
+            # Methods
+            "username",
             "following",
             "followers",
             "is_followed_by_me"
         )
+
+    def get_username(self, obj):
+        if not obj.user:
+            return None
+        return obj.user.username
 
     def get_is_followed_by_me(self, obj):
         user = self.context['request'].user
@@ -83,3 +70,11 @@ class PersonFollowSerializer(serializers.ModelSerializer):
                 many=True
         )
         return users.data + orgs.data
+
+
+class OrganizationPublicSerializer(serializers.ModelSerializer):
+    type = serializers.ReadOnlyField(default='organization')
+
+    class Meta:
+        model = Organization
+        fields = ("name", "images", "type")
