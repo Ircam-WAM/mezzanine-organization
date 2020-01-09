@@ -189,6 +189,13 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
     bio = RichTextField(_('biography'), blank=True)
     role = models.CharField(_('role'), max_length=256, blank=True, null=True)
     occupation = models.CharField(_('occupation'), max_length=256, blank=True, null=True)
+    professional_category = models.ForeignKey(
+            'PersonProfessionalCategory', 
+            related_name='category', 
+            verbose_name='professional category',
+            blank=True, 
+            null=True, 
+            on_delete=models.SET_NULL)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     hal_url = models.URLField(_('HAL url'), max_length=512, blank=True)
     karma = models.IntegerField(default=0, editable=False)
@@ -782,3 +789,17 @@ class MediaDepartment(models.Model):
     media = models.ForeignKey(Media, verbose_name=_('media'), related_name='department')
     department = models.ForeignKey(Department, verbose_name=_('department'), related_name='medias', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
 
+
+
+class PersonProfessionalCategory(models.Model):
+
+    name = models.CharField(_('name'), max_length=256)
+    
+    class Meta:
+        verbose_name = _('Professionnal category')
+        verbose_name_plural = _('Professionnal categories')
+
+    def __str__(self):
+        return self.name
+
+    

@@ -248,7 +248,7 @@ class PersonForm(ModelForm):
 
     class Meta:
         model = Person
-        fields = ('profile_image', 'background_image', 'occupation', 'bio', 'address', 'address_2', 'postal_code',
+        fields = ('profile_image', 'background_image', 'professional_category', 'occupation', 'bio', 'address', 'address_2', 'postal_code',
                 'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender',
                 'citizenship')
         widgets = {
