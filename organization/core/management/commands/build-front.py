@@ -66,14 +66,12 @@ class Command(BaseCommand):
                 theme_path = apps.get_app_config(theme.split('.')[-1]).path
                 os.chdir(theme_path)
                 print('Building ' + theme)
-                if not os.path.exists('node_modules') or self.force_npm:
-                    subprocess.run(["npm", "ci"])
-                if not os.path.exists('static/vendors') or self.force_bower:
-                    subprocess.run(["bower", "--allow-root", "install"])
+                subprocess.run(["npm", "install"])
+                subprocess.run(["bower", "--allow-root", "install"])
                 subprocess.run(["gulp", "build"])
             for theme in getattr(settings, 'EXTRA_THEMES_BUILD', []):
                 theme_path = apps.get_app_config(theme[0].split('.')[-1]).path
                 os.chdir(theme_path)
                 print('Building ' + theme[0])
-                subprocess.run(["npm", "ci"])
+                subprocess.run(["npm", "install"])
                 subprocess.run(theme[1].split(' '))
