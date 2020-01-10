@@ -244,7 +244,11 @@ class PersonImageForm(ModelForm):
 
 class PersonForm(ModelForm):
 
+
     birthday = forms.DateField(localize=True, help_text=_('Please format yyyy-mm-dd'))
+
+    required_fields = ['occupation', 'professional_category', 'country', ]
+    required_css_class = 'required'
 
     class Meta:
         model = Person
@@ -257,6 +261,12 @@ class PersonForm(ModelForm):
             'address': forms.Textarea(attrs={'rows':2,}),
             'address_2': forms.Textarea(attrs={'rows':2,}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(PersonForm, self).__init__(*args, **kwargs)
+
+        for key in self.required_fields:
+            self.fields[key].required = True
 
 
 class UserForm(ModelForm):
