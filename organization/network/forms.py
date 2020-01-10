@@ -245,6 +245,7 @@ class PersonImageForm(ModelForm):
 class PersonForm(ModelForm):
 
     birthday = forms.DateField(localize=True, help_text=_('Please format yyyy-mm-dd'))
+    required_css_class = 'required'
 
     class Meta:
         model = Person
