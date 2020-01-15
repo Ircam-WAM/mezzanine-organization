@@ -50,6 +50,7 @@ from django.views.generic.edit import CreateView, FormView
 from django.views.generic.detail import SingleObjectMixin
 from extra_views import FormSetView
 from mezzanine.conf import settings
+from mezzanine.utils.sites import override_current_site_id
 from organization.core.views import *
 from organization.network.forms import *
 from organization.network.models import Person
@@ -865,22 +866,23 @@ class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = {}
 
-        categories = ['organizations',]
-        organizations = Organization.objects.filter(is_on_map=True)
-        context['objects'] = [self.get_object_dict(object, categories) for object in organizations]
+        with override_current_site_id(0):
+            categories = ['organizations',]
+            organizations = Organization.objects.filter(is_on_map=True)
+            context['objects'] = [self.get_object_dict(object, categories) for object in organizations]
 
-        categories = ['producers',]
-        role, c = OrganizationRole.objects.get_or_create(key='Producer')
-        producers = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
-        context['objects'] += [self.get_object_dict(object, categories) for object in producers]
+            categories = ['producers',]
+            role, c = OrganizationRole.objects.get_or_create(key='Producer')
+            producers = Organization.objects.filter(role=role).filter(validation_status=3).select_related().order_by('name')
+            context['objects'] += [self.get_object_dict(object, categories) for object in producers]
 
-        categories = ['persons',]
-        persons = Person.objects.exclude(mappable_location__isnull=True)
-        context['objects'] += [self.get_object_dict(object, categories) for object in persons]
+            categories = ['persons',]
+            persons = Person.objects.exclude(mappable_location__isnull=True)
+            context['objects'] += [self.get_object_dict(object, categories) for object in persons]
 
-        categories = ['residencies',]
-        residencies = ProjectResidency.objects.exclude(mappable_location__isnull=True)
-        context['objects'] += [self.get_object_dict(object, categories) for object in residencies]
+            categories = ['residencies',]
+            residencies = ProjectResidency.objects.exclude(mappable_location__isnull=True)
+            context['objects'] += [self.get_object_dict(object, categories) for object in residencies]
 
         return context
 
