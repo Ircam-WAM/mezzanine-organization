@@ -256,9 +256,9 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
 
 class PersonOptions(models.Model):
 
-    newsletter = models.BooleanField(_('newsletter'), default=False, help_text=_('You will receive a periodic Newsletter by email from the STARTS editorial team.'))
-    user_organization_notifications = models.BooleanField(_('Users and Organizations email notifications'), default=False, help_text=_('You will receive some email notifications when events concerning your profile and interactions occur.'))
-    on_map = models.BooleanField(_('Appear on the Artistic Network Map'), default=False, help_text=_('Your profile will be accessible via our world map. For this, you need to inform your geo-localisation (at least city and country).'))
+    newsletter = models.BooleanField(_('newsletter'), default=False, help_text=_('You will receive monthly newsletters by email from the STARTS editorial team!'))
+    user_organization_notifications = models.BooleanField(_('Users and Organizations email notifications'), default=False, help_text=_('Check the box not to miss any opportunity such as new STARTS calls for residencies, funding or exhibition. These are only sent to our members!'))
+    on_map = models.BooleanField(_('Appear on the Artistic Network Map'), default=False, help_text=_('Your profile will be accessible via our world map. For this, you need to inform your geo-localization (at least city and country).'))
     person = models.OneToOneField(Person, verbose_name=_('person'))
 
 
