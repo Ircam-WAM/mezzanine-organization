@@ -255,7 +255,7 @@ class PersonForm(ModelForm):
         model = Person
         fields = ('profile_image', 'background_image', 'professional_category', 'occupation', 'bio', 'address', 'address_2', 'postal_code',
                 'city', 'country', 'telephone', 'telephone_2', 'birthday', 'gender',
-                'citizenship')
+                'citizenship', 'signup_reason')
         widgets = {
             'profile_image' : ClearableFileInputCustom(),
             'background_image' : ClearableFileInputCustom(),
@@ -268,6 +268,8 @@ class PersonForm(ModelForm):
 
         for key in self.required_fields:
             self.fields[key].required = True
+
+        self.fields['birthday'].required = False
 
 
 class UserForm(ModelForm):
