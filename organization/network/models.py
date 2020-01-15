@@ -190,11 +190,18 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
     role = models.CharField(_('role'), max_length=256, blank=True, null=True)
     occupation = models.CharField(_('occupation'), max_length=256, blank=True, null=True)
     professional_category = models.ForeignKey(
-            'PersonProfessionalCategory', 
-            related_name='category', 
+            'PersonProfessionalCategory',
+            related_name='category',
             verbose_name='professional category',
-            blank=True, 
-            null=True, 
+            blank=True,
+            null=True,
+            on_delete=models.SET_NULL)
+    signup_reason = models.ForeignKey(
+            'PersonSignupReason',
+            related_name='signup_reason',
+            verbose_name='How did you hear from us?',
+            blank=True,
+            null=True,
             on_delete=models.SET_NULL)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     hal_url = models.URLField(_('HAL url'), max_length=512, blank=True)
@@ -249,9 +256,9 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
 
 class PersonOptions(models.Model):
 
-    newsletter = models.BooleanField(_('newsletter'), default=False, help_text=_('You will receive a periodic Newsletter by email from the STARTS editorial team.'))
-    user_organization_notifications = models.BooleanField(_('Users and Organizations email notifications'), default=False, help_text=_('You will receive some email notifications when events concerning your profile and interactions occur.'))
-    on_map = models.BooleanField(_('Appear on the Artistic Network Map'), default=False, help_text=_('Your profile card will be displayed on the geographical community map if you add your own or professional address to your profile.'))
+    newsletter = models.BooleanField(_('newsletter'), default=False, help_text=_('You will receive monthly newsletters by email from the STARTS editorial team!'))
+    user_organization_notifications = models.BooleanField(_('Users and Organizations email notifications'), default=False, help_text=_('Check the box not to miss any opportunity such as new STARTS calls for residencies, funding or exhibition. These are only sent to our members!'))
+    on_map = models.BooleanField(_('Appear on the Artistic Network Map'), default=False, help_text=_('Your profile will be accessible via our world map. For this, you need to inform your geo-localization (at least city and country).'))
     person = models.OneToOneField(Person, verbose_name=_('person'))
 
 
@@ -794,7 +801,7 @@ class MediaDepartment(models.Model):
 class PersonProfessionalCategory(models.Model):
 
     name = models.CharField(_('name'), max_length=256)
-    
+
     class Meta:
         verbose_name = _('Professionnal category')
         verbose_name_plural = _('Professionnal categories')
@@ -802,4 +809,16 @@ class PersonProfessionalCategory(models.Model):
     def __str__(self):
         return self.name
 
-    
+
+class PersonSignupReason(models.Model):
+
+    reason = models.CharField(_('reason'), max_length=512)
+
+    class Meta:
+        verbose_name = _('Signup reason')
+        verbose_name_plural = _('Signup reasons')
+
+    def __str__(self):
+        return self.reason
+
+
