@@ -37,6 +37,8 @@ class PersonPublicSerializer(serializers.ModelSerializer):
         return obj.user.username
 
     def get_is_followed_by_me(self, obj):
+        if not obj.user:
+            return None
         user = self.context['request'].user
         if not hasattr(user, 'person'):
             return False
@@ -47,6 +49,8 @@ class PersonPublicSerializer(serializers.ModelSerializer):
                   .exists()
 
     def get_followers(self, obj):
+        if not obj.user:
+            return []
         users = UserPublicSerializer(
                 User.objects.filter(person__in=obj.user.followers_users.all()),
                 read_only=True,
