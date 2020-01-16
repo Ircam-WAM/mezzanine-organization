@@ -31,12 +31,14 @@ from django.contrib.admin.views.decorators import staff_member_required
 from organization.media.models import *
 from organization.core.views import *
 from organization.core.utils import split_events_from_other_related_content
+from organization.core.views import DynamicReverseMixin
+
 
 # temporarily excluse not ready models
 EXCLUDED_MODELS = ("organizationplaylist", "personplaylist")
 
 
-class MediaDetailView(SlugMixin, DetailView):
+class MediaDetailView(SlugMixin, DetailView, DynamicReverseMixin):
 
     model = Media
     context_object_name = 'media'
@@ -58,7 +60,7 @@ class MediaDetailView(SlugMixin, DetailView):
         return context
 
 
-class PlaylistDetailView(SlugMixin, DetailView):
+class PlaylistDetailView(SlugMixin, DetailView, DynamicReverseMixin):
 
     model = Playlist
     template_name='media/playlist/playlist_detail.html'
