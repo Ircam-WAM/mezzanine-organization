@@ -379,6 +379,13 @@ class DynamicContentMagazineContentView(Select2QuerySetSequenceView):
         return results
 
 
+MAGAZINE_FILTERS = {
+    'article' : _('Articles'),
+    'video' : _('Videos'),
+    'audio' : _('Audio'),
+    'playlist' : _('Playlists'),
+}
+
 class MagazineDetailView(DetailView):
     
     model = Magazine
@@ -391,3 +398,30 @@ class MagazineDetailView(DetailView):
         except Magazine.DoesNotExist:
             raise Http404("Magazine does not exist")
         return obj
+
+    def get_context_data(self, **kwargs):
+        context = super(MagazineDetailView, self).get_context_data(**kwargs)
+
+        context['dynamic_content'] = self.object.dynamic_content.all()
+        if 'type' in self.kwargs:
+            if self.kwargs['type'] in ('article', 'playlist'):
+                context['dynamic_content'] = context['dynamic_content'] \
+                                            .filter(content_type__model=self.kwargs['type'])
+            elif self.kwargs['type'] in ('audio', 'video'):
+                # @WannaCry
+                # can't do : .filter(content_object__type=self.kwargs['type'])
+                # Because it generates this error :
+                # Field 'content_object' does not generate an automatic reverse
+                # relation and thereforecannot be used for reverse querying.
+                context['dynamic_content'] = context['dynamic_content'] \
+                                            .filter(content_type__model='media')
+                dynamic_content = []
+                for d in context['dynamic_content']:
+                    if d.content_object.type == self.kwargs['type']:
+                        dynamic_content.append(d)
+
+                context['dynamic_content'] = dynamic_content
+
+        context['filters'] = MAGAZINE_FILTERS
+        context['current_type'] = self.kwargs['type']
+        return context
