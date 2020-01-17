@@ -216,7 +216,6 @@ class DynamicContentArticleView(Select2QuerySetSequenceView):
 
 
 class ArticleListView(ListView):
-    print("ArticleListView")
     model = Article
     template_name='magazine/article/article_list.html'
     context_object_name = 'objects'
