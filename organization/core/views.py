@@ -293,6 +293,22 @@ class DynamicContentMixin(SingleObjectMixin):
         return context
 
 
+DYNAMIC_MULTIMEDIA_MODELS = [
+    'dynamiccontentpage',
+    'dynamicmultimediapage',
+    'dynamiccontentperson',
+    'dynamicmultimediaorganization',
+    'dynamicmultimediaperson',
+    'dynamiccontentproject',
+    'dynamicmultimediaproject',
+    'dynamiccontentprojectpage',
+    'dynamiccontentarticle',
+    'dynamicmultimediaarticle',
+    'dynamiccontentevent',
+    'dynamicmultimediaevent',
+]
+
+
 class DynamicReverseMixin(SingleObjectMixin):
     
     def get_context_data(self, **kwargs):
@@ -304,7 +320,7 @@ class DynamicReverseMixin(SingleObjectMixin):
         content_type = ContentType.objects.get_for_model(self.object._meta.model)
         for key in keys:
             for model_str, model_class in apps.all_models[key].items():
-                if model_str != 'dynamiccontenthomebody' and (match(r'dynamiccontent[a-z]*', model_str) or match(r'dynamicmultimedia[a-z]*', model_str)):
+                if model_str in DYNAMIC_MULTIMEDIA_MODELS:
                     queryset = model_class.objects.filter(content_type_id=content_type.id, object_id=self.object.id)
                     for dynamic_content in queryset:
                         for field in dynamic_content._meta.get_fields():
