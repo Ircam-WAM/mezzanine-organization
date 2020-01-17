@@ -304,10 +304,9 @@ class DynamicReverseMixin(SingleObjectMixin):
         content_type = ContentType.objects.get_for_model(self.object._meta.model)
         for key in keys:
             for model_str, model_class in apps.all_models[key].items():
-                if match(r'dynamiccontent[a-z]*', model_str) or match(r'dynamicmultimedia[a-z]*', model_str):
+                if model_str != 'dynamiccontenthomebody' and (match(r'dynamiccontent[a-z]*', model_str) or match(r'dynamicmultimedia[a-z]*', model_str)):
                     queryset = model_class.objects.filter(content_type_id=content_type.id, object_id=self.object.id)
                     for dynamic_content in queryset:
-                        print(model_class, vars(dynamic_content))
                         for field in dynamic_content._meta.get_fields():
                             if field.remote_field.__class__.__name__ == 'ManyToOneRel' \
                                 and field.name != "field.name":
