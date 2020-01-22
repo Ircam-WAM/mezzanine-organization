@@ -119,6 +119,10 @@ ORGANIZATION_STATUS_CHOICES = (
     (3, _('accepted')),
 )
 
+ACCOUNT_TYPE_CHOICES = (
+    (0, _('Individual')),
+    (1, _('Organization')),
+)
 
 class TeamOwnable(Ownable):
     """
@@ -181,6 +185,7 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address):
     gender = models.CharField(_('gender'), max_length=16, choices=GENDER_CHOICES, blank=True)
     first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
+    account_type = models.IntegerField(_('account type'), choices=ACCOUNT_TYPE_CHOICES, default=0, null=True)
     email = models.EmailField(_('email'), blank=True, null=True)
     telephone = models.CharField(_('telephone 1'), max_length=64, blank=True, null=True)
     telephone_2 = models.CharField(_('telephone 2'), max_length=64, blank=True, null=True)
@@ -820,5 +825,4 @@ class PersonSignupReason(models.Model):
 
     def __str__(self):
         return self.reason
-
 
