@@ -859,7 +859,17 @@ class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
             elif attribute == 'categories':
                 data[attribute] = categories
             elif attribute == 'url':
-                data['url'] = object.get_absolute_url()
+                # If possible, generate an absolute URL with
+                # the domain name of the site it belongs to.
+                # It fixes 404 error on residencies URL
+                if hasattr(object, 'site'):
+                    data['url'] = ''.join((
+                            'https://',
+                            object.site.domain,
+                            object.get_absolute_url()
+                    ))
+                else:
+                    data['url'] = object.get_absolute_url()
 
         return data
 
