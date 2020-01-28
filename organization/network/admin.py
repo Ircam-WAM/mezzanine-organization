@@ -374,7 +374,6 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
             return response
 
     def export_all_raw_as_csv(self, request, queryset):
-            queryset = Person.objects.all()
             meta = self.model._meta
             field_names = ['first_name', 'last_name', 'email', 'gender', 'birthday']
             response = HttpResponse(content_type='text/csv')
@@ -387,8 +386,8 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
             return response
 
-    export_as_csv.short_description = "Export Selected"
-    export_all_raw_as_csv.short_description = "Export all Persons as CSV with raw data"
+    export_as_csv.short_description = "Export selected with activities"
+    export_all_raw_as_csv.short_description = "Export selected with raw data only"
 
 
 class ProjectActivityAdmin(BaseTranslationModelAdmin):
