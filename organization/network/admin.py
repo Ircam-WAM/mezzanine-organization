@@ -42,6 +42,7 @@ from organization.network.translation import *
 import csv
 from django.http import HttpResponse
 
+
 from organization.network.utils import getUsersListOfSameTeams
 
 
@@ -342,7 +343,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
                     'activities__status', 'activities__teams',
                     'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
-    actions = ['export_as_csv', ]
+    actions = ['export_as_csv', 'export_all_raw_as_csv']
 
 
     def last_weekly_hour_volume(self, instance):
@@ -354,7 +355,6 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
         return weekly_hour_volume
 
     def export_as_csv(self, request, queryset):
-
             meta = self.model._meta
             field_names = ['first_name', 'last_name', 'gender', 'birthday']
             activity_fields = ['date_from', 'date_to', 'framework', 'function', 'organizations', 'teams']
@@ -373,7 +373,30 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
             return response
 
-    export_as_csv.short_description = "Export Selected"
+    def export_all_raw_as_csv(self, request, queryset):
+            meta = self.model._meta
+            field_names = ['first_name', 'last_name', 'email', 'gender', 'birthday']
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+            response.write(u'\ufeff'.encode('utf8'))
+            writer = csv.writer(response, delimiter=';', dialect='excel')
+            writer.writerow(field_names)
+            for obj in queryset:
+                data = []
+                for field in field_names:
+                    if field == 'email':
+                        email = getattr(obj, field)
+                        if not email and obj.user:
+                            if obj.user.email:
+                                email = obj.user.email
+                        data.append(email)
+                    else:
+                        data.append(getattr(obj, field))
+                row = writer.writerow(data)
+            return response
+
+    export_as_csv.short_description = "Export selected with activities"
+    export_all_raw_as_csv.short_description = "Export selected with raw data only"
 
 
 class ProjectActivityAdmin(BaseTranslationModelAdmin):

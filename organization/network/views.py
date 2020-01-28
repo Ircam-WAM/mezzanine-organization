@@ -857,7 +857,13 @@ class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
                 value = images.first().file.url if images else ''
                 data[attribute] = value
             elif attribute == 'categories':
-                data[attribute] = categories
+                # Append professional_category to categories
+                if hasattr(object, 'professional_category') and object.professional_category:
+                    new_categories = categories.copy()
+                    new_categories.append(str(object.professional_category))
+                    data[attribute] = new_categories
+                else:
+                    data[attribute] = categories
             elif attribute == 'url':
                 # If possible, generate an absolute URL with
                 # the domain name of the site it belongs to.

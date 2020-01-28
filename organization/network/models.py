@@ -59,6 +59,8 @@ mrs = _('Ms')
 GENDER_CHOICES = [
     ('male', _('male')),
     ('female', _('female')),
+    ('neutral', _('neutral')),
+    ('prefer not to disclose', _('prefer not to disclose')),
 ]
 
 PERSON_LIST_STYLE_CHOICES = [
