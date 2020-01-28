@@ -380,6 +380,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
             response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
             response.write(u'\ufeff'.encode('utf8'))
             writer = csv.writer(response, delimiter=';', dialect='excel')
+            writer.writerow(field_names)
             for obj in queryset:
                 data = [getattr(obj, field) for field in field_names]
                 row = writer.writerow(data)
