@@ -247,7 +247,7 @@ class PersonForm(ModelForm):
 
     birthday = forms.DateField(localize=True, help_text=_('Please format yyyy-mm-dd'))
 
-    required_fields = ['occupation', 'professional_category', 'country', ]
+    required_fields = ['occupation', 'professional_category', 'country', 'city']
     required_css_class = 'required'
 
     class Meta:
