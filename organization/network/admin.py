@@ -384,7 +384,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
             for obj in queryset:
                 data = []
                 for field in field_names:
-                    if field == 'email'
+                    if field == 'email':
                         email = getattr(obj, field)
                         if not email and obj.user:
                             if obj.user.email:
