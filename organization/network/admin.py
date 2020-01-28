@@ -382,9 +382,17 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
             writer = csv.writer(response, delimiter=';', dialect='excel')
             writer.writerow(field_names)
             for obj in queryset:
-                data = [getattr(obj, field) for field in field_names]
+                data = []
+                for field in field_names:
+                    if field == 'email'
+                        email = getattr(obj, field)
+                        if not email and obj.user:
+                            if obj.user.email:
+                                email = obj.user.email
+                        data.append(email)
+                    else:
+                        data.append(getattr(obj, field))
                 row = writer.writerow(data)
-
             return response
 
     export_as_csv.short_description = "Export selected with activities"
