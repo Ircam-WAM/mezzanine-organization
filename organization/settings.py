@@ -280,6 +280,7 @@ INSTALLED_APPS = [
     'rdf_io',
     'skosxl',
     'versatileimagefield',
+    'captcha',
 ]
 
 CUSTOM_MODULES = False
@@ -730,3 +731,11 @@ HAL_YEAR_BEGIN = 1977
 
 # Ownable
 OWNABLE_MODELS_ALL_EDITABLE = []
+
+
+###########
+# CAPTCHA #
+###########
+
+CAPTCHA_FONT_SIZE = 30
+CAPTCHA_LENGTH = 6

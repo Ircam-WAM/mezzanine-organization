@@ -9,7 +9,6 @@ django-extensions==1.7.4
 django-countries==5.3
 django-querysetsequence==0.6.1
 django-autocomplete-light==3.2.1
-django-csv-export-view==1.0.1
 mezzanine==4.2.3
 xlrd==1.0.0
 ipython
@@ -42,4 +41,5 @@ django-taggit==0.22.2
 djangorestframework==3.8.2
 django-versatileimagefield==1.10
 django-extra-fields==1.2.4
+django-simple-captcha==0.5.12
 -e .

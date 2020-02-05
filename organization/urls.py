@@ -58,6 +58,10 @@ urlpatterns += [
     url("^", include('organization.shop.urls')),
 ]
 
+urlpatterns += [
+    url(r'^captcha/', include('captcha.urls')),
+]
+
 if settings.DEBUG :
     urlpatterns += [
         url(r'^hijack/', include('hijack.urls')),
