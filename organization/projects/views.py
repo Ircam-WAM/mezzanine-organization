@@ -31,6 +31,7 @@ from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
 from mezzanine.conf import settings
+from mezzanine.utils.sites import override_current_site_id
 from organization.projects.models import *
 from organization.projects.forms import *
 from organization.network.forms import *
@@ -460,9 +461,10 @@ class ResidencyBlogArticleViewSet(viewsets.ModelViewSet):
         if filter_type == "followed":
             if not request.user.is_authenticated():
                 raise NotAuthenticated("followed filter requires authentication")
-            person = Person.objects.get(user=self.request.user)
-            articles = Article.objects.filter(user__in=person.following_users.all())
-            queryset = queryset.filter(article__in=articles)
+            with override_current_site_id(0):
+                person = Person.objects.get(user=self.request.user)
+                articles = Article.objects.filter(user__in=person.following_users.all())
+                queryset = queryset.filter(article__in=articles)
 
         elif filter_type == "myposts":
             if not request.user.is_authenticated():
