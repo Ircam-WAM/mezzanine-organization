@@ -30,7 +30,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ("title", "content", "user")
+        fields = ("title", "content", "user", "publish_date")
 
     # Empty user field to avoid bad insert
     def validate_user(self, user):
