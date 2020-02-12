@@ -906,6 +906,20 @@ class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
         return self.render_to_json_response(context, **response_kwargs)
 
 
+class PublicNetworkStats(JSONResponseMixin, TemplateView):
+
+    def get_context_data(self, **kwargs):
+        with override_current_site_id(0):
+            total = Person.objects.all().count()
+
+        return {
+                "total": total
+        }
+
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)
+
+
 class TeamOwnableMixin(object):
 
     def filter_by_team(self, query, team_slug):
