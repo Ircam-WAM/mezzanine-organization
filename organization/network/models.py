@@ -121,9 +121,12 @@ ORGANIZATION_STATUS_CHOICES = (
     (3, _('accepted')),
 )
 
+ACCOUNT_TYPE_INDIVIDUAL = 0
+ACCOUNT_TYPE_ORGANIZATION = 1
+
 ACCOUNT_TYPE_CHOICES = (
-    (0, _('Individual')),
-    (1, _('Organization')),
+    (ACCOUNT_TYPE_INDIVIDUAL, _('Individual')),
+    (ACCOUNT_TYPE_ORGANIZATION, _('Organization')),
 )
 
 class TeamOwnable(Ownable):

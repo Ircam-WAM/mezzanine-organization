@@ -53,7 +53,7 @@ from mezzanine.conf import settings
 from mezzanine.utils.sites import override_current_site_id
 from organization.core.views import *
 from organization.network.forms import *
-from organization.network.models import Person
+from organization.network.models import Person, ACCOUNT_TYPE_ORGANIZATION
 from organization.network.serializers import PersonPublicSerializer
 from organization.network.models import *
 from organization.network.utils import get_users_of_team
@@ -886,6 +886,11 @@ class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
             categories = ['organizations',]
             organizations = Organization.objects.filter(is_on_map=True)
             context['objects'] = [self.get_object_dict(object, categories) for object in organizations]
+            # Add Persons with account_type = "organizations"
+            orgs_individuals = Person.objects \
+                                     .exclude(mappable_location__isnull=True) \
+                                     .filter(account_type=ACCOUNT_TYPE_ORGANIZATION)
+            context['objects'] += [self.get_object_dict(object, categories) for object in orgs_individuals]
 
             categories = ['producers',]
             role, c = OrganizationRole.objects.get_or_create(key='Producer')
@@ -893,7 +898,10 @@ class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
             context['objects'] += [self.get_object_dict(object, categories) for object in producers]
 
             categories = ['persons',]
-            persons = Person.objects.exclude(mappable_location__isnull=True)
+            persons = Person.objects.exclude(
+                    mappable_location__isnull=True,
+                    account_type=ACCOUNT_TYPE_ORGANIZATION
+                    )
             context['objects'] += [self.get_object_dict(object, categories) for object in persons]
 
             categories = ['residencies',]
