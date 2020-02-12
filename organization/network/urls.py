@@ -65,6 +65,7 @@ from organization.network.views import (
         JuryListView,
         PublicNetworkData,
         PublicNetworkDataNew,
+        PublicNetworkStats,
         TeamMembersView,
         TeamPublicationsView,
         DynamicContentPersonView,
@@ -125,6 +126,7 @@ urlpatterns = [
     # Map
     url('^public-network-data/$', PublicNetworkData.as_view(), name='organization-public-network-data'),
     url('^public-network-data-new/$', PublicNetworkDataNew.as_view(), name='organization-public-network-data'),
+    url('^public-network-stats/$', PublicNetworkStats.as_view(), name='organization-public-network-stats'),
 
     url('^team/(?P<slug>.*)/members/$', TeamMembersView.as_view(), name='team-members'),
     url('^team/(?P<slug>.*)/publications/$', TeamPublicationsView.as_view(), name='team-publications'),
