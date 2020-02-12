@@ -898,10 +898,7 @@ class PublicNetworkDataNew(JSONResponseMixin, TemplateView):
             context['objects'] += [self.get_object_dict(object, categories) for object in producers]
 
             categories = ['persons',]
-            persons = Person.objects.exclude(
-                    mappable_location__isnull=True,
-                    account_type=ACCOUNT_TYPE_ORGANIZATION
-                    )
+            persons = Person.objects.exclude(id__in=orgs_individuals)
             context['objects'] += [self.get_object_dict(object, categories) for object in persons]
 
             categories = ['residencies',]
