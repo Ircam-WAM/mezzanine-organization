@@ -28,6 +28,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.core.files.images import get_image_dimensions
+from organization.core.models import Named
 from organization.core.models import *
 from organization.pages.models import *
 from organization.network.models import *
@@ -212,11 +213,21 @@ class ProjectTopicPage(Page, SubTitled):
         verbose_name_plural = _("project topic pages")
 
 
+class ProjectCallCategory(Named):
+    pass
+
+
 class ProjectCall(Displayable, Period, RichText, NamedOnly):
 
     project_form_content = RichTextField(_("Project form content"), blank=True, null=True)
     residency_form_content = RichTextField(_("Residency form content"), blank=True, null=True)
     producer_form_content = RichTextField(_("Producer form content"), blank=True, null=True)
+    category = models.ForeignKey('ProjectCallCategory',
+                                 verbose_name=_('category'),
+                                 related_name=_('category'),
+                                 null=True,
+                                 on_delete=models.SET_NULL
+                                 )
     # manager = models.ForeignKey(User, verbose_name=_('project call manager'), related_name='project_call_managers', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:

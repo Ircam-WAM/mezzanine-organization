@@ -27,6 +27,7 @@ from pprint import pprint
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from modeltranslation.admin import TranslationTabularInline
+from organization.projects.models import ProjectCallCategory
 from organization.projects.models import *
 from organization.pages.models import *
 from organization.media.models import Playlist
@@ -600,3 +601,4 @@ admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
 admin.site.register(ProjectResidency, ProjectResidencyAdmin)
 admin.site.register(Call, CallAdminDisplayable)
 admin.site.register(ProjectPage, ProjectPageAdminDisplayable)
+admin.site.register(ProjectCallCategory)
