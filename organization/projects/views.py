@@ -347,7 +347,7 @@ class ProjectCallListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProjectCallListView, self).get_context_data(*args, **kwargs)
-        context["open_calls"] = ProjectCall.objects.filter(date_to__gte=datetime.now()).order_by("date_to")
+        context["open_calls"] = ProjectCall.objects.filter(date_to__gte=datetime.now()).order_by("-date_to")
         context["closed_calls"] = ProjectCall.objects.filter(date_to__lt=datetime.now()).order_by("date_to")
         return context
 
