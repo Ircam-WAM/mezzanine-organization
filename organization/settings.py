@@ -641,6 +641,8 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.redirects.RedirectsPanel',
 ]
 
+ACCOUNTS_PROFILE_FORM_CLASS="organization.core.forms.SignUpForm"
+
 # HIJACK
 HIJACK_DISPLAY_WARNING = False
 HIJACK_ALLOW_GET_REQUESTS = False
