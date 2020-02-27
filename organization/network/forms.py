@@ -229,10 +229,8 @@ class PersonLinkInline(InlineFormSet):
 class PersonOptionsInline(InlineFormSet):
 
     model = PersonOptions
-    max_num = 1
     can_delete = False
     fields = ('newsletter', 'user_organization_notifications', 'on_map' )
-    exclude = ('id', 'person')
 
 
 class PersonImageForm(ModelForm):
