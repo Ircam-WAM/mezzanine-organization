@@ -24,6 +24,7 @@ import datetime
 import os
 
 from django.db import models
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
@@ -32,6 +33,7 @@ from organization.core.models import Named
 from organization.core.models import *
 from organization.pages.models import *
 from organization.network.models import *
+from organization.magazine.models import ArticleMultiSite
 from organization.magazine.models import *
 from mezzanine_agenda.models import *
 from mezzanine.core.models import RichText, Displayable, Slugged, Orderable, Ownable, MetaData, TimeStamped
@@ -537,8 +539,29 @@ class ProjectResidencyUserImage(UserImage):
 
 class ProjectResidencyArticle(VersatileImage):
 
-    residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='residency_articles', blank=True, null=True, on_delete=models.SET_NULL)
-    article = models.ForeignKey(ArticleMultiSite, verbose_name=_('article'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
+    residency = models.ForeignKey(
+            ProjectResidency,
+            verbose_name=_('residency'),
+            related_name='residency_articles',
+            blank=True,
+            null=True,
+            on_delete=models.SET_NULL
+    )
+    article = models.ForeignKey(
+            ArticleMultiSite,
+            verbose_name=_('article'),
+            related_name='residencies',
+            blank=True,
+            null=True,
+            on_delete=models.CASCADE
+    )
+
+
+# Delete article when a ProjectResidencyArticle is deleted
+@receiver(models.signals.post_delete, sender=ProjectResidencyArticle)
+def handle_deleted_project_residency_article(sender, instance, **kwargs):
+    if instance.article:
+        instance.article.delete()
 
 
 class ProjectResidencyEvent(models.Model):
