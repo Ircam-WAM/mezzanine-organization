@@ -24,13 +24,16 @@ import datetime
 import os
 
 from django.db import models
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.core.files.images import get_image_dimensions
+from organization.core.models import Named
 from organization.core.models import *
 from organization.pages.models import *
 from organization.network.models import *
+from organization.magazine.models import ArticleMultiSite
 from organization.magazine.models import *
 from mezzanine_agenda.models import *
 from mezzanine.core.models import RichText, Displayable, Slugged, Orderable, Ownable, MetaData, TimeStamped
@@ -212,11 +215,21 @@ class ProjectTopicPage(Page, SubTitled):
         verbose_name_plural = _("project topic pages")
 
 
+class ProjectCallCategory(Named):
+    pass
+
+
 class ProjectCall(Displayable, Period, RichText, NamedOnly):
 
     project_form_content = RichTextField(_("Project form content"), blank=True, null=True)
     residency_form_content = RichTextField(_("Residency form content"), blank=True, null=True)
     producer_form_content = RichTextField(_("Producer form content"), blank=True, null=True)
+    category = models.ForeignKey('ProjectCallCategory',
+                                 verbose_name=_('category'),
+                                 related_name=_('category'),
+                                 null=True,
+                                 on_delete=models.SET_NULL
+                                 )
     # manager = models.ForeignKey(User, verbose_name=_('project call manager'), related_name='project_call_managers', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
@@ -526,8 +539,29 @@ class ProjectResidencyUserImage(UserImage):
 
 class ProjectResidencyArticle(VersatileImage):
 
-    residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='residency_articles', blank=True, null=True, on_delete=models.SET_NULL)
-    article = models.ForeignKey(ArticleMultiSite, verbose_name=_('article'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
+    residency = models.ForeignKey(
+            ProjectResidency,
+            verbose_name=_('residency'),
+            related_name='residency_articles',
+            blank=True,
+            null=True,
+            on_delete=models.SET_NULL
+    )
+    article = models.ForeignKey(
+            ArticleMultiSite,
+            verbose_name=_('article'),
+            related_name='residencies',
+            blank=True,
+            null=True,
+            on_delete=models.CASCADE
+    )
+
+
+# Delete article when a ProjectResidencyArticle is deleted
+@receiver(models.signals.post_delete, sender=ProjectResidencyArticle)
+def handle_deleted_project_residency_article(sender, instance, **kwargs):
+    if instance.article:
+        instance.article.delete()
 
 
 class ProjectResidencyEvent(models.Model):
