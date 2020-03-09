@@ -14,10 +14,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RemoveField(
             model_name='repository',
-            name='access',
-        ),
-        migrations.RemoveField(
-            model_name='repository',
             name='branch',
         ),
         migrations.RemoveField(
