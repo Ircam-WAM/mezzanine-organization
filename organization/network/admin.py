@@ -343,7 +343,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
                     'activities__status', 'activities__teams',
                     'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
-    actions = ['export_as_csv', 'export_all_raw_as_csv']
+    actions = ['export_activities_as_csv', 'export_profiles_as_csv']
 
 
     def last_weekly_hour_volume(self, instance):
@@ -354,7 +354,7 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
                 weekly_hour_volume = last_activity.weekly_hour_volume.__str__()
         return weekly_hour_volume
 
-    def export_as_csv(self, request, queryset):
+    def export_activities_as_csv(self, request, queryset):
             meta = self.model._meta
             field_names = ['first_name', 'last_name', 'gender', 'birthday']
             activity_fields = ['date_from', 'date_to', 'framework', 'function', 'organizations', 'teams']
@@ -373,17 +373,37 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
 
             return response
 
-    def export_all_raw_as_csv(self, request, queryset):
+    def export_profiles_as_csv(self, request, queryset):
             meta = self.model._meta
-            field_names = ['first_name', 'last_name', 'email', 'gender', 'birthday']
+            person_field_names = ['first_name',
+                    'last_name',
+                    'email',
+                    'gender',
+                    'birthday',
+                    'address',
+                    'postal_code',
+                    'city', 'country',
+                    'citizenship',
+                    'account_type',
+                    'description',
+                    'role',
+                    'occupation',
+                    'professional_category',
+                    'signup_reason',
+                    ]
+            person_options_field_names = ['newsletter',
+                                          'user_organization_notifications',
+                                          'on_map'
+                                          ]
             response = HttpResponse(content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+            response['Content-Disposition'] = 'attachment; filename={}.csv' .format(meta)
             response.write(u'\ufeff'.encode('utf8'))
             writer = csv.writer(response, delimiter=';', dialect='excel')
-            writer.writerow(field_names)
+            writer.writerow(person_field_names + person_options_field_names)
+
             for obj in queryset:
                 data = []
-                for field in field_names:
+                for field in person_field_names:
                     if field == 'email':
                         email = getattr(obj, field)
                         if not email and obj.user:
@@ -392,11 +412,25 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
                         data.append(email)
                     else:
                         data.append(getattr(obj, field))
+
+                person_options = PersonOptions.objects.filter(person=obj)
+                for field in person_options_field_names:
+                    if person_options:
+                        data.append(getattr(obj.personoptions, field))
+                    else:
+                        data.append('')
+
+                person_links = PersonLink.objects.filter(person=obj)
+                if person_links:
+                    for link in person_links:
+                        data.append(link.link_type.name)
+                        data.append(link.url)
+
                 row = writer.writerow(data)
             return response
 
-    export_as_csv.short_description = "Export selected with activities"
-    export_all_raw_as_csv.short_description = "Export selected with raw data only"
+    export_activities_as_csv.short_description = "Export activities of selected persons"
+    export_profiles_as_csv.short_description = "Export profiles of selected persons"
 
 
 class ProjectActivityAdmin(BaseTranslationModelAdmin):
