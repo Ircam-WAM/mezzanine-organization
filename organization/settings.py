@@ -145,7 +145,7 @@ USE_TZ = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
-SITE_ID = 1
+SITE_ID = 5
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -234,7 +234,7 @@ DATABASES = {
 ################
 
 INSTALLED_APPS = [
-    'ircam_www_theme',
+    # 'ircam_www_theme',
     # the current theme has to be defined in main local_settings as HOST_THEMES
     "modeltranslation",
     "dal",
@@ -573,6 +573,7 @@ SEASON_START_DAY=31
 SEASON_END_MONTH=8
 SEASON_END_DAY=1
 
+TEAM_HOMEPAGE_ITEM=9
 
 BLOG_SLUG = 'article'
 BLOG_POST_PER_PAGE = 200
@@ -690,9 +691,9 @@ ANONYMOUS_USER_NAME = None
 LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
 
 # Themes
-HOST_THEMES = [
-    ('example.com', 'ircam_www_theme'),
-]
+# HOST_THEMES = [
+#     ('example.com', 'ircam_www_theme'),
+# ]
 
 # TIMESHEET
 TIMESHEET_USER_TEST = 1
