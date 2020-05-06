@@ -42,7 +42,6 @@ from organization.core.models import *
 from organization.magazine.models import Article
 from organization.network.models import *
 from organization.pages.models import *
-from skosxl.models import Concept
 
 logger = logging.getLogger('app')
 
@@ -104,7 +103,6 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     is_private = models.BooleanField(verbose_name=_('Is private'), help_text='If the project is private, permissions will be enforced. Else, the project is considered public and they will be omitted.', default=False)
     validation_status = models.IntegerField(_('validation status'), choices=PROJECT_STATUS_CHOICES, default=1)
     funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
-    concepts = models.ManyToManyField('skosxl.Concept', verbose_name=_('concepts'), blank=True)
     owner = models.ForeignKey(User, verbose_name=_('project owner'), related_name='owned_projects', blank=True, null=True, on_delete=models.SET_NULL)
     configuration = JSONField(default=dict(), null=True, blank=True)  # A generic-use field for storing simple mixed values/schema
                                                       # Example: project preferences, UI toggles, etc.
