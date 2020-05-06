@@ -468,13 +468,15 @@ def filter_content_model(content_list, model_name):
 @register.filter
 def get_team_articles(team):
     users = get_users_of_team(team)
-    articles = Article.objects.filter(user__in=users)
-    events = Event.objects.published().filter(user__in=users)
+    articles = Article.objects.published() \
+                .filter(user__in=users)
+    events = Event.objects.published() \
+                .filter(user__in=users)
 
     q = sorted(
         chain(articles, events),
-        key=lambda instance: instance.created,
-        reverse=True)
+        key=lambda instance: instance.publish_date,
+        reverse=True)[:settings.TEAM_HOMEPAGE_ITEM]
     return q
 
 
