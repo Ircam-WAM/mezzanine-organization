@@ -491,6 +491,7 @@ class ProjectResidency(Displayable, Period, Address, RichText):
     artist = models.ForeignKey(Person, verbose_name=_('artist'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
     validated = models.BooleanField(default=False)
     producer_commitment = models.TextField(_('producer commitment'), help_text="")
+    outcome = RichTextField(_("outcome"), blank=True, null=True)
 
     @property
     def articles(self):
