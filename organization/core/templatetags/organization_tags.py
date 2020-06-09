@@ -50,6 +50,8 @@ from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
 from django.utils.functional import allow_lazy
 from django.utils import six
 from django.contrib.contenttypes.models import ContentType
+from django.utils.translation import ugettext
+
 from django.apps import apps
 
 register = Library()
@@ -593,3 +595,12 @@ def has_shop(product):
                 product.product_external_shop.label
     else:
         return False
+
+
+@register.filter(name='template_trans')
+def template_trans(text):
+    try:
+        print("ugettext(text)", ugettext(text))
+        return ugettext(text)
+    except Exception as e:
+        return text

@@ -46,7 +46,10 @@ class JobResponse(models.Model):
 class JobOffer(Displayable, RichText, TeamOwnable):
 
     email = models.EmailField(max_length=255, null=False, verbose_name=_('Email to forward response'))
-    type = models.CharField(blank=True, choices=[('internship', 'internship'), ('job', 'job')], max_length=32, verbose_name='Job offer type')
+    type = models.CharField(blank=True, choices=[('internship', _('Internship')),
+                        ('job', _('Permanent position')),
+                        ('short_term_contract', _('Short term contract'))
+                    ], max_length=32, verbose_name='Job offer type')
 
     text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'), default=_('View'))
     url = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'), \

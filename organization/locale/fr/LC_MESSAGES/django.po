@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-19 16:09+0000\n"
+"POT-Creation-Date: 2020-06-09 14:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -389,11 +389,11 @@ msgstr ""
 msgid "sites"
 msgstr ""
 
-#: core/templatetags/organization_tags.py:308
+#: core/templatetags/organization_tags.py:310
 msgid "through"
 msgstr "au"
 
-#: core/templatetags/organization_tags.py:311
+#: core/templatetags/organization_tags.py:313
 msgid "and"
 msgstr "et"
 
@@ -447,7 +447,7 @@ msgstr "curriculum vitae"
 msgid "cover letter"
 msgstr "lettre de motivation"
 
-#: job/models.py:39 job/models.py:61 job/models.py:68
+#: job/models.py:39 job/models.py:64 job/models.py:71
 msgid "job offer"
 msgstr ""
 
@@ -463,31 +463,43 @@ msgstr ""
 msgid "Email to forward response"
 msgstr ""
 
-#: job/models.py:51 job/models.py:73 magazine/models.py:87
+#: job/models.py:49
+msgid "Internship"
+msgstr "Stage"
+
+#: job/models.py:50
+msgid "Permanent position"
+msgstr "CDI"
+
+#: job/models.py:51
+msgid "Short term contract"
+msgstr "CDD"
+
+#: job/models.py:54 job/models.py:76 magazine/models.py:87
 msgid "text button"
 msgstr ""
 
-#: job/models.py:51
+#: job/models.py:54
 msgid "View"
 msgstr "Voir"
 
-#: job/models.py:52 job/models.py:74 magazine/models.py:88
+#: job/models.py:55 job/models.py:77 magazine/models.py:88
 #, fuzzy
 #| msgid "external ID"
 msgid "external content"
 msgstr "ID externe"
 
-#: job/models.py:62
+#: job/models.py:65
 msgid "job offers"
 msgstr ""
 
-#: job/models.py:83 job/models.py:89
+#: job/models.py:86 job/models.py:92
 #, fuzzy
 #| msgid "candidacies"
 msgid "candidacy"
 msgstr "Candidatures"
 
-#: job/models.py:84
+#: job/models.py:87
 msgid "candidacies"
 msgstr "Candidatures"
 
@@ -2773,9 +2785,6 @@ msgstr ""
 
 #~ msgid "See the video"
 #~ msgstr "Voir la vidéo"
-
-#~ msgid "Jobs/Internships"
-#~ msgstr "Offres d'emplois et stages"
 
 #~ msgid "Application form"
 #~ msgstr "Formulaire de candidature en ligne"
