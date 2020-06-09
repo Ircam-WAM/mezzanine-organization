@@ -174,7 +174,7 @@ class TeamAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
 
 class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaPage
     form = DynamicMultimediaPageForm
 
@@ -201,7 +201,7 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
     fk_name = 'person'
     filter_horizontal = ['organizations', 'employers', 'teams',
                          'supervisors', 'phd_directors', ]
-    
+
 
 class PersonPlaylistInline(TabularDynamicInlineAdmin):
 
@@ -235,7 +235,7 @@ class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
 
 
 class PersonRelatedTitleAdmin(TranslationTabularInline):
-    
+
     model = PersonRelatedTitle
 
 
@@ -264,7 +264,7 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
                     'activities__status', 'activities__teams',
                     'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
-    actions = ['export_as_csv', ]
+    actions = ['export_as_csv', 'export_all_raw_as_csv']
 
 
     def last_weekly_hour_volume(self, instance):
@@ -295,6 +295,21 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
 
             return response
 
+    def export_all_raw_as_csv(self, request, queryset):
+
+            queryset = Person.objects.all()
+            meta = self.model._meta
+            field_names = ['first_name', 'last_name', 'email', 'gender', 'birthday']
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+            response.write(u'\ufeff'.encode('utf8'))
+            writer = csv.writer(response, delimiter=';', dialect='excel')
+            for obj in queryset:
+                data = [getattr(obj, field) for field in field_names]
+                row = writer.writerow(data)
+
+            return response
+
     def save_form(self, request, form, change):
         """
         Avoid calling save_form() from OwnableAdmin to not erase user
@@ -303,6 +318,7 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
         return super(OwnableAdmin, self).save_form(request, form, change)
 
     export_as_csv.short_description = "Export Selected"
+    export_all_raw_as_csv.short_description = "Export all Persons with raw data"
 
 
 class ProjectActivityAdmin(BaseTranslationModelAdmin):
