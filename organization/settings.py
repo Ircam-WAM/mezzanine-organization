@@ -145,7 +145,7 @@ USE_TZ = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
-SITE_ID = 5
+SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -234,7 +234,7 @@ DATABASES = {
 ################
 
 INSTALLED_APPS = [
-    # 'ircam_www_theme',
+    'ircam_www_theme',
     # the current theme has to be defined in main local_settings as HOST_THEMES
     "modeltranslation",
     "dal",
@@ -722,3 +722,4 @@ OWNABLE_MODELS_ALL_EDITABLE = []
 # ARTICLE LIST
 ARTICLE_KEYWORDS = ['', ]
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
