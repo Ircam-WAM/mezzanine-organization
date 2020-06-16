@@ -518,7 +518,9 @@ ADMIN_MENU_ORDER = (
                     'shop.DiscountCode',
                     'shop.Sale',
                     )),
-    (_('Jobs'), ('organization-job.JobOffer','organization-job.Candidacy')),
+    (_('Jobs'), ('organization-job.JobOffer',
+                 'organization-job.JobResponse',
+                 'organization-job.Candidacy')),
     (_('Users'), ('auth.User', 'auth.Group',)),
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
 )

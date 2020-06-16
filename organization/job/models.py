@@ -39,8 +39,8 @@ class JobResponse(models.Model):
     job_offer = models.ForeignKey("JobOffer", verbose_name=_('job offer'), related_name='job_response', blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
-        verbose_name = _('job_reponse')
-        verbose_name_plural = _("job_reponses")
+        verbose_name = _('job reponse')
+        verbose_name_plural = _("job reponses")
 
 
 class JobOffer(Displayable, RichText, TeamOwnable):
