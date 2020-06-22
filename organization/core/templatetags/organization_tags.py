@@ -553,7 +553,10 @@ def index(List, i):
 
 @register.filter
 def subtract(a, b):
-    return str(int(a) - int(b))
+    if type(a) is datetime.datetime or type(b) is datetime.datetime:
+        return a - b
+    else:
+        return str(int(a) - int(b))
 
 
 @register.filter
