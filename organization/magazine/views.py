@@ -43,17 +43,17 @@ from organization.network.models import DepartmentPage, Person
 from organization.network.views import TeamOwnableMixin
 from organization.pages.models import CustomPage, DynamicContentPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting, \
-                                    DynamicContentMixin, FilteredListView
+                                    DynamicContentMixin, FilteredListView, \
+                                    RedirectContentView, DynamicReverseMixin
 from organization.core.utils import split_events_from_other_related_content
-from organization.core.views import RedirectContentView
-
 from django.template.defaultfilters import slugify
 from itertools import chain
 from django.views.generic.edit import FormView
 from .forms import CategoryFilterForm
 
 
-class ArticleDetailView(RedirectContentView, SlugMixin, DetailView, DynamicContentMixin):
+class ArticleDetailView(RedirectContentView, SlugMixin, DetailView,
+                        DynamicContentMixin, DynamicReverseMixin):
 
     model = Article
     template_name='magazine/article/article_detail.html'
@@ -65,43 +65,6 @@ class ArticleDetailView(RedirectContentView, SlugMixin, DetailView, DynamicConte
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
-        sorting = False
-
-        # automatic relation : dynamic content page
-        pages = DynamicContentPage.objects.filter(object_id=self.object.id).all()
-        pages_related = []
-        for p in pages :
-            try:
-                if hasattr(p, 'page'):
-                    if p.page:
-                        pages_related.append(p.page)
-            except ObjectDoesNotExist:
-                continue
-        if pages_related:
-            context['concrete_objects'] += pages_related
-            sorting = True
-
-        # automatic relation : dynamic content article
-        articles = DynamicContentArticle.objects.filter(object_id=self.object.id).all()
-        articles_related = []
-        for a in articles:
-            try:
-                if hasattr(a, 'article'):
-                    if a.article:
-                        articles_related.append(a.article)
-            except ObjectDoesNotExist:
-                continue
-        if articles_related:
-            context['concrete_objects'] += articles_related
-            sorting = True
-
-        # gather all and order by creation date
-        if sorting:
-            context['concrete_objects'].sort(key=lambda x: x.created, reverse=True)
-
-        # classify related content to display it in another way (cf Manifeste)
-        # @Todo : use tempalte tags filter_content_model instead the method below
-        # context = split_events_from_other_related_content(context, related_content)
 
         if self.object.department:
             first_page = self.object.department.pages.first()

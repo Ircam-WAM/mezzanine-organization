@@ -75,7 +75,7 @@ class ArticleAdminDisplayable(TeamOwnableAdmin, DisplayableAdmin):
 
     fieldsets = deepcopy(ArticleAdmin.fieldsets)
     list_display = ('title', 'department', 'publish_date', 'status', 'user')
-    exclude = ('related_posts', )
+    exclude = ('related_posts', 'short_url')
 
     filter_horizontal = ['categories',]
     inlines = [ArticleImageInline,

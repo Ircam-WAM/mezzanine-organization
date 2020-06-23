@@ -50,6 +50,8 @@ from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
 from django.utils.functional import allow_lazy
 from django.utils import six
 from django.contrib.contenttypes.models import ContentType
+from django.utils.translation import ugettext
+
 from django.apps import apps
 
 register = Library()
@@ -315,13 +317,14 @@ def get_separator_with(date_start, date_end):
 @register.filter
 def format_date_fct_of(date_start, date_end):
     date_start = DateFormat(date_start)
-    date_start = date_start.format(get_format('DATE_EVENT_FORMAT'))
     if date_end:
         date_end = DateFormat(date_end)
         if date_start.format(get_format('SHORT_DATE_FORMAT')) == date_end.format(get_format('SHORT_DATE_FORMAT')):
-            date_start = date_start.format(get_format('DATE_EVENT_FORMAT'))
+            date_start = date_start.format(get_format('DATE_EVENT_FORMAT_Y'))
         elif date_start.format(get_format('YEAR_MONTH_FORMAT')) == date_end.format(get_format('YEAR_MONTH_FORMAT')):
             date_start = date_start.format(get_format('WEEK_DAY_FORMAT'))
+    else:
+        date_start = date_start.format(get_format('DATE_EVENT_FORMAT'))
     return date_start
 
 
@@ -482,7 +485,8 @@ def get_team_articles(team):
 
 @register.filter
 def get_content_objects(dynamic_content):
-    return [dc.content_object for dc in dynamic_content]
+    if dynamic_content:
+        return [dc.content_object for dc in dynamic_content]
 
 
 @register.filter
@@ -593,3 +597,12 @@ def has_shop(product):
                 product.product_external_shop.label
     else:
         return False
+
+
+@register.filter(name='template_trans')
+def template_trans(text):
+    try:
+        print("ugettext(text)", ugettext(text))
+        return ugettext(text)
+    except Exception as e:
+        return text
