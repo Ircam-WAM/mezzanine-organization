@@ -50,6 +50,13 @@ class JobOfferAdminDisplayable(TeamOwnableAdmin, BaseTranslationModelAdmin):
     )
 
 
+class JobResponseAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
+
+    model = JobResponse
+    search_fields = ['last_name', 'first_name']
+    list_display = ['first_name', 'last_name', 'email', 'job_offer']
+
+
 class CandidacyImageInline(TabularDynamicInlineAdmin):
 
     model = CandidacyImage
@@ -68,5 +75,6 @@ class CandidacyAdminDisplayable(BaseTranslationModelAdmin,):
     )
 
 
+admin.site.register(JobResponse, JobResponseAdmin)
 admin.site.register(JobOffer, JobOfferAdminDisplayable)
 admin.site.register(Candidacy, CandidacyAdminDisplayable)

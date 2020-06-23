@@ -174,6 +174,8 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address, Tea
     hal_url = models.URLField(_('HAL url'), max_length=512, blank=True)
     karma = models.IntegerField(default=0, editable=False)
     search_fields = {"title": 1}
+    is_referenced =  models.BooleanField(_('Is Referenced'), default=True,
+                        help_text=_("Determine if the Person has to be referenced on search"))
 
     class Meta:
         verbose_name = _('person')

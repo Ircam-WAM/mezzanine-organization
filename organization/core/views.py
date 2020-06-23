@@ -289,7 +289,8 @@ class DynamicContentMixin(SingleObjectMixin):
         for dc in dynamic_content:
             if dc.content_object:
                 context['concrete_objects'].append(dc.content_object)
-
+        # reorder objects by creation date
+        context['concrete_objects'].sort(key=lambda x: x.created, reverse=True)
         return context
 
 
