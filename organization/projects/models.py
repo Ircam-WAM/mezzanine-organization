@@ -41,6 +41,7 @@ from skosxl.models import Concept
 PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
     ('external', _('external')),
+    ('industrial', _('industrial')),
 ]
 
 REPOSITORY_ACCESS_CHOICES = [
