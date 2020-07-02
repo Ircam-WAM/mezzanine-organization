@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-26 13:29+0000\n"
+"POT-Creation-Date: 2020-07-02 15:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1956,20 +1956,16 @@ msgid "homes"
 msgstr ""
 
 #: projects/models.py:42
-#, fuzzy
-#| msgid "external ID"
-msgid "internal"
-msgstr "ID externe"
+msgid "Internal project"
+msgstr "Projet interne"
 
 #: projects/models.py:43
-#, fuzzy
-#| msgid "external ID"
-msgid "external"
-msgstr "ID externe"
+msgid "National or European project"
+msgstr "Projet national ou Européen"
 
 #: projects/models.py:44
-msgid "industrial"
-msgstr "industriel"
+msgid "Industrial project"
+msgstr "Projet industriel"
 
 #: projects/models.py:48
 msgid "public"
@@ -2326,13 +2322,13 @@ msgstr "page rubrique d'un projet"
 msgid "project page"
 msgstr "page rubrique d'un projet"
 
-#: projects/views.py:580
+#: projects/views.py:584
 #, fuzzy
 #| msgid "Projects"
 msgid "Archived Projects"
 msgstr "Projets"
 
-#: projects/views.py:582 settings.py:499
+#: projects/views.py:586 settings.py:499
 msgid "Projects"
 msgstr "Projets"
 
@@ -2462,6 +2458,11 @@ msgstr ""
 #: shop/models.py:116
 msgid "Product Keywords"
 msgstr ""
+
+#, fuzzy
+#~| msgid "external ID"
+#~ msgid "external"
+#~ msgstr "ID externe"
 
 #~ msgid "Recent Actions"
 #~ msgstr "Actions récentes"

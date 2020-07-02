@@ -39,9 +39,9 @@ from skosxl.models import Concept
 
 
 PROJECT_TYPE_CHOICES = [
-    ('internal', _('internal')),
-    ('external', _('external')),
-    ('industrial', _('industrial')),
+    ('internal', _('Internal project')),
+    ('external', _('National or European project')),
+    ('industrial', _('Industrial project')),
 ]
 
 REPOSITORY_ACCESS_CHOICES = [
