@@ -323,8 +323,10 @@ def format_date_fct_of(date_start, date_end):
             date_start = date_start.format(get_format('DATE_EVENT_FORMAT_Y'))
         elif date_start.format(get_format('YEAR_MONTH_FORMAT')) == date_end.format(get_format('YEAR_MONTH_FORMAT')):
             date_start = date_start.format(get_format('WEEK_DAY_FORMAT'))
+        else:
+            date_start = date_start.format(get_format('DATE_EVENT_FORMAT'))
     else:
-        date_start = date_start.format(get_format('DATE_EVENT_FORMAT'))
+        date_start = date_start.format(get_format('DATE_EVENT_FORMAT_Y'))
     return date_start
 
 
@@ -555,7 +557,10 @@ def index(List, i):
 
 @register.filter
 def subtract(a, b):
-    return str(int(a) - int(b))
+    if type(a) is datetime.datetime or type(b) is datetime.datetime:
+        return a - b
+    else:
+        return str(int(a) - int(b))
 
 
 @register.filter
