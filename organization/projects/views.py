@@ -561,8 +561,12 @@ class AbstractProjectListView(ListView, FilteredListView):
         # filter archived projects
         self.qs = self.qs.filter(project__is_archive=self.archived)
 
-        # order by title
-        self.qs = self.qs.order_by('title')
+        # order by date
+        from django.db.models import Count
+        # better solution in Django 1.11
+        # https://stackoverflow.com/questions/15121093/django-adding-nulls-last-to-query/42798609#42798609
+        self.qs = self.qs.annotate(null_position=Count('project__date_from')) \
+                .order_by('-null_position', '-project__date_from')
 
         return self.qs
 
