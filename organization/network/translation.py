@@ -51,7 +51,7 @@ class DepartmentPageTranslationOptions(TranslationOptions):
 @register(Team)
 class TeamTranslationOptions(TranslationOptions):
 
-    fields = ('name', 'description')
+    fields = ('name', 'description', 'hal_researche_structure')
 
 
 @register(TeamPage)
