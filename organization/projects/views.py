@@ -581,7 +581,7 @@ class AbstractProjectListView(ListView, FilteredListView):
         # set if project listed are archived
         context['is_archive'] = self.archived
         if self.archived:
-            context['title'] = _('Archived Projects')
+            context['title'] = _('Finished Projects')
         else :
             context['title'] = _('Projects')
 
