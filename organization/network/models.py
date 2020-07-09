@@ -38,6 +38,12 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django import forms
 from django.utils.text import slugify
+from django.db.models.signals import (
+    post_save,
+    pre_save,
+    pre_delete,
+)
+
 from mezzanine.pages.models import Page
 from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Ownable, Orderable, MetaData, TimeStamped, wrapped_manager
 from mezzanine.core.fields import RichTextField, OrderField, FileField
@@ -49,6 +55,7 @@ from organization.pages.models import CustomPage
 from organization.media.models import Media
 from organization.network.validators import *
 from organization.network.utils import usersTeamsIntersection
+
 
 # from .nationalities.fields import NationalityField
 
@@ -830,4 +837,15 @@ class PersonSignupReason(models.Model):
 
     def __str__(self):
         return self.reason
+
+
+def user_post_save(sender, **kwargs):
+    instance = kwargs['instance']
+    person = Person.objects.get(user=instance)
+    person.first_name = instance.first_name
+    person.last_name = instance.last_name
+    person.title = ''
+    person.save()
+
+post_save.connect(user_post_save, sender=User)
 
