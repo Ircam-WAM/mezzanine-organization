@@ -42,4 +42,5 @@ djangorestframework==3.8.2
 django-versatileimagefield==1.10
 django-extra-fields==1.2.4
 django-simple-captcha==0.5.12
+django-registration==2.4.1
 -e .
