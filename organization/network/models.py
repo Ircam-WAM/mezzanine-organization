@@ -841,11 +841,13 @@ class PersonSignupReason(models.Model):
 
 def user_post_save(sender, **kwargs):
     instance = kwargs['instance']
-    person = Person.objects.get(user=instance)
-    person.first_name = instance.first_name
-    person.last_name = instance.last_name
-    person.title = ''
-    person.save()
+    persons = Person.objects.filter(user=instance)
+    if persons:
+        person = persons[0]
+        person.first_name = instance.first_name
+        person.last_name = instance.last_name
+        person.title = ''
+        person.save()
 
 post_save.connect(user_post_save, sender=User)
 
