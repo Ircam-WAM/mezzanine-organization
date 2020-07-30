@@ -19,30 +19,26 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from itertools import chain
-from django.shortcuts import render
-from django.template.loader import render_to_string, get_template
-from django.core.mail import EmailMessage
-from django.template import Context
-from django.utils.translation import ugettext_lazy as _
-from django.views.generic.edit import FormView
-from django.http import Http404
+from datetime import datetime
+
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
-from mezzanine_agenda.models import Event
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import EmailMessage
+from django.db.models import Count
+from django.http import Http404
+from django.template import Context
+from django.template.loader import get_template
+from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
-from organization.projects.models import *
-from organization.projects.forms import *
-from organization.network.forms import *
-from organization.network.models import Organization
+from mezzanine_agenda.models import Event
 from organization.core.views import *
 from organization.magazine.views import Article
+from organization.network.forms import *
+from organization.network.models import Organization
 from organization.pages.models import CustomPage
-from datetime import datetime, date, timedelta
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.contenttypes.models import ContentType
-from django.db import models
-
+from organization.projects.forms import *
+from organization.projects.models import *
 
 EXCLUDED_MODELS = ()
 
@@ -534,12 +530,13 @@ class AbstractProjectListView(ListView, FilteredListView):
 
     def get_queryset(self):
         self.qs = super(AbstractProjectListView, self).get_queryset()
-        
+        team_page = None
+        v_filter = None
+
         # list all projects labo or filter functions of slug team
         if 'slug' in self.kwargs:
             self.qs = self.qs.filter(project__teams__slug=self.kwargs['slug'])
-
-        v_filter = None
+            team_page = TeamPage.objects.get(team__slug=self.kwargs['slug'])
 
         # Filter if GET
         if self.request.GET:
@@ -561,11 +558,14 @@ class AbstractProjectListView(ListView, FilteredListView):
         # filter archived projects
         self.qs = self.qs.filter(project__is_archive=self.archived)
 
-        # order by date
-        from django.db.models import Count
+        # order by date (default)
         # better solution in Django 1.11
         # https://stackoverflow.com/questions/15121093/django-adding-nulls-last-to-query/42798609#42798609
-        self.qs = self.qs.annotate(null_position=Count('project__date_from')) \
+        if team_page and team_page.order_projects_by == 'manual':
+            # order manually if selected in TeamPage
+            self.qs = self.qs.order_by('teamprojectordering___order')
+        else:
+            self.qs = self.qs.annotate(null_position=Count('project__date_from')) \
                 .order_by('-null_position', '-project__date_from')
 
         return self.qs
@@ -612,7 +612,7 @@ class ProjectArchivesListView(AbstractProjectListView):
 
 
 class ProjectTeamListView(AbstractProjectListView):
-    
+
     form_class = TypeFilterForm
     property_query_filter = "project__type"
     archived = False

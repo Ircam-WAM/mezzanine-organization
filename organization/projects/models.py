@@ -502,7 +502,12 @@ class ProjectResidencyEvent(models.Model):
 
 class ProjectPage(Displayable, RichText, TeamOwnable):
 
-    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='pages', blank=True, null=True, on_delete=models.SET_NULL)
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='pages')
+    
+    @property
+    def is_archive(self):
+        if self.project:
+            return self.project.is_archive
 
     def get_absolute_url(self):
         return reverse("organization-project-projectpage-detail", kwargs={'slug': self.slug})

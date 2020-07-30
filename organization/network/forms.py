@@ -25,22 +25,17 @@ import dal_queryset_sequence
 import dal_select2_queryset_sequence
 from django.utils import timezone
 from django import forms
-from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
-from mezzanine.core.models import Orderable
 from organization.projects.models import ProjectWorkPackage, ProjectPage
 from organization.network.models import *
-from organization.pages.models import Page, CustomPage
 from organization.network.utils import timesheet_master_notification_for_validation
 from organization.network.models import *
-from organization.pages.models import Page, CustomPage
 from organization.media.forms import DynamicMultimediaForm
 from organization.magazine.models import Article
 from extra_views import InlineFormSet
 
 
 class PageCustomPersonListForm(forms.ModelForm):
-
     person_list_block = forms.ModelChoiceField(
         queryset=PersonListBlock.objects.all(),
         widget=autocomplete.ModelSelect2(url='person-list-block-autocomplete')
@@ -52,7 +47,6 @@ class PageCustomPersonListForm(forms.ModelForm):
 
 
 class PersonListBlockInlineForm(forms.ModelForm):
-
     person = forms.ModelChoiceField(
         queryset=Person.objects.all(),
         widget=autocomplete.ModelSelect2(url='person-autocomplete')
@@ -64,7 +58,6 @@ class PersonListBlockInlineForm(forms.ModelForm):
 
 
 class OrganizationLinkedListForm(forms.ModelForm):
-
     organization_linked = forms.ModelChoiceField(
         queryset=OrganizationLinked.objects.all(),
         widget=autocomplete.ModelSelect2(url='organization-linked-list-autocomplete')
@@ -76,7 +69,6 @@ class OrganizationLinkedListForm(forms.ModelForm):
 
 
 class OrganizationLinkedForm(forms.ModelForm):
-
     organization = forms.ModelChoiceField(
         queryset=Organization.objects.all(),
         widget=autocomplete.ModelSelect2(url='organization-linked-autocomplete')
@@ -91,24 +83,26 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PersonActivityTimeSheetForm, self).__init__(*args, **kwargs)
-        if 'initial' in kwargs :
-            self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(project=kwargs['initial']['project'])
+        if 'initial' in kwargs:
+            self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(
+                project=kwargs['initial']['project'])
             self.fields['project'].choices = ((kwargs['initial']['project'].id, kwargs['initial']['project']),)
             self.fields['activity'].choices = ((kwargs['initial']['activity'].id, kwargs['initial']['activity']),)
         if self.fields['work_packages'].choices.__len__() == 0:
             self.fields['work_packages'].widget = forms.MultipleHiddenInput()
         else:
-            self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(choices=self.fields['work_packages'].choices)
+            self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(
+                choices=self.fields['work_packages'].choices)
 
     def save(self):
         self.instance.accounting = timezone.now()
         # send mail
         super(PersonActivityTimeSheetForm, self).save()
         timesheet_master_notification_for_validation(self.instance.activity.person,
-                                                    self.instance.month,
-                                                    self.instance.year,
-                                                    self.instance._meta.app_config.label,
-                                                    self.instance.__class__.__name__)
+                                                     self.instance.month,
+                                                     self.instance.year,
+                                                     self.instance._meta.app_config.label,
+                                                     self.instance.__class__.__name__)
 
     class Meta:
         model = PersonActivityTimeSheet
@@ -117,7 +111,6 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
 
 
 class PersonActivityTimeSheetAdminForm(forms.ModelForm):
-
     class Meta:
         model = PersonActivityTimeSheet
         fields = ('__all__')
@@ -150,7 +143,6 @@ class ProjectActivityForm(forms.ModelForm):
 
 
 class OrganizationContactInline(InlineFormSet):
-
     max_num = 1
     model = OrganizationContact
     prefix = 'Contact'
@@ -159,7 +151,6 @@ class OrganizationContactInline(InlineFormSet):
 
 
 class OrganizationUserImageInline(InlineFormSet):
-
     max_num = 4
     model = OrganizationUserImage
     prefix = 'Images'
@@ -168,15 +159,13 @@ class OrganizationUserImageInline(InlineFormSet):
 
 
 class OrganizationForm(ModelForm):
-
     class Meta:
         model = Organization
         fields = ['name', 'description', 'url', 'address',
-                  'address', 'postal_code', 'city', 'country',]
+                  'address', 'postal_code', 'city', 'country', ]
 
 
 class ProducerDataInline(InlineFormSet):
-
     max_num = 1
     model = ProducerData
     prefix = "Descriptions"
@@ -190,10 +179,9 @@ class ProducerDataInline(InlineFormSet):
 
 
 class ProducerForm(ModelForm):
-
     class Meta:
         model = Organization
-        fields = ['name', 'url', 'email', 'telephone', 'address', 'postal_code', 'city', 'country',]
+        fields = ['name', 'url', 'email', 'telephone', 'address', 'postal_code', 'city', 'country', ]
 
     def __init__(self, *args, **kwargs):
         super(ProducerForm, self).__init__(*args, **kwargs)
@@ -202,19 +190,16 @@ class ProducerForm(ModelForm):
 
 
 class DynamicMultimediaOrganizationForm(DynamicMultimediaForm):
-    
     class Meta(DynamicMultimediaForm.Meta):
         model = DynamicMultimediaOrganization
 
 
 class DynamicMultimediaPersonForm(DynamicMultimediaForm):
-    
     class Meta(DynamicMultimediaForm.Meta):
         model = DynamicMultimediaPerson
 
 
 class DynamicContentPersonForm(autocomplete.FutureModelForm):
-    
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
         queryset=autocomplete.QuerySetSequence(
             Article.objects.all(),

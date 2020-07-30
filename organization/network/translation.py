@@ -285,3 +285,9 @@ class PersonRelatedTitleTranslationOptions(TranslationOptions):
 class DynamicContentPersonInlineTranslationOptions(TranslationOptions):
 
     fields = ()
+
+
+@register(TeamProjectOrdering)
+class TeamProjectOrderingTranslationOptions(TranslationOptions):
+
+    fields = ()
