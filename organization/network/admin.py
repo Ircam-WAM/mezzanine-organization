@@ -157,7 +157,7 @@ class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
 
 class TeamProjectOrderingInline(admin.TabularInline):
     model = TeamProjectOrdering
-    #form = TeamProjectOrderingForm
+    form = TeamProjectOrderingForm
     readonly_fields = ('project_page',)
     extra = 0
 

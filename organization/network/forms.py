@@ -214,3 +214,10 @@ class DynamicContentPersonForm(autocomplete.FutureModelForm):
     class Meta:
         model = DynamicContentPerson
         fields = ('content_object',)
+
+
+class TeamProjectOrderingForm(forms.ModelForm):
+
+    class Meta:
+        model = TeamProjectOrdering
+        fields = ('__all__')
