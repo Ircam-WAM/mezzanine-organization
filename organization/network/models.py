@@ -781,7 +781,7 @@ class MediaDepartment(models.Model):
                                    on_delete=models.SET_NULL)
 
 
-class TeamProjectOrdering(Orderable):
+class TeamProjectOrdering(SiteRelated, Orderable):
     project_page = models.ForeignKey('organization-projects.ProjectPage', verbose_name=_('Project'),
                                      related_name='teamprojectordering')
     team_page = models.ForeignKey('TeamPage', verbose_name=_('Team'), related_name='teamprojectordering')
@@ -798,4 +798,5 @@ class TeamProjectOrdering(Orderable):
                     tp = TeamProjectOrdering()
                     tp.project_page = instance
                     tp.team_page = team.pages.first()
+                    tp.site_id = tp.team_page.site_id
                     tp.save()
