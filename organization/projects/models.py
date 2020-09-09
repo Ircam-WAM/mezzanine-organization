@@ -558,13 +558,6 @@ class ProjectResidencyArticle(VersatileImage):
     )
 
 
-# Delete article when a ProjectResidencyArticle is deleted
-@receiver(models.signals.post_delete, sender=ProjectResidencyArticle)
-def handle_deleted_project_residency_article(sender, instance, **kwargs):
-    if instance.article:
-        instance.article.delete()
-
-
 class ProjectResidencyEvent(models.Model):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='residency_events', blank=True, null=True, on_delete=models.SET_NULL)
