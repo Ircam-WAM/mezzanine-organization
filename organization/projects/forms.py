@@ -192,7 +192,7 @@ class TopicFilterForm(forms.Form):
         topics = ProjectTopic.objects.all()
         topics_list = []
 
-        for topic in topics_list:
+        for topic in topics:
             if topic.projects.count():
                 topics_list.append((topic.id, topic.name))
         return topics_list
