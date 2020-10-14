@@ -21,37 +21,26 @@
 
 from __future__ import unicode_literals
 
-import os
-import re
-import pwd
-import time
-import urllib
-import string
-import datetime
-import mimetypes
-
-from django.db import models
-from django.apps import apps
-from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse, reverse_lazy
-from django.dispatch import receiver
-from django.conf import settings
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 from django import forms
-from django.utils.text import slugify
+from django.apps import apps
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.db import models
 from django.db.models.signals import post_save
-from mezzanine.pages.models import Page
-from mezzanine.core.models import RichText, Displayable, Slugged, SiteRelated, Ownable, Orderable, MetaData, \
-    TimeStamped, wrapped_manager, TeamOwnable
-from mezzanine.core.fields import RichTextField, OrderField, FileField
-from mezzanine.utils.models import AdminThumbMixin, upload_to
+from django.dispatch import receiver
+from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ObjectDoesNotExist
+from mezzanine.core.fields import RichTextField, FileField
 from mezzanine.core.managers import SearchableManager
+from mezzanine.core.models import RichText, SiteRelated, Orderable, MetaData, \
+    TimeStamped, TeamOwnable
+from mezzanine.pages.models import Page
+from mezzanine.utils.models import AdminThumbMixin
 from organization.core.models import *
 from organization.media.models import *
-from organization.pages.models import CustomPage
 from organization.media.models import Media
 from organization.network.validators import *
+from organization.pages.models import CustomPage
 
 # from .nationalities.fields import NationalityField
 
@@ -787,14 +776,16 @@ class TeamProjectOrdering(SiteRelated, Orderable):
     team_page = models.ForeignKey('TeamPage', verbose_name=_('Team'), related_name='teamprojectordering')
 
     class Meta:
-        unique_together = (("project_page", "team_page", ),)
+        unique_together = (("project_page", "team_page",),)
 
     @receiver(post_save, sender='organization-projects.ProjectPage')
     def create_order(sender, instance, **kwargs):
         model_project_page = apps.get_model('organization-projects', 'ProjectPage')
         if type(instance) is model_project_page:
             for team in instance.project.teams.all():
-                if not TeamProjectOrdering.objects.get(project_page=instance, team_page=team.pages.first()):
+                try:
+                    TeamProjectOrdering.objects.get(project_page=instance, team_page=team.pages.first())
+                except ObjectDoesNotExist:
                     tp = TeamProjectOrdering()
                     tp.project_page = instance
                     tp.team_page = team.pages.first()
