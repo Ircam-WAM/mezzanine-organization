@@ -188,18 +188,27 @@ class DynamicContentProjectPageForm(autocomplete.FutureModelForm):
 
 class TopicFilterForm(forms.Form):
 
-    def get_topics():
+    filter = forms.ChoiceField(required=False)
+    # @Todo : Better to user ModelChoiceField, to support model translation, but need refactoring
+    # filter = forms.ModelChoiceField(queryset=ProjectTopic.objects.all(), required=False, empty_label=None)
+
+    def __init__(self, *args, **kwargs):
+        super(TopicFilterForm, self).__init__(*args, **kwargs)
+        # If the page is reloaded, choices in right languages are initialized
+        self.process_topics()
+
+    def process_topics(self):
         topics = ProjectTopic.objects.all()
         topics_list = []
 
         for topic in topics:
             if topic.projects.count():
                 topics_list.append((topic.id, topic.name))
-        return topics_list
 
-    filter = forms.ChoiceField(choices=get_topics(), required=False)
+        self.fields['filter'].choices = topics_list
 
 
 class TypeFilterForm(forms.Form):
 
+    # @Todo : Better to put project types in a model
     filter = forms.ChoiceField(choices=PROJECT_TYPE_CHOICES, required=False)
