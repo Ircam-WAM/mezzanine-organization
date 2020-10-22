@@ -289,11 +289,9 @@ class ProjectCallAdmin(DisplayableAdmin):
     search_fields = ['title', 'project__title',]
 
 
-
 class ProjectPageAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
-
     model = ProjectPage
-    list_display = ['title', 'project', ]
+    list_display = ['title', 'project']
     list_filter = ['project', ]
 
 
@@ -318,7 +316,6 @@ class DynamicContentProjectPageInline(TabularDynamicInlineAdmin):
         )
 
 class ProjectPageAdmin(TeamOwnableAdmin, DisplayableAdmin):
-
     fieldsets = deepcopy(ProjectPageAdmin.fieldsets)
     inlines = [ ProjectPageBlockInline,
                 ProjectPageImageInline,
@@ -327,9 +324,21 @@ class ProjectPageAdmin(TeamOwnableAdmin, DisplayableAdmin):
     # list_filter = ['type', 'program', 'program_type', null_filter('external_id')]
     # list_display = ['title', 'date_from', 'date_to', 'status', 'admin_link']
     # actions = actions_to_duplicate()
-    search_fields = ['title', 'project__title',]
+    search_fields = ['title', 'project__title', 'project__teams__code']
+    list_display = ['title', 'project', 'get_teams', 'is_archive', 'status']
 
+    def get_teams(self, obj):
+        if obj.project:
+            return  ", ".join(obj.project.teams.values_list('code', flat=True))
 
+    get_teams.short_description = 'Teams'
+
+    def is_archive(self, obj):
+        if obj.project:
+            return str(obj.project.is_archive)
+
+    is_archive.short_description = "Archived"
+    is_archive.admin_order_field = 'project__is_archive'
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)

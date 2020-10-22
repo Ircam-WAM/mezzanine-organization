@@ -51,7 +51,7 @@ class DepartmentPageTranslationOptions(TranslationOptions):
 @register(Team)
 class TeamTranslationOptions(TranslationOptions):
 
-    fields = ('name', 'description')
+    fields = ('name', 'description', 'hal_researche_structure')
 
 
 @register(TeamPage)
@@ -283,5 +283,11 @@ class PersonRelatedTitleTranslationOptions(TranslationOptions):
 
 @register(DynamicContentPerson)
 class DynamicContentPersonInlineTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(TeamProjectOrdering)
+class TeamProjectOrderingTranslationOptions(TranslationOptions):
 
     fields = ()
