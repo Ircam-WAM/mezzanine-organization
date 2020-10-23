@@ -124,7 +124,7 @@ class PersonDirectoryView(ListView):
         if not self.kwargs['letter']:
             self.kwargs['letter'] = "a"
         self.queryset = self.queryset.filter(Q(last_name__istartswith=self.kwargs['letter'])
-                                            & Q(activities__date_to__gte=datetime.date.today())
+                                            & Q(activities__date_to__gte=date.today())
                                             & Q(activities__umr=1)).distinct()
         return self.queryset
 
@@ -162,7 +162,7 @@ class TeamMembersView(ListView):
                                         .distinct("last_name", "first_name")
 
         # Filter active persons
-        lookup = lookup & Q(activities__date_to__gte=datetime.date.today())
+        lookup = lookup & Q(activities__date_to__gte=date.today())
         active_persons = self.queryset.filter(lookup)
 
         # permanent persons
@@ -189,7 +189,7 @@ class TeamMembersView(ListView):
         # former persons
         active_persons_id = [p.id for p in active_persons]
         self.old_members = self.queryset.filter(Q(activities__teams__slug=self.kwargs['slug']) \
-                                                & Q(activities__date_to__lt=datetime.date.today())) \
+                                                & Q(activities__date_to__lt=date.today())) \
                                         .exclude(id__in=active_persons_id)
 
         return self.queryset
@@ -413,7 +413,7 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView): # pragma: no cove
     def get(self, request, *args, **kwargs):
         # the user can create a timesheet only month-1..n
         if 'year' in kwargs and 'month' in kwargs:
-            curr_date = datetime.date.today()
+            curr_date = date.today()
             asked_date = date(int(kwargs['year']), int(kwargs['month']), curr_date.day)
             if (curr_date - asked_date).days <= 0:
                 raise PermissionDenied
