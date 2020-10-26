@@ -179,7 +179,7 @@ class DynamicContentArticleView(Select2QuerySetSequenceView):
 
 
 class ArticleListView(ListView):
-    print("ArticleListView")
+
     model = Article
     template_name='magazine/article/article_list.html'
     context_object_name = 'objects'
@@ -202,7 +202,7 @@ class ArticleListView(ListView):
                 chain( self.qs, playlists),
                 key=lambda instance: instance.created,
                 reverse=True)
-        
+
         if 'keyword' in self.kwargs:
             keywords = AssignedKeyword.objects.filter(keyword__slug=self.kwargs['keyword'])
             self.qs = self.qs.filter(keywords__in=keywords)
@@ -211,11 +211,11 @@ class ArticleListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
-        context['keywords'] = settings.ARTICLE_KEYWORDS  
+        context['keywords'] = settings.ARTICLE_KEYWORDS
 
         # keywords
         assigned_keyword = AssignedKeyword()
-        self.keywords = assigned_keyword.get_keywords_of_content_type(self.model._meta.app_label, 
+        self.keywords = assigned_keyword.get_keywords_of_content_type(self.model._meta.app_label,
                                                                     self.model.__name__.lower())
         if self.keywords:
             context['keywords'] = self.keywords
@@ -231,8 +231,8 @@ class ArticleListView(ListView):
 
         # keyword by MediaType: video, audio.....
         if 'type' in self.kwargs:
-            context['current_keyword'] = self.kwargs['type'];    
-        
+            context['current_keyword'] = self.kwargs['type'];
+
         return context
 
 
@@ -253,7 +253,7 @@ class ArticleEventView(SlugMixin, ListView, FilteredListView):
 
     def get_queryset(self):
         self.qs = super(ArticleEventView, self).get_queryset()
-        
+
         # get only published Articles and ordered by publish date
         self.qs = self.qs.filter(status=2).order_by('-publish_date')
 
@@ -297,16 +297,16 @@ class ArticleEventView(SlugMixin, ListView, FilteredListView):
 
 
 class ArticleEventTeamView(ArticleEventView, TeamOwnableMixin):
-    
+
     def get_queryset(self):
         self.qs = super(ArticleEventTeamView, self).get_queryset()
-        if 'slug' in self.kwargs: 
+        if 'slug' in self.kwargs:
             self.qs = self.filter_by_team(self.qs, self.kwargs['slug'])
         return self.qs
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-        if 'slug' in self.kwargs: 
+        if 'slug' in self.kwargs:
             form.process_choices(self.kwargs['slug'])
         return super(ArticleEventTeamView, self).post(self, request, *args, **kwargs)
 
@@ -343,7 +343,7 @@ class DynamicContentMagazineContentView(Select2QuerySetSequenceView):
 
 
 class MagazineDetailView(DetailView):
-    
+
     model = Magazine
     template_name='magazine/magazine/magazine_detail.html'
     context_object_name = 'magazine'
