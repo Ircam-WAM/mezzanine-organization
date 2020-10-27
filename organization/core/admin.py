@@ -43,7 +43,6 @@ class KeywordAdmin(BaseTranslationModelAdmin):
 
     model = Keyword
 
-
 # class DuplicateAdmin(object):
 
 #     func_template = """def duplicate_content_to_%s(self, request, queryset):
@@ -130,6 +129,7 @@ admin.site.register(LinkType)
 admin.site.unregister(BlogPost)
 admin.site.unregister(ThreadedComment)
 admin.site.register(Keyword, KeywordAdmin)
+
 
 # admin.site.unregister(LinkAdmin)
 # admin.site.register(Link, CustomLinkAdmin)

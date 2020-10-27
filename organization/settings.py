@@ -85,7 +85,10 @@ PAGE_MENU_TEMPLATES = (
     (5, _("Magazine"), "pages/menus/magazine.html"),
     (6, _("Vous êtes"), "pages/menus/vous_etes.html"),
     (7, _("Personnes"), "pages/menus/tree.html"),
+    (8, _("Candidacies"), "pages/menus/candidacies.html"),
 )
+
+PAGE_MENU_TEMPLATES_DEFAULT = ()
 
 MENU_PERSON_ID = 7
 
@@ -458,7 +461,7 @@ ADMIN_MENU_ORDER = (
     (_('Events'), ('mezzanine_agenda.Event',
                   'mezzanine_agenda.Season',
                   'mezzanine_agenda.EventLocation',
-                  'mezzanine_agenda.EventShop',
+                  'mezzanine_agenda.ExternalShop',
                   'mezzanine_agenda.EventPrice',
                   'mezzanine_agenda.EventCategory',
                   'organization-agenda.EventPublicType',
@@ -510,11 +513,14 @@ ADMIN_MENU_ORDER = (
                     )),
     (_('Shop'), ('shop.Product',
                     'organization-shop.ProductList',
+                    'organization-shop.ProductKeyword',
                     'shop.Order',
                     'shop.DiscountCode',
                     'shop.Sale',
                     )),
-    (_('Jobs'), ('organization-job.JobOffer','organization-job.Candidacy')),
+    (_('Jobs'), ('organization-job.JobOffer',
+                 'organization-job.JobResponse',
+                 'organization-job.Candidacy')),
     (_('Users'), ('auth.User', 'auth.Group',)),
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
 )
@@ -532,7 +538,7 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'organization-projects.ProjectPage',
                         'shop.Product',
                         'organization-magazine.Article')
-                        
+
 # authorize models which does not heritate from Displayable
 SEARCH_MODEL_NO_DISPLAYABLE = ('organization-network.Person',)
 
@@ -554,10 +560,11 @@ DAL_MAX_RESULTS = 100
 # EVENTS
 
 EVENT_SLUG = 'agenda'
-EVENT_GOOGLE_MAPS_DOMAIN = 'maps.googleapis.com'
+EVENT_GOOGLE_MAPS_DOMAIN = 'www.google.com'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
 EVENT_EXCLUDE_TAG_LIST = [ ]
+EVENT_TAG_HIGHLIGHTED = 2
 PAST_EVENTS = True
 
 # SEASON
@@ -568,6 +575,7 @@ SEASON_START_DAY=31
 SEASON_END_MONTH=8
 SEASON_END_DAY=1
 
+TEAM_HOMEPAGE_ITEM=9
 
 BLOG_SLUG = 'article'
 BLOG_POST_PER_PAGE = 200
@@ -600,11 +608,11 @@ OPTIONAL_APPS = (
     PACKAGE_NAME_GRAPPELLI,
 )
 
-if DEBUG:
-    OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+# if DEBUG:
+    # OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
+    # MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
-INTERNAL_IPS = ['127.0.0.1', '172.17.0.1']
+INTERNAL_IPS = ['127.0.0.1', '172.17.0.1', '172.17.0.2']
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 DEBUG_TOOLBAR_PANELS = [
@@ -685,9 +693,9 @@ ANONYMOUS_USER_NAME = None
 LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
 
 # Themes
-HOST_THEMES = [
-    ('example.com', 'ircam_www_theme'),
-]
+# HOST_THEMES = [
+#     ('example.com', 'ircam_www_theme'),
+# ]
 
 # TIMESHEET
 TIMESHEET_USER_TEST = 1
@@ -716,3 +724,4 @@ OWNABLE_MODELS_ALL_EDITABLE = []
 # ARTICLE LIST
 ARTICLE_KEYWORDS = ['', ]
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000

@@ -23,3 +23,18 @@ from django.shortcuts import render
 
 from organization.projects.models import *
 from organization.core.views import *
+from cartridge.shop.models import Product
+
+
+class CustomProductDetailView(SlugMixin, DetailView):
+    
+    model = Product
+    template_name='shop/product/product_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomProductDetailView, self).get_context_data(**kwargs)
+        if hasattr(self.object, 'product_external_shop'):
+            if self.object.product_external_shop.shop:
+                if self.object.product_external_shop.shop.item_url:
+                    context['shop_url'] = self.object.product_external_shop.shop.item_url % self.object.product_external_shop.external_id
+        return context

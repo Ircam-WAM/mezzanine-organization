@@ -21,13 +21,14 @@
 from collections import OrderedDict
 from re import match
 from urllib.parse import urlparse
-from django.shortcuts import render
 from django.utils import timezone
+from django.urls import reverse_lazy
 #from django.views.generic import *
 from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.detail import SingleObjectMixin
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import *
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
@@ -36,12 +37,14 @@ from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine_agenda.models import Event
 from mezzanine.utils.views import paginate
 from mezzanine.conf import settings
+from mezzanine.generic.models import AssignedKeyword
 from organization.magazine.models import *
 from organization.network.models import DepartmentPage, Person
 from organization.network.views import TeamOwnableMixin
 from organization.pages.models import CustomPage, DynamicContentPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting, \
-                                    DynamicContentMixin, FilteredListView
+                                    DynamicContentMixin, FilteredListView, \
+                                    RedirectContentView, DynamicReverseMixin
 from organization.core.utils import split_events_from_other_related_content
 from django.template.defaultfilters import slugify
 from itertools import chain
@@ -49,7 +52,8 @@ from django.views.generic.edit import FormView
 from .forms import CategoryFilterForm
 
 
-class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
+class ArticleDetailView(RedirectContentView, SlugMixin, DetailView,
+                        DynamicContentMixin, DynamicReverseMixin):
 
     model = Article
     template_name='magazine/article/article_detail.html'
@@ -61,43 +65,6 @@ class ArticleDetailView(SlugMixin, DetailView, DynamicContentMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
-        sorting = False
-
-        # automatic relation : dynamic content page
-        pages = DynamicContentPage.objects.filter(object_id=self.object.id).all()
-        pages_related = []
-        for p in pages :
-            try:
-                if hasattr(p, 'page'):
-                    if p.page:
-                        pages_related.append(p.page)
-            except ObjectDoesNotExist:
-                continue
-        if pages_related:
-            context['concrete_objects'] += pages_related
-            sorting = True
-
-        # automatic relation : dynamic content article
-        articles = DynamicContentArticle.objects.filter(object_id=self.object.id).all()
-        articles_related = []
-        for a in articles:
-            try:
-                if hasattr(a, 'article'):
-                    if a.article:
-                        articles_related.append(a.article)
-            except ObjectDoesNotExist:
-                continue
-        if articles_related:
-            context['concrete_objects'] += articles_related
-            sorting = True
-
-        # gather all and order by creation date
-        if sorting:
-            context['concrete_objects'].sort(key=lambda x: x.created, reverse=True)
-
-        # classify related content to display it in another way (cf Manifeste)
-        # @Todo : use tempalte tags filter_content_model instead the method below
-        # context = split_events_from_other_related_content(context, related_content)
 
         if self.object.department:
             first_page = self.object.department.pages.first()
@@ -216,36 +183,63 @@ class ArticleListView(ListView):
     model = Article
     template_name='magazine/article/article_list.html'
     context_object_name = 'objects'
-    keywords = OrderedDict()
+    keywords = None
 
     def get_queryset(self):
         self.qs = self.model.objects.published(for_user=self.request.user).order_by('-created')
-        playlists = Playlist.objects.published().order_by('-created').distinct()
+        if getattr(settings, 'ALLOW_PLAYLISTS_IN_ARTICLE', True):
+            playlists = Playlist.objects.published().order_by('-created').distinct()
 
-        if 'type' in self.kwargs:
-            if self.kwargs['type'] == "article":
-                playlists = []
+            if 'type' in self.kwargs:
+                if self.kwargs['type'] == "article":
+                    playlists = []
 
-            if self.kwargs['type'] == "video" or self.kwargs['type'] == "audio":
-                playlists = playlists.filter(type=self.kwargs['type'])
-                self.qs = []
+                if self.kwargs['type'] == "video" or self.kwargs['type'] == "audio":
+                    playlists = playlists.filter(type=self.kwargs['type'])
+                    self.qs = []
 
-        self.qs = sorted(
-            chain( self.qs, playlists),
-            key=lambda instance: instance.created,
-            reverse=True)
+            self.qs = sorted(
+                chain( self.qs, playlists),
+                key=lambda instance: instance.created,
+                reverse=True)
+
+        if 'keyword' in self.kwargs:
+            keywords = AssignedKeyword.objects.filter(keyword__slug=self.kwargs['keyword'])
+            self.qs = self.qs.filter(keywords__in=keywords)
 
         return self.qs
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
         context['keywords'] = settings.ARTICLE_KEYWORDS
+
+        # keywords
+        assigned_keyword = AssignedKeyword()
+        self.keywords = assigned_keyword.get_keywords_of_content_type(self.model._meta.app_label,
+                                                                    self.model.__name__.lower())
+        if self.keywords:
+            context['keywords'] = self.keywords
+
+        # pagination
         context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
-                              settings.MEDIA_PER_PAGE,
+                              settings.ARTICLE_PER_PAGE,
                               settings.MAX_PAGING_LINKS)
+
+        # keyword by AssignKeyword
+        if 'keyword' in self.kwargs:
+            context['current_keyword_slug'] = self.kwargs['keyword']
+
+        # keyword by MediaType: video, audio.....
         if 'type' in self.kwargs:
             context['current_keyword'] = self.kwargs['type'];
+
         return context
+
+
+class ArticleListRedirect(RedirectView):
+
+    permanent = True
+    url = reverse_lazy('magazine-article-list')
 
 
 class ArticleEventView(SlugMixin, ListView, FilteredListView):
@@ -259,7 +253,7 @@ class ArticleEventView(SlugMixin, ListView, FilteredListView):
 
     def get_queryset(self):
         self.qs = super(ArticleEventView, self).get_queryset()
-        
+
         # get only published Articles and ordered by publish date
         self.qs = self.qs.filter(status=2).order_by('-publish_date')
 
@@ -303,16 +297,16 @@ class ArticleEventView(SlugMixin, ListView, FilteredListView):
 
 
 class ArticleEventTeamView(ArticleEventView, TeamOwnableMixin):
-    
+
     def get_queryset(self):
         self.qs = super(ArticleEventTeamView, self).get_queryset()
-        if 'slug' in self.kwargs: 
+        if 'slug' in self.kwargs:
             self.qs = self.filter_by_team(self.qs, self.kwargs['slug'])
         return self.qs
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-        if 'slug' in self.kwargs: 
+        if 'slug' in self.kwargs:
             form.process_choices(self.kwargs['slug'])
         return super(ArticleEventTeamView, self).post(self, request, *args, **kwargs)
 
@@ -349,7 +343,7 @@ class DynamicContentMagazineContentView(Select2QuerySetSequenceView):
 
 
 class MagazineDetailView(DetailView):
-    
+
     model = Magazine
     template_name='magazine/magazine/magazine_detail.html'
     context_object_name = 'magazine'

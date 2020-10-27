@@ -21,39 +21,33 @@
 
 
 import csv
+
 from django.contrib import admin
-from django import forms
 from django.http import HttpResponse
-from copy import deepcopy
-from dal import autocomplete
 from guardian.admin import GuardedModelAdmin
-from guardian.shortcuts import get_objects_for_user
-from modeltranslation.admin import TranslationTabularInline
-from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
-from organization.network.models import *
+from modeltranslation.admin import TranslationTabularInline
+from organization.core.admin import *
 from organization.network.forms import *
+from organization.network.models import *
+from organization.network.translation import *
+from organization.network.utils import TimesheetXLS, set_timesheets_validation_date, flatten_activities
+from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline, DynamicContentPageInline, \
+    PageRelatedTitleAdmin
 from organization.pages.forms import DynamicMultimediaPageForm
 from organization.pages.models import *
-from organization.core.admin import *
-from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline, DynamicContentPageInline, PageRelatedTitleAdmin
 from organization.shop.models import PageProductList
-from organization.network.utils import TimesheetXLS, set_timesheets_validation_date, flatten_activities
-from organization.network.translation import *
-from organization.core.utils import getUsersListOfSameTeams
 
 
 class OrganizationAdminInline(StackedDynamicInlineAdmin):
-
     model = OrganizationLinkedInline
     form = OrganizationLinkedForm
 
 
 class OrganizationLinkedAdmin(BaseTranslationOrderedModelAdmin):
-
     inlines = (OrganizationAdminInline,)
-    first_fields = ['name',]
+    first_fields = ['name', ]
 
     class Media:
         js = (
@@ -62,191 +56,167 @@ class OrganizationLinkedAdmin(BaseTranslationOrderedModelAdmin):
 
 
 class OrganizationLinkedBlockInlineAdmin(StackedDynamicInlineAdmin):
-
     model = OrganizationLinkedBlockInline
     form = OrganizationLinkedListForm
 
 
 class OrganizationPlaylistInline(TabularDynamicInlineAdmin):
-
     model = OrganizationPlaylist
 
 
 class OrganizationLinkInline(StackedDynamicInlineAdmin):
-
     model = OrganizationLink
 
 
 class OrganizationImageInline(TabularDynamicInlineAdmin):
-
     model = OrganizationImage
 
 
 class OrganizationUserImageInline(TabularDynamicInlineAdmin):
-
     model = OrganizationUserImage
 
 
 class OrganizationBlockInline(StackedDynamicInlineAdmin):
-
     model = OrganizationBlock
 
 
 class OrganizationServiceInline(StackedDynamicInlineAdmin):
-
     model = OrganizationService
 
 
 class OrganizationEventLocationInline(TranslationTabularInline):
-
     extra = 1
     model = OrganizationEventLocation
 
 
 class ProducerDataInline(StackedDynamicInlineAdmin):
-
     model = ProducerData
 
 
 class DynamicMultimediaOrganizationInline(TabularDynamicInlineAdmin):
-
     model = DynamicMultimediaOrganization
     form = DynamicMultimediaOrganizationForm
 
 
 class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
-
     model = Organization
-    inlines = [ OrganizationEventLocationInline,
-                OrganizationServiceInline,
-                OrganizationPlaylistInline,
-                DynamicMultimediaOrganizationInline,
-                OrganizationImageInline,
-                OrganizationBlockInline,
-                OrganizationLinkInline,
-                OrganizationLinkedBlockInlineAdmin,
-                ProducerDataInline,
-                 ]
+    inlines = [OrganizationEventLocationInline,
+               OrganizationServiceInline,
+               OrganizationPlaylistInline,
+               DynamicMultimediaOrganizationInline,
+               OrganizationImageInline,
+               OrganizationBlockInline,
+               OrganizationLinkInline,
+               OrganizationLinkedBlockInlineAdmin,
+               ProducerDataInline,
+               ]
     list_display = ['name', 'type', 'role', 'admin_thumb']
     list_filter = ['is_on_map', 'type', 'role', 'validation_status']
-    search_fields = ['name',]
-    first_fields = ['name',]
+    search_fields = ['name', ]
+    first_fields = ['name', ]
 
 
 class OrganizationRoleAdmin(BaseTranslationModelAdmin):
-
     model = OrganizationRole
 
 
 class PageProductListInline(TabularDynamicInlineAdmin):
-
     model = PageProductList
 
 
 class DynamicMultimediaDepartmentInline(TabularDynamicInlineAdmin):
-
     model = DynamicMultimediaPage
     form = DynamicMultimediaPageForm
 
 
 class DepartmentPageAdmin(PageAdmin):
-
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaDepartmentInline, PageProductListInline, ]
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaDepartmentInline,
+               PageProductListInline, ]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
-
     model = Department
 
 
 class TeamLinkInline(StackedDynamicInlineAdmin):
-
     model = TeamLink
 
 
 class TeamAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
-
     model = Team
     search_fields = ['name', 'code']
     list_filter = ['department']
     list_display = ['name', 'department', 'code']
-    inlines = [TeamLinkInline,]
+    inlines = [TeamLinkInline, ]
 
 
 class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
-    
     model = DynamicMultimediaPage
     form = DynamicMultimediaPageForm
 
 
-class TeamPageAdmin(PageAdmin, GuardedModelAdmin):
+class TeamProjectOrderingInline(admin.TabularInline):
+    model = TeamProjectOrdering
+    form = TeamProjectOrderingForm
+    readonly_fields = ('project_page',)
+    extra = 0
 
+
+class TeamPageAdmin(PageAdmin, GuardedModelAdmin):
     inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaTeamPageInline,
-                PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]
+               PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline, TeamProjectOrderingInline]
 
 
 class PersonAdminBase(BaseTranslationModelAdmin):
-
     model = Person
 
 
 class ActivityWeeklyHourVolumeAdmin(BaseTranslationModelAdmin):
-
     model = ActivityWeeklyHourVolume
 
 
 class PersonActivityInline(StackedDynamicInlineAdmin):
-
     model = PersonActivity
     fk_name = 'person'
     filter_horizontal = ['organizations', 'employers', 'teams',
                          'supervisors', 'phd_directors', ]
-    
+
 
 class PersonPlaylistInline(TabularDynamicInlineAdmin):
-
     model = PersonPlaylist
 
 
 class PersonLinkInline(StackedDynamicInlineAdmin):
-
     model = PersonLink
 
 
 class PersonImageInline(TabularDynamicInlineAdmin):
-
     model = PersonImage
 
 
 class PersonFileInline(TabularDynamicInlineAdmin):
-
     model = PersonFile
 
 
 class PersonBlockInline(StackedDynamicInlineAdmin):
-
     model = PersonBlock
 
 
 class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
-
     model = DynamicMultimediaPerson
     form = DynamicMultimediaPersonForm
 
 
 class PersonRelatedTitleAdmin(TranslationTabularInline):
-    
     model = PersonRelatedTitle
 
 
 class DynamicContentPersonInline(TabularDynamicInlineAdmin):
-
     model = DynamicContentPerson
     form = DynamicContentPersonForm
 
 
 class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
-
     model = Person
     inlines = [PersonImageInline,
                PersonBlockInline,
@@ -256,16 +226,16 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
                DynamicContentPersonInline,
                PersonLinkInline,
                PersonFileInline,
-               PersonActivityInline,]
+               PersonActivityInline, ]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
     search_fields = ['last_name', 'first_name', 'user__username', 'user__email', 'email']
-    list_display = [ 'last_name', 'first_name', 'register_id', 'external_id', 'email', 'user', 'last_weekly_hour_volume', 'gender', 'created']
+    list_display = ['last_name', 'first_name', 'register_id', 'external_id', 'email', 'user', 'last_weekly_hour_volume',
+                    'gender', 'created']
     list_filter = ['person_title', 'activities__date_from', 'activities__date_to',
-                    'activities__is_permanent', 'activities__framework', 'activities__grade',
-                    'activities__status', 'activities__teams',
-                    'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
-    actions = ['export_as_csv', ]
-
+                   'activities__is_permanent', 'activities__framework', 'activities__grade',
+                   'activities__status', 'activities__teams',
+                   'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
+    actions = ['export_as_csv', 'export_all_raw_as_csv']
 
     def last_weekly_hour_volume(self, instance):
         last_activity = instance.activities.first()
@@ -277,23 +247,38 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
 
     def export_as_csv(self, request, queryset):
 
-            meta = self.model._meta
-            field_names = ['first_name', 'last_name', 'gender', 'birthday']
-            activity_fields = ['date_from', 'date_to', 'framework', 'function', 'organizations', 'teams']
-            response = HttpResponse(content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
-            response.write(u'\ufeff'.encode('utf8'))
-            writer = csv.writer(response, delimiter=';', dialect='excel')
-            activity_fields_all = []
-            for i in range(10):
-                activity_fields_all += activity_fields
-            writer.writerow(field_names + activity_fields_all)
-            for obj in queryset:
-                data = [getattr(obj, field) for field in field_names]
-                data += flatten_activities(obj.activities.all(), activity_fields)
-                row = writer.writerow(data)
+        meta = self.model._meta
+        field_names = ['first_name', 'last_name', 'gender', 'birthday']
+        activity_fields = ['date_from', 'date_to', 'framework', 'function', 'organizations', 'teams']
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        response.write(u'\ufeff'.encode('utf8'))
+        writer = csv.writer(response, delimiter=';', dialect='excel')
+        activity_fields_all = []
+        for i in range(10):
+            activity_fields_all += activity_fields
+        writer.writerow(field_names + activity_fields_all)
+        for obj in queryset:
+            data = [getattr(obj, field) for field in field_names]
+            data += flatten_activities(obj.activities.all(), activity_fields)
+            row = writer.writerow(data)
 
-            return response
+        return response
+
+    def export_all_raw_as_csv(self, request, queryset):
+
+        queryset = Person.objects.all()
+        meta = self.model._meta
+        field_names = ['first_name', 'last_name', 'email', 'gender', 'birthday']
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        response.write(u'\ufeff'.encode('utf8'))
+        writer = csv.writer(response, delimiter=';', dialect='excel')
+        for obj in queryset:
+            data = [getattr(obj, field) for field in field_names]
+            row = writer.writerow(data)
+
+        return response
 
     def save_form(self, request, form, change):
         """
@@ -303,14 +288,14 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
         return super(OwnableAdmin, self).save_form(request, form, change)
 
     export_as_csv.short_description = "Export Selected"
+    export_all_raw_as_csv.short_description = "Export all Persons with raw data"
 
 
 class ProjectActivityAdmin(BaseTranslationModelAdmin):
-
     model = ProjectActivity
     form = ProjectActivityForm
-    list_display = [ 'title', 'project', 'default_percentage', 'work_package', ]
-    search_fields = ['activity__person__title', 'project__title',]
+    list_display = ['title', 'project', 'default_percentage', 'work_package', ]
+    search_fields = ['activity__person__title', 'project__title', ]
     exclude = ("title", "description")
 
     def work_package(self, instance):
@@ -319,39 +304,38 @@ class ProjectActivityAdmin(BaseTranslationModelAdmin):
 
 
 class ProjectActivityInline(TabularDynamicInlineAdmin):
-
     model = ProjectActivity
     form = ProjectActivityForm
     exclude = ("title", "description")
 
 
 class PersonActivityAdmin(BaseTranslationModelAdmin):
-
     model = PersonActivity
     list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to', 'get_organizations', 'get_employers']
     filter_horizontal = ['organizations', 'employers', 'teams',
-                         'supervisors', 'phd_directors', ] #project_activity__project
+                         'supervisors', 'phd_directors', ]  # project_activity__project
     search_fields = ['person__title', 'organizations__name', 'employers__name']
-    list_filter = [ 'date_from', 'date_to',
-                    'is_permanent', 'framework', 'grade',
-                    'status', 'teams']
-    inlines = [ProjectActivityInline,]
-
+    list_filter = ['date_from', 'date_to',
+                   'is_permanent', 'framework', 'grade',
+                   'status', 'teams']
+    inlines = [ProjectActivityInline, ]
 
     def get_organizations(self, instance):
         org_str = []
         for org in instance.organizations.all():
-            if org :
+            if org:
                 org_str.append(org.name)
         return ", ".join(org_str)
+
     get_organizations.short_description = 'organizations'
 
     def get_employers(self, instance):
         emp_str = []
         for emp in instance.employers.all():
-            if emp :
+            if emp:
                 emp_str.append(emp.name)
         return ", ".join(emp_str)
+
     get_employers.short_description = 'employers'
 
     def get_teams(self, instance):
@@ -359,69 +343,61 @@ class PersonActivityAdmin(BaseTranslationModelAdmin):
         for team in instance.teams.all():
             values.append(team.code)
         return ' - '.join(values)
+
     get_teams.short_description = 'teams'
 
 
 class PersonListBlockInlineAdmin(TabularDynamicInlineAdmin):
-
     model = PersonListBlockInline
     form = PersonListBlockInlineForm
 
 
 class PersonListBlockAdmin(BaseTranslationModelAdmin):
-
-    inlines = [PersonListBlockInlineAdmin,]
-    search_fields = ['title', 'label',]
+    inlines = [PersonListBlockInlineAdmin, ]
+    search_fields = ['title', 'label', ]
     list_display = ['title', 'label', 'description', 'date_created', 'date_modified']
 
 
 class ActivityFunctionAdmin(BaseTranslationModelAdmin):
-
     model = ActivityFunction
 
 
 class ActivityGradeAdmin(BaseTranslationModelAdmin):
-
     model = ActivityGrade
 
 
 class ActivityFrameworkAdmin(BaseTranslationModelAdmin):
-
     model = ActivityFramework
 
 
 class ActivityStatusAdmin(BaseTranslationModelAdmin):
-
     model = ActivityStatus
 
 
 class TrainingTypeAdmin(BaseTranslationModelAdmin):
-
     model = TrainingType
 
 
 class TrainingLevelAdmin(BaseTranslationModelAdmin):
-
     model = TrainingLevel
 
 
 class TrainingSpecialityAdmin(BaseTranslationModelAdmin):
-
     model = TrainingSpeciality
 
 
 class TrainingTopicAdmin(BaseTranslationModelAdmin):
-
     model = TrainingTopic
 
 
 class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
     model = PersonActivityTimeSheet
     search_fields = ['year', 'month', 'activity__person__last_name', "project__title"]
-    list_display = ['person', 'activity', 'year', 'month', 'project', 'work_package', 'percentage',  'accounting', 'validation']
+    list_display = ['person', 'activity', 'year', 'month', 'project', 'work_package', 'percentage', 'accounting',
+                    'validation']
     list_filter = ['activity__person', 'year', 'month', 'project']
     actions = ['export_xls', 'validate_timesheets']
-    first_fields = ['title',]
+    first_fields = ['title', ]
     form = PersonActivityTimeSheetAdminForm
 
     def person(self, instance):
@@ -432,9 +408,9 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
         return ",".join(wk_list)
 
     def export_xls(self, request, queryset):
-        if request.GET.get('year') :
+        if request.GET.get('year'):
             xls = TimesheetXLS(queryset, request.GET.get('year'))
-        else :
+        else:
             xls = TimesheetXLS(queryset)
         return xls.write()
 
@@ -442,7 +418,6 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
         set_timesheets_validation_date(queryset)
 
     export_xls.short_description = "Export person timesheets"
-
 
 
 admin.site.register(OrganizationLinked, OrganizationLinkedAdmin)

@@ -19,8 +19,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import re
-from django.shortcuts import render, get_object_or_404
+from re import match, findall
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from django.views.generic.base import View, RedirectView
 from django.views.generic import DetailView, ListView, TemplateView, UpdateView
@@ -283,13 +283,14 @@ class DynamicContentMixin(SingleObjectMixin):
         # @Todo : rename all related as 'dynamic_content' and delete
         # the further paragraph
         for f in self.object._meta.get_fields():
-            if re.match(r"^dynamic_content_", f.name):
+            if match(r"^dynamic_content_", f.name):
                 dynamic_content = getattr(self.object, f.name).all()
         # get all concrete objects from dynamic content and append 
         for dc in dynamic_content:
             if dc.content_object:
                 context['concrete_objects'].append(dc.content_object)
-
+        # reorder objects by creation date
+        context['concrete_objects'].sort(key=lambda x: x.created, reverse=True)
         return context
 
 
@@ -300,11 +301,11 @@ class DynamicReverseMixin(SingleObjectMixin):
         if not 'concrete_objects' in context.keys():
             context['concrete_objects'] = []
         reverse_object = set()
-        keys = [m for m in apps.all_models.keys() if re.match(r'organization-[a-z]*', m)]
+        keys = [m for m in apps.all_models.keys() if match(r'organization-[a-z]*', m)]
         content_type = ContentType.objects.get_for_model(self.object._meta.model)
         for key in keys:
             for model_str, model_class in apps.all_models[key].items():
-                if re.match(r'dynamiccontent[a-z]*', model_str):
+                if match(r'dynamiccontent[a-z]*', model_str):
                     queryset = model_class.objects.filter(content_type_id=content_type.id, object_id=self.object.id)
                     for dynamic_content in queryset:
                         for field in dynamic_content._meta.get_fields():
@@ -408,3 +409,14 @@ class FilteredListView(FormView):
         if self.request.GET and self.item_to_filter in self.request.GET.keys():
             form.fields[self.item_to_filter].initial = [ self._get_choice_id(self.request.GET[self.item_to_filter], form.fields[self.item_to_filter]._choices)]
         return form
+
+
+class RedirectContentView(SingleObjectMixin):
+    
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        if match(r'^<p>http',self.object.content):
+            url = findall(r'<p>(.*?)</p>', self.object.content)
+            if url :
+                return redirect(url[0])
+        return response

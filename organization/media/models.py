@@ -52,7 +52,7 @@ LIVE_STREAMING_TYPE_CHOICES = [
 class Media(Displayable, TeamOwnable):
     """Media"""
 
-    external_id = models.CharField(_('media id'), max_length=128)
+    external_id = models.CharField(_('media id'), max_length=128, blank=True, null=True)
     poster_url = models.URLField(_('poster'), max_length=1024, blank=True)
     category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='medias', blank=True, null=True, on_delete=models.SET_NULL)
 
@@ -99,7 +99,7 @@ class Media(Displayable, TeamOwnable):
 
         for source in sources:
             mime_type = source.attrib['type']
-            transcoded, c = MediaTranscoded.objects.get_or_create(media=self, mime_type=mime_type)        
+            transcoded, c = MediaTranscoded.objects.get_or_create(media=self, mime_type=mime_type)
             transcoded.url = 'https:' + source.attrib['src']
             transcoded.save()
 

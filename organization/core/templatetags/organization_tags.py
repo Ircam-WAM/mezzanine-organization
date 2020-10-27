@@ -27,7 +27,7 @@ import re
 import copy
 from re import match
 from django.http import QueryDict
-from django import template 
+from django import template
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from mezzanine.template import Library
@@ -50,6 +50,8 @@ from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
 from django.utils.functional import allow_lazy
 from django.utils import six
 from django.contrib.contenttypes.models import ContentType
+from django.utils.translation import ugettext
+
 from django.apps import apps
 
 register = Library()
@@ -204,18 +206,21 @@ def get_team_persons(team, status):
 @register.filter
 def slice_ng(qs, indexes):
     list = []
-    for obj in qs:
-        list.append(obj)
-    index_split = indexes.split(':')
-    index_1 = int(index_split[0])
-    index_2 = 0
-    if len(index_split) > 1:
-        index_2 = int(index_split[1])
-    if index_1 >= 0 and index_2:
-        return list[index_1:index_2]
-    elif index_1 >= 0 & index_1 < len(list):
-        return [list[index_1]]
-    else :
+    if qs:
+        for obj in qs:
+            list.append(obj)
+        index_split = indexes.split(':')
+        index_1 = int(index_split[0])
+        index_2 = 0
+        if len(index_split) > 1:
+            index_2 = int(index_split[1])
+        if index_1 >= 0 and index_2:
+            return list[index_1:index_2]
+        elif index_1 >= 0 & index_1 < len(list):
+            return [list[index_1]]
+        else :
+            return list
+    else:
         return list
 
 @register.filter
@@ -315,13 +320,16 @@ def get_separator_with(date_start, date_end):
 @register.filter
 def format_date_fct_of(date_start, date_end):
     date_start = DateFormat(date_start)
-    date_start = date_start.format(get_format('DATE_EVENT_FORMAT'))
     if date_end:
         date_end = DateFormat(date_end)
         if date_start.format(get_format('SHORT_DATE_FORMAT')) == date_end.format(get_format('SHORT_DATE_FORMAT')):
-            date_start = date_start.format(get_format('DATE_EVENT_FORMAT'))
+            date_start = date_start.format(get_format('DATE_EVENT_FORMAT_Y'))
         elif date_start.format(get_format('YEAR_MONTH_FORMAT')) == date_end.format(get_format('YEAR_MONTH_FORMAT')):
             date_start = date_start.format(get_format('WEEK_DAY_FORMAT'))
+        else:
+            date_start = date_start.format(get_format('DATE_EVENT_FORMAT'))
+    else:
+        date_start = date_start.format(get_format('DATE_EVENT_FORMAT_Y'))
     return date_start
 
 
@@ -450,7 +458,7 @@ def template_exists(value):
 
 @register.filter
 def filter_content_model(content_list, model_name):
-    # pop contents from list, based on model name 
+    # pop contents from list, based on model name
     # example call in template : new_content=related_content|filter_content_model:"Article"
     # {{ new_content.0 }} : list of poped contents
     # {{ new_content.1 }} : list of remains contents
@@ -458,7 +466,7 @@ def filter_content_model(content_list, model_name):
     filtered_cards = []
     content_list_filtered = []
     for i, rc in enumerate(content_list):
-        if rc._meta.model_name == model_name: 
+        if rc._meta.model_name == model_name:
             filtered_cards.append(rc)
         else :
             content_list_filtered.append(rc)
@@ -468,19 +476,22 @@ def filter_content_model(content_list, model_name):
 @register.filter
 def get_team_articles(team):
     users = get_users_of_team(team)
-    articles = Article.objects.filter(user__in=users)
-    events = Event.objects.published().filter(user__in=users)
+    articles = Article.objects.published() \
+                .filter(user__in=users)
+    events = Event.objects.published() \
+                .filter(user__in=users)
 
     q = sorted(
         chain(articles, events),
-        key=lambda instance: instance.created,
-        reverse=True)
+        key=lambda instance: instance.publish_date,
+        reverse=True)[:settings.TEAM_HOMEPAGE_ITEM]
     return q
 
 
 @register.filter
 def get_content_objects(dynamic_content):
-    return [dc.content_object for dc in dynamic_content]
+    if dynamic_content:
+        return [dc.content_object for dc in dynamic_content]
 
 
 @register.filter
@@ -549,7 +560,10 @@ def index(List, i):
 
 @register.filter
 def subtract(a, b):
-    return str(int(a) - int(b))
+    if type(a) is datetime.datetime or type(b) is datetime.datetime:
+        return a - b
+    else:
+        return str(int(a) - int(b))
 
 
 @register.filter
@@ -575,3 +589,28 @@ def get_action_name(action_id):
         return 'edit'
     elif action_id == 3:
         return 'remove'
+
+
+# Limit queryset
+@register.filter
+def limit(q, nb):
+    return q[:nb]
+
+
+@register.filter
+def has_shop(product):
+    if hasattr(product, 'product_external_shop'):
+        return product.product_external_shop.external_id and \
+                product.product_external_shop.shop and \
+                product.product_external_shop.label
+    else:
+        return False
+
+
+@register.filter(name='template_trans')
+def template_trans(text):
+    try:
+        print("ugettext(text)", ugettext(text))
+        return ugettext(text)
+    except Exception as e:
+        return text
