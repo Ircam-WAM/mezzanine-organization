@@ -41,9 +41,10 @@ from mezzanine.conf import settings
 from mezzanine.utils.sites import current_site_id
 from mezzanine.utils.urls import home_slug
 from mezzanine.core.managers import search_fields_to_dict, SearchableQuerySet, SearchableManager, DisplayableManager
+from mezzanine.pages.managers import PageManager
 
 
-class CustomSearchableManager(DisplayableManager):
+class CustomSearchableManager(PageManager):
 
     def search(self, *args, **kwargs):
         """
