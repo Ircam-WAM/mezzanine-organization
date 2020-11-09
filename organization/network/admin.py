@@ -360,34 +360,52 @@ class PersonListBlockAdmin(BaseTranslationModelAdmin):
 
 class ActivityFunctionAdmin(BaseTranslationModelAdmin):
     model = ActivityFunction
+    ordering = ['name',]
 
 
 class ActivityGradeAdmin(BaseTranslationModelAdmin):
     model = ActivityGrade
+    ordering = ['name',]
 
 
 class ActivityFrameworkAdmin(BaseTranslationModelAdmin):
     model = ActivityFramework
+    ordering = ['name',]
 
 
 class ActivityStatusAdmin(BaseTranslationModelAdmin):
     model = ActivityStatus
+    ordering = ['name',]
 
 
 class TrainingTypeAdmin(BaseTranslationModelAdmin):
     model = TrainingType
+    ordering = ['name',]
 
 
 class TrainingLevelAdmin(BaseTranslationModelAdmin):
     model = TrainingLevel
+    ordering = ['name',]
 
 
 class TrainingSpecialityAdmin(BaseTranslationModelAdmin):
     model = TrainingSpeciality
+    ordering = ['name',]
 
 
 class TrainingTopicAdmin(BaseTranslationModelAdmin):
     model = TrainingTopic
+    ordering = ['name',]
+
+
+class BudgetCodeAdmin(BaseTranslationModelAdmin):
+    model = BudgetCode
+    ordering = ['name',]
+
+
+class RecordPieceAdmin(BaseTranslationModelAdmin):
+    model = RecordPiece
+    ordering = ['name',]
 
 
 class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
@@ -442,3 +460,5 @@ admin.site.register(TrainingTopic, TrainingTopicAdmin)
 admin.site.register(TrainingSpeciality, TrainingSpecialityAdmin)
 admin.site.register(PersonActivityTimeSheet, PersonActivityTimeSheetAdmin)
 admin.site.register(ProjectActivity, ProjectActivityAdmin)
+admin.site.register(BudgetCode, BudgetCodeAdmin)
+admin.site.register(RecordPiece, RecordPieceAdmin)

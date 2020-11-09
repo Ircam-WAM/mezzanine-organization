@@ -27,7 +27,7 @@ import re
 import copy
 from re import match
 from django.http import QueryDict
-from django import template 
+from django import template
 from mezzanine.pages.models import Page
 from mezzanine.blog.models import BlogPost
 from mezzanine.template import Library
@@ -206,18 +206,21 @@ def get_team_persons(team, status):
 @register.filter
 def slice_ng(qs, indexes):
     list = []
-    for obj in qs:
-        list.append(obj)
-    index_split = indexes.split(':')
-    index_1 = int(index_split[0])
-    index_2 = 0
-    if len(index_split) > 1:
-        index_2 = int(index_split[1])
-    if index_1 >= 0 and index_2:
-        return list[index_1:index_2]
-    elif index_1 >= 0 & index_1 < len(list):
-        return [list[index_1]]
-    else :
+    if qs:
+        for obj in qs:
+            list.append(obj)
+        index_split = indexes.split(':')
+        index_1 = int(index_split[0])
+        index_2 = 0
+        if len(index_split) > 1:
+            index_2 = int(index_split[1])
+        if index_1 >= 0 and index_2:
+            return list[index_1:index_2]
+        elif index_1 >= 0 & index_1 < len(list):
+            return [list[index_1]]
+        else :
+            return list
+    else:
         return list
 
 @register.filter
@@ -455,7 +458,7 @@ def template_exists(value):
 
 @register.filter
 def filter_content_model(content_list, model_name):
-    # pop contents from list, based on model name 
+    # pop contents from list, based on model name
     # example call in template : new_content=related_content|filter_content_model:"Article"
     # {{ new_content.0 }} : list of poped contents
     # {{ new_content.1 }} : list of remains contents
@@ -463,7 +466,7 @@ def filter_content_model(content_list, model_name):
     filtered_cards = []
     content_list_filtered = []
     for i, rc in enumerate(content_list):
-        if rc._meta.model_name == model_name: 
+        if rc._meta.model_name == model_name:
             filtered_cards.append(rc)
         else :
             content_list_filtered.append(rc)
