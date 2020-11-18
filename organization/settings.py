@@ -492,6 +492,8 @@ ADMIN_MENU_ORDER = (
                     'organization-network.TrainingTopic',
                     'organization-network.TrainingLevel',
                     'organization-network.TrainingSpeciality',
+                    'organization-network.RecordPiece',
+                    'organization-network.BudgetCode'
                     )),
     (_('Timesheet'), ('organization-network.ActivityWeeklyHourVolume',
                      'organization-network.PersonActivityTimeSheet'
