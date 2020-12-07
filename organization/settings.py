@@ -706,8 +706,10 @@ TIMESHEET_START = date(2015, 1, 1) # arbitrary timesheet start due to missing da
 IRCAM_EMPLOYER = 1
 if DEBUG:
     TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+    TIMESHEET_BCC_MAIL = "de@bug.com"
 else:
     TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+    TIMESHEET_BCC_MAIL = "de@bug.com"
 
 # HAL
 
