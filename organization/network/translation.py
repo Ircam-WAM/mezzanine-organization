@@ -291,3 +291,15 @@ class DynamicContentPersonInlineTranslationOptions(TranslationOptions):
 class TeamProjectOrderingTranslationOptions(TranslationOptions):
 
     fields = ()
+
+
+@register(BudgetCode)
+class BudgetCodeTranslationOptions(TranslationOptions):
+    fields = ()
+
+
+@register(RecordPiece)
+class RecordPieceTranslationOptions(TranslationOptions):
+    fields = ()
+
+
