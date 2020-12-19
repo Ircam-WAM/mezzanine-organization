@@ -55,6 +55,7 @@ class Media(Displayable, TeamOwnable):
     external_id = models.CharField(_('media id'), max_length=128, blank=True, null=True)
     poster_url = models.URLField(_('poster'), max_length=1024, blank=True)
     category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='medias', blank=True, null=True, on_delete=models.SET_NULL)
+    iframe = models.TextField(_("Iframe"), blank=True)
 
     # objects = SearchableManager()
     # search_fields = ("title",)
@@ -81,16 +82,20 @@ class Media(Displayable, TeamOwnable):
 
     @property
     def type(self):
-        for transcoded in self.transcoded.all():
-            if 'video' in transcoded.mime_type:
-                return 'video'
-            if 'audio' in transcoded.mime_type:
-                return 'audio'
+        if self.iframe:
+            return 'iframe'
+        else:
+            for transcoded in self.transcoded.all():
+                if 'video' in transcoded.mime_type:
+                    return 'video'
+                if 'audio' in transcoded.mime_type:
+                    return 'audio'
 
     def save(self, *args, **kwargs):
         q = pq(self.get_html())
         sources = q('source')
         video = q('video')
+
         if len(video):
             if 'poster' in video[0].attrib.keys():
                 self.poster_url = 'https:' + video[0].attrib['poster']
@@ -196,3 +201,4 @@ class LiveStreaming(Displayable):
 
     def get_absolute_url(self):
         return reverse("organization-streaming-detail", kwargs={"slug": self.slug, "type" : self.type})
+
