@@ -51,6 +51,7 @@ from django.utils.functional import allow_lazy
 from django.utils import six
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext
+from django.shortcuts import resolve_url
 
 from django.apps import apps
 
@@ -614,3 +615,30 @@ def template_trans(text):
         return ugettext(text)
     except Exception as e:
         return text
+
+
+@register.simple_tag(name='oauth2_login')
+def oauth2_login():
+#    return False
+    return mark_safe(settings.OAUTH2_IRCAM)
+
+# @register.simple_tag(takes_context=True)
+# def login_url(context):
+#     """
+#     Returns the login_url with ?next parameter returning to the current URL
+#     """
+#     login_url_parts = list(urlparse(resolve_url(settings.LOGIN_URL)))
+#     querystring = QueryDict(login_url_parts[4], mutable=True)
+#     querystring['next'] = context.request.get_full_path()
+#     login_url_parts[4] = querystring.urlencode(safe='/')
+#     return urlunparse(login_url_parts)
+
+@register.simple_tag()
+def login_url():
+    """
+    Returns the login_url 
+    """
+    if settings.OAUTH2_IRCAM:
+        return  resolve_url('ircamauth_login')
+    else:
+        return resolve_url('login')

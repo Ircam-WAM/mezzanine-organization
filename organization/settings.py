@@ -153,8 +153,9 @@ USE_I18N = True
 USE_L10N = True
 
 AUTHENTICATION_BACKENDS = (
-    "organization.core.backend.OrganizationLDAPBackend",
+    # "organization.core.backend.OrganizationLDAPBackend",
     "mezzanine.core.auth_backends.MezzanineBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
     "guardian.backends.ObjectPermissionBackend",
 )
 
@@ -281,6 +282,10 @@ INSTALLED_APPS = [
     'extra_views',
     'rdf_io',
     'skosxl',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'organization.ircam_oauth2_provider',  # allauth Ircam custom provider
 ]
 
 CUSTOM_MODULES = False
@@ -729,3 +734,18 @@ OWNABLE_MODELS_ALL_EDITABLE = []
 ARTICLE_KEYWORDS = ['', ]
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
+
+# OAUTH2
+OAUTH2_IRCAM = True
+
+OAUTH_SERVER_BASEURL = 'https://auth.ircam.fr/'
+USER_SERVER_BASEURL = 'https://auth.ircam.fr/'
+#OAUTH_SERVER_BASEURL = 'http://my-oauth2-server.dev:8000'
+#USER_SERVER_BASEURL = 'http://localhost:8130'
+
+LOGOUT_URL = USER_SERVER_BASEURL + '/accounts/logout/'
+LOGIN_REDIRECT_URL = '/person/'
+#LOGIN_URL = 'ircamauth_login'
+# LOGOUT_REDIRECT_URL = '/'
+# Account creation URL
+OAUTH_SIGNUP_URL = '{}/accounts/signup'.format(USER_SERVER_BASEURL)
