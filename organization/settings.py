@@ -711,8 +711,10 @@ TIMESHEET_START = date(2015, 1, 1) # arbitrary timesheet start due to missing da
 IRCAM_EMPLOYER = 1
 if DEBUG:
     TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+    TIMESHEET_BCC_MAIL = "de@bug.com"
 else:
     TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+    TIMESHEET_BCC_MAIL = "de@bug.com"
 
 # HAL
 
@@ -743,8 +745,5 @@ USER_SERVER_BASEURL = 'https://auth.ircam.fr/'
 
 LOGOUT_URL = USER_SERVER_BASEURL + '/accounts/logout/'
 LOGIN_REDIRECT_URL = '/person/'
-#LOGIN_URL = 'ircamauth_login'
-# LOGOUT_REDIRECT_URL = '/'
 # Account creation URL
 OAUTH_SIGNUP_URL = '{}/accounts/signup'.format(USER_SERVER_BASEURL)
-

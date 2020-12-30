@@ -232,7 +232,7 @@ class Command(BaseCommand):
                           current_site.domain,
                           self.reminder
                     )
-            else :
+            else:
                 l_timesheet = log_timehseet(True)
 
             self.logger.info(l_head, l_reminder + l_timesheet + l_person)
@@ -290,7 +290,7 @@ def send_mail_to_user(first_name, last_name, email, date_from, date_to, domain, 
     }
 
     message = get_template('email/timesheet_user.html').render(ctx)
-    msg = EmailMessage(subject, message, to=to, from_email=from_email, bcc=('zawadzki@ircam.fr', ))
+    msg = EmailMessage(subject, message, to=to, from_email=from_email, bcc=(settings.TIMESHEET_BCC_MAIL, ))
     msg.content_subtype = 'html'
     msg.send()
 
@@ -298,7 +298,7 @@ def send_mail_to_user(first_name, last_name, email, date_from, date_to, domain, 
 
 def send_mail_to_master_list_user(date_from, date_to, log_file):
     subject = "[WWW] Listes utilisateurs pour la période du "+date_from.strftime('%d/%m/%Y')+" au "+date_to.strftime('%d/%m/%Y')
-    to = (settings.TIMESHEET_MASTER_MAIL, 'zawadzki@ircam.fr')
+    to = (settings.TIMESHEET_MASTER_MAIL,)
     from_email = settings.DEFAULT_FROM_EMAIL
 
     ctx = {
@@ -307,7 +307,7 @@ def send_mail_to_master_list_user(date_from, date_to, log_file):
     }
 
     message = get_template('email/timesheet_master_list_user.html').render(ctx)
-    msg = EmailMessage(subject, message, to=to, from_email=settings.TIMESHEET_MASTER_MAIL)
+    msg = EmailMessage(subject, message, to=to, from_email=settings.TIMESHEET_MASTER_MAIL, bcc=(settings.TIMESHEET_BCC_MAIL, ))
     msg.content_subtype = 'html'
     msg.attach_file(log_file)
     msg.send()

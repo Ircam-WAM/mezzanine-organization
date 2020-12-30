@@ -25,7 +25,6 @@ class IrcamAuthProvider(OAuth2Provider):
         return str(data['id'])
 
     def extract_common_fields(self, data):
-        from pprint import pprint
         return dict(username=data['username'],
                     email=data['email'],
                     first_name=data['first_name'],
@@ -38,10 +37,7 @@ class IrcamAuthProvider(OAuth2Provider):
         return scope
 
     def get_avatar_url(self):
-        print(self.account.extra_data.get('avatar'))
-        return ""
+        return self.account.extra_data.get('avatar')
 
         
-
-
 providers.registry.register(IrcamAuthProvider)
