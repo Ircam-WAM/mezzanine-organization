@@ -15,7 +15,6 @@ class IrcamAuthAccount(ProviderAccount):
     #     dflt = super(IrcamAuthAccount, self).to_str()
     #     return self.account.extra_data.get('username', dflt)
 
-
 class IrcamAuthProvider(OAuth2Provider):
     id = 'ircamauth'
     name = 'Ircam Auth'

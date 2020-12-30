@@ -158,6 +158,7 @@ AUTHENTICATION_BACKENDS = (
     "guardian.backends.ObjectPermissionBackend",
 )
 
+
 #########
 # PATHS #
 #########

@@ -65,7 +65,3 @@ if settings.OAUTH2_IRCAM:
     url(r'^accounts/', include('allauth.urls')),
     #url(r'^accounts/profile$', views.ProfileView),
     ]
-else:
-    urlpatterns += [
-        url(r'^accountsfake/', include('allauth.urls')),
-    ]
