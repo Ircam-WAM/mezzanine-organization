@@ -61,7 +61,7 @@ if settings.DEBUG :
 # # we prefer oauth2
 if settings.OAUTH2_IRCAM:
     urlpatterns += [
-    url(r'^accounts/signup/$', RedirectView.as_view(url=settings.OAUTH_SIGNUP_URL, permanent=True, query_string=True), name="account_signup"),
+    url(r'^accounts/signup/$', RedirectView.as_view(url=settings.OAUTH_SIGNUP_URL, permanent=False, query_string=True), name="account_signup"),
     url(r'^accounts/', include('allauth.urls')),
     #url(r'^accounts/profile$', views.ProfileView),
     ]

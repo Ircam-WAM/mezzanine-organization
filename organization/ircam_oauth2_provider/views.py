@@ -26,12 +26,12 @@ class IrcamAuthAdapter(OAuth2Adapter):
 
     def create_or_update_person(self,user):
         try :
-            person = Person.objects.get_or_create(user_id=user.id)            
+            person, created = Person.objects.get_or_create(user_id=user.id)            
             person.user = user
-            person.title=user.first_name+" "+user.last_name
-            person.first_name=user.first_name
-            person.last_name=user.last_name
-            person.email=user.email
+            person.title = user.first_name+" "+user.last_name
+            person.first_name = user.first_name
+            person.last_name = user.last_name
+            person.email = user.email
 
             person.save()
 
@@ -53,7 +53,6 @@ class IrcamAuthAdapter(OAuth2Adapter):
                 'is_superuser': False,
                 'is_staff': False,
                 'email': extra_data['email'],
-                'password': 'unique.password'
             }
         )
         user.save()
@@ -69,7 +68,6 @@ class IrcamAuthAdapter(OAuth2Adapter):
                                     extra_data={'id': user.id, 'username': user.username, 'email': user.email})
         social_account.save()
         self.logger.info('Social account created. User {0} '.format(user.username))
-
         return self.get_provider().sociallogin_from_response(request, extra_data)
 
     def update_localuser(self,social_user,extra_data):
@@ -92,7 +90,6 @@ class IrcamAuthAdapter(OAuth2Adapter):
             # Creating or updating Person
             self.create_or_update_person(user)
  
-
     def complete_login(self, request, app, token, **kwargs):
         headers = {'Authorization': 'Bearer {0}'.format(token.token)}
         resp = requests.get(self.profile_url, headers=headers)
@@ -109,8 +106,7 @@ class IrcamAuthAdapter(OAuth2Adapter):
         except:
             social_user = self.create_user_socialaccount(request,extra_data)
 
-        self.logger.info('User logged in: {0} '.format(social_user.user.username))
-        
+        self.logger.info('User logged in: {0} '.format(social_user.user.username))        
         return social_user
 
 
