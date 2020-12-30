@@ -153,7 +153,6 @@ USE_I18N = True
 USE_L10N = True
 
 AUTHENTICATION_BACKENDS = (
-    # "organization.core.backend.OrganizationLDAPBackend",
     "mezzanine.core.auth_backends.MezzanineBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
     "guardian.backends.ObjectPermissionBackend",
@@ -738,10 +737,8 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 # OAUTH2
 OAUTH2_IRCAM = True
 
-OAUTH_SERVER_BASEURL = 'https://auth.ircam.fr/'
-USER_SERVER_BASEURL = 'https://auth.ircam.fr/'
-#OAUTH_SERVER_BASEURL = 'http://my-oauth2-server.dev:8000'
-#USER_SERVER_BASEURL = 'http://localhost:8130'
+OAUTH_SERVER_BASEURL = os.getenv('OAUTH_SERVER_BASEURL')
+USER_SERVER_BASEURL = os.getenv('USER_SERVER_BASEURL')
 
 LOGOUT_URL = USER_SERVER_BASEURL + '/accounts/logout/'
 LOGIN_REDIRECT_URL = '/person/'
