@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 from organization.network.models import Person
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
 
 import logging
 
@@ -50,8 +53,6 @@ class IrcamAuthAdapter(OAuth2Adapter):
                 'first_name': extra_data['first_name'],
                 'last_name': extra_data['last_name'],
                 'is_active': True,
-                'is_superuser': False,
-                'is_staff': False,
                 'email': extra_data['email'],
             }
         )
@@ -73,7 +74,7 @@ class IrcamAuthAdapter(OAuth2Adapter):
     def update_localuser(self,social_user,extra_data):
         from django.contrib.auth.models import User
 
-        user = User.objects.filter( username__contains=extra_data['username'] )[0]
+        user = User.objects.filter( username=extra_data['username'] )[0]
         if (  
                 user.email != extra_data['email'] or 
                 user.first_name != extra_data['first_name'] or 
@@ -109,6 +110,12 @@ class IrcamAuthAdapter(OAuth2Adapter):
         self.logger.info('User logged in: {0} '.format(social_user.user.username))        
         return social_user
 
+def serverLogout(request):
+    if not request.user.is_authenticated:
+        pass
+    else :
+        logout(request)
+    return redirect("/")
 
 oauth2_login = OAuth2LoginView.adapter_view(IrcamAuthAdapter)
 oauth2_callback = OAuth2CallbackView.adapter_view(IrcamAuthAdapter)

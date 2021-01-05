@@ -5,15 +5,6 @@ from allauth.socialaccount.providers.oauth2.provider import OAuth2Provider
 
 class IrcamAuthAccount(ProviderAccount):
     pass
-    # def get_profile_url(self):
-    #     return self.account.extra_data.get('profileUrl')
-
-    # def get_avatar_url(self):
-    #     return self.account.extra_data.get('avatar')
-
-    # def to_str(self):
-    #     dflt = super(IrcamAuthAccount, self).to_str()
-    #     return self.account.extra_data.get('username', dflt)
 
 class IrcamAuthProvider(OAuth2Provider):
     id = 'ircamauth'

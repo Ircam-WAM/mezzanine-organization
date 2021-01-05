@@ -737,11 +737,13 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
 # OAUTH2
 OAUTH2_IRCAM = True
-
+if OAUTH2_IRCAM is not True:
+    LOGIN_URL = '/accounts/login'
 OAUTH_SERVER_BASEURL = os.getenv('OAUTH_SERVER_BASEURL')
 USER_SERVER_BASEURL = os.getenv('USER_SERVER_BASEURL')
 
-LOGOUT_URL = USER_SERVER_BASEURL + '/accounts/logout/'
+LOGOUT_URL = '/accounts/logout/'
 LOGIN_REDIRECT_URL = '/person/'
+#LOGIN_REDIRECT_URL = '/dashboard/'
 # Account creation URL
 OAUTH_SIGNUP_URL = '{}/accounts/signup'.format(USER_SERVER_BASEURL)
