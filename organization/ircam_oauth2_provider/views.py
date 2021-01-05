@@ -96,8 +96,7 @@ class IrcamAuthAdapter(OAuth2Adapter):
         resp = requests.get(self.profile_url, headers=headers)
         extra_data = resp.json()
 
-        self.logger.debug("EXTRA_DATA:")
-        self.logger.debug(str(extra_data))
+        self.logger.debug("EXTRA_DATA:"+str(extra_data))
         try:
             social_user = self.get_provider().sociallogin_from_response(request, extra_data)
             saccount = SocialAccount.objects.get(
