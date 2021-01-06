@@ -20,7 +20,7 @@ class IrcamAuthAdapter(OAuth2Adapter):
     
     logger = logging.getLogger('ircamauth')
     logger.addHandler(logging.StreamHandler())
-    logger.setLevel(logging.DEBUG) if settings.DEBUG else logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG) if settings.DEBUG else logger.setLevel(logging.WARNING)
    
     provider_id = IrcamAuthProvider.id
     access_token_url = '{}/o/token/'.format(settings.OAUTH_SERVER_BASEURL)  # Called programmatically, must be reachable from container
