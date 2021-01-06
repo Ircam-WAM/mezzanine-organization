@@ -739,6 +739,8 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 OAUTH2_IRCAM = True
 if OAUTH2_IRCAM is not True:
     LOGIN_URL = '/accounts/login'
+else:
+   LOGIN_URL = '/accounts/ircamauth/login/'
 OAUTH_SERVER_BASEURL = os.getenv('OAUTH_SERVER_BASEURL')
 USER_SERVER_BASEURL = os.getenv('USER_SERVER_BASEURL')
 
