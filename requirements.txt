@@ -1,4 +1,4 @@
-Django==1.10.8
+Django==1.11.*
 pyquery
 humanize
 django-modeltranslation==0.12.2
@@ -14,7 +14,7 @@ xlrd==1.0.0
 ipython
 gitpython
 pygraphviz
-pandas==0.19.2
+pandas==1.1.5
 xlwt==1.2.0
 DateTimeRange==0.2.8
 workalendar==1.0.0
