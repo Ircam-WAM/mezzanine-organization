@@ -25,9 +25,8 @@ from __future__ import absolute_import, unicode_literals
 import os
 from datetime import date
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 import ldap, logging
-from django.core.urlresolvers import reverse_lazy
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 DEBUG = True if os.environ.get('DEBUG') == 'True' else False
