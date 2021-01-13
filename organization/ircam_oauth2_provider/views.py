@@ -9,17 +9,20 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.contrib.auth import logout
 from django.shortcuts import redirect
-
+from .utils import createOrUpdateLocalEntities
+from rest_framework.response import Response
 
 import logging
 
+logger = logging.getLogger('ircamauth')
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.DEBUG) if settings.DEBUG else logger.setLevel(logging.WARNING)
+ 
 class IrcamAuthAdapter(OAuth2Adapter):
 
     if not hasattr(settings, 'OAUTH_SERVER_BASEURL'):
         raise Exception("Couldn't find OAUTH_SERVER_BASEURL in the settings")
     
-    logger = logging.getLogger('ircamauth')
-    logger.addHandler(logging.StreamHandler())
     logger.setLevel(logging.DEBUG) if settings.DEBUG else logger.setLevel(logging.WARNING)
    
     provider_id = IrcamAuthProvider.id
@@ -27,87 +30,19 @@ class IrcamAuthAdapter(OAuth2Adapter):
     authorize_url = '{}/o/authorize/'.format(settings.USER_SERVER_BASEURL)  # Accessed by the client so must be host-reachable
     profile_url = '{}/profile/'.format(settings.OAUTH_SERVER_BASEURL)
 
-    def create_or_update_person(self,user):
-        try :
-            person, created = Person.objects.get_or_create(user_id=user.id)            
-            person.user = user
-            person.title = user.first_name+" "+user.last_name
-            person.first_name = user.first_name
-            person.last_name = user.last_name
-            person.email = user.email
-
-            person.save()
-
-        except ObjectDoesNotExist:
-            person = Person.objects.get(
-                user_id=user.id
-            )
-        except IntegrityError:
-            pass
-
-    def create_user_socialaccount(self,request,extra_data):
-
-        user, created = User.objects.update_or_create(
-            username = extra_data['username'],
-            defaults={
-                'first_name': extra_data['first_name'],
-                'last_name': extra_data['last_name'],
-                'is_active': True,
-                'email': extra_data['email'],
-            }
-        )
-        user.save()
-        self.logger.info('Local user {0} id:{1} username:{2} email:{3}'.format('created: ' if created else 'updated: ',user.id,user.username,user.email))
-        
-        # Creating or updating Person
-        self.create_or_update_person(user)
-       
-        # Creating the allauth social account so the user can log in through Ircam Auth
-        social_account = SocialAccount(user=user,
-                                    provider='ircamauth',
-                                    uid=extra_data['id'],
-                                    extra_data={'id': user.id, 'username': user.username, 'email': user.email})
-        social_account.save()
-        self.logger.info('Social account created. User {0} '.format(user.username))
-        return self.get_provider().sociallogin_from_response(request, extra_data)
-
-    def update_localuser(self,social_user,extra_data):
-        from django.contrib.auth.models import User
-
-        user = User.objects.filter( username=extra_data['username'] )[0]
-        if (  
-                user.email != extra_data['email'] or 
-                user.first_name != extra_data['first_name'] or 
-                user.last_name != extra_data['last_name'] 
-            ) :
-            user.username = extra_data['username']
-            user.email = extra_data['email']
-            user.first_name = extra_data['first_name']
-            user.last_name = extra_data['last_name']
-            user.is_active = True
-            user.save()
-            self.logger.info('User {0} updated, email:{1}, firstN:{2}, LastN:{3}'
-                .format(user.username,user.email,user.first_name,user.last_name))
-            # Creating or updating Person
-            self.create_or_update_person(user)
- 
     def complete_login(self, request, app, token, **kwargs):
         headers = {'Authorization': 'Bearer {0}'.format(token.token)}
         resp = requests.get(self.profile_url, headers=headers)
         extra_data = resp.json()
+        logger.info("complete_login. extra_data:{0}".format(extra_data))
+        if createOrUpdateLocalEntities(extra_data):
+            social_login = self.get_provider().sociallogin_from_response(request, extra_data)
+        else :
+            logger.error("Failed to create user and socialAccount with extra_data: {0}".format(extra_data))
+            return None
 
-        self.logger.debug("EXTRA_DATA:"+str(extra_data))
-        try:
-            social_user = self.get_provider().sociallogin_from_response(request, extra_data)
-            saccount = SocialAccount.objects.get(
-                provider=social_user.account.provider, uid=social_user.account.uid
-            )
-            self.update_localuser(social_user,extra_data)
-        except:
-            social_user = self.create_user_socialaccount(request,extra_data)
+        return social_login
 
-        self.logger.info('User logged in: {0} '.format(social_user.user.username))        
-        return social_user
 
 def serverLogout(request):
     if not request.user.is_authenticated:
