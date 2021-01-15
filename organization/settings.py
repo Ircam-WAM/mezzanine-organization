@@ -285,7 +285,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'organization.ircam_oauth2_provider',  # allauth Ircam custom provider
+    'allauth_ircam',  # allauth Ircam custom provider
 ]
 
 CUSTOM_MODULES = False

@@ -33,7 +33,7 @@ from mezzanine.conf import settings
 
 from django.views.generic.base import RedirectView
 
-from .ircam_oauth2_provider.views import serverLogout
+from allauth_ircam.views import serverLogout
 urlpatterns = []
 
 if "drum.links" in settings.INSTALLED_APPS:
