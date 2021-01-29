@@ -344,12 +344,35 @@ class ProjectCallListView(ListView):
 
     model = ProjectCall
     template_name='projects/project_call_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return ProjectCall.objects.filter(date_to__gte=datetime.now()).order_by("-date_to")
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProjectCallListView, self).get_context_data(*args, **kwargs)
-        context["open_calls"] = ProjectCall.objects.filter(date_to__gte=datetime.now()).order_by("-date_to")
-        context["closed_calls"] = ProjectCall.objects.filter(date_to__lt=datetime.now()).order_by("date_to")
+        context["title"] = _("Open Calls")
+        context['objects'] = paginate(self.get_queryset(), self.request.GET.get("page", 1),
+                              settings.MEDIA_PER_PAGE,
+                              settings.MAX_PAGING_LINKS)
+        context['closed'] = False
         return context
+
+
+
+class ProjectCallClosedListView(ProjectCallListView):
+
+    def get_queryset(self):
+        return ProjectCall.objects.filter(date_to__lt=datetime.now()).order_by("-date_to")
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProjectCallClosedListView, self).get_context_data(*args, **kwargs)
+        context["title"] = _("Closed Calls")
+        context['closed'] = True
+        return context
+
+
+
 
 
 class ProjectCallListAsEventsView(ProjectCallListView):

@@ -45,7 +45,7 @@ from organization.projects.views import (
         ProjectResidencyListView, ProjectResidencyCreateView,
         ProjectResidencyDetailView,
         # Calls
-        ProjectCallListView, ProjectCallListAsEventsView,
+        ProjectCallListView, ProjectCallClosedListView, ProjectCallListAsEventsView,
         ProjectCallDetailView
 )
 
@@ -100,6 +100,7 @@ urlpatterns = [
 
     # Calls
     url("^calls/$", ProjectCallListView.as_view(), name='organization-call-list'),
+    url("^calls/closed/$", ProjectCallClosedListView.as_view(), name='organization-call-closed-list'),
     url("^calls/as_events/$", ProjectCallListAsEventsView.as_view(), name='organization-call-list-as-events'),
     url("^calls/(?P<slug>.*)/detail/$", ProjectCallDetailView.as_view(), name='organization-project-call-detail'),
 
