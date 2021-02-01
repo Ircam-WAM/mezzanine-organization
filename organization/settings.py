@@ -539,7 +539,8 @@ SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'mezzanine_agenda.Event',
                         'organization-projects.ProjectPage',
                         'shop.Product',
-                        'organization-magazine.Article')
+                        'organization-magazine.Article',
+                        'organization-projects.ProjectCall')
 
 # authorize models which does not heritate from Displayable
 SEARCH_MODEL_NO_DISPLAYABLE = ('organization-network.Person',)
