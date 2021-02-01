@@ -749,3 +749,5 @@ LOGIN_REDIRECT_URL = '/person/'
 #LOGIN_REDIRECT_URL = '/dashboard/'
 # Account creation URL
 OAUTH_SIGNUP_URL = '{}/accounts/signup'.format(USER_SERVER_BASEURL)
+# Creation of an internal user's group for OAUTH2/LDAP and Dashboard presentation (internal/external user) 
+ORGANIZATION_INTERN_USERS_GROUP = 'Ircam - Intern'
