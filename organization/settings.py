@@ -746,3 +746,12 @@ CAPTCHA_LENGTH = 6
 # FORMS
 
 FORMS_UPLOAD_ROOT = MEDIA_ROOT
+
+# CACHES
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'memcached:11211',
+    }
+}
