@@ -79,7 +79,7 @@ router.register(
     base_name="person"
 )
 
-timeout = 60*60*48
+timeout = 60*60*24
 
 urlpatterns = [
     url('^directory(?:/(?P<letter>.*))?/$', PersonDirectoryView.as_view(letter="a"), name='person-directory'),
@@ -128,7 +128,7 @@ urlpatterns = [
 
     # Map
     url('^public-network-data/$', cache_page(timeout)(PublicNetworkData.as_view()), name='organization-public-network-data'),
-    url('^public-network-data-new/$', PublicNetworkDataNew.as_view(), name='organization-public-network-data'),
+    url('^public-network-data-new/$', cache_page(timeout)(PublicNetworkDataNew.as_view()), name='organization-public-network-data'),
     url('^public-network-stats/$', cache_page(timeout)(PublicNetworkStats.as_view()), name='organization-public-network-stats'),
 
     url('^team/(?P<slug>.*)/members/$', TeamMembersView.as_view(), name='team-members'),
