@@ -751,7 +751,7 @@ FORMS_UPLOAD_ROOT = MEDIA_ROOT
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'BACKEND': 'organization.cache.LargeMemcachedCache',
         'LOCATION': 'memcached:11211',
     }
 }

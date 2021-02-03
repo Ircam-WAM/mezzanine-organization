@@ -26,9 +26,10 @@ from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse_lazy
+from django.views.decorators.cache import cache_page
+
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
-
 from rest_framework.routers import DefaultRouter
 
 from organization.network.views import (
@@ -78,6 +79,8 @@ router.register(
     base_name="person"
 )
 
+timeout = 60*60*48
+
 urlpatterns = [
     url('^directory(?:/(?P<letter>.*))?/$', PersonDirectoryView.as_view(letter="a"), name='person-directory'),
     url('^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
@@ -124,9 +127,9 @@ urlpatterns = [
     url('^jurys/$', JuryListView.as_view(), name='organization-jury-list'),
 
     # Map
-    url('^public-network-data/$', PublicNetworkData.as_view(), name='organization-public-network-data'),
+    url('^public-network-data/$', cache_page(timeout)(PublicNetworkData.as_view()), name='organization-public-network-data'),
     url('^public-network-data-new/$', PublicNetworkDataNew.as_view(), name='organization-public-network-data'),
-    url('^public-network-stats/$', PublicNetworkStats.as_view(), name='organization-public-network-stats'),
+    url('^public-network-stats/$', cache_page(timeout)(PublicNetworkStats.as_view()), name='organization-public-network-stats'),
 
     url('^team/(?P<slug>.*)/members/$', TeamMembersView.as_view(), name='team-members'),
     url('^team/(?P<slug>.*)/publications/$', TeamPublicationsView.as_view(), name='team-publications'),
