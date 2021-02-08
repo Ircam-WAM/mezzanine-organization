@@ -77,8 +77,8 @@ SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 # that doesn't appear in this setting, all pages will appear in it.
 
 PAGE_MENU_TEMPLATES = (
-    (1, _("Action"), "pages/menus/action.html"),
-    (2, _("Departement"), "pages/menus/header.html"),
+    (1, _("Header"), "pages/menus/action.html"),
+    (2, _("Menu"), "pages/menus/header.html"),
     (3, _("Footer vertical"), "pages/menus/footer_vertical.html"),
     (4, _("Footer horizontal"), "pages/menus/footer_horizontal.html"),
     (5, _("Magazine"), "pages/menus/magazine.html"),
