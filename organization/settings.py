@@ -233,12 +233,13 @@ DATABASES = {
 ################
 
 INSTALLED_APPS = [
-    'ircam_www_theme',
     # the current theme has to be defined in main local_settings as HOST_THEMES
+    'ircam_www_theme',
     "modeltranslation",
+    "dal_legacy_static",
     "dal",
-    "dal_select2",
     "dal_queryset_sequence",
+    "dal_select2",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -365,7 +366,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-    'djangobower.finders.BowerFinder',
+    # 'djangobower.finders.BowerFinder',
 )
 
 GRAPH_MODELS = {
