@@ -49,8 +49,10 @@ setup(name='mezzanine-organization',
         "django-debug-toolbar==1.9.1",
         "django-extensions==1.7.4",
         "django-countries==5.3",
-        "django-querysetsequence==0.6.1",
-        "django-autocomplete-light==3.2.1",
+        # v0.13 is not compatible with django 1.11
+        "django-querysetsequence <= 0.12",
+        # v3.5.0 has breaking change
+        "django-autocomplete-light==3.4.1",
         "mezzanine",
         "xlrd==1.0.0",
         "ipython",
