@@ -347,7 +347,7 @@ class ProjectCallListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return ProjectCall.objects.published().filter(date_to__gte=datetime.now()).order_by("-date_to")
+        return ProjectCall.objects.published().filter(date_to__gte=datetime.now()).order_by("date_to")
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProjectCallListView, self).get_context_data(*args, **kwargs)
@@ -363,7 +363,7 @@ class ProjectCallListView(ListView):
 class ProjectCallClosedListView(ProjectCallListView):
 
     def get_queryset(self):
-        return ProjectCall.objects.published().filter(date_to__lt=datetime.now()).order_by("-date_to")
+        return ProjectCall.objects.published().filter(date_to__lt=datetime.now()).order_by("date_to")
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProjectCallClosedListView, self).get_context_data(*args, **kwargs)
