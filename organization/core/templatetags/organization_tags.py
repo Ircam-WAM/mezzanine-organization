@@ -51,6 +51,7 @@ from django.utils.functional import allow_lazy
 from django.utils import six
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext
+from django.shortcuts import resolve_url
 
 from django.apps import apps
 
@@ -614,3 +615,15 @@ def template_trans(text):
         return ugettext(text)
     except Exception as e:
         return text
+
+
+@register.simple_tag()
+def login_url():
+    """
+    Returns the login_url. Depending off the login method, Oauth2 or mezzanine.backends,
+    the url would be /accounts/ircamauth/login or accounts/login
+    """
+    if settings.OAUTH2_IRCAM:
+        return resolve_url('ircamauth_login')
+    else:
+        return resolve_url('login')

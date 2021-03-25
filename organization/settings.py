@@ -152,10 +152,11 @@ USE_I18N = True
 USE_L10N = True
 
 AUTHENTICATION_BACKENDS = (
-    "organization.core.backend.OrganizationLDAPBackend",
     "mezzanine.core.auth_backends.MezzanineBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
     "guardian.backends.ObjectPermissionBackend",
 )
+
 
 #########
 # PATHS #
@@ -281,6 +282,10 @@ INSTALLED_APPS = [
     'extra_views',
     'rdf_io',
     'skosxl',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth_ircam',  # allauth Ircam custom provider
 ]
 
 CUSTOM_MODULES = False
@@ -729,3 +734,20 @@ OWNABLE_MODELS_ALL_EDITABLE = []
 ARTICLE_KEYWORDS = ['', ]
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
+
+# OAUTH2
+OAUTH2_IRCAM = True
+if OAUTH2_IRCAM is not True:
+    LOGIN_URL = '/accounts/login'
+else:
+   LOGIN_URL = '/accounts/ircamauth/login/'
+OAUTH_SERVER_BASEURL = os.getenv('OAUTH_SERVER_BASEURL')
+USER_SERVER_BASEURL = os.getenv('USER_SERVER_BASEURL')
+
+LOGOUT_URL = '/accounts/logout/'
+LOGIN_REDIRECT_URL = '/person/'
+#LOGIN_REDIRECT_URL = '/dashboard/'
+# Account creation URL
+OAUTH_SIGNUP_URL = '{}/accounts/signup'.format(USER_SERVER_BASEURL)
+# Creation of an internal user's group for OAUTH2/LDAP and Dashboard presentation (internal/external user) 
+ORGANIZATION_INTERN_USERS_GROUP = 'Ircam - Intern'
