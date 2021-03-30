@@ -216,6 +216,7 @@ class ProjectAdminDisplayable(DisplayableAdmin):
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
 
     model = ProjectTopic
+    search_fields = ['name']
 
 
 class ProjectProgramAdmin(BaseTranslationModelAdmin):
