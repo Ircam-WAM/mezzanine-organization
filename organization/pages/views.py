@@ -32,7 +32,7 @@ from mezzanine.conf import settings
 from organization.pages.models import CustomPage, ExtendedCustomPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting
 from organization.magazine.models import Article, Topic, Brief
-from organization.pages.models import Home
+from organization.pages.models import Home, DashboardService
 from organization.pages.forms import YearForm
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
@@ -41,6 +41,7 @@ from organization.projects.models import Project, ProjectPage
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 
+from mezzanine.utils.views import paginate
 
 class HomeView(SlugMixin, DetailView):
 
@@ -254,3 +255,23 @@ class DynamicContentPageView(Select2QuerySetSequenceView):
     def get_results(self, context):
         results = autocomplete_result_formatting(self, context)
         return results
+
+class DashboardServiceListView(ListView):
+
+    model = DashboardService
+    template_name='pages/dashboardservice_list.html'
+    context_object_name = 'dashboardservice'
+    keywords = None
+
+    def get_queryset(self):
+        if self.request.user.groups.filter(name = settings.ORGANIZATION_INTERN_USERS_GROUP).exists():
+            services = DashboardService.objects.all()
+        else :
+            services = DashboardService.objects.filter(internal=False)
+        self.qs = autocomplete.QuerySetSequence(services,)
+        return self.qs
+
+    def get_context_data(self, **kwargs):
+        context = super(DashboardServiceListView, self).get_context_data(**kwargs)
+        context['objects'] = self.qs
+        return context

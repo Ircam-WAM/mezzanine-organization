@@ -455,8 +455,11 @@ JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'
 TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 
 ADMIN_MENU_ORDER = (
-    (_('Pages'), ('pages.Page', 'organization-pages.Home',
-                 'organization-core.LinkType',),),
+    (_('Pages'), ('pages.Page', 
+                'organization-pages.Home',
+                 'organization-core.LinkType',
+                 'organization-pages.Dashboard'
+                 ),),
     (_('Media'), ('organization-media.Media',
                   'organization-media.Playlist',
                   'organization-media.LiveStreaming',

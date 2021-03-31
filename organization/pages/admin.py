@@ -176,9 +176,18 @@ class HomeAdminDisplayable(BaseTranslationModelAdmin):
                 DynamicContentHomeBodyInline,
                 ]
 
+class DashboardServiceInline(TabularDynamicInlineAdmin):
+
+    model = DashboardService
+
+class DashboardAdminDisplayable(BaseTranslationModelAdmin):
+
+    inlines = [ DashboardServiceInline ]
 
 admin.site.register(CustomPage, CustomPageAdmin)
 admin.site.register(ExtendedCustomPage, ExtendedCustomPageAdmin)
 admin.site.register(Home, HomeAdminDisplayable)
 admin.site.unregister(MezzanineLink)
 admin.site.register(MezzanineLink, LinkImageAdmin)
+admin.site.register(Dashboard, DashboardAdminDisplayable)
+#admin.site.register(DashboardService)
