@@ -32,7 +32,7 @@ from mezzanine.conf import settings
 from organization.pages.models import CustomPage, ExtendedCustomPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting
 from organization.magazine.models import Article, Topic, Brief
-from organization.pages.models import Home, DashboardService
+from organization.pages.models import Home, DashboardService, Dashboard
 from organization.pages.forms import YearForm
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
@@ -263,11 +263,18 @@ class DashboardServiceListView(ListView):
     context_object_name = 'dashboardservice'
     keywords = None
 
+    def get_last_dashboard_published(self):
+        dashboards = Dashboard.objects.published()
+        if dashboards:
+            return dashboards.latest("publish_date")
+        return None
+
     def get_queryset(self):
-        if self.request.user.groups.filter(name = settings.ORGANIZATION_INTERN_USERS_GROUP).exists():
-            services = DashboardService.objects.all()
+        dashboard = self.get_last_dashboard_published()
+        if self.request.user.groups.filter( name=settings.ORGANIZATION_INTERN_USERS_GROUP ).exists():
+            services = DashboardService.objects.filter( dashboard=dashboard.id )
         else :
-            services = DashboardService.objects.filter(internal=False)
+            services = DashboardService.objects.filter( dashboard=dashboard.id, internal=False )
         self.qs = autocomplete.QuerySetSequence(services,)
         return self.qs
 
