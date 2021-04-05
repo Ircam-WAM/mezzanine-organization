@@ -271,6 +271,10 @@ class DashboardServiceListView(ListView):
 
     def get_queryset(self):
         dashboard = self.get_last_dashboard_published()
+        if dashboard is None:
+            self.qs = None
+            return self.qs
+
         if self.request.user.groups.filter( name=settings.ORGANIZATION_INTERN_USERS_GROUP ).exists():
             services = DashboardService.objects.filter( dashboard=dashboard.id )
         else :
