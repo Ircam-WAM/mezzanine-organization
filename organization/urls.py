@@ -31,6 +31,9 @@ admin.autodiscover()
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
+from django.views.generic.base import RedirectView
+
+from allauth_ircam.views import serverLogout
 urlpatterns = []
 
 if "drum.links" in settings.INSTALLED_APPS:
@@ -53,4 +56,18 @@ urlpatterns += [
 if settings.DEBUG :
     urlpatterns += [
         url(r'^hijack/', include('hijack.urls')),
+    ]
+
+# Mezzanine's Accounts app
+# # we prefer oauth2
+if settings.OAUTH2_IRCAM:
+    urlpatterns += [
+    url(r'^accounts/signup/$', RedirectView.as_view(url=settings.OAUTH_SIGNUP_URL, permanent=False, query_string=True), name="account_signup"),
+    url(r'^accounts/', include('allauth.urls')),
+    url(r'^serverlogout/',serverLogout)
+    #url(r'^accounts/profile$', views.ProfileView),
+    ]
+else:
+    urlpatterns += [
+    url(r'^serverlogout/',RedirectView.as_view(url=settings.LOGOUT_URL, permanent=False, query_string=True), name="account_logout"),
     ]

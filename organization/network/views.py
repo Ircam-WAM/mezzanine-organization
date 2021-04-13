@@ -71,12 +71,19 @@ class PersonMixin(SingleObjectMixin):
         person = None
         user = self.request.user
         if user.is_authenticated():
-            if not Person.objects.filter(user=user):
+            persons = Person.objects.filter(user=user)
+            if not persons:
                 person = Person(first_name=user.first_name, last_name=user.last_name, user=user,
                                 email=user.email, title=' '.join([user.first_name, user.last_name]))
                 person.save()
-            person = user.person
-
+            else:
+                person = persons[0]
+                person.title = user.first_name+" "+user.last_name
+                person.first_name = user.first_name
+                person.last_name = user.last_name
+                person.email = user.email
+                person.save()
+            
         if 'username' in self.kwargs:
             users = User.objects.filter(username=self.kwargs['username'])
             if users:
@@ -687,3 +694,43 @@ class DynamicContentPersonView(Select2QuerySetSequenceView):
     def get_results(self, context):
         results = autocomplete_result_formatting(self, context)
         return results
+
+class PersonDashboardView(PersonMixin, SlugMixin, DynamicContentMixin, DetailView, DynamicReverseMixin):
+
+    model = Person
+    template_name='network/person_dashboard.html'
+    context_object_name = 'person'
+
+    def get_context_data(self, **kwargs):
+        context = super(PersonDashboardView, self).get_context_data(**kwargs)
+        reverse_related = []
+        # Related Events when you add PersonList in Events
+        if hasattr(self.object, "person_list_block_inlines"):
+            # Get all PersonListBlockInline where the Person is referenced to
+            person_list_block_inlines = self.object.person_list_block_inlines.all()
+            for person_list_block_inline in person_list_block_inlines:
+                # PersonListBlock has ForeignKey with Aritcle, Event, Page...
+                if hasattr(person_list_block_inline, 'person_list_block') and person_list_block_inline.person_list_block != None :
+                    # get field name of Article, Event, Page...
+                    related_fields = person_list_block_inline.person_list_block._meta.get_fields()
+                    for related_field in related_fields:
+                        attr = getattr(person_list_block_inline.person_list_block, related_field.name)
+                        if attr and attr.__class__.__name__ == "RelatedManager":
+                            related_inlines = attr.all()
+                            for related_inline in related_inlines:
+                                if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                    fields = related_inline._meta.get_fields()
+                                    for field in fields:
+                                        # check if it is a ForeignKey
+                                        if isinstance(field, ForeignKey) :
+                                            instance = getattr(related_inline, field.name)
+                                            # get only article, custom page etc...
+                                            if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                                reverse_related.append(instance)
+
+            reverse_related.sort(key=lambda x: x.created if hasattr(x, 'created') else now(), reverse=True)
+            context["concrete_objects"] += reverse_related
+            # concat list as a set to get list of unique objects
+            context["concrete_objects"] = set(context["concrete_objects"])
+        context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
+        return context

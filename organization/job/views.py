@@ -99,7 +99,7 @@ class JobOfferListView(ListView):
 
     def get_queryset(self, **kwargs):
         return self.model.objects.published()
-        
+
 
 def email_application_notification(request, job_offer, data):
     subject = "Candidature > " + job_offer.title
@@ -113,7 +113,7 @@ def email_application_notification(request, job_offer, data):
         'message': data['message']
     }
 
-    message = get_template('email/application_notification.html').render(Context(ctx))
+    message = get_template('email/application_notification.html').render(ctx)
     msg = EmailMessage(subject, message, to=to, from_email=from_email)
     msg.attach(data['curriculum_vitae'].name, data['curriculum_vitae'].read(), data['curriculum_vitae'].content_type)
     msg.attach(data['cover_letter'].name, data['cover_letter'].read(), data['cover_letter'].content_type)
@@ -124,7 +124,7 @@ def email_application_notification(request, job_offer, data):
 
 
 class CandidacyDetailView(DetailView):
-        
+
     model = Candidacy
     template_name='job/candidacy/candidacy_detail.html'
 
@@ -149,9 +149,9 @@ class CandidacyListView(ListView):
 
 
 class CandidacyAutocomplete(Select2QuerySetSequenceView):
-    
+
     paginate_by = settings.DAL_MAX_RESULTS
-    
+
     def get_queryset(self):
 
         articles = Article.objects.all()
