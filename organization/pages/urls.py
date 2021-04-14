@@ -41,5 +41,6 @@ urlpatterns = [
     url("^newsletter/$", NewsletterView.as_view(), name='organization-newsletter'),
     url("^information/$", InformationView.as_view(), name='organization-information'),
     url("^publications/$", PublicationsView.as_view(), name='publications'),
+    url("^dashboard/$", DashboardServiceListView.as_view(), name="dashboard-service-list"),
 
 ]

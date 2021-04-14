@@ -217,3 +217,36 @@ class Home(Displayable):
 
     def get_absolute_url(self):
         return reverse("organization-home")
+
+class Dashboard(Displayable):
+
+    class Meta:
+        verbose_name = 'Dashboard'
+
+
+class DashboardService(Named, URL, Orderable):
+
+    CSS_COLOR_CHOICES = [
+        ('orange', _('orange')),
+        ('blue', _('blue')),
+        ('green', _('green')),
+    ]
+
+    CSS_BANNER_CHOICES = [
+        ('fsxxl', 'fsxxl'),
+        ('fsxxxl', 'fsxxxl'),
+    ]
+
+    BOX_SIZE_CHOICES = [
+        (3, 3),
+        (6, 6),
+    ]
+
+    dashboard = models.ForeignKey(Dashboard, verbose_name=_('dashboard'), related_name='services', blank=True,
+                                     null=True, on_delete=models.SET_NULL)
+    image = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
+    css_color = models.CharField(_('css color'), max_length=64, blank=True, null=True, choices=CSS_COLOR_CHOICES)
+    css_banner_type = models.CharField(_('css banner type'), max_length=64, blank=True, null=True,
+                                       choices=CSS_BANNER_CHOICES)
+    box_size = models.IntegerField(_('box size'), default=3, choices=BOX_SIZE_CHOICES)
+    internal = models.BooleanField(_('internal'), default=False)

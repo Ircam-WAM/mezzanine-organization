@@ -125,3 +125,14 @@ class HomeImageTranslationOptions(TranslationOptions):
 class DynamicMultimediaPageTranslationOptions(TranslationOptions):
 
     fields = ()
+
+
+@register(Dashboard)
+class DashboardTranslationOptions(TranslationOptions):
+    
+    pass
+
+@register(DashboardService)
+class DashboardServiceTranslationOptions(TranslationOptions):
+
+    fields = ()
