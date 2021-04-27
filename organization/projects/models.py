@@ -464,7 +464,11 @@ class ProjectResidency(Displayable, Period, Address, RichText):
         verbose_name_plural = 'Project residencies'
 
     def get_absolute_url(self):
-        return reverse("organization-residency-detail", kwargs={"call_slug": self.project.call.slug, "slug": self.slug})
+        call_slug = ''
+        if self.project:
+            if self.project.call:
+                call_slug = self.project.call.slug
+        return reverse("organization-residency-detail", kwargs={"call_slug": call_slug, "slug": self.slug})
 
 
 class ProjectResidencyProducer(models.Model):
@@ -503,7 +507,7 @@ class ProjectResidencyEvent(models.Model):
 class ProjectPage(Displayable, RichText, TeamOwnable):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='pages')
-    
+
     @property
     def is_archive(self):
         if self.project:
@@ -511,7 +515,7 @@ class ProjectPage(Displayable, RichText, TeamOwnable):
 
     def get_absolute_url(self):
         return reverse("organization-project-projectpage-detail", kwargs={'slug': self.slug})
-    
+
     class Meta:
         permissions = TeamOwnable.Meta.permissions
 
