@@ -36,7 +36,7 @@ urlpatterns = [
     url('^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
     url('^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name='organization-network-timesheet-create-view'),
     url('^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name='organization-network-timesheet-list-view' ),
-    url('^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name='organization-network-person-detail'),    
+    url('^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name='organization-network-person-detail'),
     url('^profile/(?P<username>.*)/$', PersonDetailView.as_view(), name='profile'),
     url('^persons/$', PersonListView.as_view(), name='organization-network-person-list'),
     url('^person-list-block-autocomplete/$', permission_required('organization-network.change_person')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
@@ -61,5 +61,5 @@ urlpatterns = [
     url('^team/(?P<slug>.*)/publications/$', TeamPublicationsView.as_view(), name='team-publications'),
 
     url("^dynamic-content-person/$",  DynamicContentPersonView.as_view(), name='dynamic-content-person'),
-    url('^dashboard(?:/(?P<slug>.*))?/$', PersonDashboardView.as_view(), name='organization-network-person-detail'),    
+    url('^dashboard(?:/(?P<slug>.*))?/$', PersonDashboardView.as_view(), name='organization-network-dashboard-person-detail'),
     ]
