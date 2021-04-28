@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-19 16:09+0000\n"
+"POT-Creation-Date: 2021-04-28 16:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -541,13 +541,33 @@ msgstr "Magazine"
 msgid "magazines"
 msgstr "Magazine"
 
-#: magazine/views.py:332
+#: magazine/views.py:331
 msgid "Laboratory News"
 msgstr "Actualités du Labo"
 
-#: magazine/views.py:353
+#: magazine/views.py:352
 msgid "Team News"
 msgstr "Actualités de l'équipe"
+
+#: magazine/views.py:382
+#, fuzzy
+#| msgid "Article"
+msgid "Articles"
+msgstr "Article"
+
+#: magazine/views.py:383
+msgid "Videos"
+msgstr "Vidéos"
+
+#: magazine/views.py:384
+msgid "Audio"
+msgstr ""
+
+#: magazine/views.py:385
+#, fuzzy
+#| msgid "playlists"
+msgid "Playlists"
+msgstr "playlists"
 
 #: media/models.py:42
 msgid "audio"
@@ -2698,9 +2718,6 @@ msgstr ""
 
 #~ msgid "Play the video"
 #~ msgstr "Jouer la vidéo"
-
-#~ msgid "Videos"
-#~ msgstr "Vidéos"
 
 #~ msgid "Tag:"
 #~ msgstr "Mot clé :"
