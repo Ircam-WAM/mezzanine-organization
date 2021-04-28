@@ -17,6 +17,7 @@ pygraphviz
 sphinx_rtd_theme
 Sphinx
 pandas==0.19.2
+numpy==1.17.2
 xlwt==1.2.0
 DateTimeRange==0.2.8
 workalendar==1.0.0
