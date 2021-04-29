@@ -551,7 +551,7 @@ def index(List, i):
     if List:
         return List[int(i)]
     else:
-        return
+        return []
 
 
 @register.filter

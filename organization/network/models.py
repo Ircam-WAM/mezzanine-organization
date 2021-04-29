@@ -153,7 +153,7 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
         return reverse("network")
 
 
-class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address, TeamOwnable):
+class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address, TeamOwnable, SiteRelated):
     """(Person description)"""
 
     objects = SearchableManager()

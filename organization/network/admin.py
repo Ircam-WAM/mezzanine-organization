@@ -174,7 +174,7 @@ class TeamAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
 
 class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaPage
     form = DynamicMultimediaPageForm
 
@@ -201,7 +201,7 @@ class PersonActivityInline(StackedDynamicInlineAdmin):
     fk_name = 'person'
     filter_horizontal = ['organizations', 'employers', 'teams',
                          'supervisors', 'phd_directors', ]
-    
+
 
 class PersonPlaylistInline(TabularDynamicInlineAdmin):
 
@@ -235,7 +235,7 @@ class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
 
 
 class PersonRelatedTitleAdmin(TranslationTabularInline):
-    
+
     model = PersonRelatedTitle
 
 
@@ -259,7 +259,7 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
                PersonActivityInline,]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
     search_fields = ['last_name', 'first_name', 'user__username', 'user__email', 'email']
-    list_display = [ 'last_name', 'first_name', 'register_id', 'external_id', 'email', 'user', 'last_weekly_hour_volume', 'gender', 'created']
+    list_display = [ 'last_name', 'first_name', 'register_id', 'external_id', 'email', 'user', 'last_weekly_hour_volume', 'gender', 'created', 'site']
     list_filter = ['person_title', 'activities__date_from', 'activities__date_to',
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
                     'activities__status', 'activities__teams',
