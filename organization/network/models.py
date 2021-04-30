@@ -48,6 +48,8 @@ from organization.media.models import *
 from organization.pages.models import CustomPage
 from organization.media.models import Media
 from organization.network.validators import *
+from organization.core.managers import *
+
 
 # from .nationalities.fields import NationalityField
 
@@ -156,7 +158,7 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
 class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address, TeamOwnable, SiteRelated):
     """(Person description)"""
 
-    objects = SearchableManager()
+    objects = CustomSearchableManager()
     search_fields = {"title": 5}
 
     user = models.OneToOneField(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
