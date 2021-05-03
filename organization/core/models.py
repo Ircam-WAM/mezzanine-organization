@@ -25,22 +25,36 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.core.exceptions import ValidationError
+from django_countries.fields import CountryField
+
+from geopy.geocoders import GoogleV3, Nominatim
+from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded
 
 from mezzanine.pages.models import Page, RichText
 from mezzanine.core.fields import RichTextField, OrderField, FileField
-from mezzanine.core.models import Displayable, Slugged, Orderable
+from mezzanine.core.models import Displayable, Slugged, Orderable, Ownable
 from mezzanine.utils.urls import admin_url, slugify, unique_slug
 from mezzanine.utils.models import base_concrete_model, get_user_model_name
 
-from django_countries.fields import CountryField
 
 
-COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')), ('white', _('white')), ('blue', _('blue')), ('purple', _('purple')),)
+COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')),
+    ('red', _('red')), ('white', _('white')), ('blue', _('blue')),
+    ('purple', _('purple')),)
 
-ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
+ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')),
+    ('right', _('right')))
 
 
-IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('logo_white', _('logo white')), ('logo_black', _('logo black')), ('logo_header', _('logo header')), ('logo_footer', _('logo footer')), ('slider', _('slider')), ('card', _('card')), ('page_slider', _('page - slider')), ('page_featured', _('page - featured')))
+IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('logo_white', _('logo white')),
+    ('logo_black', _('logo black')), ('logo_header', _('logo header')),
+    ('logo_back', _('logo back')),
+    ('logo_footer', _('logo footer')), ('slider', _('slider')),
+    ('card', _('card')), ('page_slider', _('page - slider')),
+    ('page_featured', _('page - featured')))
+
+
 
 
 class Description(models.Model):
@@ -82,24 +96,23 @@ class Named(models.Model):
         return slugify(self.__str__())
 
 
-class NamedSlugged(models.Model):
+class GenericSlugged(models.Model):
     """
     Abstract model that handles auto-generating slugs. Each named slugged
     object is also affiliated with a specific site object.
     """
 
-    name = models.CharField(_('name'), max_length=512)
-    description = models.TextField(_('description'), blank=True)
+    slug_field_name = ''
+
     slug = models.CharField(_("URL"), max_length=2000, blank=True, null=True,
             help_text=_("Leave blank to have the URL auto-generated from "
-                        "the name."))
+                        "the filed defined by slug_field_name."))
 
     class Meta:
         abstract = True
-        ordering = ['name',]
 
     def __str__(self):
-        return self.name
+        return getattr(self, self.slug_field_name)
 
     def save(self, *args, **kwargs):
         """
@@ -107,7 +120,7 @@ class NamedSlugged(models.Model):
         """
         if not self.slug:
             self.slug = self.generate_unique_slug()
-        super(NamedSlugged, self).save(*args, **kwargs)
+        super(GenericSlugged, self).save(*args, **kwargs)
 
     def generate_unique_slug(self):
         """
@@ -116,7 +129,7 @@ class NamedSlugged(models.Model):
         """
         # For custom content types, use the ``Page`` instance for
         # slug lookup.
-        concrete_model = base_concrete_model(NamedSlugged, self)
+        concrete_model = base_concrete_model(GenericSlugged, self)
         slug_qs = concrete_model.objects.exclude(id=self.id)
         return unique_slug(slug_qs, "slug", self.get_slug())
 
@@ -124,26 +137,40 @@ class NamedSlugged(models.Model):
         """
         Allows subclasses to implement their own slug creation logic.
         """
-        attr = "name"
+        attr = self.slug_field_name
         if settings.USE_MODELTRANSLATION:
             from modeltranslation.utils import build_localized_fieldname
             attr = build_localized_fieldname(attr, settings.LANGUAGE_CODE)
         # Get self.name_xx where xx is the default language, if any.
         # Get self.name otherwise.
-        return slugify(getattr(self, attr, None) or self.name)
+        return slugify(getattr(self, attr, None) or getattr(self, self.slug_field_name))
 
     def admin_link(self):
         return "<a href='%s'>%s</a>" % (self.get_absolute_url(),
-                                        ugettext("View on site"))
+                                        _("View on site"))
     admin_link.allow_tags = True
     admin_link.short_description = ""
+
+
+class NamedSlugged(GenericSlugged):
+    """
+    Abstract model that handles auto-generating slugs. Each named slugged
+    object is also affiliated with a specific site object.
+    """
+
+    slug_field_name = 'name'
+
+    name = models.CharField(_('name'), max_length=512)
+
+    class Meta:
+        abstract = True
+        ordering = ['name',]
 
 
 class Titled(models.Model):
     """Abstract model providing a title field"""
 
     title = models.CharField(_('title'), max_length=1024)
-    description = models.TextField(_('description'), blank=True)
 
     class Meta:
         abstract = True
@@ -158,6 +185,21 @@ class SubTitled(models.Model):
 
     class Meta:
         abstract = True
+
+
+class TitledSlugged(GenericSlugged):
+    """
+    Abstract model that handles auto-generating slugs. Each slugged
+    object is also affiliated with a specific site object.
+    """
+
+    slug_field_name = 'title'
+
+    title = models.CharField(_("Title"), max_length=500)
+
+    class Meta:
+        abstract = True
+        ordering = ['title',]
 
 
 class Label(models.Model):
@@ -178,7 +220,7 @@ class CustomCategory(Named):
         return self.name
 
 
-class Block(Titled, RichText, Orderable):
+class Block(Titled, Description, RichText, Orderable):
 
     with_separator = models.BooleanField(default=False)
     background_color = models.CharField(_('background color'), max_length=32, choices=COLOR_CHOICES, blank=True)
@@ -188,7 +230,7 @@ class Block(Titled, RichText, Orderable):
         abstract = True
 
 
-class Image(Titled, Orderable):
+class Image(Titled, Description, Orderable):
 
     file = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
     credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
@@ -206,7 +248,7 @@ class Image(Titled, Orderable):
         return value
 
 
-class UserImage(Titled, Orderable):
+class UserImage(Titled, Description, Orderable):
 
     file = models.FileField(_("Image"), max_length=1024, upload_to="user/images/%Y/%m/%d/")
     credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
@@ -223,7 +265,7 @@ class UserImage(Titled, Orderable):
         return value
 
 
-class File(Titled, Orderable):
+class File(Titled, Description, Orderable):
 
     file = FileField(_("document"), max_length=1024, upload_to="documents")
 
@@ -371,12 +413,58 @@ class Address(models.Model):
     postal_code = models.CharField(_('postal code'), max_length=16, null=True, blank=True)
     city = models.CharField(_('city'), max_length=255, null=True, blank=True)
     country = CountryField(_('country'), null=True, blank=True)
+    mappable_location = models.CharField(max_length=512, blank=True, null=True,
+        help_text=("This address will be used to calculate latitude and longitude. "
+            "Leave blank and set Latitude and Longitude to specify the location yourself, "
+            "or leave all three blank to auto-fill from the Location field."))
+    lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True,
+        verbose_name="Latitude",
+        help_text="Calculated automatically if mappable location is set.")
+    lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True,
+        null=True, verbose_name="Longitude",
+        help_text="Calculated automatically if mappable location is set.")
 
     def __str__(self):
         return ' '.join((self.address, self.postal_code))
 
     class Meta:
         abstract = True
+
+    def clean(self):
+        """
+        Validate set/validate mappable_location, longitude and latitude.
+        """
+        super(Address, self).clean()
+
+        if self.lat and not self.lon:
+            raise ValidationError("Longitude required if specifying latitude.")
+
+        if self.lon and not self.lat:
+            raise ValidationError("Latitude required if specifying longitude.")
+
+        if not (self.lat and self.lon) and not self.mappable_location:
+            if self.address:
+                self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
+
+        if self.mappable_location and not (self.lat and self.lon): #location should always override lat/long if set
+            try:
+                if settings.EVENT_GOOGLE_MAPS_DOMAIN:
+                    service = 'googlemaps'
+                    geolocator = GoogleV3(api_key=settings.GOOGLE_API_KEY, domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
+                else:
+                    service = "openstreetmap"
+                    geolocator = Nominatim(user_agent='mezzo')
+                mappable_location, (lat, lon) = geolocator.geocode(self.mappable_location)
+            except GeocoderQueryError as e:
+                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service=service, error=e.message))
+            except ValueError as e:
+                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service=service, error=e.message))
+            except TypeError as e:
+                raise ValidationError("The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.")
+
+            self.mappable_location = mappable_location
+            self.lat = lat
+            self.lon = lon
 
 
 class RelatedTitle(models.Model):
@@ -408,3 +496,4 @@ class Sites(models.Model):
         abstract = True
         verbose_name = 'Sites'
         verbose_name_plural = 'Sites'
+

@@ -22,7 +22,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse, reverse_lazy
-from mezzanine.core.models import Displayable, Slugged, Orderable
+from mezzanine.core.models import Displayable, Slugged, Orderable, TeamOwnable
 from mezzanine.pages.models import Link as MezzanineLink
 from organization.core.models import *
 from organization.media.models import *
@@ -37,6 +37,7 @@ class CustomPage(Page, SubTitled, RichText):
 
     class Meta:
         verbose_name = 'custom page'
+        permissions = TeamOwnable.Meta.permissions
 
 
 class ExtendedCustomPage(Page, SubTitled, RichText):
@@ -86,6 +87,7 @@ class ExtendedCustomPageDynamicContent(models.Model):
         except KeyError:
             temp = ""
         return temp
+
 
 class PageBlock(Block):
 
@@ -143,6 +145,14 @@ class DynamicContentPage(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Dynamic Content Page'
+
+
+class DynamicMultimediaPage(DynamicContent, Orderable):
+    
+    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
 
 
 class LinkImage(models.Model):

@@ -64,6 +64,12 @@ class DynamicContentArticleTranslationOptions(TranslationOptions):
     pass
 
 
+@register(DynamicMultimediaArticle)
+class DynamicMultimediaArticleTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
 @register(ArticlePlaylist)
 class ArticlePlaylistTranslationOptions(TranslationOptions):
 
@@ -74,3 +80,15 @@ class ArticlePlaylistTranslationOptions(TranslationOptions):
 class ArticleRelatedTitleTranslationOptions(TranslationOptions):
 
     fields = ('title', )
+
+
+@register(Magazine)
+class MagazineTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description', )
+
+
+@register(DynamicContentMagazineContent)
+class DynamicContentMagazineContentTranslationOptions(TranslationOptions):
+
+    pass

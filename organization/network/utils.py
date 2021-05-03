@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from xlwt import *
 import calendar
 import datetime
+from django.apps import apps
 from django.utils import timezone
 from django.http import QueryDict
 from organization.network.api import *
@@ -408,3 +409,37 @@ def proccess_total_prod_hours(prod_hours_dict):
     for month, hours in prod_hours_dict.items():
         total += hours
     return total    
+    
+
+def flatten_activities(activities, fields):
+    flat = []
+    for activity in activities:
+        for field in fields:
+            data = getattr(activity, field)
+            if type(data).__name__ == 'ManyRelatedManager':
+                data = data.all()
+                data2 = []
+                for d in data :
+                    data2.append(d.name)
+                data = ",".join(data2)
+            flat.append(data)
+    return flat
+    
+
+def get_users_of_team(team):
+    users = set()
+    person_activity_model = apps.get_model('organization-network.PersonActivity')
+    activities = person_activity_model.objects.filter(teams=team)
+    for activity in activities:
+        users.add(activity.person.user)
+    return users
+
+
+def get_team_from_user(user):
+    try: 
+        team = user.person.activities.latest('date_from').teams.first()
+        if team.department.id == 1: # Research Department
+            return team
+    except :
+        pass
+

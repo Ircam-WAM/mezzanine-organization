@@ -34,7 +34,7 @@ LOGIN_URL = settings.LOGIN_URL
 _slash = "/" if settings.APPEND_SLASH else ""
 
 urlpatterns = [
-     url("^search/$", CustomSearchView.as_view(), name="search"),
-     url("^profile/projects/$", UserProjectsView.as_view(), name="user_projects"),
-     url("^profile/producer/$", UserProducerView.as_view(), name="user_producer"), 
+    url("^search/$", CustomSearchView.as_view(), name="search"),
+    url("^profile/projects/$", UserProjectsView.as_view(), name="user_projects"),
+    url("^profile/producer/$", UserProducerView.as_view(), name="user_producer"),
 ]

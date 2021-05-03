@@ -261,3 +261,27 @@ class OrganizationRoleTranslationOptions(TranslationOptions):
 class MediaDepartmentTranslationOptions(TranslationOptions):
 
     fields = []
+
+
+@register(DynamicMultimediaOrganization)
+class DynamicMultimediaOrganizationTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(DynamicMultimediaPerson)
+class DynamicMultimediaPersonTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(PersonRelatedTitle)
+class PersonRelatedTitleTranslationOptions(TranslationOptions):
+
+    fields = ('title', )
+
+
+@register(DynamicContentPerson)
+class DynamicContentPersonInlineTranslationOptions(TranslationOptions):
+
+    fields = ()

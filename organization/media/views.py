@@ -20,28 +20,32 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import json
-from django.shortcuts import render
+from datetime import datetime
+from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from collections import defaultdict
+from django.db.models import Q
+from django.shortcuts import render
+from django.core.exceptions import FieldDoesNotExist
+from django.contrib.admin.views.decorators import staff_member_required
 from organization.media.models import *
 from organization.core.views import *
 from organization.core.utils import split_events_from_other_related_content
-from dal import autocomplete
-from django.core.exceptions import FieldDoesNotExist
-from datetime import datetime
-from django.db.models import Q
+from organization.core.views import DynamicReverseMixin
+
 
 # temporarily excluse not ready models
 EXCLUDED_MODELS = ("organizationplaylist", "personplaylist")
 
 
-class MediaDetailView(SlugMixin, DetailView):
+class MediaDetailView(SlugMixin, DetailView, DynamicReverseMixin):
 
     model = Media
     context_object_name = 'media'
+    template_name='media/media/media_detail.html'
 
     def get_template_names(self):
         templates = super(MediaDetailView, self).get_template_names()
-        templates.insert(0,'media/'+self.kwargs['type'].lower()+'/'+self.kwargs['type'].lower()+'_detail.html')
         return templates
 
     def get_context_data(self, **kwargs):
@@ -56,10 +60,10 @@ class MediaDetailView(SlugMixin, DetailView):
         return context
 
 
-class PlaylistDetailView(SlugMixin, DetailView):
+class PlaylistDetailView(SlugMixin, DetailView, DynamicReverseMixin):
 
     model = Playlist
-    template_name='media/playlist_detail.html'
+    template_name='media/playlist/playlist_detail.html'
     context_object_name = 'playlist'
     def get_context_data(self, **kwargs):
         context = super(PlaylistDetailView, self).get_context_data(**kwargs)
@@ -91,7 +95,7 @@ class PlaylistDetailView(SlugMixin, DetailView):
 class PlaylistListView(ListView):
 
     model = Playlist
-    template_name='media/playlist_list.html'
+    template_name='media/playlist/playlist_list.html'
     context_object_name = 'playlists'
 
     def get_queryset(self):
@@ -179,4 +183,26 @@ class LiveStreamingDetailView(SlugMixin, DetailView):
 
         context['json_event'] = json.dumps(events_data)
         return context
+
+
+class DynamicMultimediaView(Select2QuerySetSequenceView):
+    
+    paginate_by = settings.DAL_MAX_RESULTS
+
+    def get_queryset(self):
+
+        medias = Media.objects.all()
+        playlists = Playlist.objects.all()
+
+        if self.q:
+            medias = medias.filter(title__icontains=self.q)
+            playlists = playlists.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(medias, playlists, )
+
+        return qs
+
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results
 

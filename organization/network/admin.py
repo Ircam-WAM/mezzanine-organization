@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2016-2017 Ircam
-# Copyright (c) 2016-2017 Guillaume Pellerin
+# Copyright (c) 2016-2019 Ircam
+# Copyright (c) 2016-2019 Guillaume Pellerin
 # Copyright (c) 2016-2017 Emilie Zawadzki
 
 # This file is part of mezzanine-organization.
@@ -18,25 +18,30 @@
 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+import csv
 from django.contrib import admin
 from django import forms
 from django.http import HttpResponse
 from copy import deepcopy
 from dal import autocomplete
+from guardian.admin import GuardedModelAdmin
+from guardian.shortcuts import get_objects_for_user
 from modeltranslation.admin import TranslationTabularInline
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
 from organization.network.models import *
 from organization.network.forms import *
+from organization.pages.forms import DynamicMultimediaPageForm
 from organization.pages.models import *
 from organization.core.admin import *
 from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline, DynamicContentPageInline, PageRelatedTitleAdmin
 from organization.shop.models import PageProductList
-from organization.network.utils import TimesheetXLS, set_timesheets_validation_date
+from organization.network.utils import TimesheetXLS, set_timesheets_validation_date, flatten_activities
 from organization.network.translation import *
-
-
+from organization.core.utils import getUsersListOfSameTeams
 
 
 class OrganizationAdminInline(StackedDynamicInlineAdmin):
@@ -103,12 +108,19 @@ class ProducerDataInline(StackedDynamicInlineAdmin):
     model = ProducerData
 
 
+class DynamicMultimediaOrganizationInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaOrganization
+    form = DynamicMultimediaOrganizationForm
+
+
 class OrganizationAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Organization
     inlines = [ OrganizationEventLocationInline,
                 OrganizationServiceInline,
                 OrganizationPlaylistInline,
+                DynamicMultimediaOrganizationInline,
                 OrganizationImageInline,
                 OrganizationBlockInline,
                 OrganizationLinkInline,
@@ -131,9 +143,15 @@ class PageProductListInline(TabularDynamicInlineAdmin):
     model = PageProductList
 
 
+class DynamicMultimediaDepartmentInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaPage
+    form = DynamicMultimediaPageForm
+
+
 class DepartmentPageAdmin(PageAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, PageProductListInline, ]
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaDepartmentInline, PageProductListInline, ]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -146,7 +164,7 @@ class TeamLinkInline(StackedDynamicInlineAdmin):
     model = TeamLink
 
 
-class TeamAdmin(BaseTranslationModelAdmin):
+class TeamAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = Team
     search_fields = ['name', 'code']
@@ -155,9 +173,15 @@ class TeamAdmin(BaseTranslationModelAdmin):
     inlines = [TeamLinkInline,]
 
 
-class TeamPageAdmin(PageAdmin):
+class DynamicMultimediaTeamPageInline(TabularDynamicInlineAdmin):
 
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline,
+    model = DynamicMultimediaPage
+    form = DynamicMultimediaPageForm
+
+
+class TeamPageAdmin(PageAdmin, GuardedModelAdmin):
+
+    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaTeamPageInline,
                 PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline]
 
 
@@ -204,22 +228,44 @@ class PersonBlockInline(StackedDynamicInlineAdmin):
     model = PersonBlock
 
 
-class PersonAdmin(BaseTranslationOrderedModelAdmin):
+class DynamicMultimediaPersonInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaPerson
+    form = DynamicMultimediaPersonForm
+
+
+class PersonRelatedTitleAdmin(TranslationTabularInline):
+
+    model = PersonRelatedTitle
+
+
+class DynamicContentPersonInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentPerson
+    form = DynamicContentPersonForm
+
+
+class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
 
     model = Person
     inlines = [PersonImageInline,
                PersonBlockInline,
                PersonPlaylistInline,
+               DynamicMultimediaPersonInline,
+               PersonRelatedTitleAdmin,
+               DynamicContentPersonInline,
                PersonLinkInline,
                PersonFileInline,
                PersonActivityInline,]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
-    search_fields = ['last_name', 'first_name']
-    list_display = [ 'last_name', 'first_name', 'register_id', 'external_id', 'email', 'user', 'last_weekly_hour_volume', 'gender', 'created']
-    list_filter = ['person_title', 'activities__date_from', 'activities__date_to', 'user',
+    search_fields = ['last_name', 'first_name', 'user__username', 'user__email', 'email']
+    list_display = [ 'last_name', 'first_name', 'register_id', 'external_id', 'email', 'user', 'last_weekly_hour_volume', 'gender', 'created', 'site']
+    list_filter = ['person_title', 'activities__date_from', 'activities__date_to',
                     'activities__is_permanent', 'activities__framework', 'activities__grade',
                     'activities__status', 'activities__teams',
                     'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
+    actions = ['export_as_csv', ]
+
 
     def last_weekly_hour_volume(self, instance):
         last_activity = instance.activities.first()
@@ -228,6 +274,35 @@ class PersonAdmin(BaseTranslationOrderedModelAdmin):
             if last_activity.weekly_hour_volume.__str__() != 'None':
                 weekly_hour_volume = last_activity.weekly_hour_volume.__str__()
         return weekly_hour_volume
+
+    def export_as_csv(self, request, queryset):
+
+            meta = self.model._meta
+            field_names = ['first_name', 'last_name', 'gender', 'birthday']
+            activity_fields = ['date_from', 'date_to', 'framework', 'function', 'organizations', 'teams']
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+            response.write(u'\ufeff'.encode('utf8'))
+            writer = csv.writer(response, delimiter=';', dialect='excel')
+            activity_fields_all = []
+            for i in range(10):
+                activity_fields_all += activity_fields
+            writer.writerow(field_names + activity_fields_all)
+            for obj in queryset:
+                data = [getattr(obj, field) for field in field_names]
+                data += flatten_activities(obj.activities.all(), activity_fields)
+                row = writer.writerow(data)
+
+            return response
+
+    def save_form(self, request, form, change):
+        """
+        Avoid calling save_form() from OwnableAdmin to not erase user
+        by the current one is saving
+        """
+        return super(OwnableAdmin, self).save_form(request, form, change)
+
+    export_as_csv.short_description = "Export Selected"
 
 
 class ProjectActivityAdmin(BaseTranslationModelAdmin):
@@ -253,20 +328,38 @@ class ProjectActivityInline(TabularDynamicInlineAdmin):
 class PersonActivityAdmin(BaseTranslationModelAdmin):
 
     model = PersonActivity
-    list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to']
+    list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to', 'get_organizations', 'get_employers']
     filter_horizontal = ['organizations', 'employers', 'teams',
                          'supervisors', 'phd_directors', ] #project_activity__project
-    search_fields = ['person__title',]
+    search_fields = ['person__title', 'organizations__name', 'employers__name']
     list_filter = [ 'date_from', 'date_to',
                     'is_permanent', 'framework', 'grade',
                     'status', 'teams']
     inlines = [ProjectActivityInline,]
+
+
+    def get_organizations(self, instance):
+        org_str = []
+        for org in instance.organizations.all():
+            if org :
+                org_str.append(org.name)
+        return ", ".join(org_str)
+    get_organizations.short_description = 'organizations'
+
+    def get_employers(self, instance):
+        emp_str = []
+        for emp in instance.employers.all():
+            if emp :
+                emp_str.append(emp.name)
+        return ", ".join(emp_str)
+    get_employers.short_description = 'employers'
 
     def get_teams(self, instance):
         values = []
         for team in instance.teams.all():
             values.append(team.code)
         return ' - '.join(values)
+    get_teams.short_description = 'teams'
 
 
 class PersonListBlockInlineAdmin(TabularDynamicInlineAdmin):
@@ -349,6 +442,7 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
         set_timesheets_validation_date(queryset)
 
     export_xls.short_description = "Export person timesheets"
+
 
 
 admin.site.register(OrganizationLinked, OrganizationLinkedAdmin)

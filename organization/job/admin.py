@@ -33,10 +33,21 @@ class JobResponseInline(TabularDynamicInlineAdmin):
     model = JobResponse
 
 
-class JobOfferAdminDisplayable(BaseTranslationModelAdmin):
+class JobOfferImageInline(TabularDynamicInlineAdmin):
+
+    model = JobOfferImage
+
+
+class JobOfferAdminDisplayable(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = JobOffer
-    inlines = [JobResponseInline,]
+    inlines = [JobOfferImageInline, JobResponseInline,]
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'status', 'publish_date', 'expiry_date', 'description',
+                        'gen_description', 'content', 'email', 'type', 'text_button', 'url',),
+        }),
+    )
 
 
 class CandidacyImageInline(TabularDynamicInlineAdmin):
@@ -44,20 +55,15 @@ class CandidacyImageInline(TabularDynamicInlineAdmin):
     model = CandidacyImage
 
 
-class CandidacyAdmin(admin.ModelAdmin):
-
-    model = Candidacy
-
-
 class CandidacyAdminDisplayable(BaseTranslationModelAdmin,):
 
-    list_display = ('title', 'external_content', 'content_object', )
-    form = CandidacyForm
+    model = Candidacy
+    list_display = ('title', 'url', )
     inlines = [CandidacyImageInline,]
-    exclude = ("short_url", "keywords", "description", "slug", )
     fieldsets = (
         (None, {
-            'fields': ('title', 'status', 'publish_date', 'expiry_date', 'content', 'date_from', 'date_to', 'text_button_external', 'external_content', 'text_button_internal', 'content_object',),
+            'fields': ('title', 'status', 'publish_date', 'expiry_date', 'description',
+                        'gen_description', 'content', 'date_from', 'date_to', 'text_button', 'url',),
         }),
     )
 

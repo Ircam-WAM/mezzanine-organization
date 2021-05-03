@@ -27,15 +27,13 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
-
-from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
 from django.core.files.images import get_image_dimensions
-
 from organization.core.models import *
 from organization.pages.models import *
 from organization.network.models import *
 from organization.magazine.models import *
 from mezzanine_agenda.models import *
+from mezzanine.core.models import RichText, Displayable, Slugged, Orderable, Ownable, MetaData, TimeStamped
 
 from skosxl.models import Concept
 
@@ -70,10 +68,11 @@ FUNDING_CHOICES = (
 )
 
 
-class Project(Displayable, Period, RichText, OwnableOrNot):
+class Project(TitledSlugged, MetaData, TimeStamped, Period, RichText, TeamOwnable):
+# class Project(Displayable, Period, RichText, OwnableOrNot):
     """(Project description)"""
 
-    type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES)
+    type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES, blank=True)
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     program = models.ForeignKey('ProjectProgram', verbose_name=_('project program'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
     program_type = models.ForeignKey('ProjectProgramType', verbose_name=_('project program type'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
@@ -96,6 +95,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         verbose_name_plural = _("projects")
         # ordering = ['-date_from', '-date_to']
         ordering = ['title', ]
+        permissions = TeamOwnable.Meta.permissions
 
     def __str__(self):
         return self.title
@@ -151,7 +151,7 @@ class ProjectProgramType(Named):
         ordering = ['name',]
 
 
-class ProjectWorkPackage(Titled, Period):
+class ProjectWorkPackage(Titled, Description, Period):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='work_packages')
     number = models.IntegerField(_('number'))
@@ -240,22 +240,22 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
 
 class ProjectCallBlock(Block):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call blocks'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallImage(Image):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call image'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallFile(File):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call file'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='files', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectCallLink(Link):
 
-    call = models.ForeignKey('ProjectCall', verbose_name=_('project call link'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+    call = models.ForeignKey('ProjectCall', verbose_name=_('project call'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
 
 
 class ProjectDemo(Displayable, RichText, URL):
@@ -354,6 +354,14 @@ class DynamicContentProject(DynamicContent, Orderable):
         verbose_name = 'Dynamic Content Project'
 
 
+class DynamicMultimediaProject(DynamicContent, Orderable):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Multimedia'
+
+
 class ProjectBlogPage(Displayable, RichText):
 
     project = models.ForeignKey(Project, verbose_name=_('project'), related_name='blog_pages', blank=True, null=True, on_delete=models.SET_NULL)
@@ -434,9 +442,7 @@ class ProjectResidency(Displayable, Period, Address, RichText):
     artist = models.ForeignKey(Person, verbose_name=_('artist'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
     validated = models.BooleanField(default=False)
     producer_commitment = models.TextField(_('producer commitment'), help_text="")
-    mappable_location = models.CharField(max_length=128, blank=True, null=True, help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.")
-    lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Latitude", help_text="Calculated automatically if mappable location is set.")
-    lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True, verbose_name="Longitude", help_text="Calculated automatically if mappable location is set.")
+
 
     @property
     def articles(self):
@@ -458,36 +464,6 @@ class ProjectResidency(Displayable, Period, Address, RichText):
 
     def get_absolute_url(self):
         return reverse("organization-residency-detail", kwargs={"call_slug": self.project.call.slug, "slug": self.slug})
-
-    def clean(self):
-        """
-        Validate set/validate mappable_location, longitude and latitude.
-        """
-        super(ProjectResidency, self).clean()
-
-        if self.lat and not self.lon:
-            raise ValidationError("Longitude required if specifying latitude.")
-
-        if self.lon and not self.lat:
-            raise ValidationError("Latitude required if specifying longitude.")
-
-        if not (self.lat and self.lon) and not self.mappable_location:
-            if self.address:
-                self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
-
-        if self.mappable_location and not (self.lat and self.lon): #location should always override lat/long if set
-            g = GoogleMaps(domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
-            try:
-                mappable_location, (lat, lon) = g.geocode(self.mappable_location)
-            except GeocoderQueryError as e:
-                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
-            except ValueError as e:
-                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service="Google Maps", error=e.message))
-            except TypeError as e:
-                raise ValidationError("The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.")
-            self.mappable_location = mappable_location
-            self.lat = lat
-            self.lon = lon
 
 
 class ProjectResidencyProducer(models.Model):
@@ -521,3 +497,34 @@ class ProjectResidencyEvent(models.Model):
 
     residency = models.ForeignKey(ProjectResidency, verbose_name=_('residency'), related_name='residency_events', blank=True, null=True, on_delete=models.SET_NULL)
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='residencies', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectPage(Displayable, RichText, TeamOwnable):
+
+    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='pages', blank=True, null=True, on_delete=models.SET_NULL)
+
+    def get_absolute_url(self):
+        return reverse("organization-project-projectpage-detail", kwargs={'slug': self.slug})
+    
+    class Meta:
+        permissions = TeamOwnable.Meta.permissions
+
+
+class ProjectPageImage(Image):
+
+    project_page = models.ForeignKey(ProjectPage, verbose_name=_('project page'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class ProjectPageBlock(Block):
+
+    project_page = models.ForeignKey(ProjectPage, verbose_name=_('project page'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+
+
+class DynamicContentProjectPage(DynamicContent, Orderable):
+
+    project_page = models.ForeignKey(ProjectPage, verbose_name=_('project page'), related_name='dynamic_content_project_pages', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Dynamic Content Project Page'
+
+

@@ -19,17 +19,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib import admin
 from copy import deepcopy
+import re
+from django.contrib import admin
+from django.contrib.admin import SimpleListFilter
+from django.contrib.sites.models import Site
 from mezzanine.core.admin import *
 from mezzanine.pages.admin import PageAdmin
-from organization.core.models import *
 from mezzanine.blog.models import BlogPost
 from mezzanine.generic.models import ThreadedComment, Keyword
 from mezzanine.conf import settings
-from django.contrib.admin import SimpleListFilter
+from organization.core.models import *
 from organization.core.translation import *
-from django.contrib.auth.admin import UserAdmin
+from organization.core.utils import get_other_sites, getUsersListOfSameTeams
+
 try:
     from hijack_admin.admin import HijackUserAdmin
 except ImportError:
@@ -39,6 +42,25 @@ from pprint import pprint
 class KeywordAdmin(BaseTranslationModelAdmin):
 
     model = Keyword
+
+# class DuplicateAdmin(object):
+
+#     func_template = """def duplicate_content_to_%s(self, request, queryset):
+#                             import inspect
+#                             import copy
+#                             from pprint import pprint
+#                             domain = inspect.stack()[0][3].replace('duplicate_content_to_', '').replace('_', '.')
+#                             site = Site.objects.get(domain=domain)
+                            
+#                             for obj in queryset:
+#                                 clone = copy.copy(obj)
+#                                 if hasattr(clone, 'blogpost_ptr_id'):
+#                                     blogpost_ptr_id = None
+#                                 clone.pk = None
+#                                 clone.site = site
+#                                 clone.save(force_insert=True)"""
+
+#     for site in get_other_sites(): exec(func_template % (re.sub(r'(\.|-)', '_', site.domain)))
 
 
 class BaseTranslationOrderedModelAdmin(BaseTranslationModelAdmin):
@@ -50,6 +72,7 @@ class BaseTranslationOrderedModelAdmin(BaseTranslationModelAdmin):
             lang = settings.LANGUAGE_CODE
             lang_fields = []
             for field in fields:
+                lang_fields.append(field)
                 lang_fields.append(field + '_' + lang)
             fields = lang_fields
         for field in fields:
@@ -74,8 +97,9 @@ class NullListFilter(SimpleListFilter):
             return queryset.filter(**kwargs)
         return queryset
 
+
 if settings.DEBUG :
-    class UserAdminCustom(HijackUserAdmin, UserAdmin):
+    class UserAdminCustom(HijackUserAdmin, SitePermissionUserAdmin):
 
         list_display = UserAdmin.list_display + ('is_active',  'is_superuser', 'last_login', 'date_joined', 'person_link', 'my_groups', 'hijack_field' )
 
@@ -105,6 +129,11 @@ admin.site.register(LinkType)
 admin.site.unregister(BlogPost)
 admin.site.unregister(ThreadedComment)
 admin.site.register(Keyword, KeywordAdmin)
+
+
+# admin.site.unregister(LinkAdmin)
+# admin.site.register(Link, CustomLinkAdmin)
+
 
 if settings.DEBUG and settings.HIJACK_REGISTER_ADMIN:
     UserModel = get_user_model()

@@ -185,12 +185,44 @@ class ProjectCallFileTranslationOptions(TranslationOptions):
 
     pass
 
+
 @register(ProjectContact)
 class ProjectContactTranslationOptions(TranslationOptions):
 
     pass
 
+
 @register(ProjectTopic)
 class ProjectTopicTranslationOptions(TranslationOptions):
 
     fields = ('name', 'description')
+
+
+@register(DynamicMultimediaProject)
+class DynamicMultimediaProjectTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(ProjectPage)
+class ProjectPageTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description', 'content')
+
+
+@register(ProjectPageBlock)
+class ProjectPageBlockTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description', 'content')
+
+
+@register(ProjectPageImage)
+class ProjectPageImageTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(DynamicContentProjectPage)
+class DynamicContentProjectPageTranslationOptions(TranslationOptions):
+
+    fields = ()

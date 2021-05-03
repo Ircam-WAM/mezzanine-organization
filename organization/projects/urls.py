@@ -22,7 +22,7 @@
 from __future__ import unicode_literals
 
 import django.views.i18n
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib.auth.decorators import permission_required
 from mezzanine.core.views import direct_to_template
@@ -31,16 +31,23 @@ from mezzanine.conf import settings
 from organization.projects.views import *
 
 urlpatterns = [
-    url("^dynamic-content-project/$",  permission_required('project.can_edit')(DynamicContentProjectView.as_view()), name='dynamic-content-project'),
+    url("^dynamic-content-project/$",  permission_required('organization-projects.change_projectpage')(DynamicContentProjectView.as_view()), name='dynamic-content-project'),
 
-    url("^projects/detail/(?P<slug>.*)/$", ProjectDetailView.as_view(), name='organization-project-detail'),
+    url("^projects/detail/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-projectpage-detail'), name='organization-project-detail'),
+    url("^projects/pages/(?P<slug>.*)/$", ProjectPageView.as_view(), name='organization-project-projectpage-detail'),
+    url("^projects/list/$", ProjectListView.as_view(), name='organization-project-list'),
+    url("^projects/archives/list/$", ProjectArchivesListView.as_view(), name='organization-project-archive-list'),
+
+    url("^team/(?P<slug>.*)/projects/list/$", ProjectTeamListView.as_view(), name='organization-project-team-list'),
+    url("^team/(?P<slug>.*)/projects/archives/list/$", ProjectArchivesTeamListView.as_view(), name='organization-project-archive-team-list'),
+
     url("^projects/demo/(?P<slug>.*)/$", ProjectDemoDetailView.as_view(), name='organization-project-demo-detail'),
     url("^projects/blog/(?P<slug>.*)/$", ProjectBlogPageView.as_view(), name='organization-project-blogpage-detail'),
 
     # due to this commit 73743f67f1d1574dbeff6cc22aae37986d257a92, redirect to old patterns 'project' without 's'
     url("^project/detail/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-detail'), name="redirect-project-detail"),
     url("^project/demo/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-demo-detail'), name="redirect-project-demo"),
-    url("^project/blog/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-blogpage-detail'), name="redirect-project-blog"),   
+    url("^project/blog/(?P<slug>.*)/$", RedirectView.as_view(pattern_name = 'organization-project-blogpage-detail'), name="redirect-project-blog"),
 
     url("^ict-projects/list/$", ProjectICTListView.as_view(), name='organization-ict-project-list'),
     url("^ict-projects/(?P<slug>.*)/detail/$", ProjectICTDetailView.as_view(), name='organization-ict-project-detail'),
