@@ -71,6 +71,7 @@ class HomeView(SlugMixin, DetailView):
             pass
 
         context['hal_url'] = settings.HAL_URL
+        context['instagram_profile_name'] = settings.INSTAGRAM_PROFILE_NAME
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -176,7 +177,7 @@ class NewsletterView(TemplateView):
 
 
 class PublicationsView(FormView):
-    
+
     template_name = "pages/publications.html"
     form_class = YearForm
     success_url = "."
