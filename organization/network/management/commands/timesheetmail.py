@@ -34,7 +34,6 @@ import xlrd
 from itertools import takewhile
 from re import findall
 import dateutil.parser
-import sys,ldap,ldap.async
 from datetime import date, timedelta, datetime
 # from string import split
 from django.contrib.sites.models import Site
