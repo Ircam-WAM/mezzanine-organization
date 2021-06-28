@@ -350,7 +350,7 @@ class Department(Named):
             return ' - '.join((self.organization.name, self.name))
         return self.name
 
-manage
+
 class DepartmentPage(Page, SubTitled, RichText):
     """(Department description)"""
 
