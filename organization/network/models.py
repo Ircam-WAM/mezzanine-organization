@@ -158,7 +158,7 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
 class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address, TeamOwnable, SiteRelated):
     """(Person description)"""
 
-    objects = CustomSearchableManager()
+    objects = SearchableManager()
     search_fields = {"title": 5}
 
     user = models.OneToOneField(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
@@ -350,7 +350,7 @@ class Department(Named):
             return ' - '.join((self.organization.name, self.name))
         return self.name
 
-
+manage
 class DepartmentPage(Page, SubTitled, RichText):
     """(Department description)"""
 
