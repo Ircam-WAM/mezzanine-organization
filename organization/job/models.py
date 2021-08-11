@@ -21,7 +21,7 @@
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from mezzanine.core.models import Displayable
 from organization.core.models import *
 from organization.media.models import *

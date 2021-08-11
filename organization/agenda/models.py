@@ -63,7 +63,12 @@ class EventDepartment(models.Model):
 class EventPersonListBlockInline(Titled, Description):
 
     event = models.ForeignKey(Event, verbose_name=_('event'), related_name='persons_list', blank=True, null=True, on_delete=models.SET_NULL)
-    person_list_block = models.ForeignKey(PersonListBlock, related_name='events', verbose_name=_('Person List Block'), blank=True, null=True)
+    person_list_block = models.ForeignKey(PersonListBlock,
+        related_name='events',
+        verbose_name=_('Person List Block'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('Person List')

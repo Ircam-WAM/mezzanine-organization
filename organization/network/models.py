@@ -24,7 +24,7 @@ from __future__ import unicode_literals
 from django import forms
 from django.apps import apps
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -221,8 +221,12 @@ class DynamicContentPerson(DynamicContent, Orderable):
 
 
 class OrganizationLinkedBlockInline(Titled, Description, Orderable):
-    organization_linked = models.ForeignKey('OrganizationLinked', verbose_name=_('organization list'),
-                                            related_name='organization_linked_block_inline_list', blank=True, null=True)
+    organization_linked = models.ForeignKey('OrganizationLinked',
+        verbose_name=_('organization list'),
+        related_name='organization_linked_block_inline_list',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
     organization_main = models.ForeignKey('Organization', verbose_name=_('organization'),
                                           related_name='organization_linked_block', blank=True, null=True,
                                           on_delete=models.SET_NULL)
@@ -342,7 +346,12 @@ class OrganizationUserImage(UserImage):
 class Department(Named):
     """(Department description)"""
 
-    organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="departments")
+    organization = models.ForeignKey('Organization',
+        verbose_name=_('organization'),
+        related_name="departments",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('department')
@@ -486,8 +495,12 @@ class PersonBlock(Block):
 class PageCustomPersonListBlockInline(Titled):
     page = models.ForeignKey(CustomPage, verbose_name=_('Page'), related_name='page_custom_person_list_block_inlines',
                              blank=True, null=True, on_delete=models.SET_NULL)
-    person_list_block = models.ForeignKey("PersonListBlock", related_name='page_custom_person_list_block_inlines',
-                                          verbose_name=_('Person List Block'), blank=True, null=True)
+    person_list_block = models.ForeignKey("PersonListBlock",
+        related_name='page_custom_person_list_block_inlines',
+        verbose_name=_('Person List Block'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('Person List')
@@ -607,7 +620,12 @@ class ActivityWeeklyHourVolume(Titled, Description):
 class PersonActivity(Period):
     """(Activity description)"""
 
-    person = models.ForeignKey('Person', verbose_name=_('person'), related_name='activities')
+    person = models.ForeignKey('Person',
+        verbose_name=_('person'),
+        related_name='activities',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     weeks = models.IntegerField(_('number of weeks'), blank=True, null=True)
     status = models.ForeignKey(ActivityStatus, verbose_name=_('status'), blank=True, null=True,
@@ -692,8 +710,18 @@ class PersonActivity(Period):
 
 
 class PersonActivityTimeSheet(models.Model):
-    activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='timesheets')
-    project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='timesheets')
+    activity = models.ForeignKey('PersonActivity',
+        verbose_name=_('activity'),
+        related_name='timesheets',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
+    project = models.ForeignKey('organization-projects.Project',
+        verbose_name=_('project'),
+        related_name='timesheets',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
     work_packages = models.ManyToManyField('organization-projects.ProjectWorkPackage', verbose_name=_('work package'),
                                            related_name='timesheets', blank=True)
     percentage = models.IntegerField(_('% of work time on the project'), validators=[is_percent],
@@ -715,7 +743,12 @@ class PersonActivityTimeSheet(models.Model):
 
 
 class ProjectActivity(Titled, Description, Orderable):
-    activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='project_activity')
+    activity = models.ForeignKey('PersonActivity',
+        verbose_name=_('activity'),
+        related_name='project_activity',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
     project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'),
                                 related_name='project_activity', null=True, on_delete=models.SET_NULL)
     default_percentage = models.IntegerField(_('default %'), validators=[is_percent], blank=True, null=True,
@@ -735,7 +768,11 @@ class ProjectActivity(Titled, Description, Orderable):
 
 
 class PersonActivityVacation(Period):
-    activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'))
+    activity = models.ForeignKey('PersonActivity',
+        verbose_name=_('activity'),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
 
 
 def update_activity(a):
@@ -766,16 +803,34 @@ def update_activity(a):
 
 
 class MediaDepartment(models.Model):
-    media = models.ForeignKey(Media, verbose_name=_('media'), related_name='department')
-    department = models.ForeignKey(Department, verbose_name=_('department'), related_name='medias',
-                                   limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True,
-                                   on_delete=models.SET_NULL)
+    media = models.ForeignKey(Media,
+        verbose_name=_('media'),
+        related_name='department',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
+    department = models.ForeignKey(Department,
+        verbose_name=_('department'),
+        related_name='medias',
+        limit_choices_to=dict(id__in=Department.objects.all()),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
 
 class TeamProjectOrdering(SiteRelated, Orderable):
-    project_page = models.ForeignKey('organization-projects.ProjectPage', verbose_name=_('Project'),
-                                     related_name='teamprojectordering')
-    team_page = models.ForeignKey('TeamPage', verbose_name=_('Team'), related_name='teamprojectordering')
+    project_page = models.ForeignKey('organization-projects.ProjectPage',
+        verbose_name=_('Project'),
+        related_name='teamprojectordering',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
+    team_page = models.ForeignKey('TeamPage',
+        verbose_name=_('Team'),
+        related_name='teamprojectordering',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         unique_together = (("project_page", "team_page",),)

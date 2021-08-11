@@ -39,7 +39,7 @@ from datetime import date, timedelta, datetime
 from django.contrib.sites.models import Site
 from django.http import HttpResponse
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
 from django.core.management.base import BaseCommand, CommandError

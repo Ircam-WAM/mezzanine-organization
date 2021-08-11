@@ -30,7 +30,7 @@ from django.shortcuts import render
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView
 from django.contrib import messages
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.template import Context
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage

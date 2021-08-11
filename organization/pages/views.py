@@ -26,7 +26,7 @@ from django.shortcuts import render
 from django.views.generic import DetailView, ListView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from organization.pages.models import CustomPage, ExtendedCustomPage

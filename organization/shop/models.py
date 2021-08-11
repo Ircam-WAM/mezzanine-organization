@@ -77,9 +77,19 @@ class ProductLink(Link):
 
 class ProductExternalShop(models.Model):
 
-    product = models.OneToOneField(Product, verbose_name=_('product'), related_name='product_external_shop')
+    product = models.OneToOneField(Product,
+        verbose_name=_('product'),
+        related_name='product_external_shop',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
     external_id = models.IntegerField(verbose_name=_('external id'), null=True, blank=True)
-    shop = models.ForeignKey(ExternalShop, verbose_name=_('shop'), related_name='product_external_shop', null=True, blank=True)
+    shop = models.ForeignKey(ExternalShop,
+        verbose_name=_('shop'),
+        related_name='product_external_shop',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
     label = models.CharField(_('label'), max_length=50, null=True, blank=True)
 
     class Meta:
@@ -92,8 +102,18 @@ class ProductExternalShop(models.Model):
 
 class TeamProduct(models.Model):
     
-    product = models.ForeignKey(Product, verbose_name=_('product'), related_name='team')
-    teams = models.ForeignKey(Team, verbose_name=_('team'), null=True, blank=True, related_name='products')
+    product = models.ForeignKey(Product,
+        verbose_name=_('product'),
+        related_name='team',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
+    teams = models.ForeignKey(Team,
+        verbose_name=_('team'),
+        null=True,
+        blank=True,
+        related_name='products',
+        on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _("team")

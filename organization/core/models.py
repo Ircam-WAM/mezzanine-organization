@@ -22,7 +22,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.core.exceptions import ValidationError
@@ -290,6 +290,7 @@ class DynamicContent(models.Model):
         null=True,
         blank=True,
         editable=False,
+        on_delete=models.SET_NULL
     )
 
     # used for autocomplete but hidden in admin
@@ -343,7 +344,11 @@ class Link(URL):
     """A person can have many links."""
 
     title = models.CharField(_('title'), max_length=1024, null=True, blank=True)
-    link_type = models.ForeignKey(LinkType, verbose_name=_('link type'))
+    link_type = models.ForeignKey(LinkType,
+        verbose_name=_('link type'),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         abstract = True
@@ -481,7 +486,7 @@ class OwnableOrNot(models.Model):
     """
 
     user = models.ForeignKey(get_user_model_name(), verbose_name=_("Author"),
-        related_name="%(class)ss", null=True, blank=True)
+        related_name="%(class)ss", null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         abstract = True

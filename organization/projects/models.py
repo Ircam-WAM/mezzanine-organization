@@ -35,8 +35,6 @@ from organization.magazine.models import *
 from mezzanine_agenda.models import *
 from mezzanine.core.models import RichText, Displayable, Slugged, Orderable, Ownable, MetaData, TimeStamped
 
-from skosxl.models import Concept
-
 
 PROJECT_TYPE_CHOICES = [
     ('internal', _('Internal project')),
@@ -89,7 +87,6 @@ class Project(TitledSlugged, MetaData, TimeStamped, Period, RichText, TeamOwnabl
     is_archive = models.BooleanField(verbose_name=_('Is Archive'), help_text='Hide project in Team Page', default=False)
     validation_status = models.IntegerField(_('validation status'), choices=PROJECT_STATUS_CHOICES, default=1)
     funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
-    concepts = models.ManyToManyField('skosxl.Concept', verbose_name=_('concepts'), blank=True)
 
     class Meta:
         verbose_name = _('project')
@@ -122,7 +119,12 @@ class Project(TitledSlugged, MetaData, TimeStamped, Period, RichText, TeamOwnabl
 class ProjectTopic(Named):
 
     key = models.CharField(_('key'), unique=True, max_length=128)
-    parent = models.ForeignKey('ProjectTopic', verbose_name=_('parent topic'), related_name='topics', blank=True, null=True)
+    parent = models.ForeignKey('ProjectTopic',
+        verbose_name=_('parent topic'),
+        related_name='topics',
+        blank=True, null=True,
+        on_delete=models.SET_NULL
+        )
 
     class Meta:
         verbose_name = _('project topic')
@@ -154,9 +156,19 @@ class ProjectProgramType(Named):
 
 class ProjectWorkPackage(Titled, Description, Period):
 
-    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='work_packages')
+    project = models.ForeignKey(Project,
+        verbose_name=_('project'),
+        related_name='work_packages',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
     number = models.IntegerField(_('number'))
-    lead_organization = models.ForeignKey('organization-network.Organization', verbose_name=_('lead organization'), related_name='leader_work_packages', blank=True, null=True)
+    lead_organization = models.ForeignKey('organization-network.Organization',
+        verbose_name=_('lead organization'),
+        related_name='leader_work_packages',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('work package')
@@ -292,7 +304,12 @@ class ProjectDemo(Displayable, RichText, URL):
 
 class Repository(Named):
 
-    system = models.ForeignKey('RepositorySystem', verbose_name=_('system'), related_name='repositories')
+    system = models.ForeignKey('RepositorySystem',
+        verbose_name=_('system'),
+        related_name='repositories',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
     access = models.CharField(_('access rights'), max_length=64, choices=REPOSITORY_ACCESS_CHOICES, default='private')
     branch = models.CharField(_('branch'), max_length=32, default='master')
     url = models.CharField(_('URL'), max_length=256, help_text='http(s) or ssh')
@@ -506,7 +523,12 @@ class ProjectResidencyEvent(models.Model):
 
 class ProjectPage(Displayable, RichText, TeamOwnable):
 
-    project = models.ForeignKey(Project, verbose_name=_('project'), related_name='pages')
+    project = models.ForeignKey(Project,
+        verbose_name=_('project'),
+        related_name='pages',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
 
     @property
     def is_archive(self):

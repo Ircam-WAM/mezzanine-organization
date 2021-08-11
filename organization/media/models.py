@@ -111,7 +111,12 @@ class Media(Displayable, TeamOwnable):
 
 class MediaTranscoded(models.Model):
 
-    media = models.ForeignKey('Media', verbose_name=_('media'), related_name='transcoded')
+    media = models.ForeignKey('Media',
+        verbose_name=_('media'),
+        related_name='transcoded',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
     file = FileField(_("file"), max_length=1024, upload_to="uploads/media/", blank=True, null=True)
     url = models.URLField(_('URL'), max_length=1024, blank=True)
     mime_type = models.CharField(_('mime type'), max_length=64)

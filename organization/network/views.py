@@ -42,7 +42,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.db.models.fields.related import ForeignKey
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from organization.network.models import *

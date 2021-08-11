@@ -12,7 +12,7 @@ from organization.network.api import *
 from collections import defaultdict, OrderedDict
 from pprint import pprint
 from workalendar.europe import France
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
 from django.contrib.sites.models import Site

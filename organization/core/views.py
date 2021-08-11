@@ -31,7 +31,7 @@ from django.utils import six, timezone, formats
 from django.utils.translation import ugettext_lazy as _
 from django.http import QueryDict
 from django.template.defaultfilters import capfirst
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from mezzanine.conf import settings
 from mezzanine.utils.views import paginate

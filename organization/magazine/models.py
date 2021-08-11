@@ -27,7 +27,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from mezzanine.core.managers import SearchableManager
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 
 from mezzanine.core.models import RichText, Displayable, Slugged, TeamOwnable
 from mezzanine.pages.models import Page
@@ -94,6 +94,7 @@ class Brief(Displayable, RichText, TeamOwnable):
         null=True,
         blank=True,
         editable=False,
+        on_delete=models.SET_NULL,
     )
 
     # used for autocomplete but hidden in admin
@@ -124,7 +125,12 @@ class Topic(Page, RichText):
 class ArticlePersonListBlockInline(Titled, Description):
 
     article = models.ForeignKey(Article, verbose_name=_('Article'), related_name='article_person_list_block_inlines', blank=True, null=True, on_delete=models.SET_NULL)
-    person_list_block = models.ForeignKey(PersonListBlock, related_name='article_person_list_block_inlines', verbose_name=_('Person List Block'), blank=True, null=True)
+    person_list_block = models.ForeignKey(PersonListBlock,
+        related_name='article_person_list_block_inlines',
+        verbose_name=_('Person List Block'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('Person List')

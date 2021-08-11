@@ -47,7 +47,7 @@ from organization.core.models import *
 from itertools import chain
 from django.db.models import Q
 from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
-from django.utils.functional import allow_lazy
+from django.utils.functional import keep_lazy as allow_lazy
 from django.utils import six
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext
@@ -532,12 +532,12 @@ def get_team_code_from_user(user):
         return get_team_from_user(user).code
 
 
-@register.assignment_tag
+@register.simple_tag
 def increment(i):
     return i + 1
 
 
-@register.assignment_tag
+@register.simple_tag
 def previous(val):
     return val
 
