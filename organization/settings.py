@@ -249,6 +249,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    "django.contrib.messages",
     'django_extensions',
     "mezzanine.boot",
     "mezzanine.conf",
@@ -262,7 +263,7 @@ INSTALLED_APPS = [
     # "mezzanine.galleries",
     # "mezzanine.mobile",
     "cartridge.shop",
-    'djangobower',
+    # 'djangobower',
     "meta",
     "mezzanine_agenda",
     "organization.core",
@@ -315,8 +316,7 @@ MIGRATION_MODULES = {
 
 TEMPLATES = [{
                'BACKEND': 'django.template.backends.django.DjangoTemplates',
-               'OPTIONS': {'builtins': ['mezzanine.template.loader_tags'],
-                           'context_processors': ('django.contrib.auth.context_processors.auth',
+               'OPTIONS': {'context_processors': ('django.contrib.auth.context_processors.auth',
                                                   'django.contrib.messages.context_processors.messages',
                                                   'django.template.context_processors.debug',
                                                   'django.template.context_processors.i18n',
@@ -339,7 +339,7 @@ TEMPLATES = [{
 # List of middleware classes to use. Order is important; in the request phase,
 # these middleware classes will be applied in the order given, and in the
 # response phase the middleware will be applied in reverse order.
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     # 'sandbox.middleware.StartupMiddleware',
     "mezzanine.core.middleware.UpdateCacheMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -348,7 +348,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "mezzanine.core.request.CurrentRequestMiddleware",
@@ -617,7 +616,7 @@ OPTIONAL_APPS = (
 
 if DEBUG:
     OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 INTERNAL_IPS = ['127.0.0.1', '172.17.0.1', '172.17.0.2']
 
@@ -736,7 +735,7 @@ ARTICLE_KEYWORDS = ['', ]
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
 # OAUTH2
-OAUTH2_IRCAM = True
+OAUTH2_IRCAM = False
 if OAUTH2_IRCAM is not True:
     LOGIN_URL = '/accounts/login'
 else:
