@@ -33,10 +33,6 @@ from organization.core.models import *
 from organization.core.translation import *
 from organization.core.utils import get_other_sites, getUsersListOfSameTeams
 
-try:
-    from hijack_admin.admin import HijackUserAdmin
-except ImportError:
-    pass
 from pprint import pprint
 
 class KeywordAdmin(BaseTranslationModelAdmin):
@@ -99,9 +95,9 @@ class NullListFilter(SimpleListFilter):
 
 
 if settings.DEBUG :
-    class UserAdminCustom(HijackUserAdmin, SitePermissionUserAdmin):
+    class UserAdminCustom(SitePermissionUserAdmin):
 
-        list_display = UserAdmin.list_display + ('is_active',  'is_superuser', 'last_login', 'date_joined', 'person_link', 'my_groups', 'hijack_field' )
+        list_display = UserAdmin.list_display + ('is_active',  'is_superuser', 'last_login', 'date_joined', 'person_link', 'my_groups' )
 
         def person_link(self, instance):
             url = reverse('admin:%s_%s_change' %(instance.person._meta.app_label, instance.person._meta.model_name),  args=[instance.person.id] )
