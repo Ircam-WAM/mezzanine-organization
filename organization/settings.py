@@ -414,7 +414,7 @@ if not os.path.exists(FILE_UPLOAD_TEMP_DIR):
 MAX_UPLOAD_SIZE = 512000000
 MAX_UPLOAD_SIZE_FRONT = 10485760
 FILEBROWSER_MAX_UPLOAD_SIZE = 512000000
-
+THUMBNAILS_DIR_NAME = 'thumbs'
 
 # EXTENSIONS AND FORMATS
 # Allowed Extensions for File Upload. Lower case is important.
@@ -450,7 +450,7 @@ FILEBROWSER_SELECT_FORMATS = {
 
 GRAPPELLI_INSTALLED = True
 # JQUERY_FILENAME = 'jquery-3.1.0.min.js'
-JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'
+JQUERY_UI_FILENAME = 'jquery-ui-1.12.1.js'
 TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 
 ADMIN_MENU_ORDER = (
