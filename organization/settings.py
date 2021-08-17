@@ -23,20 +23,21 @@
 from __future__ import absolute_import, unicode_literals
 
 import os
+import ldap
+import logging
+import warnings
 from datetime import date
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse_lazy
-import ldap, logging
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
-import warnings
 warnings.filterwarnings(
         'ignore', r"DateTimeField .* received a naive datetime",
         RuntimeWarning, r'django\.db\.models\.fields')
 
-SILENCED_SYSTEM_CHECKS = ['fields.W342',]
+SILENCED_SYSTEM_CHECKS = ['fields.W342', ]
 
 ######################
 # MEZZANINE SETTINGS #
@@ -235,7 +236,7 @@ DATABASES = {
 
 INSTALLED_APPS = [
     # the current theme has to be defined in main local_settings as HOST_THEMES
-    'ircam_www_theme',
+    # 'ircam_www_theme',
     "modeltranslation",
     "dal_legacy_static",
     "dal",
@@ -274,7 +275,7 @@ INSTALLED_APPS = [
     "organization.agenda",
     "organization.shop",
     "organization.job",
-    #"sorl.thumbnail", # required for thumbnail support
+    # "sorl.thumbnail", # required for thumbnail support
     "django_instagram",
     'hijack',
     'compat',
@@ -302,7 +303,7 @@ BOWER_INSTALLED_APPS = (
     'font-awesome#4.4.0',
 )
 
-# Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats
+# Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats  # noqa: E501
 MIGRATION_MODULES = {
     "blog": "mezzanine.migrations.blog",
     "forms": "mezzanine.migrations.forms",
@@ -313,28 +314,32 @@ MIGRATION_MODULES = {
     "generic": "mezzanine.migrations.generic",
 }
 
-TEMPLATES = [{
-               'BACKEND': 'django.template.backends.django.DjangoTemplates',
-               'OPTIONS': {'builtins': ['mezzanine.template.loader_tags'],
-                           'context_processors': ('django.contrib.auth.context_processors.auth',
-                                                  'django.contrib.messages.context_processors.messages',
-                                                  'django.template.context_processors.debug',
-                                                  'django.template.context_processors.i18n',
-                                                  'django.template.context_processors.static',
-                                                  'django.template.context_processors.media',
-                                                  'django.template.context_processors.request',
-                                                  'django.template.context_processors.tz',
-                                                  'mezzanine.conf.context_processors.settings',
-                                                  'mezzanine.pages.context_processors.page',
-                                                  'organization.core.context_processors.organization_settings',
-                                                  ),
-                            'loaders': [
-                                'mezzanine.template.loaders.host_themes.Loader',
-                                'django.template.loaders.filesystem.Loader',
-                                'django.template.loaders.app_directories.Loader',
-                                ],
-                        }
-            }]
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'OPTIONS': {
+            'builtins': ['mezzanine.template.loader_tags'],
+            'context_processors': (
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.static',
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                'django.template.context_processors.tz',
+                'mezzanine.conf.context_processors.settings',
+                'mezzanine.pages.context_processors.page',
+                'organization.core.context_processors.organization_settings',
+            ),
+            'loaders': [
+                'mezzanine.template.loaders.host_themes.Loader',
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+        }
+    }
+]
 
 # List of middleware classes to use. Order is important; in the request phase,
 # these middleware classes will be applied in the order given, and in the
@@ -370,7 +375,7 @@ PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
     # 'djangobower.finders.BowerFinder',
 )
 
@@ -455,84 +460,152 @@ JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'
 TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 
 ADMIN_MENU_ORDER = (
-    (_('Pages'), ('pages.Page', 'organization-pages.Home',
-                 'organization-core.LinkType',),),
-    (_('Media'), ('organization-media.Media',
-                  'organization-media.Playlist',
-                  'organization-media.LiveStreaming',
-                 'organization-media.MediaCategory',
-                 (_('Media Library'), 'fb_browse'),
-                 )),
-    (_('Events'), ('mezzanine_agenda.Event',
-                  'mezzanine_agenda.Season',
-                  'mezzanine_agenda.EventLocation',
-                  'mezzanine_agenda.ExternalShop',
-                  'mezzanine_agenda.EventPrice',
-                  'mezzanine_agenda.EventCategory',
-                  'organization-agenda.EventPublicType',
-                  'organization-agenda.EventTrainingLevel',
-                  'generic.Keyword',
-                  )),
-    (_('Magazine'), ('organization-magazine.Magazine',
-                    'organization-magazine.Article',
-                    'organization-magazine.Brief',)),
-    (_('Network'), ('organization-network.Organization',
-                    'organization-network.OrganizationLinked',
-                    'organization-network.OrganizationRole',
-                    'organization-network.OrganizationType',
-                    'organization-network.Department',
-                    'organization-network.Team',
-                    'organization-network.Person',
-                    'organization-network.Activity',
-                    'organization-network.PersonListBlock',
-                    )),
-    (_('Activity'), ('organization-network.PersonActivity',
-                    'organization-network.ActivityStatusFamily',
-                    'organization-network.ActivityStatus',
-                    'organization-network.ActivityGrade',
-                    'organization-network.ActivityFramework',
-                    'organization-network.ActivityFunction',
-                    'organization-network.ProjectActivity',
-                    'organization-network.TrainingType',
-                    'organization-network.TrainingTopic',
-                    'organization-network.TrainingLevel',
-                    'organization-network.TrainingSpeciality',
-                    'organization-network.RecordPiece',
-                    'organization-network.BudgetCode'
-                    )),
-    (_('Timesheet'), ('organization-network.ActivityWeeklyHourVolume',
-                     'organization-network.PersonActivityTimeSheet'
-                    )),
-    (_('Projects'), ('organization-projects.Project',
-                    'organization-projects.ProjectPage',
-                    'organization-projects.ProjectCall',
-                    'organization-projects.ProjectContact',
-                    'organization-projects.ProjectProgram',
-                    'organization-projects.ProjectProgramType',
-                    'organization-projects.ProjectTopic',
-                    'organization-projects.ProjectWorkPackage',
-                    'organization-projects.ProjectPublicData',
-                    'organization-projects.ProjectPrivateData',
-                    'organization-projects.ProjectResidency',
-                    'organization-projects.Repository',
-                    'organization-projects.RepositorySystem',
-                    'organization-projects.ProjectDemo',
-                    )),
-    (_('Shop'), ('shop.Product',
-                    'organization-shop.ProductList',
-                    'organization-shop.ProductKeyword',
-                    'shop.Order',
-                    'shop.DiscountCode',
-                    'shop.Sale',
-                    )),
-    (_('Jobs'), ('organization-job.JobOffer',
-                 'organization-job.JobResponse',
-                 'organization-job.Candidacy')),
-    (_('Users'), ('auth.User', 'auth.Group',)),
-    (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
+    (
+        _('Pages'),
+        (
+            'pages.Page',
+            'organization-pages.Home',
+            'organization-core.LinkType',
+        ),
+    ),
+    (
+        _('Media'),
+        (
+            'organization-media.Media',
+            'organization-media.Playlist',
+            'organization-media.LiveStreaming',
+            'organization-media.MediaCategory',
+            (
+                _('Media Library'),
+                'fb_browse'
+            ),
+        )
+    ),
+    (
+        _('Events'),
+        (
+            'mezzanine_agenda.Event',
+            'mezzanine_agenda.Season',
+            'mezzanine_agenda.EventLocation',
+            'mezzanine_agenda.ExternalShop',
+            'mezzanine_agenda.EventPrice',
+            'mezzanine_agenda.EventCategory',
+            'organization-agenda.EventPublicType',
+            'organization-agenda.EventTrainingLevel',
+            'generic.Keyword',
+        )
+    ),
+    (
+        _('Magazine'),
+        (
+            'organization-magazine.Magazine',
+            'organization-magazine.Article',
+            'organization-magazine.Brief',
+        )
+    ),
+    (
+        _('Network'),
+        (
+            'organization-network.Organization',
+            'organization-network.OrganizationLinked',
+            'organization-network.OrganizationRole',
+            'organization-network.OrganizationType',
+            'organization-network.Department',
+            'organization-network.Team',
+            'organization-network.Person',
+            'organization-network.Activity',
+            'organization-network.PersonListBlock',
+        )
+    ),
+    (
+        _('Activity'),
+        (
+            'organization-network.PersonActivity',
+            'organization-network.ActivityStatusFamily',
+            'organization-network.ActivityStatus',
+            'organization-network.ActivityGrade',
+            'organization-network.ActivityFramework',
+            'organization-network.ActivityFunction',
+            'organization-network.ProjectActivity',
+            'organization-network.TrainingType',
+            'organization-network.TrainingTopic',
+            'organization-network.TrainingLevel',
+            'organization-network.TrainingSpeciality',
+            'organization-network.RecordPiece',
+            'organization-network.BudgetCode'
+        )
+    ),
+    (
+        _('Timesheet'),
+        (
+            'organization-network.ActivityWeeklyHourVolume',
+            'organization-network.PersonActivityTimeSheet'
+        )
+    ),
+    (
+        _('Projects'),
+        (
+            'organization-projects.Project',
+            'organization-projects.ProjectPage',
+            'organization-projects.ProjectCall',
+            'organization-projects.ProjectContact',
+            'organization-projects.ProjectProgram',
+            'organization-projects.ProjectProgramType',
+            'organization-projects.ProjectTopic',
+            'organization-projects.ProjectWorkPackage',
+            'organization-projects.ProjectPublicData',
+            'organization-projects.ProjectPrivateData',
+            'organization-projects.ProjectResidency',
+            'organization-projects.Repository',
+            'organization-projects.RepositorySystem',
+            'organization-projects.ProjectDemo',
+        )
+    ),
+    (
+        _('Shop'),
+        (
+            'shop.Product',
+            'organization-shop.ProductList',
+            'organization-shop.ProductKeyword',
+            'shop.Order',
+            'shop.DiscountCode',
+            'shop.Sale',
+        )
+    ),
+    (
+        _('Jobs'),
+        (
+            'organization-job.JobOffer',
+            'organization-job.JobResponse',
+            'organization-job.Candidacy'
+        )
+    ),
+    (
+        _('Users'),
+        (
+            'auth.User',
+            'auth.Group',
+        )
+    ),
+    (
+        _('Site'),
+        (
+            'sites.Site',
+            'redirects.Redirect',
+            'conf.Setting'
+        )
+    ),
 )
 
-DASHBOARD_TAGS = ( ("mezzanine_tags.app_list",), (), ("mezzanine_tags.recent_actions",), )
+DASHBOARD_TAGS = (
+    (
+        "mezzanine_tags.app_list",
+    ),
+    (),
+    (
+        "mezzanine_tags.recent_actions",
+    ),
+)
 
 SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
                         'organization-network.DepartmentPage',
@@ -570,26 +643,26 @@ EVENT_SLUG = 'agenda'
 EVENT_GOOGLE_MAPS_DOMAIN = 'www.google.com'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
-EVENT_EXCLUDE_TAG_LIST = [ ]
+EVENT_EXCLUDE_TAG_LIST = []
 EVENT_TAG_HIGHLIGHTED = 2
 PAST_EVENTS = True
 
 # SEASON
 # year is dynamic in context processor
 
-SEASON_START_MONTH=7
-SEASON_START_DAY=31
-SEASON_END_MONTH=8
-SEASON_END_DAY=1
+SEASON_START_MONTH = 7
+SEASON_START_DAY = 31
+SEASON_END_MONTH = 8
+SEASON_END_DAY = 1
 
-TEAM_HOMEPAGE_ITEM=9
+TEAM_HOMEPAGE_ITEM = 9
 
 BLOG_SLUG = 'article'
 BLOG_POST_PER_PAGE = 200
 ARTICLE_PER_PAGE = 10
 MEDIA_PER_PAGE = 9
 
-#SHOP_CURRENCY_LOCALE = ''
+# SHOP_CURRENCY_LOCALE = ''
 SHOP_USE_VARIATIONS = False
 SHOP_USE_RATINGS = False
 
@@ -643,7 +716,7 @@ HIJACK_ALLOW_GET_REQUESTS = False
 HIJACK_REGISTER_ADMIN = False
 SILENCED_SYSTEM_CHECKS = ["hijack_admin.E001"]
 
-if DEBUG :
+if DEBUG:
     SILENCED_SYSTEM_CHECKS = []
     HIJACK_LOGIN_REDIRECT_URL = "/person"
     HIJACK_LOGOUT_REDIRECT_URL = "/"
@@ -651,10 +724,8 @@ if DEBUG :
     HIJACK_DISPLAY_WARNING = True
     HIJACK_REGISTER_ADMIN = True
 
-
-
 ##############################################
-##########  AUTHENTIFICATION LDAP  ###########
+#           AUTHENTIFICATION LDAP            #
 ##############################################
 # You can use LDAP Authentication by using 'Django Auth LDAP'#
 
@@ -667,11 +738,17 @@ if DEBUG:
 
 # 2 - Specify your LDAP settings :
 AUTH_LDAP_SERVER_URI = "ldap://clusterldap1.ircam.fr"
-AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=People,dc=ircam,dc=fr", ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+AUTH_LDAP_USER_SEARCH = LDAPSearch(
+    "ou=People,dc=ircam,dc=fr",
+    ldap.SCOPE_SUBTREE,
+    "(uid=%(user)s)"
+)
 
 # Set up the basic group parameters.
-AUTH_LDAP_GROUP_SEARCH = LDAPSearch("ou=People,dc=ircam,dc=fr",
-    ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)"
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
+    "ou=People,dc=ircam,dc=fr",
+    ldap.SCOPE_SUBTREE,
+    "(objectClass=groupOfNames)"
 )
 AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
 
@@ -693,7 +770,7 @@ AUTH_LDAP_CACHE_GROUPS = True
 AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 
 ##################
-#### GUARDIAN ####
+#    GUARDIAN    #
 ##################
 
 ANONYMOUS_USER_NAME = None
@@ -707,7 +784,7 @@ LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
 # TIMESHEET
 TIMESHEET_USER_TEST = 1
 TIMESHEET_LOG_PATH = "/var/log/cron/"
-TIMESHEET_START = date(2015, 1, 1) # arbitrary timesheet start due to missing data
+TIMESHEET_START = date(2015, 1, 1)  # arbitrary timesheet start due to missing data
 IRCAM_EMPLOYER = 1
 if DEBUG:
     TIMESHEET_MASTER_MAIL = "foo@bar.fr"
@@ -718,9 +795,10 @@ else:
 
 # HAL
 
-HAL_URL = "//haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?affi_exp=Ircam&CB_auteur=oui&CB_titre=oui" \
-                        "&CB_article=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=typdoc&tri_exp3=date_publi" \
-                        "&ordre_aff=TA&Fen=Aff&Formate=Oui"
+HAL_URL = "//haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?" \
+    "affi_exp=Ircam&CB_auteur=oui&CB_titre=oui" \
+    "&CB_article=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=typdoc&"\
+    "tri_exp3=date_publi&ordre_aff=TA&Fen=Aff&Formate=Oui"
 
 HAL_LABOS_EXP = "labos_exp="
 HAL_URL_CSS = "&css=//%s/static/css/index.min.css"
@@ -740,14 +818,15 @@ OAUTH2_IRCAM = True
 if OAUTH2_IRCAM is not True:
     LOGIN_URL = '/accounts/login'
 else:
-   LOGIN_URL = '/accounts/ircamauth/login/'
+    LOGIN_URL = '/accounts/ircamauth/login/'
 OAUTH_SERVER_BASEURL = os.getenv('OAUTH_SERVER_BASEURL')
 USER_SERVER_BASEURL = os.getenv('USER_SERVER_BASEURL')
 
 LOGOUT_URL = '/accounts/logout/'
 LOGIN_REDIRECT_URL = '/person/'
-#LOGIN_REDIRECT_URL = '/dashboard/'
+# LOGIN_REDIRECT_URL = '/dashboard/'
 # Account creation URL
 OAUTH_SIGNUP_URL = '{}/accounts/signup'.format(USER_SERVER_BASEURL)
-# Creation of an internal user's group for OAUTH2/LDAP and Dashboard presentation (internal/external user) 
+# Creation of an internal user's group for OAUTH2/LDAP and
+# Dashboard presentation (internal/external user) 
 ORGANIZATION_INTERN_USERS_GROUP = 'Ircam - Intern'
