@@ -20,12 +20,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib import admin
-from mezzanine.utils.static import static_lazy as static
-from copy import deepcopy
-from mezzanine.core.admin import *
-from organization.job.models import *
-from organization.job.forms import *
-from organization.job.translation import *
+from mezzanine.core.admin import TabularDynamicInlineAdmin, TeamOwnableAdmin,\
+    BaseTranslationModelAdmin
+from organization.job.models import JobResponse, JobOfferImage, JobOffer,\
+    CandidacyImage, Candidacy
 
 
 class JobResponseInline(TabularDynamicInlineAdmin):
@@ -41,11 +39,22 @@ class JobOfferImageInline(TabularDynamicInlineAdmin):
 class JobOfferAdminDisplayable(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = JobOffer
-    inlines = [JobOfferImageInline, JobResponseInline,]
+    inlines = [JobOfferImageInline, JobResponseInline, ]
     fieldsets = (
         (None, {
-            'fields': ('title', 'status', 'publish_date', 'expiry_date', 'description',
-                        'gen_description', 'content', 'email', 'type', 'text_button', 'url',),
+            'fields': (
+                'title',
+                'status',
+                'publish_date',
+                'expiry_date',
+                'description',
+                'gen_description',
+                'content',
+                'email',
+                'type',
+                'text_button',
+                'url',
+            ),
         }),
     )
 
@@ -66,11 +75,22 @@ class CandidacyAdminDisplayable(BaseTranslationModelAdmin,):
 
     model = Candidacy
     list_display = ('title', 'url', )
-    inlines = [CandidacyImageInline,]
+    inlines = [CandidacyImageInline, ]
     fieldsets = (
         (None, {
-            'fields': ('title', 'status', 'publish_date', 'expiry_date', 'description',
-                        'gen_description', 'content', 'date_from', 'date_to', 'text_button', 'url',),
+            'fields': (
+                'title',
+                'status',
+                'publish_date',
+                'expiry_date',
+                'description',
+                'gen_description',
+                'content',
+                'date_from',
+                'date_to',
+                'text_button',
+                'url',
+            ),
         }),
     )
 

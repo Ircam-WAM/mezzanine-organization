@@ -19,8 +19,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
-
 from django import forms
 from django.apps import apps
 from django.contrib.auth.models import User
@@ -36,13 +34,13 @@ from mezzanine.core.models import RichText, SiteRelated, Orderable, MetaData, \
     TimeStamped, TeamOwnable
 from mezzanine.pages.models import Page
 from mezzanine.utils.models import AdminThumbMixin
-from organization.core.models import *
-from organization.media.models import *
-from organization.media.models import Media
-from organization.network.validators import *
+from organization.core.models import NamedSlugged, Description, Address, URL,\
+    AdminThumbRelatedMixin, TitledSlugged, RelatedTitle, DynamicContent,\
+    Titled, Link, Image, File, Block, Named, UserImage, SubTitled, Period,\
+    Label, Dated
+from organization.media.models import Media, PlaylistRelated
+from organization.network.validators import validate_positive, is_percent
 from organization.pages.models import CustomPage
-
-# from .nationalities.fields import NationalityField
 
 # Hack to have these strings translated
 mr = _('Mr')
@@ -112,13 +110,30 @@ ORGANIZATION_STATUS_CHOICES = (
 )
 
 
-class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMixin, Orderable):
+class Organization(
+    NamedSlugged,
+    Description,
+    Address,
+    URL,
+    AdminThumbRelatedMixin,
+    Orderable
+):
     """(Organization description)"""
 
-    type = models.ForeignKey('OrganizationType', verbose_name=_('organization type'), blank=True, null=True,
-                             on_delete=models.SET_NULL)
-    role = models.ForeignKey('OrganizationRole', verbose_name=_('organization role'), blank=True, null=True,
-                             on_delete=models.SET_NULL)
+    type = models.ForeignKey(
+        'OrganizationType',
+        verbose_name=_('organization type'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    role = models.ForeignKey(
+        'OrganizationRole',
+        verbose_name=_('organization role'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
     email = models.EmailField(_('email'), blank=True, null=True)
     initials = models.CharField(_('initials'), max_length=128, blank=True, null=True)
     is_on_map = models.BooleanField(_('is on map'), default=False, blank=True)
@@ -129,7 +144,11 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
     subway_access = models.TextField(_('subway access'), blank=True)
     bio = models.TextField(_('bio'), blank=True)
     admin_thumb_type = 'logo'
-    validation_status = models.IntegerField(_('validation status'), choices=ORGANIZATION_STATUS_CHOICES, default=1)
+    validation_status = models.IntegerField(
+        _('validation status'),
+        choices=ORGANIZATION_STATUS_CHOICES,
+        default=1
+    )
     hal_id = models.CharField(_('HAL id'), max_length=10, blank=True, null=True)
 
     class Meta:
@@ -148,29 +167,103 @@ class Organization(NamedSlugged, Description, Address, URL, AdminThumbRelatedMix
         return reverse("network")
 
 
-class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address, TeamOwnable):
+class Person(
+    TitledSlugged,
+    MetaData,
+    TimeStamped,
+    AdminThumbMixin,
+    Address,
+    TeamOwnable
+):
     """(Person description)"""
 
     objects = SearchableManager()
     search_fields = {"title": 5}
 
-    user = models.OneToOneField(User, verbose_name=_('user'), blank=True, null=True, on_delete=models.SET_NULL)
-    person_title = models.CharField(_('title'), max_length=16, choices=TITLE_CHOICES, blank=True)
-    gender = models.CharField(_('gender'), max_length=16, choices=GENDER_CHOICES, blank=True)
-    first_name = models.CharField(_('first name'), max_length=255, blank=True, null=True)
-    last_name = models.CharField(_('last name'), max_length=255, blank=True, null=True)
-    email = models.EmailField(_('email'), blank=True, null=True)
-    telephone = models.CharField(_('telephone'), max_length=64, blank=True, null=True)
-    register_id = models.CharField(_('register ID'), blank=True, null=True, max_length=128)
-    birthday = models.DateField(_('birthday'), blank=True, null=True)
-    bio = RichTextField(_('biography'), blank=True)
-    role = models.CharField(_('role'), max_length=256, blank=True, null=True)
-    external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
-    hal_url = models.URLField(_('HAL url'), max_length=512, blank=True)
-    karma = models.IntegerField(default=0, editable=False)
+    user = models.OneToOneField(
+        User,
+        verbose_name=_('user'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    person_title = models.CharField(
+        _('title'),
+        max_length=16,
+        choices=TITLE_CHOICES,
+        blank=True
+    )
+    gender = models.CharField(
+        _('gender'),
+        max_length=16,
+        choices=GENDER_CHOICES,
+        blank=True
+    )
+    first_name = models.CharField(
+        _('first name'),
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    last_name = models.CharField(
+        _('last name'),
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    email = models.EmailField(
+        _('email'),
+        blank=True,
+        null=True
+    )
+    telephone = models.CharField(
+        _('telephone'),
+        max_length=64,
+        blank=True,
+        null=True
+    )
+    register_id = models.CharField(
+        _('register ID'),
+        blank=True,
+        null=True,
+        max_length=128
+    )
+    birthday = models.DateField(
+        _('birthday'),
+        blank=True,
+        null=True
+    )
+    bio = RichTextField(
+        _('biography'),
+        blank=True
+    )
+    role = models.CharField(
+        _('role'),
+        max_length=256,
+        blank=True,
+        null=True
+    )
+    external_id = models.CharField(
+        _('external ID'),
+        blank=True,
+        null=True,
+        max_length=128
+    )
+    hal_url = models.URLField(
+        _('HAL url'),
+        max_length=512,
+        blank=True
+    )
+    karma = models.IntegerField(
+        default=0,
+        editable=False
+    )
     search_fields = {"title": 1}
-    is_referenced =  models.BooleanField(_('Is Referenced'), default=True,
-                        help_text=_("Determine if the Person has to be referenced on search"))
+    is_referenced = models.BooleanField(
+        _('Is Referenced'),
+        default=True,
+        help_text=_("Determine if the Person has to be referenced on search")
+    )
 
     class Meta:
         verbose_name = _('person')
@@ -205,27 +298,49 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address, Tea
 
 
 class PersonRelatedTitle(RelatedTitle):
-    person = models.OneToOneField("Person", verbose_name=_('person'), related_name='related_title', blank=True,
-                                  null=True, on_delete=models.SET_NULL)
+    person = models.OneToOneField(
+        "Person",
+        verbose_name=_('person'),
+        related_name='related_title',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("related title")
 
 
 class DynamicContentPerson(DynamicContent, Orderable):
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='dynamic_content_person', blank=True,
-                               null=True, on_delete=models.CASCADE)
+    person = models.ForeignKey(
+        Person,
+        verbose_name=_('person'),
+        related_name='dynamic_content_person',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         verbose_name = 'Dynamic Content Person'
 
 
 class OrganizationLinkedBlockInline(Titled, Description, Orderable):
-    organization_linked = models.ForeignKey('OrganizationLinked', verbose_name=_('organization list'),
-                                            related_name='organization_linked_block_inline_list', blank=True, null=True)
-    organization_main = models.ForeignKey('Organization', verbose_name=_('organization'),
-                                          related_name='organization_linked_block', blank=True, null=True,
-                                          on_delete=models.SET_NULL)
+    organization_linked = models.ForeignKey(
+        'OrganizationLinked',
+        verbose_name=_('organization list'),
+        related_name='organization_linked_block_inline_list',
+        blank=True,
+        null=True
+    )
+    organization_main = models.ForeignKey(
+        'Organization',
+        verbose_name=_('organization'),
+        related_name='organization_linked_block',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class OrganizationLinked(Titled, Description):
@@ -237,57 +352,124 @@ class OrganizationLinked(Titled, Description):
 
 
 class OrganizationLinkedInline(Titled, Description, Orderable):
-    organization_list = models.ForeignKey('OrganizationLinked', verbose_name=_('organization linked'),
-                                          related_name='organization_linked_inline_linked', blank=True, null=True,
-                                          on_delete=models.SET_NULL)
-    organization = models.ForeignKey('Organization', verbose_name=_('organization'),
-                                     related_name='organization_linked_inline_from', blank=True, null=True,
-                                     on_delete=models.SET_NULL)
+    organization_list = models.ForeignKey(
+        'OrganizationLinked',
+        verbose_name=_('organization linked'),
+        related_name='organization_linked_inline_linked',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    organization = models.ForeignKey(
+        'Organization',
+        verbose_name=_('organization'),
+        related_name='organization_linked_inline_from',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class OrganizationPlaylist(PlaylistRelated):
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='playlists', blank=True,
-                                     null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(
+        Organization,
+        verbose_name=_('organization'),
+        related_name='playlists',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class DynamicMultimediaOrganization(DynamicContent, Orderable):
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='dynamic_multimedia',
-                                     blank=True, null=True, on_delete=models.CASCADE)
+    organization = models.ForeignKey(
+        Organization,
+        verbose_name=_('organization'),
+        related_name='dynamic_multimedia',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         verbose_name = 'Multimedia'
 
 
 class DynamicMultimediaPerson(DynamicContent, Orderable):
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='dynamic_multimedia', blank=True,
-                               null=True, on_delete=models.CASCADE)
+    person = models.ForeignKey(
+        Person,
+        verbose_name=_('person'),
+        related_name='dynamic_multimedia',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         verbose_name = 'Multimedia'
 
 
 class OrganizationLink(Link):
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='links', blank=True,
-                                     null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(
+        Organization,
+        verbose_name=_('organization'),
+        related_name='links',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class OrganizationImage(Image):
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='images', blank=True,
-                                     null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(
+        Organization,
+        verbose_name=_('organization'),
+        related_name='images', blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class OrganizationBlock(Block):
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='blocks', blank=True,
-                                     null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(
+        Organization,
+        verbose_name=_('organization'),
+        related_name='blocks',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class OrganizationService(Named, URL, Orderable):
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='services', blank=True,
-                                     null=True, on_delete=models.SET_NULL)
-    image = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
-    css_color = models.CharField(_('css color'), max_length=64, blank=True, null=True, choices=CSS_COLOR_CHOICES)
-    css_banner_type = models.CharField(_('css banner type'), max_length=64, blank=True, null=True,
-                                       choices=CSS_BANNER_CHOICES)
+    organization = models.ForeignKey(
+        Organization,
+        verbose_name=_('organization'),
+        related_name='services',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    image = FileField(
+        _("Image"),
+        max_length=1024,
+        format="Image",
+        upload_to="images"
+    )
+    css_color = models.CharField(
+        _('css color'),
+        max_length=64,
+        blank=True,
+        null=True,
+        choices=CSS_COLOR_CHOICES
+    )
+    css_banner_type = models.CharField(
+        _('css banner type'),
+        max_length=64,
+        blank=True,
+        null=True,
+        choices=CSS_BANNER_CHOICES
+    )
     box_size = models.IntegerField(_('box size'), default=3, choices=BOX_SIZE_CHOICES)
 
 
@@ -303,10 +485,22 @@ class OrganizationType(Named):
 
 
 class OrganizationEventLocation(models.Model):
-    organization = models.ForeignKey('organization-network.Organization', verbose_name=_('Organization'),
-                                     related_name='event_locations', blank=True, null=True, on_delete=models.SET_NULL)
-    event_location = models.ForeignKey('mezzanine_agenda.EventLocation', verbose_name=_('Event location'),
-                                       related_name='organizations', blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(
+        'organization-network.Organization',
+        verbose_name=_('Organization'),
+        related_name='event_locations',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    event_location = models.ForeignKey(
+        'mezzanine_agenda.EventLocation',
+        verbose_name=_('Event location'),
+        related_name='organizations',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = 'Organization'
@@ -315,7 +509,14 @@ class OrganizationEventLocation(models.Model):
 class OrganizationRole(Named):
     """Roles of Organizations"""
 
-    key = models.CharField(_('key'), blank=False, null=False, unique=True, max_length=128, default="unknown")
+    key = models.CharField(
+        _('key'),
+        blank=False,
+        null=False,
+        unique=True,
+        max_length=128,
+        default="unknown"
+    )
 
     class Meta:
         verbose_name = _('organization role')
@@ -326,8 +527,14 @@ class OrganizationRole(Named):
 
 
 class OrganizationContact(Person):
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='contacts', blank=True,
-                                     null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(
+        Organization,
+        verbose_name=_('organization'),
+        related_name='contacts',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = 'Organization contact'
@@ -335,14 +542,24 @@ class OrganizationContact(Person):
 
 
 class OrganizationUserImage(UserImage):
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='user_images',
-                                     blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(
+        Organization,
+        verbose_name=_('organization'),
+        related_name='user_images',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class Department(Named):
     """(Department description)"""
 
-    organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="departments")
+    organization = models.ForeignKey(
+        'Organization',
+        verbose_name=_('organization'),
+        related_name="departments"
+    )
 
     class Meta:
         verbose_name = _('department')
@@ -357,9 +574,20 @@ class Department(Named):
 class DepartmentPage(Page, SubTitled, RichText):
     """(Department description)"""
 
-    department = models.ForeignKey('Department', verbose_name=_('department'), related_name="pages", blank=True,
-                                   null=True, on_delete=models.SET_NULL)
-    weaving_css_class = models.CharField(_('background pattern'), choices=PATTERN_CHOICES, max_length=64, blank=True)
+    department = models.ForeignKey(
+        'Department',
+        verbose_name=_('department'),
+        related_name="pages",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    weaving_css_class = models.CharField(
+        _('background pattern'),
+        choices=PATTERN_CHOICES,
+        max_length=64,
+        blank=True
+    )
 
     class Meta:
         verbose_name = _('department page')
@@ -368,16 +596,52 @@ class DepartmentPage(Page, SubTitled, RichText):
 class Team(NamedSlugged, Description, TeamOwnable):
     """(Team description)"""
 
-    organization = models.ForeignKey('Organization', verbose_name=_('organization'), related_name="teams", blank=True,
-                                     null=True, on_delete=models.SET_NULL)
-    department = models.ForeignKey('Department', verbose_name=_('department'), related_name="teams", blank=True,
-                                   null=True, on_delete=models.SET_NULL)
-    code = models.CharField(_('code'), max_length=64, blank=True, null=True)
-    is_legacy = models.BooleanField(_('is legacy'), default=False)
-    parent = models.ForeignKey('Team', verbose_name=_('parent team'), related_name="children", blank=True, null=True,
-                               on_delete=models.SET_NULL)
-    hal_tutelage = models.CharField(_('HAL Tutelage'), max_length=255, blank=True, null=True)
-    hal_researche_structure = models.CharField(_('HAL Researche Structure'), max_length=255, blank=True, null=True)
+    organization = models.ForeignKey(
+        'Organization',
+        verbose_name=_('organization'),
+        related_name="teams",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    department = models.ForeignKey(
+        'Department',
+        verbose_name=_('department'),
+        related_name="teams",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    code = models.CharField(
+        _('code'),
+        max_length=64,
+        blank=True,
+        null=True
+    )
+    is_legacy = models.BooleanField(
+        _('is legacy'),
+        default=False
+    )
+    parent = models.ForeignKey(
+        'Team',
+        verbose_name=_('parent team'),
+        related_name="children",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    hal_tutelage = models.CharField(
+        _('HAL Tutelage'),
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    hal_researche_structure = models.CharField(
+        _('HAL Researche Structure'),
+        max_length=255,
+        blank=True,
+        null=True
+    )
 
     class Meta:
         verbose_name = _('team')
@@ -389,7 +653,9 @@ class Team(NamedSlugged, Description, TeamOwnable):
             return ' - '.join((self.organization.name, self.name))
         elif self.department:
             if self.department.organization:
-                return ' - '.join((self.department.organization.name, self.department.name, self.name))
+                return ' - '.join(
+                    (self.department.organization.name, self.department.name, self.name)
+                )
             else:
                 return ' - '.join((self.department.name, self.name))
         return self.name
@@ -412,37 +678,68 @@ class Team(NamedSlugged, Description, TeamOwnable):
 class TeamPage(Page, SubTitled, RichText):
     """(Team description)"""
 
-    team = models.ForeignKey('Team', verbose_name=_('team'), related_name="pages", blank=True, null=True,
-                             on_delete=models.SET_NULL)
-    order_projects_by = models.CharField(_('Projects ordering'), max_length=16, choices=[
-                            ('creation_date', _('Creation Date')),
-                            ('manual', _('Manuel')),
-                        ])
+    team = models.ForeignKey(
+        'Team',
+        verbose_name=_('team'),
+        related_name="pages",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    order_projects_by = models.CharField(
+        _('Projects ordering'),
+        max_length=16,
+        choices=[
+            ('creation_date', _('Creation Date')),
+            ('manual', _('Manuel')),
+        ]
+    )
+
     class Meta():
         verbose_name = _('team page')
         permissions = TeamOwnable.Meta.permissions
         # We should put here a constraint between team and site_id
-        # Note possible in Django 1.10, because the field are in two differents table in DB
+        # Note possible in Django 1.10, because the field are in two differents table in DB  # noqa: E501
         # Maybe possible in Django 2.2
         # https://docs.djangoproject.com/en/2.2/ref/models/constraints/
         # unique_together = (("team", "page__site_id"),)
 
 
 class TeamLink(Link):
-    team = models.ForeignKey(Team, verbose_name=_('team'), related_name='links', blank=True, null=True,
-                             on_delete=models.SET_NULL)
+    team = models.ForeignKey(
+        Team,
+        verbose_name=_('team'),
+        related_name='links',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class ProducerData(models.Model):
     """(ProducerData description)"""
 
-    organization = models.ForeignKey(Organization, verbose_name=_('organization'), related_name='producer_data',
-                                     blank=True, null=True, on_delete=models.SET_NULL)
+    organization = models.ForeignKey(
+        Organization,
+        verbose_name=_('organization'),
+        related_name='producer_data',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
-    experience_description = models.CharField(_('experience description'), max_length=60,
-                                              help_text="Do you have prior experience with working in organizations in a co-creation process? If so, please describe it. (40 to 60 words)")
-    producer_description = models.TextField(_('producer description'),
-                                            help_text="Description of the producer organization and the resources they bring for the proposal (100 to 150 words).")
+    experience_description = models.CharField(
+        _('experience description'),
+        max_length=60,
+        help_text="Do you have prior experience with working"
+        " in organizations in a co-creation process? If so,"
+        " please describe it. (40 to 60 words)"
+    )
+    producer_description = models.TextField(
+        _('producer description'),
+        help_text="Description of the producer organization"
+        " and the resources they bring for the proposal (100 to 150 words)."
+    )
 
     class Meta:
         verbose_name = 'Producer data'
@@ -459,35 +756,76 @@ class ProducerMixin(object):
 
 
 class PersonPlaylist(PlaylistRelated):
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='playlists', blank=True, null=True,
-                               on_delete=models.SET_NULL)
+    person = models.ForeignKey(
+        Person,
+        verbose_name=_('person'),
+        related_name='playlists',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class PersonLink(Link):
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='links', blank=True, null=True,
-                               on_delete=models.SET_NULL)
+    person = models.ForeignKey(
+        Person,
+        verbose_name=_('person'),
+        related_name='links',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class PersonImage(Image):
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='images', blank=True, null=True,
-                               on_delete=models.SET_NULL)
+    person = models.ForeignKey(
+        Person,
+        verbose_name=_('person'),
+        related_name='images',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class PersonFile(File):
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='files', blank=True, null=True,
-                               on_delete=models.SET_NULL)
+    person = models.ForeignKey(
+        Person,
+        verbose_name=_('person'),
+        related_name='files',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class PersonBlock(Block):
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='blocks', blank=True, null=True,
-                               on_delete=models.SET_NULL)
+    person = models.ForeignKey(
+        Person,
+        verbose_name=_('person'),
+        related_name='blocks',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class PageCustomPersonListBlockInline(Titled):
-    page = models.ForeignKey(CustomPage, verbose_name=_('Page'), related_name='page_custom_person_list_block_inlines',
-                             blank=True, null=True, on_delete=models.SET_NULL)
-    person_list_block = models.ForeignKey("PersonListBlock", related_name='page_custom_person_list_block_inlines',
-                                          verbose_name=_('Person List Block'), blank=True, null=True)
+    page = models.ForeignKey(
+        CustomPage,
+        verbose_name=_('Page'),
+        related_name='page_custom_person_list_block_inlines',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    person_list_block = models.ForeignKey(
+        "PersonListBlock",
+        related_name='page_custom_person_list_block_inlines',
+        verbose_name=_('Person List Block'),
+        blank=True,
+        null=True
+    )
 
     class Meta:
         verbose_name = _('Person List')
@@ -497,7 +835,11 @@ class PageCustomPersonListBlockInline(Titled):
 
 
 class PersonListBlock(Titled, Description, Label, Dated, SiteRelated):
-    style = models.CharField(_('style'), max_length=16, choices=PERSON_LIST_STYLE_CHOICES)
+    style = models.CharField(
+        _('style'),
+        max_length=16,
+        choices=PERSON_LIST_STYLE_CHOICES
+    )
 
     class Meta:
         verbose_name = _('Person List')
@@ -507,11 +849,21 @@ class PersonListBlock(Titled, Description, Label, Dated, SiteRelated):
 
 
 class PersonListBlockInline(SiteRelated):
-    person_list_block = models.ForeignKey(PersonListBlock, verbose_name=_('Person List Block'),
-                                          related_name='person_list_block_inlines', blank=True, null=True,
-                                          on_delete=models.SET_NULL)
-    person = models.ForeignKey(Person, verbose_name=_('Person'), related_name='person_list_block_inlines', null=True,
-                               on_delete=models.SET_NULL)
+    person_list_block = models.ForeignKey(
+        PersonListBlock,
+        verbose_name=_('Person List Block'),
+        related_name='person_list_block_inlines',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    person = models.ForeignKey(
+        Person,
+        verbose_name=_('Person'),
+        related_name='person_list_block_inlines',
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _('Person autocomplete')
@@ -520,8 +872,14 @@ class PersonListBlockInline(SiteRelated):
 class ActivityStatus(Named):
     order = models.IntegerField(_('order number'), default=100)
     display = models.BooleanField(_('display on team page'), blank=True, default=True)
-    parent = models.ForeignKey('ActivityStatus', verbose_name=_('parent'), related_name='children', blank=True,
-                               null=True, on_delete=models.SET_NULL)
+    parent = models.ForeignKey(
+        'ActivityStatus',
+        verbose_name=_('parent'),
+        related_name='children',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _('status')
@@ -607,73 +965,266 @@ class ActivityWeeklyHourVolume(Titled, Description):
 class PersonActivity(Period):
     """(Activity description)"""
 
-    person = models.ForeignKey('Person', verbose_name=_('person'), related_name='activities')
+    person = models.ForeignKey(
+        'Person',
+        verbose_name=_('person'),
+        related_name='activities'
+    )
 
-    weeks = models.IntegerField(_('number of weeks'), blank=True, null=True)
-    status = models.ForeignKey(ActivityStatus, verbose_name=_('status'), blank=True, null=True,
-                               related_name='activities', on_delete=models.SET_NULL)
+    weeks = models.IntegerField(
+        _('number of weeks'),
+        blank=True,
+        null=True
+    )
+    status = models.ForeignKey(
+        ActivityStatus,
+        verbose_name=_('status'),
+        blank=True,
+        null=True,
+        related_name='activities',
+        on_delete=models.SET_NULL
+    )
     is_permanent = models.BooleanField(_('permanent'), default=False)
-    framework = models.ForeignKey(ActivityFramework, verbose_name=_('framework'), blank=True, null=True,
-                                  on_delete=models.SET_NULL)
-    grade = models.ForeignKey(ActivityGrade, verbose_name=_('grade'), blank=True, null=True, on_delete=models.SET_NULL)
-    function = models.ForeignKey(ActivityFunction, verbose_name=_('function'), blank=True, null=True,
-                                 on_delete=models.SET_NULL)
+    framework = models.ForeignKey(
+        ActivityFramework,
+        verbose_name=_('framework'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    grade = models.ForeignKey(
+        ActivityGrade,
+        verbose_name=_('grade'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    function = models.ForeignKey(
+        ActivityFunction,
+        verbose_name=_('function'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
-    organizations = models.ManyToManyField(Organization, verbose_name=_('organizations (attachment or subscribed)'),
-                                           related_name='project_activities', blank=True)
-    employers = models.ManyToManyField(Organization, verbose_name=_('employers'),
-                                       related_name='employer_project_activities', blank=True)
-    umr = models.ForeignKey(UMR, verbose_name=_('UMR'), blank=True, null=True, on_delete=models.SET_NULL)
-    teams = models.ManyToManyField('Team', verbose_name=_('teams'), related_name='team_activities', blank=True)
-    team_text = models.CharField(_('other team text'), blank=True, null=True, max_length=256)
-    rd_quota_float = models.FloatField(_('R&D quota (float)'), blank=True, null=True)
-    rd_quota_text = models.CharField(_('R&D quota (text)'), blank=True, null=True, max_length=128)
-    rd_program = models.TextField(_('R&D program'), blank=True)
-    budget_code = models.ForeignKey(BudgetCode, blank=True, null=True, on_delete=models.SET_NULL)
+    organizations = models.ManyToManyField(
+        Organization,
+        verbose_name=_('organizations (attachment or subscribed)'),
+        related_name='project_activities',
+        blank=True
+    )
+    employers = models.ManyToManyField(
+        Organization,
+        verbose_name=_('employers'),
+        related_name='employer_project_activities',
+        blank=True
+    )
+    umr = models.ForeignKey(
+        UMR,
+        verbose_name=_('UMR'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    teams = models.ManyToManyField(
+        'Team',
+        verbose_name=_('teams'),
+        related_name='team_activities',
+        blank=True
+    )
+    team_text = models.CharField(
+        _('other team text'),
+        blank=True,
+        null=True,
+        max_length=256
+    )
+    rd_quota_float = models.FloatField(
+        _('R&D quota (float)'),
+        blank=True,
+        null=True
+    )
+    rd_quota_text = models.CharField(
+        _('R&D quota (text)'),
+        blank=True,
+        null=True,
+        max_length=128
+    )
+    rd_program = models.TextField(
+        _('R&D program'),
+        blank=True
+    )
+    budget_code = models.ForeignKey(
+        BudgetCode,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
-    supervisors = models.ManyToManyField('Person', verbose_name=_('supervisors'), related_name='supervisor_activities',
-                                         blank=True)
+    supervisors = models.ManyToManyField(
+        'Person',
+        verbose_name=_('supervisors'),
+        related_name='supervisor_activities',
+        blank=True
+    )
 
-    phd_doctoral_school = models.ForeignKey(Organization, verbose_name=_('doctoral school'), blank=True, null=True,
-                                            on_delete=models.SET_NULL)
-    phd_directors = models.ManyToManyField('Person', verbose_name=_('PhD directors'),
-                                           related_name='phd_director_activities', blank=True)
-    phd_defense_date = models.DateField(_('PhD defense date'), blank=True, null=True)
+    phd_doctoral_school = models.ForeignKey(
+        Organization,
+        verbose_name=_('doctoral school'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    phd_directors = models.ManyToManyField(
+        'Person',
+        verbose_name=_('PhD directors'),
+        related_name='phd_director_activities',
+        blank=True
+    )
+    phd_defense_date = models.DateField(
+        _('PhD defense date'),
+        blank=True,
+        null=True
+    )
     phd_title = models.TextField(_('PhD title'), blank=True)
-    phd_post_doctoral_situation = models.CharField(_('post-doctoral situation'), blank=True, max_length=256)
+    phd_post_doctoral_situation = models.CharField(
+        _('post-doctoral situation'),
+        blank=True,
+        max_length=256
+    )
     hdr = models.BooleanField(_('HDR'), default=False)
 
-    training_type = models.ForeignKey(TrainingType, verbose_name=_('training type'), blank=True, null=True,
-                                      on_delete=models.SET_NULL)
-    training_level = models.ForeignKey(TrainingLevel, verbose_name=_('training level'), blank=True, null=True,
-                                       on_delete=models.SET_NULL)
-    training_topic = models.ForeignKey(TrainingTopic, verbose_name=_('training topic'), blank=True, null=True,
-                                       on_delete=models.SET_NULL)
-    training_speciality = models.ForeignKey(TrainingSpeciality, verbose_name=_('training speciality'), blank=True,
-                                            null=True, on_delete=models.SET_NULL)
-    training_title = models.TextField(_('Training title'), blank=True)
+    training_type = models.ForeignKey(
+        TrainingType,
+        verbose_name=_('training type'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    training_level = models.ForeignKey(
+        TrainingLevel,
+        verbose_name=_('training level'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    training_topic = models.ForeignKey(
+        TrainingTopic,
+        verbose_name=_('training topic'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    training_speciality = models.ForeignKey(
+        TrainingSpeciality,
+        verbose_name=_('training speciality'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    training_title = models.TextField(
+        _('Training title'),
+        blank=True
+    )
 
-    record_piece = models.ForeignKey(RecordPiece, blank=True, null=True, on_delete=models.SET_NULL)
+    record_piece = models.ForeignKey(
+        RecordPiece,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
-    date_added = models.DateTimeField(_('add date'), auto_now_add=True)
-    date_modified = models.DateTimeField(_('modification date'), auto_now=True)
-    date_modified_manual = models.DateTimeField(_('manual modification date'), blank=True, null=True)
+    date_added = models.DateTimeField(
+        _('add date'),
+        auto_now_add=True
+    )
+    date_modified = models.DateTimeField(
+        _('modification date'),
+        auto_now=True
+    )
+    date_modified_manual = models.DateTimeField(
+        _('manual modification date'),
+        blank=True,
+        null=True
+    )
 
-    comments = models.TextField(_('comments'), blank=True)
-    external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
+    comments = models.TextField(
+        _('comments'),
+        blank=True
+    )
+    external_id = models.CharField(
+        _('external ID'),
+        blank=True,
+        null=True,
+        max_length=128
+    )
 
-    weekly_hour_volume = models.ForeignKey('ActivityWeeklyHourVolume', blank=True, null=True, on_delete=models.SET_NULL)
+    weekly_hour_volume = models.ForeignKey(
+        'ActivityWeeklyHourVolume',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
-    monday_am = models.FloatField(_('monday AM'), validators=[validate_positive], blank=True, null=True)
-    monday_pm = models.FloatField(_('monday PM'), validators=[validate_positive], blank=True, null=True)
-    tuesday_am = models.FloatField(_('tuesday AM'), validators=[validate_positive], blank=True, null=True)
-    tuesday_pm = models.FloatField(_('tuesday PM'), validators=[validate_positive], blank=True, null=True)
-    wednesday_am = models.FloatField(_('wednesday AM'), validators=[validate_positive], blank=True, null=True)
-    wednesday_pm = models.FloatField(_('wednesday PM'), validators=[validate_positive], blank=True, null=True)
-    thursday_am = models.FloatField(_('thursday AM'), validators=[validate_positive], blank=True, null=True)
-    thursday_pm = models.FloatField(_('thursday PM'), validators=[validate_positive], blank=True, null=True)
-    friday_am = models.FloatField(_('friday AM'), validators=[validate_positive], blank=True, null=True)
-    friday_pm = models.FloatField(_('friday PM'), validators=[validate_positive], blank=True, null=True)
+    monday_am = models.FloatField(
+        _('monday AM'),
+        validators=[validate_positive],
+        blank=True,
+        null=True
+    )
+    monday_pm = models.FloatField(
+        _('monday PM'),
+        validators=[validate_positive],
+        blank=True,
+        null=True
+    )
+    tuesday_am = models.FloatField(
+        _('tuesday AM'),
+        validators=[validate_positive],
+        blank=True,
+        null=True
+    )
+    tuesday_pm = models.FloatField(
+        _('tuesday PM'),
+        validators=[validate_positive],
+        blank=True,
+        null=True
+    )
+    wednesday_am = models.FloatField(
+        _('wednesday AM'),
+        validators=[validate_positive],
+        blank=True,
+        null=True
+    )
+    wednesday_pm = models.FloatField(
+        _('wednesday PM'),
+        validators=[validate_positive],
+        blank=True,
+        null=True
+    )
+    thursday_am = models.FloatField(
+        _('thursday AM'),
+        validators=[validate_positive],
+        blank=True,
+        null=True
+    )
+    thursday_pm = models.FloatField(
+        _('thursday PM'),
+        validators=[validate_positive],
+        blank=True,
+        null=True
+    )
+    friday_am = models.FloatField(
+        _('friday AM'),
+        validators=[validate_positive],
+        blank=True,
+        null=True
+    )
+    friday_pm = models.FloatField(
+        _('friday PM'),
+        validators=[validate_positive],
+        blank=True,
+        null=True
+    )
 
     class Meta:
         verbose_name = _('activity')
@@ -682,7 +1233,9 @@ class PersonActivity(Period):
 
     def __str__(self):
         if self.status:
-            return ' - '.join((self.status.name, str(self.date_from), str(self.date_to)))
+            return ' - '.join(
+                (self.status.name, str(self.date_from), str(self.date_to))
+            )
         else:
             return ' - '.join((str(self.date_from), str(self.date_to)))
 
@@ -692,12 +1245,27 @@ class PersonActivity(Period):
 
 
 class PersonActivityTimeSheet(models.Model):
-    activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='timesheets')
-    project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'), related_name='timesheets')
-    work_packages = models.ManyToManyField('organization-projects.ProjectWorkPackage', verbose_name=_('work package'),
-                                           related_name='timesheets', blank=True)
-    percentage = models.IntegerField(_('% of work time on the project'), validators=[is_percent],
-                                     help_text="Percentage has to be an integer between 0 and 100")
+    activity = models.ForeignKey(
+        'PersonActivity',
+        verbose_name=_('activity'),
+        related_name='timesheets'
+    )
+    project = models.ForeignKey(
+        'organization-projects.Project',
+        verbose_name=_('project'),
+        related_name='timesheets'
+    )
+    work_packages = models.ManyToManyField(
+        'organization-projects.ProjectWorkPackage',
+        verbose_name=_('work package'),
+        related_name='timesheets',
+        blank=True
+    )
+    percentage = models.IntegerField(
+        _('% of work time on the project'),
+        validators=[is_percent],
+        help_text="Percentage has to be an integer between 0 and 100"
+    )
     month = models.IntegerField(_('month'), choices=MONTH_CHOICES)
     year = models.IntegerField(_('year'))
     accounting = models.DateField(blank=True, null=True)
@@ -715,13 +1283,31 @@ class PersonActivityTimeSheet(models.Model):
 
 
 class ProjectActivity(Titled, Description, Orderable):
-    activity = models.ForeignKey('PersonActivity', verbose_name=_('activity'), related_name='project_activity')
-    project = models.ForeignKey('organization-projects.Project', verbose_name=_('project'),
-                                related_name='project_activity', null=True, on_delete=models.SET_NULL)
-    default_percentage = models.IntegerField(_('default %'), validators=[is_percent], blank=True, null=True,
-                                             help_text="Percentage has to be an integer between 0 and 100")
-    work_packages = models.ManyToManyField('organization-projects.ProjectWorkPackage', verbose_name=_('work package'),
-                                           related_name='project_activity', blank=True)
+    activity = models.ForeignKey(
+        'PersonActivity',
+        verbose_name=_('activity'),
+        related_name='project_activity'
+    )
+    project = models.ForeignKey(
+        'organization-projects.Project',
+        verbose_name=_('project'),
+        related_name='project_activity',
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    default_percentage = models.IntegerField(
+        _('default %'),
+        validators=[is_percent],
+        blank=True,
+        null=True,
+        help_text="Percentage has to be an integer between 0 and 100"
+    )
+    work_packages = models.ManyToManyField(
+        'organization-projects.ProjectWorkPackage',
+        verbose_name=_('work package'),
+        related_name='project_activity',
+        blank=True
+    )
     work_packages.widget = forms.CheckboxSelectMultiple()
 
     class Meta:
@@ -767,15 +1353,28 @@ def update_activity(a):
 
 class MediaDepartment(models.Model):
     media = models.ForeignKey(Media, verbose_name=_('media'), related_name='department')
-    department = models.ForeignKey(Department, verbose_name=_('department'), related_name='medias',
-                                   limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True,
-                                   on_delete=models.SET_NULL)
+    department = models.ForeignKey(
+        Department,
+        verbose_name=_('department'),
+        related_name='medias',
+        limit_choices_to=dict(id__in=Department.objects.all()),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class TeamProjectOrdering(SiteRelated, Orderable):
-    project_page = models.ForeignKey('organization-projects.ProjectPage', verbose_name=_('Project'),
-                                     related_name='teamprojectordering')
-    team_page = models.ForeignKey('TeamPage', verbose_name=_('Team'), related_name='teamprojectordering')
+    project_page = models.ForeignKey(
+        'organization-projects.ProjectPage',
+        verbose_name=_('Project'),
+        related_name='teamprojectordering'
+    )
+    team_page = models.ForeignKey(
+        'TeamPage',
+        verbose_name=_('Team'),
+        related_name='teamprojectordering'
+    )
 
     class Meta:
         unique_together = (("project_page", "team_page",),)
@@ -786,7 +1385,10 @@ class TeamProjectOrdering(SiteRelated, Orderable):
         if type(instance) is model_project_page:
             for team in instance.project.teams.all():
                 try:
-                    TeamProjectOrdering.objects.get(project_page=instance, team_page=team.pages.first())
+                    TeamProjectOrdering.objects.get(
+                        project_page=instance,
+                        team_page=team.pages.first()
+                    )
                 except ObjectDoesNotExist:
                     tp = TeamProjectOrdering()
                     tp.project_page = instance

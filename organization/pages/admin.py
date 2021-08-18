@@ -22,22 +22,26 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationTabularInline
 from mezzanine.utils.static import static_lazy as static
-from copy import deepcopy
-from mezzanine.core.admin import *
+from mezzanine.core.admin import StackedDynamicInlineAdmin, BaseTranslationModelAdmin,\
+    TabularDynamicInlineAdmin
 from mezzanine.pages.admin import PageAdmin, LinkAdmin
 from mezzanine.pages.models import Link as MezzanineLink
-from organization.pages.models import *
+from organization.pages.models import PageBlock, PageImage,\
+    PagePlaylist, PageLink, LinkImage, LinkStyle, DynamicContentPage,\
+    PageRelatedTitle, DynamicMultimediaPage, ExtendedCustomPageDynamicContent,\
+    DynamicContentHomeMedia, HomeImage, CustomPage, ExtendedCustomPage
 from organization.pages.models import (
     DynamicContentHomeSlider,
     DynamicContentHomeBody,
     Home,
 )
 
-from organization.pages.forms import *
-from organization.network.forms import *
+from organization.pages.forms import DynamicContentPageForm, DynamicMultimediaPageForm,\
+    DynamicContentHomeSliderForm, DynamicContentHomeBodyForm,\
+    DynamicContentHomeMediaForm
+from organization.network.forms import PageCustomPersonListForm
 from organization.network.models import PageCustomPersonListBlockInline
-from organization.shop.models import *
-from organization.pages.translation import *
+from organization.shop.models import PageProductList
 
 
 class PageBlockInline(StackedDynamicInlineAdmin):
@@ -81,6 +85,7 @@ class PersonListBlockAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
     exclude = ("title", "description")
     form = PageCustomPersonListForm
 
+
 class PageProductListInline(TabularDynamicInlineAdmin):
 
     model = PageProductList
@@ -110,16 +115,17 @@ class DynamicMultimediaPageInline(TabularDynamicInlineAdmin):
 
 class CustomPageAdmin(PageAdmin):
 
-    inlines = [PageBlockInline,
-            PageImageInline,
-            PagePlaylistInline,
-            DynamicMultimediaPageInline,
-            PageLinkInline,
-            PersonListBlockAutocompleteInlineAdmin,
-            PageProductListInline,
-            PageRelatedTitleAdmin,
-            DynamicContentPageInline
-            ]
+    inlines = [
+        PageBlockInline,
+        PageImageInline,
+        PagePlaylistInline,
+        DynamicMultimediaPageInline,
+        PageLinkInline,
+        PersonListBlockAutocompleteInlineAdmin,
+        PageProductListInline,
+        PageRelatedTitleAdmin,
+        DynamicContentPageInline
+    ]
 
 
 class ExtendedCustomPageDynamicContentInline(TabularDynamicInlineAdmin):
@@ -129,15 +135,16 @@ class ExtendedCustomPageDynamicContentInline(TabularDynamicInlineAdmin):
 
 class ExtendedCustomPageAdmin(PageAdmin):
 
-    inlines = [PageBlockInline,
-            PageImageInline,
-            PagePlaylistInline,
-            PageLinkInline,
-            PageProductListInline,
-            PageRelatedTitleAdmin,
-            ExtendedCustomPageDynamicContentInline,
-            DynamicContentPageInline
-            ]
+    inlines = [
+        PageBlockInline,
+        PageImageInline,
+        PagePlaylistInline,
+        PageLinkInline,
+        PageProductListInline,
+        PageRelatedTitleAdmin,
+        ExtendedCustomPageDynamicContentInline,
+        DynamicContentPageInline
+    ]
 
 
 class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
@@ -170,11 +177,12 @@ class HomeImageInline(TabularDynamicInlineAdmin):
 
 class HomeAdminDisplayable(BaseTranslationModelAdmin):
 
-    inlines = [ HomeImageInline,
-                DynamicContentHomeSliderInline,
-                DynamicContentHomeMediaInline,
-                DynamicContentHomeBodyInline,
-                ]
+    inlines = [
+        HomeImageInline,
+        DynamicContentHomeSliderInline,
+        DynamicContentHomeMediaInline,
+        DynamicContentHomeBodyInline,
+    ]
 
 
 admin.site.register(CustomPage, CustomPageAdmin)

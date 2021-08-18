@@ -19,15 +19,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import requests
 import json
-from optparse import make_option
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
-from organization.projects.models import *
-from django.utils.text import slugify
-from django.contrib.sites.models import Site
-from copy import deepcopy
+from django.core.management.base import BaseCommand
+from organization.projects.models import ProjectPage
 
 
 class Command(BaseCommand):
@@ -37,7 +31,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        json_path = '/srv/lib/mezzanine-organization/organization/projects/management/commands/projects.json'
+        json_path = '/srv/lib/mezzanine-organization/organization/projects/management/commands/projects.json'  # noqa: E501
         old_projects = self.read_json(json_path)
 
         project_pages = ProjectPage.objects.all()

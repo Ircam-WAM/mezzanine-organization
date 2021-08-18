@@ -25,13 +25,10 @@ import dal_queryset_sequence
 import dal_select2_queryset_sequence
 
 from django import forms
-from django.forms.widgets import HiddenInput
-from django.forms import ModelForm
-from mezzanine.core.models import Orderable
-from organization.magazine.models import Article, Topic, Brief
+from organization.magazine.models import Article
 from organization.pages.models import CustomPage
-from organization.agenda.models import Event, DynamicContentEvent, EventPersonListBlockInline, DynamicMultimediaEvent
-from organization.media.models import Playlist, Media
+from organization.agenda.models import Event, DynamicContentEvent,\
+    EventPersonListBlockInline, DynamicMultimediaEvent
 from organization.media.forms import DynamicMultimediaForm
 from organization.network.models import PersonListBlock, Person
 
@@ -46,7 +43,9 @@ class DynamicContentEventForm(autocomplete.FutureModelForm):
             Person.objects.all()
         ),
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-event'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-event'
+        ),
     )
 
     class Meta:
@@ -55,13 +54,13 @@ class DynamicContentEventForm(autocomplete.FutureModelForm):
 
 
 class DynamicMultimediaEventForm(DynamicMultimediaForm):
-    
+
     class Meta(DynamicMultimediaForm.Meta):
         model = DynamicMultimediaEvent
-    
+
 
 class EventPersonListForm(forms.ModelForm):
-    
+
     person_list_block = forms.ModelChoiceField(
         queryset=PersonListBlock.objects.all(),
         widget=autocomplete.ModelSelect2(url='person-list-block-autocomplete')

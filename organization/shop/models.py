@@ -23,13 +23,11 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from mezzanine.core.models import RichText, Displayable, Slugged, Orderable
-from mezzanine.generic.models import Keyword
-from mezzanine.generic.managers import KeywordManager
+from mezzanine.core.models import RichText, Slugged, Orderable
 from mezzanine_agenda.models import ExternalShop
 from cartridge.shop.models import Product
 from organization.network.models import Team
-from organization.core.models import *
+from organization.core.models import Titled, Description, Link
 
 
 PRODUCT_LIST_STYLE_CHOICES = [
@@ -40,7 +38,11 @@ PRODUCT_LIST_STYLE_CHOICES = [
 
 class ProductList(Titled, Description, RichText):
 
-    style = models.CharField(_('style'), max_length=16, choices=PRODUCT_LIST_STYLE_CHOICES)
+    style = models.CharField(
+        _('style'),
+        max_length=16,
+        choices=PRODUCT_LIST_STYLE_CHOICES
+    )
 
     class Meta:
         verbose_name = _("product list")
@@ -52,8 +54,22 @@ class ProductList(Titled, Description, RichText):
 
 class ProductListProduct(Orderable):
 
-    list = models.ForeignKey(ProductList, verbose_name=_('product list'), related_name='products', blank=True, null=True, on_delete=models.SET_NULL)
-    product = models.ForeignKey(Product, verbose_name=_('product'), related_name='lists', blank=True, null=True, on_delete=models.SET_NULL)
+    list = models.ForeignKey(
+        ProductList,
+        verbose_name=_('product list'),
+        related_name='products',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    product = models.ForeignKey(
+        Product,
+        verbose_name=_('product'),
+        related_name='lists',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("product")
@@ -62,8 +78,22 @@ class ProductListProduct(Orderable):
 
 class PageProductList(models.Model):
 
-    page = models.ForeignKey('pages.Page', verbose_name=_('page'), related_name='product_lists', blank=True, null=True, on_delete=models.SET_NULL)
-    list = models.ForeignKey('organization-shop.ProductList', verbose_name=_('product list'), related_name='pages', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey(
+        'pages.Page',
+        verbose_name=_('page'),
+        related_name='product_lists',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    list = models.ForeignKey(
+        'organization-shop.ProductList',
+        verbose_name=_('product list'),
+        related_name='pages',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("product list")
@@ -72,15 +102,41 @@ class PageProductList(models.Model):
 
 class ProductLink(Link):
 
-    product = models.ForeignKey(Product, verbose_name=_('product'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+    product = models.ForeignKey(
+        Product,
+        verbose_name=_('product'),
+        related_name='links',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class ProductExternalShop(models.Model):
 
-    product = models.OneToOneField(Product, verbose_name=_('product'), related_name='product_external_shop')
-    external_id = models.IntegerField(verbose_name=_('external id'), null=True, blank=True)
-    shop = models.ForeignKey(ExternalShop, verbose_name=_('shop'), related_name='product_external_shop', null=True, blank=True)
-    label = models.CharField(_('label'), max_length=50, null=True, blank=True)
+    product = models.OneToOneField(
+        Product,
+        verbose_name=_('product'),
+        related_name='product_external_shop'
+    )
+    external_id = models.IntegerField(
+        verbose_name=_('external id'),
+        null=True,
+        blank=True
+    )
+    shop = models.ForeignKey(
+        ExternalShop,
+        verbose_name=_('shop'),
+        related_name='product_external_shop',
+        null=True,
+        blank=True
+    )
+    label = models.CharField(
+        _('label'),
+        max_length=50,
+        null=True,
+        blank=True
+    )
 
     class Meta:
         verbose_name = _("external shop")
@@ -91,25 +147,33 @@ class ProductExternalShop(models.Model):
 
 
 class TeamProduct(models.Model):
-    
-    product = models.ForeignKey(Product, verbose_name=_('product'), related_name='team')
-    teams = models.ForeignKey(Team, verbose_name=_('team'), null=True, blank=True, related_name='products')
+
+    product = models.ForeignKey(
+        Product,
+        verbose_name=_('product'),
+        related_name='team'
+    )
+    teams = models.ForeignKey(
+        Team,
+        verbose_name=_('team'),
+        null=True,
+        blank=True,
+        related_name='products'
+    )
 
     class Meta:
         verbose_name = _("team")
         verbose_name_plural = _("teams")
 
 
-# class CustomProductImage(Image):
-    
-#     product = models.ForeignKey(Product, verbose_name=_('product'), related_name='custom_images')
-
-
 class ProductKeyword(Slugged):
 
-    # objects = KeywordManager()
-
-    product = models.ManyToManyField(Product, verbose_name=_('product'), related_name='p_keywords', blank=True)
+    product = models.ManyToManyField(
+        Product,
+        verbose_name=_('product'),
+        related_name='p_keywords',
+        blank=True
+    )
 
     class Meta:
         verbose_name = _("Product Keyword")

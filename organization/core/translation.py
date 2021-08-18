@@ -19,13 +19,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from modeltranslation.translator import translator, register, TranslationOptions
-from mezzanine.pages.models import Page, RichText
-from mezzanine.pages.translation import TranslatedRichText
+from modeltranslation.translator import register, TranslationOptions
 from mezzanine.generic.models import Keyword
 from .models import Image
-from organization.core.models import *
-
 
 
 @register(Keyword)

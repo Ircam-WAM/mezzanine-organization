@@ -23,20 +23,23 @@ from __future__ import unicode_literals
 
 from pyquery import PyQuery as pq
 
+from django.core.urlresolvers import reverse
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from mezzanine.core.managers import SearchableManager
-from mezzanine.core.models import RichText, Displayable, Slugged, TeamOwnable
-from mezzanine.core.fields import RichTextField, OrderField, FileField
-from mezzanine.utils.models import AdminThumbMixin, upload_to
-from organization.core.models import *
-from mezzanine_agenda.models import Event, EventLocation
+from mezzanine.core.models import Displayable, Slugged, TeamOwnable
+from mezzanine.core.fields import FileField
+from organization.core.models import Image, Description
+from mezzanine_agenda.models import EventLocation
 from django.conf import settings
-from django.apps import apps
 import requests
 
 
-MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
+MEDIA_BASE_URL = getattr(
+    settings,
+    'MEDIA_BASE_URL',
+    'http://medias.ircam.fr/embed/media/'
+)
 
 PLAYLIST_TYPE_CHOICES = [
     ('audio', _('audio')),
@@ -54,7 +57,14 @@ class Media(Displayable, TeamOwnable):
 
     external_id = models.CharField(_('media id'), max_length=128, blank=True, null=True)
     poster_url = models.URLField(_('poster'), max_length=1024, blank=True)
-    category = models.ForeignKey('MediaCategory', verbose_name=_('category'), related_name='medias', blank=True, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(
+        'MediaCategory',
+        verbose_name=_('category'),
+        related_name='medias',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
     iframe = models.TextField(_("Iframe"), blank=True)
 
     # objects = SearchableManager()
@@ -70,7 +80,10 @@ class Media(Displayable, TeamOwnable):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("organization-media-detail", kwargs={"type": self.type, "slug": self.slug})
+        return reverse(
+            "organization-media-detail",
+            kwargs={"type": self.type, "slug": self.slug}
+        )
 
     @property
     def uri(self):
@@ -104,15 +117,28 @@ class Media(Displayable, TeamOwnable):
 
         for source in sources:
             mime_type = source.attrib['type']
-            transcoded, c = MediaTranscoded.objects.get_or_create(media=self, mime_type=mime_type)
+            transcoded, c = MediaTranscoded.objects.get_or_create(
+                media=self,
+                mime_type=mime_type
+            )
             transcoded.url = 'https:' + source.attrib['src']
             transcoded.save()
 
 
 class MediaTranscoded(models.Model):
 
-    media = models.ForeignKey('Media', verbose_name=_('media'), related_name='transcoded')
-    file = FileField(_("file"), max_length=1024, upload_to="uploads/media/", blank=True, null=True)
+    media = models.ForeignKey(
+        'Media',
+        verbose_name=_('media'),
+        related_name='transcoded'
+    )
+    file = FileField(
+        _("file"),
+        max_length=1024,
+        upload_to="uploads/media/",
+        blank=True,
+        null=True
+    )
     url = models.URLField(_('URL'), max_length=1024, blank=True)
     mime_type = models.CharField(_('mime type'), max_length=64)
 
@@ -128,7 +154,14 @@ class MediaTranscoded(models.Model):
 
 class MediaImage(Image):
 
-    media = models.ForeignKey(Media, verbose_name=_('media'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+    media = models.ForeignKey(
+        Media,
+        verbose_name=_('media'),
+        related_name='images',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("image")
@@ -166,8 +199,22 @@ class Playlist(Displayable):
 class PlaylistMedia(models.Model):
     """Playlist media"""
 
-    playlist = models.ForeignKey(Playlist, verbose_name=_('playlist'), related_name='medias', blank=True, null=True, on_delete=models.SET_NULL)
-    media = models.ForeignKey(Media, verbose_name=_('media'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
+    playlist = models.ForeignKey(
+        Playlist,
+        verbose_name=_('playlist'),
+        related_name='medias',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    media = models.ForeignKey(
+        Media,
+        verbose_name=_('media'),
+        related_name='playlists',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _('media')
@@ -177,7 +224,14 @@ class PlaylistMedia(models.Model):
 class PlaylistRelated(models.Model):
     """Playlist inline"""
 
-    playlist = models.ForeignKey(Playlist, verbose_name=_('playlist'), related_name='playlist_related', blank=True, null=True, on_delete=models.SET_NULL)
+    playlist = models.ForeignKey(
+        Playlist,
+        verbose_name=_('playlist'),
+        related_name='playlist_related',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _('playlist')
@@ -189,8 +243,20 @@ class LiveStreaming(Displayable):
 
     html5_url = models.URLField(_('html5 url'), max_length=1024, blank=True)
     youtube_id = models.CharField(_('youtube id'), max_length=64, blank=True, null=True)
-    type = models.CharField(_('type'), max_length=32, choices=LIVE_STREAMING_TYPE_CHOICES, default='html5')
-    event_location = models.ForeignKey(EventLocation, verbose_name=_('Event Location'), related_name='live_streaming_location', blank=True, null=True, on_delete=models.SET_NULL)
+    type = models.CharField(
+        _('type'),
+        max_length=32,
+        choices=LIVE_STREAMING_TYPE_CHOICES,
+        default='html5'
+    )
+    event_location = models.ForeignKey(
+        EventLocation,
+        verbose_name=_('Event Location'),
+        related_name='live_streaming_location',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = "live streaming"
@@ -200,5 +266,7 @@ class LiveStreaming(Displayable):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("organization-streaming-detail", kwargs={"slug": self.slug, "type" : self.type})
-
+        return reverse(
+            "organization-streaming-detail",
+            kwargs={"slug": self.slug, "type": self.type}
+        )

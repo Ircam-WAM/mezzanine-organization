@@ -19,19 +19,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import requests
-from optparse import make_option
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from organization.network.models import Person
-from organization.network.api import *
+from organization.network.api import get_active_persons, get_inactive_persons
 from django.utils.text import slugify
+
 
 class Command(BaseCommand):
     help = """Import figgo id from api
     python manage.py import-figo-id
     """
     number_of_person = 0
+
     def handle(self, *args, **options):
         # process active person
         self.update_external_id(get_active_persons())
@@ -53,5 +52,12 @@ class Command(BaseCommand):
                 for p in person:
                     p.external_id = figgo_user['id']
                     p.save()
-            else :
-                print("Person not found: "+figgo_user['lastName']+' '+figgo_user['firstName']+' | manual slug : '+ slug)
+            else:
+                print(
+                    "Person not found: " +
+                    figgo_user['lastName'] +
+                    ' ' +
+                    figgo_user['firstName'] +
+                    ' | manual slug : ' +
+                    slug
+                )

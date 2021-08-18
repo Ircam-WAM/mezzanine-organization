@@ -19,22 +19,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from django.shortcuts import render
 
-from organization.projects.models import *
-from organization.core.views import *
+from organization.core.views import SlugMixin
+from django.views.generic import DetailView
 from cartridge.shop.models import Product
 
 
 class CustomProductDetailView(SlugMixin, DetailView):
-    
+
     model = Product
-    template_name='shop/product/product_detail.html'
+    template_name = 'shop/product/product_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(CustomProductDetailView, self).get_context_data(**kwargs)
-        if hasattr(self.object, 'product_external_shop'):
-            if self.object.product_external_shop.shop:
-                if self.object.product_external_shop.shop.item_url:
-                    context['shop_url'] = self.object.product_external_shop.shop.item_url % self.object.product_external_shop.external_id
+        if hasattr(self.object, 'product_external_shop') and\
+                self.object.product_external_shop.shop and\
+                self.object.product_external_shop.shop.item_url:
+            context['shop_url'] = self.object.product_external_shop.shop.item_url %\
+                self.object.product_external_shop.external_id
         return context

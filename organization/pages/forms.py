@@ -26,13 +26,13 @@ import dal_queryset_sequence
 import dal_select2_queryset_sequence
 from cartridge.shop.models import Product
 from django import forms
-from django.forms.widgets import HiddenInput
-from django.forms import ModelForm
 from mezzanine.conf import settings
-from mezzanine.core.models import Orderable
-from organization.magazine.models import Article, Topic, Brief
+from organization.magazine.models import Article, Brief
 from organization.pages.models import CustomPage
-from organization.pages.models import *
+from organization.media.models import Media, Playlist
+from organization.pages.models import DynamicContentHomeSlider,\
+    DynamicContentHomeBody, DynamicContentHomeMedia, ExtendedCustomPage,\
+    DynamicContentPage, DynamicMultimediaPage
 from organization.agenda.models import Event
 from organization.media.forms import DynamicMultimediaForm
 from organization.network.models import Person
@@ -50,7 +50,9 @@ class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
             Media.objects.all()
         ),
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-slider'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-home-slider'
+        ),
     )
 
     class Meta:
@@ -72,7 +74,9 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
             Playlist.objects.all(),
         ),
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-body'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-home-body'
+        ),
     )
 
     class Meta:
@@ -87,13 +91,14 @@ class DynamicContentHomeMediaForm(autocomplete.FutureModelForm):
             Playlist.objects.all(),
         ),
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-media'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-home-media'
+        ),
     )
 
     class Meta:
         model = DynamicContentHomeMedia
         fields = ('content_object',)
-
 
 
 class DynamicContentPageForm(autocomplete.FutureModelForm):
@@ -108,7 +113,9 @@ class DynamicContentPageForm(autocomplete.FutureModelForm):
             Product.objects.all()
         ),
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-page'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-page'
+        ),
     )
 
     class Meta:
@@ -117,17 +124,17 @@ class DynamicContentPageForm(autocomplete.FutureModelForm):
 
 
 class DynamicMultimediaPageForm(DynamicMultimediaForm):
-    
+
     class Meta(DynamicMultimediaForm.Meta):
         model = DynamicMultimediaPage
 
 
 class YearForm(forms.Form):
-    
+
     curr_year = datetime.datetime.today().year
     year_list = reversed(range(settings.HAL_YEAR_BEGIN, curr_year + 1))
     YEARS = []
     for year in year_list:
         YEARS.append((str(year), str(year)))
-    
+
     year = forms.ChoiceField(choices=YEARS)

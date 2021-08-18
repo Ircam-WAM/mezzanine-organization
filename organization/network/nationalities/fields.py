@@ -21,6 +21,7 @@
 
 from django.db.models.fields import CharField
 
+
 class Nationality(object):
     """
     Class represents a nationality.
@@ -49,7 +50,7 @@ class Nationality(object):
         return not self.__eq__(other)
 
     def __cmp__(self, other):
-        return cmp(self.code, str(other))
+        return cmp(self.code, str(other))  # noqa: F821
 
     def __hash__(self):
         return hash(self.code)
@@ -133,6 +134,6 @@ class NationalityField(CharField):
 # like a normal CharField.
 try:
     from south.modelsinspector import add_introspection_rules
-    add_introspection_rules([], ["^nationalities\.fields\.NationalityField"])
+    add_introspection_rules([], [r"^nationalities\.fields\.NationalityField"])
 except ImportError:
     pass

@@ -25,18 +25,38 @@ import csv
 from django.contrib import admin
 from django.http import HttpResponse
 from guardian.admin import GuardedModelAdmin
-from mezzanine.core.admin import *
+from mezzanine.core.admin import StackedDynamicInlineAdmin,\
+    TabularDynamicInlineAdmin, BaseTranslationModelAdmin,\
+    TeamOwnableAdmin, OwnableAdmin
 from mezzanine.pages.admin import PageAdmin
+from mezzanine.utils.static import static_lazy as static
 from modeltranslation.admin import TranslationTabularInline
-from organization.core.admin import *
-from organization.network.forms import *
-from organization.network.models import *
-from organization.network.translation import *
-from organization.network.utils import TimesheetXLS, set_timesheets_validation_date, flatten_activities
-from organization.pages.admin import PageImageInline, PageBlockInline, PagePlaylistInline, DynamicContentPageInline, \
-    PageRelatedTitleAdmin
+from organization.core.admin import BaseTranslationOrderedModelAdmin,\
+    null_filter
+from organization.network.forms import OrganizationLinkedForm,\
+    OrganizationLinkedListForm, DynamicMultimediaOrganizationForm,\
+    TeamProjectOrderingForm, DynamicMultimediaPersonForm,\
+    DynamicContentPersonForm, ProjectActivityForm, PersonListBlockInlineForm,\
+    PersonActivityTimeSheetAdminForm
+from organization.network.models import OrganizationLinkedInline,\
+    OrganizationLinkedBlockInline, OrganizationPlaylist, OrganizationLink,\
+    OrganizationImage, OrganizationUserImage, OrganizationBlock,\
+    OrganizationService, OrganizationEventLocation, ProducerData,\
+    DynamicMultimediaOrganization, Organization, OrganizationRole,\
+    Department, TeamLink, Team, TeamProjectOrdering, Person,\
+    ActivityWeeklyHourVolume, PersonActivity, PersonPlaylist,\
+    PersonLink, PersonImage, PersonFile, PersonBlock, DynamicMultimediaPerson,\
+    PersonRelatedTitle, DynamicContentPerson, ProjectActivity, PersonListBlockInline,\
+    ActivityFunction, ActivityGrade, ActivityFramework, ActivityStatus, TrainingType,\
+    TrainingLevel, TrainingSpeciality, TrainingTopic, BudgetCode, RecordPiece,\
+    PersonActivityTimeSheet, OrganizationLinked, OrganizationType, DepartmentPage,\
+    TeamPage, PersonListBlock
+from organization.network.utils import TimesheetXLS, set_timesheets_validation_date,\
+    flatten_activities
+from organization.pages.admin import PageImageInline, PageBlockInline,\
+    PagePlaylistInline, DynamicContentPageInline, PageRelatedTitleAdmin
 from organization.pages.forms import DynamicMultimediaPageForm
-from organization.pages.models import *
+from organization.pages.models import DynamicMultimediaPage
 from organization.shop.models import PageProductList
 
 
@@ -130,8 +150,13 @@ class DynamicMultimediaDepartmentInline(TabularDynamicInlineAdmin):
 
 
 class DepartmentPageAdmin(PageAdmin):
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaDepartmentInline,
-               PageProductListInline, ]
+    inlines = [
+        PageImageInline,
+        PageBlockInline,
+        PagePlaylistInline,
+        DynamicMultimediaDepartmentInline,
+        PageProductListInline,
+    ]
 
 
 class DepartmentAdmin(BaseTranslationModelAdmin):
@@ -163,8 +188,16 @@ class TeamProjectOrderingInline(admin.TabularInline):
 
 
 class TeamPageAdmin(PageAdmin, GuardedModelAdmin):
-    inlines = [PageImageInline, PageBlockInline, PagePlaylistInline, DynamicMultimediaTeamPageInline,
-               PageProductListInline, PageRelatedTitleAdmin, DynamicContentPageInline, TeamProjectOrderingInline]
+    inlines = [
+        PageImageInline,
+        PageBlockInline,
+        PagePlaylistInline,
+        DynamicMultimediaTeamPageInline,
+        PageProductListInline,
+        PageRelatedTitleAdmin,
+        DynamicContentPageInline,
+        TeamProjectOrderingInline
+    ]
 
 
 class PersonAdminBase(BaseTranslationModelAdmin):
@@ -228,13 +261,37 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
                PersonFileInline,
                PersonActivityInline, ]
     first_fields = ['last_name', 'first_name', 'title', 'gender', 'user']
-    search_fields = ['last_name', 'first_name', 'user__username', 'user__email', 'email']
-    list_display = ['last_name', 'first_name', 'register_id', 'external_id', 'email', 'user', 'last_weekly_hour_volume',
-                    'gender', 'created']
-    list_filter = ['person_title', 'activities__date_from', 'activities__date_to',
-                   'activities__is_permanent', 'activities__framework', 'activities__grade',
-                   'activities__status', 'activities__teams',
-                   'activities__weekly_hour_volume', null_filter('register_id'), null_filter('external_id')]
+    search_fields = [
+        'last_name',
+        'first_name',
+        'user__username',
+        'user__email',
+        'email'
+    ]
+    list_display = [
+        'last_name',
+        'first_name',
+        'register_id',
+        'external_id',
+        'email',
+        'user',
+        'last_weekly_hour_volume',
+        'gender',
+        'created'
+    ]
+    list_filter = [
+        'person_title',
+        'activities__date_from',
+        'activities__date_to',
+        'activities__is_permanent',
+        'activities__framework',
+        'activities__grade',
+        'activities__status',
+        'activities__teams',
+        'activities__weekly_hour_volume',
+        null_filter('register_id'),
+        null_filter('external_id')
+    ]
     actions = ['export_as_csv', 'export_all_raw_as_csv']
 
     def last_weekly_hour_volume(self, instance):
@@ -249,7 +306,14 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
 
         meta = self.model._meta
         field_names = ['first_name', 'last_name', 'gender', 'birthday']
-        activity_fields = ['date_from', 'date_to', 'framework', 'function', 'organizations', 'teams']
+        activity_fields = [
+            'date_from',
+            'date_to',
+            'framework',
+            'function',
+            'organizations',
+            'teams'
+        ]
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
         response.write(u'\ufeff'.encode('utf8'))
@@ -261,7 +325,7 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
         for obj in queryset:
             data = [getattr(obj, field) for field in field_names]
             data += flatten_activities(obj.activities.all(), activity_fields)
-            row = writer.writerow(data)
+            writer.writerow(data)
 
         return response
 
@@ -276,7 +340,7 @@ class PersonAdmin(TeamOwnableAdmin, BaseTranslationOrderedModelAdmin):
         writer = csv.writer(response, delimiter=';', dialect='excel')
         for obj in queryset:
             data = [getattr(obj, field) for field in field_names]
-            row = writer.writerow(data)
+            writer.writerow(data)
 
         return response
 
@@ -311,7 +375,15 @@ class ProjectActivityInline(TabularDynamicInlineAdmin):
 
 class PersonActivityAdmin(BaseTranslationModelAdmin):
     model = PersonActivity
-    list_display = ['person', 'get_teams', 'status', 'date_from', 'date_to', 'get_organizations', 'get_employers']
+    list_display = [
+        'person',
+        'get_teams',
+        'status',
+        'date_from',
+        'date_to',
+        'get_organizations',
+        'get_employers'
+    ]
     filter_horizontal = ['organizations', 'employers', 'teams',
                          'supervisors', 'phd_directors', ]  # project_activity__project
     search_fields = ['person__title', 'organizations__name', 'employers__name']
@@ -360,59 +432,68 @@ class PersonListBlockAdmin(BaseTranslationModelAdmin):
 
 class ActivityFunctionAdmin(BaseTranslationModelAdmin):
     model = ActivityFunction
-    ordering = ['name',]
+    ordering = ['name', ]
 
 
 class ActivityGradeAdmin(BaseTranslationModelAdmin):
     model = ActivityGrade
-    ordering = ['name',]
+    ordering = ['name', ]
 
 
 class ActivityFrameworkAdmin(BaseTranslationModelAdmin):
     model = ActivityFramework
-    ordering = ['name',]
+    ordering = ['name', ]
 
 
 class ActivityStatusAdmin(BaseTranslationModelAdmin):
     model = ActivityStatus
-    ordering = ['name',]
+    ordering = ['name', ]
 
 
 class TrainingTypeAdmin(BaseTranslationModelAdmin):
     model = TrainingType
-    ordering = ['name',]
+    ordering = ['name', ]
 
 
 class TrainingLevelAdmin(BaseTranslationModelAdmin):
     model = TrainingLevel
-    ordering = ['name',]
+    ordering = ['name', ]
 
 
 class TrainingSpecialityAdmin(BaseTranslationModelAdmin):
     model = TrainingSpeciality
-    ordering = ['name',]
+    ordering = ['name', ]
 
 
 class TrainingTopicAdmin(BaseTranslationModelAdmin):
     model = TrainingTopic
-    ordering = ['name',]
+    ordering = ['name', ]
 
 
 class BudgetCodeAdmin(BaseTranslationModelAdmin):
     model = BudgetCode
-    ordering = ['name',]
+    ordering = ['name', ]
 
 
 class RecordPieceAdmin(BaseTranslationModelAdmin):
     model = RecordPiece
-    ordering = ['name',]
+    ordering = ['name', ]
 
 
 class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
     model = PersonActivityTimeSheet
     search_fields = ['year', 'month', 'activity__person__last_name', "project__title"]
-    list_display = ['person', 'activity', 'year', 'month', 'project', 'work_package', 'percentage', 'accounting',
-                    'validation']
+    list_display = [
+        'person',
+        'activity',
+        'year',
+        'month',
+        'project',
+        'work_package',
+        'percentage',
+        'accounting',
+        'validation'
+    ]
     list_filter = ['activity__person', 'year', 'month', 'project']
     actions = ['export_xls', 'validate_timesheets']
     first_fields = ['title', ]

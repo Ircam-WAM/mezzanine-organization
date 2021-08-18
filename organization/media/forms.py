@@ -25,10 +25,7 @@ import dal_queryset_sequence
 import dal_select2_queryset_sequence
 
 from django import forms
-from django.forms.widgets import HiddenInput
-from django.forms import ModelForm
-from mezzanine.core.models import Orderable
-from organization.media.models import *
+from organization.media.models import Media, PlaylistMedia, Playlist
 
 
 class PlaylistMediaForm(forms.ModelForm):
@@ -44,14 +41,16 @@ class PlaylistMediaForm(forms.ModelForm):
 
 
 class DynamicMultimediaForm(autocomplete.FutureModelForm):
-    
+
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
         queryset=autocomplete.QuerySetSequence(
             Media.objects.all(),
             Playlist.objects.all()
         ),
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-multimedia'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-multimedia'
+        ),
     )
 
     class Meta:

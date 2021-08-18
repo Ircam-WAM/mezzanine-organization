@@ -1,23 +1,25 @@
 # Figgo API consumption
 
 import requests
-import time
 from django.conf import settings
 from datetime import date, timedelta
 import dateutil.parser
-from pprint import pprint
 
 WEEK_DAYS = {
-    1:'monday',
-    2:'tuesday',
-    3:'wednesday',
-    4:'thursday',
-    5:'friday'
+    1: 'monday',
+    2: 'tuesday',
+    3: 'wednesday',
+    4: 'thursday',
+    5: 'friday'
 }
+
 
 def figgo_request(method):
     """generic method to call Figgo API"""
-    return requests.get(settings.FIGGO_API_URL_PROD+method, headers={'Authorization': settings.FIGGO_API_HEADER_AUTH})
+    return requests.get(
+        settings.FIGGO_API_URL_PROD+method,
+        headers={'Authorization': settings.FIGGO_API_HEADER_AUTH}
+    )
 
 
 def get_active_persons():
@@ -29,13 +31,24 @@ def get_active_persons():
 def get_inactive_persons():
     yesterday = date.today() - timedelta(1)
     yesterday = yesterday.isoformat()
-    r_p_inactive = figgo_request('api/users?dtContractEnd=until,'+yesterday+',null&fields=id,lastname,firstname')
+    r_p_inactive = figgo_request(
+        'api/users?dtContractEnd=until,' +
+        yesterday +
+        ',null&fields=id,lastname,firstname'
+    )
     r_p_inactive = r_p_inactive.json()
     return r_p_inactive['data'] if 'data' in r_p_inactive else {}
 
 
 def get_leave_periods(date_from, date_to, person_external_id):
-    leave_periods = figgo_request('api/leaves?date=between,'+str(date_from)+','+str(date_to)+'&fields=owner.name,owner.login,owner.mail,owner.matricule,duration,name,date,status,leaveScope&owner.id='+str(person_external_id))
+    leave_periods = figgo_request(
+        'api/leaves?date=between,' +
+        str(date_from) +
+        ',' +
+        str(date_to) +
+        '&fields=owner.name,owner.login,owner.mail,owner.matricule,duration,name,date,status,leaveScope&owner.id=' +  # noqa: E501
+        str(person_external_id)
+    )
     leave_periods = leave_periods.json()
 
     return leave_periods['data'] if 'data' in leave_periods else {}
@@ -109,9 +122,9 @@ def increment_day_per_month(month_key, day_key, dt):
     if month_key in dt:
         if day_key in dt[month_key]:
             dt[month_key][day_key] += 1
-        else :
+        else:
             dt[month_key][day_key] = 1
-    else :
+    else:
         dt[month_key] = {}
         dt[month_key][day_key] = 1
     return dt
@@ -120,5 +133,5 @@ def increment_day_per_month(month_key, day_key, dt):
 def increment_day(key, dt):
     if key in dt:
         dt[key] += 1
-    else :
+    else:
         dt[key] = 1

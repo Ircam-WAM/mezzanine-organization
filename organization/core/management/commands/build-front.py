@@ -19,13 +19,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import os, time
+import os
 import subprocess
 from django.apps import apps
-from optparse import make_option
 from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
-from django.db import connections
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -60,7 +58,8 @@ class Command(BaseCommand):
             print('Building front...')
             for host_theme in settings.HOST_THEMES:
                 themes_module = host_theme[1]
-                if not themes_module in themes_modules and themes_module in settings.INSTALLED_APPS:
+                if themes_module not in themes_modules and\
+                        themes_module in settings.INSTALLED_APPS:
                     themes_modules.append(themes_module)
             for theme in themes_modules:
                 theme_path = apps.get_app_config(theme.split('.')[-1]).path

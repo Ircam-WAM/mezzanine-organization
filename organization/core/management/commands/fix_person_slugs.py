@@ -19,17 +19,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from optparse import make_option
 from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand
 from organization.network.models import Person
+
 
 class Command(BaseCommand):
     help = """Fix Person slugs"""
 
     def handle(self, *args, **options):
-        settings.SITE_ID=2
+        settings.SITE_ID = 2
         persons = Person.objects.all()
         i = 0
         for person in persons:

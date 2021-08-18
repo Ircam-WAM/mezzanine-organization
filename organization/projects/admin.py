@@ -22,18 +22,26 @@
 from copy import deepcopy
 
 from django.contrib import admin
-from django.utils.translation import ugettext_lazy as _
-from pprint import pprint
-from mezzanine.core.admin import *
+from mezzanine.utils.static import static_lazy as static
+from mezzanine.core.admin import StackedDynamicInlineAdmin, TabularDynamicInlineAdmin,\
+    BaseTranslationModelAdmin, TeamOwnableAdmin, DisplayableAdmin
 from mezzanine.pages.admin import PageAdmin
 from modeltranslation.admin import TranslationTabularInline
-from organization.projects.models import *
-from organization.pages.models import *
-from organization.media.models import Playlist
+from organization.projects.models import ProjectLink, ProjectImage, ProjectBlock,\
+    ProjectPlaylist, ProjectFile, ProjectDemo, ProjectPage, ProjectWorkPackage,\
+    ProjectBlogPage, ProjectUserImage, ProjectContact, ProjectPublicData,\
+    ProjectPrivateData, ProjectRelatedTitle, DynamicContentProject,\
+    DynamicMultimediaProject, ProjectResidencyProducer, ProjectResidencyImage,\
+    ProjectResidencyUserImage, ProjectResidencyArticle, ProjectResidencyEvent,\
+    ProjectResidency, Project, ProjectTopic, ProjectProgram, ProjectProgramType,\
+    ProjectCall, ProjectCallBlock, ProjectCallLink, ProjectCallImage,\
+    ProjectCallFile, ProjectPageBlock, ProjectPageImage, DynamicContentProjectPage,\
+    ProjectTopicPage, Repository, RepositorySystem
 from organization.pages.admin import PageImageInline
-from organization.projects.forms import DynamicContentProjectForm, DynamicMultimediaProjectForm, DynamicContentProjectPageForm
-from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin, TeamOwnableAdmin
-from organization.core.utils import actions_to_duplicate, get_other_sites
+from organization.projects.forms import DynamicContentProjectForm,\
+    DynamicMultimediaProjectForm, DynamicContentProjectPageForm
+from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin
+from django.conf import settings
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
@@ -100,19 +108,19 @@ class ProjectContactInline(StackedDynamicInlineAdmin):
 class ProjectPublicDataAdmin(admin.ModelAdmin):
 
     model = ProjectPublicData
-    list_display = ['project',]
+    list_display = ['project', ]
 
 
 class ProjectPrivateDataAdmin(admin.ModelAdmin):
 
     model = ProjectPrivateData
-    list_display = ['project',]
+    list_display = ['project', ]
 
 
 class ProjectContactAdmin(admin.ModelAdmin):
 
     model = ProjectContact
-    list_display = ['project',]
+    list_display = ['project', ]
 
 
 class ProjectPublicDataInline(StackedDynamicInlineAdmin):
@@ -175,14 +183,15 @@ class ProjectResidencyEventInline(TabularDynamicInlineAdmin):
 class ProjectResidencyAdmin(admin.ModelAdmin):
 
     model = ProjectResidency
-    list_display = ["title", "project", "artist", "get_producers", "validated",]
+    list_display = ["title", "project", "artist", "get_producers", "validated", ]
     list_filter = ["validated"]
-    inlines = [ ProjectResidencyProducerInline,
-                ProjectResidencyImageInline,
-                ProjectResidencyUserImageInline,
-                ProjectResidencyArticleInline,
-                ProjectResidencyEventInline,
-                ]
+    inlines = [
+        ProjectResidencyProducerInline,
+        ProjectResidencyImageInline,
+        ProjectResidencyUserImageInline,
+        ProjectResidencyArticleInline,
+        ProjectResidencyEventInline,
+    ]
 
     def get_producers(self, obj):
         producers = ""
@@ -196,34 +205,60 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
     get_producers.short_description = "producers"
 
 
+# ProjectAdmin
+filter_horizontal = ['teams', 'organizations']
+if settings.MEZZO_CONF["onthology"]:
+    filter_horizontal += 'concepts'
+
+
 class ProjectAdmin(BaseTranslationOrderedModelAdmin):
 
     model = Project
 
-    inlines = [ ProjectBlockInline,
-                ProjectContactInline,
-                ProjectUserImageInline,
-                ProjectImageInline,
-                ProjectPublicDataInline,
-                ProjectPrivateDataInline,
-                ProjectWorkPackageInline,
-                ProjectPageInline,
-                ProjectPlaylistInline,
-                DynamicMultimediaProjectInline,
-                ProjectLinkInline,
-                ProjectFileInline,
-                ProjectRelatedTitleAdmin,
-                DynamicContentProjectInline,
-                ProjectBlogPageInline,
-                ]
-    filter_horizontal = ['teams', 'organizations', 'concepts']
+    inlines = [
+        ProjectBlockInline,
+        ProjectContactInline,
+        ProjectUserImageInline,
+        ProjectImageInline,
+        ProjectPublicDataInline,
+        ProjectPrivateDataInline,
+        ProjectWorkPackageInline,
+        ProjectPageInline,
+        ProjectPlaylistInline,
+        DynamicMultimediaProjectInline,
+        ProjectLinkInline,
+        ProjectFileInline,
+        ProjectRelatedTitleAdmin,
+        DynamicContentProjectInline,
+        ProjectBlogPageInline,
+    ]
+    filter_horizontal = filter_horizontal
     search_fields = ['title', ]
-    list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status', 'call']
-    list_display = ['title', 'date_from', 'date_to', 'created', 'lead_organization',
-        'program', 'is_archive', 'topic', 'external_id', 'validation_status']
-    first_fields = ['title',]
+    list_filter = [
+        'type',
+        'program',
+        'program_type',
+        null_filter('external_id'),
+        'topic',
+        'validation_status',
+        'call'
+    ]
+    list_display = [
+        'title',
+        'date_from',
+        'date_to',
+        'created',
+        'lead_organization',
+        'program',
+        'is_archive',
+        'topic',
+        'external_id',
+        'validation_status'
+    ]
+    first_fields = ['title', ]
 
 
+# ProjectTopicAdmin
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
 
     model = ProjectTopic
@@ -247,8 +282,21 @@ class ProjectTopicPageAdmin(PageAdmin):
 class ProjectWorkPackageAdmin(BaseTranslationModelAdmin):
 
     model = ProjectWorkPackage
-    list_display = ['title', 'project', 'date_from', 'date_to', 'number', 'lead_organization' ]
-    list_filter = ['project', 'date_from', 'date_to', 'lead_organization' ]
+    list_display = [
+        'title',
+        'project',
+        'date_from',
+        'date_to',
+        'number',
+        'lead_organization'
+    ]
+    list_filter = [
+        'project',
+        'date_from',
+        'date_to',
+        'lead_organization'
+    ]
+
 
 class ProjectCallAdmin(admin.ModelAdmin):
 
@@ -278,15 +326,14 @@ class ProjectCallFileInline(StackedDynamicInlineAdmin):
 class ProjectCallAdmin(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectCallAdmin.fieldsets)
-    inlines = [ ProjectCallBlockInline,
-                ProjectCallImageInline,
-                ProjectCallLinkInline,
-                ProjectCallFileInline,
-                ]
-    # list_filter = ['type', 'program', 'program_type', null_filter('external_id')]
-    # list_display = ['title', 'date_from', 'date_to', 'status', 'admin_link']
+    inlines = [
+        ProjectCallBlockInline,
+        ProjectCallImageInline,
+        ProjectCallLinkInline,
+        ProjectCallFileInline,
+    ]
 
-    search_fields = ['title', 'project__title',]
+    search_fields = ['title', 'project__title', ]
 
 
 class ProjectPageAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
@@ -315,12 +362,14 @@ class DynamicContentProjectPageInline(TabularDynamicInlineAdmin):
             static("mezzanine/js/admin/dynamic_inline.js"),
         )
 
+
 class ProjectPageAdmin(TeamOwnableAdmin, DisplayableAdmin):
     fieldsets = deepcopy(ProjectPageAdmin.fieldsets)
-    inlines = [ ProjectPageBlockInline,
-                ProjectPageImageInline,
-                DynamicContentProjectPageInline,
-                ]
+    inlines = [
+        ProjectPageBlockInline,
+        ProjectPageImageInline,
+        DynamicContentProjectPageInline,
+    ]
     # list_filter = ['type', 'program', 'program_type', null_filter('external_id')]
     # list_display = ['title', 'date_from', 'date_to', 'status', 'admin_link']
     # actions = actions_to_duplicate()
@@ -329,7 +378,7 @@ class ProjectPageAdmin(TeamOwnableAdmin, DisplayableAdmin):
 
     def get_teams(self, obj):
         if obj.project:
-            return  ", ".join(obj.project.teams.values_list('code', flat=True))
+            return ", ".join(obj.project.teams.values_list('code', flat=True))
 
     get_teams.short_description = 'Teams'
 
@@ -339,6 +388,7 @@ class ProjectPageAdmin(TeamOwnableAdmin, DisplayableAdmin):
 
     is_archive.short_description = "Archived"
     is_archive.admin_order_field = 'project__is_archive'
+
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)

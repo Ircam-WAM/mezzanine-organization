@@ -3,19 +3,28 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+from django.conf import settings
 
+if settings.MEZZO_CONF["onthology"]:
+    class Migration(migrations.Migration):
 
-class Migration(migrations.Migration):
+        dependencies = [
+            ('skosxl', '0001_initial'),
+            ('organization-projects', '0072_auto_20180307_1152'),
+        ]
 
-    dependencies = [
-        ('skosxl', '0001_initial'),
-        ('organization-projects', '0072_auto_20180307_1152'),
-    ]
+        operations = [
+            migrations.AddField(
+                model_name='project',
+                name='concepts',
+                field=models.ManyToManyField(blank=True, to='skosxl.Concept', verbose_name='concepts'),
+            ),
+        ]
+else:
+    class Migration(migrations.Migration):
 
-    operations = [
-        migrations.AddField(
-            model_name='project',
-            name='concepts',
-            field=models.ManyToManyField(blank=True, to='skosxl.Concept', verbose_name='concepts'),
-        ),
-    ]
+        dependencies = [
+            ('organization-projects', '0072_auto_20180307_1152'),
+        ]
+
+        operations = []

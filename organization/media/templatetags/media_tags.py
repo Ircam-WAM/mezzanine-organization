@@ -24,6 +24,7 @@ from mezzanine.template import Library
 
 register = Library()
 
+
 @register.filter
 def get_photo_alignment(value):
     if value == 'left':

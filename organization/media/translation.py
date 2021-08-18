@@ -19,9 +19,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from modeltranslation.translator import translator, register, TranslationOptions
+from modeltranslation.translator import register, TranslationOptions
 
-from organization.media.models import *
+from organization.media.models import Media, MediaTranscoded, Playlist,\
+    PlaylistMedia, MediaCategory, MediaImage, LiveStreaming
 
 
 @register(Media)
@@ -64,4 +65,3 @@ class MediaImageTranslationOptions(TranslationOptions):
 class LiveStreamingTranslationOptions(TranslationOptions):
 
     fields = ('title', 'description', 'html5_url')
-

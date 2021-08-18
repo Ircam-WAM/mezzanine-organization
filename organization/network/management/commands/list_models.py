@@ -19,21 +19,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import requests
-from optparse import make_option
 from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
-from organization.network.models import Person
-from organization.network.api import *
-from django.utils.text import slugify
+from django.core.management.base import BaseCommand
 from django.utils.translation import ugettext_lazy as _
 from django.utils import translation
 from django.apps import apps
-from django.conf import settings
+
 
 class Command(BaseCommand):
     help = """list models + properties per apps
     """
+
     def handle(self, *args, **options):
         # process active person
         translation.activate(settings.LANGUAGE_CODE)

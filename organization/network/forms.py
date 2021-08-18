@@ -27,11 +27,17 @@ from django.utils import timezone
 from django import forms
 from django.forms import ModelForm
 from organization.projects.models import ProjectWorkPackage, ProjectPage
-from organization.network.models import *
 from organization.network.utils import timesheet_master_notification_for_validation
-from organization.network.models import *
+from organization.network.models import PersonListBlock,\
+    PageCustomPersonListBlockInline, Person, PersonListBlockInline,\
+    OrganizationLinked, OrganizationLinkedBlockInline, Organization,\
+    OrganizationLinkedInline, PersonActivityTimeSheet, ProjectActivity,\
+    OrganizationContact, OrganizationUserImage, ProducerData,\
+    TeamProjectOrdering, DynamicContentPerson, DynamicMultimediaPerson,\
+    DynamicMultimediaOrganization
 from organization.media.forms import DynamicMultimediaForm
 from organization.magazine.models import Article
+from mezzanine_agenda.models import Event
 from extra_views import InlineFormSet
 
 
@@ -86,8 +92,12 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
         if 'initial' in kwargs:
             self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(
                 project=kwargs['initial']['project'])
-            self.fields['project'].choices = ((kwargs['initial']['project'].id, kwargs['initial']['project']),)
-            self.fields['activity'].choices = ((kwargs['initial']['activity'].id, kwargs['initial']['activity']),)
+            self.fields['project'].choices = (
+                (kwargs['initial']['project'].id, kwargs['initial']['project']),
+            )
+            self.fields['activity'].choices = (
+                (kwargs['initial']['activity'].id, kwargs['initial']['activity']),
+            )
         if self.fields['work_packages'].choices.__len__() == 0:
             self.fields['work_packages'].widget = forms.MultipleHiddenInput()
         else:
@@ -98,11 +108,13 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
         self.instance.accounting = timezone.now()
         # send mail
         super(PersonActivityTimeSheetForm, self).save()
-        timesheet_master_notification_for_validation(self.instance.activity.person,
-                                                     self.instance.month,
-                                                     self.instance.year,
-                                                     self.instance._meta.app_config.label,
-                                                     self.instance.__class__.__name__)
+        timesheet_master_notification_for_validation(
+            self.instance.activity.person,
+            self.instance.month,
+            self.instance.year,
+            self.instance._meta.app_config.label,
+            self.instance.__class__.__name__
+        )
 
     class Meta:
         model = PersonActivityTimeSheet
@@ -130,8 +142,12 @@ class ProjectActivityForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProjectActivityForm, self).__init__(*args, **kwargs)
-        self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(project=self.instance.project)
-        self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(choices=self.fields['work_packages'].choices)
+        self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(
+            project=self.instance.project
+        )
+        self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(
+            choices=self.fields['work_packages'].choices
+        )
 
     class Meta:
         model = ProjectActivity
@@ -181,7 +197,16 @@ class ProducerDataInline(InlineFormSet):
 class ProducerForm(ModelForm):
     class Meta:
         model = Organization
-        fields = ['name', 'url', 'email', 'telephone', 'address', 'postal_code', 'city', 'country', ]
+        fields = [
+            'name',
+            'url',
+            'email',
+            'telephone',
+            'address',
+            'postal_code',
+            'city',
+            'country',
+        ]
 
     def __init__(self, *args, **kwargs):
         super(ProducerForm, self).__init__(*args, **kwargs)
@@ -208,7 +233,9 @@ class DynamicContentPersonForm(autocomplete.FutureModelForm):
             Product.objects.all(),
         ),
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-person'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-person'
+        ),
     )
 
     class Meta:

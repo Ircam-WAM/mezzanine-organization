@@ -26,10 +26,14 @@ import os
 import ldap
 import logging
 import warnings
+import json
 from datetime import date
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse_lazy
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
+
+# mezzo conf file
+MEZZO_CONF = json.loads(open(os.path.dirname(__file__) + '/../conf.json', 'r').read())
 
 DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
@@ -281,19 +285,16 @@ INSTALLED_APPS = [
     'compat',
     'guardian',
     'extra_views',
-    'rdf_io',
-    'skosxl',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth_ircam',  # allauth Ircam custom provider
 ]
 
-CUSTOM_MODULES = False
-
-if CUSTOM_MODULES:
+if MEZZO_CONF["onthology"]:
     INSTALLED_APPS += [
-        "organization.custom",
+        'rdf_io',
+        'skosxl',
     ]
 
 BOWER_COMPONENTS_ROOT = '/srv/bower/'
@@ -720,7 +721,7 @@ if DEBUG:
     SILENCED_SYSTEM_CHECKS = []
     HIJACK_LOGIN_REDIRECT_URL = "/person"
     HIJACK_LOGOUT_REDIRECT_URL = "/"
-    HIJACK_ALLOW_GET_REQUESTS =  True
+    HIJACK_ALLOW_GET_REQUESTS = True
     HIJACK_DISPLAY_WARNING = True
     HIJACK_REGISTER_ADMIN = True
 
@@ -828,5 +829,5 @@ LOGIN_REDIRECT_URL = '/person/'
 # Account creation URL
 OAUTH_SIGNUP_URL = '{}/accounts/signup'.format(USER_SERVER_BASEURL)
 # Creation of an internal user's group for OAUTH2/LDAP and
-# Dashboard presentation (internal/external user) 
+# Dashboard presentation (internal/external user)
 ORGANIZATION_INTERN_USERS_GROUP = 'Ircam - Intern'

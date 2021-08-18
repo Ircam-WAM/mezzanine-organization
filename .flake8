@@ -1,3 +1,3 @@
 [flake8]
 max-line-length = 88
-exclude = migrations, static, __pycache__, wsgi.py, manage.py
+exclude = migrations, static, __pycache__, wsgi.py, manage.py, test, tests.py, tests_front.py

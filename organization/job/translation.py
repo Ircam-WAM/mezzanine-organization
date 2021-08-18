@@ -19,10 +19,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from modeltranslation.translator import translator, register, TranslationOptions
-from mezzanine.pages.models import Page, RichText
-from mezzanine.pages.translation import TranslatedRichText
-from organization.job.models import *
+from modeltranslation.translator import register, TranslationOptions
+from organization.job.models import JobOffer, JobResponse, JobOfferImage,\
+    Candidacy, CandidacyImage
 
 
 @register(JobOffer)
@@ -32,24 +31,21 @@ class JobOfferTranslationOptions(TranslationOptions):
 
 
 @register(JobResponse)
-class JobResponseTranslationOptions(TranslationOptions):
-
+class JobResponseTranslationOptions1(TranslationOptions):
     pass
 
 
 @register(JobOfferImage)
-class JobResponseTranslationOptions(TranslationOptions):
-
+class JobResponseTranslationOptions2(TranslationOptions):
     pass
 
 
 @register(Candidacy)
-class JobResponseTranslationOptions(TranslationOptions):
+class JobResponseTranslationOptions3(TranslationOptions):
 
     fields = ('title', 'description', 'content', 'text_button', )
 
 
 @register(CandidacyImage)
-class JobResponseTranslationOptions(TranslationOptions):
-
+class JobResponseTranslationOptions4(TranslationOptions):
     pass

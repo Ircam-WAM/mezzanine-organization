@@ -22,39 +22,48 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.core.exceptions import ValidationError
 from django_countries.fields import CountryField
 
 from geopy.geocoders import GoogleV3, Nominatim
-from geopy.exc import GeocoderQueryError, GeocoderQuotaExceeded
+from geopy.exc import GeocoderQueryError
 
-from mezzanine.pages.models import Page, RichText
-from mezzanine.core.fields import RichTextField, OrderField, FileField
-from mezzanine.core.models import Displayable, Slugged, Orderable, Ownable
-from mezzanine.utils.urls import admin_url, slugify, unique_slug
+from mezzanine.pages.models import RichText
+from mezzanine.core.fields import FileField
+from mezzanine.core.models import Orderable
+from mezzanine.utils.urls import slugify, unique_slug
 from mezzanine.utils.models import base_concrete_model, get_user_model_name
 
 
+COLOR_CHOICES = (
+    ('black', _('black')),
+    ('yellow', _('yellow')),
+    ('red', _('red')),
+    ('white', _('white')),
+    ('blue', _('blue')),
+    ('purple', _('purple')),
+)
 
-COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')),
-    ('red', _('red')), ('white', _('white')), ('blue', _('blue')),
-    ('purple', _('purple')),)
+ALIGNMENT_CHOICES = (
+    ('left', _('left')),
+    ('center', _('center')),
+    ('right', _('right'))
+)
 
-ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')),
-    ('right', _('right')))
 
-
-IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('logo_white', _('logo white')),
-    ('logo_black', _('logo black')), ('logo_header', _('logo header')),
+IMAGE_TYPE_CHOICES = (
+    ('logo', _('logo')),
+    ('logo_white', _('logo white')),
+    ('logo_black', _('logo black')),
+    ('logo_header', _('logo header')),
     ('logo_back', _('logo back')),
-    ('logo_footer', _('logo footer')), ('slider', _('slider')),
-    ('card', _('card')), ('page_slider', _('page - slider')),
+    ('logo_footer', _('logo footer')),
+    ('slider', _('slider')),
+    ('card', _('card')),
+    ('page_slider', _('page - slider')),
     ('page_featured', _('page - featured')))
-
-
 
 
 class Description(models.Model):
@@ -86,7 +95,7 @@ class Named(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ['name',]
+        ordering = ['name', ]
 
     def __str__(self):
         return self.name
@@ -104,9 +113,16 @@ class GenericSlugged(models.Model):
 
     slug_field_name = ''
 
-    slug = models.CharField(_("URL"), max_length=2000, blank=True, null=True,
-            help_text=_("Leave blank to have the URL auto-generated from "
-                        "the filed defined by slug_field_name."))
+    slug = models.CharField(
+        _("URL"),
+        max_length=2000,
+        blank=True,
+        null=True,
+        help_text=_(
+            "Leave blank to have the URL auto-generated from "
+            "the filed defined by slug_field_name."
+        )
+    )
 
     class Meta:
         abstract = True
@@ -164,7 +180,7 @@ class NamedSlugged(GenericSlugged):
 
     class Meta:
         abstract = True
-        ordering = ['name',]
+        ordering = ['name', ]
 
 
 class Titled(models.Model):
@@ -199,7 +215,7 @@ class TitledSlugged(GenericSlugged):
 
     class Meta:
         abstract = True
-        ordering = ['title',]
+        ordering = ['title', ]
 
 
 class Label(models.Model):
@@ -223,7 +239,12 @@ class CustomCategory(Named):
 class Block(Titled, Description, RichText, Orderable):
 
     with_separator = models.BooleanField(default=False)
-    background_color = models.CharField(_('background color'), max_length=32, choices=COLOR_CHOICES, blank=True)
+    background_color = models.CharField(
+        _('background color'),
+        max_length=32,
+        choices=COLOR_CHOICES,
+        blank=True
+    )
     login_required = models.BooleanField(_('login required'), default=False)
 
     class Meta:
@@ -250,8 +271,17 @@ class Image(Titled, Description, Orderable):
 
 class UserImage(Titled, Description, Orderable):
 
-    file = models.FileField(_("Image"), max_length=1024, upload_to="user/images/%Y/%m/%d/")
-    credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
+    file = models.FileField(
+        _("Image"),
+        max_length=1024,
+        upload_to="user/images/%Y/%m/%d/"
+    )
+    credits = models.CharField(
+        _('credits'),
+        max_length=256,
+        blank=True,
+        null=True
+    )
 
     class Meta:
         abstract = True
@@ -329,8 +359,18 @@ class LinkType(models.Model):
             ' icons to them)'),
         blank=True,
     )
-    ordering = models.PositiveIntegerField(verbose_name=_('ordering'), null=True, blank=True)
-    fa_option = models.CharField(max_length=64, verbose_name=_('fontawesome icon name option'), null=True, blank=True, help_text="will be added to fa-<slug>")
+    ordering = models.PositiveIntegerField(
+        verbose_name=_('ordering'),
+        null=True,
+        blank=True
+    )
+    fa_option = models.CharField(
+        max_length=64,
+        verbose_name=_('fontawesome icon name option'),
+        null=True,
+        blank=True,
+        help_text="will be added to fa-<slug>"
+    )
 
     class Meta:
         ordering = ['ordering', ]
@@ -409,20 +449,51 @@ class Dated(models.Model):
 class Address(models.Model):
     """(Address description)"""
 
-    address = models.TextField(_('address'), blank=True)
-    postal_code = models.CharField(_('postal code'), max_length=16, null=True, blank=True)
-    city = models.CharField(_('city'), max_length=255, null=True, blank=True)
-    country = CountryField(_('country'), null=True, blank=True)
-    mappable_location = models.CharField(max_length=512, blank=True, null=True,
-        help_text=("This address will be used to calculate latitude and longitude. "
-            "Leave blank and set Latitude and Longitude to specify the location yourself, "
+    address = models.TextField(
+        _('address'),
+        blank=True
+    )
+    postal_code = models.CharField(
+        _('postal code'),
+        max_length=16,
+        null=True,
+        blank=True
+    )
+    city = models.CharField(
+        _('city'),
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    country = CountryField(
+        _('country'),
+        null=True,
+        blank=True
+    )
+    mappable_location = models.CharField(
+        max_length=512,
+        blank=True,
+        null=True,
+        help_text=(
+            "This address will be used to calculate latitude and longitude. "
+            "Leave blank and set Latitude and Longitude to specify the location yourself, "  # noqa: E501
             "or leave all three blank to auto-fill from the Location field."))
-    lat = models.DecimalField(max_digits=10, decimal_places=7, blank=True, null=True,
+    lat = models.DecimalField(
+        max_digits=10,
+        decimal_places=7,
+        blank=True,
+        null=True,
         verbose_name="Latitude",
-        help_text="Calculated automatically if mappable location is set.")
-    lon = models.DecimalField(max_digits=10, decimal_places=7, blank=True,
-        null=True, verbose_name="Longitude",
-        help_text="Calculated automatically if mappable location is set.")
+        help_text="Calculated automatically if mappable location is set."
+    )
+    lon = models.DecimalField(
+        max_digits=10,
+        decimal_places=7,
+        blank=True,
+        null=True,
+        verbose_name="Longitude",
+        help_text="Calculated automatically if mappable location is set."
+    )
 
     def __str__(self):
         return ' '.join((self.address, self.postal_code))
@@ -444,23 +515,50 @@ class Address(models.Model):
 
         if not (self.lat and self.lon) and not self.mappable_location:
             if self.address:
-                self.mappable_location = self.address.replace("\n"," ").replace('\r', ' ') + ", " + self.postal_code + " " + self.city
+                self.mappable_location = self.address.replace("\n", " ")\
+                    .replace('\r', ' ') + ", " + self.postal_code + " " + self.city
 
-        if self.mappable_location and not (self.lat and self.lon): #location should always override lat/long if set
+        # location should always override lat/long if set
+        if self.mappable_location and not (self.lat and self.lon):
             try:
                 if settings.EVENT_GOOGLE_MAPS_DOMAIN:
                     service = 'googlemaps'
-                    geolocator = GoogleV3(api_key=settings.GOOGLE_API_KEY, domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
+                    geolocator = GoogleV3(
+                        api_key=settings.GOOGLE_API_KEY,
+                        domain=settings.EVENT_GOOGLE_MAPS_DOMAIN
+                    )
                 else:
                     service = "openstreetmap"
                     geolocator = Nominatim(user_agent='mezzo')
-                mappable_location, (lat, lon) = geolocator.geocode(self.mappable_location)
+                mappable_location, (lat, lon) = geolocator.geocode(
+                    self.mappable_location
+                )
             except GeocoderQueryError as e:
-                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service=service, error=e.message))
+                raise ValidationError(
+                    "The mappable location you specified could not be found on"
+                    " {service}: \"{error}\" Try changing the mappable location,"
+                    " removing any business names, or leaving mappable location"
+                    " blank and using coordinates from getlatlon.com.".format(
+                        service=service,
+                        error=e.message
+                    )
+                )
             except ValueError as e:
-                raise ValidationError("The mappable location you specified could not be found on {service}: \"{error}\" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.".format(service=service, error=e.message))
-            except TypeError as e:
-                raise ValidationError("The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.")
+                raise ValidationError(
+                    "The mappable location you specified could not be found on"
+                    " {service}: \"{error}\" Try changing the mappable location,"
+                    " removing any business names, or leaving mappable location blank"
+                    " and using coordinates from getlatlon.com.".format(
+                        service=service,
+                        error=e.message
+                    )
+                )
+            except TypeError:
+                raise ValidationError(
+                    "The mappable location you specified could not be found. Try"
+                    " changing the mappable location, removing any business names,"
+                    " or leaving mappable location blank and using coordinates"
+                    " from getlatlon.com.")
 
             self.mappable_location = mappable_location
             self.lat = lat
@@ -480,8 +578,13 @@ class OwnableOrNot(models.Model):
     Abstract model that provides ownership of an object for a user.
     """
 
-    user = models.ForeignKey(get_user_model_name(), verbose_name=_("Author"),
-        related_name="%(class)ss", null=True, blank=True)
+    user = models.ForeignKey(
+        get_user_model_name(),
+        verbose_name=_("Author"),
+        related_name="%(class)ss",
+        null=True,
+        blank=True
+    )
 
     class Meta:
         abstract = True
@@ -490,10 +593,14 @@ class OwnableOrNot(models.Model):
 class Sites(models.Model):
     # Abstract model to allow publishing content on multiple sites
 
-    sites = models.ManyToManyField("sites.Site", verbose_name=_("sites"), related_name='%(class)ss', blank=True)
+    sites = models.ManyToManyField(
+        "sites.Site",
+        verbose_name=_("sites"),
+        related_name='%(class)ss',
+        blank=True
+    )
 
     class Meta:
         abstract = True
         verbose_name = 'Sites'
         verbose_name_plural = 'Sites'
-

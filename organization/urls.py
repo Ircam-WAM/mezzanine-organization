@@ -19,21 +19,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
+from mezzanine.conf import settings
+from django.views.generic.base import RedirectView
+from allauth_ircam.views import serverLogout
 
-import django.views.i18n
 from django.conf.urls import include, url
-from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 
 admin.autodiscover()
 
-from mezzanine.core.views import direct_to_template
-from mezzanine.conf import settings
-
-from django.views.generic.base import RedirectView
-
-from allauth_ircam.views import serverLogout
 urlpatterns = []
 
 if "drum.links" in settings.INSTALLED_APPS:
@@ -53,7 +47,7 @@ urlpatterns += [
     url("^", include('organization.shop.urls')),
 ]
 
-if settings.DEBUG :
+if settings.DEBUG:
     urlpatterns += [
         url(r'^hijack/', include('hijack.urls')),
     ]
@@ -62,12 +56,27 @@ if settings.DEBUG :
 # # we prefer oauth2
 if settings.OAUTH2_IRCAM:
     urlpatterns += [
-    url(r'^accounts/signup/$', RedirectView.as_view(url=settings.OAUTH_SIGNUP_URL, permanent=False, query_string=True), name="account_signup"),
-    url(r'^accounts/', include('allauth.urls')),
-    url(r'^serverlogout/',serverLogout)
-    #url(r'^accounts/profile$', views.ProfileView),
+        url(
+            r'^accounts/signup/$',
+            RedirectView.as_view(
+                url=settings.OAUTH_SIGNUP_URL,
+                permanent=False,
+                query_string=True
+            ),
+            name="account_signup"
+        ),
+        url(r'^accounts/', include('allauth.urls')),
+        url(r'^serverlogout/', serverLogout)
     ]
 else:
     urlpatterns += [
-    url(r'^serverlogout/',RedirectView.as_view(url=settings.LOGOUT_URL, permanent=False, query_string=True), name="account_logout"),
+        url(
+            r'^serverlogout/',
+            RedirectView.as_view(
+                url=settings.LOGOUT_URL,
+                permanent=False,
+                query_string=True
+            ),
+            name="account_logout"
+        ),
     ]

@@ -30,15 +30,27 @@ from django.http import Http404
 from django.template import Context
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from django.views.generic.base import TemplateView
+from django.urls import reverse_lazy
 from mezzanine.conf import settings
 from mezzanine_agenda.models import Event
-from organization.core.views import *
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView
+from organization.core.views import DynamicContentMixin, SlugMixin,\
+    autocomplete_result_formatting, FilteredListView
 from organization.magazine.views import Article
-from organization.network.forms import *
-from organization.network.models import Organization
+# from organization.network.forms import TypeFilterForm
+from organization.network.models import Organization, Person, Team, TeamPage
 from organization.pages.models import CustomPage
-from organization.projects.forms import *
-from organization.projects.models import *
+from organization.projects.forms import ProjectForm, TopicFilterForm, TypeFilterForm,\
+    ProjectPublicDataInline, ProjectPrivateDataInline, ProjectUserImageInline,\
+    ProjectContactInline, ProjectPrivateDataPublicFundingInline,\
+    ProjectPrivateDataPrivateFundingInline, ProjectResidencyForm
+from organization.projects.models import Project, ProjectTopic, ProjectDemo,\
+    ProjectBlogPage, ProjectPage, ProjectCall, ProjectResidency
+from mezzanine.utils.views import paginate
+
 
 EXCLUDED_MODELS = ()
 
@@ -76,23 +88,18 @@ class ProjectMixin(DynamicContentMixin):
 class ProjectICTDetailView(SlugMixin, ProjectMixin, DetailView):
 
     model = Project
-    template_name='projects/project_ict_detail.html'
+    template_name = 'projects/project_ict_detail.html'
 
     def get_object(self, queryset=None):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         project = super(ProjectICTDetailView, self).get_object()
         if project.topic != topic:
             raise Http404()
-        #TODO: Check if user is registered and admin or creator to allow other status values
+        # TODO: Check if user is registered and admin
+        # or creator to allow other status values
         if project.validation_status != 3:
             raise Http404()
         return project
-
-
-class ProjectListView(ListView):
-
-    model = Project
-    template_name='projects/project_list.html'
 
 
 class DynamicContentProjectView(Select2QuerySetSequenceView):
@@ -114,7 +121,13 @@ class DynamicContentProjectView(Select2QuerySetSequenceView):
             persons = persons.filter(title__icontains=self.q)
             organizations = organizations.filter(name__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, events, persons, organizations)
+        qs = autocomplete.QuerySetSequence(
+            articles,
+            custompage,
+            events,
+            persons,
+            organizations
+        )
         return qs
 
     def get_results(self, context):
@@ -125,20 +138,20 @@ class DynamicContentProjectView(Select2QuerySetSequenceView):
 class ProjectDemoDetailView(SlugMixin, ProjectMixin, DetailView):
 
     model = ProjectDemo
-    template_name='projects/project_demo_detail.html'
+    template_name = 'projects/project_demo_detail.html'
     context_object_name = 'demo'
 
 
 class ProjectBlogPageView(SlugMixin, ProjectMixin, DetailView):
 
     model = ProjectBlogPage
-    template_name='projects/project_blogpage_detail.html'
+    template_name = 'projects/project_blogpage_detail.html'
 
 
 class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
 
     model = ProjectPage
-    template_name='projects/project/project_detail.html'
+    template_name = 'projects/project/project_detail.html'
 
     def get_object(self):
         obj = super(ProjectPageView, self).get_object()
@@ -159,17 +172,26 @@ class ProjectCallMixin(object):
 class ProjectICTSubmissionView(ProjectCallMixin, TemplateView):
 
     model = Project
-    template_name='projects/project_ict_submission.html'
+    template_name = 'projects/project_ict_submission.html'
 
 
-class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView): # pragma: no cover
+class ProjectICTCreateView(
+    LoginRequiredMixin,
+    ProjectCallMixin,
+    CreateWithInlinesView
+):  # pragma: no cover
 
     model = Project
     form_class = ProjectForm
-    template_name='projects/project_ict_create.html'
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataInline, ProjectUserImageInline,
-                ProjectContactInline]
+    template_name = 'projects/project_ict_create.html'
+    inlines = [
+        ProjectPublicDataInline,
+        ProjectPrivateDataInline,
+        ProjectUserImageInline,
+        ProjectContactInline
+    ]
     topic = 'ICT'
+
     def forms_valid(self, form, inlines):
         self.object = form.save()
         self.object.user = self.request.user
@@ -194,7 +216,9 @@ class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlin
             'project_title': self.object.title,
         }
 
-        message = get_template('projects/project_ict_create_notification.html').render(Context(ctx))
+        message = get_template(
+            'projects/project_ict_create_notification.html'
+        ).render(Context(ctx))
         msg = EmailMessage(subject, message, to=to_email, from_email=from_email)
         msg.content_subtype = 'html'
         msg.send()
@@ -202,16 +226,27 @@ class ProjectICTCreateView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlin
         return super(ProjectICTCreateView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})
+        return reverse_lazy(
+            'organization-project-validation',
+            kwargs={'slug': self.call.slug}
+        )
 
 
-class ProjectICTCreatePublicFundingView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
+class ProjectICTCreatePublicFundingView(
+    LoginRequiredMixin,
+    ProjectCallMixin,
+    CreateWithInlinesView
+):
 
     model = Project
     form_class = ProjectForm
-    template_name='projects/project_ict_create_public_funding.html'
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, ProjectUserImageInline,
-                ProjectContactInline]
+    template_name = 'projects/project_ict_create_public_funding.html'
+    inlines = [
+        ProjectPublicDataInline,
+        ProjectPrivateDataPublicFundingInline,
+        ProjectUserImageInline,
+        ProjectContactInline
+    ]
     topic = 'ICT'
 
     def forms_valid(self, form, inlines):
@@ -239,22 +274,32 @@ class ProjectICTCreatePublicFundingView(LoginRequiredMixin, ProjectCallMixin, Cr
             'project_title': self.object.title,
         }
 
-        message = get_template('projects/project_ict_create_notification.html').render(Context(ctx))
+        message = get_template(
+            'projects/project_ict_create_notification.html'
+        ).render(Context(ctx))
         msg = EmailMessage(subject, message, to=to_email, from_email=from_email)
         msg.content_subtype = 'html'
         msg.send()
         return super(ProjectICTCreatePublicFundingView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})
+        return reverse_lazy(
+            'organization-project-validation',
+            kwargs={'slug': self.call.slug}
+        )
+
 
 class ProjectICTEditPublicFundingView(LoginRequiredMixin, UpdateWithInlinesView):
 
     model = Project
     form_class = ProjectForm
-    template_name='projects/project_ict_edit_public_funding.html'
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, ProjectUserImageInline,
-                ProjectContactInline]
+    template_name = 'projects/project_ict_edit_public_funding.html'
+    inlines = [
+        ProjectPublicDataInline,
+        ProjectPrivateDataPublicFundingInline,
+        ProjectUserImageInline,
+        ProjectContactInline
+    ]
 
     def get_initial(self):
         initial = super(ProjectICTEditPublicFundingView, self).get_initial()
@@ -270,7 +315,10 @@ class ProjectICTEditPublicFundingView(LoginRequiredMixin, UpdateWithInlinesView)
         return initial
 
     def get_context_data(self, **kwargs):
-        context = super(ProjectICTEditPublicFundingView, self).get_context_data(**kwargs)
+        context = super(
+            ProjectICTEditPublicFundingView,
+            self
+        ).get_context_data(**kwargs)
         slug = self.kwargs['slug']
         user = self.request.user
         project = Project.objects.get(slug=slug)
@@ -291,9 +339,9 @@ class ProjectICTEditPublicFundingView(LoginRequiredMixin, UpdateWithInlinesView)
                     keywords_result = ""
                     for key in contacts.keywords.all():
                         if index == 0:
-                            keywords_result = keyword
+                            keywords_result = key
                         elif index <= 2 and index > 0:
-                            keywords_result = "," + keyword
+                            keywords_result = "," + key
                         else:
                             break
                     context["keywords"] = keywords_result
@@ -312,16 +360,27 @@ class ProjectICTEditPublicFundingView(LoginRequiredMixin, UpdateWithInlinesView)
         return super(ProjectICTEditPublicFundingView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('user-project-edit', kwargs={'slug':self.call.slug})
+        return reverse_lazy(
+            'user-project-edit',
+            kwargs={'slug': self.call.slug}
+        )
 
 
-class ProjectICTCreatePrivateFundingView(LoginRequiredMixin, ProjectCallMixin, CreateWithInlinesView):
+class ProjectICTCreatePrivateFundingView(
+    LoginRequiredMixin,
+    ProjectCallMixin,
+    CreateWithInlinesView
+):
 
     model = Project
     form_class = ProjectForm
-    template_name='projects/project_ict_create_private_funding.html'
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPrivateFundingInline, ProjectUserImageInline,
-                ProjectContactInline]
+    template_name = 'projects/project_ict_create_private_funding.html'
+    inlines = [
+        ProjectPublicDataInline,
+        ProjectPrivateDataPrivateFundingInline,
+        ProjectUserImageInline,
+        ProjectContactInline
+    ]
     topic = 'ICT'
 
     def forms_valid(self, form, inlines):
@@ -349,23 +408,36 @@ class ProjectICTCreatePrivateFundingView(LoginRequiredMixin, ProjectCallMixin, C
             'project_title': self.object.title,
         }
 
-        message = get_template('projects/project_ict_create_notification.html').render(Context(ctx))
+        message = get_template(
+            'projects/project_ict_create_notification.html'
+        ).render(Context(ctx))
         msg = EmailMessage(subject, message, to=to_email, from_email=from_email)
         msg.content_subtype = 'html'
         msg.send()
-        return super(ProjectICTCreatePrivateFundingView, self).forms_valid(form, inlines)
+        return super(
+            ProjectICTCreatePrivateFundingView,
+            self
+        ).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('organization-project-validation', kwargs={'slug':self.call.slug})
+        return reverse_lazy(
+            'organization-project-validation',
+            kwargs={'slug': self.call.slug}
+        )
 
 
 class ProjectICTEditPrivateFundingView(LoginRequiredMixin, UpdateWithInlinesView):
 
     model = Project
     form_class = ProjectForm
-    template_name='projects/project_ict_edit_public_funding.html'
-    inlines = [ProjectPublicDataInline, ProjectPrivateDataPublicFundingInline, ProjectUserImageInline,
-                ProjectContactInline]
+    template_name = 'projects/project_ict_edit_public_funding.html'
+    inlines = [
+        ProjectPublicDataInline,
+        ProjectPrivateDataPublicFundingInline,
+        ProjectUserImageInline,
+        ProjectContactInline
+    ]
+
     def get_initial(self):
         initial = super(ProjectICTEditPrivateFundingView, self).get_initial()
         slug = self.kwargs['slug']
@@ -380,7 +452,10 @@ class ProjectICTEditPrivateFundingView(LoginRequiredMixin, UpdateWithInlinesView
         return initial
 
     def get_context_data(self, **kwargs):
-        context = super(ProjectICTEditPrivateFundingView, self).get_context_data(**kwargs)
+        context = super(
+            ProjectICTEditPrivateFundingView,
+            self
+        ).get_context_data(**kwargs)
         slug = self.kwargs['slug']
         user = self.request.user
         project = Project.objects.get(slug=slug)
@@ -401,9 +476,9 @@ class ProjectICTEditPrivateFundingView(LoginRequiredMixin, UpdateWithInlinesView
                     keywords_result = ""
                     for key in contacts.keywords.all():
                         if index == 0:
-                            keywords_result = keyword
+                            keywords_result = key
                         elif index <= 2 and index > 0:
-                            keywords_result = "," + keyword
+                            keywords_result = "," + key
                         else:
                             break
                     context["keywords"] = keywords_result
@@ -422,37 +497,42 @@ class ProjectICTEditPrivateFundingView(LoginRequiredMixin, UpdateWithInlinesView
         return super(ProjectICTEditPrivateFundingView, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        return reverse_lazy('user-project-edit-private', kwargs={'slug':self.call.slug})
+        return reverse_lazy(
+            'user-project-edit-private',
+            kwargs={'slug': self.call.slug}
+        )
 
 
 class ProjectICTValidationView(ProjectCallMixin, TemplateView):
 
     model = Project
-    template_name='projects/project_ict_validation.html'
+    template_name = 'projects/project_ict_validation.html'
 
 
 class ProjectICTListView(ListView):
 
     model = Project
-    template_name='projects/project_ict_list.html'
+    template_name = 'projects/project_ict_list.html'
 
     def get_queryset(self):
         topic, c = ProjectTopic.objects.get_or_create(key='ICT')
-        #TODO: Filter by Call
-        qs = Project.objects.filter(topic=topic).filter(validation_status=3).select_related().order_by('title')
+        # TODO: Filter by Call
+        qs = Project.objects.filter(topic=topic)\
+            .filter(validation_status=3)\
+            .select_related().order_by('title')
         return qs
 
 
 class ProjectCallDetailView(SlugMixin, DetailView):
 
     model = ProjectCall
-    template_name='projects/project_call_detail.html'
+    template_name = 'projects/project_call_detail.html'
 
 
 class ProjectCallListView(ListView):
 
     model = ProjectCall
-    template_name='projects/project_call_list.html'
+    template_name = 'projects/project_call_list.html'
 
 
 class ProjectCallListAsEventsView(ListView):
@@ -462,22 +542,29 @@ class ProjectCallListAsEventsView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = {}
-        context["open_calls"] = ProjectCall.objects.filter(date_to__gte=datetime.now()).order_by("date_to")
-        context["closed_calls"] = ProjectCall.objects.filter(date_to__lt=datetime.now()).order_by("date_to")
+        context["open_calls"] = ProjectCall.objects.filter(
+            date_to__gte=datetime.now()
+        ).order_by("date_to")
+        context["closed_calls"] = ProjectCall.objects.filter(
+            date_to__lt=datetime.now()
+        ).order_by("date_to")
         return context
 
 
 class ProjectResidencyDetailView(SlugMixin, DetailView):
 
     model = ProjectResidency
-    template_name='projects/project_residency_detail.html'
+    template_name = 'projects/project_residency_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(ProjectResidencyDetailView, self).get_context_data(**kwargs)
         # Add the previous and next residencies to the context
         call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
         projects = Project.objects.filter(call=call)
-        residencies = ProjectResidency.objects.filter(project__in=projects).filter(validated=True).select_related().order_by("id")
+        residencies = ProjectResidency.objects.filter(project__in=projects)\
+            .filter(validated=True)\
+            .select_related()\
+            .order_by("id")
         this_residency = residencies.get(slug=self.kwargs["slug"])
         index = 0
         for i, residency in enumerate(residencies):
@@ -492,7 +579,7 @@ class ProjectResidencyDetailView(SlugMixin, DetailView):
 class ProjectResidencyListView(ListView):
 
     model = ProjectResidency
-    template_name='projects/project_residency_list.html'
+    template_name = 'projects/project_residency_list.html'
 
     def get_context_data(self, **kwargs):
         context = super(ProjectResidencyListView, self).get_context_data(**kwargs)
@@ -510,7 +597,10 @@ class ProjectResidencyListView(ListView):
     def get_queryset(self):
         call = ProjectCall.objects.get(slug=self.kwargs["call_slug"])
         projects = Project.objects.filter(call=call)
-        qs = ProjectResidency.objects.filter(project__in=projects).filter(validated=True).select_related().order_by("id")
+        qs = ProjectResidency.objects.filter(project__in=projects)\
+            .filter(validated=True)\
+            .select_related()\
+            .order_by("id")
         return qs
 
 
@@ -518,14 +608,14 @@ class ProjectResidencyCreateView(CreateWithInlinesView):
 
     model = ProjectResidency
     form_class = ProjectResidencyForm
-    template_name='projects/project_residency_create.html'
+    template_name = 'projects/project_residency_create.html'
     inlines = []
 
 
 class AbstractProjectListView(ListView, FilteredListView):
-    
+
     model = ProjectPage
-    template_name='projects/project/project_list.html'
+    template_name = 'projects/project/project_list.html'
     item_to_filter = "filter"
 
     def get_queryset(self):
@@ -542,7 +632,10 @@ class AbstractProjectListView(ListView, FilteredListView):
         if self.request.GET:
             if self.item_to_filter in self.request.GET.keys():
                 form = self.get_form()
-                v_filter = self._get_choice_id(self.request.GET[self.item_to_filter], form.fields[self.item_to_filter]._choices)
+                v_filter = self._get_choice_id(
+                    self.request.GET[self.item_to_filter],
+                    form.fields[self.item_to_filter]._choices
+                )
 
         # Filter if POST
         if self.filter_value:
@@ -571,43 +664,46 @@ class AbstractProjectListView(ListView, FilteredListView):
         return self.qs
 
     def get_context_data(self, **kwargs):
-        context = super(AbstractProjectListView, self).get_context_data(**kwargs)            
-        
+        context = super(AbstractProjectListView, self).get_context_data(**kwargs)
+
         # list object function of pagination
-        context['objects'] = paginate(self.qs, self.request.GET.get("page", 1),
-                              settings.MEDIA_PER_PAGE,
-                              settings.MAX_PAGING_LINKS)
+        context['objects'] = paginate(
+            self.qs,
+            self.request.GET.get("page", 1),
+            settings.MEDIA_PER_PAGE,
+            settings.MAX_PAGING_LINKS
+        )
 
         # set if project listed are archived
         context['is_archive'] = self.archived
         if self.archived:
             context['title'] = _('Finished Projects')
-        else :
+        else:
             context['title'] = _('Projects')
 
         # slug of the team
         # used to switch between all labo projects or a specific team
-        if 'slug' in self.kwargs:     
+        if 'slug' in self.kwargs:
             context['slug'] = self.kwargs['slug']
         return context
 
 
 class ProjectListView(AbstractProjectListView):
-    
+
     form_class = TopicFilterForm
     property_query_filter = "project__topic__id"
     archived = False
 
 
 class ProjectArchivesListView(AbstractProjectListView):
-    
+
     form_class = TopicFilterForm
     property_query_filter = "project__topic__id"
     archived = True
 
     def get_context_data(self, **kwargs):
         context = super(ProjectArchivesListView, self).get_context_data(**kwargs)
-        context['project_list_url'] = reverse_lazy('organization-project-list') 
+        context['project_list_url'] = reverse_lazy('organization-project-list')
         return context
 
 
@@ -619,13 +715,16 @@ class ProjectTeamListView(AbstractProjectListView):
 
 
 class ProjectArchivesTeamListView(AbstractProjectListView):
-    
+
     form_class = TypeFilterForm
     property_query_filter = "project__type"
     archived = True
 
     def get_context_data(self, **kwargs):
         context = super(ProjectArchivesTeamListView, self).get_context_data(**kwargs)
-        context['project_list_url'] = reverse_lazy('organization-project-team-list', kwargs={'slug' : self.kwargs['slug']})
+        context['project_list_url'] = reverse_lazy(
+            'organization-project-team-list',
+            kwargs={'slug': self.kwargs['slug']}
+        )
         context['team'] = Team.objects.get(slug=self.kwargs['slug'])
         return context

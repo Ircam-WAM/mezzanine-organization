@@ -25,16 +25,16 @@ import dal_queryset_sequence
 import dal_select2_queryset_sequence
 
 from django import forms
-from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
-from mezzanine.core.models import Orderable
-from organization.magazine.models import Article, Topic, Brief
+from organization.magazine.models import Article
 from organization.pages.models import CustomPage
-from organization.agenda.models import Event, DynamicContentEvent
-from organization.media.models import Playlist
+from organization.agenda.models import Event
 from organization.media.forms import DynamicMultimediaForm
-from organization.network.models import Organization
-from organization.projects.models import *
+from organization.network.models import Organization, Person
+from organization.projects.models import DynamicContentProject, Project,\
+    ProjectPublicData, ProjectPrivateData, ProjectUserImage, ProjectLink,\
+    ProjectContact, ProjectResidency, DynamicMultimediaProject,\
+    DynamicContentProjectPage, ProjectTopic, PROJECT_TYPE_CHOICES
 from extra_views import InlineFormSet
 
 
@@ -49,7 +49,9 @@ class DynamicContentProjectForm(autocomplete.FutureModelForm):
             Organization.objects.all()
         ),
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-project'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-project'
+        ),
     )
 
     class Meta:
@@ -62,7 +64,7 @@ class ProjectForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
         self.fields['title'].label = "Project name"
-        self.fields['title'].help_text =  "Acronym + full designation"
+        self.fields['title'].help_text = "Acronym + full designation"
         self.fields['keywords'].help_text = "3 comma separated keywords"
         self.fields['date_from'].help_text = "Project start date (MM/DD/YYYY)"
         self.fields['date_to'].help_text = "Project end date (MM/DD/YYYY)"
@@ -105,7 +107,13 @@ class ProjectPrivateDataPrivateFundingInline(InlineFormSet):
     model = ProjectPrivateData
     prefix = "Private data"
     can_delete = False
-    fields = ("description", "dimension", "commitment_letter", "investor_letter", "persons",)
+    fields = (
+        "description",
+        "dimension",
+        "commitment_letter",
+        "investor_letter",
+        "persons",
+    )
 
 
 class ProjectUserImageInline(InlineFormSet):
@@ -128,21 +136,34 @@ class ProjectLinkInline(InlineFormSet):
     fields = ['url', 'type']
 
 
-
 class ProjectContactForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProjectContactForm, self).__init__(*args, **kwargs)
-        self.fields['organization_name'].help_text = "The organization related to the contact"
-        self.fields['position'].help_text = "The position of the contact in the organization"
+        self.fields[
+            'organization_name'
+        ].help_text = "The organization related to the contact"
+        self.fields[
+            'position'
+        ].help_text = "The position of the contact in the organization"
         for field in self._meta.fields:
             self.fields[field].required = True
 
     class Meta:
         model = ProjectContact
-        fields = ('first_name', 'last_name', 'email', 'organization_name',
-                    'position', 'address', 'telephone', 'address', 'postal_code',
-                    'city', 'country')
+        fields = (
+            'first_name',
+            'last_name',
+            'email',
+            'organization_name',
+            'position',
+            'address',
+            'telephone',
+            'address',
+            'postal_code',
+            'city',
+            'country'
+        )
 
 
 class ProjectContactInline(InlineFormSet):
@@ -178,7 +199,9 @@ class DynamicContentProjectPageForm(autocomplete.FutureModelForm):
             Organization.objects.all()
         ),
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-project'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-project'
+        ),
     )
 
     class Meta:
@@ -189,8 +212,8 @@ class DynamicContentProjectPageForm(autocomplete.FutureModelForm):
 class TopicFilterForm(forms.Form):
 
     filter = forms.ChoiceField(required=False)
-    # @Todo : Better to user ModelChoiceField, to support model translation, but need refactoring
-    # filter = forms.ModelChoiceField(queryset=ProjectTopic.objects.all(), required=False, empty_label=None)
+    # @Todo : Better to user ModelChoiceField, to support model translation, but need refactoring  # noqa: E501
+    # filter = forms.ModelChoiceField(queryset=ProjectTopic.objects.all(), required=False, empty_label=None)  # noqa: E501
 
     def __init__(self, *args, **kwargs):
         super(TopicFilterForm, self).__init__(*args, **kwargs)

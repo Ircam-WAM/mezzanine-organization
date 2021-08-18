@@ -19,19 +19,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from copy import deepcopy
 
 from django.contrib import admin
-from django.utils.translation import ugettext_lazy as _
 
-from mezzanine.core.admin import *
+from mezzanine.core.admin import TabularDynamicInlineAdmin, BaseTranslationModelAdmin
 
-from organization.core.admin import *
-from organization.projects.models import *
-from organization.pages.models import *
-from organization.shop.models import *
-from organization.shop.translation import *
-from cartridge.shop.admin import *
+from organization.core.admin import BaseTranslationOrderedModelAdmin
+from organization.shop.models import ProductListProduct, ProductLink,\
+    ProductExternalShop, TeamProduct, Product, ProductKeyword, ProductList
+from cartridge.shop.admin import ProductAdmin, ProductImageAdmin,\
+    ProductVariationAdmin
+
 
 class ProductListProductInline(TabularDynamicInlineAdmin):
 
@@ -41,12 +39,13 @@ class ProductListProductInline(TabularDynamicInlineAdmin):
 class ProductListAdmin(BaseTranslationOrderedModelAdmin):
 
     inlines = [ProductListProductInline, ]
-    first_fields = ['title', 'description',]
+    first_fields = ['title', 'description', ]
 
 
 class ProductLinkInline(TabularDynamicInlineAdmin):
 
     model = ProductLink
+
 
 class ProductExternalShopInline(TabularDynamicInlineAdmin):
 
@@ -54,25 +53,25 @@ class ProductExternalShopInline(TabularDynamicInlineAdmin):
 
 
 class TeamProductInline(TabularDynamicInlineAdmin):
-    
+
     model = TeamProduct
 
 
-# class ProductImageAdmin(TabularDynamicInlineAdmin):
-
-#     model = CustomProductImage
-
-
 class ProductKeywordInline(TabularDynamicInlineAdmin):
-    
+
     model = Product.p_keywords.through
-    # model = ProductKeyword # 'organization-shop.ProductKeyword' has no ForeignKey to 'shop.Product'.
 
 
 class CustomProductAdmin(ProductAdmin):
-    
-    inlines = [ProductExternalShopInline, TeamProductInline, ProductKeywordInline,
-                ProductImageAdmin, ProductVariationAdmin, ProductLinkInline, ]
+
+    inlines = [
+        ProductExternalShopInline,
+        TeamProductInline,
+        ProductKeywordInline,
+        ProductImageAdmin,
+        ProductVariationAdmin,
+        ProductLinkInline,
+    ]
 
 
 class ProductKeywordAdmin(BaseTranslationModelAdmin):
