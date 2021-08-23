@@ -22,7 +22,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.core.models import Displayable, RichText, TeamOwnable
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from organization.core.models import Image, Period
 
 

@@ -10,7 +10,7 @@ from django.http import QueryDict
 from organization.network.api import get_leave_days_per_month
 from collections import OrderedDict
 from workalendar.europe import France
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
 from django.contrib.sites.models import Site

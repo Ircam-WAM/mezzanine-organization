@@ -23,7 +23,7 @@ from __future__ import unicode_literals
 
 from pyquery import PyQuery as pq
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -130,7 +130,10 @@ class MediaTranscoded(models.Model):
     media = models.ForeignKey(
         'Media',
         verbose_name=_('media'),
-        related_name='transcoded'
+        related_name='transcoded',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
     file = FileField(
         _("file"),

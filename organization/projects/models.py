@@ -26,7 +26,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 from django.core.files.images import get_image_dimensions
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from organization.core.models import TitledSlugged, Period,\
     Named, Titled, Description, Block, Link, Image, UserImage, File,\
     SubTitled, NamedOnly, RelatedTitle, URL, DynamicContent, Address
@@ -241,8 +241,8 @@ class ProjectTopic(Named):
         'ProjectTopic',
         verbose_name=_('parent topic'),
         related_name='topics',
-        blank=True,
-        null=True
+        blank=True, null=True,
+        on_delete=models.SET_NULL
     )
 
     class Meta:
@@ -278,7 +278,10 @@ class ProjectWorkPackage(Titled, Description, Period):
     project = models.ForeignKey(
         Project,
         verbose_name=_('project'),
-        related_name='work_packages'
+        related_name='work_packages',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
     number = models.IntegerField(_('number'))
     lead_organization = models.ForeignKey(
@@ -286,7 +289,8 @@ class ProjectWorkPackage(Titled, Description, Period):
         verbose_name=_('lead organization'),
         related_name='leader_work_packages',
         blank=True,
-        null=True
+        null=True,
+        on_delete=models.SET_NULL
     )
 
     class Meta:
@@ -543,7 +547,10 @@ class Repository(Named):
     system = models.ForeignKey(
         'RepositorySystem',
         verbose_name=_('system'),
-        related_name='repositories'
+        related_name='repositories',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
     access = models.CharField(
         _('access rights'),
@@ -1011,7 +1018,10 @@ class ProjectPage(Displayable, RichText, TeamOwnable):
     project = models.ForeignKey(
         Project,
         verbose_name=_('project'),
-        related_name='pages'
+        related_name='pages',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
 
     @property

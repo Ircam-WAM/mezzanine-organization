@@ -27,7 +27,7 @@ from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
 from django.utils.translation import ugettext_lazy as _

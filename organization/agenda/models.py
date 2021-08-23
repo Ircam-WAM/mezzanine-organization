@@ -102,7 +102,8 @@ class EventPersonListBlockInline(Titled, Description):
         related_name='events',
         verbose_name=_('Person List Block'),
         blank=True,
-        null=True
+        null=True,
+        on_delete=models.SET_NULL
     )
 
     class Meta:

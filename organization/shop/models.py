@@ -117,7 +117,10 @@ class ProductExternalShop(models.Model):
     product = models.OneToOneField(
         Product,
         verbose_name=_('product'),
-        related_name='product_external_shop'
+        related_name='product_external_shop',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
     external_id = models.IntegerField(
         verbose_name=_('external id'),
@@ -129,7 +132,8 @@ class ProductExternalShop(models.Model):
         verbose_name=_('shop'),
         related_name='product_external_shop',
         null=True,
-        blank=True
+        blank=True,
+        on_delete=models.SET_NULL
     )
     label = models.CharField(
         _('label'),
@@ -151,14 +155,18 @@ class TeamProduct(models.Model):
     product = models.ForeignKey(
         Product,
         verbose_name=_('product'),
-        related_name='team'
+        related_name='team',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
     teams = models.ForeignKey(
         Team,
         verbose_name=_('team'),
         null=True,
         blank=True,
-        related_name='products'
+        related_name='products',
+        on_delete=models.SET_NULL
     )
 
     class Meta:

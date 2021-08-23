@@ -21,7 +21,7 @@
 
 from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from mezzanine.core.admin import BaseTranslationModelAdmin, SitePermissionUserAdmin,\
     UserAdmin
 from mezzanine.blog.models import BlogPost
@@ -29,11 +29,6 @@ from mezzanine.generic.models import ThreadedComment, Keyword
 from mezzanine.conf import settings
 from mezzanine.utils.models import get_user_model
 from organization.core.models import LinkType
-
-try:
-    from hijack_admin.admin import HijackUserAdmin
-except ImportError:
-    pass
 
 
 class KeywordAdmin(BaseTranslationModelAdmin):
@@ -79,7 +74,7 @@ class NullListFilter(SimpleListFilter):
 
 
 if settings.DEBUG:
-    class UserAdminCustom(HijackUserAdmin, SitePermissionUserAdmin):
+    class UserAdminCustom(SitePermissionUserAdmin):
 
         list_display = UserAdmin.list_display + (
             'is_active',
@@ -88,7 +83,6 @@ if settings.DEBUG:
             'date_joined',
             'person_link',
             'my_groups',
-            'hijack_field'
         )
 
         def person_link(self, instance):

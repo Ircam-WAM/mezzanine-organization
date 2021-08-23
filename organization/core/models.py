@@ -320,6 +320,7 @@ class DynamicContent(models.Model):
         null=True,
         blank=True,
         editable=False,
+        on_delete=models.SET_NULL
     )
 
     # used for autocomplete but hidden in admin
@@ -383,7 +384,13 @@ class Link(URL):
     """A person can have many links."""
 
     title = models.CharField(_('title'), max_length=1024, null=True, blank=True)
-    link_type = models.ForeignKey(LinkType, verbose_name=_('link type'))
+    link_type = models.ForeignKey(
+        LinkType,
+        verbose_name=_('link type'),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         abstract = True
@@ -583,7 +590,8 @@ class OwnableOrNot(models.Model):
         verbose_name=_("Author"),
         related_name="%(class)ss",
         null=True,
-        blank=True
+        blank=True,
+        on_delete=models.SET_NULL
     )
 
     class Meta:

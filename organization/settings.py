@@ -254,6 +254,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    "django.contrib.messages",
     'django_extensions',
     "mezzanine.boot",
     "mezzanine.conf",
@@ -267,7 +268,7 @@ INSTALLED_APPS = [
     # "mezzanine.galleries",
     # "mezzanine.mobile",
     "cartridge.shop",
-    'djangobower',
+    # 'djangobower',
     "meta",
     "mezzanine_agenda",
     "organization.core",
@@ -319,7 +320,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'OPTIONS': {
-            'builtins': ['mezzanine.template.loader_tags'],
             'context_processors': (
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -345,7 +345,7 @@ TEMPLATES = [
 # List of middleware classes to use. Order is important; in the request phase,
 # these middleware classes will be applied in the order given, and in the
 # response phase the middleware will be applied in reverse order.
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     # 'sandbox.middleware.StartupMiddleware',
     "mezzanine.core.middleware.UpdateCacheMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -354,7 +354,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "mezzanine.core.request.CurrentRequestMiddleware",
@@ -422,6 +421,7 @@ MAX_UPLOAD_SIZE = 512000000
 MAX_UPLOAD_SIZE_FRONT = 10485760
 FILEBROWSER_MAX_UPLOAD_SIZE = 512000000
 
+THUMBNAILS_DIR_NAME = 'thumbs'
 
 # EXTENSIONS AND FORMATS
 # Allowed Extensions for File Upload. Lower case is important.
@@ -457,7 +457,7 @@ FILEBROWSER_SELECT_FORMATS = {
 
 GRAPPELLI_INSTALLED = True
 # JQUERY_FILENAME = 'jquery-3.1.0.min.js'
-JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'
+JQUERY_UI_FILENAME = 'jquery-ui-1.12.1.min.js'
 TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 
 ADMIN_MENU_ORDER = (
@@ -690,8 +690,8 @@ OPTIONAL_APPS = (
 )
 
 if DEBUG:
-    OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    OPTIONAL_APPS += ('debug_toolbar', )  # , 'hijack_admin',)
+    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 INTERNAL_IPS = ['127.0.0.1', '172.17.0.1', '172.17.0.2']
 
@@ -715,7 +715,7 @@ DEBUG_TOOLBAR_PANELS = [
 HIJACK_DISPLAY_WARNING = False
 HIJACK_ALLOW_GET_REQUESTS = False
 HIJACK_REGISTER_ADMIN = False
-SILENCED_SYSTEM_CHECKS = ["hijack_admin.E001"]
+# SILENCED_SYSTEM_CHECKS = ["hijack_admin.E001"]
 
 if DEBUG:
     SILENCED_SYSTEM_CHECKS = []

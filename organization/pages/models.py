@@ -21,7 +21,7 @@
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from mezzanine.core.models import Displayable, Orderable, TeamOwnable, RichText
 from mezzanine.core.fields import FileField
 from mezzanine.pages.models import Page, Link as MezzanineLink

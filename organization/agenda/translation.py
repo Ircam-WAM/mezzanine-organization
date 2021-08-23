@@ -73,7 +73,7 @@ class EventPersonListBlockInlineTranslationOptions(TranslationOptions):
 @register(EventLink)
 class EventLinkTranslationOptions(TranslationOptions):
 
-    fields = ('title',)
+    fields = ('title', 'url')
 
 
 @register(EventPeriod)
