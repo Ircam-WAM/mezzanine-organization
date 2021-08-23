@@ -43,7 +43,7 @@ def get_requirements():
         "django-taggit==0.22.2",
         "djangorestframework==3.8.2",
         # "django-cors-middleware==1.3.1",  Deprectated : https://github.com/zestedesavoir/django-cors-middleware  # noqa: E501
-        "django-allauth==0.34.0",
+        "django-allauth==0.41.0",
         "xlrd==1.0.0",
         "pytz==2021.1",
         "pandas==1.1.5",
