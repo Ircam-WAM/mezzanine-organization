@@ -26,7 +26,6 @@ import os
 import ldap
 import logging
 import warnings
-import json
 from datetime import date
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse_lazy

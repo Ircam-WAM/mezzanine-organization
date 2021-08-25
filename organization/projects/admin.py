@@ -41,7 +41,6 @@ from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm,\
     DynamicMultimediaProjectForm, DynamicContentProjectPageForm
 from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin
-from django.conf import settings
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
