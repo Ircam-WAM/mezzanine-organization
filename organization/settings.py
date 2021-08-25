@@ -32,9 +32,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse_lazy
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
-# mezzo conf file
-MEZZO_CONF = json.loads(open(os.path.dirname(__file__) + '/../conf.json', 'r').read())
-
 DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
 warnings.filterwarnings(
@@ -150,6 +147,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 SITE_ID = 1
+
+MULTIPLE_DOMAIN_SETTING_ALLOWED = True
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -291,12 +290,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth_ircam',  # allauth Ircam custom provider
 ]
-
-if MEZZO_CONF["onthology"]:
-    INSTALLED_APPS += [
-        'rdf_io',
-        'skosxl',
-    ]
 
 BOWER_COMPONENTS_ROOT = '/srv/bower/'
 BOWER_PATH = '/usr/local/bin/bower'
@@ -456,7 +449,7 @@ FILEBROWSER_SELECT_FORMATS = {
 #########################
 
 GRAPPELLI_INSTALLED = True
-# JQUERY_FILENAME = 'jquery-3.1.0.min.js'
+JQUERY_FILENAME = 'jquery-3.1.0.min.js'
 JQUERY_UI_FILENAME = 'jquery-ui-1.12.1.min.js'
 TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 

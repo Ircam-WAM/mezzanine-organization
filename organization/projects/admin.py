@@ -207,8 +207,6 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
 
 # ProjectAdmin
 filter_horizontal = ['teams', 'organizations']
-if settings.MEZZO_CONF["onthology"]:
-    filter_horizontal += 'concepts'
 
 
 class ProjectAdmin(BaseTranslationOrderedModelAdmin):

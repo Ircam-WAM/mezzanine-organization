@@ -71,7 +71,7 @@ FUNDING_CHOICES = (
 )
 
 
-class AbstractProject(
+class Project(
         TitledSlugged,
         MetaData,
         TimeStamped,
@@ -192,7 +192,6 @@ class AbstractProject(
         verbose_name_plural = ("projects")
         ordering = ['title', ]
         permissions = TeamOwnable.Meta.permissions
-        abstract = True
 
     def __str__(self):
         return self.title
@@ -220,18 +219,6 @@ class AbstractProject(
                 return ('completed')
         else:
             return ('pending')
-
-
-if settings.MEZZO_CONF["onthology"]:
-    class Project(AbstractProject):
-        concepts = models.ManyToManyField(
-            'skosxl.Concept',
-            verbose_name=('concepts'),
-            blank=True
-        )
-else:
-    class Project(AbstractProject):
-        pass
 
 
 class ProjectTopic(Named):

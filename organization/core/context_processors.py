@@ -29,6 +29,7 @@ from django.contrib.sites.models import Site
 
 
 def organization_settings(request):
+
     date_now = datetime.now()
     # SEASON
     current_season, created = Season.objects.get_or_create(
