@@ -113,43 +113,43 @@ class Command(BaseCommand):
         self.delete = options['delete']
 
         clean_dynamics(
-            'organization-magazine',
+            'organization_magazine',
             'DynamicContentArticle',
             'article_id',
             self.delete
         )
         clean_dynamics(
-            'organization-pages',
+            'organization_pages',
             'DynamicContentPage',
             'page_id',
             self.delete
         )
         clean_dynamics(
-            'organization-agenda',
+            'organization_agenda',
             'DynamicContentEvent',
             'event_id',
             self.delete
         )
         clean_dynamics(
-            'organization-pages',
+            'organization_pages',
             'DynamicContentHomeSlider',
             'home_id',
             self.delete
         )
         clean_dynamics(
-            'organization-pages',
+            'organization_pages',
             'DynamicContentHomeBody',
             'home_id',
             self.delete
         )
         clean_dynamics(
-            'organization-pages',
+            'organization_pages',
             'DynamicContentHomeMedia',
             'home_id',
             self.delete
         )
         clean_dynamics(
-            'organization-projects',
+            'organization_projects',
             'DynamicContentProject',
             'project_id',
             self.delete

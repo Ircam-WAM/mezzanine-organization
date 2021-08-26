@@ -25,4 +25,4 @@ from django.apps import AppConfig
 class AgendaConfig(AppConfig):
 
     name = 'organization.agenda'
-    label = 'organization-agenda'
+    label = 'organization_agenda'

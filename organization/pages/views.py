@@ -46,6 +46,7 @@ class HomeView(SlugMixin, DetailView):
     context_object_name = 'home'
 
     def get_object(self, **kwargs):
+        print(self.model)
         homes = self.model.objects.published()
         if homes:
             return homes.latest("publish_date")

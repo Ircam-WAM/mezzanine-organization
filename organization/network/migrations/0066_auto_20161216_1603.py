@@ -10,7 +10,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0065_auto_20161208_1244'),
+        ('organization_network', '0065_auto_20161208_1244'),
     ]
 
     operations = [
@@ -50,6 +50,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='organizationservice',
             name='organization',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='services', to='organization-network.Organization', verbose_name='organization'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='services', to='organization_network.Organization', verbose_name='organization'),
         ),
     ]

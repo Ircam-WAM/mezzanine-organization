@@ -8,7 +8,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-agenda', '0035_auto_20210628_1238'),
+        ('organization_agenda', '0035_auto_20210628_1238'),
     ]
 
     operations = [
@@ -30,11 +30,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='eventlink',
             name='link_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-core.LinkType', verbose_name='link type'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_core.LinkType', verbose_name='link type'),
         ),
         migrations.AlterField(
             model_name='eventpersonlistblockinline',
             name='person_list_block',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='events', to='organization-network.PersonListBlock', verbose_name='Person List Block'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='events', to='organization_network.PersonListBlock', verbose_name='Person List Block'),
         ),
     ]

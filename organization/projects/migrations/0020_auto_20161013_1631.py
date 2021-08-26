@@ -9,21 +9,21 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-media', '0006_auto_20161013_1631'),
-        ('organization-projects', '0019_auto_20161007_1045'),
+        ('organization_media', '0006_auto_20161013_1631'),
+        ('organization_projects', '0019_auto_20161007_1045'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='ProjectPlaylist',
             fields=[
-                ('playlist_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-media.Playlist')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='playlists', to='organization-projects.Project', verbose_name='project')),
+                ('playlist_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_media.Playlist')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='playlists', to='organization_projects.Project', verbose_name='project')),
             ],
             options={
                 'abstract': False,
             },
-            bases=('organization-media.playlist',),
+            bases=('organization_media.playlist',),
         ),
         migrations.RemoveField(
             model_name='projectaudio',

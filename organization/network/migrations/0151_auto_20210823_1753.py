@@ -8,7 +8,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0150_merge_20201022_1151'),
+        ('organization_network', '0150_merge_20201022_1151'),
     ]
 
     operations = [
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='department',
             name='organization',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='departments', to='organization-network.Organization', verbose_name='organization'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='departments', to='organization_network.Organization', verbose_name='organization'),
         ),
         migrations.AlterField(
             model_name='dynamiccontentperson',
@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='mediadepartment',
             name='media',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='department', to='organization-media.Media', verbose_name='media'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='department', to='organization_media.Media', verbose_name='media'),
         ),
         migrations.AlterField(
             model_name='organization',
@@ -65,12 +65,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='organizationlink',
             name='link_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-core.LinkType', verbose_name='link type'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_core.LinkType', verbose_name='link type'),
         ),
         migrations.AlterField(
             model_name='organizationlinkedblockinline',
             name='organization_linked',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='organization_linked_block_inline_list', to='organization-network.OrganizationLinked', verbose_name='organization list'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='organization_linked_block_inline_list', to='organization_network.OrganizationLinked', verbose_name='organization list'),
         ),
         migrations.AlterField(
             model_name='organizationservice',
@@ -80,27 +80,27 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='pagecustompersonlistblockinline',
             name='person_list_block',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='page_custom_person_list_block_inlines', to='organization-network.PersonListBlock', verbose_name='Person List Block'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='page_custom_person_list_block_inlines', to='organization_network.PersonListBlock', verbose_name='Person List Block'),
         ),
         migrations.AlterField(
             model_name='personactivity',
             name='person',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='activities', to='organization-network.Person', verbose_name='person'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='activities', to='organization_network.Person', verbose_name='person'),
         ),
         migrations.AlterField(
             model_name='personactivitytimesheet',
             name='activity',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='timesheets', to='organization-network.PersonActivity', verbose_name='activity'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='timesheets', to='organization_network.PersonActivity', verbose_name='activity'),
         ),
         migrations.AlterField(
             model_name='personactivitytimesheet',
             name='project',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='timesheets', to='organization-projects.Project', verbose_name='project'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='timesheets', to='organization_projects.Project', verbose_name='project'),
         ),
         migrations.AlterField(
             model_name='personactivityvacation',
             name='activity',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-network.PersonActivity', verbose_name='activity'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_network.PersonActivity', verbose_name='activity'),
         ),
         migrations.AlterField(
             model_name='personfile',
@@ -115,26 +115,26 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='personlink',
             name='link_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-core.LinkType', verbose_name='link type'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_core.LinkType', verbose_name='link type'),
         ),
         migrations.AlterField(
             model_name='projectactivity',
             name='activity',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_activity', to='organization-network.PersonActivity', verbose_name='activity'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_activity', to='organization_network.PersonActivity', verbose_name='activity'),
         ),
         migrations.AlterField(
             model_name='teamlink',
             name='link_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-core.LinkType', verbose_name='link type'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_core.LinkType', verbose_name='link type'),
         ),
         migrations.AlterField(
             model_name='teamprojectordering',
             name='project_page',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='teamprojectordering', to='organization-projects.ProjectPage', verbose_name='Project'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='teamprojectordering', to='organization_projects.ProjectPage', verbose_name='Project'),
         ),
         migrations.AlterField(
             model_name='teamprojectordering',
             name='team_page',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='teamprojectordering', to='organization-network.TeamPage', verbose_name='Team'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='teamprojectordering', to='organization_network.TeamPage', verbose_name='Team'),
         ),
     ]

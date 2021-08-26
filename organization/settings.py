@@ -160,6 +160,7 @@ AUTHENTICATION_BACKENDS = (
     "guardian.backends.ObjectPermissionBackend",
 )
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 #########
 # PATHS #
@@ -457,17 +458,17 @@ ADMIN_MENU_ORDER = (
         _('Pages'),
         (
             'pages.Page',
-            'organization-pages.Home',
-            'organization-core.LinkType',
+            'organization_pages.Home',
+            'organization_core.LinkType',
         ),
     ),
     (
         _('Media'),
         (
-            'organization-media.Media',
-            'organization-media.Playlist',
-            'organization-media.LiveStreaming',
-            'organization-media.MediaCategory',
+            'organization_media.Media',
+            'organization_media.Playlist',
+            'organization_media.LiveStreaming',
+            'organization_media.MediaCategory',
             (
                 _('Media Library'),
                 'fb_browse'
@@ -483,83 +484,83 @@ ADMIN_MENU_ORDER = (
             'mezzanine_agenda.ExternalShop',
             'mezzanine_agenda.EventPrice',
             'mezzanine_agenda.EventCategory',
-            'organization-agenda.EventPublicType',
-            'organization-agenda.EventTrainingLevel',
+            'organization_agenda.EventPublicType',
+            'organization_agenda.EventTrainingLevel',
             'generic.Keyword',
         )
     ),
     (
         _('Magazine'),
         (
-            'organization-magazine.Magazine',
-            'organization-magazine.Article',
-            'organization-magazine.Brief',
+            'organization_magazine.Magazine',
+            'organization_magazine.Article',
+            'organization_magazine.Brief',
         )
     ),
     (
         _('Network'),
         (
-            'organization-network.Organization',
-            'organization-network.OrganizationLinked',
-            'organization-network.OrganizationRole',
-            'organization-network.OrganizationType',
-            'organization-network.Department',
-            'organization-network.Team',
-            'organization-network.Person',
-            'organization-network.Activity',
-            'organization-network.PersonListBlock',
+            'organization_network.Organization',
+            'organization_network.OrganizationLinked',
+            'organization_network.OrganizationRole',
+            'organization_network.OrganizationType',
+            'organization_network.Department',
+            'organization_network.Team',
+            'organization_network.Person',
+            'organization_network.Activity',
+            'organization_network.PersonListBlock',
         )
     ),
     (
         _('Activity'),
         (
-            'organization-network.PersonActivity',
-            'organization-network.ActivityStatusFamily',
-            'organization-network.ActivityStatus',
-            'organization-network.ActivityGrade',
-            'organization-network.ActivityFramework',
-            'organization-network.ActivityFunction',
-            'organization-network.ProjectActivity',
-            'organization-network.TrainingType',
-            'organization-network.TrainingTopic',
-            'organization-network.TrainingLevel',
-            'organization-network.TrainingSpeciality',
-            'organization-network.RecordPiece',
-            'organization-network.BudgetCode'
+            'organization_network.PersonActivity',
+            'organization_network.ActivityStatusFamily',
+            'organization_network.ActivityStatus',
+            'organization_network.ActivityGrade',
+            'organization_network.ActivityFramework',
+            'organization_network.ActivityFunction',
+            'organization_network.ProjectActivity',
+            'organization_network.TrainingType',
+            'organization_network.TrainingTopic',
+            'organization_network.TrainingLevel',
+            'organization_network.TrainingSpeciality',
+            'organization_network.RecordPiece',
+            'organization_network.BudgetCode'
         )
     ),
     (
         _('Timesheet'),
         (
-            'organization-network.ActivityWeeklyHourVolume',
-            'organization-network.PersonActivityTimeSheet'
+            'organization_network.ActivityWeeklyHourVolume',
+            'organization_network.PersonActivityTimeSheet'
         )
     ),
     (
         _('Projects'),
         (
-            'organization-projects.Project',
-            'organization-projects.ProjectPage',
-            'organization-projects.ProjectCall',
-            'organization-projects.ProjectContact',
-            'organization-projects.ProjectProgram',
-            'organization-projects.ProjectProgramType',
-            'organization-projects.ProjectTopic',
-            'organization-projects.ProjectWorkPackage',
-            'organization-projects.ProjectPublicData',
-            'organization-projects.ProjectPrivateData',
-            'organization-projects.ProjectResidency',
-            'organization-projects.Repository',
-            'organization-projects.RepositorySystem',
-            'organization-projects.ProjectDemo',
+            'organization_projects.Project',
+            'organization_projects.ProjectPage',
+            'organization_projects.ProjectCall',
+            'organization_projects.ProjectContact',
+            'organization_projects.ProjectProgram',
+            'organization_projects.ProjectProgramType',
+            'organization_projects.ProjectTopic',
+            'organization_projects.ProjectWorkPackage',
+            'organization_projects.ProjectPublicData',
+            'organization_projects.ProjectPrivateData',
+            'organization_projects.ProjectResidency',
+            'organization_projects.Repository',
+            'organization_projects.RepositorySystem',
+            'organization_projects.ProjectDemo',
         )
     ),
     (
         _('Shop'),
         (
             'shop.Product',
-            'organization-shop.ProductList',
-            'organization-shop.ProductKeyword',
+            'organization_shop.ProductList',
+            'organization_shop.ProductKeyword',
             'shop.Order',
             'shop.DiscountCode',
             'shop.Sale',
@@ -568,9 +569,9 @@ ADMIN_MENU_ORDER = (
     (
         _('Jobs'),
         (
-            'organization-job.JobOffer',
-            'organization-job.JobResponse',
-            'organization-job.Candidacy'
+            'organization_job.JobOffer',
+            'organization_job.JobResponse',
+            'organization_job.Candidacy'
         )
     ),
     (
@@ -600,29 +601,29 @@ DASHBOARD_TAGS = (
     ),
 )
 
-SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
-                        'organization-network.DepartmentPage',
-                        'organization-network.TeamPage',
-                        'organization-network.Person',
-                        'organization-projects.ProjectTopicPage',
+SEARCH_MODEL_CHOICES = ('organization_pages.CustomPage',
+                        'organization_network.DepartmentPage',
+                        'organization_network.TeamPage',
+                        'organization_network.Person',
+                        'organization_projects.ProjectTopicPage',
                         'pages.Page',
-                        'organization-media.Playlist',
+                        'organization_media.Playlist',
                         'mezzanine_agenda.Event',
-                        'organization-projects.ProjectPage',
+                        'organization_projects.ProjectPage',
                         'shop.Product',
-                        'organization-magazine.Article')
+                        'organization_magazine.Article')
 
 # authorize models which does not heritate from Displayable
-SEARCH_MODEL_NO_DISPLAYABLE = ('organization-network.Person',)
+SEARCH_MODEL_NO_DISPLAYABLE = ('organization_network.Person',)
 
-PAGES_MODELS = ('organization-pages.CustomPage',
-                'organization-magazine.Topic',
-                'organization-network.DepartmentPage',
-                'organization-network.TeamPage',
-                'organization-projects.ProjectTopicPage',
+PAGES_MODELS = ('organization_pages.CustomPage',
+                'organization_magazine.Topic',
+                'organization_network.DepartmentPage',
+                'organization_network.TeamPage',
+                'organization_projects.ProjectTopicPage',
                 'shop.Product')
 
-SEARCH_PARENTS_MODELS = ('organization-network.Person',)
+SEARCH_PARENTS_MODELS = ('organization_network.Person',)
 
 PAGES_PUBLISHED_INCLUDE_LOGIN_REQUIRED = True
 
@@ -767,7 +768,7 @@ AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 ##################
 
 ANONYMOUS_USER_NAME = None
-LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
+LOGIN_REDIRECT_URL = reverse_lazy('organization_network-person-detail')
 
 # Themes
 # HOST_THEMES = [

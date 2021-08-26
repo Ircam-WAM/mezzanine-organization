@@ -105,7 +105,7 @@ class JobOffer(Displayable, RichText, TeamOwnable):
 
     def get_absolute_url(self):
         if not self.url:
-            return reverse("organization-job-offer-detail", kwargs={"slug": self.slug})
+            return reverse("organization_job-offer-detail", kwargs={"slug": self.slug})
         return self.url
 
     class Meta:

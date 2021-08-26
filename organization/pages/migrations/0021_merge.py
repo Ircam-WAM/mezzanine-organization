@@ -8,8 +8,8 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-pages', '0019_custompage_menu_alinea'),
-        ('organization-pages', '0020_homeimage'),
+        ('organization_pages', '0019_custompage_menu_alinea'),
+        ('organization_pages', '0020_homeimage'),
     ]
 
     operations = [

@@ -9,18 +9,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0013_auto_20160919_1829'),
+        ('organization_network', '0013_auto_20160919_1829'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='personlistblockinline',
             name='person',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block_inline', to='organization-network.Person', verbose_name='Person'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block_inline', to='organization_network.Person', verbose_name='Person'),
         ),
         migrations.AlterField(
             model_name='personlistblockinline',
             name='person_list_block',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block_inline', to='organization-network.PersonListBlock', verbose_name='Person List Block'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block_inline', to='organization_network.PersonListBlock', verbose_name='Person List Block'),
         ),
     ]

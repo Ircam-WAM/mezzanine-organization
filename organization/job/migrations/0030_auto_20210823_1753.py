@@ -7,7 +7,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-job', '0029_auto_20200616_1711'),
+        ('organization_job', '0029_auto_20200616_1711'),
     ]
 
     operations = [

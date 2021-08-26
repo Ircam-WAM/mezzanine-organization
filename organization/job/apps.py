@@ -26,4 +26,4 @@ from django.apps import AppConfig
 
 class OrganizationJobConfig(AppConfig):
     name = 'organization.job'
-    label = 'organization-job'
+    label = 'organization_job'

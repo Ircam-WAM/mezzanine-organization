@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-shop', '0015_productexternalshop_label'),
+        ('organization_shop', '0015_productexternalshop_label'),
     ]
 
     operations = [

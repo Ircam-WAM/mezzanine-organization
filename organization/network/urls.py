@@ -43,22 +43,22 @@ urlpatterns = [
     url(
         '^person/timesheet/declare-curr-month$',
         TimeSheetCreateCurrMonthView.as_view(),
-        name='organization-network-timesheet-create-curr-month-view'
+        name='organization_network-timesheet-create-curr-month-view'
     ),
     url(
         '^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$',
         TimeSheetCreateView.as_view(),
-        name='organization-network-timesheet-create-view'
+        name='organization_network-timesheet-create-view'
     ),
     url(
         '^person/timesheet/$',
         PersonActivityTimeSheetListView.as_view(),
-        name='organization-network-timesheet-list-view'
+        name='organization_network-timesheet-list-view'
     ),
     url(
         '^person(?:/(?P<slug>.*))?/$',
         PersonDetailView.as_view(),
-        name='organization-network-person-detail'
+        name='organization_network-person-detail'
     ),
     url(
         '^profile/(?P<username>.*)/$',
@@ -67,18 +67,18 @@ urlpatterns = [
     ),
     url(
         '^persons/$', PersonListView.as_view(),
-        name='organization-network-person-list'
+        name='organization_network-person-list'
     ),
     url(
         '^person-list-block-autocomplete/$',
-        permission_required('organization-network.change_person')(
+        permission_required('organization_network.change_person')(
             PersonListBlockAutocompleteView.as_view(create_field='title')
         ),
         name='person-list-block-autocomplete'
     ),
     url(
         '^person-autocomplete/$',
-        permission_required('organization-network.change_person')(
+        permission_required('organization_network.change_person')(
             PersonAutocompleteView.as_view()
         ),
         name='person-autocomplete'
@@ -92,14 +92,14 @@ urlpatterns = [
 
     url(
         '^organization-linked-list-autocomplete/$',
-        permission_required('organization-network.change_organization')(
+        permission_required('organization_network.change_organization')(
             OrganizationLinkedListView.as_view()
         ),
         name='organization-linked-list-autocomplete'
     ),
     url(
         '^organization-linked-autocomplete/$',
-        permission_required('organization-network.change_organization')(
+        permission_required('organization_network.change_organization')(
             OrganizationLinkedView.as_view()
         ),
         name='organization-linked-autocomplete'
@@ -160,6 +160,6 @@ urlpatterns = [
     url(
         '^dashboard(?:/(?P<slug>.*))?/$',
         PersonDashboardView.as_view(),
-        name='organization-network-dashboard-person-detail'
+        name='organization_network-dashboard-person-detail'
     ),
     ]

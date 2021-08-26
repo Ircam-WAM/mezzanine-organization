@@ -8,7 +8,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-magazine', '0034_auto_20190703_1044'),
+        ('organization_magazine', '0034_auto_20190703_1044'),
     ]
 
     operations = [
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='articlepersonlistblockinline',
             name='person_list_block',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='article_person_list_block_inlines', to='organization-network.PersonListBlock', verbose_name='Person List Block'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='article_person_list_block_inlines', to='organization_network.PersonListBlock', verbose_name='Person List Block'),
         ),
         migrations.AlterField(
             model_name='brief',

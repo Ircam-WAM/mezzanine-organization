@@ -358,7 +358,7 @@ def send_mail_to_user(
         'date_from': date_from,
         'date_to': date_to,
         'timesheet_url': "https://" + domain + reverse(
-            'organization-network-timesheet-create-view',
+            'organization_network-timesheet-create-view',
             args=(date_from.year, date_from.month)
         )
     }

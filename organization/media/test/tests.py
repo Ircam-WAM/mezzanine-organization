@@ -128,7 +128,7 @@ class PlaylistTests(TestCase):
         super(PlaylistTests,self).setUp()
         self.user = User().objects.create_user(username="user", password='test')
         self.playlist = Playlist.objects.create(type="audio")
-        app = "organization-media"
+        app = "organization_media"
         model = "playlist" 
         self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
     

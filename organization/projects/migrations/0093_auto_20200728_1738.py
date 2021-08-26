@@ -9,14 +9,14 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0092_auto_20200703_1644'),
+        ('organization_projects', '0092_auto_20200703_1644'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='projectpage',
             name='project',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='pages', to='organization-projects.Project', verbose_name='project'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='pages', to='organization_projects.Project', verbose_name='project'),
             preserve_default=False,
         ),
     ]

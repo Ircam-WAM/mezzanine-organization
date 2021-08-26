@@ -25,7 +25,7 @@ from django.apps import AppConfig
 class CoreConfig(AppConfig):
 
     name = 'organization.core'
-    label = 'organization-core'
+    label = 'organization_core'
 
     def ready(self):
         from .defaults import register_setting  # noqa: F401

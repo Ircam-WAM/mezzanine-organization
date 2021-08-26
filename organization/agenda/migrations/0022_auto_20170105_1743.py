@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-agenda', '0021_eventblock_login_required'),
+        ('organization_agenda', '0021_eventblock_login_required'),
     ]
 
     operations = [

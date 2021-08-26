@@ -31,7 +31,7 @@ class Command(BaseCommand):
 
         with connection.cursor() as cursor:
             cursor.execute('SELECT "first_name", "last_name", count(*) \
-            FROM "organization-network_person" \
+            FROM "organization_network_person" \
             GROUP BY "first_name", "last_name" HAVING count(*) > 1')
             rows = cursor.fetchall()
 

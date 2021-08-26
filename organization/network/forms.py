@@ -38,7 +38,7 @@ from organization.network.models import PersonListBlock,\
 from organization.media.forms import DynamicMultimediaForm
 from organization.magazine.models import Article
 from mezzanine_agenda.models import Event
-from extra_views import InlineFormSet
+from extra_views import InlineFormSetView
 
 
 class PageCustomPersonListForm(forms.ModelForm):
@@ -158,7 +158,7 @@ class ProjectActivityForm(forms.ModelForm):
         }
 
 
-class OrganizationContactInline(InlineFormSet):
+class OrganizationContactInline(InlineFormSetView):
     max_num = 1
     model = OrganizationContact
     prefix = 'Contact'
@@ -166,7 +166,7 @@ class OrganizationContactInline(InlineFormSet):
     fields = ['person_title', 'first_name', 'last_name', 'email', 'telephone', 'role']
 
 
-class OrganizationUserImageInline(InlineFormSet):
+class OrganizationUserImageInline(InlineFormSetView):
     max_num = 4
     model = OrganizationUserImage
     prefix = 'Images'
@@ -181,7 +181,7 @@ class OrganizationForm(ModelForm):
                   'address', 'postal_code', 'city', 'country', ]
 
 
-class ProducerDataInline(InlineFormSet):
+class ProducerDataInline(InlineFormSetView):
     max_num = 1
     model = ProducerData
     prefix = "Descriptions"

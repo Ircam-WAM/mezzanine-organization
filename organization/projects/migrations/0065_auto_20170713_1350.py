@@ -9,18 +9,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0064_projectresidencyevent'),
+        ('organization_projects', '0064_projectresidencyevent'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='projectresidencyarticle',
             name='residency',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residency_articles', to='organization-projects.ProjectResidency', verbose_name='residency'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residency_articles', to='organization_projects.ProjectResidency', verbose_name='residency'),
         ),
         migrations.AlterField(
             model_name='projectresidencyevent',
             name='residency',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residency_events', to='organization-projects.ProjectResidency', verbose_name='residency'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residency_events', to='organization_projects.ProjectResidency', verbose_name='residency'),
         ),
     ]

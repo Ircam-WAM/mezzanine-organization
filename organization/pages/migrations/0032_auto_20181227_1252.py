@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-pages', '0031_dynamicmultimediapage'),
+        ('organization_pages', '0031_dynamicmultimediapage'),
     ]
 
     operations = [

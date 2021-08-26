@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0035_auto_20170106_1149'),
+        ('organization_projects', '0035_auto_20170106_1149'),
     ]
 
     operations = [
@@ -29,11 +29,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='project',
             name='referring_person',
-            field=models.ManyToManyField(blank=True, related_name='projects_referring_person', to='organization-network.Person', verbose_name='Referring Person'),
+            field=models.ManyToManyField(blank=True, related_name='projects_referring_person', to='organization_network.Person', verbose_name='Referring Person'),
         ),
         migrations.AddField(
             model_name='project',
             name='call',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='projects', to='organization-projects.ProjectCall', verbose_name='project call'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='projects', to='organization_projects.ProjectCall', verbose_name='project call'),
         ),
     ]

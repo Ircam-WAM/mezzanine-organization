@@ -274,7 +274,7 @@ class Person(
         return self.title
 
     def get_absolute_url(self):
-        return reverse("organization-network-person-detail", kwargs={'slug': self.slug})
+        return reverse("organization_network-person-detail", kwargs={'slug': self.slug})
 
     def set_names(self):
         names = self.title.split(' ')
@@ -487,7 +487,7 @@ class OrganizationType(Named):
 
 class OrganizationEventLocation(models.Model):
     organization = models.ForeignKey(
-        'organization-network.Organization',
+        'organization_network.Organization',
         verbose_name=_('Organization'),
         related_name='event_locations',
         blank=True,
@@ -1262,7 +1262,7 @@ class PersonActivityTimeSheet(models.Model):
         on_delete=models.SET_NULL
     )
     project = models.ForeignKey(
-        'organization-projects.Project',
+        'organization_projects.Project',
         verbose_name=_('project'),
         related_name='timesheets',
         null=True,
@@ -1270,7 +1270,7 @@ class PersonActivityTimeSheet(models.Model):
         on_delete=models.SET_NULL
     )
     work_packages = models.ManyToManyField(
-        'organization-projects.ProjectWorkPackage',
+        'organization_projects.ProjectWorkPackage',
         verbose_name=_('work package'),
         related_name='timesheets',
         blank=True
@@ -1306,7 +1306,7 @@ class ProjectActivity(Titled, Description, Orderable):
         on_delete=models.SET_NULL
     )
     project = models.ForeignKey(
-        'organization-projects.Project',
+        'organization_projects.Project',
         verbose_name=_('project'),
         related_name='project_activity',
         null=True,
@@ -1320,7 +1320,7 @@ class ProjectActivity(Titled, Description, Orderable):
         help_text="Percentage has to be an integer between 0 and 100"
     )
     work_packages = models.ManyToManyField(
-        'organization-projects.ProjectWorkPackage',
+        'organization_projects.ProjectWorkPackage',
         verbose_name=_('work package'),
         related_name='project_activity',
         blank=True
@@ -1396,7 +1396,7 @@ class MediaDepartment(models.Model):
 
 class TeamProjectOrdering(SiteRelated, Orderable):
     project_page = models.ForeignKey(
-        'organization-projects.ProjectPage',
+        'organization_projects.ProjectPage',
         verbose_name=_('Project'),
         related_name='teamprojectordering',
         null=True,
@@ -1415,9 +1415,9 @@ class TeamProjectOrdering(SiteRelated, Orderable):
     class Meta:
         unique_together = (("project_page", "team_page",),)
 
-    @receiver(post_save, sender='organization-projects.ProjectPage')
+    @receiver(post_save, sender='organization_projects.ProjectPage')
     def create_order(sender, instance, **kwargs):
-        model_project_page = apps.get_model('organization-projects', 'ProjectPage')
+        model_project_page = apps.get_model('organization_projects', 'ProjectPage')
         if type(instance) is model_project_page:
             for team in instance.project.teams.all():
                 try:

@@ -35,26 +35,26 @@ urlpatterns = [
     url("^$", HomeView.as_view(), name="home"),
     url(
         "^dynamic-content-home-slider/$",
-        permission_required('organization-pages.change_home')(
+        permission_required('organization_pages.change_home')(
             DynamicContentHomeSliderView.as_view()
         ), name='dynamic-content-home-slider'),
     url(
         "^dynamic-content-home-body/$",
-        permission_required('organization-pages.change_home')(
+        permission_required('organization_pages.change_home')(
             DynamicContentHomeBodyView.as_view()
         ),
         name='dynamic-content-home-body'
     ),
     url(
         "^dynamic-content-home-media/$",
-        permission_required('organization-pages.change_home')(
+        permission_required('organization_pages.change_home')(
             DynamicContentHomeMediaView.as_view()
         ),
         name='dynamic-content-home-media'
     ),
     url(
         "^dynamic-content-page/$",
-        permission_required('organization-pages.change_custompage')(
+        permission_required('organization_pages.change_custompage')(
             DynamicContentPageView.as_view()
         ),
         name='dynamic-content-page'

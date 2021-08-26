@@ -24,4 +24,4 @@ from django.apps import AppConfig
 
 class OrganizationPagesConfig(AppConfig):
     name = 'organization.pages'
-    label = 'organization-pages'
+    label = 'organization_pages'

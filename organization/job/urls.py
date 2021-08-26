@@ -34,12 +34,12 @@ urlpatterns = [
     url(
         "^job-offer/(?P<slug>.*)%s$" % _slash,
         JobOfferDetailView.as_view(),
-        name='organization-job-offer-detail'
+        name='organization_job-offer-detail'
     ),
     url(
         "^job-offer/$",
         JobOfferListView.as_view(),
-        name='organization-job-offer-list'
+        name='organization_job-offer-list'
     ),
     url(
         "^candidacy/(?P<slug>.*)%s$" % _slash,

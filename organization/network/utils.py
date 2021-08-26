@@ -609,7 +609,7 @@ def flatten_activities(activities, fields):
 
 def get_users_of_team(team):
     users = set()
-    person_activity_model = apps.get_model('organization-network.PersonActivity')
+    person_activity_model = apps.get_model('organization_network.PersonActivity')
     activities = person_activity_model.objects.filter(teams=team)
     for activity in activities:
         users.add(activity.person.user)

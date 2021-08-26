@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 
 def update_project_topic(apps, schema_editor):
-    ProjectTopic = apps.get_model("organization-projects", "ProjectTopic")
+    ProjectTopic = apps.get_model("organization_projects", "ProjectTopic")
     for project_topic in ProjectTopic.objects.all():
         if not project_topic.key:
             project_topic.key = project_topic.name
@@ -16,7 +16,7 @@ def update_project_topic(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0057_auto_20170412_1310'),
+        ('organization_projects', '0057_auto_20170412_1310'),
     ]
 
     operations = [

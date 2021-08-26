@@ -10,7 +10,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0064_auto_20161205_1536'),
+        ('organization_network', '0064_auto_20161205_1536'),
     ]
 
     operations = [
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('_order', mezzanine.core.fields.OrderField(null=True, verbose_name='Order')),
                 ('title', models.CharField(max_length=1024, verbose_name='title')),
                 ('description', models.TextField(blank=True, verbose_name='description')),
-                ('organization_linked', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='organization_linked_block_inline_list', to='organization-network.OrganizationLinked', verbose_name='organization list')),
+                ('organization_linked', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='organization_linked_block_inline_list', to='organization_network.OrganizationLinked', verbose_name='organization list')),
             ],
             options={
                 'ordering': ('_order',),
@@ -70,16 +70,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='organizationlinkedinline',
             name='organization',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='organization_linked_inline_from', to='organization-network.Organization', verbose_name='organization'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='organization_linked_inline_from', to='organization_network.Organization', verbose_name='organization'),
         ),
         migrations.AddField(
             model_name='organizationlinkedinline',
             name='organization_list',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='organization_linked_inline_linked', to='organization-network.OrganizationLinked', verbose_name='organization linked'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='organization_linked_inline_linked', to='organization_network.OrganizationLinked', verbose_name='organization linked'),
         ),
         migrations.AddField(
             model_name='organizationlinkedblockinline',
             name='organization_main',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='organization_linked_block', to='organization-network.Organization', verbose_name='organization'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='organization_linked_block', to='organization_network.Organization', verbose_name='organization'),
         ),
     ]

@@ -9,19 +9,19 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0059_auto_20170418_1918'),
+        ('organization_projects', '0059_auto_20170418_1918'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='project',
             name='lead_organization',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='leader_projects', to='organization-network.Organization', verbose_name='lead organization'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='leader_projects', to='organization_network.Organization', verbose_name='lead organization'),
         ),
         migrations.AlterField(
             model_name='project',
             name='lead_team',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='leader_projects', to='organization-network.Team', verbose_name='lead team'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='leader_projects', to='organization_network.Team', verbose_name='lead team'),
         ),
         migrations.AlterField(
             model_name='projectprivatedata',

@@ -9,23 +9,23 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-media', '0005_auto_20160930_1849'),
+        ('organization_media', '0005_auto_20160930_1849'),
         ('mezzanine_agenda', '0013_auto_20161010_1130'),
-        ('organization-agenda', '0008_auto_20161005_1455'),
+        ('organization_agenda', '0008_auto_20161005_1455'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='EventPlaylist',
             fields=[
-                ('playlist_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-media.Playlist')),
+                ('playlist_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_media.Playlist')),
                 ('event', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='playlists', to='mezzanine_agenda.Event', verbose_name='event')),
             ],
             options={
                 'verbose_name': 'playlist',
                 'verbose_name_plural': 'playlists',
             },
-            bases=('organization-media.playlist',),
+            bases=('organization_media.playlist',),
         ),
         migrations.DeleteModel(
             name='EventAudio',

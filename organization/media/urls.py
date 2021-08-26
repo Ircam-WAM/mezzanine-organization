@@ -38,7 +38,7 @@ if getattr(settings, 'DEACTIVATE_MEDIA_PAGES', False):
         url(
             "^medias/(?P<type>.*)/(?P<slug>.*)/detail/$",
             ArticleListRedirect.as_view(),
-            name="organization-media-detail"
+            name="organization_media-detail"
         ),
         url(
             "^playlists/(?P<slug>.*)/detail/$",
@@ -61,12 +61,12 @@ urlpatterns += [
     url(
         "^medias/(?P<type>.*)/(?P<slug>.*)/detail/$",
         MediaDetailView.as_view(),
-        name="organization-media-detail"
+        name="organization_media-detail"
     ),
     url(
         "^medias/(?P<type>.*)/(?P<slug>.*)/overlay/$",
         MediaOverlayView.as_view(),
-        name="organization-media-overlay"
+        name="organization_media-overlay"
     ),
     url(
         "^playlists/(?P<slug>.*)/detail/$",
@@ -90,7 +90,7 @@ urlpatterns += [
     ),
     url(
         "^playlist-media-autocomplete/$",
-        permission_required('organization-media.change_playlist')(PlayListMediaView.as_view()),  # noqa: E501
+        permission_required('organization_media.change_playlist')(PlayListMediaView.as_view()),  # noqa: E501
         name='media-autocomplete'
     ),
     url(

@@ -25,4 +25,4 @@ from django.apps import AppConfig
 class FormatsConfig(AppConfig):
 
     name = 'organization.formats'
-    label = 'organization-formats'
+    label = 'organization_formats'

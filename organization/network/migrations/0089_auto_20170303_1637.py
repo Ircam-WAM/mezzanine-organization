@@ -9,7 +9,7 @@ import django_countries.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0088_organization_site'),
+        ('organization_network', '0088_organization_site'),
     ]
 
     operations = [

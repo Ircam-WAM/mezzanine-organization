@@ -153,7 +153,7 @@ class DepartmentTests(TC):
     
     def setUp(self):
         super(DepartmentTests, self).setUp()
-        app = "organization-network"
+        app = "organization_network"
         model = "department" 
         self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         self.organization = Organization.objects.create(name="orga")
@@ -239,7 +239,7 @@ class TeamTests(TC):
     
     def setUp(self):
         super(TeamTests, self).setUp()
-        app = "organization-network"
+        app = "organization_network"
         model = "team" 
         self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         self.organization = Organization.objects.create()
@@ -343,7 +343,7 @@ class OrganizationTests(TC):
 
     def setUp(self):
         super(OrganizationTests, self).setUp() 
-        app = "organization-network"
+        app = "organization_network"
         model = "organization" 
         self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         self.organization_type = OrganizationType.objects.create(name="organization_type")
@@ -476,7 +476,7 @@ class PersonTests(TC):
     
     def setUp(self):
         super(PersonTests, self).setUp()
-        app = "organization-network"
+        app = "organization_network"
         model = "person" 
         self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         from django.contrib.auth import get_user_model

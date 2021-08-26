@@ -10,7 +10,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-job', '0026_auto_20191219_1106'),
+        ('organization_job', '0026_auto_20191219_1106'),
     ]
 
     operations = [
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('credits_fr', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
                 ('credits_en', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
                 ('type', models.CharField(choices=[('logo', 'logo'), ('logo_white', 'logo white'), ('logo_black', 'logo black'), ('logo_header', 'logo header'), ('logo_back', 'logo back'), ('logo_footer', 'logo footer'), ('slider', 'slider'), ('card', 'card'), ('page_slider', 'page - slider'), ('page_featured', 'page - featured')], max_length=64, verbose_name='type')),
-                ('job_offer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization-job.JobOffer', verbose_name='job offer')),
+                ('job_offer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization_job.JobOffer', verbose_name='job offer')),
             ],
             options={
                 'ordering': ('_order',),

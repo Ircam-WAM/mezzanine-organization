@@ -34,8 +34,8 @@ class Command(BaseCommand):
         # process active person
         translation.activate(settings.LANGUAGE_CODE)
         applications = [
-            'organization-network',
-            'organization-projects'
+            'organization_network',
+            'organization_projects'
         ]
         for app in applications:
             print(str(_(app)))

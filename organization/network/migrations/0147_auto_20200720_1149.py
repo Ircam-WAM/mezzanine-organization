@@ -9,18 +9,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0146_auto_20200720_1030'),
+        ('organization_network', '0146_auto_20200720_1030'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='teamprojectordering',
             name='project_page',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='teamprojectordering', to='organization-projects.ProjectPage', verbose_name='Project'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='teamprojectordering', to='organization_projects.ProjectPage', verbose_name='Project'),
         ),
         migrations.AlterField(
             model_name='teamprojectordering',
             name='team_page',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='teamprojectordering', to='organization-network.TeamPage', verbose_name='Team'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='teamprojectordering', to='organization_network.TeamPage', verbose_name='Team'),
         ),
     ]

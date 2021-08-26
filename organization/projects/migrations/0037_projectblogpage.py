@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('sites', '0002_alter_domain_unique'),
-        ('organization-projects', '0036_auto_20170103_1227'),
+        ('organization_projects', '0036_auto_20170103_1227'),
     ]
 
     operations = [
@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('content', mezzanine.core.fields.RichTextField(verbose_name='Content')),
                 ('content_fr', mezzanine.core.fields.RichTextField(null=True, verbose_name='Content')),
                 ('content_en', mezzanine.core.fields.RichTextField(null=True, verbose_name='Content')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blog_pages', to='organization-projects.Project', verbose_name='project')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blog_pages', to='organization_projects.Project', verbose_name='project')),
                 ('site', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='sites.Site')),
             ],
             options={

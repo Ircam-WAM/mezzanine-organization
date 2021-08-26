@@ -10,9 +10,9 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('mezzanine_agenda', '0007_auto_20160923_1634'),
-        ('organization-core', '0004_auto_20160923_1141'),
-        ('organization-network', '0023_auto_20160921_2043'),
-        ('organization-agenda', '0002_eventdepartment'),
+        ('organization_core', '0004_auto_20160923_1141'),
+        ('organization_network', '0023_auto_20160921_2043'),
+        ('organization_agenda', '0002_eventdepartment'),
     ]
 
     operations = [
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('url', models.URLField(blank=True, max_length=512, verbose_name='URL')),
                 ('event', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='links', to='mezzanine_agenda.Event', verbose_name='event')),
-                ('link_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization-core.LinkType', verbose_name='link type')),
+                ('link_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization_core.LinkType', verbose_name='link type')),
             ],
             options={
                 'verbose_name_plural': 'links',
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('event', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='persons', to='mezzanine_agenda.Event', verbose_name='event')),
-                ('person', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='events', to='organization-network.Person', verbose_name='person')),
+                ('person', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='events', to='organization_network.Person', verbose_name='person')),
             ],
             options={
                 'verbose_name_plural': 'persons',

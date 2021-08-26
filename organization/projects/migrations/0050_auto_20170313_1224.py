@@ -10,7 +10,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0049_auto_20170310_1658'),
+        ('organization_projects', '0049_auto_20170310_1658'),
     ]
 
     operations = [
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True, verbose_name='description')),
                 ('file', models.FileField(max_length=1024, upload_to='images', verbose_name='Image')),
                 ('credits', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_images', to='organization-projects.Project', verbose_name='project')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_images', to='organization_projects.Project', verbose_name='project')),
             ],
             options={
                 'ordering': ('_order',),

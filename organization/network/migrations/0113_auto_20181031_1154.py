@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 def set_default_order(apps, schema_editor):
-    Organization = apps.get_model('organization-network', 'Organization')
+    Organization = apps.get_model('organization_network', 'Organization')
     organizations = Organization.objects.filter(_order__isnull=True)
     for organization in organizations :
         organization._order = 0
@@ -14,7 +14,7 @@ def set_default_order(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0112_auto_20180502_1742'),
+        ('organization_network', '0112_auto_20180502_1742'),
     ]
 
     operations = [

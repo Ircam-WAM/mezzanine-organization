@@ -10,8 +10,8 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('pages', '0004_auto_20160804_1547'),
-        ('organization-core', '0002_linktype_picto'),
-        ('organization-pages', '0001_initial'),
+        ('organization_core', '0002_linktype_picto'),
+        ('organization_pages', '0001_initial'),
     ]
 
     operations = [
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('url', models.URLField(blank=True, max_length=512, verbose_name='URL')),
-                ('link_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization-core.LinkType', verbose_name='link type')),
+                ('link_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization_core.LinkType', verbose_name='link type')),
                 ('page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='links', to='pages.Page', verbose_name='page')),
             ],
             options={

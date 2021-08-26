@@ -35,7 +35,7 @@ from organization.projects.models import DynamicContentProject, Project,\
     ProjectPublicData, ProjectPrivateData, ProjectUserImage, ProjectLink,\
     ProjectContact, ProjectResidency, DynamicMultimediaProject,\
     DynamicContentProjectPage, ProjectTopic, PROJECT_TYPE_CHOICES
-from extra_views import InlineFormSet
+from extra_views import InlineFormSetView
 
 
 class DynamicContentProjectForm(autocomplete.FutureModelForm):
@@ -74,7 +74,7 @@ class ProjectForm(ModelForm):
         fields = ('title', 'keywords', 'website', 'date_from', 'date_to')
 
 
-class ProjectPublicDataInline(InlineFormSet):
+class ProjectPublicDataInline(InlineFormSetView):
 
     max_num = 1
     model = ProjectPublicData
@@ -83,7 +83,7 @@ class ProjectPublicDataInline(InlineFormSet):
     fields = '__all__'
 
 
-class ProjectPrivateDataInline(InlineFormSet):
+class ProjectPrivateDataInline(InlineFormSetView):
 
     max_num = 1
     model = ProjectPrivateData
@@ -92,7 +92,7 @@ class ProjectPrivateDataInline(InlineFormSet):
     fields = '__all__'
 
 
-class ProjectPrivateDataPublicFundingInline(InlineFormSet):
+class ProjectPrivateDataPublicFundingInline(InlineFormSetView):
 
     max_num = 1
     model = ProjectPrivateData
@@ -101,7 +101,7 @@ class ProjectPrivateDataPublicFundingInline(InlineFormSet):
     fields = ("description", "funding_programme", "commitment_letter", "persons",)
 
 
-class ProjectPrivateDataPrivateFundingInline(InlineFormSet):
+class ProjectPrivateDataPrivateFundingInline(InlineFormSetView):
 
     max_num = 1
     model = ProjectPrivateData
@@ -116,7 +116,7 @@ class ProjectPrivateDataPrivateFundingInline(InlineFormSet):
     )
 
 
-class ProjectUserImageInline(InlineFormSet):
+class ProjectUserImageInline(InlineFormSetView):
 
     extra = 3
     model = ProjectUserImage
@@ -126,7 +126,7 @@ class ProjectUserImageInline(InlineFormSet):
     fields = ['file', 'credits']
 
 
-class ProjectLinkInline(InlineFormSet):
+class ProjectLinkInline(InlineFormSetView):
 
     extra = 3
     model = ProjectLink
@@ -166,7 +166,7 @@ class ProjectContactForm(ModelForm):
         )
 
 
-class ProjectContactInline(InlineFormSet):
+class ProjectContactInline(InlineFormSetView):
 
     max_num = 1
     model = ProjectContact

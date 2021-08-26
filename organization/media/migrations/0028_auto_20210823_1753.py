@@ -8,7 +8,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-media', '0027_media_iframe'),
+        ('organization_media', '0027_media_iframe'),
     ]
 
     operations = [
@@ -25,6 +25,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='mediatranscoded',
             name='media',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='transcoded', to='organization-media.Media', verbose_name='media'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='transcoded', to='organization_media.Media', verbose_name='media'),
         ),
     ]

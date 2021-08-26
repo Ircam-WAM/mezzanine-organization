@@ -8,7 +8,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0093_auto_20200728_1738'),
+        ('organization_projects', '0093_auto_20200728_1738'),
     ]
 
     operations = [
@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='projectcalllink',
             name='link_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-core.LinkType', verbose_name='link type'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_core.LinkType', verbose_name='link type'),
         ),
         migrations.AlterField(
             model_name='projectfile',
@@ -55,12 +55,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='projectlink',
             name='link_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-core.LinkType', verbose_name='link type'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_core.LinkType', verbose_name='link type'),
         ),
         migrations.AlterField(
             model_name='projectpage',
             name='project',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='pages', to='organization-projects.Project', verbose_name='project'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='pages', to='organization_projects.Project', verbose_name='project'),
         ),
         migrations.AlterField(
             model_name='projectpageimage',
@@ -80,21 +80,21 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='projecttopic',
             name='parent',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='topics', to='organization-projects.ProjectTopic', verbose_name='parent topic'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='topics', to='organization_projects.ProjectTopic', verbose_name='parent topic'),
         ),
         migrations.AlterField(
             model_name='projectworkpackage',
             name='lead_organization',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='leader_work_packages', to='organization-network.Organization', verbose_name='lead organization'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='leader_work_packages', to='organization_network.Organization', verbose_name='lead organization'),
         ),
         migrations.AlterField(
             model_name='projectworkpackage',
             name='project',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='work_packages', to='organization-projects.Project', verbose_name='project'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='work_packages', to='organization_projects.Project', verbose_name='project'),
         ),
         migrations.AlterField(
             model_name='repository',
             name='system',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='repositories', to='organization-projects.RepositorySystem', verbose_name='system'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='repositories', to='organization_projects.RepositorySystem', verbose_name='system'),
         ),
     ]

@@ -119,7 +119,7 @@ class Project(
         on_delete=models.SET_NULL
     )
     lead_team = models.ForeignKey(
-        'organization-network.Team',
+        'organization_network.Team',
         verbose_name=('lead team'),
         related_name='leader_projects',
         blank=True,
@@ -127,7 +127,7 @@ class Project(
         on_delete=models.SET_NULL
     )
     lead_organization = models.ForeignKey(
-        'organization-network.Organization',
+        'organization_network.Organization',
         verbose_name=('lead organization'),
         related_name='leader_projects',
         blank=True,
@@ -135,13 +135,13 @@ class Project(
         on_delete=models.SET_NULL
     )
     teams = models.ManyToManyField(
-        'organization-network.Team',
+        'organization_network.Team',
         verbose_name=('teams'),
         related_name='partner_projects',
         blank=True
     )
     organizations = models.ManyToManyField(
-        'organization-network.Organization',
+        'organization_network.Organization',
         verbose_name=('organizations'),
         blank=True
     )
@@ -159,12 +159,12 @@ class Project(
         on_delete=models.SET_NULL
     )
     referring_person = models.ManyToManyField(
-        'organization-network.Person',
+        'organization_network.Person',
         verbose_name=('Referring Person'),
         related_name='projects_referring_person', blank=True
     )
     manager = models.ManyToManyField(
-        'organization-network.Person',
+        'organization_network.Person',
         verbose_name=('Manager'),
         related_name='projects_manager',
         blank=True
@@ -272,7 +272,7 @@ class ProjectWorkPackage(Titled, Description, Period):
     )
     number = models.IntegerField(_('number'))
     lead_organization = models.ForeignKey(
-        'organization-network.Organization',
+        'organization_network.Organization',
         verbose_name=_('lead organization'),
         related_name='leader_work_packages',
         blank=True,

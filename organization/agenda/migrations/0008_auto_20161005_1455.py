@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('mezzanine_agenda', '0010_remove_event_language'),
-        ('organization-agenda', '0007_auto_20160929_1300'),
+        ('organization_agenda', '0007_auto_20160929_1300'),
     ]
 
     operations = [
@@ -70,11 +70,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='eventtraining',
             name='level',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='trainings', to='organization-agenda.EventTrainingLevel', verbose_name='level'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='trainings', to='organization_agenda.EventTrainingLevel', verbose_name='level'),
         ),
         migrations.AddField(
             model_name='eventtraining',
             name='public_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='trainings', to='organization-agenda.EventPublicType', verbose_name='public type'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='trainings', to='organization_agenda.EventPublicType', verbose_name='public type'),
         ),
     ]

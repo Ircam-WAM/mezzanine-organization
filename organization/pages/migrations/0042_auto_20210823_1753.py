@@ -8,7 +8,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-pages', '0041_auto_20190703_1044'),
+        ('organization_pages', '0041_auto_20190703_1044'),
     ]
 
     operations = [
@@ -55,6 +55,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='pagelink',
             name='link_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-core.LinkType', verbose_name='link type'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_core.LinkType', verbose_name='link type'),
         ),
     ]

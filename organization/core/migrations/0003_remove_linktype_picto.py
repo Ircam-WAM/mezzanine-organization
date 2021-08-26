@@ -8,7 +8,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-core', '0002_linktype_picto'),
+        ('organization_core', '0002_linktype_picto'),
     ]
 
     operations = [

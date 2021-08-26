@@ -27,4 +27,4 @@ from django.apps import AppConfig
 class MagazineConfig(AppConfig):
 
     name = 'organization.magazine'
-    label = 'organization-magazine'
+    label = 'organization_magazine'

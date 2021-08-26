@@ -9,8 +9,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-core', '0004_auto_20160923_1141'),
-        ('organization-network', '0057_auto_20161108_1807'),
+        ('organization_core', '0004_auto_20160923_1141'),
+        ('organization_network', '0057_auto_20161108_1807'),
     ]
 
     operations = [
@@ -20,8 +20,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('url', models.URLField(blank=True, max_length=512, verbose_name='URL')),
                 ('title', models.CharField(blank=True, max_length=1024, null=True, verbose_name='title')),
-                ('link_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization-core.LinkType', verbose_name='link type')),
-                ('team', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='links', to='organization-network.Team', verbose_name='team')),
+                ('link_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization_core.LinkType', verbose_name='link type')),
+                ('team', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='links', to='organization_network.Team', verbose_name='team')),
             ],
             options={
                 'verbose_name_plural': 'links',

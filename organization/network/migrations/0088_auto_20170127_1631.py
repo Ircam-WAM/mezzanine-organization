@@ -18,7 +18,7 @@ def migrate_project(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0087_auto_20170127_1708'),
+        ('organization_network', '0087_auto_20170127_1708'),
     ]
 
     operations = [

@@ -11,24 +11,24 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('organization-network', '0001_initial'),
-        ('organization-magazine', '0001_initial'),
+        ('organization_network', '0001_initial'),
+        ('organization_magazine', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='article',
             name='department',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='articles', to='organization-network.Department', verbose_name='department'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='articles', to='organization_network.Department', verbose_name='department'),
         ),
         migrations.AddField(
             model_name='article',
             name='related_articles',
-            field=models.ManyToManyField(blank=True, related_name='_article_related_articles_+', to='organization-magazine.Article', verbose_name='Related articles'),
+            field=models.ManyToManyField(blank=True, related_name='_article_related_articles_+', to='organization_magazine.Article', verbose_name='Related articles'),
         ),
         migrations.AddField(
             model_name='article',
             name='topics',
-            field=models.ManyToManyField(blank=True, related_name='articles', to='organization-magazine.Topic', verbose_name='topics'),
+            field=models.ManyToManyField(blank=True, related_name='articles', to='organization_magazine.Topic', verbose_name='topics'),
         ),
     ]

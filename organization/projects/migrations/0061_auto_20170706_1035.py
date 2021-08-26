@@ -11,7 +11,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0060_auto_20170421_1202'),
+        ('organization_projects', '0060_auto_20170421_1202'),
     ]
 
     operations = [
@@ -67,6 +67,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='projectresidencyuserimage',
             name='residency',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_images', to='organization-projects.ProjectResidency', verbose_name='project residency user image'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_images', to='organization_projects.ProjectResidency', verbose_name='project residency user image'),
         ),
     ]

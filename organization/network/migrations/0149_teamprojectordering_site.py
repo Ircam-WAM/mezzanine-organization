@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('sites', '0002_alter_domain_unique'),
-        ('organization-network', '0148_teampage_order_projects_by'),
+        ('organization_network', '0148_teampage_order_projects_by'),
     ]
 
     operations = [

@@ -19,6 +19,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import six
 from re import match, findall
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
@@ -27,7 +28,7 @@ from django.views.generic import ListView, TemplateView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import FormView
 from django.apps import apps
-from django.utils import six, timezone, formats
+from django.utils import timezone, formats
 from django.utils.translation import ugettext_lazy as _
 from django.http import QueryDict
 from django.template.defaultfilters import capfirst
@@ -131,7 +132,7 @@ class CustomSearchView(TemplateView):
                 if full_classname in settings.PAGES_MODELS:
                     classname = "CustomPage"
                     verbose_name = "Page"
-                    app_label = "organization-pages"
+                    app_label = "organization_pages"
             elif classname == "Playlist":
                 verbose_name = "Media"
             if classname in filter_dict:
@@ -146,22 +147,22 @@ class CustomSearchView(TemplateView):
             'CustomPage': {
                 'count': results_page_count,
                 'verbose_name': _('Page'),
-                'app_label': 'organization-pages'
+                'app_label': 'organization_pages'
             },
             'Article': {
                 'count': results_article_count,
                 'verbose_name': _('Article'),
-                'app_label': 'organization-magazine'
+                'app_label': 'organization_magazine'
             },
             'Playlist': {
                 'count': results_media_count,
                 'verbose_name': _('Media'),
-                'app_label': 'organization-media'
+                'app_label': 'organization_media'
             },
             'Project': {
                 'count': results_project_count,
                 'verbose_name': _('Project'),
-                'app_label': 'organization-projects'
+                'app_label': 'organization_projects'
             },
             'Event': {
                 'count': results_event_count,
@@ -275,7 +276,7 @@ class AccountProfilView(RedirectView):
                 person.save()
                 if person.register_id:
                     redirect_url = reverse(
-                        "organization-network-person-detail",
+                        "organization_network-person-detail",
                         kwargs={"slug": person.slug}
                     )
         except Exception:

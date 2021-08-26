@@ -37,7 +37,7 @@ from organization.projects.views import DynamicContentProjectView, ProjectPageVi
 urlpatterns = [
     url(
         "^dynamic-content-project/$",
-        permission_required('organization-projects.change_projectpage')(DynamicContentProjectView.as_view()),  # noqa: E501
+        permission_required('organization_projects.change_projectpage')(DynamicContentProjectView.as_view()),  # noqa: E501
         name='dynamic-content-project'
     ),
 

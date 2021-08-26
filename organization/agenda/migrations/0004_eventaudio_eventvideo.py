@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('mezzanine_agenda', '0008_auto_20160926_1552'),
-        ('organization-agenda', '0003_eventlink_eventperson'),
+        ('organization_agenda', '0003_eventlink_eventperson'),
     ]
 
     operations = [

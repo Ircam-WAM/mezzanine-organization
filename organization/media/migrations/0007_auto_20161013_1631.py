@@ -10,12 +10,12 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('sites', '0002_alter_domain_unique'),
-        ('organization-pages', '0008_auto_20161013_1631'),
-        ('organization-magazine', '0012_auto_20161013_1631'),
-        ('organization-media', '0006_auto_20161013_1631'),
-        ('organization-network', '0038_auto_20161013_1631'),
-        ('organization-projects', '0020_auto_20161013_1631'),
-        ('organization-agenda', '0009_auto_20161013_1631'),
+        ('organization_pages', '0008_auto_20161013_1631'),
+        ('organization_magazine', '0012_auto_20161013_1631'),
+        ('organization_media', '0006_auto_20161013_1631'),
+        ('organization_network', '0038_auto_20161013_1631'),
+        ('organization_projects', '0020_auto_20161013_1631'),
+        ('organization_agenda', '0009_auto_20161013_1631'),
     ]
 
     operations = [
@@ -28,22 +28,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='playlistmedia',
             name='media',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='playlists', to='organization-media.Media', verbose_name='media'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='playlists', to='organization_media.Media', verbose_name='media'),
         ),
         migrations.AddField(
             model_name='playlistmedia',
             name='playlist',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='medias', to='organization-media.Playlist', verbose_name='playlist'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='medias', to='organization_media.Playlist', verbose_name='playlist'),
         ),
         migrations.AddField(
             model_name='mediatranscoded',
             name='media',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='transcoded', to='organization-media.Media', verbose_name='media'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='transcoded', to='organization_media.Media', verbose_name='media'),
         ),
         migrations.AddField(
             model_name='media',
             name='category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='medias', to='organization-media.MediaCategory', verbose_name='category'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='medias', to='organization_media.MediaCategory', verbose_name='category'),
         ),
         migrations.AddField(
             model_name='media',

@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('mezzanine_agenda', '0039_externalshop_content'),
-        ('organization-shop', '0012_auto_20191104_1023'),
+        ('organization_shop', '0012_auto_20191104_1023'),
     ]
 
     operations = [

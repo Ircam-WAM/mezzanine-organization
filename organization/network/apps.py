@@ -27,4 +27,4 @@ from django.apps import AppConfig
 class NetworkConfig(AppConfig):
 
     name = 'organization.network'
-    label = 'organization-network'
+    label = 'organization_network'

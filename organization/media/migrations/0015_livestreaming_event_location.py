@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('mezzanine_agenda', '0017_auto_20170222_1039'),
-        ('organization-media', '0014_livestreaming'),
+        ('organization_media', '0014_livestreaming'),
     ]
 
     operations = [

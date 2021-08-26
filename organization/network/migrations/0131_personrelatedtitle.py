@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0130_dynamiccontentperson'),
+        ('organization_network', '0130_dynamiccontentperson'),
     ]
 
     operations = [
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(blank=True, max_length=1024, null=True, verbose_name='title')),
                 ('title_fr', models.CharField(blank=True, max_length=1024, null=True, verbose_name='title')),
                 ('title_en', models.CharField(blank=True, max_length=1024, null=True, verbose_name='title')),
-                ('person', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='related_title', to='organization-network.Person', verbose_name='person')),
+                ('person', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='related_title', to='organization_network.Person', verbose_name='person')),
             ],
             options={
                 'verbose_name': 'related title',

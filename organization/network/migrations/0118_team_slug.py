@@ -15,7 +15,7 @@ from organization.network.models import Team
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0117_merge_20181204_1801'),
+        ('organization_network', '0117_merge_20181204_1801'),
     ]
 
     operations = [

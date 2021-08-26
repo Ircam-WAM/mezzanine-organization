@@ -9,8 +9,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-media', '0015_livestreaming_event_location'),
-        ('organization-network', '0108_merge'),
+        ('organization_media', '0015_livestreaming_event_location'),
+        ('organization_network', '0108_merge'),
     ]
 
     operations = [
@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
             name='MediaDepartment',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('department', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='medias', to='organization-network.Department', verbose_name='department')),
-                ('media', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='department', to='organization-media.Media', verbose_name='media')),
+                ('department', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='medias', to='organization_network.Department', verbose_name='department')),
+                ('media', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='department', to='organization_media.Media', verbose_name='media')),
             ],
         ),
     ]

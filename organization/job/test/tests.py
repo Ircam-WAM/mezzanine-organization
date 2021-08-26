@@ -62,7 +62,7 @@ class JobOfferTests(TestCase):
 
     def setUp(self):
         super(JobOfferTests, self).setUp()
-        app = "organization-job"
+        app = "organization_job"
         model = "joboffer" 
         self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         self.file = SimpleUploadedFile('letter.txt'.encode(), 'content'.encode())
@@ -135,7 +135,7 @@ class JobResponseTests(TestCase):
     
     def setUp(self):
         super(JobResponseTests, self).setUp()
-        app = "organization-job"
+        app = "organization_job"
         model = "joboffer" 
         self.user = User().objects.create_user(username="user", password='test')
         self.file = SimpleUploadedFile('letter.txt'.encode(), 'content'.encode())

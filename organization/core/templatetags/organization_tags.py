@@ -46,7 +46,7 @@ from itertools import chain
 from django.db.models import Q
 from organization.pages.models import ExtendedCustomPageDynamicContent as ECPDC
 from django.utils.functional import keep_lazy as allow_lazy
-from django.utils import six
+import six
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext
 from django.shortcuts import resolve_url

@@ -9,8 +9,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-pages', '0002_auto_20160914_1838'),
-        ('organization-network', '0012_auto_20160916_1423'),
+        ('organization_pages', '0002_auto_20160914_1838'),
+        ('organization_network', '0012_auto_20160916_1423'),
     ]
 
     operations = [
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=1024, verbose_name='title')),
                 ('description', models.TextField(blank=True, verbose_name='description')),
-                ('page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block', to='organization-pages.CustomPage', verbose_name='Page')),
+                ('page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block', to='organization_pages.CustomPage', verbose_name='Page')),
             ],
             options={
                 'verbose_name': 'Person List',
@@ -42,8 +42,8 @@ class Migration(migrations.Migration):
             name='PersonListBlockInline',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('person', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block', to='organization-network.Person', verbose_name='Person')),
-                ('person_list_block', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_autocomplete', to='organization-network.PersonListBlock', verbose_name='Person List Block')),
+                ('person', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block', to='organization_network.Person', verbose_name='Person')),
+                ('person_list_block', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_autocomplete', to='organization_network.PersonListBlock', verbose_name='Person List Block')),
             ],
             options={
                 'verbose_name': 'Person autocomplete',
@@ -52,6 +52,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pagecustompersonlistblockinline',
             name='person_list_block',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='page_custom', to='organization-network.PersonListBlock', verbose_name='Person List Block'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='page_custom', to='organization_network.PersonListBlock', verbose_name='Person List Block'),
         ),
     ]

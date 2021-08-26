@@ -87,7 +87,7 @@ class PageProductList(models.Model):
         on_delete=models.SET_NULL
     )
     list = models.ForeignKey(
-        'organization-shop.ProductList',
+        'organization_shop.ProductList',
         verbose_name=_('product list'),
         related_name='pages',
         blank=True,

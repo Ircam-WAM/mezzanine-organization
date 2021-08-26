@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('organization-projects', '0075_auto_20181102_1151'),
+        ('organization_projects', '0075_auto_20181102_1151'),
     ]
 
     operations = [
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('_order', mezzanine.core.fields.OrderField(null=True, verbose_name='Order')),
                 ('object_id', models.PositiveIntegerField(editable=False, null=True, verbose_name='related object')),
                 ('content_type', models.ForeignKey(blank=True, editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType', verbose_name='content type')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_multimedia', to='organization-projects.Project', verbose_name='project')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_multimedia', to='organization_projects.Project', verbose_name='project')),
             ],
             options={
                 'verbose_name': 'Multimedia',

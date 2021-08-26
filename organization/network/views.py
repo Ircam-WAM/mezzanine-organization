@@ -53,7 +53,7 @@ from organization.network.utils import TimesheetXLS
 from organization.magazine.models import Article
 from organization.projects.models import ProjectWorkPackage, ProjectPage
 from collections import OrderedDict
-from django.utils import six
+import six
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from organization.pages.views import PublicationsView
 from organization.network.utils import get_users_of_team
@@ -471,7 +471,7 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):  # pragma: no cov
     form_class = PersonActivityTimeSheetForm
     formset = ""
     extra = 0
-    success_url = reverse_lazy("organization-network-timesheet-list-view")
+    success_url = reverse_lazy("organization_network-timesheet-list-view")
     last_day_in_month = date.today().replace(day=1) - timedelta(days=1)
     curr_month = last_day_in_month.month
     curr_year = last_day_in_month.year

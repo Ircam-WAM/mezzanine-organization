@@ -8,18 +8,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0062_auto_20161114_1842'),
+        ('organization_network', '0062_auto_20161114_1842'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='organization',
             name='organizations_content',
-            field=models.ManyToManyField(blank=True, help_text='Usefull for host organization', related_name='_organization_organizations_content_+', to='organization-network.Organization', verbose_name='Linked organizations (in content)'),
+            field=models.ManyToManyField(blank=True, help_text='Usefull for host organization', related_name='_organization_organizations_content_+', to='organization_network.Organization', verbose_name='Linked organizations (in content)'),
         ),
         migrations.AddField(
             model_name='organization',
             name='organizations_footer',
-            field=models.ManyToManyField(blank=True, help_text='Usefull for host organization', related_name='_organization_organizations_footer_+', to='organization-network.Organization', verbose_name='Linked organizations (in footer)'),
+            field=models.ManyToManyField(blank=True, help_text='Usefull for host organization', related_name='_organization_organizations_footer_+', to='organization_network.Organization', verbose_name='Linked organizations (in footer)'),
         ),
     ]

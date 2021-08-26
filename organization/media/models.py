@@ -81,7 +81,7 @@ class Media(Displayable, TeamOwnable):
 
     def get_absolute_url(self):
         return reverse(
-            "organization-media-detail",
+            "organization_media-detail",
             kwargs={"type": self.type, "slug": self.slug}
         )
 

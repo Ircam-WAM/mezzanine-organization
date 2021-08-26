@@ -68,7 +68,7 @@ class JobOfferDetailView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy(
-            'organization-job-offer-detail',
+            'organization_job-offer-detail',
             kwargs={
                 'slug': self.kwargs['slug']
             }

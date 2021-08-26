@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0003_auto_20160901_1810'),
+        ('organization_projects', '0003_auto_20160901_1810'),
     ]
 
     operations = [
@@ -44,16 +44,16 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='project',
             name='teams',
-            field=models.ManyToManyField(blank=True, related_name='partner_projects', to='organization-network.Team', verbose_name='teams'),
+            field=models.ManyToManyField(blank=True, related_name='partner_projects', to='organization_network.Team', verbose_name='teams'),
         ),
         migrations.AddField(
             model_name='project',
             name='program',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='projects', to='organization-projects.ProjectProgram', verbose_name='project program'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='projects', to='organization_projects.ProjectProgram', verbose_name='project program'),
         ),
         migrations.AddField(
             model_name='project',
             name='program_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='projects', to='organization-projects.ProjectProgramType', verbose_name='project program type'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='projects', to='organization_projects.ProjectProgramType', verbose_name='project program type'),
         ),
     ]

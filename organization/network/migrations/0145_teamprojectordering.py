@@ -10,8 +10,8 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0092_auto_20200703_1644'),
-        ('organization-network', '0144_auto_20200703_1644'),
+        ('organization_projects', '0092_auto_20200703_1644'),
+        ('organization_network', '0144_auto_20200703_1644'),
     ]
 
     operations = [
@@ -20,8 +20,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('_order', mezzanine.core.fields.OrderField(null=True, verbose_name='Order')),
-                ('project_page', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization-projects.ProjectPage', verbose_name='Project')),
-                ('team_page', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization-network.TeamPage', verbose_name='Team')),
+                ('project_page', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization_projects.ProjectPage', verbose_name='Project')),
+                ('team_page', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization_network.TeamPage', verbose_name='Team')),
             ],
             options={
                 'ordering': ('_order',),

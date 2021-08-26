@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         ('sites', '0002_alter_domain_unique'),
         ('contenttypes', '0002_remove_content_type_name'),
         ('pages', '0004_auto_20160804_1547'),
-        ('organization-media', '0001_initial'),
+        ('organization_media', '0001_initial'),
     ]
 
     operations = [
@@ -89,14 +89,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PageAudio',
             fields=[
-                ('audio_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-media.Audio')),
+                ('audio_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_media.Audio')),
                 ('page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='audios', to='pages.Page', verbose_name='page')),
             ],
             options={
                 'verbose_name': 'audio',
                 'verbose_name_plural': 'audios',
             },
-            bases=('organization-media.audio',),
+            bases=('organization_media.audio',),
         ),
         migrations.CreateModel(
             name='PageBlock',
@@ -143,24 +143,24 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PageVideo',
             fields=[
-                ('video_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-media.Video')),
+                ('video_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_media.Video')),
                 ('page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='videos', to='pages.Page', verbose_name='page')),
             ],
             options={
                 'verbose_name': 'video',
                 'verbose_name_plural': 'videos',
             },
-            bases=('organization-media.video',),
+            bases=('organization_media.video',),
         ),
         migrations.AddField(
             model_name='dynamiccontenthomeslider',
             name='home',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-pages.Home', verbose_name='home'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_pages.Home', verbose_name='home'),
         ),
         migrations.AddField(
             model_name='dynamiccontenthomebody',
             name='home',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-pages.Home', verbose_name='home'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_pages.Home', verbose_name='home'),
         ),
         migrations.AlterOrderWithRespectTo(
             name='pagevideo',

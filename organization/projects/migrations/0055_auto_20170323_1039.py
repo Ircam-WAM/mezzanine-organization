@@ -10,7 +10,7 @@ from django.utils.timezone import utc
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0054_auto_20170323_0815'),
+        ('organization_projects', '0054_auto_20170323_0815'),
     ]
 
     operations = [

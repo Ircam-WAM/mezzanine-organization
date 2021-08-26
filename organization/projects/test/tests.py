@@ -130,7 +130,7 @@ class ProjectTests(TestCase):
         tomorrow = datetime.date.today() + datetime.timedelta(days=1)
         yesterday = datetime.date.today() - datetime.timedelta(days=1)
         super(ProjectTests, self).setUp()
-        app = "organization-projects"
+        app = "organization_projects"
         model = "project" 
         self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         self.project_program = ProjectProgram.objects.create()

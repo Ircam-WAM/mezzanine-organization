@@ -70,7 +70,7 @@ class ArticleTests(TestCase):
 
     def setUp(self):
         super(ArticleTests, self).setUp()
-        app = "organization-magazine"
+        app = "organization_magazine"
         model = "article" 
         self.url = urlresolvers.reverse("admin:%s_%s_add" % (app, model))
         organization = Organization.objects.create()

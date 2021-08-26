@@ -74,7 +74,7 @@ urlpatterns = [
     ),
     url(
         "^dynamic-content-magazine/$",
-        permission_required('organization-magazine.change_magazine')(DynamicContentMagazineContentView.as_view()),  # noqa: E501
+        permission_required('organization_magazine.change_magazine')(DynamicContentMagazineContentView.as_view()),  # noqa: E501
         name='dynamic-content-magazine'
     ),
     url(
