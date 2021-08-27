@@ -71,7 +71,7 @@ class PersonMixin(SingleObjectMixin):
     def get_object(self, queryset=None):
         person = None
         user = self.request.user
-        if user.is_authenticated():
+        if user.is_authenticated:
             persons = Person.objects.filter(user=user)
             if not persons:
                 person = Person(
