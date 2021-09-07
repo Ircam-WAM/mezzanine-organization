@@ -34,6 +34,24 @@ class CustomPage(Page, SubTitled, RichText):
     objects = CustomSearchableManager()
     menu_alinea = models.BooleanField(_('menu alinea'), default=False)
     class_css = models.CharField(_('CSS class'), max_length=32, blank=True, null=True)
+    
+    # order of blocks
+    block_order = models.CharField(_(
+        '''
+        order of blocks (
+            0: liens,
+            1: images,
+            2: multimedias,
+            3: liste de personnes,
+            4: blocks,
+            5: listes des produits,
+            6: Dynamic Content pages
+        )
+        '''
+        ),
+        max_length=32,
+        default='0,1,2,3,4,5,6'
+    )
 
     class Meta:
         verbose_name = 'custom page'

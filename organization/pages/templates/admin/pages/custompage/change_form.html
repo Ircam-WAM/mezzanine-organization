@@ -1,0 +1,141 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block inline_field_sets %}
+
+	<style>
+		#inlines-wrapper{
+			display: flex;
+	    	flex-direction: column;
+		}
+	
+		.block-index-wrapper div{
+			width: 100%;
+		}
+
+		.block-index-wrapper div.block-index-ordering{
+			margin: 5px;
+			width: fit-content;
+			min-width: 70px;
+			padding: 5px;
+			border: 1px solid black;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.block-index-ordering .icon{
+			width: 15px;
+			display: block;
+			margin: 5px 0px;
+			height: auto;
+			cursor: pointer;
+		}
+
+		.block-index-wrapper{
+			display: flex;
+		}
+
+		.field-block_order{
+			display: none;
+		}
+	</style>
+
+	<div id="inlines-wrapper">
+		{% for inline_admin_formset in inline_admin_formsets %}
+			<div class="flex-order-wrapper" value="{{inline_admin_formset.opts.model_name}}" style="order:{% if inline_admin_formset.opts.model_name == 'PageLink' %}
+				{{ original.block_order|slice:":1" }}
+				{% elif inline_admin_formset.opts.model_name == 'PageImage' %}
+					{{ original.block_order|slice:"2:3" }}
+				{% elif inline_admin_formset.opts.model_name == 'DynamicMultimediaPage' or inline_admin_formset.opts.model_name == 'PagePlaylist' %}
+					{{ original.block_order|slice:"4:5" }}
+				{% elif inline_admin_formset.opts.model_name == 'PageCustomPersonListBlockInline' %}
+					{{ original.block_order|slice:"6:7" }}
+				{% elif inline_admin_formset.opts.model_name == 'PageBlock' %}
+					{{ original.block_order|slice:"8:9" }}
+				{% elif inline_admin_formset.opts.model_name == 'PageProductList' %}
+					{{ original.block_order|slice:"10:11" }}
+				{% elif inline_admin_formset.opts.model_name == 'DynamicContentPage' or inline_admin_formset.opts.model_name == 'PageRelatedTitle'%}
+					{{ original.block_order|slice:"12:13" }}
+				{% endif %}">
+		    	{% include inline_admin_formset.opts.template %}
+		    </div>
+		{% endfor %}
+	</div>
+
+	<script>
+		var arr = []
+		window.addEventListener("DOMContentLoaded", function(){
+			var wrapper = document.getElementById("inlines-wrapper")
+			formsets = wrapper.getElementsByClassName("flex-order-wrapper")
+			for(var formset in formsets){
+				var test = (function(){
+					var up = formsets[formset].querySelector(".icon.up")
+					var down = formsets[formset].querySelector(".icon.down")
+					var form = formset
+					var cl = formsets[form]
+					if(typeof arr[cl.style.order] == "undefined") arr[cl.style.order] = []
+					arr[cl.style.order].push(cl)
+					up.addEventListener("click", function(e){
+						if(cl.style.order > 0){
+							invert2items(cl.style.order, parseInt(cl.style.order) - 1)
+						}
+					})
+					down.addEventListener("click", function(e){
+						if(cl.style.order < 6){
+							invert2items(cl.style.order, parseInt(cl.style.order) + 1)
+						}
+					})
+				})()
+			}
+		})
+
+		function invert2items(a, b){
+			var temp = []
+			for(aa in arr[a]){
+				arr[a][aa].style.order = b
+				temp.push(arr[a][aa])
+			}
+			for(aa in arr[b]){
+				arr[b][aa].style.order = a
+			}
+			arr[a] = arr[b]
+			arr[b] = temp
+			updateOrderFormInput()
+		}
+
+		function updateOrderFormInput(){
+			var result = []
+			for(a in arr){
+				for(aa in arr[a]){
+					switch(arr[a][aa].getAttribute("value")){
+						case 'PageLink':
+							result[0] = a
+							break
+						case 'PageImage':
+							result[1] = a
+							break
+						case 'DynamicMultimediaPage':
+							result[2] = a
+							break
+						case 'PageCustomPersonListBlockInline':
+							result[3] = a
+							break
+						case 'PageBlock':
+							result[4] = a
+							break
+						case 'PageProductList':
+							result[5] = a
+							break
+						case 'DynamicContentPage':
+							result[6] = a
+							break
+					}
+				}
+			}
+			document.querySelector("[name='block_order']").value = result.join(",")
+		}
+	</script>
+
+{% endblock %}
