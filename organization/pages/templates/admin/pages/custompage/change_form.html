@@ -18,7 +18,8 @@
 			width: fit-content;
 			min-width: 70px;
 			padding: 5px;
-			border: 1px solid black;
+			border: 2px solid #b3b3b3;
+			border-radius: 7px;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -70,24 +71,26 @@
 			var wrapper = document.getElementById("inlines-wrapper")
 			formsets = wrapper.getElementsByClassName("flex-order-wrapper")
 			for(var formset in formsets){
-				var test = (function(){
-					var up = formsets[formset].querySelector(".icon.up")
-					var down = formsets[formset].querySelector(".icon.down")
-					var form = formset
-					var cl = formsets[form]
-					if(typeof arr[cl.style.order] == "undefined") arr[cl.style.order] = []
-					arr[cl.style.order].push(cl)
-					up.addEventListener("click", function(e){
-						if(cl.style.order > 0){
-							invert2items(cl.style.order, parseInt(cl.style.order) - 1)
-						}
-					})
-					down.addEventListener("click", function(e){
-						if(cl.style.order < 6){
-							invert2items(cl.style.order, parseInt(cl.style.order) + 1)
-						}
-					})
-				})()
+				if(typeof formsets[formset] == "object"){
+					var test = (function(){
+						var up = formsets[formset].querySelector(".icon.up")
+						var down = formsets[formset].querySelector(".icon.down")
+						var form = formset
+						var cl = formsets[form]
+						if(typeof arr[cl.style.order] == "undefined") arr[cl.style.order] = []
+						arr[cl.style.order].push(cl)
+						up.addEventListener("click", function(e){
+							if(cl.style.order > 0){
+								invert2items(cl.style.order, parseInt(cl.style.order) - 1)
+							}
+						})
+						down.addEventListener("click", function(e){
+							if(cl.style.order < 6){
+								invert2items(cl.style.order, parseInt(cl.style.order) + 1)
+							}
+						})
+					})()
+				}
 			}
 		})
 
