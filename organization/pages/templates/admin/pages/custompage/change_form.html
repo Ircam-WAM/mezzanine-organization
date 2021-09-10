@@ -45,23 +45,28 @@
 
 	<div id="inlines-wrapper">
 		{% for inline_admin_formset in inline_admin_formsets %}
-			<div class="flex-order-wrapper" value="{{inline_admin_formset.opts.model_name}}" style="order:{% if inline_admin_formset.opts.model_name == 'PageLink' %}
-				{{ original.block_order|slice:":1" }}
-				{% elif inline_admin_formset.opts.model_name == 'PageImage' %}
-					{{ original.block_order|slice:"2:3" }}
-				{% elif inline_admin_formset.opts.model_name == 'DynamicMultimediaPage' or inline_admin_formset.opts.model_name == 'PagePlaylist' %}
-					{{ original.block_order|slice:"4:5" }}
-				{% elif inline_admin_formset.opts.model_name == 'PageCustomPersonListBlockInline' %}
-					{{ original.block_order|slice:"6:7" }}
-				{% elif inline_admin_formset.opts.model_name == 'PageBlock' %}
-					{{ original.block_order|slice:"8:9" }}
-				{% elif inline_admin_formset.opts.model_name == 'PageProductList' %}
-					{{ original.block_order|slice:"10:11" }}
-				{% elif inline_admin_formset.opts.model_name == 'DynamicContentPage' or inline_admin_formset.opts.model_name == 'PageRelatedTitle'%}
-					{{ original.block_order|slice:"12:13" }}
-				{% endif %}">
-		    	{% include inline_admin_formset.opts.template %}
-		    </div>
+			{% if inline_admin_formset.opts.model_name == 'PageLink' %}
+				<div style="order:-1">
+					{% include inline_admin_formset.opts.template %}
+				</div>
+			{% else %}
+				<div class="flex-order-wrapper" value="{{inline_admin_formset.opts.model_name}}" style="order:
+					{% if inline_admin_formset.opts.model_name == 'PageImage' %}
+						{{ original.block_order|slice:":1" }}
+					{% elif inline_admin_formset.opts.model_name == 'DynamicMultimediaPage' or inline_admin_formset.opts.model_name == 'PagePlaylist' %}
+						{{ original.block_order|slice:"2:3" }}
+					{% elif inline_admin_formset.opts.model_name == 'PageCustomPersonListBlockInline' %}
+						{{ original.block_order|slice:"4:5" }}
+					{% elif inline_admin_formset.opts.model_name == 'PageBlock' %}
+						{{ original.block_order|slice:"6:7" }}
+					{% elif inline_admin_formset.opts.model_name == 'PageProductList' %}
+						{{ original.block_order|slice:"8:9" }}
+					{% elif inline_admin_formset.opts.model_name == 'DynamicContentPage' or inline_admin_formset.opts.model_name == 'PageRelatedTitle'%}
+						{{ original.block_order|slice:"10:11" }}
+					{% endif %}">
+			    	{% include inline_admin_formset.opts.template %}
+			    </div>
+			{% endif %}
 		{% endfor %}
 	</div>
 
@@ -85,7 +90,7 @@
 							}
 						})
 						down.addEventListener("click", function(e){
-							if(cl.style.order < 6){
+							if(cl.style.order < 5){
 								invert2items(cl.style.order, parseInt(cl.style.order) + 1)
 							}
 						})
@@ -113,26 +118,23 @@
 			for(a in arr){
 				for(aa in arr[a]){
 					switch(arr[a][aa].getAttribute("value")){
-						case 'PageLink':
+						case 'PageImage':
 							result[0] = a
 							break
-						case 'PageImage':
+						case 'DynamicMultimediaPage':
 							result[1] = a
 							break
-						case 'DynamicMultimediaPage':
+						case 'PageCustomPersonListBlockInline':
 							result[2] = a
 							break
-						case 'PageCustomPersonListBlockInline':
+						case 'PageBlock':
 							result[3] = a
 							break
-						case 'PageBlock':
+						case 'PageProductList':
 							result[4] = a
 							break
-						case 'PageProductList':
-							result[5] = a
-							break
 						case 'DynamicContentPage':
-							result[6] = a
+							result[5] = a
 							break
 					}
 				}

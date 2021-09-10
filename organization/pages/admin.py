@@ -65,7 +65,6 @@ class PageLinkInline(StackedDynamicInlineAdmin):
 
     model = PageLink
     model_name = "PageLink"
-    template = 'admin/pages/custompage/edit_inline/stacked.html'
 
 
 class LinkImageInline(StackedDynamicInlineAdmin):
