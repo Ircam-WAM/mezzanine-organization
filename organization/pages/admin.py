@@ -128,11 +128,12 @@ class DynamicMultimediaPageInline(TabularDynamicInlineAdmin):
 
 class CustomPageAdmin(PageAdmin):
 
-    inlines = [PageBlockInline,
+    inlines = [
+            PageLinkInline,
             PageImageInline,
             PagePlaylistInline,
             DynamicMultimediaPageInline,
-            PageLinkInline,
+            PageBlockInline,
             PersonListBlockAutocompleteInlineAdmin,
             PageProductListInline,
             PageRelatedTitleAdmin,

@@ -38,7 +38,7 @@
 			display: flex;
 		}
 
-		.field-block_order{
+		.field-block_order, .field-separator{
 			display: none;
 		}
 	</style>
@@ -71,12 +71,16 @@
 	</div>
 
 	<script>
+
 		var arr = []
 		window.addEventListener("DOMContentLoaded", function(){
+			var initSeparators = document.getElementById('id_separator').value
 			var wrapper = document.getElementById("inlines-wrapper")
 			formsets = wrapper.getElementsByClassName("flex-order-wrapper")
 			for(var formset in formsets){
 				if(typeof formsets[formset] == "object"){
+
+					// Order
 					var test = (function(){
 						var up = formsets[formset].querySelector(".icon.up")
 						var down = formsets[formset].querySelector(".icon.down")
@@ -95,7 +99,71 @@
 							}
 						})
 					})()
+
+					var seperatorModelLabel = document.createElement('label')
+					seperatorModelLabel.innerHTML = "Separator"
+					var seperatorModelBox = document.createElement('input')
+					seperatorModelBox.type = 'checkbox'
+					seperatorModelLabel.appendChild(seperatorModelBox)
+					seperatorModelLabel.style.order = parseInt(formsets[formset].style.order)
+					// Separators
+					var closure = (function(){
+						var formsetName = formsets[formset].getAttribute("value")
+						seperatorModelBox.addEventListener("change", function(e){
+							updateSeparatorFormInput()
+						})
+						if (
+							formsets[formset].getAttribute("value") == "PageBlock" ||
+							formsets[formset].getAttribute("value") == "PageImage" ||
+							formsets[formset].getAttribute("value") == "PagePlaylist" ||
+							formsets[formset].getAttribute("value") == "PageCustomPersonListBlockInline" ||
+							formsets[formset].getAttribute("value") == "PageProductList" ||
+							formsets[formset].getAttribute("value") == "PageRelatedTitle"
+
+						){
+							formsets[formset].prepend(seperatorModelLabel)
+						}
+					})()
 				}
+			}
+			var initSeparators = document.getElementById('id_separator').value
+			var count = 0
+			var splitt = initSeparators.split(',')
+			for(var id in splitt){
+				result = splitt[id] == '1' ? true : false
+				switch(count){
+					case 0:
+						document.querySelector(
+							".flex-order-wrapper[value='PageImage'] input[type='checkbox']"
+						).checked = result
+						break
+					case 1:
+						document.querySelector(
+							".flex-order-wrapper[value='PagePlaylist'] input[type='checkbox']"
+						).checked = result
+						break
+					case 2:
+						document.querySelector(
+							".flex-order-wrapper[value='PageCustomPersonListBlockInline'] input[type='checkbox']"
+						).checked = result
+						break
+					case 3:
+						document.querySelector(
+							".flex-order-wrapper[value='PageBlock'] input[type='checkbox']"
+						).checked = result
+						break
+					case 4:
+						document.querySelector(
+							".flex-order-wrapper[value='PageProductList'] input[type='checkbox']"
+						).checked = result
+						break
+					case 5:
+						document.querySelector(
+							".flex-order-wrapper[value='PageRelatedTitle'] input[type='checkbox']"
+						).checked = result
+						break
+				}
+				count++
 			}
 		})
 
@@ -141,6 +209,44 @@
 			}
 			document.querySelector("[name='block_order']").value = result.join(",")
 		}
+
+		function updateSeparatorFormInput(){
+			var wrapper = document.getElementById("inlines-wrapper")
+			formsets = wrapper.getElementsByClassName("flex-order-wrapper")
+			result = []
+			for(f in formsets){
+				if(typeof formsets[f] == 'object'){
+					switch(formsets[f].getAttribute("value")){
+						case 'PageImage':
+							var box = formsets[f].querySelector("input[type='checkbox']")
+							result[0] = box.checked ? '1' : '0'
+							break
+						case 'PagePlaylist':
+							var box = formsets[f].querySelector("input[type='checkbox']")
+							result[1] = box.checked ? '1' : '0'
+							break
+						case 'PageCustomPersonListBlockInline':
+							var box = formsets[f].querySelector("input[type='checkbox']")
+							result[2] = box.checked ? '1' : '0'
+							break
+						case 'PageBlock':
+							var box = formsets[f].querySelector("input[type='checkbox']")
+							result[3] = box.checked ? '1' : '0'
+							break
+						case 'PageProductList':
+							var box = formsets[f].querySelector("input[type='checkbox']")
+							result[4] = box.checked ? '1' : '0'
+							break
+						case 'PageRelatedTitle':
+							var box = formsets[f].querySelector("input[type='checkbox']")
+							result[5] = box.checked ? '1' : '0'
+							break
+					}
+				}
+			}
+			document.querySelector("[name='separator']").value = result.join(",")
+		}
+
 	</script>
 
 {% endblock %}

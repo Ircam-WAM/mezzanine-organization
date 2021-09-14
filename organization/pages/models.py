@@ -52,6 +52,27 @@ class CustomPage(Page, SubTitled, RichText):
         default='0,1,2,3,4,5'
     )
 
+    separator = models.CharField(_(
+        '''
+        separator before blocks,
+        0 : no sepeartor
+        1 : separator
+
+        order of blocks (
+            0: images,
+            1: multimedias,
+            2: liste de personnes,
+            3: blocks,
+            4: listes des produits,
+            5: Dynamic Content pages
+        )
+        
+        '''
+        ),
+        max_length=32,
+        default='0,0,1,1,1,1'
+    )
+
     class Meta:
         verbose_name = 'custom page'
         permissions = TeamOwnable.Meta.permissions
