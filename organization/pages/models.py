@@ -171,8 +171,8 @@ class PageLink(Link):
 
 
 DYNAMIC_CONTENT_DISPLAY_MODES = (
-    ('0', "Display full width block without nav menu at left"),
-    ('1', "Display as width limited block with nav menu at left"),
+    ('0', "Affichage toute largueur"),
+    ('1', "Affichage pour menu gauche"),
 )
 
 
