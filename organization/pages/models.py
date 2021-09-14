@@ -73,6 +73,8 @@ class CustomPage(Page, SubTitled, RichText):
         default='0,0,1,1,1,1'
     )
 
+    display_content = models.BooleanField(_('display content'), default=True)
+
     class Meta:
         verbose_name = 'custom page'
         permissions = TeamOwnable.Meta.permissions
@@ -168,9 +170,16 @@ class PageLink(Link):
         order_with_respect_to = "page"
 
 
+DYNAMIC_CONTENT_DISPLAY_MODES = (
+    ('0', "Display full width block without nav menu at left"),
+    ('1', "Display as width limited block with nav menu at left"),
+)
+
+
 class PageRelatedTitle(RelatedTitle):
 
     page = models.OneToOneField(Page, verbose_name=_('page'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+    display_mode = models.CharField(max_length=1, choices=DYNAMIC_CONTENT_DISPLAY_MODES, default='0')
 
     class Meta:
         verbose_name = _("related title")
