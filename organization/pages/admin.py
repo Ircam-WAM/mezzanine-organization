@@ -47,21 +47,28 @@ from organization.shop.models import PageProductList
 class PageBlockInline(StackedDynamicInlineAdmin):
 
     model = PageBlock
+    model_name = "PageBlock"
+    template = 'admin/pages/custompage/edit_inline/stacked.html'
 
 
 class PageImageInline(TabularDynamicInlineAdmin):
 
     model = PageImage
+    model_name = "PageImage"
+    template = 'admin/pages/custompage/edit_inline/tabular.html'
 
 
 class PagePlaylistInline(TabularDynamicInlineAdmin):
 
     model = PagePlaylist
+    model_name = "PagePlaylist"
+    template = 'admin/pages/custompage/edit_inline/tabular.html'
 
 
 class PageLinkInline(StackedDynamicInlineAdmin):
 
     model = PageLink
+    model_name = "PageLink"
 
 
 class LinkImageInline(StackedDynamicInlineAdmin):
@@ -72,6 +79,7 @@ class LinkImageInline(StackedDynamicInlineAdmin):
 class LinkStyleInline(TabularDynamicInlineAdmin):
 
     model = LinkStyle
+    template = 'admin/pages/custompage/edit_inline/stacked.html'
 
 
 class LinkImageAdmin(LinkAdmin):
@@ -82,19 +90,25 @@ class LinkImageAdmin(LinkAdmin):
 class PersonListBlockAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
 
     model = PageCustomPersonListBlockInline
+    model_name = "PageCustomPersonListBlockInline"
     exclude = ("title", "description")
     form = PageCustomPersonListForm
+    template = 'admin/pages/custompage/edit_inline/tabular.html'
 
 
 class PageProductListInline(TabularDynamicInlineAdmin):
 
     model = PageProductList
+    model_name = "PageProductList"
+    template = 'admin/pages/custompage/edit_inline/tabular.html'
 
 
 class DynamicContentPageInline(TabularDynamicInlineAdmin):
 
     model = DynamicContentPage
+    model_name = "DynamicContentPage"
     form = DynamicContentPageForm
+    template = 'admin/pages/custompage/edit_inline/tabular.html'
 
     class Media:
         js = (
@@ -105,27 +119,33 @@ class DynamicContentPageInline(TabularDynamicInlineAdmin):
 class PageRelatedTitleAdmin(TranslationTabularInline):
 
     model = PageRelatedTitle
+    model_name = "PageRelatedTitle"
+    template = 'admin/pages/custompage/edit_inline/tabular.html'
 
 
 class DynamicMultimediaPageInline(TabularDynamicInlineAdmin):
 
     model = DynamicMultimediaPage
+    model_name = "DynamicMultimediaPage"
     form = DynamicMultimediaPageForm
+    template = 'admin/pages/custompage/edit_inline/tabular.html'
 
 
 class CustomPageAdmin(PageAdmin):
 
     inlines = [
-        PageBlockInline,
+        PageLinkInline,
         PageImageInline,
         PagePlaylistInline,
         DynamicMultimediaPageInline,
-        PageLinkInline,
+        PageBlockInline,
         PersonListBlockAutocompleteInlineAdmin,
         PageProductListInline,
         PageRelatedTitleAdmin,
         DynamicContentPageInline
     ]
+
+    change_form_template = "admin/pages/custompage/change_form.html"
 
 
 class ExtendedCustomPageDynamicContentInline(TabularDynamicInlineAdmin):

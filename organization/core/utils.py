@@ -44,9 +44,11 @@ def getUsersListOfSameTeams(user):
 
 def usersTeamsIntersection(userA, userB):
     teamsUserA = set()
-    for activities in userA.person.activities.all():
-        teamsUserA.update(activities.teams.all())
+    if hasattr(userA, 'person'):
+        for activities in userA.person.activities.all():
+            teamsUserA.update(activities.teams.all())
     teamsUserB = set()
-    for activities in userB.person.activities.all():
-        teamsUserB.update(activities.teams.all())
+    if hasattr(userB, 'person'):
+        for activities in userB.person.activities.all():
+            teamsUserB.update(activities.teams.all())
     return teamsUserA & teamsUserB

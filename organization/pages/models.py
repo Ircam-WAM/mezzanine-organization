@@ -37,6 +37,46 @@ class CustomPage(Page, SubTitled, RichText):
     menu_alinea = models.BooleanField(_('menu alinea'), default=False)
     class_css = models.CharField(_('CSS class'), max_length=32, blank=True, null=True)
 
+    # order of blocks
+    block_order = models.CharField(_(
+        '''
+        order of blocks (
+            0: images,
+            1: multimedias,
+            2: liste de personnes,
+            3: blocks,
+            4: listes des produits,
+            5: Dynamic Content pages
+        )
+        '''
+        ),
+        max_length=32,
+        default='0,1,2,3,4,5'
+    )
+
+    separator = models.CharField(_(
+        '''
+        separator before blocks,
+        0 : no sepeartor
+        1 : separator
+
+        order of blocks (
+            0: images,
+            1: multimedias,
+            2: liste de personnes,
+            3: blocks,
+            4: listes des produits,
+            5: Dynamic Content pages
+        )
+
+        '''
+        ),
+        max_length=32,
+        default='0,0,1,1,1,1'
+    )
+
+    display_content = models.BooleanField(_('display content'), default=True)
+
     class Meta:
         verbose_name = 'custom page'
         permissions = TeamOwnable.Meta.permissions
@@ -171,6 +211,12 @@ class PageLink(Link):
         order_with_respect_to = "page"
 
 
+DYNAMIC_CONTENT_DISPLAY_MODES = (
+    ('0', "Affichage toute largueur"),
+    ('1', "Affichage pour menu gauche"),
+)
+
+
 class PageRelatedTitle(RelatedTitle):
 
     page = models.OneToOneField(
@@ -180,6 +226,11 @@ class PageRelatedTitle(RelatedTitle):
         blank=True,
         null=True,
         on_delete=models.SET_NULL
+    )
+    display_mode = models.CharField(
+        max_length=1,
+        choices=DYNAMIC_CONTENT_DISPLAY_MODES,
+        default='0'
     )
 
     class Meta:
