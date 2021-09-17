@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-pages', '0045_pagerelatedtitle_display_mode'),
+        ('organization_pages', '0045_pagerelatedtitle_display_mode'),
     ]
 
     operations = [
