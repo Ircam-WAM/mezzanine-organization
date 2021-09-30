@@ -33,7 +33,7 @@ from organization.media.models import Media, Playlist
 from organization.pages.models import DynamicContentHomeSlider,\
     DynamicContentHomeBody, DynamicContentHomeMedia, ExtendedCustomPage,\
     DynamicContentPage, DynamicMultimediaPage
-from organization.agenda.models import Event
+from mezzanine_agenda.models import Event
 from organization.media.forms import DynamicMultimediaForm
 from organization.network.models import Person
 from organization.projects.models import Project, ProjectPage
@@ -42,13 +42,7 @@ from organization.projects.models import Project, ProjectPage
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Article.objects.all(),
-            CustomPage.objects.all(),
-            Event.objects.all(),
-            Person.objects.all(),
-            Media.objects.all()
-        ),
+        queryset=None,  # defined in widget
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-content-home-slider'

@@ -95,11 +95,13 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
         medias = Media.objects.all()
 
         if self.q:
-            articles = articles.filter(title__icontains=self.q)
-            custompage = custompage.filter(title__icontains=self.q)
-            events = events.filter(title__icontains=self.q)
+            articles = articles.filter(title__icontains=self.q)\
+                .order_by("-publish_date")
+            custompage = custompage.filter(title__icontains=self.q)\
+                .order_by("-publish_date")
+            events = events.filter(title__icontains=self.q).order_by("-start")
             persons = persons.filter(title__icontains=self.q)
-            medias = medias.filter(title__icontains=self.q)
+            medias = medias.filter(title__icontains=self.q).order_by("-publish_date")
 
         qs = autocomplete.QuerySetSequence(
             articles,
