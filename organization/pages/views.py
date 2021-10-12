@@ -37,6 +37,7 @@ from organization.network.models import Person, Organization
 from organization.projects.models import Project, ProjectPage
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
+from queryset_sequence import QuerySetSequence
 
 
 class HomeView(SlugMixin, DetailView):
@@ -46,7 +47,6 @@ class HomeView(SlugMixin, DetailView):
     context_object_name = 'home'
 
     def get_object(self, **kwargs):
-        print(self.model)
         homes = self.model.objects.published()
         if homes:
             return homes.latest("publish_date")
@@ -110,7 +110,11 @@ class DynamicContentHomeSliderView(Select2QuerySetSequenceView):
             persons,
             medias
         )
-        qs = self.mixup_querysets(qs)
+        # Unlimited queryset
+        # https://django-autocomplete-light.readthedocs.io/en/master/_modules/dal_queryset_sequence/views.html
+        # qs = self.mixup_querysets(qs)
+        querysets = list(qs.get_querysets())
+        qs = QuerySetSequence(*[q for q in querysets])
 
         return qs
 
@@ -135,9 +139,11 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
         playlists = Playlist.objects.all()
 
         if self.q:
-            articles = articles.filter(title__icontains=self.q)
-            custompage = custompage.filter(title__icontains=self.q)
-            events = events.filter(title__icontains=self.q)
+            articles = articles.filter(title__icontains=self.q)\
+                .order_by("-publish_date")
+            custompage = custompage.filter(title__icontains=self.q)\
+                .order_by("-publish_date")
+            events = events.filter(title__icontains=self.q).order_by("-start")
             briefs = briefs.filter(title__icontains=self.q)
             medias = medias.filter(title__icontains=self.q)
             persons = persons.filter(title__icontains=self.q)
@@ -154,7 +160,9 @@ class DynamicContentHomeBodyView(Select2QuerySetSequenceView):
             projects,
             playlists
         )
-        qs = self.mixup_querysets(qs)
+
+        querysets = list(qs.get_querysets())
+        qs = QuerySetSequence(*[q for q in querysets])
 
         return qs
 
@@ -179,7 +187,9 @@ class DynamicContentHomeMediaView(Select2QuerySetSequenceView):
         if self.q:
             qs = qs.filter(title__icontains=self.q)
 
-        qs = self.mixup_querysets(qs)
+        querysets = list(qs.get_querysets())
+        qs = QuerySetSequence(*[q for q in querysets])
+
         return qs
 
 

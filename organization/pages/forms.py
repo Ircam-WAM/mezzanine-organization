@@ -27,16 +27,15 @@ import dal_select2_queryset_sequence
 from cartridge.shop.models import Product
 from django import forms
 from mezzanine.conf import settings
-from organization.magazine.models import Article, Brief
+from organization.magazine.models import Article
 from organization.pages.models import CustomPage
-from organization.media.models import Media, Playlist
+from organization.media.models import Playlist
 from organization.pages.models import DynamicContentHomeSlider,\
     DynamicContentHomeBody, DynamicContentHomeMedia, ExtendedCustomPage,\
     DynamicContentPage, DynamicMultimediaPage
 from mezzanine_agenda.models import Event
 from organization.media.forms import DynamicMultimediaForm
-from organization.network.models import Person
-from organization.projects.models import Project, ProjectPage
+from organization.projects.models import ProjectPage
 
 
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
@@ -57,16 +56,7 @@ class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
 class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Article.objects.all(),
-            CustomPage.objects.all(),
-            Brief.objects.all(),
-            Event.objects.all(),
-            Media.objects.all(),
-            Person.objects.all(),
-            Project.objects.all(),
-            Playlist.objects.all(),
-        ),
+        queryset=None,  # defined in widget
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-content-home-body'
