@@ -2,7 +2,7 @@ name: Lint
 on: [push, pull_request]
 jobs:
   flake8-lint:
-    runs-on: python:3.7.5-buster
+    runs-on: ubuntu-latest
     name: Lint
     steps:
       - name: Check out source repository
