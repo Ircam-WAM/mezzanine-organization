@@ -187,6 +187,9 @@ STATIC_URL = "/static/"
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, STATIC_URL.strip("/"))
 STATIC_ROOT = '/srv/static/'
 
+STATIC_HASH = os.environ.get('STATIC_HASH')\
+    if os.environ.get('STATIC_HASH') is not None else ''
+
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
@@ -325,6 +328,7 @@ TEMPLATES = [
                 'mezzanine.conf.context_processors.settings',
                 'mezzanine.pages.context_processors.page',
                 'organization.core.context_processors.organization_settings',
+                'organization.utils.context_processors.static_hash'
             ),
             'loaders': [
                 'mezzanine.template.loaders.host_themes.Loader',
