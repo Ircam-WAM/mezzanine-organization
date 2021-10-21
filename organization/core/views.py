@@ -97,7 +97,7 @@ class CustomSearchView(TemplateView):
         results_page_count = len(
             CustomPage.objects.search(
                 query,
-                for_user=request.user
+                for_user=request.user,
             )
         )
         results_event_count = len(
@@ -130,9 +130,13 @@ class CustomSearchView(TemplateView):
             # aggregate all Page types : CustomPage, TeamPage, Topic etc...
             if result._meta.get_parent_list():
                 if full_classname in settings.PAGES_MODELS:
-                    classname = "CustomPage"
-                    verbose_name = "Page"
-                    app_label = "organization_pages"
+                    if result.login_required:
+                        results.remove(result)
+                        break
+                    else:
+                        classname = "CustomPage"
+                        verbose_name = "Page"
+                        app_label = "organization_pages"
             elif classname == "Playlist":
                 verbose_name = "Media"
             if classname in filter_dict:
@@ -147,7 +151,7 @@ class CustomSearchView(TemplateView):
             'CustomPage': {
                 'count': results_page_count,
                 'verbose_name': _('Page'),
-                'app_label': 'organization_pages'
+                'app_label': 'organization_pages',
             },
             'Article': {
                 'count': results_article_count,
