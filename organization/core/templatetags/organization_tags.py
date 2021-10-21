@@ -652,7 +652,7 @@ def login_url():
 @register.filter(name='ytb_iframe')
 def ytb_iframe(text):
     try:
-        list = re.compile(r'https://youtu.be/([a-zA-Z0-9]*)')
+        list = re.compile(r'https://youtu\.be/([a-zA-Z0-9]*)')
         for _match in list.finditer(text):
             ytb_iframe_template = '<iframe width="100%" height="720" ' +\
                 'src="https://www.youtube.com/embed/{0}" frameborder="0" ' +\
