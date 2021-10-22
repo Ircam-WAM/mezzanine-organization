@@ -197,6 +197,9 @@ class Person(TitledSlugged, MetaData, TimeStamped, AdminThumbMixin, Address, Tea
 
     def save(self, *args, **kwargs):
         self.clean()
+        if self.id and not self.user:
+            old = Person.objects.get(id=self.id)
+            self.user = old.user
         if self.first_name and self.last_name and (not self.title or self.title == '-'):
             self.title = self.first_name + ' ' + self.last_name
         super(Person, self).save(*args, **kwargs)
