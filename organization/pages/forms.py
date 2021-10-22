@@ -27,9 +27,11 @@ import dal_select2_queryset_sequence
 from cartridge.shop.models import Product
 from django import forms
 from mezzanine.conf import settings
-from organization.magazine.models import Article
+from organization.magazine.models import Article, Brief
 from organization.pages.models import CustomPage
-from organization.media.models import Playlist
+from organization.media.models import Playlist, Media
+from organization.network.models import Person
+from organization.projects.models import Project
 from organization.pages.models import DynamicContentHomeSlider,\
     DynamicContentHomeBody, DynamicContentHomeMedia, ExtendedCustomPage,\
     DynamicContentPage, DynamicMultimediaPage
@@ -41,7 +43,13 @@ from organization.projects.models import ProjectPage
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=None,  # defined in widget
+        queryset=autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            CustomPage.objects.all(),
+            Event.objects.all(),
+            Person.objects.all(),
+            Media.objects.all()
+        ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-content-home-slider'
@@ -56,7 +64,16 @@ class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
 class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=None,  # defined in widget
+        queryset=autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            CustomPage.objects.all(),
+            Event.objects.all(),
+            Brief.objects.all(),
+            Media.objects.all(),
+            Person.objects.all(),
+            Project.objects.all(),
+            Playlist.objects.all()
+        ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-content-home-body'
