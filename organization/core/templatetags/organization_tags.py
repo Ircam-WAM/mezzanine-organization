@@ -208,7 +208,6 @@ def slice_ng(qs, indexes):
 @register.filter
 def date_year_higher_than(date, years):
     diff = date - datetime.date.today()
-    print(diff.days)
     return diff.days > years*365
 
 
@@ -527,7 +526,6 @@ def has_title_en(objects_list, strg):
 @register.filter
 def has_id(objects_list, id):
     b = False
-    print("id", id, type(id))
     for o in objects_list:
         if id == o.id:
             b = True
@@ -631,7 +629,6 @@ def has_shop(product):
 @register.filter(name='template_trans')
 def template_trans(text):
     try:
-        print("ugettext(text)", ugettext(text))
         return ugettext(text)
     except Exception:
         return text

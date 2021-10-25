@@ -521,9 +521,11 @@ class Address(models.Model):
             raise ValidationError("Latitude required if specifying longitude.")
 
         if not (self.lat and self.lon) and not self.mappable_location:
-            if self.address:
+            if self.address and self.postal_code and self.city:
                 self.mappable_location = self.address.replace("\n", " ")\
                     .replace('\r', ' ') + ", " + self.postal_code + " " + self.city
+            else:
+                self.mappable_location = None
 
         # location should always override lat/long if set
         if self.mappable_location and not (self.lat and self.lon):

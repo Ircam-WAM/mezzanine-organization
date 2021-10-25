@@ -28,18 +28,26 @@ def actions_to_duplicate():
 
 
 def getUsersListOfSameTeams(user):
-    teams = {x.teams.all() for x in user.person.activities.all()}
-    person_list = []
-    person_model = apps.get_model('organization_network.Person')
-    for team in teams:
-        person_list.extend(
-            person_model.objects.filter(activities__teams__in=team).all().distinct()
-        )
-    user_list = []
-    for person in person_list:
-        if hasattr(person, 'user') and person.user:
-            user_list.append(person.user.id)
-    return user_list
+    try:
+        try:
+            person = user.person
+        except Exception:
+            from organization.network.models import Person
+            person = Person.objects.get(user__id=user.id)
+        teams = {x.teams.all() for x in person.activities.all()}
+        person_list = []
+        person_model = apps.get_model('organization-network.Person')
+        for team in teams:
+            person_list.extend(
+                person_model.objects.filter(activities__teams__in=team).all().distinct()
+            )
+        user_list = []
+        for person in person_list:
+            if hasattr(person, 'user') and person.user:
+                user_list.append(person.user.id)
+        return user_list
+    except Exception:
+        return []
 
 
 def usersTeamsIntersection(userA, userB):
