@@ -31,9 +31,13 @@ from organization.media.models import Media, PlaylistMedia, Playlist
 class PlaylistMediaForm(forms.ModelForm):
 
     media = forms.ModelChoiceField(
-        queryset=Media.objects.all(),
+        queryset=None,
         widget=autocomplete.ModelSelect2(url='media-autocomplete')
     )
+
+    def __init__(self, *args, **kwargs):
+        super(PlaylistMediaForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = Media.objects.all()
 
     class Meta:
         model = PlaylistMedia
@@ -43,15 +47,19 @@ class PlaylistMediaForm(forms.ModelForm):
 class DynamicMultimediaForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Media.objects.all(),
-            Playlist.objects.all()
-        ),
+        queryset=None,
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-multimedia'
         ),
     )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicMultimediaForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Media.objects.all(),
+            Playlist.objects.all()
+        )
 
     class Meta:
         abstract = True

@@ -38,16 +38,20 @@ from organization.media.models import Playlist, Media
 class BriefForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Article.objects.all(),
-            Event.objects.all(),
-            CustomPage.objects.all(),
-        ),
+        queryset=None,
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'object-autocomplete'
         ),
     )
+
+    def __init__(self, *args, **kwargs):
+        super(BriefForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            Event.objects.all(),
+            CustomPage.objects.all(),
+        )
 
     class Meta:
         model = Brief
@@ -57,9 +61,13 @@ class BriefForm(autocomplete.FutureModelForm):
 class ArticlePersonListForm(forms.ModelForm):
 
     person_list_block = forms.ModelChoiceField(
-        queryset=PersonListBlock.objects.all(),
+        queryset=None,
         widget=autocomplete.ModelSelect2(url='person-list-block-autocomplete')
     )
+
+    def __init__(self, *args, **kwargs):
+        super(ArticlePersonListForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = PersonListBlock.objects.all()
 
     class Meta:
         model = ArticlePersonListBlockInline
@@ -69,17 +77,21 @@ class ArticlePersonListForm(forms.ModelForm):
 class DynamicContentArticleForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Article.objects.all(),
-            Event.objects.all(),
-            CustomPage.objects.all(),
-            Person.objects.all()
-        ),
+        queryset=None,
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-content-article'
         ),
     )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentArticleForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            Event.objects.all(),
+            CustomPage.objects.all(),
+            Person.objects.all()
+        )
 
     class Meta:
         model = DynamicContentArticle
@@ -140,16 +152,20 @@ class CategoryFilterForm(forms.Form, TeamOwnableMixin):
 class DynamicContentMagazineContentForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Article.objects.all(),
-            Playlist.objects.all(),
-            Media.objects.all()
-        ),
+        queryset=None,
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-content-magazine'
         ),
     )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentMagazineContentForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            Playlist.objects.all(),
+            Media.objects.all()
+        )
 
     class Meta:
         model = DynamicContentMagazineContent

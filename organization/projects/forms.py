@@ -41,18 +41,22 @@ from extra_views import InlineFormSetView
 class DynamicContentProjectForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Article.objects.all(),
-            CustomPage.objects.all(),
-            Event.objects.all(),
-            Person.objects.all(),
-            Organization.objects.all()
-        ),
+        queryset=None,
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-content-project'
         ),
     )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentProjectForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            CustomPage.objects.all(),
+            Event.objects.all(),
+            Person.objects.all(),
+            Organization.objects.all()
+        )
 
     class Meta:
         model = DynamicContentProject
@@ -191,18 +195,22 @@ class DynamicMultimediaProjectForm(DynamicMultimediaForm):
 class DynamicContentProjectPageForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Article.objects.all(),
-            CustomPage.objects.all(),
-            Event.objects.all(),
-            Person.objects.all(),
-            Organization.objects.all()
-        ),
+        queryset=None,
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-content-project'
         ),
     )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentProjectPageForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            CustomPage.objects.all(),
+            Event.objects.all(),
+            Person.objects.all(),
+            Organization.objects.all()
+        )
 
     class Meta:
         model = DynamicContentProjectPage

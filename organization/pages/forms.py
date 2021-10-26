@@ -43,18 +43,22 @@ from organization.projects.models import ProjectPage
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Article.objects.all(),
-            CustomPage.objects.all(),
-            Event.objects.all(),
-            Person.objects.all(),
-            Media.objects.all()
-        ),
+        queryset=None,
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-content-home-slider'
         ),
     )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentHomeSliderForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            CustomPage.objects.all(),
+            Event.objects.all(),
+            Person.objects.all(),
+            Media.objects.all()
+        )
 
     class Meta:
         model = DynamicContentHomeSlider
@@ -64,7 +68,16 @@ class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
 class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
+        queryset=None,
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-home-body'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentHomeBodyForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
             Article.objects.all(),
             CustomPage.objects.all(),
             Event.objects.all(),
@@ -73,12 +86,7 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
             Person.objects.all(),
             Project.objects.all(),
             Playlist.objects.all()
-        ),
-        required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
-            'dynamic-content-home-body'
-        ),
-    )
+        )
 
     class Meta:
         model = DynamicContentHomeBody
@@ -88,14 +96,18 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
 class DynamicContentHomeMediaForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Playlist.objects.all(),
-        ),
+        queryset=None,
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-content-home-media'
         ),
     )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentHomeMediaForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Playlist.objects.all(),
+        )
 
     class Meta:
         model = DynamicContentHomeMedia
@@ -105,19 +117,23 @@ class DynamicContentHomeMediaForm(autocomplete.FutureModelForm):
 class DynamicContentPageForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
+        queryset=None,
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-page'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentPageForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
             Article.objects.all(),
             CustomPage.objects.all(),
             Event.objects.all(),
             ExtendedCustomPage.objects.all(),
             ProjectPage.objects.all(),
             Product.objects.all()
-        ),
-        required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
-            'dynamic-content-page'
-        ),
-    )
+        )
 
     class Meta:
         model = DynamicContentPage

@@ -15,7 +15,6 @@ def split_events_from_other_related_content(context, related_content):
 
 
 def get_other_sites():
-    # return Site.objects.exclude(pk=settings.SITE_ID)
     return Site.objects.all()
 
 

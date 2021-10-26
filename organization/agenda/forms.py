@@ -36,17 +36,21 @@ from organization.network.models import PersonListBlock, Person
 class DynamicContentEventForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Article.objects.all(),
-            CustomPage.objects.all(),
-            Event.objects.all(),
-            Person.objects.all()
-        ),
+        queryset=None,
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
             'dynamic-content-event'
         ),
     )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentEventForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            CustomPage.objects.all(),
+            Event.objects.all(),
+            Person.objects.all()
+        )
 
     class Meta:
         model = DynamicContentEvent
@@ -62,9 +66,13 @@ class DynamicMultimediaEventForm(DynamicMultimediaForm):
 class EventPersonListForm(forms.ModelForm):
 
     person_list_block = forms.ModelChoiceField(
-        queryset=PersonListBlock.objects.all(),
+        queryset=None,
         widget=autocomplete.ModelSelect2(url='person-list-block-autocomplete')
     )
+
+    def __init__(self, *args, **kwargs):
+        super(EventPersonListForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = PersonListBlock.objects.all()
 
     class Meta:
         model = EventPersonListBlockInline

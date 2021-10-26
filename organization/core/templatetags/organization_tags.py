@@ -661,6 +661,5 @@ def ytb_iframe(text):
             e = _match.end()
             text = text[:s] + ytb_iframe_template + text[e+1:]
         return text
-    except Exception as e:
-        print(e)
+    except Exception:
         return text
