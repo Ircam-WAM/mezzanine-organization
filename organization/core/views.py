@@ -340,7 +340,7 @@ class DynamicReverseMixin(SingleObjectMixin):
         if 'concrete_objects' not in context.keys():
             context['concrete_objects'] = []
         reverse_object = set()
-        keys = [m for m in apps.all_models.keys() if match(r'organization-[a-z]*', m)]
+        keys = [m for m in apps.all_models.keys() if match(r'organization_[a-z]*', m)]
         content_type = ContentType.objects.get_for_model(self.object._meta.model)
         for key in keys:
             for model_str, model_class in apps.all_models[key].items():

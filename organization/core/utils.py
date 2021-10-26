@@ -36,7 +36,7 @@ def getUsersListOfSameTeams(user):
             person = Person.objects.get(user__id=user.id)
         teams = {x.teams.all() for x in person.activities.all()}
         person_list = []
-        person_model = apps.get_model('organization-network.Person')
+        person_model = apps.get_model('organization_network.Person')
         for team in teams:
             person_list.extend(
                 person_model.objects.filter(activities__teams__in=team).all().distinct()

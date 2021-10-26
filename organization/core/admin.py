@@ -29,6 +29,7 @@ from mezzanine.generic.models import ThreadedComment, Keyword
 from mezzanine.conf import settings
 from mezzanine.utils.models import get_user_model
 from organization.core.models import LinkType
+from django.utils.safestring import mark_safe
 
 
 class KeywordAdmin(BaseTranslationModelAdmin):
@@ -92,10 +93,10 @@ if settings.DEBUG:
                     instance.person._meta.model_name
                 ),  args=[instance.person.id]
             )
-            return '<a href="%s" target="_blank">%s</a>' % (
+            return mark_safe('<a href="%s" target="_blank">%s</a>' % (
                 url,
                 instance.person.__str__()
-            )
+            ))
 
         person_link.allow_tags = True
 
