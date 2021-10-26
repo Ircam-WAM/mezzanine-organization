@@ -49,7 +49,7 @@ class PageCustomPersonListForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PageCustomPersonListForm, self).__init__(*args, **kwargs)
-        self.fields['content_object'].queryset = PersonListBlock.objects.all()
+        self.fields['person_list_block'].queryset = PersonListBlock.objects.all()
 
     class Meta:
         model = PageCustomPersonListBlockInline
@@ -64,7 +64,7 @@ class PersonListBlockInlineForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PersonListBlockInlineForm, self).__init__(*args, **kwargs)
-        self.fields['content_object'].queryset = Person.objects.all()
+        self.fields['person'].queryset = Person.objects.all()
 
     class Meta:
         model = PersonListBlockInline
@@ -79,7 +79,7 @@ class OrganizationLinkedListForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(OrganizationLinkedListForm, self).__init__(*args, **kwargs)
-        self.fields['content_object'].queryset = OrganizationLinked.objects.all()
+        self.fields['organization_linked'].queryset = OrganizationLinked.objects.all()
 
     class Meta:
         model = OrganizationLinkedBlockInline
@@ -94,7 +94,7 @@ class OrganizationLinkedForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(OrganizationLinkedForm, self).__init__(*args, **kwargs)
-        self.fields['content_object'].queryset = Organization.objects.all()
+        self.fields['organization'].queryset = Organization.objects.all()
 
     class Meta:
         model = OrganizationLinkedInline

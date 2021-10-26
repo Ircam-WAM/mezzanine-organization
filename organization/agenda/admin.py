@@ -25,6 +25,7 @@ from copy import deepcopy
 
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
+from django.utils.html import mark_safe
 from mezzanine.utils.static import static_lazy as static
 
 from modeltranslation.admin import TranslationTabularInline
@@ -178,8 +179,10 @@ class CustomEventAdmin(EventAdmin):
         event_is_parent = False
         if instance.parent is None:
             # self.allow_tags = True
-            event_is_parent = '<div style="width:100%%; height:100%%;'
-            'background-color:orange;">True</div>'
+            event_is_parent = mark_safe(
+                '<div style="width:100%%; height:100%%;'
+                'background-color:orange;">True</div>'
+            )
         return event_is_parent
 
     search_fields = ['title', 'external_id']

@@ -67,7 +67,7 @@ class ArticlePersonListForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ArticlePersonListForm, self).__init__(*args, **kwargs)
-        self.fields['content_object'].queryset = PersonListBlock.objects.all()
+        self.fields['person_list_block'].queryset = PersonListBlock.objects.all()
 
     class Meta:
         model = ArticlePersonListBlockInline

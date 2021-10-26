@@ -37,7 +37,7 @@ class PlaylistMediaForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PlaylistMediaForm, self).__init__(*args, **kwargs)
-        self.fields['content_object'].queryset = Media.objects.all()
+        self.fields['media'].queryset = Media.objects.all()
 
     class Meta:
         model = PlaylistMedia
