@@ -19,16 +19,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from django.test import TestCase
 from django.test.runner import DiscoverRunner
 
+
 class NoDbTestRunner(DiscoverRunner):
-  """ A test runner to test without database creation """
+    """ A test runner to test without database creation """
 
-  def setup_databases(self, **kwargs):
-    """ Override the database creation defined in parent class """
-    pass
+    def setup_databases(self, **kwargs):
+        """ Override the database creation defined in parent class """
+        pass
 
-  def teardown_databases(self, old_config, **kwargs):
-    """ Override the database teardown defined in parent class """
-    pass
+    def teardown_databases(self, old_config, **kwargs):
+        """ Override the database teardown defined in parent class """
+        pass
