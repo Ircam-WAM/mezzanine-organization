@@ -653,7 +653,7 @@ def ytb_iframe(text):
             r'(<a href=\")?https:\/\/youtu\.be/([a-zA-Z0-9]*)(\">.*<\/a>)?'
         )
         for _match in list.finditer(text):
-            ytb_iframe_template = '<iframe width="100%" height="720" ' +\
+            ytb_iframe_template = '<iframe width="100%" ' +\
                 'src="https://www.youtube.com/embed/{0}" frameborder="0" ' +\
                 'allow="accelerometer; autoplay; clipboard-write; encrypted-media; ' +\
                 'gyroscope; picture-in-picture" ' +\

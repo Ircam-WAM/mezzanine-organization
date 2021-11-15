@@ -189,6 +189,7 @@ class ArticleListView(ListView):
             playlists = Playlist.objects.published().order_by('-created').distinct()
 
             if 'type' in self.kwargs:
+
                 if self.kwargs['type'] == "article":
                     playlists = []
 
