@@ -649,19 +649,24 @@ def login_url():
 @register.filter(name='ytb_iframe')
 def ytb_iframe(text):
     try:
-        list = re.compile(
-            r'(<a href=\")?https:\/\/youtu\.be/([a-zA-Z0-9]*)(\">.*<\/a>)?'
+        regex = re.compile(
+            r'(<a href=\")?https:\/\/youtu\.be/([a-zA-Z0-9]*)(\"[ ]*>.*<\/a>)?'
         )
-        for _match in list.finditer(text):
-            ytb_iframe_template = '<iframe width="100%" ' +\
+        _match = regex.search(text)
+        while _match:
+            ytb_iframe_template = '<div style="position:relative;' +\
+                'padding-top:56.25%;">' +\
+                '<iframe width="100%" ' +\
                 'src="https://www.youtube.com/embed/{0}" frameborder="0" ' +\
                 'allow="accelerometer; autoplay; clipboard-write; encrypted-media; ' +\
                 'gyroscope; picture-in-picture" ' +\
-                'allowfullscreen></iframe>'
+                'allowfullscreen style="position:absolute;top:0;' +\
+                'left:0;width:100%;height:100%;"></iframe></div>'
             ytb_iframe_template = ytb_iframe_template.format(_match.group(2))
             s = _match.start()
             e = _match.end()
             text = text[:s] + ytb_iframe_template + text[e:]
+            _match = regex.search(text)
         return text
     except Exception:
         return text
