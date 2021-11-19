@@ -25,7 +25,8 @@ from django.conf.urls import url
 
 from mezzanine.conf import settings
 
-from organization.core.views import CustomSearchView, UserProjectsView, UserProducerView
+from organization.core.views import CustomSearchView, UserProjectsView,\
+     UserProducerView
 
 LOGIN_URL = settings.LOGIN_URL
 _slash = "/" if settings.APPEND_SLASH else ""

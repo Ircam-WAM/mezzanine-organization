@@ -22,8 +22,10 @@
 from mezzanine.conf import settings
 from django.views.generic.base import RedirectView
 from allauth_ircam.views import serverLogout
+from organization.core.views import redirect_url
 
 from django.conf.urls import include, url
+from django.urls import path
 from django.contrib import admin
 
 admin.autodiscover()
@@ -36,6 +38,11 @@ if "drum.links" in settings.INSTALLED_APPS:
     ]
 
 urlpatterns += [
+    path(
+        "redirect<path:slug>",
+        redirect_url,
+        name="redirect_url",
+    ),
     url("^", include('organization.core.urls')),
     url("^", include('organization.pages.urls')),
     url("^", include('organization.magazine.urls')),

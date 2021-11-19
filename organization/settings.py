@@ -282,6 +282,7 @@ INSTALLED_APPS = [
     "organization.agenda",
     "organization.shop",
     "organization.job",
+    "organization.utils",
     # "sorl.thumbnail", # required for thumbnail support
     "django_instagram",
     'hijack',

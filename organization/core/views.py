@@ -482,3 +482,7 @@ class RedirectContentView(SingleObjectMixin):
             if url:
                 return redirect(url[0])
         return response
+
+
+def redirect_url(request, slug):
+    return redirect(slug)
