@@ -232,6 +232,7 @@ class PageRelatedTitle(RelatedTitle):
         choices=DYNAMIC_CONTENT_DISPLAY_MODES,
         default='0'
     )
+    in_navbar = models.BooleanField(_('in navbar ?'), default=False)
 
     class Meta:
         verbose_name = _("related title")
