@@ -232,6 +232,10 @@ class PageRelatedTitle(RelatedTitle):
         choices=DYNAMIC_CONTENT_DISPLAY_MODES,
         default='0'
     )
+    as_page_title = models.BooleanField(
+        _('Afficher le titre comme un titre de page'),
+        default=False
+    )
     in_navbar = models.BooleanField(_('in navbar ?'), default=False)
 
     class Meta:
