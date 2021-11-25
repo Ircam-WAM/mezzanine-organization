@@ -77,6 +77,8 @@ class CustomPage(Page, SubTitled, RichText):
 
     display_content = models.BooleanField(_('display content'), default=True)
 
+    display_navbar = models.BooleanField(default=True)
+
     class Meta:
         verbose_name = 'custom page'
         permissions = TeamOwnable.Meta.permissions

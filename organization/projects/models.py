@@ -369,6 +369,8 @@ class ProjectTopicPage(Page, SubTitled):
         on_delete=models.SET_NULL
     )
 
+    display_navbar = models.BooleanField(default=True)
+
     class Meta:
         verbose_name = _('project topic page')
         verbose_name_plural = _("project topic pages")
@@ -1010,6 +1012,7 @@ class ProjectPage(Displayable, RichText, TeamOwnable):
         blank=True,
         on_delete=models.SET_NULL
     )
+    display_navbar = models.BooleanField(default=True)
 
     @property
     def is_archive(self):

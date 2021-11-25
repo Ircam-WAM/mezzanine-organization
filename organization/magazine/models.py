@@ -169,6 +169,8 @@ class Brief(Displayable, RichText, TeamOwnable):
 class Topic(Page, RichText):
     """Topic for magazine menu"""
 
+    display_navbar = models.BooleanField(default=True)
+
     class Meta:
         verbose_name = _('topic')
 
