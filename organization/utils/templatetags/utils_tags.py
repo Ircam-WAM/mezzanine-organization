@@ -11,3 +11,8 @@ def is_list(value):
 @register.filter(name='is_dict')
 def is_dict(value):
     return isinstance(value, dict)
+
+
+@register.filter(name='before_comma')
+def split(value):
+    return value.split(',')[0]
