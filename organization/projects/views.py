@@ -50,6 +50,8 @@ from organization.projects.forms import ProjectForm, TopicFilterForm, TypeFilter
 from organization.projects.models import Project, ProjectTopic, ProjectDemo,\
     ProjectBlogPage, ProjectPage, ProjectCall, ProjectResidency
 from mezzanine.utils.views import paginate
+from django.utils import translation
+from django.utils.text import slugify
 
 
 EXCLUDED_MODELS = ()
@@ -158,6 +160,51 @@ class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
         if not obj.published():
             raise Http404()
         return obj
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectPageView, self).get_context_data()
+        page = None
+        if self.project.topic and self.project.topic.pages.all().exists():
+            page = self.project.topic.pages.all()[0]
+        blocks = self.object.blocks.all().order_by("_order")
+        submenu = []
+        for block in blocks:
+            if block.content and block.title:
+                with translation.override('fr'):
+                    href = slugify(block.title)
+                submenu.append(
+                    {
+                        "href": href,
+                        "text": block.title,
+                        "extra_class": "slow-move"
+                    }
+                )
+        context["menu"] = []
+        if page and page.parent:
+            context["menu"] += [
+                {
+                    "href": page.parent.get_absolute_url(),
+                    "text": page.parent.title,
+                    "extra_class": ""
+                }
+            ]
+        if page:
+            context["menu"] += [
+                {
+                    "href": page.get_absolute_url(),
+                    "text": page.title,
+                    "extra_class": ""
+                }
+            ]
+        context["menu"] += [
+            {
+                "href": '#',
+                "text": self.project.title,
+                "extra_class": "active"
+            },
+            submenu
+        ]
+        return context
 
 
 class ProjectCallMixin(object):

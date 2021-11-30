@@ -545,7 +545,7 @@ class TimesheetXLS(object):
 
 def set_timesheets_validation_date(timesheets):
     """ Admin action to set validation date for selected timesheets """
-    for timesheet in timesheets :
+    for timesheet in timesheets:
         if not timesheet.validation:
             timesheet.validation = timezone.now()
             timesheet.save()
