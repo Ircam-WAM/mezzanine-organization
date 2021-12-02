@@ -596,6 +596,7 @@ class DepartmentPage(Page, SubTitled, RichText):
         blank=True
     )
     display_navbar = models.BooleanField(default=True)
+    displayed_in_navbars = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = _('department page')
@@ -703,6 +704,7 @@ class TeamPage(Page, SubTitled, RichText):
         ]
     )
     display_navbar = models.BooleanField(default=True)
+    displayed_in_navbars = models.BooleanField(default=True)
 
     class Meta():
         verbose_name = _('team page')
