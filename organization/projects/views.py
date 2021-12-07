@@ -179,6 +179,14 @@ class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
                         "extra_class": "slow-move"
                     }
                 )
+        if self.object.project.organizations.all().exists():
+            submenu.append(
+                {
+                    "href": "partenaires",
+                    "text": _("Partners"),
+                    "extra_class": "slow-move"
+                }
+            )
         context["menu"] = []
         if page and page.parent:
             context["menu"] += [
