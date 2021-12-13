@@ -168,6 +168,14 @@ class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
             page = self.project.topic.pages.all()[0]
         blocks = self.object.blocks.all().order_by("_order")
         submenu = []
+        if self.project.type == 'external':
+            submenu.append(
+                {
+                    "href": "details",
+                    "text": _("Project details"),
+                    "extra_class": "slow-move"
+                }
+            )
         for block in blocks:
             if block.content and block.title:
                 with translation.override('fr'):
