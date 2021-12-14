@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2016-2017 Ircam
-# Copyright (c) 2016-2017 Guillaume Pellerin
-# Copyright (c) 2016-2017 Emilie Zawadzki
+# Copyright (c) 2016-2021 Ircam
+# Copyright (c) 2016-2021 Guillaume Pellerin
+# Copyright (c) 2021 Clement Gérard
+# Copyright (c) 2020 Denis Rouiller
+# Copyright (c) 2016-2020 Emilie Zawadzki
 
 # This file is part of mezzanine-organization.
 
