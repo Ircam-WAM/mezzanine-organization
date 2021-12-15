@@ -134,7 +134,7 @@ class PersonDirectoryView(ListView):
 
     def get_queryset(self):
         self.queryset = super(PersonDirectoryView, self).get_queryset()
-        if not self.kwargs['letter']:
+        if hasattr(self.kwargs, 'letter') and not self.kwargs['letter']:
             self.kwargs['letter'] = "a"
         self.queryset = self.queryset.filter(
             Q(
