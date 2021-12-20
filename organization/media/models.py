@@ -21,7 +21,7 @@
 
 from __future__ import unicode_literals
 
-from pyquery import PyQuery as pq
+from django.core.exceptions import ValidationError
 
 from django.urls import reverse
 
@@ -105,23 +105,29 @@ class Media(Displayable, TeamOwnable):
                     return 'audio'
 
     def save(self, *args, **kwargs):
-        q = pq(self.get_html())
-        sources = q('source')
-        video = q('video')
 
-        if len(video):
-            if 'poster' in video[0].attrib.keys():
-                self.poster_url = 'https:' + video[0].attrib['poster']
+        try:
+            print(settings.MEDIA_BASE_URL.replace("embed/media/", "") +
+                'get-sources-and-poster/' +
+                self.external_id)
+            result = requests.get(
+                settings.MEDIA_BASE_URL.replace("embed/media/", "") +
+                'get-sources-and-poster/' +
+                self.external_id
+            ).json()
+        except Exception:
+            raise ValidationError("Error during connection with medias.ircam.fr")
+
+        self.poster_url = result["poster"]
 
         super(Media, self).save(*args, **kwargs)
 
-        for source in sources:
-            mime_type = source.attrib['type']
+        for source in result["profiles"]:
             transcoded, c = MediaTranscoded.objects.get_or_create(
                 media=self,
-                mime_type=mime_type
+                mime_type=source["mimetype"]
             )
-            transcoded.url = 'https:' + source.attrib['src']
+            transcoded.url = source["url"]
             transcoded.save()
 
 
