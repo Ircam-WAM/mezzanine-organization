@@ -586,13 +586,24 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):  # pragma: no cov
         percent = 0
         for data_k, data_v in formset.data.items():
             if match(r'form-\d+-percentage', data_k):
-                percent += int(data_v)
+                if not data_v:
+                    formset.errors.append(
+                        {
+                            'percentage': [
+                                'The percentage cannot be null.'
+                            ]
+                        }
+                    )
+                    redirect = super(TimeSheetCreateView, self).formset_invalid(formset)
+                    is_valid = False
+                else:
+                    percent += int(data_v)
 
         if percent > 100:
             formset.errors.append(
                 {
                     'percentage': [
-                        'The total percentage worked do not have to exceed 100 %'
+                        'The total percentage worked do not have to exceed 100%.'
                     ]
                 }
             )

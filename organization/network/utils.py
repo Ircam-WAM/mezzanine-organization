@@ -613,7 +613,9 @@ def get_users_of_team(team):
     person_activity_model = apps.get_model('organization_network.PersonActivity')
     activities = person_activity_model.objects.filter(teams=team)
     for activity in activities:
-        users.add(activity.person.user)
+        if activity.person:
+            if activity.person.user:
+                users.add(activity.person.user)
     return users
 
 

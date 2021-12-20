@@ -119,9 +119,11 @@ def get_pages_in_menu(menu_id):
 @register.filter
 def get_type(objects, type):
     if objects:
-        objs = objects.filter(type=type)
-        if objs:
-            return objs
+        objs = objects.all()
+        if hasattr(objs[0], 'type'):
+            return objs.filter(type=type)
+        elif objs:
+            return objs.all()
     return None
 
 
