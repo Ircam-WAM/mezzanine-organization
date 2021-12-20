@@ -107,9 +107,6 @@ class Media(Displayable, TeamOwnable):
     def save(self, *args, **kwargs):
 
         try:
-            print(settings.MEDIA_BASE_URL.replace("embed/media/", "") +
-                'get-sources-and-poster/' +
-                self.external_id)
             result = requests.get(
                 settings.MEDIA_BASE_URL.replace("embed/media/", "") +
                 'get-sources-and-poster/' +
