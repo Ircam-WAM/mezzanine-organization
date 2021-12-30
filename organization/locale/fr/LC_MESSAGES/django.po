@@ -726,6 +726,18 @@ msgstr ""
 #~ msgid "Candidacies"
 #~ msgstr "Candidatures"
 
+#~ msgid "Candidacies: "
+#~ msgstr "Candidaturesnbsp;: "
+
+#~ msgid "Candidacies:"
+#~ msgstr "Candidaturesnbsp;:"
+
+#~msgid "Application dates:"
+#~msgstr "Candidatures&nbsp;:"
+
+#~msgid "Application dates: "
+#~msgstr "Candidatures&nbsp;: "
+
 #~ msgid "Pages"
 #~ msgstr "Pages"
 

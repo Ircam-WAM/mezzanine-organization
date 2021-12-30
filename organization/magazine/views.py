@@ -38,13 +38,17 @@ from organization.network.views import TeamOwnableMixin
 from organization.pages.models import CustomPage
 from organization.media.models import Playlist, Media
 from organization.core.views import SlugMixin, autocomplete_result_formatting, \
-    DynamicContentMixin, FilteredListView, RedirectContentView, DynamicReverseMixin
+    DynamicContentMixin, FilteredListView, RedirectContentView  # , DynamicReverseMixin
 from itertools import chain
 from .forms import CategoryFilterForm
 
 
-class ArticleDetailView(RedirectContentView, SlugMixin, DetailView,
-                        DynamicContentMixin, DynamicReverseMixin):
+class ArticleDetailView(
+    RedirectContentView,
+    SlugMixin,
+    DetailView,
+    DynamicContentMixin
+):
 
     model = Article
     template_name = 'magazine/article/article_detail.html'

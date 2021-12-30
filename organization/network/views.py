@@ -45,7 +45,7 @@ from organization.network.models import Person, PersonListBlock, Organization,\
     OrganizationLinked, OrganizationRole, ProducerMixin, PersonActivityTimeSheet,\
     PersonActivity, Team
 from organization.core.views import SlugMixin, DynamicContentMixin,\
-    DynamicReverseMixin, autocomplete_result_formatting
+    autocomplete_result_formatting  # , DynamicReverseMixin
 from datetime import date, timedelta
 from organization.network.forms import ProducerForm, ProducerDataInline,\
     PersonActivityTimeSheetForm
@@ -255,7 +255,7 @@ class PersonDetailView(
     SlugMixin,
     DynamicContentMixin,
     DetailView,
-    DynamicReverseMixin
+    # DynamicReverseMixin
 ):
 
     model = Person
@@ -840,8 +840,8 @@ class PersonDashboardView(
     PersonMixin,
     SlugMixin,
     DynamicContentMixin,
-    DetailView,
-    DynamicReverseMixin
+    DetailView
+    # DynamicReverseMixin
 ):
 
     model = Person
