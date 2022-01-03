@@ -37,7 +37,7 @@ urlpatterns = [
         name='event_detail'
     ),
     url(
-        "^%s/" % settings.EVENT_SLUG,
+        "^%s%s" % (settings.EVENT_SLUG, _slash),
         include("mezzanine_agenda.urls")
     ),
     url(
