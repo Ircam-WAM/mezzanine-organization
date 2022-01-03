@@ -115,6 +115,8 @@ class Media(Displayable, TeamOwnable):
         except Exception:
             raise ValidationError("Error during connection with medias.ircam.fr")
 
+        if result["poster"] is None:
+            result["poster"] = ''
         self.poster_url = result["poster"]
 
         super(Media, self).save(*args, **kwargs)
