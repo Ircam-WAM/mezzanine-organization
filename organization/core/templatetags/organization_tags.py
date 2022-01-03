@@ -194,13 +194,19 @@ def slice_ng(qs, indexes):
             list.append(obj)
         index_split = indexes.split(':')
         index_1 = int(index_split[0])
-        index_2 = 0
+        index_2 = False
         if len(index_split) > 1:
             index_2 = int(index_split[1])
         if index_1 >= 0 and index_2:
             return list[index_1:index_2]
         elif index_1 >= 0 & index_1 < len(list):
             return [list[index_1]]
+        elif index_1 < 0 and index_2 is not False and index_2 <= 0:
+            return list[len(list) + index_1:len(list) + index_2]
+        elif index_1 < 0 and index_2:
+            return list[len(list) + index_1:index_2]
+        elif index_1 < 0:
+            return [list[len(list) + index_1]]
         else:
             return list
     else:
