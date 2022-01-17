@@ -51,8 +51,7 @@ setup(name='mezzanine-organization',
         "django-countries==5.3",
         # v0.13 is not compatible with django 1.11
         "django-querysetsequence <= 0.12",
-        # v3.5.0 has breaking change
-        "django-autocomplete-light==3.4.1",
+        "django-autocomplete-light==3.8.2",
         "mezzanine",
         "xlrd==1.0.0",
         "ipython",
