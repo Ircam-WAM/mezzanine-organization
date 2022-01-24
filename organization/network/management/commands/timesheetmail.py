@@ -31,8 +31,8 @@ from django.template.loader import get_template
 from django.core.mail import EmailMessage
 from django.core.management.base import BaseCommand
 from django.db.models import Q
-from organization.network.models import Person, ProjectActivity
-from organization.projects.models import PersonActivityTimeSheet
+from organization.network.models import Person, ProjectActivity,\
+     PersonActivityTimeSheet
 
 
 checkboxes = {'True': 'X', 'False': '-'}
