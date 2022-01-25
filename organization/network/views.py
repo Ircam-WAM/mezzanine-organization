@@ -472,11 +472,12 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView):  # pragma: no cov
     fields = '__all__'
     form_class = PersonActivityTimeSheetForm
     formset = ""
-    extra = 0
     success_url = reverse_lazy("organization_network-timesheet-list-view")
     last_day_in_month = date.today().replace(day=1) - timedelta(days=1)
     curr_month = last_day_in_month.month
     curr_year = last_day_in_month.year
+    factory_kwargs = {'extra': 0, 'max_num': None,
+                      'can_order': False, 'can_delete': False}
 
     def get(self, request, *args, **kwargs):
         # the user can create a timesheet only month-1..n
