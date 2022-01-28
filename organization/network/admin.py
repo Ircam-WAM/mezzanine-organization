@@ -500,7 +500,10 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
     form = PersonActivityTimeSheetAdminForm
 
     def person(self, instance):
-        return instance.activity.person
+        if instance.activity:
+            if instance.activity.person:
+                return instance.activity.person
+        return
 
     def work_package(self, instance):
         wk_list = [str(wk.number) for wk in instance.work_packages.all()]
