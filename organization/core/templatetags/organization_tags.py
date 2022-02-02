@@ -661,7 +661,6 @@ def ytb_iframe(text):
             r'iframe:https:\/\/youtu\.be/([-a-zA-Z0-9]*)'
         )
         _match = regex.search(text)
-        print(_match)
         while _match:
             ytb_iframe_template = '<div style="position:relative;' +\
                 'padding-top:56.25%;">' +\
