@@ -656,10 +656,9 @@ def login_url():
 
 @register.filter(name='ytb_iframe')
 def ytb_iframe(text):
-    return text
     try:
         regex = re.compile(
-            r'(<a href=\")?https:\/\/youtu\.be/([a-zA-Z0-9]*)(\"[ ]*>.*<\/a>)?'
+            r'iframe:https:\/\/youtu\.be/([a-zA-Z0-9]*)'
         )
         _match = regex.search(text)
         while _match:
