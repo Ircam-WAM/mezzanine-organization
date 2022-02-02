@@ -31,54 +31,54 @@ msgstr ""
 #~ msgid "Seasons"
 #~ msgstr "personnes"
 
-#~ msgid "event"
-#~ msgstr "événement"
+msgid "event"
+msgstr "événement"
 
 #, fuzzy
 #~| msgid "images"
 #~ msgid "image"
 #~ msgstr "images"
 
-#~ msgid "images"
-#~ msgstr "images"
+msgid "images"
+msgstr "images"
 
-#~ msgid "department"
-#~ msgstr "département"
+msgid "department"
+msgstr "département"
 
-#~ msgid "departments"
-#~ msgstr "départements"
+msgid "departments"
+msgstr "départements"
 
 #, fuzzy
 #~| msgid "Person List"
 #~ msgid "Person List Block"
 #~ msgstr "Liste de personnes"
 
-#~ msgid "Person List"
-#~ msgstr "Liste de personnes"
+msgid "Person List"
+msgstr "Liste de personnes"
 
-#~ msgid "link"
-#~ msgstr "lien"
+msgid "link"
+msgstr "lien"
 
-#~ msgid "links"
-#~ msgstr "liens"
+msgid "links"
+msgstr "liens"
 
-#~ msgid "playlist"
-#~ msgstr "playlist"
+msgid "playlist"
+msgstr "playlist"
 
-#~ msgid "playlists"
-#~ msgstr "playlists"
+msgid "playlists"
+msgstr "playlists"
 
-#~ msgid "period"
-#~ msgstr "période"
+msgid "period"
+msgstr "période"
 
-#~ msgid "periods"
-#~ msgstr "périodes"
+msgid "periods"
+msgstr "périodes"
 
-#~ msgid "public type"
-#~ msgstr "type public"
+msgid "public type"
+msgstr "type public"
 
-#~ msgid "public types"
-#~ msgstr "types publics"
+msgid "public types"
+msgstr "types publics"
 
 #, fuzzy
 #~| msgid "training type"
@@ -90,11 +90,11 @@ msgstr ""
 #~ msgid "training levels"
 #~ msgstr "type de formation"
 
-#~ msgid "language"
-#~ msgstr "langue"
+msgid "language"
+msgstr "langue"
 
-#~ msgid "level"
-#~ msgstr "niveau"
+msgid "level"
+msgstr "niveau"
 
 #, fuzzy
 #~| msgid "training type"
@@ -106,123 +106,123 @@ msgstr ""
 #~ msgid "trainings"
 #~ msgstr "type de formation"
 
-#~ msgid "related title"
-#~ msgstr "titre de contenu lié"
+msgid "related title"
+msgstr "titre de contenu lié"
 
 #, fuzzy
 #~| msgid "brief description"
 #~ msgid "event_price_description"
 #~ msgstr "Brève description"
 
-#~ msgid "description"
-#~ msgstr "description"
+msgid "description"
+msgstr "description"
 
-#~ msgid "left"
-#~ msgstr "gauche"
+msgid "left"
+msgstr "gauche"
 
-#~ msgid "center"
-#~ msgstr "centre"
+msgid "center"
+msgstr "centre"
 
-#~ msgid "right"
-#~ msgstr "droite"
+msgid "right"
+msgstr "droite"
 
-#~ msgid "page - featured"
-#~ msgstr "page- à la une"
+msgid "page - featured"
+msgstr "page- à la une"
 
-#~ msgid "name"
-#~ msgstr "nom"
+msgid "name"
+msgstr "nom"
 
-#~ msgid "title"
-#~ msgstr "titre"
+msgid "title"
+msgstr "titre"
 
-#~ msgid "sub title"
-#~ msgstr "sous-titre"
+msgid "sub title"
+msgstr "sous-titre"
 
-#~ msgid "custom category"
-#~ msgstr "catégorie personnalisé"
+msgid "custom category"
+msgstr "catégorie personnalisé"
 
-#~ msgid "credits"
-#~ msgstr "crédits"
+msgid "credits"
+msgstr "crédits"
 
-#~ msgid "type"
-#~ msgstr "type"
+msgid "type"
+msgstr "type"
 
-#~ msgid "document"
-#~ msgstr "document"
+msgid "document"
+msgstr "document"
 
-#~ msgid "content type"
-#~ msgstr "type de contenu"
+msgid "content type"
+msgstr "type de contenu"
 
-#~ msgid "related object"
-#~ msgstr "contenu lié"
+msgid "related object"
+msgstr "contenu lié"
 
-#~ msgid "link type"
-#~ msgstr "type de lien"
+msgid "link type"
+msgstr "type de lien"
 
-#~ msgid "end date"
-#~ msgstr "date de fin"
+msgid "end date"
+msgstr "date de fin"
 
-#~ msgid "begin date"
-#~ msgstr "date de début"
+msgid "begin date"
+msgstr "date de début"
 
-#~ msgid "creation date"
-#~ msgstr "date de création"
+msgid "creation date"
+msgstr "date de création"
 
-#~ msgid "address"
-#~ msgstr "adresse"
+msgid "address"
+msgstr "adresse"
 
-#~ msgid "postal code"
-#~ msgstr "code postal"
+msgid "postal code"
+msgstr "code postal"
 
-#~ msgid "country"
-#~ msgstr "pays"
+msgid "country"
+msgstr "pays"
 
-#~ msgid "through"
-#~ msgstr "au"
+msgid "through"
+msgstr "au"
 
-#~ msgid "and"
-#~ msgstr "et"
+msgid "and"
+msgstr "et"
 
-#~ msgid "Everything"
-#~ msgstr "Tout"
+msgid "Everything"
+msgstr "Tout"
 
-#~ msgid "Page"
-#~ msgstr "Page"
+msgid "Page"
+msgstr "Page"
 
-#~ msgid "Article"
-#~ msgstr "Article"
+msgid "Article"
+msgstr "Article"
 
-#~ msgid "Media"
-#~ msgstr "Média"
+msgid "Media"
+msgstr "Média"
 
-#~ msgid "Project"
-#~ msgstr "Projet"
+msgid "Project"
+msgstr "Projet"
 
-#~ msgid "Event"
-#~ msgstr "Événement"
+msgid "Event"
+msgstr "Événement"
 
 #, fuzzy
 #~| msgid "name"
 #~ msgid "last name"
 #~ msgstr "nom"
 
-#~ msgid "curriculum vitae"
-#~ msgstr "curriculum vitae"
+msgid "curriculum vitae"
+msgstr "curriculum vitae"
 
-#~ msgid "cover letter"
-#~ msgstr "lettre de motivation"
+msgid "cover letter"
+msgstr "lettre de motivation"
 
-#~ msgid "Internship"
-#~ msgstr "Stage"
+msgid "Internship"
+msgstr "Stage"
 
-#~ msgid "Permanent position"
-#~ msgstr "CDI"
+msgid "Permanent position"
+msgstr "CDI"
 
-#~ msgid "Short term contract"
-#~ msgstr "CDD"
+msgid "Short term contract"
+msgstr "CDD"
 
-#~ msgid "View"
-#~ msgstr "Voir"
+msgid "View"
+msgstr "Voir"
 
 #, fuzzy
 #~| msgid "external ID"
@@ -234,81 +234,81 @@ msgstr ""
 #~ msgid "candidacy"
 #~ msgstr "Candidatures"
 
-#~ msgid "candidacies"
-#~ msgstr "Candidatures"
+msgid "candidacies"
+msgstr "Candidatures"
 
-#~ msgid "topics"
-#~ msgstr "rubriques"
+msgid "topics"
+msgstr "rubriques"
 
-#~ msgid "article"
-#~ msgstr "article"
+msgid "article"
+msgstr "article"
 
-#~ msgid "brief"
-#~ msgstr "brève"
+msgid "brief"
+msgstr "brève"
 
-#~ msgid "topic"
-#~ msgstr "rubrique"
+msgid "topic"
+msgstr "rubrique"
 
-#~ msgid "magazine"
-#~ msgstr "Magazine"
+msgid "magazine"
+msgstr "Magazine"
 
-#~ msgid "magazines"
-#~ msgstr "Magazine"
+msgid "magazines"
+msgstr "Magazine"
 
-#~ msgid "Laboratory News"
-#~ msgstr "Actualités du Labo"
+msgid "Laboratory News"
+msgstr "Actualités du Labo"
 
-#~ msgid "Team News"
-#~ msgstr "Actualités de l'équipe"
+msgid "Team News"
+msgstr "Actualités de l'équipe"
 
-#~ msgid "video"
-#~ msgstr "video"
+msgid "video"
+msgstr "video"
 
-#~ msgid "media id"
-#~ msgstr "media id"
+msgid "media id"
+msgstr "media id"
 
-#~ msgid "category"
-#~ msgstr "catégorie"
+msgid "category"
+msgstr "catégorie"
 
-#~ msgid "media"
-#~ msgstr "Mémediadia"
+msgid "media"
+msgstr "Mémediadia"
 
-#~ msgid "mime type"
-#~ msgstr "type mime"
+msgid "mime type"
+msgstr "type mime"
 
-#~ msgid "media category"
-#~ msgstr "catégorie de media"
+msgid "media category"
+msgstr "catégorie de media"
 
-#~ msgid "media categories"
-#~ msgstr "Catégories de media"
+msgid "media categories"
+msgstr "Catégories de media"
 
 #, fuzzy
 #~| msgid "Medias"
 #~ msgid "medias"
 #~ msgstr "Medias"
 
-#~ msgid "Event Location"
-#~ msgstr "Lieux"
+msgid "Event Location"
+msgstr "Lieux"
 
-#~ msgid "Mr"
-#~ msgstr "Mr"
+msgid "Mr"
+msgstr "Mr"
 
-#~ msgid "Ms"
-#~ msgstr "Mme"
+msgid "Ms"
+msgstr "Mme"
 
-#~ msgid "male"
-#~ msgstr "homme"
+msgid "male"
+msgstr "homme"
 
-#~ msgid "female"
-#~ msgstr "femme"
+msgid "female"
+msgstr "femme"
 
 #, fuzzy
 #~| msgid "circles"
 #~ msgid "circle"
 #~ msgstr "cercles"
 
-#~ msgid "circles"
-#~ msgstr "cercles"
+msgid "circles"
+msgstr "cercles"
 
 #, fuzzy
 #~| msgid "archive"
@@ -325,51 +325,51 @@ msgstr ""
 #~ msgid "in process"
 #~ msgstr "en cours"
 
-#~ msgid "organization type"
-#~ msgstr "type d'organisation"
+msgid "organization type"
+msgstr "type d'organisation"
 
 #, fuzzy
 #~| msgid "organization"
 #~ msgid "organization role"
 #~ msgstr "organisation"
 
-#~ msgid "opening times"
-#~ msgstr "horaires d'ouverture"
+msgid "opening times"
+msgstr "horaires d'ouverture"
 
-#~ msgid "subway access"
-#~ msgstr "accès en transports"
+msgid "subway access"
+msgstr "accès en transports"
 
-#~ msgid "organization"
-#~ msgstr "organisation"
+msgid "organization"
+msgstr "organisation"
 
-#~ msgid "gender"
-#~ msgstr "genre"
+msgid "gender"
+msgstr "genre"
 
-#~ msgid "register ID"
-#~ msgstr "matricule"
+msgid "register ID"
+msgstr "matricule"
 
-#~ msgid "birthday"
-#~ msgstr "déte de naissance"
+msgid "birthday"
+msgstr "déte de naissance"
 
-#~ msgid "biography"
-#~ msgstr "biographie"
+msgid "biography"
+msgstr "biographie"
 
-#~ msgid "role"
-#~ msgstr "rôle"
+msgid "role"
+msgstr "rôle"
 
-#~ msgid "external ID"
-#~ msgstr "ID externe"
+msgid "external ID"
+msgstr "ID externe"
 
-#~ msgid "Is Referenced"
-#~ msgstr "À référencer"
+msgid "Is Referenced"
+msgstr "À référencer"
 
-#~ msgid "Determine if the Person has to be referenced on search"
-#~ msgstr ""
-#~ "Détermine si cette personne remonte dans les résultats de recherche des "
-#~ "moteurs (Google, Bing, DuckDuckGo etc...)"
+msgid "Determine if the Person has to be referenced on search"
+msgstr ""
+"Détermine si cette personne remonte dans les résultats de recherche des "
+"moteurs (Google, Bing, DuckDuckGo etc...)"
 
-#~ msgid "person"
-#~ msgstr "personne"
+msgid "person"
+msgstr "personne"
 
 #, fuzzy
 #~| msgid "organizations"
@@ -386,24 +386,24 @@ msgstr ""
 #~ msgid "organization linked"
 #~ msgstr "type d'organisation"
 
-#~ msgid "Organization"
-#~ msgstr "Organisation"
+msgid "Organization"
+msgstr "Organisation"
 
 #, fuzzy
 #~| msgid "Event Location"
 #~ msgid "Event location"
 #~ msgstr "Lieux"
 
-#~ msgid "department page"
-#~ msgstr "page de département"
+msgid "department page"
+msgstr "page de département"
 
 #, fuzzy
 #~| msgid "department page"
 #~ msgid "parent team"
 #~ msgstr "page de département"
 
-#~ msgid "team"
-#~ msgstr "équipe"
+msgid "team"
+msgstr "équipe"
 
 #, fuzzy
 #~| msgid "brief description"
@@ -415,8 +415,8 @@ msgstr ""
 #~ msgid "Creation Date"
 #~ msgstr "date de création"
 
-#~ msgid "team page"
-#~ msgstr "page d'équipe"
+msgid "team page"
+msgstr "page d'équipe"
 
 #, fuzzy
 #~| msgid "brief description"
@@ -428,79 +428,79 @@ msgstr ""
 #~ msgid "producer description"
 #~ msgstr "Brève description"
 
-#~ msgid "Person"
-#~ msgstr "Personne"
+msgid "Person"
+msgstr "Personne"
 
-#~ msgid "display on team page"
-#~ msgstr "afficher sur la page d'équipe"
+msgid "display on team page"
+msgstr "afficher sur la page d'équipe"
 
-#~ msgid "framework"
-#~ msgstr "cadre"
+msgid "framework"
+msgstr "cadre"
 
-#~ msgid "frameworks"
-#~ msgstr "corps"
+msgid "frameworks"
+msgstr "corps"
 
-#~ msgid "function"
-#~ msgstr "fonction"
+msgid "function"
+msgstr "fonction"
 
-#~ msgid "functions"
-#~ msgstr "fonctions"
+msgid "functions"
+msgstr "fonctions"
 
-#~ msgid "training type"
-#~ msgstr "type de formation"
+msgid "training type"
+msgstr "type de formation"
 
-#~ msgid "training types"
-#~ msgstr "type de formation"
+msgid "training types"
+msgstr "type de formation"
 
 #, fuzzy
 #~| msgid "training topics"
 #~ msgid "training topic"
 #~ msgstr "sujets de formation"
 
-#~ msgid "training topics"
-#~ msgstr "sujets de formation"
+msgid "training topics"
+msgstr "sujets de formation"
 
 #, fuzzy
 #~| msgid "training specialities"
 #~ msgid "training speciality"
 #~ msgstr "spécialités de formation"
 
-#~ msgid "training specialities"
-#~ msgstr "spécialités de formation"
+msgid "training specialities"
+msgstr "spécialités de formation"
 
-#~ msgid "teams"
-#~ msgstr "équipes"
+msgid "teams"
+msgstr "équipes"
 
-#~ msgid "R&D program"
-#~ msgstr "Programme"
+msgid "R&D program"
+msgstr "Programme"
 
-#~ msgid "PhD title"
-#~ msgstr "titre de docteur"
+msgid "PhD title"
+msgstr "titre de docteur"
 
 #, fuzzy
 #~| msgid "training type"
 #~ msgid "Training title"
 #~ msgstr "type de formation"
 
-#~ msgid "add date"
-#~ msgstr "ajouter une date"
+msgid "add date"
+msgstr "ajouter une date"
 
 #, fuzzy
 #~| msgid "creation date"
 #~ msgid "modification date"
 #~ msgstr "date de création"
 
-#~ msgid "comments"
-#~ msgstr "commentaires"
+msgid "comments"
+msgstr "commentaires"
 
-#~ msgid "activity"
-#~ msgstr "activité"
+msgid "activity"
+msgstr "activité"
 
-#~ msgid "activities"
-#~ msgstr "activités"
+msgid "activities"
+msgstr "activités"
 
-#~ msgid "project"
-#~ msgstr "projet"
+msgid "project"
+msgstr "projet"
 
 #, fuzzy
 #~| msgid "activities"
@@ -512,11 +512,11 @@ msgstr ""
 #~ msgid "activity timesheets"
 #~ msgstr "activités"
 
-#~ msgid "project activity"
-#~ msgstr "activité de projet"
+msgid "project activity"
+msgstr "activité de projet"
 
-#~ msgid "project activities"
-#~ msgstr "activités de projet"
+msgid "project activities"
+msgstr "activités de projet"
 
 #, fuzzy
 #~| msgid "Team News"
@@ -528,29 +528,29 @@ msgstr ""
 #~ msgid "Icelandic"
 #~ msgstr "Candidatures"
 
-#~ msgid "page"
-#~ msgstr "page"
+msgid "page"
+msgstr "page"
 
-#~ msgid "link image"
-#~ msgstr "lien d'image"
+msgid "link image"
+msgstr "lien d'image"
 
-#~ msgid "link images"
-#~ msgstr "lien d'images"
+msgid "link images"
+msgstr "lien d'images"
 
-#~ msgid "Internal project"
-#~ msgstr "Projet interne"
+msgid "Internal project"
+msgstr "Projet interne"
 
-#~ msgid "National or European project"
-#~ msgstr "Projet national ou Européen"
+msgid "National or European project"
+msgstr "Projet national ou Européen"
 
-#~ msgid "Industrial project"
-#~ msgstr "Projet industriel"
+msgid "Industrial project"
+msgstr "Projet industriel"
 
-#~ msgid "public"
-#~ msgstr "public"
+msgid "public"
+msgstr "public"
 
-#~ msgid "project program"
-#~ msgstr "programme du projet"
+msgid "project program"
+msgstr "programme du projet"
 
 #, fuzzy
 #~| msgid "project program"
@@ -562,26 +562,26 @@ msgstr ""
 #~ msgid "project call"
 #~ msgstr "Appel à projet"
 
-#~ msgid "lead team"
-#~ msgstr "équipe principale"
+msgid "lead team"
+msgstr "équipe principale"
 
-#~ msgid "lead organization"
-#~ msgstr "organisation principale"
+msgid "lead organization"
+msgstr "organisation principale"
 
-#~ msgid "organizations"
-#~ msgstr "organisations"
+msgid "organizations"
+msgstr "organisations"
 
-#~ msgid "Is Archive"
-#~ msgstr "Est une archive"
+msgid "Is Archive"
+msgstr "Est une archive"
 
-#~ msgid "projects"
-#~ msgstr "projets"
+msgid "projects"
+msgstr "projets"
 
-#~ msgid "in progress"
-#~ msgstr "en cours"
+msgid "in progress"
+msgstr "en cours"
 
-#~ msgid "completed"
-#~ msgstr "terminé"
+msgid "completed"
+msgstr "terminé"
 
 #, fuzzy
 #~| msgid "project topics"
@@ -593,44 +593,44 @@ msgstr ""
 #~ msgid "project topic"
 #~ msgstr "rubrique d'un projet"
 
-#~ msgid "project topics"
-#~ msgstr "rubrique d'un projet"
+msgid "project topics"
+msgstr "rubrique d'un projet"
 
-#~ msgid "program"
-#~ msgstr "programme"
+msgid "program"
+msgstr "programme"
 
-#~ msgid "programs"
-#~ msgstr "programmes"
+msgid "programs"
+msgstr "programmes"
 
-#~ msgid "program type"
-#~ msgstr "Type de programme"
+msgid "program type"
+msgstr "Type de programme"
 
-#~ msgid "program types"
-#~ msgstr "Types de programme"
+msgid "program types"
+msgstr "Types de programme"
 
-#~ msgid "project topic page"
-#~ msgstr "page rubrique d'un projet"
+msgid "project topic page"
+msgstr "page rubrique d'un projet"
 
-#~ msgid "project topic pages"
-#~ msgstr "pages de rubrique d'un projet"
+msgid "project topic pages"
+msgstr "pages de rubrique d'un projet"
 
-#~ msgid "project calls"
-#~ msgstr "Appel à projet"
+msgid "project calls"
+msgstr "Appel à projet"
 
-#~ msgid "authors"
-#~ msgstr "auteurs"
+msgid "authors"
+msgstr "auteurs"
 
-#~ msgid "project demo"
-#~ msgstr "projet demo"
+msgid "project demo"
+msgstr "projet demo"
 
-#~ msgid "project demos"
-#~ msgstr "projets demo"
+msgid "project demos"
+msgstr "projets demo"
 
-#~ msgid "access rights"
-#~ msgstr "droits d'accès"
+msgid "access rights"
+msgstr "droits d'accès"
 
-#~ msgid "brief description"
-#~ msgstr "Brève description"
+msgid "brief description"
+msgstr "Brève description"
 
 #, fuzzy
 #~| msgid "brief description"
@@ -667,8 +667,8 @@ msgstr ""
 #~ msgid "funding programme"
 #~ msgstr "en cours"
 
-#~ msgid "persons"
-#~ msgstr "personnes"
+msgid "persons"
+msgstr "personnes"
 
 #, fuzzy
 #~| msgid "organization"
@@ -680,8 +680,8 @@ msgstr ""
 #~ msgid "position"
 #~ msgstr "description"
 
-#~ msgid "artist"
-#~ msgstr "artiste"
+msgid "artist"
+msgstr "artiste"
 
 #, fuzzy
 #~| msgid "project topic page"
@@ -703,34 +703,34 @@ msgstr ""
 #~ msgid "project page"
 #~ msgstr "page rubrique d'un projet"
 
-#~ msgid "Finished Projects"
-#~ msgstr "Projets Terminés"
+msgid "Finished Projects"
+msgstr "Projets Terminés"
 
-#~ msgid "Projects"
-#~ msgstr "Projets"
+msgid "Projects"
+msgstr "Projets"
 
-#~ msgid "Action"
-#~ msgstr "Action"
+msgid "Action"
+msgstr "Action"
 
-#~ msgid "Departement"
-#~ msgstr "Département"
+msgid "Departement"
+msgstr "Département"
 
-#~ msgid "Magazine"
-#~ msgstr "Magazine"
+msgid "Magazine"
+msgstr "Magazine"
 
 #, fuzzy
 #~| msgid "Person"
 #~ msgid "Personnes"
 #~ msgstr "Personne"
 
-#~ msgid "Candidacies"
-#~ msgstr "Candidatures"
+msgid "Candidacies"
+msgstr "Candidatures"
 
-#~ msgid "Candidacies: "
-#~ msgstr "Candidaturesnbsp;: "
+msgid "Candidacies: "
+msgstr "Candidaturesnbsp;: "
 
-#~ msgid "Candidacies:"
-#~ msgstr "Candidaturesnbsp;:"
+msgid "Candidacies:"
+msgstr "Candidaturesnbsp;:"
 
 #~msgid "Application dates:"
 #~msgstr "Candidatures&nbsp;:"
@@ -738,31 +738,31 @@ msgstr ""
 #~msgid "Application dates: "
 #~msgstr "Candidatures&nbsp;: "
 
-#~ msgid "Pages"
-#~ msgstr "Pages"
+msgid "Pages"
+msgstr "Pages"
 
-#~ msgid "Media Library"
-#~ msgstr "Librairie media"
+msgid "Media Library"
+msgstr "Librairie media"
 
-#~ msgid "Events"
-#~ msgstr "Événements"
+msgid "Events"
+msgstr "Événements"
 
-#~ msgid "Network"
-#~ msgstr "Réseaux"
+msgid "Network"
+msgstr "Réseaux"
 
-#~ msgid "Activity"
-#~ msgstr "Activité"
+msgid "Activity"
+msgstr "Activité"
 
-#~ msgid "Jobs"
-#~ msgstr "Offres d'emplois et stages"
+msgid "Jobs"
+msgstr "Offres d'emplois et stages"
 
 #, fuzzy
 #~| msgid "product lists"
 #~ msgid "product list"
 #~ msgstr "listes de produits"
 
-#~ msgid "product lists"
-#~ msgstr "listes de produits"
+msgid "product lists"
+msgstr "listes de produits"
 
 #, fuzzy
 #~| msgid "product lists"
@@ -794,406 +794,404 @@ msgstr ""
 #~ msgid "external"
 #~ msgstr "ID externe"
 
-#~ msgid "Recent Actions"
-#~ msgstr "Actions récentes"
+msgid "Recent Actions"
+msgstr "Actions récentes"
 
-#~ msgid "Add"
-#~ msgstr "Ajouter"
+msgid "Add"
+msgstr "Ajouter"
 
-#~ msgid "My Actions"
-#~ msgstr "Mes Actions"
+msgid "My Actions"
+msgstr "Mes Actions"
 
-#~ msgid "Home"
-#~ msgstr "Accueil"
+msgid "Home"
+msgstr "Accueil"
 
-#~ msgid "Language"
-#~ msgstr "Langue"
+msgid "Language"
+msgstr "Langue"
 
-#~ msgid "Reserve"
-#~ msgstr "Réserver"
+msgid "Reserve"
+msgstr "Réserver"
 
-#~ msgid "Confirmation"
-#~ msgstr "Confirmation"
+msgid "Confirmation"
+msgstr "Confirmation"
 
-#~ msgid "Agenda"
-#~ msgstr "Rendez-vous"
+msgid "Agenda"
+msgstr "Rendez-vous"
 
-#~ msgid "Trainers"
-#~ msgstr "Encadrants"
+msgid "Trainers"
+msgstr "Encadrants"
 
-#~ msgid "Rendez-vous in Paris"
-#~ msgstr "Rendez-vous à Paris"
+msgid "Rendez-vous in Paris"
+msgstr "Rendez-vous à Paris"
 
-#~ msgid "On tour"
-#~ msgstr "Tournées"
+msgid "On tour"
+msgstr "Tournées"
 
-#~ msgid "Archives"
-#~ msgstr "Archives"
+msgid "Archives"
+msgstr "Archives"
 
-#~ msgid "Viewing events for the location"
-#~ msgstr "Événements du lieu"
+msgid "Viewing events for the location"
+msgstr "Événements du lieu"
 
-#~ msgid "to"
-#~ msgstr "au"
+msgid "to"
+msgstr "au"
 
-#~ msgid "Room"
-#~ msgstr "Salle"
+msgid "Room"
+msgstr "Salle"
 
-#~ msgid "Click to get the interactive map"
-#~ msgstr "Cliquer pour voir la carte interactive"
+msgid "Click to get the interactive map"
+msgstr "Cliquer pour voir la carte interactive"
 
-#~ msgid "Level"
-#~ msgstr "Niveau"
+msgid "Level"
+msgstr "Niveau"
 
-#~ msgid "Downloads"
-#~ msgstr "Téléchargements"
+msgid "Downloads"
+msgstr "Téléchargements"
 
-#~ msgid "Prices"
-#~ msgstr "Prix"
+msgid "Prices"
+msgstr "Prix"
 
-#~ msgid "Upcoming Events"
-#~ msgstr "Événements à venir"
+msgid "Upcoming Events"
+msgstr "Événements à venir"
 
-#~ msgid "Recent Events"
-#~ msgstr "Événements récents"
+msgid "Recent Events"
+msgstr "Événements récents"
 
-#~ msgid "Tags"
-#~ msgstr "Mots clés"
+msgid "Tags"
+msgstr "Mots clés"
 
-#~ msgid "Also discover"
-#~ msgstr "À découvrir aussi"
+msgid "Also discover"
+msgstr "À découvrir aussi"
 
-#~ msgid "Name"
-#~ msgstr "Nom"
+msgid "Name"
+msgstr "Nom"
 
-#~ msgid "Sorry, an error occurred."
-#~ msgstr "Une erreur s'est produite."
+msgid "Sorry, an error occurred."
+msgstr "Une erreur s'est produite."
 
-#~ msgid "Comments"
-#~ msgstr "Commentaires"
+msgid "Comments"
+msgstr "Commentaires"
 
-#~ msgid "News"
-#~ msgstr "Actualité"
+msgid "News"
+msgstr "Actualité"
 
-#~ msgid "Subscribe to our newsletter"
-#~ msgstr "Inscription à la newsletter"
+msgid "Subscribe to our newsletter"
+msgstr "Inscription à la newsletter"
 
-#~ msgid "Follow us on"
-#~ msgstr "Suivez-nous sur"
+msgid "Follow us on"
+msgstr "Suivez-nous sur"
 
-#~ msgid "Opening times"
-#~ msgstr "Horaires d'ouverture"
+msgid "Opening times"
+msgstr "Horaires d'ouverture"
 
-#~ msgid "Subway access"
-#~ msgstr "Accès en transports"
+msgid "Subway access"
+msgstr "Accès en transports"
 
-#~ msgid "go to"
-#~ msgstr "Aller vers"
+msgid "go to"
+msgstr "Aller vers"
 
-#~ msgid "Previous page"
-#~ msgstr "Page précédente"
+msgid "Previous page"
+msgstr "Page précédente"
 
-#~ msgid "Next page"
-#~ msgstr "Page suivante"
-
-#~ msgid "Type something"
-#~ msgstr "Recherché"
-
-#~ msgid "Share on Facebook"
-#~ msgstr "Partagez sur Facebook"
-
-#~ msgid "Share on Twitter"
-#~ msgstr "Partagez sur Twitter"
-
-#~ msgid "Share by email"
-#~ msgstr "Partager par email"
-
-#~ msgid "Print this page"
-#~ msgstr "Imprimer cette page"
-
-#~ msgid "Add to"
-#~ msgstr "Ajouter à"
-
-#~ msgid "News Headlines"
-#~ msgstr "À la une"
-
-#~ msgid "Brief"
-#~ msgstr "Brève"
-
-#~ msgid "Briefs"
-#~ msgstr "Brèves"
-
-#~ msgid "Please come back later. There is no candidacy at the moment."
-#~ msgstr ""
-#~ "Merci de revenir plus tard. Il n'y a pas de candidature pour le moment."
-
-#~ msgid "From"
-#~ msgstr "Du"
-
-#~ msgid "until"
-#~ msgstr "jusqu'au"
-
-#~ msgid "Published on"
-#~ msgstr "Publié le"
-
-#~ msgid "Please come back later. There is no job offer at the moment."
-#~ msgstr ""
-#~ "Merci de revenir plus tard. Il n'y a pas d'offre d'emploi pour le moment."
-
-#~ msgid "Newsletter"
-#~ msgstr "Newsletter"
-
-#~ msgid ""
-#~ "Sign up for our monthly newsletter to keep up to date with the "
-#~ "institute's activities every month and be eligible to take advantage of "
-#~ "special offers from our partners."
-#~ msgstr ""
-#~ "Abonnez-vous à notre newsletter mensuelle pour être tenu au courant de "
-#~ "l’actualité de l’Ircam chaque début de mois et bénéficiez des offres "
-#~ "réservées à nos abonnés dans différents lieux partenaires de l’Institut."
-
-#~ msgid "under the tutelage of"
-#~ msgstr "sous la tutelle de"
+msgid "Next page"
+msgstr "Page suivante"
+
+msgid "Type something"
+msgstr "Recherché"
+
+msgid "Share on Facebook"
+msgstr "Partagez sur Facebook"
+
+msgid "Share on Twitter"
+msgstr "Partagez sur Twitter"
+
+msgid "Share by email"
+msgstr "Partager par email"
+
+msgid "Print this page"
+msgstr "Imprimer cette page"
+
+msgid "Add to"
+msgstr "Ajouter à"
+
+msgid "News Headlines"
+msgstr "À la une"
+
+msgid "Brief"
+msgstr "Brève"
+
+msgid "Briefs"
+msgstr "Brèves"
+
+msgid "Please come back later. There is no candidacy at the moment."
+msgstr ""
+"Merci de revenir plus tard. Il n'y a pas de candidature pour le moment."
+
+msgid "From"
+msgstr "Du"
+
+msgid "until"
+msgstr "jusqu'au"
+
+msgid "Published on"
+msgstr "Publié le"
+
+msgid "Please come back later. There is no job offer at the moment."
+msgstr ""
+"Merci de revenir plus tard. Il n'y a pas d'offre d'emploi pour le moment."
+
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgid ""
+"Sign up for our monthly newsletter to keep up to date with the "
+"institute's activities every month and be eligible to take advantage of "
+"special offers from our partners."
+msgstr ""
+"Abonnez-vous à notre newsletter mensuelle pour être tenu au courant de "
+"l’actualité de l’Ircam chaque début de mois et bénéficiez des offres "
+"réservées à nos abonnés dans différents lieux partenaires de l’Institut."
+
+msgid "under the tutelage of"
+msgstr "sous la tutelle de"
 
-#~ msgid ""
-#~ "<strong>IRCAM, the Institute for Research and Coordination in Acoustics/"
-#~ "Music</strong> is one of the world’s largest public research centers "
-#~ "dedicated to musical creation and scientific research. A unique venue "
-#~ "where artistic vision converges with scientific and technological "
-#~ "innovation, the institute directed by Frank Madlener brings together over "
-#~ "160 collaborators. IRCAM hosts the UMR9912 STMS Ircam-CNRS-UPMC science "
-#~ "and technologies research lab."
-#~ msgstr ""
-#~ "<strong>L'Ircam, Institut de Recherche et Coordination Acoustique/"
-#~ "Musique</strong> est aujourd’hui l’un des plus grands centres de "
-#~ "recherche publique au monde se consacrant à la création musicale et à la "
-#~ "recherche scientifique. Lieu unique où convergent la prospective "
-#~ "artistique et l’innovation scientifique et technologique, l’institut est "
-#~ "dirigé par Frank Madlener, et réunit plus de cent soixante "
-#~ "collaborateurs. Il héberge l'Unité mixte de recherche Sciences et "
-#~ "technologies de la musique et du son (UMR9912 STMS Ircam-CNRS-UPMC)."
+msgid ""
+"<strong>IRCAM, the Institute for Research and Coordination in Acoustics/"
+"Music</strong> is one of the world’s largest public research centers "
+"dedicated to musical creation and scientific research. A unique venue "
+"where artistic vision converges with scientific and technological "
+"innovation, the institute directed by Frank Madlener brings together over "
+"160 collaborators. IRCAM hosts the UMR9912 STMS Ircam-CNRS-UPMC science "
+"and technologies research lab."
+msgstr ""
+"<strong>L'Ircam, Institut de Recherche et Coordination Acoustique/"
+"Musique</strong> est aujourd’hui l’un des plus grands centres de "
+"recherche publique au monde se consacrant à la création musicale et à la "
+"recherche scientifique. Lieu unique où convergent la prospective "
+"artistique et l’innovation scientifique et technologique, l’institut est "
+"dirigé par Frank Madlener, et réunit plus de cent soixante "
+"collaborateurs. Il héberge l'Unité mixte de recherche Sciences et "
+"technologies de la musique et du son (UMR9912 STMS Ircam-CNRS-UPMC)."
 
-#~ msgid "On Tour"
-#~ msgstr "Tournées"
+msgid "On Tour"
+msgstr "Tournées"
 
-#~ msgid ""
-#~ "Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de "
-#~ "toutes choses..."
-#~ msgstr ""
-#~ "Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de "
-#~ "toutes choses..."
+msgid ""
+"Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de "
+"toutes choses..."
+msgstr ""
+"Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de "
+"toutes choses..."
 
-#~ msgid "Calls for Applications 2017"
-#~ msgstr "Appel à candidatures 2017"
+msgid "Calls for Applications 2017"
+msgstr "Appel à candidatures 2017"
 
-#~ msgid ""
-#~ "Cursus – Practical Training in Composition and Computer Music, Artistic "
-#~ "Research Residence, ManiFeste-2017, the Academy"
-#~ msgstr ""
-#~ "Cursus de composition et d'informatique musicale, Résidence en recherche "
-#~ "artistique, ManiFeste-2017 l'académie"
+msgid ""
+"Cursus – Practical Training in Composition and Computer Music, Artistic "
+"Research Residence, ManiFeste-2017, the Academy"
+msgstr ""
+"Cursus de composition et d'informatique musicale, Résidence en recherche "
+"artistique, ManiFeste-2017 l'académie"
 
-#~ msgid "IRCAM Library Center"
-#~ msgstr "Centre de Ressources Ircam"
+msgid "IRCAM Library Center"
+msgstr "Centre de Ressources Ircam"
 
-#~ msgid ""
-#~ "Audiovisual and sound archives, a database on contemporary music "
-#~ "(BRAHMS), a catalogue of works…"
-#~ msgstr ""
-#~ "Archives audiovisuelles et sonores, base de documentation sur la musique "
-#~ "contemporaine (base BRAHMS), catalogue d'œuvres..."
+msgid ""
+"Audiovisual and sound archives, a database on contemporary music "
+"(BRAHMS), a catalogue of works…"
+msgstr ""
+"Archives audiovisuelles et sonores, base de documentation sur la musique "
+"contemporaine (base BRAHMS), catalogue d'œuvres..."
 
-#~ msgid "Forumnet"
-#~ msgstr "Forumnet"
+msgid "Forumnet"
+msgstr "Forumnet"
 
-#~ msgid "IRCAM software users’ community"
-#~ msgstr "Communauté d'utilisateurs des logiciels Ircam"
+msgid "IRCAM software users’ community"
+msgstr "Communauté d'utilisateurs des logiciels Ircam"
 
-#~ msgid ""
-#~ "European network for the promotion and support of young contemporary "
-#~ "musical creation"
-#~ msgstr ""
-#~ "Réseau européen pour la promotion et le soutien de la jeune création "
-#~ "musicale contemporaine"
+msgid ""
+"European network for the promotion and support of young contemporary "
+"musical creation"
+msgstr ""
+"Réseau européen pour la promotion et le soutien de la jeune création "
+"musicale contemporaine"
 
-#~ msgid "Ircam teams"
-#~ msgstr "Équipes Ircam"
+msgid "Ircam teams"
+msgstr "Équipes Ircam"
 
-#~ msgid "Recent Posts"
-#~ msgstr "Articles récents"
+msgid "Recent Posts"
+msgstr "Articles récents"
 
-#~ msgid "Categories"
-#~ msgstr "Catégories"
+msgid "Categories"
+msgstr "Catégories"
 
-#~ msgid "Feeds"
-#~ msgstr "Fils"
+msgid "Feeds"
+msgstr "Fils"
 
-#~ msgid "Artists"
-#~ msgstr "Artistes"
+msgid "Artists"
+msgstr "Artistes"
 
-#~ msgid "Play the video"
-#~ msgstr "Jouer la vidéo"
+msgid "Play the video"
+msgstr "Jouer la vidéo"
 
-#~ msgid "Videos"
-#~ msgstr "Vidéos"
+msgid "Videos"
+msgstr "Vidéos"
 
-#~ msgid "Tag:"
-#~ msgstr "Mot clé :"
+msgid "Tag:"
+msgstr "Mot clé :"
 
-#~ msgid "Category:"
-#~ msgstr "Catégorie :"
+msgid "Category:"
+msgstr "Catégorie :"
 
-#~ msgid "Author:"
-#~ msgstr "Auteur :"
+msgid "Author:"
+msgstr "Auteur :"
 
-#~ msgid "Related events"
-#~ msgstr "Événements associés"
+msgid "Related events"
+msgstr "Événements associés"
 
-#~ msgid "Related posts"
-#~ msgstr "Articles associés"
+msgid "Related posts"
+msgstr "Articles associés"
 
-#~ msgid "Tournées"
-#~ msgstr "On tour"
+msgid "Tournées"
+msgstr "On tour"
 
-#~ msgid "Applications"
-#~ msgstr "Appels à candidature"
+msgid "Applications"
+msgstr "Appels à candidature"
 
-#~ msgid "display text"
-#~ msgstr "afficher le text"
+msgid "display text"
+msgstr "afficher le text"
 
-#~ msgid "activity grade"
-#~ msgstr "grade de l'activité"
+msgid "activity grade"
+msgstr "grade de l'activité"
 
-#~ msgid "activity framework"
-#~ msgstr "corps de l'activité"
+msgid "activity framework"
+msgstr "corps de l'activité"
 
-#~ msgid "activity function"
-#~ msgstr "fonction de l'activité"
+msgid "activity function"
+msgstr "fonction de l'activité"
 
-#~ msgid "Follow us on Facebook"
-#~ msgstr "Suivez nous sur Facebook"
+msgid "Follow us on Facebook"
+msgstr "Suivez nous sur Facebook"
 
-#~ msgid "Follow us on Twitter"
-#~ msgstr "Suivez nous sur Twitter"
+msgid "Follow us on Twitter"
+msgstr "Suivez nous sur Twitter"
 
-#~ msgid "Follow us on Instagram"
-#~ msgstr "Suivez nous sur Instagram"
+msgid "Follow us on Instagram"
+msgstr "Suivez nous sur Instagram"
 
-#~ msgid "Follow us on Youtube"
-#~ msgstr "Suivez nous sur Youtube"
+msgid "Follow us on Youtube"
+msgstr "Suivez nous sur Youtube"
 
-#~ msgid "Ulysses Community"
-#~ msgstr "Ulysses Community"
+msgid "Ulysses Community"
+msgstr "Ulysses Community"
 
-#~ msgid "published on"
-#~ msgstr "publié le"
+msgid "published on"
+msgstr "publié le"
 
-#~ msgid "IRCAM Archives"
-#~ msgstr "Les ressources Ircam"
+msgid "IRCAM Archives"
+msgstr "Les ressources Ircam"
 
-#~ msgid "Functions"
-#~ msgstr "Fonctions"
+msgid "Functions"
+msgstr "Fonctions"
 
-#~ msgid "Accueil"
-#~ msgstr "Back"
+msgid "Accueil"
+msgstr "Back"
 
-#~ msgid "Coordinator"
-#~ msgstr "Coordinateur"
+msgid "Coordinator"
+msgstr "Coordinateur"
 
-#~ msgid "attachment organization"
-#~ msgstr "organisation rattachée"
+msgid "attachment organization"
+msgstr "organisation rattachée"
 
-#~ msgid "Location:"
-#~ msgstr "Lieu :"
+msgid "Location:"
+msgstr "Lieu :"
 
-#~ msgid "See the video"
-#~ msgstr "Voir la vidéo"
+msgid "See the video"
+msgstr "Voir la vidéo"
 
-#~ msgid "Application form"
-#~ msgstr "Formulaire de candidature en ligne"
+msgid "Application form"
+msgstr "Formulaire de candidature en ligne"
 
-#~ msgid "Download"
-#~ msgstr "Télécharger"
+msgid "Download"
+msgstr "Télécharger"
 
-#~ msgid "the room program"
-#~ msgstr "le programme de salle"
+msgid "the room program"
+msgstr "le programme de salle"
 
-#~ msgid "Free entry. Limited seats available"
-#~ msgstr ""
-#~ "Entrée libre, sans réservation, dans la limite des places disponibles"
+msgid "Free entry. Limited seats available"
+msgstr ""
+"Entrée libre, sans réservation, dans la limite des places disponibles"
 
-#~ msgid "at"
-#~ msgstr "à"
+msgid "at"
+msgstr "à"
 
-#~ msgid "photo alignment"
-#~ msgstr "alignement photo"
+msgid "photo alignment"
+msgstr "alignement photo"
 
-#~ msgid "photo card credits"
-#~ msgstr "crédits photo"
+msgid "photo card credits"
+msgstr "crédits photo"
 
-#~ msgid "photo slider credits"
-#~ msgstr "crédits photo slider"
+msgid "photo slider credits"
+msgstr "crédits photo slider"
 
-#~ msgid "video category"
-#~ msgstr "catégorie de vidéo"
+msgid "video category"
+msgstr "catégorie de vidéo"
 
-#~ msgid "All"
-#~ msgstr "Tous les"
+msgid "All"
+msgstr "Tous les"
 
-#~ msgid "Breaking"
-#~ msgstr "Dernière"
+msgid "Breaking"
+msgstr "Dernière"
 
-#~ msgid "news"
-#~ msgstr "minute"
+msgid "news"
+msgstr "minute"
 
-#~ msgid "More"
-#~ msgstr "Plus de"
+msgid "More"
+msgstr "Plus de"
 
-#~ msgid "blog posts"
-#~ msgstr "articles"
+msgid "blog posts"
+msgstr "articles"
 
-#~ msgid "Read the edito"
-#~ msgstr "Lire l'édito"
+msgid "Read the edito"
+msgstr "Lire l'édito"
 
-#~ msgctxt "apos"
-#~ msgid "More"
-#~ msgstr "Plus d'"
+msgctxt "apos"
+msgid "More"
+msgstr "Plus d'"
 
-#~ msgid "Videos for the category"
-#~ msgstr "Les vidéos de la catégorie"
+msgid "Videos for the category"
+msgstr "Les vidéos de la catégorie"
 
-#~ msgid "Viewing events tagged"
-#~ msgstr "Événements pour le mot clé"
+msgid "Viewing events tagged"
+msgstr "Événements pour le mot clé"
 
-#~ msgid "Viewing events from"
-#~ msgstr "Événements du"
+msgid "Viewing events from"
+msgstr "Événements du"
 
-#~ msgid "Viewing events by"
-#~ msgstr "Événements par"
+msgid "Viewing events by"
+msgstr "Événements par"
 
-#~ msgid "Viewing posts for the category"
-#~ msgstr "Les articles de la catégorie"
+msgid "Viewing posts for the category"
+msgstr "Les articles de la catégorie"
 
-#~ msgid "Viewing posts from"
-#~ msgstr "Les articles postés depuis"
+msgid "Viewing posts from"
+msgstr "Les articles postés depuis"
 
-#~ msgid "Related event"
-#~ msgstr "Événement associé"
+msgid "Related event"
+msgstr "Événement associé"
 
-#~ msgctxt "fem"
-#~ msgid "All"
-#~ msgstr "Toutes les"
+msgctxt "fem"
+msgid "All"
+msgstr "Toutes les"
 
-#~ msgid "Edito"
-#~ msgstr "Édito"
+msgid "Edito"
+msgstr "Édito"
 
-#~ msgid "Read more"
-#~ msgstr "Lire la suite"
+msgid "Read more"
+msgstr "Lire la suite"
 
-#~| msgid "Artists"
-#~ msgid "Artist"
-#~ msgstr "Artiste"
+msgid "Artist"
+msgstr "Artiste"
 
-#~| msgid "Videos"
-#~ msgid "Video"
-#~ msgstr "Vidéo"
+msgid "Video"
+msgstr "Vidéo"
