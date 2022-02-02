@@ -658,9 +658,10 @@ def login_url():
 def ytb_iframe(text):
     try:
         regex = re.compile(
-            r'iframe:https:\/\/youtu\.be/([a-zA-Z0-9]*)'
+            r'iframe:https:\/\/youtu\.be/([-a-zA-Z0-9]*)'
         )
         _match = regex.search(text)
+        print(_match)
         while _match:
             ytb_iframe_template = '<div style="position:relative;' +\
                 'padding-top:56.25%;">' +\
@@ -670,7 +671,7 @@ def ytb_iframe(text):
                 'gyroscope; picture-in-picture" ' +\
                 'allowfullscreen style="position:absolute;top:0;' +\
                 'left:0;width:100%;height:100%;"></iframe></div>'
-            ytb_iframe_template = ytb_iframe_template.format(_match.group(2))
+            ytb_iframe_template = ytb_iframe_template.format(_match.group(1))
             s = _match.start()
             e = _match.end()
             text = text[:s] + ytb_iframe_template + text[e:]
