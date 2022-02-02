@@ -284,7 +284,6 @@ INSTALLED_APPS = [
     "organization.job",
     "organization.utils",
     # "sorl.thumbnail", # required for thumbnail support
-    "django_instagram",
     'hijack',
     'compat',
     'guardian',
