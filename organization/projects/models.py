@@ -298,8 +298,6 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
 
         contributors = []  # Holds all the contributors from all the sources
 
-        from pprint import pprint
-
         # Getting each source
         for source in CONTRIBUTORS_SOURCES:
 
@@ -619,8 +617,10 @@ class Repository(models.Model):
                                         self.vendor,
                                         settings=s,
                                         debug=settings.DEBUG)
-            except Exception:
-                instance = None  # Must be fail-safe to allow "if repo.api" form of check in the code
+            except Exception as e:
+                # Must be fail-safe to allow "if repo.api" form of check in the code
+                logger.warning("unable to reach repo %s: %s", url, e)
+                instance = None
 
         return instance
 
