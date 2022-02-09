@@ -257,12 +257,13 @@ def format_percent(percent):
 
 @register.filter
 def get_media_type(media):
-    mime_type = media.transcoded.first().mime_type
     media_type = ""
-    if match('video', mime_type):
-        media_type = "Video"
-    elif match('audio', mime_type):
-        media_type = "Audio"
+    if media:
+        mime_type = media.transcoded.first().mime_type
+        if match('video', mime_type):
+            media_type = "Video"
+        elif match('audio', mime_type):
+            media_type = "Audio"
     return media_type
 
 @register.filter
@@ -548,9 +549,9 @@ def get_menu_id(template_path):
 
 @register.filter
 def index(List, i):
-    if List:
+    try:
         return List[int(i)]
-    else:
+    except:
         return []
 
 
