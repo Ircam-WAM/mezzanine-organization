@@ -413,6 +413,9 @@ class ProjectTopic(Named):
         verbose_name_plural = _('tags')
         ordering = ['key',]
 
+    def get_absolute_url(self):
+        return reverse('ircam-forum-projecttopic-detail', kwargs={'pk': self.pk, 'name': self.name})
+
     def __str__(self):
         if self.parent:
             return ' - '.join((self.parent.name, self.name))
@@ -485,7 +488,6 @@ class ProjectTopicPage(Page, SubTitled):
     class Meta:
         verbose_name = _('project topic page')
         verbose_name_plural = _("project topic pages")
-
 
 class ProjectCall(Displayable, Period, RichText, NamedOnly):
 
