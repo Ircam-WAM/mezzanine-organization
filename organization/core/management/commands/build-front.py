@@ -70,4 +70,5 @@ class Command(BaseCommand):
                     subprocess.run(["npm", "ci"])
                 if not os.path.exists('static/vendors') or self.force_bower:
                     subprocess.run(["bower", "--allow-root", "install"])
+                subprocess.run(["npm", "rebuild", "node-sass"])
                 subprocess.run(["gulp", "build"])

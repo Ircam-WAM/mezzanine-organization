@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import pandas as pd
+# import pandas as pd
 import csv
 from django.http import HttpResponse
 from xlwt import *

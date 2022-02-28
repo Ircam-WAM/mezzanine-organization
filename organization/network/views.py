@@ -59,7 +59,7 @@ from organization.pages.forms import YearForm
 from organization.pages.views import PublicationsView
 from organization.network.utils import get_users_of_team
 
-import pandas as pd
+# import pandas as pd
 
 
 class PersonMixin(SingleObjectMixin):
@@ -555,49 +555,49 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView): # pragma: no cove
         return redirect
 
 
-class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView): # pragma: no cover
-    model = PersonActivityTimeSheet
-    template_name='network/person_activity_timesheet/person_activity_timesheet_list.html'
-    context_object_name = 'timesheets_by_year'
+# class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView): # pragma: no cover
+#     model = PersonActivityTimeSheet
+#     template_name='network/person_activity_timesheet/person_activity_timesheet_list.html'
+#     context_object_name = 'timesheets_by_year'
 
-    def get_queryset(self):
+#     def get_queryset(self):
 
-        # get list of months / years
-        dt1 = date.today().replace(day=1)
-        prev_month = dt1 - timedelta(days=1)
-        timesheet_range = pd.date_range(settings.TIMESHEET_START, prev_month, freq="MS")
-        timesheets = PersonActivityTimeSheet.objects.filter(activity__person=self.request.user.person).order_by('-year', 'month', 'project')
+#         # get list of months / years
+#         dt1 = date.today().replace(day=1)
+#         prev_month = dt1 - timedelta(days=1)
+#         timesheet_range = pd.date_range(settings.TIMESHEET_START, prev_month, freq="MS")
+#         timesheets = PersonActivityTimeSheet.objects.filter(activity__person=self.request.user.person).order_by('-year', 'month', 'project')
 
-        # construct timesheets table
-        t_dict = {}
+#         # construct timesheets table
+#         t_dict = {}
 
-        for timesheet_date in timesheet_range:
-            year = timesheet_date.year
-            month = timesheet_date.month
-            if not year in t_dict:
-                t_dict[year] = {}
-                t_dict[year]['project_count'] = 0
-                t_dict[year]['timesheets'] = {}
+#         for timesheet_date in timesheet_range:
+#             year = timesheet_date.year
+#             month = timesheet_date.month
+#             if not year in t_dict:
+#                 t_dict[year] = {}
+#                 t_dict[year]['project_count'] = 0
+#                 t_dict[year]['timesheets'] = {}
 
-            if not month in t_dict[year]['timesheets']:
-                t_dict[year]['timesheets'][month] = []
+#             if not month in t_dict[year]['timesheets']:
+#                 t_dict[year]['timesheets'][month] = []
 
-            timesheet = [t for t in timesheets if t.month == timesheet_date.month and t.year == timesheet_date.year]
-            if timesheet:
-                t_dict[year]['timesheets'][month] += timesheet
+#             timesheet = [t for t in timesheets if t.month == timesheet_date.month and t.year == timesheet_date.year]
+#             if timesheet:
+#                 t_dict[year]['timesheets'][month] += timesheet
 
-            t_dict[year]['project_count'] = max(t_dict[year]['project_count'], len(t_dict[year]['timesheets'][month]))
+#             t_dict[year]['project_count'] = max(t_dict[year]['project_count'], len(t_dict[year]['timesheets'][month]))
 
-        return OrderedDict(sorted(t_dict.items(), key=lambda t: -t[0]))
+#         return OrderedDict(sorted(t_dict.items(), key=lambda t: -t[0]))
 
-    def get_context_data(self, **kwargs):
-        last_day_in_month = date.today().replace(day=1) - timedelta(days=1)
-        context = super(PersonActivityTimeSheetListView, self).get_context_data(**kwargs)
-        context['current_month'] = last_day_in_month.month
-        context['current_year'] = last_day_in_month.year
-        context['months'] = list(range(1, last_day_in_month.month + 1))
-        context.update(self.kwargs)
-        return context
+#     def get_context_data(self, **kwargs):
+#         last_day_in_month = date.today().replace(day=1) - timedelta(days=1)
+#         context = super(PersonActivityTimeSheetListView, self).get_context_data(**kwargs)
+#         context['current_month'] = last_day_in_month.month
+#         context['current_year'] = last_day_in_month.year
+#         context['months'] = list(range(1, last_day_in_month.month + 1))
+#         context.update(self.kwargs)
+#         return context
 
 
 class PersonActivityTimeSheetExportView(TimesheetAbstractView, View):

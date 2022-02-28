@@ -279,8 +279,8 @@ INSTALLED_APPS = [
     'compat',
     'guardian',
     'extra_views',
-    'rdf_io',
-    'skosxl',
+    # 'rdf_io',
+    # 'skosxl',
 ]
 
 CUSTOM_MODULES = False
