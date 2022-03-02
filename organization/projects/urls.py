@@ -36,50 +36,50 @@ from organization.projects.views import DynamicContentProjectView, ProjectPageVi
 
 urlpatterns = [
     url(
-        "^dynamic-content-project/$",
+        "^dynamic-content-project[/]?$",
         permission_required('organization_projects.change_projectpage')(DynamicContentProjectView.as_view()),  # noqa: E501
         name='dynamic-content-project'
     ),
 
     url(
-        "^projects/detail/(?P<slug>.*)/$",
+        "^projects/detail/(?P<slug>.*)[/]?$",
         RedirectView.as_view(pattern_name='organization-project-projectpage-detail'),
         name='organization-project-detail'
     ),
     url(
-        "^projects/pages/(?P<slug>.*)/$",
+        "^projects/pages/(?P<slug>.*)[/]?$",
         ProjectPageView.as_view(),
         name='organization-project-projectpage-detail'
     ),
     url(
-        "^projects/list/$",
+        "^projects/list[/]?$",
         ProjectListView.as_view(),
         name='organization-project-list'
     ),
     url(
-        "^projects/archives/list/$",
+        "^projects/archives/list[/]?$",
         ProjectArchivesListView.as_view(),
         name='organization-project-archive-list'
     ),
 
     url(
-        "^team/(?P<slug>.*)/projects/list/$",
+        "^team/(?P<slug>.*)/projects/list[/]?$",
         ProjectTeamListView.as_view(),
         name='organization-project-team-list'
     ),
     url(
-        "^team/(?P<slug>.*)/projects/archives/list/$",
+        "^team/(?P<slug>.*)/projects/archives/list[/]?$",
         ProjectArchivesTeamListView.as_view(),
         name='organization-project-archive-team-list'
     ),
 
     url(
-        "^projects/demo/(?P<slug>.*)/$",
+        "^projects/demo/(?P<slug>.*)[/]?$",
         ProjectDemoDetailView.as_view(),
         name='organization-project-demo-detail'
     ),
     url(
-        "^projects/blog/(?P<slug>.*)/$",
+        "^projects/blog/(?P<slug>.*)[/]?$",
         ProjectBlogPageView.as_view(),
         name='organization-project-blogpage-detail'
     ),
@@ -87,110 +87,110 @@ urlpatterns = [
     # due to this commit 73743f67f1d1574dbeff6cc22aae37986d257a92
     # redirect to old patterns 'project' without 's'
     url(
-        "^project/detail/(?P<slug>.*)/$",
+        "^project/detail/(?P<slug>.*)[/]?$",
         RedirectView.as_view(pattern_name='organization-project-detail'),
         name="redirect-project-detail"
     ),
     url(
-        "^project/demo/(?P<slug>.*)/$",
+        "^project/demo/(?P<slug>.*)[/]?$",
         RedirectView.as_view(pattern_name='organization-project-demo-detail'),
         name="redirect-project-demo"
     ),
     url(
-        "^project/blog/(?P<slug>.*)/$",
+        "^project/blog/(?P<slug>.*)[/]?$",
         RedirectView.as_view(pattern_name='organization-project-blogpage-detail'),
         name="redirect-project-blog"
     ),
 
     url(
-        "^ict-projects/list/$",
+        "^ict-projects/list[/]?$",
         ProjectICTListView.as_view(),
         name='organization-ict-project-list'
     ),
     url(
-        "^ict-projects/(?P<slug>.*)/detail/$",
+        "^ict-projects/(?P<slug>.*)/detail[/]?$",
         ProjectICTDetailView.as_view(),
         name='organization-ict-project-detail'
     ),
 
     url(
-        "^calls/(?P<slug>.*)/projects/create/public/$",
+        "^calls/(?P<slug>.*)/projects/create/public[/]?$",
         ProjectICTCreatePublicFundingView.as_view(),
         name='organization-project-public-create'
     ),
     url(
-        "^calls/(?P<slug>.*)/projects/create/private/$",
+        "^calls/(?P<slug>.*)/projects/create/private[/]?$",
         ProjectICTCreatePrivateFundingView.as_view(),
         name='organization-project-private-create'
     ),
     url(
-        "^calls/(?P<slug>.*)/projects/validation/$",
+        "^calls/(?P<slug>.*)/projects/validation[/]?$",
         ProjectICTValidationView.as_view(),
         name='organization-project-validation'
     ),
 
     url(
-        "^calls/(?P<call_slug>.*)/projects/detail/(?P<slug>.*)/$",
+        "^calls/(?P<call_slug>.*)/projects/detail/(?P<slug>.*)[/]?$",
         ProjectICTDetailView.as_view(),
         name='organization-project-detail'
     ),
     url(
-        "^calls/(?P<call_slug>.*)/projects/list/$",
+        "^calls/(?P<call_slug>.*)/projects/list[/]?$",
         ProjectICTListView.as_view(),
         name='organization-project-list'
     ),
 
     url(
-        "^calls/(?P<slug>.*)/residencies/submission/$",
+        "^calls/(?P<slug>.*)/residencies/submission[/]?$",
         ProjectResidencyCreateView.as_view(),
         name='organization-residency-create'
     ),
     url(
-        "^calls/(?P<call_slug>.*)/residencies/(?P<slug>.*)/detail/$",
+        "^calls/(?P<call_slug>.*)/residencies/(?P<slug>.*)/detail[/]?$",
         ProjectResidencyDetailView.as_view(),
         name='organization-residency-detail'
     ),
     url(
-        "^calls/(?P<call_slug>.*)/residencies/list/$",
+        "^calls/(?P<call_slug>.*)/residencies/list[/]?$",
         ProjectResidencyListView.as_view(),
         name='organization-residency-list'
     ),
 
     url(
-        "^calls/$",
+        "^calls[/]?$",
         ProjectCallListAsEventsView.as_view(),
         name='organization-call-list-as-events'
     ),
 
     url(
-        "^calls/list/$",
+        "^calls/list[/]?$",
         ProjectCallListView.as_view(),
         name='organization-call-list'
     ),
     url(
-        "^calls/(?P<slug>.*)/detail/$",
+        "^calls/(?P<slug>.*)/detail[/]?$",
         ProjectCallDetailView.as_view(),
         name='organization-call-detail'
     ),
 
     url(
-        "^calls/(?P<slug>.*)/detail/projects/submission/$",
+        "^calls/(?P<slug>.*)/detail/projects/submission[/]?$",
         ProjectCallDetailView.as_view(),
         name='organization-project-submission-hack1'
     ),  # HACK
     url(
-        "^calls/detail/(?P<slug>.*)/projects/submission/$",
+        "^calls/detail/(?P<slug>.*)/projects/submission[/]?$",
         ProjectCallDetailView.as_view(),
         name='organization-project-submission-hack2'
     ),  # HACK
 
     url(
-        "^profile/project/(?P<slug>.*)/$",
+        "^profile/project/(?P<slug>.*)[/]?$",
         ProjectICTEditPublicFundingView.as_view(),
         name="user-project-edit"
     ),
     url(
-        "^profile/project/private/(?P<slug>.*)/$",
+        "^profile/project/private/(?P<slug>.*)[/]?$",
         ProjectICTEditPrivateFundingView.as_view(),
         name="user-project-edit-private"
     ),

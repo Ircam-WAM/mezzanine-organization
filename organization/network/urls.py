@@ -36,7 +36,7 @@ from organization.network.views import PersonDirectoryView,\
 
 urlpatterns = [
     url(
-        '^directory(?:/(?P<letter>.*))?/$',
+        '^directory(?:/(?P<letter>.*))?[/]?$',
         PersonDirectoryView.as_view(letter="a"),
         name='person-directory'
     ),
@@ -46,22 +46,22 @@ urlpatterns = [
         name='organization_network-timesheet-create-curr-month-view'
     ),
     url(
-        '^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$',
+        '^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create$',
         TimeSheetCreateView.as_view(),
         name='organization_network-timesheet-create-view'
     ),
     url(
-        '^person/timesheet/$',
+        '^person/timesheet[/]?$',
         PersonActivityTimeSheetListView.as_view(),
         name='organization_network-timesheet-list-view'
     ),
     url(
-        '^person(?:/(?P<slug>.*))?/$',
+        '^person(?:/(?P<slug>.*))?[/]?$',
         PersonDetailView.as_view(),
         name='organization_network-person-detail'
     ),
     url(
-        '^profile/(?P<username>.*)/$',
+        '^profile/(?P<username>.*)[/]?$',
         PersonDetailView.as_view(),
         name='profile'
     ),
@@ -85,7 +85,7 @@ urlpatterns = [
     ),
 
     url(
-        '^network/$',
+        '^network[/]?$',
         OrganizationListView.as_view(),
         name='network'
     ),
@@ -115,50 +115,50 @@ urlpatterns = [
         name='work-packages-autocomplete'
     ),
     url(
-        '^producers/submission/$',
+        '^producers/submission[/]?$',
         ProducerCreateView.as_view(),
         name='organization-producer-create'
     ),
     url(
-        '^producers/submission/(?P<slug>.*)/validation/$',
+        '^producers/submission/(?P<slug>.*)/validation[/]?$',
         ProducerValidationView.as_view(),
         name='organization-producer-validation'
     ),
     url(
-        '^producers/(?P<slug>.*)/detail/$',
+        '^producers/(?P<slug>.*)/detail[/]?$',
         ProducerDetailView.as_view(),
         name='organization-producer-detail'
     ),
     url(
-        '^producers/list/$',
+        '^producers/list[/]?$',
         ProducerListView.as_view(),
         name='organization-producer-list'
     ),
 
     url(
-        '^jury/list/$',
+        '^jury/list[/]?$',
         JuryListView.as_view(),
         name='organization-jury-list'
     ),
 
     url(
-        '^team/(?P<slug>.*)/members/$',
+        '^team/(?P<slug>.*)/members[/]?$',
         TeamMembersView.as_view(),
         name='team-members'
     ),
     url(
-        '^team/(?P<slug>.*)/publications/$',
+        '^team/(?P<slug>.*)/publications[/]?$',
         TeamPublicationsView.as_view(),
         name='team-publications'
     ),
 
     url(
-        "^dynamic-content-person/$",
+        "^dynamic-content-person[/]?$",
         DynamicContentPersonView.as_view(),
         name='dynamic-content-person'
     ),
     url(
-        '^dashboard(?:/(?P<slug>.*))?/$',
+        '^dashboard(?:/(?P<slug>.*))?[/]?$',
         PersonDashboardView.as_view(),
         name='organization_network-dashboard-person-detail'
     ),

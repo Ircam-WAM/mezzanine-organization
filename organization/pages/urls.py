@@ -60,22 +60,22 @@ urlpatterns = [
         name='dynamic-content-page'
     ),
     url(
-        "^home/$",
+        "^home[/]?$",
         HomeView.as_view(),
         name='organization-home'
     ),
     url(
-        "^newsletter/$",
+        "^newsletter[/]?$",
         NewsletterView.as_view(),
         name='organization-newsletter'
     ),
     url(
-        "^information/$",
+        "^information[/]?$",
         InformationView.as_view(),
         name='organization-information'
     ),
     url(
-        "^publications/$",
+        "^publications[/]?$",
         PublicationsView.as_view(),
         name='publications'
     ),

@@ -32,27 +32,27 @@ _slash = "/" if settings.APPEND_SLASH else ""
 
 urlpatterns = [
     url(
-        "^job-offer/(?P<slug>.*)%s$" % _slash,
-        JobOfferDetailView.as_view(),
-        name='organization_job-offer-detail'
-    ),
-    url(
-        "^job-offer/$",
+        "^job-offer[/]?$",
         JobOfferListView.as_view(),
         name='organization_job-offer-list'
     ),
     url(
-        "^candidacy/(?P<slug>.*)%s$" % _slash,
+        "^job-offer/(?P<slug>.*)[%s]?$" % _slash,
+        JobOfferDetailView.as_view(),
+        name='organization_job-offer-detail'
+    ),
+    url(
+        "^candidacy/(?P<slug>.*)[%s]?$" % _slash,
         CandidacyDetailView.as_view(),
         name='organization-candidacy-detail'
     ),
     url(
-        "^candidacies/$",
+        "^candidacies[/]?$",
         CandidacyListView.as_view(),
         name='candidacies-list'
     ),
     url(
-        "^candidacy-autocomplete/$",
+        "^candidacy-autocomplete[/]?$",
         CandidacyAutocomplete.as_view(),
         name='candidacy-autocomplete'
     ),

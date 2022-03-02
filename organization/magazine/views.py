@@ -313,9 +313,13 @@ class ArticleEventView(SlugMixin, ListView, FilteredListView):
 class ArticleEventTeamView(ArticleEventView, TeamOwnableMixin):
 
     def get_queryset(self):
-        self.qs = super(ArticleEventTeamView, self).get_queryset()
+        self.qs_init = super(ArticleEventTeamView, self).get_queryset()
         if 'slug' in self.kwargs:
-            self.qs = self.filter_by_team(self.qs, self.kwargs['slug'])
+            self.qs = self.filter_by_team(self.qs_init, self.kwargs['slug'])
+            if not self.qs:
+                self.qs = self.filter_by_team(self.qs_init, self.kwargs['slug'] + '/')
+        else:
+            self.qs = self.qs_init
         return self.qs
 
     def post(self, request, *args, **kwargs):

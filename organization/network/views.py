@@ -59,6 +59,7 @@ from organization.pages.views import PublicationsView
 from organization.network.utils import get_users_of_team
 from mezzanine_agenda.models import Event
 from extra_views import CreateWithInlinesView
+from mezzanine.utils.sites import current_site_id
 
 
 import pandas as pd
@@ -170,6 +171,11 @@ class TeamMembersView(ListView):
     permanents = []
     non_permanents = []
     old_members = []
+
+    def dispatch(self, request, **kwargs):
+        if current_site_id == 1:
+            raise Http404()
+        return super(TeamMembersView, self).dispatch(request, kwargs)
 
     def get_queryset(self):
         self.permanents = []
