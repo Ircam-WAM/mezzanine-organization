@@ -44,11 +44,11 @@ class ProductTests(TestCase):
         product_list_product = ProductListProduct.objects.create(product = self.product)
         link_type = LinkType.objects.create(name = "test link")
         product_link = ProductLink.objects.create(product = self.product, link_type = link_type)
-        product_prestashop_product = ProductPrestashopProduct.objects.create(product = self.product)
+        product_prestashop_product = ProductExternalShop.objects.create(product = self.product)
         self.product.delete()
         self.assertTrue(product_list_product in ProductListProduct.objects.filter(product__isnull=True))
         self.assertTrue(product_link in ProductLink.objects.filter(product__isnull=True))
-        self.assertFalse(product_prestashop_product in ProductPrestashopProduct.objects.all())
+        self.assertFalse(product_prestashop_product in ProductExternalShop.objects.all())
         self.assertFalse(self.product in Product.objects.all())
 
     def test_product_display_for_everyone(self):
@@ -80,7 +80,7 @@ class ProductTests(TestCase):
         self.client.login(username='test', password='test')
         nb = Product.objects.count()
         response = self.client.post(self.url, {"title" : 'title','activities-INITIAL_FORMS':'0','activities-TOTAL_FORMS':'1','blocks-INITIAL_FORMS':'0','blocks-TOTAL_FORMS':'1','files-INITIAL_FORMS':'0',
-        'files-TOTAL_FORMS':'1','images-INITIAL_FORMS':'0','images-TOTAL_FORMS':'1','links-INITIAL_FORMS':'0','links-TOTAL_FORMS':'1','prestashop_products-INITIAL_FORMS':'0','prestashop_products-TOTAL_FORMS':'1',
+        'files-TOTAL_FORMS':'1','images-INITIAL_FORMS':'0','images-TOTAL_FORMS':'1','links-INITIAL_FORMS':'0','links-TOTAL_FORMS':'1','product_external_shop-INITIAL_FORMS':'0','product_external_shop-TOTAL_FORMS':'1',
         'variations-INITIAL_FORMS':'0','variations-TOTAL_FORMS':'1','status':'2'})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(nb+1,Product.objects.count())

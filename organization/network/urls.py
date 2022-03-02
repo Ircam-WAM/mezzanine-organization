@@ -32,18 +32,20 @@ from organization.network.views import *
 
 
 urlpatterns = [
+    url('^directory(?:/(?P<letter>.*))?/$', PersonDirectoryView.as_view(letter="a"), name='person-directory'),
     url('^person/timesheet/declare-curr-month$', TimeSheetCreateCurrMonthView.as_view(), name='organization-network-timesheet-create-curr-month-view'),
     url('^person/timesheet/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/create/$', TimeSheetCreateView.as_view(), name='organization-network-timesheet-create-view'),
     url('^person/timesheet/$', PersonActivityTimeSheetListView.as_view(), name='organization-network-timesheet-list-view' ),
     url('^person(?:/(?P<slug>.*))?/$', PersonDetailView.as_view(), name='organization-network-person-detail'),    
     url('^profile/(?P<username>.*)/$', PersonDetailView.as_view(), name='profile'),
     url('^persons/$', PersonListView.as_view(), name='organization-network-person-list'),
-    url('^person-list-block-autocomplete/$', permission_required('person.can_edit')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
-    url('^person-autocomplete/$', permission_required('person.can_edit')(PersonAutocompleteView.as_view()), name='person-autocomplete'),
+    url('^person-list-block-autocomplete/$', permission_required('organization-network.change_person')(PersonListBlockAutocompleteView.as_view(create_field='title')), name='person-list-block-autocomplete'),
+    url('^person-autocomplete/$', permission_required('organization-network.change_person')(PersonAutocompleteView.as_view()), name='person-autocomplete'),
+
     url('^network/$', OrganizationListView.as_view(), name='network'),
 
-    url('^organization-linked-list-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
-    url('^organization-linked-autocomplete/$',  permission_required('organization.can_edit')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
+    url('^organization-linked-list-autocomplete/$',  permission_required('organization-network.change_organization')(OrganizationLinkedListView.as_view()), name='organization-linked-list-autocomplete'),
+    url('^organization-linked-autocomplete/$',  permission_required('organization-network.change_organization')(OrganizationLinkedView.as_view()), name='organization-linked-autocomplete'),
     url('^person-activity-autocomplete/$', PersonActivityAutocompleteView.as_view(), name='person-activity-autocomplete'),
     url('^work-packages-autocomplete/$', WorkPackageAutocompleteView.as_view(), name='work-packages-autocomplete'),
 
@@ -54,4 +56,9 @@ urlpatterns = [
     url('^producers/list/$', ProducerListView.as_view(), name='organization-producer-list'),
 
     url('^jury/list/$', JuryListView.as_view(), name='organization-jury-list'),
+
+    url('^team/(?P<slug>.*)/members/$', TeamMembersView.as_view(), name='team-members'),
+    url('^team/(?P<slug>.*)/publications/$', TeamPublicationsView.as_view(), name='team-publications'),
+
+    url("^dynamic-content-person/$",  DynamicContentPersonView.as_view(), name='dynamic-content-person'),
     ]

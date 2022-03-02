@@ -44,12 +44,12 @@ class MediaDepartmentInline(TabularDynamicInlineAdmin):
     max_num = 1
 
 
-class MediaAdmin(BaseTranslationModelAdmin):
+class MediaAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = Media
     inlines = (MediaTranscodedAdmin, MediaImageInline, MediaDepartmentInline)
     list_display = ['title', 'external_id', 'type']
-    search_fields = ['title', 'external_id', 'type']
+    search_fields = ['title', 'external_id', ]
 
     def type(self, instance):
         return instance.type

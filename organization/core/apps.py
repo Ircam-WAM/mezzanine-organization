@@ -28,3 +28,6 @@ class CoreConfig(AppConfig):
 
     name = 'organization.core'
     label = 'organization-core'
+    
+    def ready(self):
+        from .defaults import register_setting

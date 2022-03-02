@@ -28,7 +28,9 @@ from __future__ import unicode_literals
 # see http://docs.djangoproject.com/en/dev/ref/templates/builtins/#date
 DATE_FORMAT = 'N j, Y'
 DATE_EVENT_FORMAT = 'F j'
+DATE_EVENT_FORMAT_Y = 'D j F Y'
 WEEK_DAY_FORMAT = 'F j'
+WEEK_DAY_FORMAT_Y = 'F j Y'
 TIME_FORMAT = 'P'
 DATETIME_FORMAT = 'N j, Y, P'
 YEAR_MONTH_FORMAT = 'F Y'

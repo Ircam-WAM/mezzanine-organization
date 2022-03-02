@@ -210,6 +210,30 @@ class ProjectCollectionImageTranslationOptions(TranslationOptions):
     pass
 
 
+@register(DynamicMultimediaProject)
+class DynamicMultimediaProjectTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(ProjectPage)
+class ProjectPageTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description', 'content')
+
+
+@register(ProjectPageBlock)
+class ProjectPageBlockTranslationOptions(TranslationOptions):
+
+    fields = ('title', 'description', 'content')
+
+
+@register(ProjectPageImage)
+class ProjectPageImageTranslationOptions(TranslationOptions):
+
+    pass
+
+
 @register(Pivot_Project_ProjectCollection)
 class Pivot_Project_ProjectCollectionTranslationOptions(TranslationOptions):
 
@@ -226,3 +250,9 @@ class RepositoryTranslationOptions(TranslationOptions):
 class Pivot_ProjectTopic_ArticleTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(DynamicContentProjectPage)
+class DynamicContentProjectPageTranslationOptions(TranslationOptions):
+
+    fields = ()

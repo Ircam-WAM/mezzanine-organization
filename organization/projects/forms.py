@@ -32,8 +32,11 @@ from organization.magazine.models import Article, Topic, Brief
 from organization.pages.models import CustomPage
 from organization.agenda.models import Event, DynamicContentEvent
 from organization.media.models import Playlist
+from organization.media.forms import DynamicMultimediaForm
+from organization.network.models import Organization
 from organization.projects.models import *
 from extra_views import InlineFormSet
+
 
 class DynamicContentProjectForm(autocomplete.FutureModelForm):
 
@@ -41,7 +44,9 @@ class DynamicContentProjectForm(autocomplete.FutureModelForm):
         queryset=autocomplete.QuerySetSequence(
             Article.objects.all(),
             CustomPage.objects.all(),
-            Event.objects.all()
+            Event.objects.all(),
+            Person.objects.all(),
+            Organization.objects.all()
         ),
         required=False,
         widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-project'),
@@ -167,3 +172,47 @@ class Pivot_Project_ProjectCollection_Form(autocomplete.FutureModelForm):
                 attrs={'data-html': True}
             )
         }
+
+
+class DynamicMultimediaProjectForm(DynamicMultimediaForm):
+
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaProject
+
+
+class DynamicContentProjectPageForm(autocomplete.FutureModelForm):
+
+    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
+        queryset=autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            CustomPage.objects.all(),
+            Event.objects.all(),
+            Person.objects.all(),
+            Organization.objects.all()
+        ),
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-project'),
+    )
+
+    class Meta:
+        model = DynamicContentProjectPage
+        fields = ('content_object',)
+
+
+class TopicFilterForm(forms.Form):
+
+    def get_topics():
+        topics = ProjectTopic.objects.all()
+        topics_list = []
+
+        for topic in topics_list:
+            if topic.projects.count():
+                topics_list.append((topic.id, topic.name))
+        return topics_list
+
+    filter = forms.ChoiceField(choices=get_topics(), required=False)
+
+
+class TypeFilterForm(forms.Form):
+
+    filter = forms.ChoiceField(choices=PROJECT_TYPE_CHOICES, required=False)

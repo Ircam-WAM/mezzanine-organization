@@ -102,6 +102,6 @@ class Command(BaseCommand):
             ca_product.status = 1
             ca_product.save()
 
-            prestashop_product, c = os_models.ProductPrestashopProduct.objects.get_or_create(product=ca_product, external_id=product.id_product)
+            prestashop_product, c = os_models.ProductExternalShop.objects.get_or_create(product=ca_product, external_id=product.id_product)
             prestashop_product.slug = slug
             prestashop_product.save()

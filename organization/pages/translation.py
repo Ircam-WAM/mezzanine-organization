@@ -120,3 +120,8 @@ class HomeImageTranslationOptions(TranslationOptions):
 
     fields = ()
 
+
+@register(DynamicMultimediaPage)
+class DynamicMultimediaPageTranslationOptions(TranslationOptions):
+
+    fields = ()

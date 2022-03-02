@@ -24,7 +24,7 @@ from __future__ import unicode_literals
 from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
-
+from django.contrib.auth.decorators import permission_required
 from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
@@ -35,8 +35,14 @@ _slash = "/" if settings.APPEND_SLASH else ""
 urlpatterns = [
     url("^article/detail/(?P<slug>.*)%s$" % _slash, ArticleDetailView.as_view(), name="magazine-article-detail"),
     url("^article/list%s$" % _slash, ArticleListView.as_view(), name="magazine-article-list"),
-    url("^article/list/(?P<type>.*)%s$" % _slash, ArticleListView.as_view(), name="magazine-article-list"),
+    # url("^article/list/(?P<type>.*)%s$" % _slash, ArticleListView.as_view(), name="magazine-article-list"),
+    url("^article/list/(?P<keyword>.*)%s$" % _slash, ArticleListView.as_view(), name="magazine-article-list"),
     url("^topic/detail/(?P<slug>.*)%s$" % _slash, TopicDetailView.as_view(), name='topic-detail'),
     url("^object-autocomplete/$", ObjectAutocomplete.as_view(), name='object-autocomplete'),
     url("^dynamic-content-article/$",  DynamicContentArticleView.as_view(), name='dynamic-content-article'),
+    url("^article-event-list/$",  ArticleEventView.as_view(), name='article-event-list'),
+    # url("^team/article-event-list/$",  ArticleEventView.as_view(), name='article-event-team-list'),
+    url('^team/(?P<slug>.*)/article-event-list/$', ArticleEventTeamView.as_view(), name='article-event-team-list'),
+    url("^dynamic-content-magazine/$",  permission_required('organization-magazine.change_magazine')(DynamicContentMagazineContentView.as_view()), name='dynamic-content-magazine'),
+    url("^magazine/$", MagazineDetailView.as_view(), name='magazine'),
 ]

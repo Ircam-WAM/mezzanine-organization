@@ -22,7 +22,7 @@
 from django.contrib.auth.admin import UserAdmin
 from mezzanine.utils.tests import TestCase
 from organization.agenda.models import *
-from mezzanine_agenda.models import EventCategory,EventShop,EventPrice,Event,Season
+from mezzanine_agenda.models import EventCategory,ExternalShop,EventPrice,Event,Season
 from mezzanine_agenda.admin import EventAdmin
 import datetime
 from mezzanine.core.models import CONTENT_STATUS_PUBLISHED,KeywordsField
@@ -109,7 +109,7 @@ class EventTests(TestCase):
         self.user = User().objects.create_user(username="user", password='test')
         self.parent_event = Event.objects.create(start = datetime.datetime.today(), title="parent_event", user=self._user)
         self.category = EventCategory.objects.create(name="category")
-        self.shop = EventShop.objects.create()
+        self.shop = ExternalShop.objects.create()
         file = tempfile.NamedTemporaryFile(suffix='.png')
         img = ImageFile(file, name=file.name)
         self.event = Event.objects.create(title="mon-evenement", start=datetime.datetime.strptime("2018-01-13", "%Y-%m-%d").date(), end = datetime.datetime.strptime("2018-01-18", "%Y-%m-%d").date(),user=self.user,

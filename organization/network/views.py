@@ -20,107 +20,241 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from re import match
+from cartridge.shop.models import Product
 from django.contrib import messages
+from django.utils.timezone import now
 from pprint import pprint
 from calendar import monthrange
+from django.db.models import Q
+from django.db.models.query import QuerySet
 from django.db.models.fields.related import ForeignKey
 from django.http import Http404
 from django.db.utils import IntegrityError
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import View
 from django.forms import formset_factory, BaseFormSet
+from django.views.generic.detail import SingleObjectMixin
 from extra_views import FormSetView
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.db.models.fields.related import ForeignKey
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
-from django.db.models import Q
 from dal import autocomplete
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from organization.network.models import *
 from organization.core.views import *
 from datetime import date, timedelta, datetime
 from organization.network.forms import *
-from organization.projects.models import ProjectWorkPackage
+from organization.projects.models import ProjectWorkPackage, ProjectPage
 from collections import OrderedDict
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import RedirectView
 from django.utils import six
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from organization.pages.forms import YearForm
+from organization.pages.views import PublicationsView
+from organization.network.utils import get_users_of_team
+
+
 import pandas as pd
 
 
-class PersonListView(PublishedMixin, ListView):
+class PersonMixin(SingleObjectMixin):
+
+    model = Person
+
+    def get_object(self, queryset=None):
+        person = None
+        user = self.request.user
+        if user.is_authenticated():
+            if not Person.objects.filter(user=user):
+                person = Person(first_name=user.first_name, last_name=user.last_name, user=user,
+                                email=user.email, title=' '.join([user.first_name, user.last_name]))
+                person.save()
+            person = user.person
+
+        if 'username' in self.kwargs:
+            users = User.objects.filter(username=self.kwargs['username'])
+            if users:
+                user = users[0]
+                person = user.person
+
+        elif 'slug' in self.kwargs:
+            persons = Person.objects.filter(slug=self.kwargs['slug'])
+            if persons:
+                person = persons[0]
+
+        try:
+            person.title
+        except AttributeError:
+            raise Http404("This person does not exist")
+
+        return person
+
+    @property
+    def person(self):
+        if 'username' in self.kwargs:
+            user = User.objects.get_object_or_404(username=self.kwargs['username'])
+        else:
+            user = self.request.user
+        return user.person
+
+
+class PersonListView(ListView):
 
     model = Person
     template_name='network/person_list.html'
     context_object_name = 'persons'
 
 
-class PersonDetailView(SlugMixin, DetailView):
+class PersonDirectoryView(ListView):
+
+    model = Person
+    template_name='network/person/directory.html'
+    context_object_name = 'persons'
+    ordering = "last_name"
+    letter = "letter"
+
+    def get_queryset(self):
+        self.queryset = super(PersonDirectoryView, self).get_queryset()
+        if not self.kwargs['letter']:
+            self.kwargs['letter'] = "a"
+        self.queryset = self.queryset.filter(Q(last_name__istartswith=self.kwargs['letter'])
+                                            & Q(activities__date_to__gte=datetime.date.today())
+                                            & Q(activities__umr=1)).distinct()
+        return self.queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(PersonDirectoryView, self).get_context_data(**kwargs)
+        letters_pagination = OrderedDict()
+
+        # list all letters from a (97) to z (123)
+        for c in range(97, 123):
+            letters_pagination[chr(c)] = reverse_lazy('person-directory', kwargs={'letter': chr(c)})
+        context['letters_pagination'] = letters_pagination
+        context['curr_letter'] = self.kwargs['letter']
+        return context
+
+
+class TeamMembersView(ListView):
+
+    model = Person
+    template_name='network/team/members.html'
+    context_object_name = 'persons'
+    permanents = []
+    non_permanents = []
+    old_members = []
+
+    def get_queryset(self):
+        self.permanents = []
+        self.non_permanents = []
+        self.old_members = []
+        self.queryset = super(TeamMembersView, self).get_queryset()
+
+        # Filter by Team, distinct on Person
+        lookup = Q(activities__teams__slug=self.kwargs['slug'])
+        self.queryset = self.queryset.filter(lookup) \
+                                        .order_by("last_name", "first_name") \
+                                        .distinct("last_name", "first_name")
+
+        # Filter active persons
+        lookup = lookup & Q(activities__date_to__gte=datetime.date.today())
+        active_persons = self.queryset.filter(lookup)
+
+        # permanent persons
+        permanent_person = active_persons.filter(lookup & Q(activities__is_permanent=True))
+        # Filter Head Researcher
+        head_researcher = ""
+        for p in permanent_person:
+            if hasattr(p.activities.first().status, 'id') and p.activities.first().status.id == 6 : #Head Researcher
+                head_researcher = p
+            else :
+                self.permanents.append(p)
+
+        # add Head Researcher at first place
+        if head_researcher:
+            self.permanents.insert(0, head_researcher)
+
+
+        # non permanent persons
+        permanent_persons_id = [p.id for p in permanent_person]
+        self.non_permanents = active_persons.filter(lookup & Q(activities__is_permanent=False)) \
+                                            .exclude(id__in=permanent_persons_id)
+
+
+        # former persons
+        active_persons_id = [p.id for p in active_persons]
+        self.old_members = self.queryset.filter(Q(activities__teams__slug=self.kwargs['slug']) \
+                                                & Q(activities__date_to__lt=datetime.date.today())) \
+                                        .exclude(id__in=active_persons_id)
+
+        return self.queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(TeamMembersView, self).get_context_data(**kwargs)
+        context['permanents'] = self.permanents
+        context['non_permanents'] = self.non_permanents
+        context['old_members'] = self.old_members
+        context['team'] = Team.objects.get(slug=self.kwargs['slug'])
+        return context
+
+
+class TeamPublicationsView(PublicationsView):
+
+    template_name = "network/team/publications.html"
+
+    def post(self, request, *args, **kwargs):
+        self.team = get_object_or_404(Team, slug=self.kwargs['slug'])
+        self._hal_url += "&" + settings.HAL_LABOS_EXP + "%s" % self.team.hal_researche_structure.replace(' ', '+')
+        return super(TeamPublicationsView, self).post(self, request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        self.team = get_object_or_404(Team, slug=self.kwargs['slug'])
+        self._hal_url += "&" + settings.HAL_LABOS_EXP + "%s" % self.team.hal_researche_structure.replace(' ', '+')
+        return super().get_context_data(**kwargs)
+
+
+class PersonDetailView(PersonMixin, SlugMixin, DynamicContentMixin, DetailView, DynamicReverseMixin):
 
     model = Person
     template_name='network/person_detail.html'
     context_object_name = 'person'
 
-    def get(self, request, *args, **kwargs):
-        # if not hasattr(self.request.user, 'ldap_user') or not self.request.user.person:
-        #     response = redirect('organization-home')
-        self.object = self.get_object(self.queryset)
-        context = self.get_context_data(object=self.object)
-        response = self.render_to_response(context)
-        return response
-
-    def get_object(self, queryset):
-        obj = None
-        if 'slug' in self.kwargs:
-            slug = self.kwargs['slug']
-        else:
-            slug = None
-
-        if hasattr(self.request.user, 'person') and not slug and self.request.user.is_authenticated() and not 'username' in self.kwargs:
-            obj = self.request.user.person
-        elif 'username' in self.kwargs:
-            user = User.objects.get(username=self.kwargs['username'])
-            obj = Person.objects.get(user=user)
-        else:
-            obj = super().get_object()
-        return obj
-
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
-        context["related"] = {}
-        # Person events : this type is separated from the other because
-        # this is not managed by list of person by person in inlines directly
-        person_events = self.object.events.all()
-        events = [item.event for item in person_events]
-        context["related"]["event"] = events
-        # All other related models
-        person_list_block_inlines = self.object.person_list_block_inlines.all()
-        context["related"]["other"] = []
-        # for each person list to which the person belongs to...
-        for person_list_block_inline in person_list_block_inlines:
-            if hasattr(person_list_block_inline, 'person_list_block_inline') :
-                related_objects = person_list_block_inline.person_list_block._meta.get_all_related_objects()
-                for related_object in related_objects:
-                    if hasattr(person_list_block_inline.person_list_block, related_object.name):
-                        # getting relating inlines like ArticlePersonListBlockInline, PageCustomPersonListBlockInline etc...
-                        related_inlines = getattr(person_list_block_inline.person_list_block, related_object.name).all()
-                        for related_inline in related_inlines:
-                            if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
-                                fields = related_inline._meta.get_fields()
-                                for field in fields:
-                                    # check if it is a ForeignKey
-                                    if isinstance(field, ForeignKey) :
-                                        instance = getattr(related_inline, field.name)
-                                        # get only article, custom page etc...
-                                        if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
-                                            context["related"]["other"].append(instance)
+        reverse_related = []
+        # Related Events when you add PersonList in Events
+        if hasattr(self.object, "person_list_block_inlines"):
+            # Get all PersonListBlockInline where the Person is referenced to
+            person_list_block_inlines = self.object.person_list_block_inlines.all()
+            for person_list_block_inline in person_list_block_inlines:
+                # PersonListBlock has ForeignKey with Aritcle, Event, Page...
+                if hasattr(person_list_block_inline, 'person_list_block') and person_list_block_inline.person_list_block != None :
+                    # get field name of Article, Event, Page...
+                    related_fields = person_list_block_inline.person_list_block._meta.get_fields()
+                    for related_field in related_fields:
+                        attr = getattr(person_list_block_inline.person_list_block, related_field.name)
+                        if attr and attr.__class__.__name__ == "RelatedManager":
+                            related_inlines = attr.all()
+                            for related_inline in related_inlines:
+                                if not isinstance(related_inline, person_list_block_inline.__class__):  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                    fields = related_inline._meta.get_fields()
+                                    for field in fields:
+                                        # check if it is a ForeignKey
+                                        if isinstance(field, ForeignKey) :
+                                            instance = getattr(related_inline, field.name)
+                                            # get only article, custom page etc...
+                                            if not isinstance(instance, person_list_block_inline.person_list_block.__class__) and instance:  #and not isinstance(person_list_block_inline.person_list_block.__class__):
+                                                reverse_related.append(instance)
 
-        context["related"]["other"].sort(key=lambda x: x.created, reverse=True)
+            reverse_related.sort(key=lambda x: x.created if hasattr(x, 'created') else now(), reverse=True)
+            context["concrete_objects"] += reverse_related
+            # concat list as a set to get list of unique objects
+            context["concrete_objects"] = set(context["concrete_objects"])
         context["person_email"] = self.object.email if self.object.email else self.object.slug.replace('-', '.')+" (at) ircam.fr"
         return context
 
@@ -306,7 +440,7 @@ class TimeSheetCreateView(TimesheetAbstractView, FormSetView): # pragma: no cove
         )
         # gather projects of all current activities
         for activity in activities:
-            for project_activity in activity.project_activity.filter(project__date_to__gt=date.today()) :
+            for project_activity in activity.project_activity.filter(project__date_to__gte=last_day_in_month) :
                 project_list.append({
                     'activity' : activity,
                     'project' : project_activity.project,
@@ -380,12 +514,12 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView): # pragma
 
     def get_queryset(self):
 
-        # get list of months / years  
+        # get list of months / years
         dt1 = date.today().replace(day=1)
         prev_month = dt1 - timedelta(days=1)
         timesheet_range = pd.date_range(settings.TIMESHEET_START, prev_month, freq="MS")
         timesheets = PersonActivityTimeSheet.objects.filter(activity__person=self.request.user.person).order_by('-year', 'month', 'project')
-        
+
         # construct timesheets table
         t_dict = {}
 
@@ -400,10 +534,10 @@ class PersonActivityTimeSheetListView(TimesheetAbstractView, ListView): # pragma
             if not month in t_dict[year]['timesheets']:
                 t_dict[year]['timesheets'][month] = []
 
-            timesheet = [t for t in timesheets if t.month == timesheet_date.month and t.year == timesheet_date.year]    
+            timesheet = [t for t in timesheets if t.month == timesheet_date.month and t.year == timesheet_date.year]
             if timesheet:
                 t_dict[year]['timesheets'][month] += timesheet
-            
+
             t_dict[year]['project_count'] = max(t_dict[year]['project_count'], len(t_dict[year]['timesheets'][month]))
 
         return OrderedDict(sorted(t_dict.items(), key=lambda t: -t[0]))
@@ -486,7 +620,7 @@ class JuryListView(ListView):
     template_name="network/organization_jury_list.html"
     context_object_name = "jury"
 
-    def get_context_data(self, **kwargs): 
+    def get_context_data(self, **kwargs):
         context = super(JuryListView, self).get_context_data(**kwargs)
         context["description"] = ""
         jury_list = PersonListBlock.objects.filter(title__in=["Jury", "jury"])
@@ -503,3 +637,53 @@ class JuryListView(ListView):
             qs = Person.objects.filter(person_list_block_inlines__person_list_block=jury).order_by("last_name")
         else:
             qs = Person.objects.none()
+
+
+class TeamOwnableMixin(object):
+
+    def filter_by_team(self, query, team_slug):
+        try :
+            team = Team.objects.get(slug=team_slug)
+            users_in_team = get_users_of_team(team)
+            if type(query) == QuerySet or query.__class__.__name__ == 'MultilingualSearchableQuerySet':
+                query = query.filter(user__in=users_in_team)
+            if type(query) == list:
+                tmp_query = []
+                for q in query:
+                    t = q
+                    if type(t) == tuple:
+                        t = t[0]
+                    if t.user in users_in_team:
+                        tmp_query.append(q)
+                query = tmp_query
+        except ObjectDoesNotExist:
+            pass
+
+        return query
+
+
+class DynamicContentPersonView(Select2QuerySetSequenceView):
+
+    paginate_by = settings.DAL_MAX_RESULTS
+
+    def get_queryset(self):
+
+        articles = Article.objects.all()
+        projects = ProjectPage.objects.all()
+        events = Event.objects.all()
+        products = Product.objects.all()
+
+        if self.q:
+            articles = articles.filter(title__icontains=self.q)
+            projects = projects.filter(title__icontains=self.q)
+            events = events.filter(title__icontains=self.q)
+            products = products.filter(title__icontains=self.q)
+
+        qs = autocomplete.QuerySetSequence(articles, projects, events, products)
+        qs = self.mixup_querysets(qs)
+
+        return qs
+
+    def get_results(self, context):
+        results = autocomplete_result_formatting(self, context)
+        return results

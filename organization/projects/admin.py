@@ -31,9 +31,9 @@ from organization.projects.models import *
 from organization.pages.models import *
 from organization.media.models import Playlist
 from organization.pages.admin import PageImageInline
-from organization.projects.forms import DynamicContentProjectForm, Pivot_Project_ProjectCollection_Form
-from organization.core.admin import null_filter
-# from organization.projects.translation import *
+from organization.projects.forms import DynamicContentProjectForm, DynamicMultimediaProjectForm, Pivot_Project_ProjectCollection_Form, DynamicContentProjectPageForm
+from organization.core.admin import null_filter, BaseTranslationOrderedModelAdmin, TeamOwnableAdmin
+from organization.core.utils import actions_to_duplicate, get_other_sites
 
 
 class ProjectLinkInline(StackedDynamicInlineAdmin):
@@ -66,6 +66,11 @@ class ProjectDemoInline(TabularDynamicInlineAdmin):
     model = ProjectDemo
 
 
+class ProjectPageInline(StackedDynamicInlineAdmin):
+
+    model = ProjectPage
+
+
 class ProjectWorkPackageInline(TabularDynamicInlineAdmin):
 
     model = ProjectWorkPackage
@@ -90,11 +95,6 @@ class ProjectUserImageInline(StackedDynamicInlineAdmin):
 class ProjectContactInline(StackedDynamicInlineAdmin):
 
     model = ProjectContact
-
-
-class ProjectAdmin(admin.ModelAdmin):
-
-    model = Project
 
 
 class ProjectPublicDataAdmin(admin.ModelAdmin):
@@ -139,6 +139,12 @@ class DynamicContentProjectInline(TabularDynamicInlineAdmin):
         js = (
             static("mezzanine/js/admin/dynamic_inline.js"),
         )
+
+
+class DynamicMultimediaProjectInline(TabularDynamicInlineAdmin):
+
+    model = DynamicMultimediaProject
+    form = DynamicMultimediaProjectForm
 
 
 class ProjectResidencyProducerInline(TabularDynamicInlineAdmin):
@@ -190,6 +196,7 @@ class ProjectResidencyAdmin(admin.ModelAdmin):
     get_producers.short_description = "producers"
 
 
+
 class ProjectAdminDisplayable(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectAdmin.fieldsets)
@@ -207,10 +214,38 @@ class ProjectAdminDisplayable(DisplayableAdmin):
                 DynamicContentProjectInline,
                 ProjectBlogPageInline,
                 ]
-    filter_horizontal = ['teams', 'organizations']
+    filter_horizontal = ['teams', 'organizations', 'concepts']
     list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status', 'call']
     list_display = ['title', 'date_from', 'date_to', 'created', 'lead_organization',
         'program', 'status', 'is_archive', 'topic', 'external_id', 'validation_status', 'admin_link']
+
+
+class ProjectAdmin(BaseTranslationOrderedModelAdmin):
+
+    model = Project
+
+    inlines = [ ProjectBlockInline,
+                ProjectContactInline,
+                ProjectUserImageInline,
+                ProjectImageInline,
+                ProjectPublicDataInline,
+                ProjectPrivateDataInline,
+                ProjectWorkPackageInline,
+                ProjectPageInline,
+                ProjectPlaylistInline,
+                DynamicMultimediaProjectInline,
+                ProjectLinkInline,
+                ProjectFileInline,
+                ProjectRelatedTitleAdmin,
+                DynamicContentProjectInline,
+                ProjectBlogPageInline,
+                ]
+    filter_horizontal = ['teams', 'organizations', 'concepts']
+    search_fields = ['title', ]
+    list_filter = ['type', 'program', 'program_type', null_filter('external_id'), 'topic', 'validation_status', 'call']
+    list_display = ['title', 'date_from', 'date_to', 'created', 'lead_organization',
+        'program', 'is_archive', 'topic', 'external_id', 'validation_status']
+    first_fields = ['title',]
 
 
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
@@ -265,7 +300,7 @@ class ProjectCallFileInline(StackedDynamicInlineAdmin):
     model = ProjectCallFile
 
 
-class ProjectCallAdminDisplayable(DisplayableAdmin):
+class ProjectCallAdmin(DisplayableAdmin):
 
     fieldsets = deepcopy(ProjectCallAdmin.fieldsets)
     inlines = [ ProjectCallBlockInline,
@@ -293,6 +328,29 @@ class ProjectCollectionProjectInline(TabularDynamicInlineAdmin):
     verbose_name = _('Projet')
     verbose_name_plural = _('Projets')
 
+
+class ProjectPageAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
+
+    model = ProjectPage
+    list_display = ['title', 'project', ]
+    list_filter = ['project', ]
+
+
+class ProjectPageBlockInline(StackedDynamicInlineAdmin):
+
+    model = ProjectPageBlock
+
+
+class ProjectPageImageInline(StackedDynamicInlineAdmin):
+
+    model = ProjectPageImage
+
+
+class DynamicContentProjectPageInline(TabularDynamicInlineAdmin):
+
+    model = DynamicContentProjectPage
+    form = DynamicContentProjectPageForm
+
     class Media:
         js = (
             static("mezzanine/js/admin/dynamic_inline.js"),
@@ -310,6 +368,19 @@ class ProjectCollectionAdminDisplayable(DisplayableAdmin):
     inlines = [ ProjectCollectionProjectInline,
                 ProjectCollectionImageInline ]
 
+class ProjectPageAdmin(TeamOwnableAdmin, DisplayableAdmin):
+
+    fieldsets = deepcopy(ProjectPageAdmin.fieldsets)
+    inlines = [ ProjectPageBlockInline,
+                ProjectPageImageInline,
+                DynamicContentProjectPageInline,
+                ]
+    # list_filter = ['type', 'program', 'program_type', null_filter('external_id')]
+    # list_display = ['title', 'date_from', 'date_to', 'status', 'admin_link']
+    # actions = actions_to_duplicate()
+    search_fields = ['title', 'project__title',]
+
+
 admin.site.register(Project, ProjectAdminDisplayable)
 admin.site.register(ProjectPublicData, ProjectPublicDataAdmin)
 admin.site.register(ProjectPrivateData, ProjectPrivateDataAdmin)
@@ -322,6 +393,7 @@ admin.site.register(ProjectDemo, ProjectDemoAdmin)
 admin.site.register(Repository)
 admin.site.register(RepositorySystem)
 admin.site.register(ProjectWorkPackage, ProjectWorkPackageAdmin)
-admin.site.register(ProjectCall, ProjectCallAdminDisplayable)
+admin.site.register(ProjectCall, ProjectCallAdmin)
 admin.site.register(ProjectResidency, ProjectResidencyAdmin)
 admin.site.register(ProjectCollection, ProjectCollectionAdminDisplayable)
+admin.site.register(ProjectPage, ProjectPageAdmin)

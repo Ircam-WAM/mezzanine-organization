@@ -19,7 +19,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf import settings # import the settings file
+from mezzanine.conf import settings # import the settings file
 from datetime import datetime, date
 from organization.pages.models import Page
 from organization.network.models import Organization, OrganizationLinkedInline, Person
@@ -77,7 +77,8 @@ def organization_settings(request):
             'research_slug' : research_slug,
             'menu_person_id': settings.MENU_PERSON_ID,
             'debug_mode' : settings.DEBUG,
-            'http_host' :  request.environ['HTTP_HOST'] if 'HTTP_HOST' in request.environ else ''
+            'http_host' :  request.environ['HTTP_HOST'] if 'HTTP_HOST' in request.environ else '',
+            'hal_url' : settings.HAL_URL,
             }
 
     if settings.TEMPLATE:

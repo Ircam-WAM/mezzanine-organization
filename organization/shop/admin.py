@@ -33,7 +33,6 @@ from organization.shop.models import *
 from organization.shop.translation import *
 from cartridge.shop.admin import *
 
-
 class ProductListProductInline(TabularDynamicInlineAdmin):
 
     model = ProductListProduct
@@ -49,17 +48,39 @@ class ProductLinkInline(TabularDynamicInlineAdmin):
 
     model = ProductLink
 
-class ProductPrestashopProductInline(TabularDynamicInlineAdmin):
+class ProductExternalShopInline(TabularDynamicInlineAdmin):
 
-    model = ProductPrestashopProduct
+    model = ProductExternalShop
+
+
+class TeamProductInline(TabularDynamicInlineAdmin):
+    
+    model = TeamProduct
+
+
+# class ProductImageAdmin(TabularDynamicInlineAdmin):
+
+#     model = CustomProductImage
+
+
+class ProductKeywordInline(TabularDynamicInlineAdmin):
+    
+    model = Product.p_keywords.through
+    # model = ProductKeyword # 'organization-shop.ProductKeyword' has no ForeignKey to 'shop.Product'.
 
 
 class CustomProductAdmin(ProductAdmin):
+    
+    inlines = [ProductExternalShopInline, TeamProductInline, ProductKeywordInline,
+                ProductImageAdmin, ProductVariationAdmin, ProductLinkInline, ]
 
-    inlines = [ProductImageAdmin, ProductVariationAdmin, ProductLinkInline,
-                ProductPrestashopProductInline]
+
+class ProductKeywordAdmin(BaseTranslationModelAdmin):
+
+    model = ProductKeyword
 
 
 admin.site.register(ProductList, ProductListAdmin)
 admin.site.unregister(Product)
 admin.site.register(Product, CustomProductAdmin)
+admin.site.register(ProductKeyword, ProductKeywordAdmin)
