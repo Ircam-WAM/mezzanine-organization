@@ -10,8 +10,8 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('mezzanine_agenda', '0028_auto_20180926_1235'),
-        ('organization-network', '0114_auto_20181102_1151'),
-        ('organization-agenda', '0031_auto_20181102_1151'),
+        ('organization_network', '0114_auto_20181102_1151'),
+        ('organization_agenda', '0031_auto_20181102_1151'),
     ]
 
     operations = [
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=1024, verbose_name='title')),
                 ('description', models.TextField(blank=True, verbose_name='description')),
                 ('event', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='persons_list', to='mezzanine_agenda.Event', verbose_name='event')),
-                ('person_list_block', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='events', to='organization-network.PersonListBlock', verbose_name='Person List Block')),
+                ('person_list_block', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='events', to='organization_network.PersonListBlock', verbose_name='Person List Block')),
             ],
             options={
                 'verbose_name': 'Person List',

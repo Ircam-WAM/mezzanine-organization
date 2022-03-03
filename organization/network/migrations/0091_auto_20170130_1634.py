@@ -9,7 +9,7 @@ import organization.network.validators
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0090_auto_20170130_1634'),
+        ('organization_network', '0090_auto_20170130_1634'),
     ]
 
     operations = [

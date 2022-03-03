@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
+
 def validate_positive(value):
     if value < 0:
         raise ValidationError(
@@ -15,4 +16,3 @@ def is_percent(value):
             _('%(value)s must be an integer between 0 and 100'),
             params={'value': value},
         )
-

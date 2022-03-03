@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0048_auto_20161104_1445'),
+        ('organization_network', '0048_auto_20161104_1445'),
     ]
 
     operations = [
@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='personactivity',
             name='organizations',
-            field=models.ManyToManyField(blank=True, related_name='project_activities', to='organization-network.Organization', verbose_name='organizations (attachment or subscribed)'),
+            field=models.ManyToManyField(blank=True, related_name='project_activities', to='organization_network.Organization', verbose_name='organizations (attachment or subscribed)'),
         ),
     ]

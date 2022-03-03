@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0025_auto_20160928_1858'),
+        ('organization_network', '0025_auto_20160928_1858'),
     ]
 
     operations = [
@@ -176,6 +176,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='personactivity',
             name='person',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='activities', to='organization-network.Person', verbose_name='person'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='activities', to='organization_network.Person', verbose_name='person'),
         ),
     ]

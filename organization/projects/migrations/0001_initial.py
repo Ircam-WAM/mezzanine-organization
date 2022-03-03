@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('organization-network', '0001_initial'),
+        ('organization_network', '0001_initial'),
         ('sites', '0002_alter_domain_unique'),
     ]
 
@@ -44,11 +44,11 @@ class Migration(migrations.Migration):
                 ('date_begin', models.DateField(blank=True, null=True, verbose_name='begin date')),
                 ('date_end', models.DateField(blank=True, null=True, verbose_name='end date')),
                 ('website', models.URLField(blank=True, max_length=512, verbose_name='website')),
-                ('lead_team', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='leader_projects', to='organization-network.Team', verbose_name='lead team')),
-                ('organizations', models.ManyToManyField(blank=True, to='organization-network.Organization', verbose_name='organizations')),
-                ('persons', models.ManyToManyField(blank=True, to='organization-network.Person', verbose_name='persons')),
+                ('lead_team', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='leader_projects', to='organization_network.Team', verbose_name='lead team')),
+                ('organizations', models.ManyToManyField(blank=True, to='organization_network.Organization', verbose_name='organizations')),
+                ('persons', models.ManyToManyField(blank=True, to='organization_network.Person', verbose_name='persons')),
                 ('site', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='sites.Site')),
-                ('teams', models.ManyToManyField(blank=True, related_name='patner_projects', to='organization-network.Team', verbose_name='teams')),
+                ('teams', models.ManyToManyField(blank=True, related_name='patner_projects', to='organization_network.Team', verbose_name='teams')),
             ],
             options={
                 'verbose_name': 'project',

@@ -19,11 +19,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import os, time
+import time
 
-from optparse import make_option
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.db import connections
 
 
@@ -39,9 +37,9 @@ class Command(BaseCommand):
         db_conn = connections[self.db_name]
         while not connected:
             try:
-                c = db_conn.cursor()
+                db_conn.cursor()
                 connected = True
-            except:
+            except Exception:
                 print('error connecting to DB...')
                 if i > self.N:
                     print('...exiting')

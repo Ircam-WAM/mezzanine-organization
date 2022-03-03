@@ -9,32 +9,32 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-media', '0006_auto_20161013_1631'),
-        ('organization-network', '0037_organizationtype_css_class'),
+        ('organization_media', '0006_auto_20161013_1631'),
+        ('organization_network', '0037_organizationtype_css_class'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='OrganizationPlaylist',
             fields=[
-                ('playlist_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-media.Playlist')),
-                ('organization', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='playlists', to='organization-network.Organization', verbose_name='organization')),
+                ('playlist_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_media.Playlist')),
+                ('organization', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='playlists', to='organization_network.Organization', verbose_name='organization')),
             ],
             options={
                 'abstract': False,
             },
-            bases=('organization-media.playlist',),
+            bases=('organization_media.playlist',),
         ),
         migrations.CreateModel(
             name='PersonPlaylist',
             fields=[
-                ('playlist_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-media.Playlist')),
-                ('person', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='playlists', to='organization-network.Person', verbose_name='person')),
+                ('playlist_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_media.Playlist')),
+                ('person', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='playlists', to='organization_network.Person', verbose_name='person')),
             ],
             options={
                 'abstract': False,
             },
-            bases=('organization-media.playlist',),
+            bases=('organization_media.playlist',),
         ),
         migrations.RemoveField(
             model_name='organizationaudio',

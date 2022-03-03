@@ -19,18 +19,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from django.core.management.base import BaseCommand, CommandError
-from organization.network.models import Person
+from django.core.management.base import BaseCommand
 from django.db import connection
+
 
 class Command(BaseCommand):
     help = """Search for duplicates of Person by first_name and last_name
     """
+
     def handle(self, *args, **options):
 
         with connection.cursor() as cursor:
             cursor.execute('SELECT "first_name", "last_name", count(*) \
-            FROM "organization-network_person" \
+            FROM "organization_network_person" \
             GROUP BY "first_name", "last_name" HAVING count(*) > 1')
             rows = cursor.fetchall()
 

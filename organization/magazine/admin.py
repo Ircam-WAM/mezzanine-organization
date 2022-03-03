@@ -20,17 +20,19 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib import admin
-from django import forms
-from django.contrib.sites.models import Site
 from copy import deepcopy
+from mezzanine.utils.static import static_lazy as static
 from modeltranslation.admin import TranslationTabularInline
-from mezzanine.core.admin import *
+from mezzanine.core.admin import TabularDynamicInlineAdmin, TeamOwnableAdmin,\
+    DisplayableAdmin, OwnableAdmin, BaseTranslationModelAdmin
 from mezzanine.pages.admin import PageAdmin
-from mezzanine.blog.admin import BlogPostAdmin
-from organization.magazine.models import *
-from organization.magazine.forms import *
-from organization.magazine.translation import *
-from organization.core.utils import actions_to_duplicate, get_other_sites
+from organization.magazine.models import ArticleImage, ArticlePlaylist, Article,\
+    ArticlePersonListBlockInline, DynamicContentArticle, DynamicMultimediaArticle,\
+    ArticleRelatedTitle, Brief, DynamicContentMagazineContent, Magazine, Topic
+from organization.magazine.forms import ArticlePersonListForm,\
+    DynamicContentArticleForm, DynamicMultimediaArticleForm, BriefForm,\
+    DynamicContentMagazineContentForm
+
 
 class ArticleImageInline(TabularDynamicInlineAdmin):
 
@@ -77,14 +79,16 @@ class ArticleAdminDisplayable(TeamOwnableAdmin, DisplayableAdmin):
     list_display = ('title', 'department', 'publish_date', 'status', 'user')
     exclude = ('related_posts', 'short_url')
 
-    filter_horizontal = ['categories',]
-    inlines = [ArticleImageInline,
-              ArticlePersonAutocompleteInlineAdmin,
-              DynamicMultimediaArticleInline,
-              ArticleRelatedTitleAdmin,
-              DynamicContentArticleInline,
-              ArticlePlaylistInline]
-    list_filter = [ 'status', 'department', ] #'keywords'
+    filter_horizontal = ['categories', ]
+    inlines = [
+        ArticleImageInline,
+        ArticlePersonAutocompleteInlineAdmin,
+        DynamicMultimediaArticleInline,
+        ArticleRelatedTitleAdmin,
+        DynamicContentArticleInline,
+        ArticlePlaylistInline
+    ]
+    list_filter = ['status', 'department', ]  # 'keywords'
 
     # actions = actions_to_duplicate()
 
@@ -96,8 +100,11 @@ class ArticleAdminDisplayable(TeamOwnableAdmin, DisplayableAdmin):
         return DisplayableAdmin.save_form(self, request, form, change)
 
     def get_readonly_fields(self, request, obj=None):
-        self.readonly_fields = super(ArticleAdminDisplayable, self).get_readonly_fields(request, obj=None)
-        if not request.user.is_superuser and not 'user' in self.readonly_fields:
+        self.readonly_fields = super(
+            ArticleAdminDisplayable,
+            self
+        ).get_readonly_fields(request, obj=None)
+        if not request.user.is_superuser and 'user' not in self.readonly_fields:
             self.readonly_fields += ('user',)
         return self.readonly_fields
 
@@ -118,7 +125,7 @@ class BriefAdminDisplayable(TeamOwnableAdmin, BaseTranslationModelAdmin):
     form = BriefForm
     fieldsets = deepcopy(BriefAdmin.fieldsets)
     exclude = ("short_url", "keywords", "description", "slug", )
-    search_fields = ['title',]
+    search_fields = ['title', ]
 
     def ext_content(self, instance):
         return instance.external_content[:100] + "..."
@@ -138,11 +145,10 @@ class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
 class MagazineAdmin(BaseTranslationModelAdmin):
 
     model = Magazine
-    inlines = [DynamicContentHomeSliderInline,]
+    inlines = [DynamicContentHomeSliderInline, ]
 
 
 admin.site.register(Article, ArticleAdminDisplayable)
 admin.site.register(Brief, BriefAdminDisplayable)
 admin.site.register(Topic, PageAdmin)
 admin.site.register(Magazine, MagazineAdmin)
-

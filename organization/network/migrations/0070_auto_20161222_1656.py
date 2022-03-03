@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0069_auto_20161216_1649'),
+        ('organization_network', '0069_auto_20161216_1649'),
     ]
 
     operations = [
@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('wednesday_hours', models.IntegerField(blank=True, null=True, verbose_name='wednesday hours')),
                 ('thursday_hours', models.IntegerField(blank=True, null=True, verbose_name='thursday hours')),
                 ('friday_hours', models.IntegerField(blank=True, null=True, verbose_name='friday hours')),
-                ('activity', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='person_activity_weekly_hour_volume', to='organization-network.PersonActivity', verbose_name='activity')),
+                ('activity', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='person_activity_weekly_hour_volume', to='organization_network.PersonActivity', verbose_name='activity')),
             ],
             options={
                 'verbose_name': 'Person Activity Weekly Hour Volume',
@@ -53,6 +53,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='personactivity',
             name='weekly_hour_volume',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-network.ActivityWeeklyHourVolume'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_network.ActivityWeeklyHourVolume'),
         ),
     ]

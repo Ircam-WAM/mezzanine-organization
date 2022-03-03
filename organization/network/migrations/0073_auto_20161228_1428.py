@@ -10,8 +10,8 @@ import organization.network.validators
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0032_project_external_id'),
-        ('organization-network', '0072_auto_20161222_1906'),
+        ('organization_projects', '0032_project_external_id'),
+        ('organization_network', '0072_auto_20161222_1906'),
     ]
 
     operations = [
@@ -93,16 +93,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='personactivityvacation',
             name='activity',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization-network.PersonActivity', verbose_name='activity'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization_network.PersonActivity', verbose_name='activity'),
         ),
         migrations.AddField(
             model_name='personactivitytimesheet',
             name='activity',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='timesheets', to='organization-network.PersonActivity', verbose_name='activity'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='timesheets', to='organization_network.PersonActivity', verbose_name='activity'),
         ),
         migrations.AddField(
             model_name='personactivitytimesheet',
             name='project',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='timesheets', to='organization-projects.Project', verbose_name='project'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='timesheets', to='organization_projects.Project', verbose_name='project'),
         ),
     ]

@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-pages', '0017_pageblock_login_required'),
+        ('organization_pages', '0017_pageblock_login_required'),
     ]
 
     operations = [

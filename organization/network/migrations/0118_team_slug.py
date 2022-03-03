@@ -6,16 +6,16 @@ from django.db import migrations, models
 from organization.network.models import Team
 
 
-# def generate_slugs(apps, schema_editor):
-#     teams = Team.objects.all()
-#     for team in teams:
-#         team.save()
+#def generate_slugs(apps, schema_editor):
+#    teams = Team.objects.all()
+#    for team in teams:
+#        team.save()
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0117_merge_20181204_1801'),
+        ('organization_network', '0117_merge_20181204_1801'),
     ]
 
     operations = [
@@ -24,5 +24,4 @@ class Migration(migrations.Migration):
             name='slug',
             field=models.CharField(blank=True, help_text='Leave blank to have the URL auto-generated from the name.', max_length=2000, null=True, verbose_name='URL'),
         ),
-        # migrations.RunPython(generate_slugs),
     ]

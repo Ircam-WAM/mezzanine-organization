@@ -9,8 +9,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-media', '0001_initial'),
-        ('organization-agenda', '0005_auto_20160928_1858'),
+        ('organization_media', '0001_initial'),
+        ('organization_agenda', '0005_auto_20160928_1858'),
     ]
 
     operations = [
@@ -25,13 +25,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='eventaudio',
             name='audio_ptr',
-            field=models.OneToOneField(auto_created=True, default=1, on_delete=django.db.models.deletion.CASCADE, parent_link=True, serialize=False, to='organization-media.Audio'),
+            field=models.OneToOneField(auto_created=True, default=1, on_delete=django.db.models.deletion.CASCADE, parent_link=True, serialize=False, to='organization_media.Audio'),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='eventvideo',
             name='video_ptr',
-            field=models.OneToOneField(auto_created=True, default=1, on_delete=django.db.models.deletion.CASCADE, parent_link=True, serialize=False, to='organization-media.Video'),
+            field=models.OneToOneField(auto_created=True, default=1, on_delete=django.db.models.deletion.CASCADE, parent_link=True, serialize=False, to='organization_media.Video'),
             preserve_default=False,
         ),
         migrations.RemoveField(

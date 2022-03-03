@@ -9,23 +9,23 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-pages', '0024_auto_20171221_1143'),
+        ('organization_pages', '0024_auto_20171221_1143'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='dynamiccontenthomebody',
             name='home',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='organization-pages.Home', verbose_name='home'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='organization_pages.Home', verbose_name='home'),
         ),
         migrations.AlterField(
             model_name='dynamiccontenthomemedia',
             name='home',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_content_home_media', to='organization-pages.Home', verbose_name='home'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_content_home_media', to='organization_pages.Home', verbose_name='home'),
         ),
         migrations.AlterField(
             model_name='dynamiccontenthomeslider',
             name='home',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='organization-pages.Home', verbose_name='home'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='organization_pages.Home', verbose_name='home'),
         ),
     ]

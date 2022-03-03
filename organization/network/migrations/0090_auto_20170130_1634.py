@@ -15,7 +15,7 @@ def migrate_percentage(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0089_auto_20170127_1933'),
+        ('organization_network', '0089_auto_20170127_1933'),
     ]
 
     operations = [

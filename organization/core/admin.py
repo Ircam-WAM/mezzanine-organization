@@ -19,31 +19,29 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from copy import deepcopy
-import re
 from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
-from django.contrib.sites.models import Site
-from mezzanine.core.admin import *
-from mezzanine.pages.admin import PageAdmin
+from django.urls import reverse
+from mezzanine.core.admin import BaseTranslationModelAdmin, SitePermissionUserAdmin,\
+    UserAdmin
 from mezzanine.blog.models import BlogPost
 from mezzanine.generic.models import ThreadedComment, Keyword
 from mezzanine.conf import settings
-from organization.core.models import *
-from organization.core.translation import *
-from organization.core.utils import get_other_sites, getUsersListOfSameTeams
+from mezzanine.utils.models import get_user_model
+from organization.core.models import LinkType
+from django.utils.safestring import mark_safe
+from django.contrib.admin import helpers
 
 try:
     from hijack_admin.admin import HijackUserAdmin
 except ImportError:
     pass
-from pprint import pprint
-from django.contrib.admin import helpers
 
 
 class PreventLastRecordDeletionMixin():
     """
-    Prevents the deletion of a record if it is the last one (or the last `min_objects` ones)
+    Prevents the deletion of a record if it is the last one
+    (or the last `min_objects` ones)
     """
     def has_delete_permission(self, request, obj=None):
 
@@ -59,9 +57,10 @@ class PreventLastRecordDeletionMixin():
             queryset = queryset.exclude(pk__in=selected)
 
         if queryset.count() <= self.min_objects:
-            # Commented because has_delete_permission() is called multiple times (to render the admin templates) and causes a message flood
-            #message = 'There should be at least {} object(s) left.'
-            #self.message_user(request, message.format(self.min_objects))
+            # Commented because has_delete_permission() is called multiple times
+            # (to render the admin templates) and causes a message flood
+            # message = 'There should be at least {} object(s) left.'
+            # self.message_user(request, message.format(self.min_objects))
 
             # FIX: it returns a 401/403 and thus quits the admin... not perfect.
             return False
@@ -73,29 +72,10 @@ class KeywordAdmin(BaseTranslationModelAdmin):
 
     model = Keyword
 
-# class DuplicateAdmin(object):
-
-#     func_template = """def duplicate_content_to_%s(self, request, queryset):
-#                             import inspect
-#                             import copy
-#                             from pprint import pprint
-#                             domain = inspect.stack()[0][3].replace('duplicate_content_to_', '').replace('_', '.')
-#                             site = Site.objects.get(domain=domain)
-                            
-#                             for obj in queryset:
-#                                 clone = copy.copy(obj)
-#                                 if hasattr(clone, 'blogpost_ptr_id'):
-#                                     blogpost_ptr_id = None
-#                                 clone.pk = None
-#                                 clone.site = site
-#                                 clone.save(force_insert=True)"""
-
-#     for site in get_other_sites(): exec(func_template % (re.sub(r'(\.|-)', '_', site.domain)))
-
 
 class BaseTranslationOrderedModelAdmin(BaseTranslationModelAdmin):
 
-    def get_fieldsets(self, request, obj = None):
+    def get_fieldsets(self, request, obj=None):
         res = super(BaseTranslationOrderedModelAdmin, self).get_fieldsets(request, obj)
         fields = reversed(self.first_fields)
         if settings.USE_MODELTRANSLATION:
@@ -123,26 +103,43 @@ class NullListFilter(SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value() in ('0', '1'):
-            kwargs = { '{0}__isnull'.format(self.parameter_name) : self.value() == '1' }
+            kwargs = {
+                '{0}__isnull'.format(self.parameter_name): self.value() == '1'
+            }
             return queryset.filter(**kwargs)
         return queryset
 
 
-if settings.DEBUG :
-    class UserAdminCustom(HijackUserAdmin, SitePermissionUserAdmin):
+if settings.DEBUG:
+    class UserAdminCustom(SitePermissionUserAdmin):
 
-        list_display = UserAdmin.list_display + ('is_active',  'is_superuser', 'last_login', 'date_joined', 'person_link', 'my_groups', 'hijack_field' )
+        list_display = UserAdmin.list_display + (
+            'is_active',
+            'is_superuser',
+            'last_login',
+            'date_joined',
+            'person_link',
+            'my_groups',
+        )
 
         def person_link(self, instance):
-            url = reverse('admin:%s_%s_change' %(instance.person._meta.app_label, instance.person._meta.model_name),  args=[instance.person.id] )
-            return '<a href="%s" target="_blank">%s</a>' %(url, instance.person.__str__())
+            url = reverse(
+                'admin:%s_%s_change' % (
+                    instance.person._meta.app_label,
+                    instance.person._meta.model_name
+                ),  args=[instance.person.id]
+            )
+            return mark_safe('<a href="%s" target="_blank">%s</a>' % (
+                url,
+                instance.person.__str__()
+            ))
 
         person_link.allow_tags = True
 
         def my_groups(self, instance):
             grp_str = []
             for group in instance.groups.all():
-                if group :
+                if group:
                     grp_str.append(group.name)
             return ", ".join(grp_str)
 
@@ -159,10 +156,6 @@ admin.site.register(LinkType)
 admin.site.unregister(BlogPost)
 admin.site.unregister(ThreadedComment)
 admin.site.register(Keyword, KeywordAdmin)
-
-
-# admin.site.unregister(LinkAdmin)
-# admin.site.register(Link, CustomLinkAdmin)
 
 
 if settings.DEBUG and settings.HIJACK_REGISTER_ADMIN:

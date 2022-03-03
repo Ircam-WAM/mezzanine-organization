@@ -19,40 +19,24 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import os
-import sys
-import csv
 import logging
-import datetime
-import math
 from collections import OrderedDict
-from pprint import pprint
-from calendar import monthrange
-import datetimerange
-from optparse import make_option
-import xlrd
-from itertools import takewhile
-from re import findall
-import dateutil.parser
-import sys,ldap,ldap.async
 from datetime import date, timedelta, datetime
 # from string import split
 from django.contrib.sites.models import Site
 from django.http import HttpResponse
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
-from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand
 from django.db.models import Q
-from django.utils.text import slugify
-from django.template import Context
-from organization.network.models import Person, ProjectActivity
-from organization.projects.models import ProjectWorkPackage, PersonActivityTimeSheet
+from organization.network.models import Person, ProjectActivity,\
+     PersonActivityTimeSheet
 
 
-checkboxes = {'True' : 'X', 'False' : '-'}
+checkboxes = {'True': 'X', 'False': '-'}
+
 
 class Logger:
 
@@ -81,13 +65,14 @@ def get_instance(model, field, value):
         return model
 
 
-
 class Command(BaseCommand):
     help = """Import Person data from IRCAM's legacy XLS management file.
-              python manage.py import-ircam-timesheet-xls -s /srv/backup/time_sheet_2015_V3_H2020.xls
+        python manage.py import-ircam-timesheet-xls -s /srv/backup/time_sheet_2015_V3_H2020.xls  # noqa: E501
     """
 
-    log_file = settings.TIMESHEET_LOG_PATH + datetime.today().strftime("%y-%m-%d_%H-%M-%S") + ".log"
+    log_file = settings.TIMESHEET_LOG_PATH + datetime.today().strftime(
+        "%y-%m-%d_%H-%M-%S"
+    ) + ".log"
     last_day_in_month = date.today().replace(day=1) - timedelta(days=1)
     first_day_in_month = last_day_in_month.replace(day=1)
     # used for test
@@ -119,11 +104,10 @@ class Command(BaseCommand):
             help='End of a period, format YYYY/MM/DD',
         )
 
-
     def handle(self, *args, **kwargs):
         self.logger = Logger(self.log_file)
-        self.dry_run =  kwargs.get('dry_run')
-        self.reminder =  kwargs.get('reminder')
+        self.dry_run = kwargs.get('dry_run')
+        self.reminder = kwargs.get('reminder')
         self.input_from = kwargs.get('input_from')
         self.input_to = kwargs.get('input_to')
 
@@ -140,30 +124,89 @@ class Command(BaseCommand):
         person_dict = OrderedDict()
 
         # select all persons which have been a assigned to a workpackage or project
-        person_list = ProjectActivity.objects.filter((Q(project__date_from__lt=self.first_day_in_month) & Q(project__date_to__range=(self.first_day_in_month, self.last_day_in_month))
-                                                    | Q(project__date_from__range=(self.first_day_in_month, self.last_day_in_month)) & Q(project__date_to__range=(self.first_day_in_month, self.last_day_in_month))
-                                                    | Q(project__date_from__range=(self.first_day_in_month, self.last_day_in_month)) & Q(project__date_to__gt=self.last_day_in_month)
-                                                    | Q(project__date_from__lt=self.first_day_in_month) & Q(project__date_to__gt=self.last_day_in_month))
-                                                    | (Q(work_packages__date_from__lt=self.first_day_in_month) & Q(work_packages__date_to__range=(self.first_day_in_month, self.last_day_in_month))
-                                                    | Q(work_packages__date_from__range=(self.first_day_in_month, self.last_day_in_month)) & Q(work_packages__date_to__range=(self.first_day_in_month, self.last_day_in_month))
-                                                    | Q(work_packages__date_from__range=(self.first_day_in_month, self.last_day_in_month)) & Q(work_packages__date_to__range=(self.first_day_in_month, self.last_day_in_month))
-                                                    | Q(work_packages__date_from__lt=self.first_day_in_month) & Q(work_packages__date_to__gt=self.last_day_in_month))
-                                                    & Q(activity__employers__id=settings.IRCAM_EMPLOYER)) \
-        .exclude(Q(project__date_from__isnull=True) \
-                 and Q(project__date_to__isnull=True)
-                 and Q(default_percentage__isnull=True)) \
-        .values('activity__id',
-                'activity__person__id',
-                'activity__person__first_name',
-                'activity__person__last_name',
-                'activity__person__email',
-                'project__title',
-                'project__id',
-                'work_packages__title',
-                'default_percentage') \
-        .order_by('activity__person__id') \
-        .distinct() \
-        .all()
+        person_list = ProjectActivity.objects.filter(
+            (
+                Q(
+                    project__date_from__lt=self.first_day_in_month
+                ) & Q(
+                    project__date_to__range=(
+                        self.first_day_in_month,
+                        self.last_day_in_month
+                    )
+                ) | Q(
+                    project__date_from__range=(
+                        self.first_day_in_month,
+                        self.last_day_in_month
+                    )
+                ) & Q(
+                    project__date_to__range=(
+                        self.first_day_in_month,
+                        self.last_day_in_month
+                    )
+                ) | Q(
+                    project__date_from__range=(
+                        self.first_day_in_month,
+                        self.last_day_in_month
+                    )
+                ) & Q(
+                    project__date_to__gt=self.last_day_in_month
+                ) | Q(
+                    project__date_from__lt=self.first_day_in_month
+                ) & Q(
+                    project__date_to__gt=self.last_day_in_month
+                )
+            ) | (
+                Q(
+                    work_packages__date_from__lt=self.first_day_in_month
+                ) & Q(
+                    work_packages__date_to__range=(
+                        self.first_day_in_month,
+                        self.last_day_in_month
+                    )
+                ) | Q(
+                    work_packages__date_from__range=(
+                        self.first_day_in_month,
+                        self.last_day_in_month
+                    )
+                ) & Q(
+                    work_packages__date_to__range=(
+                        self.first_day_in_month,
+                        self.last_day_in_month
+                    )
+                ) | Q(
+                    work_packages__date_from__range=(
+                        self.first_day_in_month,
+                        self.last_day_in_month
+                    )
+                ) & Q(
+                    work_packages__date_to__range=(
+                        self.first_day_in_month,
+                        self.last_day_in_month
+                    )
+                ) | Q(
+                    work_packages__date_from__lt=self.first_day_in_month
+                ) & Q(
+                    work_packages__date_to__gt=self.last_day_in_month
+                )
+            ) & Q(
+                activity__employers__id=settings.IRCAM_EMPLOYER
+            )
+        )\
+            .exclude(Q(project__date_from__isnull=True)
+                     and Q(project__date_to__isnull=True)
+                     and Q(default_percentage__isnull=True)) \
+            .values('activity__id',
+                    'activity__person__id',
+                    'activity__person__first_name',
+                    'activity__person__last_name',
+                    'activity__person__email',
+                    'project__title',
+                    'project__id',
+                    'work_packages__title',
+                    'default_percentage') \
+            .order_by('activity__person__id') \
+            .distinct() \
+            .all()
 
         # Reformating data
         for person in person_list:
@@ -176,77 +219,97 @@ class Command(BaseCommand):
             person_dict[pid]['lastname'] = person['activity__person__last_name']
             person_dict[pid]['email'] = person['activity__person__email']
             # project
-            if not 'project' in person_dict[pid]:
+            if 'project' not in person_dict[pid]:
                 person_dict[pid]['project'] = {}
             # project id
-            if not person['project__id'] in person_dict[pid]['project'].keys():
+            if person['project__id'] not in person_dict[pid]['project'].keys():
                 person_dict[pid]['project'][person['project__id']] = {}
             # project name
-            person_dict[pid]['project'][person['project__id']]['name'] = person['project__title']
+            person_dict[pid]['project'][person['project__id']]['name'] = person[
+                'project__title'
+            ]
             # workpackages
-            if not 'work_packages' in person_dict[pid]['project'][person['project__id']].keys():
+            if 'work_packages' not in person_dict[pid]['project'][person['project__id']].keys():  # noqa: E501
                 person_dict[pid]['project'][person['project__id']]['work_packages'] = []
             if not person['work_packages__title'] is None:
-                person_dict[pid]['project'][person['project__id']]['work_packages'].append(person['work_packages__title'])
+                person_dict[pid]['project'][person['project__id']]['work_packages'].append(person['work_packages__title'])  # noqa: E501
             # default percentage
-            if not 'default_percentage' in person_dict[pid]['project'][person['project__id']].keys():
-                person_dict[pid]['project'][person['project__id']]['default_percentage'] = person['default_percentage']
+            if 'default_percentage' not in person_dict[pid]['project'][person['project__id']].keys():  # noqa: E501
+                person_dict[pid]['project'][person['project__id']]['default_percentage'] = person['default_percentage']  # noqa: E501
             person_dict[pid]['activity'] = person['activity__id']
 
         # test send mail
-        if settings.DEBUG :
-            person = Person.objects.get(id=settings.TIMESHEET_USER_TEST) # test
-            send_mail_to_user(person.first_name,
+        if settings.DEBUG:
+            person = Person.objects.get(id=settings.TIMESHEET_USER_TEST)  # test
+            send_mail_to_user(
+                person.first_name,
                 person.last_name,
                 person.email,
                 self.first_day_in_month,
                 self.last_day_in_month,
                 current_site.domain,
-                self.reminder)
+                self.reminder
+            )
 
         l_head = log_head(self.first_day_in_month, self.last_day_in_month)
-        # sending mail to all if person has not enterred its timesheet and if not DEBUG mode
+        # sending mail to all if person has not enterred its timesheet and if not DEBUG mode  # noqa: E501
         for pid, person_v in person_dict.items():
             l_reminder = log_reminder(False)
             l_timesheet = log_timehseet(False)
-            l_person = log_person(str(pid), person_v['firstname'], person_v['lastname'], person_v['project'])
+            l_person = log_person(
+                str(pid),
+                person_v['firstname'],
+                person_v['lastname'],
+                person_v['project']
+            )
             timesheet = []
             for project_id, project_v in person_v['project'].items():
                 t = PersonActivityTimeSheet \
-                                     .objects \
-                                     .filter(activity__id=person_v['activity'], year=curr_year, month=curr_month, project__id=project_id) \
-                                     .exclude(percentage__isnull=True)
+                   .objects \
+                   .filter(
+                        activity__id=person_v['activity'],
+                        year=curr_year,
+                        month=curr_month,
+                        project__id=project_id
+                    ) \
+                   .exclude(percentage__isnull=True)
                 timesheet.extend(t)
 
-
             # if person has not entered its timesheets
-            if len(timesheet) < len(person_v['project']) :
+            if len(timesheet) < len(person_v['project']):
                 if self.reminder:
                     l_reminder = log_reminder(True)
                 if not self.dry_run and not settings.DEBUG:
-                    send_mail_to_user(person_v['firstname'],
-                          person_v['lastname'],
-                          person_v['email'],
-                          self.first_day_in_month,
-                          self.last_day_in_month,
-                          current_site.domain,
-                          self.reminder
+                    send_mail_to_user(
+                        person_v['firstname'],
+                        person_v['lastname'],
+                        person_v['email'],
+                        self.first_day_in_month,
+                        self.last_day_in_month,
+                        current_site.domain,
+                        self.reminder
                     )
-            else :
+            else:
                 l_timesheet = log_timehseet(True)
 
             self.logger.info(l_head, l_reminder + l_timesheet + l_person)
 
         # Send list of user to master
         if self.dry_run:
-            send_mail_to_master_list_user(self.first_day_in_month, self.last_day_in_month, self.log_file)
+            send_mail_to_master_list_user(
+                self.first_day_in_month,
+                self.last_day_in_month,
+                self.log_file
+            )
 
         # used only for test
         self.stdout.write(str(self.expected_person))
 
 
 def log_head(first_day_in_month, last_day_in_month):
-    return first_day_in_month.strftime('%Y/%m/%d') + " - "+ last_day_in_month.strftime('%Y/%m/%d')
+    return first_day_in_month.strftime('%Y/%m/%d') +\
+        " - " +\
+        last_day_in_month.strftime('%Y/%m/%d')
 
 
 def log_reminder(b=False):
@@ -265,14 +328,22 @@ def log_person(id, firstname, lastname, projects):
         p_str += " | project : " + project_v['name']
         if project_v['default_percentage']:
             p_str += " | "+str(project_v['default_percentage']) + " |"
-        else :
+        else:
             p_str += " | _ |"
         if len(project_v['work_packages']):
             p_str += " "+str(project_v['work_packages'])
     return p_str
 
 
-def send_mail_to_user(first_name, last_name, email, date_from, date_to, domain, is_reminder=False):
+def send_mail_to_user(
+    first_name,
+    last_name,
+    email,
+    date_from,
+    date_to,
+    domain,
+    is_reminder=False
+):
     subject = "[WWW] Veuillez saisir vos timesheets"
     to = (email,)
     from_email = settings.DEFAULT_FROM_EMAIL
@@ -286,20 +357,31 @@ def send_mail_to_user(first_name, last_name, email, date_from, date_to, domain, 
         'last_name': last_name,
         'date_from': date_from,
         'date_to': date_to,
-        'timesheet_url' : "https://"+ domain + reverse('organization-network-timesheet-create-view', args=(date_from.year, date_from.month))
+        'timesheet_url': "https://" + domain + reverse(
+            'organization_network-timesheet-create-view',
+            args=(date_from.year, date_from.month)
+        )
     }
 
     message = get_template('email/timesheet_user.html').render(ctx)
-    msg = EmailMessage(subject, message, to=to, from_email=from_email, bcc=('zawadzki@ircam.fr', ))
+    msg = EmailMessage(
+        subject,
+        message,
+        to=to,
+        from_email=from_email,
+        bcc=(settings.TIMESHEET_BCC_MAIL, )
+    )
     msg.content_subtype = 'html'
     msg.send()
 
     return HttpResponse('email_application_notification')
 
+
 def send_mail_to_master_list_user(date_from, date_to, log_file):
-    subject = "[WWW] Listes utilisateurs pour la période du "+date_from.strftime('%d/%m/%Y')+" au "+date_to.strftime('%d/%m/%Y')
-    to = (settings.TIMESHEET_MASTER_MAIL, 'zawadzki@ircam.fr')
-    from_email = settings.DEFAULT_FROM_EMAIL
+    subject = "[WWW] Listes utilisateurs pour la période du " + date_from.strftime(
+        '%d/%m/%Y'
+    ) + " au " + date_to.strftime('%d/%m/%Y')
+    to = (settings.TIMESHEET_MASTER_MAIL,)
 
     ctx = {
         'date_from': date_from,
@@ -307,7 +389,13 @@ def send_mail_to_master_list_user(date_from, date_to, log_file):
     }
 
     message = get_template('email/timesheet_master_list_user.html').render(ctx)
-    msg = EmailMessage(subject, message, to=to, from_email=settings.TIMESHEET_MASTER_MAIL)
+    msg = EmailMessage(
+        subject,
+        message,
+        to=to,
+        from_email=settings.TIMESHEET_MASTER_MAIL,
+        bcc=settings.TIMESHEET_BCC_MAIL
+    )
     msg.content_subtype = 'html'
     msg.attach_file(log_file)
     msg.send()

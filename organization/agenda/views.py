@@ -19,20 +19,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import datetime
-from django.views.generic.base import TemplateView
 from django.views.generic import DetailView
 from mezzanine.conf import settings
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from organization.magazine.models import Article
 from organization.pages.models import CustomPage
-from organization.media.models import Playlist, Media
 from organization.network.models import Person
 from mezzanine_agenda.models import Event
-from mezzanine_agenda.views import EventListView
-from organization.core.views import autocomplete_result_formatting, SlugMixin, DynamicContentMixin
-from django.db.models import Q
+from organization.core.views import autocomplete_result_formatting,\
+    SlugMixin, DynamicContentMixin
 
 
 class DynamicContentEventView(Select2QuerySetSequenceView):
@@ -63,8 +59,7 @@ class DynamicContentEventView(Select2QuerySetSequenceView):
 
 
 class EventDetailView(SlugMixin, DetailView, DynamicContentMixin):
-    
+
     model = Event
     template_name = "agenda/event_detail.html"
     context_object_name = 'event'
-

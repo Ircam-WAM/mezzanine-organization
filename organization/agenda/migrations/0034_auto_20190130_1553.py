@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-agenda', '0033_dynamicmultimediaevent'),
+        ('organization_agenda', '0033_dynamicmultimediaevent'),
     ]
 
     operations = [

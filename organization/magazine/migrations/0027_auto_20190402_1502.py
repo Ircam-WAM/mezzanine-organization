@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('sites', '0002_alter_domain_unique'),
         ('contenttypes', '0002_remove_content_type_name'),
-        ('organization-magazine', '0026_auto_20190130_1553'),
+        ('organization_magazine', '0026_auto_20190130_1553'),
     ]
 
     operations = [
@@ -60,6 +60,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='dynamiccontentmagazinecontent',
             name='magazine',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_content', to='organization-magazine.Magazine', verbose_name='magazine'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_content', to='organization_magazine.Magazine', verbose_name='magazine'),
         ),
     ]

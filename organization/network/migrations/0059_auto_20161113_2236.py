@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0058_auto_20161109_1218'),
+        ('organization_network', '0058_auto_20161109_1218'),
     ]
 
     operations = [
@@ -106,6 +106,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='activitystatus',
             name='family',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='activity_statuses', to='organization-network.ActivityStatusFamily', verbose_name='family'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='activity_statuses', to='organization_network.ActivityStatusFamily', verbose_name='family'),
         ),
     ]

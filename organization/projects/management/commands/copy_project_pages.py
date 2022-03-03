@@ -19,12 +19,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import requests
-from optparse import make_option
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
-from organization.projects.models import *
-from django.utils.text import slugify
+from django.core.management.base import BaseCommand
+from organization.projects.models import ProjectPage, ProjectPageBlock,\
+    ProjectPageImage, DynamicContentProjectPage
 from django.contrib.sites.models import Site
 from copy import deepcopy
 
@@ -35,14 +32,16 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
 
-        parser.add_argument('-f',
+        parser.add_argument(
+            '-f',
             '--from-site-id',
             dest='from_site_id',
             help='from site id'
         )
 
-        parser.add_argument('-t',
-        '--to-site-id',
+        parser.add_argument(
+            '-t',
+            '--to-site-id',
             dest='to_site_id',
             help='to site id'
         )
@@ -64,20 +63,32 @@ class Command(BaseCommand):
             for project_page_block in project_page.blocks.all():
                 to_project_page_block = ProjectPageBlock()
                 for field in project_page_block._meta.fields:
-                    setattr(to_project_page_block, field.name, getattr(project_page_block, field.name))
+                    setattr(
+                        to_project_page_block,
+                        field.name,
+                        getattr(project_page_block, field.name)
+                    )
                 to_project_page_block.project_page = to_project_page
                 to_project_page_block.save()
 
             for project_page_image in project_page.images.all():
                 to_project_page_image = ProjectPageImage()
                 for field in project_page_image._meta.fields:
-                    setattr(to_project_page_image, field.name, getattr(project_page_image, field.name))
+                    setattr(
+                        to_project_page_image,
+                        field.name,
+                        getattr(project_page_image, field.name)
+                    )
                 to_project_page_image.project_page = to_project_page
                 to_project_page_image.save()
 
-            for dynamic_content_project in project_page.dynamic_content_project_pages.all():
+            for dynamic_content_project in project_page.dynamic_content_project_pages.all():  # noqa: E501
                 to_project_page_dynamic_content = DynamicContentProjectPage()
                 for field in dynamic_content_project._meta.fields:
-                    setattr(to_project_page_dynamic_content, field.name, getattr(dynamic_content_project, field.name))
+                    setattr(
+                        to_project_page_dynamic_content,
+                        field.name,
+                        getattr(dynamic_content_project, field.name)
+                    )
                 to_project_page_dynamic_content.project_page = to_project_page
                 to_project_page_dynamic_content.save()

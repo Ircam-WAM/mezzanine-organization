@@ -19,9 +19,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from modeltranslation.translator import translator, register, TranslationOptions
+from modeltranslation.translator import register, TranslationOptions
 
-from organization.projects.models import *
+from organization.projects.models import Project, ProjectPlaylist, ProjectImage,\
+    ProjectUserImage, ProjectResidencyProducer, ProjectResidencyImage,\
+    ProjectResidencyUserImage, ProjectResidencyArticle, ProjectResidencyEvent,\
+    ProjectFile, ProjectBlock, ProjectBlogPage, ProjectLink, ProjectProgram,\
+    ProjectProgramType, ProjectTopicPage, ProjectDemo, ProjectWorkPackage,\
+    ProjectRelatedTitle, DynamicContentProject, ProjectPublicData,\
+    ProjectPrivateData, ProjectCall, ProjectCallBlock, ProjectCallImage,\
+    ProjectCallLink, ProjectCallFile, ProjectContact, ProjectTopic,\
+    DynamicMultimediaProject, ProjectPage, ProjectPageBlock, ProjectPageImage,\
+    DynamicContentProjectPage
 
 
 @register(Project)

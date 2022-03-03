@@ -9,8 +9,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-magazine', '0019_auto_20170105_1743'),
-        ('organization-projects', '0062_auto_20170710_1701'),
+        ('organization_magazine', '0019_auto_20170105_1743'),
+        ('organization_projects', '0062_auto_20170710_1701'),
     ]
 
     operations = [
@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
             name='ProjectResidencyArticle',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('article', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residencies', to='organization-magazine.Article', verbose_name='article')),
-                ('residency', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='articles', to='organization-projects.ProjectResidency', verbose_name='residency')),
+                ('article', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residencies', to='organization_magazine.Article', verbose_name='article')),
+                ('residency', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='articles', to='organization_projects.ProjectResidency', verbose_name='residency')),
             ],
         ),
     ]

@@ -27,4 +27,4 @@ from django.apps import AppConfig
 class ShopConfig(AppConfig):
 
     name = 'organization.shop'
-    label = 'organization-shop'
+    label = 'organization_shop'

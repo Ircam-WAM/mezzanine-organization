@@ -8,7 +8,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-agenda', '0024_eventrank'),
+        ('organization_agenda', '0024_eventrank'),
     ]
 
     operations = [

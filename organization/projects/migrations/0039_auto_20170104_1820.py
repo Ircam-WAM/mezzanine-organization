@@ -9,7 +9,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0038_projectblogpage_login_required_content'),
+        ('organization_projects', '0038_projectblogpage_login_required_content'),
     ]
 
     operations = [

@@ -25,18 +25,22 @@ from copy import deepcopy
 
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.sites.models import Site
+from django.utils.html import mark_safe
+from mezzanine.utils.static import static_lazy as static
+
 from modeltranslation.admin import TranslationTabularInline
-from mezzanine.core.admin import *
-from mezzanine.pages.admin import PageAdmin
+from mezzanine.core.admin import StackedDynamicInlineAdmin
 from mezzanine.conf import settings
-from mezzanine.core.admin import DisplayableAdmin, OwnableAdmin
-from mezzanine_agenda.models import Event, EventCategory, Season
-from mezzanine_agenda.admin import *
-from organization.core.models import *
-from organization.agenda.models import *
-from organization.agenda.forms import *
-# from organization.agenda.translation import *
+from mezzanine.core.admin import DisplayableAdmin, OwnableAdmin,\
+    BaseTranslationModelAdmin, TabularDynamicInlineAdmin
+from mezzanine_agenda.models import Event, EventCategory, Season, EventPrice
+from mezzanine_agenda.admin import EventAdmin, EventAdminBase
+from organization.agenda.models import EventBlock, EventImage, EventPlaylist,\
+    EventDepartment, EventPersonListBlockInline, EventLink, EventTraining,\
+    EventPeriod, EventRelatedTitle, EventPriceDescription, DynamicContentEvent,\
+    DynamicMultimediaEvent, EventPublicType, EventTrainingLevel
+from organization.agenda.forms import EventPersonListForm, DynamicContentEventForm,\
+    DynamicMultimediaEventForm
 
 
 class EventBlockInline(StackedDynamicInlineAdmin):
@@ -60,7 +64,7 @@ class EventDepartmentInline(TabularDynamicInlineAdmin):
 
 
 class EventPersonAutocompleteInlineAdmin(TabularDynamicInlineAdmin):
-    
+
     model = EventPersonListBlockInline
     exclude = ("title", "description")
     form = EventPersonListForm
@@ -93,7 +97,7 @@ class EventPriceDescriptionAdmin(TranslationTabularInline):
 
 class CustomEventPriceAdmin(BaseTranslationModelAdmin):
 
-    inlines = [EventPriceDescriptionAdmin,]
+    inlines = [EventPriceDescriptionAdmin, ]
     list_display = ['value', 'description']
 
     def description(self, instance):
@@ -110,7 +114,7 @@ class DynamicContentEventInline(TabularDynamicInlineAdmin):
 
 
 class DynamicMultimediaEventInline(TabularDynamicInlineAdmin):
-    
+
     model = DynamicMultimediaEvent
     form = DynamicMultimediaEventForm
 
@@ -154,7 +158,7 @@ class SeasonFilter(admin.SimpleListFilter):
     parameter_name = 'seaon'
 
     def lookups(self, request, model_admin):
-        seasons = Season.objects.all();
+        seasons = Season.objects.all()
         season_lookups = ()
         for season in seasons:
             season_lookups = season_lookups + ((str(season.start.year), season.title),)
@@ -175,37 +179,49 @@ class CustomEventAdmin(EventAdmin):
         event_is_parent = False
         if instance.parent is None:
             # self.allow_tags = True
-            event_is_parent = '<div style="width:100%%; height:100%%; background-color:orange;">True</div>'
+            event_is_parent = mark_safe(
+                '<div style="width:100%%; height:100%%;'
+                'background-color:orange;">True</div>'
+            )
         return event_is_parent
 
     search_fields = ['title', 'external_id']
     fieldsets = deepcopy(EventAdminBase.fieldsets)
     exclude = ("short_url",)
     is_parent.allow_tags = True
-    list_display = ["title", "start", "end", "external_id", "user", "status", "is_parent","admin_link"]
+    list_display = [
+        "title",
+        "start",
+        "end",
+        "external_id",
+        "user",
+        "status",
+        "is_parent",
+        "admin_link"
+    ]
     if settings.EVENT_USE_FEATURED_IMAGE:
         list_display.insert(0, "admin_thumb")
-    list_filter = deepcopy(DisplayableAdmin.list_filter) + ("location", "category", EventParentFilter, SeasonFilter)
-    inlines = [EventPeriodInline, EventBlockInline, EventImageInline, EventDepartmentInline,
-                EventPersonAutocompleteInlineAdmin, EventLinkInline, EventPlaylistInline, DynamicMultimediaEventInline, EventTrainingInline,
-                EventRelatedTitleAdmin, DynamicContentEventInline]
-
-    #actions = actions_to_duplicate()
-    # func_template = """def duplicate_content_to_%s(self, request, queryset):
-    #                         import inspect
-    #                         import copy
-    #                         from pprint import pprint
-
-    #                         domain = inspect.stack()[0][3].replace('duplicate_content_to_', '').replace('_', '.')
-    #                         site = Site.objects.get(domain=domain)
-                            
-    #                         for obj in queryset:
-    #                             clone = copy.copy(obj)
-    #                             clone.pk = None
-    #                             clone.site = site
-    #                             clone.update(force_insert=True)"""
-
-    # for site in get_other_sites(): exec(func_template % (site.domain.replace(".", "_")))
+    list_filter = deepcopy(
+        DisplayableAdmin.list_filter
+    ) + (
+        "location",
+        "category",
+        EventParentFilter,
+        SeasonFilter
+    )
+    inlines = [
+        EventPeriodInline,
+        EventBlockInline,
+        EventImageInline,
+        EventDepartmentInline,
+        EventPersonAutocompleteInlineAdmin,
+        EventLinkInline,
+        EventPlaylistInline,
+        DynamicMultimediaEventInline,
+        EventTrainingInline,
+        EventRelatedTitleAdmin,
+        DynamicContentEventInline
+    ]
 
     def save_form(self, request, form, change):
         """
@@ -215,19 +231,21 @@ class CustomEventAdmin(EventAdmin):
         return DisplayableAdmin.save_form(self, request, form, change)
 
     def get_readonly_fields(self, request, obj=None):
-        self.readonly_fields = super(CustomEventAdmin, self).get_readonly_fields(request, obj=None)
-        if not request.user.is_superuser and not 'user' in self.readonly_fields:
+        self.readonly_fields = super(CustomEventAdmin, self).get_readonly_fields(
+            request,
+            obj=None
+        )
+        if not request.user.is_superuser and 'user' not in self.readonly_fields:
             self.readonly_fields += ('user',)
         return self.readonly_fields
 
     class Media:
         js = (
-        static("mezzanine/js/admin/dynamic_inline.js"),
-    )
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
 
 
 class CustomEventCategoryAdmin(BaseTranslationModelAdmin):
-
     pass
 
 
@@ -239,7 +257,6 @@ class EventPublicTypeAdmin(BaseTranslationModelAdmin):
 class EventTrainingLevelAdmin(BaseTranslationModelAdmin):
 
     model = EventTrainingLevel
-
 
 
 admin.site.unregister(Event)

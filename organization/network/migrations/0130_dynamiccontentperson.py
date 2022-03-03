@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('organization-network', '0129_merge_20190221_1703'),
+        ('organization_network', '0129_merge_20190221_1703'),
     ]
 
     operations = [
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('_order', mezzanine.core.fields.OrderField(null=True, verbose_name='Order')),
                 ('object_id', models.PositiveIntegerField(editable=False, null=True, verbose_name='related object')),
                 ('content_type', models.ForeignKey(blank=True, editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType', verbose_name='content type')),
-                ('person', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_content_person', to='organization-network.Person', verbose_name='person')),
+                ('person', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_content_person', to='organization_network.Person', verbose_name='person')),
             ],
             options={
                 'verbose_name': 'Dynamic Content Person',

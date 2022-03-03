@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('organization-pages', '0005_dynamiccontentpage'),
+        ('organization_pages', '0005_dynamiccontentpage'),
     ]
 
     operations = [
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('_order', mezzanine.core.fields.OrderField(null=True, verbose_name='Order')),
                 ('object_id', models.PositiveIntegerField(editable=False, null=True, verbose_name='related object')),
                 ('content_type', models.ForeignKey(blank=True, editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType', verbose_name='content type')),
-                ('home', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-pages.Home', verbose_name='home')),
+                ('home', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_pages.Home', verbose_name='home')),
             ],
             options={
                 'ordering': ('_order',),

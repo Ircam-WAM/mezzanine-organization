@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 
 def update_project_type(apps, schema_editor):
-    Project = apps.get_model("organization-projects", "Project")
+    Project = apps.get_model("organization_projects", "Project")
     for project in Project.objects.all():
         if project.type == 'external project':
             project.type = 'external'
@@ -19,7 +19,7 @@ def update_project_type(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0018_auto_20161005_1424'),
+        ('organization_projects', '0018_auto_20161005_1424'),
     ]
 
     operations = [

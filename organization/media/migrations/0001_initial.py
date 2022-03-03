@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=500, verbose_name='Title')),
                 ('slug', models.CharField(blank=True, help_text='Leave blank to have the URL auto-generated from the title.', max_length=2000, null=True, verbose_name='URL')),
-                ('audios', models.ManyToManyField(blank=True, related_name='playlists', to='organization-media.Audio', verbose_name='audios')),
+                ('audios', models.ManyToManyField(blank=True, related_name='playlists', to='organization_media.Audio', verbose_name='audios')),
                 ('site', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='sites.Site')),
             ],
             options={
@@ -81,6 +81,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='video',
             name='category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='videos', to='organization-media.VideoCategory', verbose_name='category'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='videos', to='organization_media.VideoCategory', verbose_name='category'),
         ),
     ]

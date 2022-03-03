@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-magazine', '0014_brief_style'),
+        ('organization_magazine', '0014_brief_style'),
     ]
 
     operations = [
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(blank=True, max_length=1024, null=True, verbose_name='title')),
-                ('article', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='related_title', to='organization-magazine.Article', verbose_name='article')),
+                ('article', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='related_title', to='organization_magazine.Article', verbose_name='article')),
             ],
             options={
                 'verbose_name': 'related title',

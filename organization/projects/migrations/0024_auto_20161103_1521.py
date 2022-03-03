@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('sites', '0002_alter_domain_unique'),
-        ('organization-projects', '0023_auto_20161026_1025'),
+        ('organization_projects', '0023_auto_20161026_1025'),
     ]
 
     operations = [
@@ -99,17 +99,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='repository',
             name='system',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='repositories', to='organization-projects.RepositorySystem', verbose_name='system'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='repositories', to='organization_projects.RepositorySystem', verbose_name='system'),
         ),
         migrations.AddField(
             model_name='projectdemo',
             name='project',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='demos', to='organization-projects.Project', verbose_name='project'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='demos', to='organization_projects.Project', verbose_name='project'),
         ),
         migrations.AddField(
             model_name='projectdemo',
             name='repository',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='demos', to='organization-projects.Repository', verbose_name='repository'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='demos', to='organization_projects.Repository', verbose_name='repository'),
         ),
         migrations.AddField(
             model_name='projectdemo',

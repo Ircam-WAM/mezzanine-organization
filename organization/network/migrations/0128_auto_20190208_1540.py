@@ -9,13 +9,13 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0127_remove_organization_site'),
+        ('organization_network', '0127_remove_organization_site'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='projectactivity',
             name='project',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_activity', to='organization-projects.Project', verbose_name='project'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_activity', to='organization_projects.Project', verbose_name='project'),
         ),
     ]

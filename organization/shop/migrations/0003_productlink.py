@@ -9,9 +9,9 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-core', '0004_auto_20160923_1141'),
+        ('organization_core', '0004_auto_20160923_1141'),
         ('shop', '0008_auto_20160907_1726'),
-        ('organization-shop', '0002_auto_20160923_1749'),
+        ('organization_shop', '0002_auto_20160923_1749'),
     ]
 
     operations = [
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('url', models.URLField(blank=True, max_length=512, verbose_name='URL')),
-                ('link_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization-core.LinkType', verbose_name='link type')),
+                ('link_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization_core.LinkType', verbose_name='link type')),
                 ('product', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='links', to='shop.Product', verbose_name='product')),
             ],
             options={

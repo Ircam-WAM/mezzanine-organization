@@ -21,18 +21,22 @@
 
 from __future__ import unicode_literals
 
-import django.views.i18n
 from django.conf.urls import include, url
-from django.conf.urls.i18n import i18n_patterns
 
-from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
-from organization.shop.views import *
+from organization.shop.views import CustomProductDetailView
 
 _slash = "/" if settings.APPEND_SLASH else ""
 
 urlpatterns = [
-    url("^shop/", include("cartridge.shop.urls")),
-    url("^product/(?P<slug>.*)%s$" % _slash, CustomProductDetailView.as_view(), name="custom_shop_product"),
+    url(
+        "^shop/",
+        include("cartridge.shop.urls")
+    ),
+    url(
+        "^product/(?P<slug>.*)%s$" % _slash,
+        CustomProductDetailView.as_view(),
+        name="custom_shop_product"
+    ),
 ]

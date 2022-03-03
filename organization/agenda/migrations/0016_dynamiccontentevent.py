@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
         ('mezzanine_agenda', '0015_auto_20161021_1937'),
-        ('organization-agenda', '0015_auto_20161026_1025'),
+        ('organization_agenda', '0015_auto_20161026_1025'),
     ]
 
     operations = [

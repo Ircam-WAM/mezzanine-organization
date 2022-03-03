@@ -20,22 +20,20 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import sys
-import csv
 import logging
 import datetime
 from optparse import make_option
 import xlrd
 from itertools import takewhile
 
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand
 from django.db.models import Q
 
-from organization.core.models import *
-from organization.network.models import *
-from organization.projects.models import *
+from organization.network.models import Organization, Person,\
+    PersonActivity, ActivityStatus, ActivityFramework, ActivityGrade,\
+    UMR, Team, OrganizationType, TrainingType, TrainingLevel, TrainingTopic,\
+    TrainingSpeciality, ActivityFunction, BudgetCode, RecordPiece
+from organization.projects.models import Project
 
 
 class Logger:
@@ -82,6 +80,7 @@ class IrcamXLS:
             col_len -= 1
         return col_len
 
+
 class IrcamPerson(object):
 
     organization = Organization.objects.get(name='Ircam')
@@ -95,7 +94,11 @@ class IrcamPerson(object):
         print(last_name)
         title = ' '.join((first_name, last_name))
 
-        self.person, c = Person.objects.get_or_create(title=title, first_name=first_name, last_name=last_name)
+        self.person, c = Person.objects.get_or_create(
+            title=title,
+            first_name=first_name,
+            last_name=last_name
+        )
         self.activity = PersonActivity(person=self.person)
 
     def set_identity(self, ):
@@ -107,9 +110,9 @@ class IrcamPerson(object):
 
         birthday = self.row[3].value
         if birthday:
-            self.person.birthday = datetime.datetime(*xlrd.xldate_as_tuple(birthday, self.datemode))
-
-        # self.person.nationality = self.get_or_create_name(Nationality, self.row[33].value)
+            self.person.birthday = datetime.datetime(
+                *xlrd.xldate_as_tuple(birthday, self.datemode)
+            )
 
         self.person.save()
 
@@ -131,13 +134,17 @@ class IrcamPerson(object):
             last_name = []
             for name in names[1:]:
                 if name:
-                    if name[0] != '(' and not name in name_exceptions:
+                    if name[0] != '(' and name not in name_exceptions:
                         last_name.append(name.capitalize())
             last_name = ' '.join(last_name)
 
             title = ' '.join((first_name, last_name))
-            print('----'  + title)
-            person, c = Person.objects.get_or_create(title=title, first_name=first_name, last_name=last_name)
+            print('----' + title)
+            person, c = Person.objects.get_or_create(
+                title=title,
+                first_name=first_name,
+                last_name=last_name
+            )
 
             return person
         return None
@@ -148,7 +155,7 @@ class IrcamPerson(object):
         if value:
             try:
                 obj, c = model.objects.get_or_create(name=value)
-            except:
+            except Exception:
                 obj = model(name=value)
                 obj.save()
         return obj
@@ -161,20 +168,44 @@ class IrcamPerson(object):
         if name_list:
             name_list = map(str.strip, name_list)
             return name_list
-        return [names,]
+        return [names, ]
 
     def add_many(self, field, model, column_id, type='name'):
         values = self.row[column_id].value if self.row[column_id].value else None
         if values:
             for value in self.split_names(values):
                 if type == 'name':
-                    qs = Q(name=value) | Q(name=value.lower()) | Q(name=value.upper()) | Q(name=value.capitalize())
+                    qs = Q(
+                        name=value
+                    ) | Q(
+                        name=value.lower()
+                    ) | Q(
+                        name=value.upper()
+                    ) | Q(
+                        name=value.capitalize()
+                    )
                     obj = model(name=value)
                 elif type == 'code':
-                    qs = Q(code=value) | Q(code=value.lower()) | Q(code=value.upper()) | Q(code=value.capitalize())
+                    qs = Q(
+                        code=value
+                    ) | Q(
+                        code=value.lower()
+                    ) | Q(
+                        code=value.upper()
+                    ) | Q(
+                        code=value.capitalize()
+                    )
                     obj = model(code=value)
                 elif type == 'title':
-                    qs = Q(title=value) | Q(title=value.lower()) | Q(title=value.upper()) | Q(title=value.capitalize())
+                    qs = Q(
+                        title=value
+                    ) | Q(
+                        title=value.lower()
+                    ) | Q(
+                        title=value.upper()
+                    ) | Q(
+                        title=value.capitalize()
+                    )
                     obj = model(title=value)
                     obj.status = 1
                 elif type == 'person':
@@ -191,11 +222,15 @@ class IrcamPerson(object):
                 field.add(obj)
 
     def set_activity(self):
-        self.activity.date_from = datetime.datetime(*xlrd.xldate_as_tuple(self.row[4].value, self.datemode)) if self.row[4].value else None
-        self.activity.date_to = datetime.datetime(*xlrd.xldate_as_tuple(self.row[5].value, self.datemode)) if self.row[5].value else None
+        self.activity.date_from = datetime.datetime(
+            *xlrd.xldate_as_tuple(self.row[4].value, self.datemode)
+        ) if self.row[4].value else None
+        self.activity.date_to = datetime.datetime(
+            *xlrd.xldate_as_tuple(self.row[5].value, self.datemode)
+            ) if self.row[5].value else None
         try:
             self.activity.weeks = int(self.row[6].value) if self.row[6].value else None
-        except:
+        except Exception:
             pass
 
         self.activity.status = self.get_or_create_name(ActivityStatus, 10)
@@ -216,12 +251,13 @@ class IrcamPerson(object):
         quota = self.row[23].value
         try:
             self.activity.rd_quota_float = float(quota)
-        except:
+        except Exception:
             self.activity.rd_quota_text = str(quota)
 
         self.activity.phd_doctoral_school = self.get_or_create_name(Organization, 25)
         if self.activity.phd_doctoral_school:
-            self.activity.phd_doctoral_school.type, c = OrganizationType.objects.get_or_create(name='Ecole doctorale')
+            self.activity.phd_doctoral_school.type, c =\
+                OrganizationType.objects.get_or_create(name='Ecole doctorale')
             self.activity.phd_doctoral_school.save()
         self.add_many(self.activity.phd_directors, Person, 26, type='person')
         self.add_many(self.activity.supervisors, Person, 27, type='person')
@@ -230,14 +266,22 @@ class IrcamPerson(object):
         self.activity.training_type = self.get_or_create_name(TrainingType, 29)
         self.activity.training_level = self.get_or_create_name(TrainingLevel, 30)
         self.activity.training_topic = self.get_or_create_name(TrainingTopic, 31)
-        self.activity.training_speciality = self.get_or_create_name(TrainingSpeciality, 32)
+        self.activity.training_speciality = self.get_or_create_name(
+            TrainingSpeciality,
+            32
+        )
         self.activity.function = self.get_or_create_name(ActivityFunction, 34)
 
         if self.activity.phd_directors:
             self.activity.phd_title = self.row[35].value
             try:
-                self.activity.phd_defense_date = datetime.datetime(*xlrd.xldate_as_tuple(self.row[38].value, self.datemode)) if self.row[38].value else None
-            except:
+                self.activity.phd_defense_date = datetime.datetime(
+                    *xlrd.xldate_as_tuple(
+                        self.row[38].value,
+                        self.datemode
+                    )
+                ) if self.row[38].value else None
+            except Exception:
                 pass
             self.activity.phd_post_doctoral_situation = self.row[39].value
         elif self.activity.training_type:
@@ -248,41 +292,61 @@ class IrcamPerson(object):
         self.activity.hdr = self.row[40].value
         self.activity.budget_code = self.get_or_create_name(BudgetCode, 41)
         try:
-            self.activity.date_modified_manual = datetime.datetime(*xlrd.xldate_as_tuple(self.row[42].value, self.datemode)) if self.row[42].value else None
-        except:
+            self.activity.date_modified_manual = datetime.datetime(
+                *xlrd.xldate_as_tuple(
+                    self.row[42].value,
+                    self.datemode
+                )
+            ) if self.row[42].value else None
+        except Exception:
             pass
-        self.activity.record_piece = self.get_or_create_name(RecordPiece, 43) if self.row[43].value else None
+        self.activity.record_piece = self.get_or_create_name(
+            RecordPiece,
+            43
+        ) if self.row[43].value else None
 
         self.activity.save()
 
 
 class Command(BaseCommand):
     help = """Import Person data from IRCAM's legacy XLS management file.
-              python manage.py import-ircam-person-xls -s /srv/backup/TB_personnel_GP-GM_4.xls
+              python manage.py import-ircam-person-xls -s /srv/backup/TB_personnel_GP-GM_4.xls  # noqa: E501
     """
 
     option_list = BaseCommand.option_list + (
-          make_option('-d', '--dry-run',
+        make_option(
+            '-d',
+            '--dry-run',
             action='store_true',
             dest='dry-run',
-            help='Do NOT write anything'),
-          make_option('-f', '--force',
+            help='Do NOT write anything'
+        ),
+        make_option(
+            '-f',
+            '--force',
             action='store_true',
             dest='force',
-            help='Force overwrite data'),
-          make_option('-s', '--source',
+            help='Force overwrite data'
+        ),
+        make_option(
+            '-s',
+            '--source',
             dest='source_file',
-            help='define the XLS source file'),
-          make_option('-l', '--log',
+            help='define the XLS source file'
+        ),
+        make_option(
+            '-l',
+            '--log',
             dest='log',
-            help='define log file'),
+            help='define log file'
+        ),
     )
 
     def handle(self, *args, **kwargs):
         # self.logger = Logger(kwargs.get('log'))
         self.pattern = kwargs.get('pattern')
         self.source_file = os.path.abspath(kwargs.get('source_file'))
-        self.dry_run =  kwargs.get('dry-run')
+        self.dry_run = kwargs.get('dry-run')
         self.force = kwargs.get('force')
 
         xls = IrcamXLS(self.source_file)

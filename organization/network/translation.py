@@ -19,9 +19,21 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from modeltranslation.translator import translator, register, TranslationOptions
+from modeltranslation.translator import register, TranslationOptions
 
-from organization.network.models import *
+from organization.network.models import Organization, ProducerData,\
+    Department, DepartmentPage, Team, TeamPage, TeamLink, Person,\
+    PersonActivity, PersonPlaylist, PersonLink, PersonImage, PersonFile,\
+    PersonBlock, OrganizationPlaylist, OrganizationLink, OrganizationImage,\
+    OrganizationBlock, OrganizationService, OrganizationContact,\
+    PersonListBlock, PersonListBlockInline, PageCustomPersonListBlockInline,\
+    ActivityGrade, ActivityFunction, ActivityFramework, ActivityStatus,\
+    TrainingTopic, TrainingType, TrainingLevel, TrainingSpeciality,\
+    OrganizationLinked, OrganizationLinkedInline, OrganizationLinkedBlockInline,\
+    ActivityWeeklyHourVolume, PersonActivityTimeSheet, ProjectActivity,\
+    OrganizationEventLocation, OrganizationRole, MediaDepartment,\
+    DynamicMultimediaOrganization, DynamicMultimediaPerson, PersonRelatedTitle,\
+    DynamicContentPerson, TeamProjectOrdering, BudgetCode, RecordPiece
 
 
 @register(Organization)
@@ -51,7 +63,7 @@ class DepartmentPageTranslationOptions(TranslationOptions):
 @register(Team)
 class TeamTranslationOptions(TranslationOptions):
 
-    fields = ('name', 'description')
+    fields = ('name', 'description', 'hal_researche_structure')
 
 
 @register(TeamPage)
@@ -69,7 +81,7 @@ class TeamLinkTranslationOptions(TranslationOptions):
 @register(Person)
 class PersonTranslationOptions(TranslationOptions):
 
-    fields = ('description','bio',)
+    fields = ('description', 'bio',)
 
 
 @register(PersonActivity)
@@ -109,7 +121,7 @@ class PersonBlockTranslationOptions(TranslationOptions):
 
 
 @register(OrganizationPlaylist)
-class OrganizationTranslationOptions(TranslationOptions):
+class OrganizationTranslationOptions2(TranslationOptions):
 
     pass
 
@@ -183,7 +195,7 @@ class ActivityFrameworkTranslationOptions(TranslationOptions):
 @register(ActivityStatus)
 class ActivityStatusTranslationOptions(TranslationOptions):
 
-    fields = ['name', 'description',]
+    fields = ['name', 'description', ]
 
 
 @register(TrainingTopic)
@@ -251,6 +263,7 @@ class OrganizationEventLocationTranslationOptions(TranslationOptions):
 
     fields = []
 
+
 @register(OrganizationRole)
 class OrganizationRoleTranslationOptions(TranslationOptions):
 
@@ -284,4 +297,20 @@ class PersonRelatedTitleTranslationOptions(TranslationOptions):
 @register(DynamicContentPerson)
 class DynamicContentPersonInlineTranslationOptions(TranslationOptions):
 
+    fields = ()
+
+
+@register(TeamProjectOrdering)
+class TeamProjectOrderingTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(BudgetCode)
+class BudgetCodeTranslationOptions(TranslationOptions):
+    fields = ()
+
+
+@register(RecordPiece)
+class RecordPieceTranslationOptions(TranslationOptions):
     fields = ()

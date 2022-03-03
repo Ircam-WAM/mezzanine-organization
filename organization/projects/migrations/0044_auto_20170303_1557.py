@@ -10,10 +10,10 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0088_organization_site'),
+        ('organization_network', '0088_organization_site'),
         ('sites', '0002_alter_domain_unique'),
-        ('organization-core', '0005_linktype_fa_option'),
-        ('organization-projects', '0043_auto_20170214_1643'),
+        ('organization_core', '0005_linktype_fa_option'),
+        ('organization_projects', '0043_auto_20170214_1643'),
     ]
 
     operations = [
@@ -94,7 +94,7 @@ class Migration(migrations.Migration):
                 ('resources_description', models.TextField(help_text='Resources available to the artist (50 – 100 words)  -- e.g. office facility, studio facility, technical equipment, internet connection, laboratory, and periods of availability for artistic production, staff possibly allocated to the project, available budget for travel, consumables and equipments, etc.).', verbose_name='resources description')),
                 ('letter', models.TextField(verbose_name='letter of commitment')),
                 ('validation_status', models.IntegerField(choices=[(0, 'pending'), (1, 'accepted'), (2, 'rejected'), (3, 'in process')], verbose_name='validation status')),
-                ('contact', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ict_projects_contact_person', to='organization-network.Person', verbose_name='Contact Person')),
+                ('contact', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ict_projects_contact_person', to='organization_network.Person', verbose_name='Contact Person')),
             ],
             options={
                 'verbose_name_plural': 'Project ICT data',
@@ -231,31 +231,31 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='projectictdata',
             name='project',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='ict_data', to='organization-projects.Project', verbose_name='project'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='ict_data', to='organization_projects.Project', verbose_name='project'),
         ),
         migrations.AddField(
             model_name='projectcalllink',
             name='call',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='links', to='organization-projects.ProjectCall', verbose_name='project call link'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='links', to='organization_projects.ProjectCall', verbose_name='project call link'),
         ),
         migrations.AddField(
             model_name='projectcalllink',
             name='link_type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization-core.LinkType', verbose_name='link type'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization_core.LinkType', verbose_name='link type'),
         ),
         migrations.AddField(
             model_name='projectcallimage',
             name='call',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization-projects.ProjectCall', verbose_name='project call image'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization_projects.ProjectCall', verbose_name='project call image'),
         ),
         migrations.AddField(
             model_name='projectcallfile',
             name='call',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='files', to='organization-projects.ProjectCall', verbose_name='project call file'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='files', to='organization_projects.ProjectCall', verbose_name='project call file'),
         ),
         migrations.AddField(
             model_name='projectcallblock',
             name='call',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blocks', to='organization-projects.ProjectCall', verbose_name='project call blocks'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blocks', to='organization_projects.ProjectCall', verbose_name='project call blocks'),
         ),
     ]

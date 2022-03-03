@@ -21,22 +21,48 @@
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse, reverse_lazy
-from mezzanine.core.models import Displayable
-from organization.core.models import *
-from organization.media.models import *
+from mezzanine.core.models import Displayable, RichText, TeamOwnable
+from django.urls import reverse
+from organization.core.models import Image, Period
 
 
 class JobResponse(models.Model):
 
-    first_name = models.CharField(max_length=255, null=False, verbose_name=_('first name'))
-    last_name = models.CharField(max_length=255, null=False, verbose_name=_('last name'))
-    email = models.EmailField(max_length=255, null=False, verbose_name=_('email'))
+    first_name = models.CharField(
+        max_length=255,
+        null=False,
+        verbose_name=_('first name')
+    )
+    last_name = models.CharField(
+        max_length=255,
+        null=False,
+        verbose_name=_('last name')
+    )
+    email = models.EmailField(
+        max_length=255,
+        null=False,
+        verbose_name=_('email')
+    )
     message = models.TextField(max_length=800, verbose_name=_('message'))
-    #@TODO validate type format
-    curriculum_vitae = models.FileField(_("curriculum vitae"), max_length=1024, upload_to="job_responses/%Y/%m/%d/")
-    cover_letter = models.FileField(max_length=1024, upload_to="job_responses/%Y/%m/%d/", verbose_name=_('cover letter'))
-    job_offer = models.ForeignKey("JobOffer", verbose_name=_('job offer'), related_name='job_response', blank=True, null=True, on_delete=models.SET_NULL)
+    # @TODO validate type format
+    curriculum_vitae = models.FileField(
+        _("curriculum vitae"),
+        max_length=1024,
+        upload_to="job_responses/%Y/%m/%d/"
+    )
+    cover_letter = models.FileField(
+        max_length=1024,
+        upload_to="job_responses/%Y/%m/%d/",
+        verbose_name=_('cover letter')
+    )
+    job_offer = models.ForeignKey(
+        "JobOffer",
+        verbose_name=_('job offer'),
+        related_name='job_response',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _('job reponse')
@@ -45,19 +71,41 @@ class JobResponse(models.Model):
 
 class JobOffer(Displayable, RichText, TeamOwnable):
 
-    email = models.EmailField(max_length=255, null=False, verbose_name=_('Email to forward response'))
-    type = models.CharField(blank=True, choices=[('internship', _('Internship')),
-                        ('job', _('Permanent position')),
-                        ('short_term_contract', _('Short term contract'))
-                    ], max_length=32, verbose_name='Job offer type')
+    email = models.EmailField(
+        max_length=255,
+        null=False,
+        verbose_name=_('Email to forward response')
+    )
+    type = models.CharField(
+        blank=True,
+        choices=[
+            ('internship', _('Internship')),
+            ('job', _('Permanent position')),
+            ('short_term_contract', _('Short term contract'))
+        ],
+        max_length=32,
+        verbose_name='Job offer type'
+    )
 
-    text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'), default=_('View'))
-    url = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'), \
-                            help_text="If definied, it will redirect to this url, by default, it will display content of this page.")
+    text_button = models.CharField(
+        blank=True,
+        max_length=150,
+        null=False,
+        verbose_name=_('text button'),
+        default=_('View')
+    )
+    url = models.URLField(
+        blank=True,
+        max_length=1000,
+        null=False,
+        verbose_name=_('external content'),
+        help_text="If definied, it will redirect to this url,"
+        " by default, it will display content of this page."
+    )
 
     def get_absolute_url(self):
         if not self.url:
-            return reverse("organization-job-offer-detail", kwargs={"slug": self.slug})
+            return reverse("organization_job-offer-detail", kwargs={"slug": self.slug})
         return self.url
 
     class Meta:
@@ -67,19 +115,37 @@ class JobOffer(Displayable, RichText, TeamOwnable):
 
 
 class JobOfferImage(Image):
-    
-    job_offer = models.ForeignKey(JobOffer, verbose_name=_('job offer'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+
+    job_offer = models.ForeignKey(
+        JobOffer,
+        verbose_name=_('job offer'),
+        related_name='images',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
 
 class Candidacy(Displayable, RichText, Period):
 
-    text_button = models.CharField(blank=True, max_length=150, null=False, verbose_name=_('text button'))
-    url = models.URLField(blank=True, max_length=1000, null=False, verbose_name=_('external content'), \
-                            help_text="If definied, it will redirect to this url, by default, it will display content of this page.")
+    text_button = models.CharField(
+        blank=True,
+        max_length=150,
+        null=False,
+        verbose_name=_('text button')
+    )
+    url = models.URLField(
+        blank=True,
+        max_length=1000,
+        null=False,
+        verbose_name=_('external content'),
+        help_text="If definied, it will redirect to this url, by default,"
+        " it will display content of this page."
+    )
 
     def get_absolute_url(self):
         if not self.url:
-            return reverse('organization-candidacy-detail', kwargs={'slug' : self.slug})
+            return reverse('organization-candidacy-detail', kwargs={'slug': self.slug})
         return self.url
 
     class Meta:
@@ -89,4 +155,11 @@ class Candidacy(Displayable, RichText, Period):
 
 class CandidacyImage(Image):
 
-    candidacy = models.ForeignKey(Candidacy, verbose_name=_('candidacy'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+    candidacy = models.ForeignKey(
+        Candidacy,
+        verbose_name=_('candidacy'),
+        related_name='images',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )

@@ -23,8 +23,8 @@ from dal import autocomplete
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
 from django import forms
-from django.forms.utils import ErrorList
-from organization.magazine.models import *
+from organization.magazine.models import Article, Brief, ArticlePersonListBlockInline,\
+    DynamicContentArticle, DynamicMultimediaArticle, DynamicContentMagazineContent
 from organization.pages.models import CustomPage
 from organization.network.models import PersonListBlock, Person
 from organization.network.views import TeamOwnableMixin
@@ -32,19 +32,26 @@ from mezzanine_agenda.models import Event
 from organization.media.forms import DynamicMultimediaForm
 from mezzanine.blog.models import BlogCategory
 from mezzanine_agenda.models import EventCategory
+from organization.media.models import Playlist, Media
 
 
 class BriefForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
+        queryset=None,
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'object-autocomplete'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(BriefForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
             Article.objects.all(),
             Event.objects.all(),
             CustomPage.objects.all(),
-        ),
-        required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('object-autocomplete'),
-    )
+        )
 
     class Meta:
         model = Brief
@@ -54,9 +61,13 @@ class BriefForm(autocomplete.FutureModelForm):
 class ArticlePersonListForm(forms.ModelForm):
 
     person_list_block = forms.ModelChoiceField(
-        queryset=PersonListBlock.objects.all(),
+        queryset=None,
         widget=autocomplete.ModelSelect2(url='person-list-block-autocomplete')
     )
+
+    def __init__(self, *args, **kwargs):
+        super(ArticlePersonListForm, self).__init__(*args, **kwargs)
+        self.fields['person_list_block'].queryset = PersonListBlock.objects.all()
 
     class Meta:
         model = ArticlePersonListBlockInline
@@ -66,15 +77,21 @@ class ArticlePersonListForm(forms.ModelForm):
 class DynamicContentArticleForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
+        queryset=None,
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-article'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentArticleForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
             Article.objects.all(),
             Event.objects.all(),
             CustomPage.objects.all(),
             Person.objects.all()
-        ),
-        required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-article'),
-    )
+        )
 
     class Meta:
         model = DynamicContentArticle
@@ -82,7 +99,7 @@ class DynamicContentArticleForm(autocomplete.FutureModelForm):
 
 
 class DynamicMultimediaArticleForm(DynamicMultimediaForm):
-    
+
     class Meta(DynamicMultimediaForm.Meta):
         model = DynamicMultimediaArticle
 
@@ -102,24 +119,26 @@ class CategoryFilterForm(forms.Form, TeamOwnableMixin):
         if team:
             articles = self.filter_by_team(articles, team)
 
-        used_art_cat = articles.values_list('categories__id', flat=True) \
-                        .order_by('categories__id') \
-                        .distinct('categories__id') \
+        used_art_cat = articles.values_list(
+            'categories__id',
+            flat=True
+        ).order_by('categories__id').distinct('categories__id')
 
         blog_categories = BlogCategory.objects.filter(id__in=used_art_cat)
         for category in blog_categories:
             CATEGORIES.append((category.id, category.title))
-        
+
         # try / except > for passing migration mezzanine_agenda-0031
         from django.db import DatabaseError
         try:
             events = Event.objects.published()
-            if team :
+            if team:
                 events = self.filter_by_team(events, team)
-            used_evt_cat = events.values_list('category__id', flat=True) \
-                                .order_by('category__id') \
-                                .distinct('category__id')
-            if team :
+            used_evt_cat = events.values_list(
+                'category__id',
+                flat=True
+            ).order_by('category__id').distinct('category__id')
+            if team:
                 used_evt_cat = self.filter_by_team(used_evt_cat, team)
             event_categories = EventCategory.objects.filter(id__in=used_evt_cat)
             for category in event_categories:
@@ -131,16 +150,22 @@ class CategoryFilterForm(forms.Form, TeamOwnableMixin):
 
 
 class DynamicContentMagazineContentForm(autocomplete.FutureModelForm):
-    
+
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
+        queryset=None,
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-magazine'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentMagazineContentForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
             Article.objects.all(),
             Playlist.objects.all(),
             Media.objects.all()
-        ),
-        required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-magazine'),
-    )
+        )
 
     class Meta:
         model = DynamicContentMagazineContent

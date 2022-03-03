@@ -21,12 +21,14 @@
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse, reverse_lazy
-from mezzanine.core.models import Displayable, Slugged, Orderable, TeamOwnable
-from mezzanine.pages.models import Link as MezzanineLink
-from organization.core.models import *
-from organization.media.models import *
-from organization.core.managers import *
+from django.urls import reverse
+from mezzanine.core.models import Displayable, Orderable, TeamOwnable, RichText
+from mezzanine.core.fields import FileField
+from mezzanine.pages.models import Page, Link as MezzanineLink
+from organization.core.models import SubTitled, Block, Image, Link, RelatedTitle,\
+    DynamicContent, URL
+from organization.media.models import PlaylistRelated
+from organization.core.managers import CustomSearchableManager
 
 
 class CustomPage(Page, SubTitled, RichText):
@@ -34,6 +36,49 @@ class CustomPage(Page, SubTitled, RichText):
     objects = CustomSearchableManager()
     menu_alinea = models.BooleanField(_('menu alinea'), default=False)
     class_css = models.CharField(_('CSS class'), max_length=32, blank=True, null=True)
+
+    # order of blocks
+    block_order = models.CharField(_(
+        '''
+        order of blocks (
+            0: images,
+            1: multimedias,
+            2: liste de personnes,
+            3: blocks,
+            4: listes des produits,
+            5: Dynamic Content pages
+        )
+        '''
+        ),
+        max_length=32,
+        default='0,1,2,3,4,5'
+    )
+
+    separator = models.CharField(_(
+        '''
+        separator before blocks,
+        0 : no sepeartor
+        1 : separator
+
+        order of blocks (
+            0: images,
+            1: multimedias,
+            2: liste de personnes,
+            3: blocks,
+            4: listes des produits,
+            5: Dynamic Content pages
+        )
+
+        '''
+        ),
+        max_length=32,
+        default='0,0,1,1,1,1'
+    )
+
+    display_content = models.BooleanField(_('display content'), default=True)
+
+    display_navbar = models.BooleanField(default=True)
+    displayed_in_navbars = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'custom page'
@@ -69,8 +114,19 @@ class ExtendedCustomPageDynamicContent(models.Model):
         (LIST_JURY, "network/ecp_inc/jury_list.html"),
     )
 
-    page = models.ForeignKey(ExtendedCustomPage, verbose_name="extended custom page", related_name="extra_content", blank=True, null=True, on_delete=models.SET_NULL)
-    extra_content = models.CharField(max_length=32, choices=EXTRA_CONTENT_CHOICES, default=NONE)
+    page = models.ForeignKey(
+        ExtendedCustomPage,
+        verbose_name="extended custom page",
+        related_name="extra_content",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    extra_content = models.CharField(
+        max_length=32,
+        choices=EXTRA_CONTENT_CHOICES,
+        default=NONE
+    )
 
     @property
     def choice(self):
@@ -91,18 +147,32 @@ class ExtendedCustomPageDynamicContent(models.Model):
 
 class PageBlock(Block):
 
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey(
+        Page,
+        verbose_name=_('page'),
+        related_name='blocks',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("block")
         verbose_name_plural = _("blocks")
         verbose_name = 'page block'
-        ordering = ['_order',]
+        ordering = ['_order', ]
 
 
 class PageImage(Image):
 
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey(
+        Page,
+        verbose_name=_('page'),
+        related_name='images',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("image")
@@ -112,7 +182,14 @@ class PageImage(Image):
 
 class PagePlaylist(PlaylistRelated):
 
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey(
+        Page,
+        verbose_name=_('page'),
+        related_name='playlists',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("playlist")
@@ -122,7 +199,14 @@ class PagePlaylist(PlaylistRelated):
 
 class PageLink(Link):
 
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.ForeignKey(
+        Page,
+        verbose_name=_('page'),
+        related_name='links',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("link")
@@ -130,9 +214,32 @@ class PageLink(Link):
         order_with_respect_to = "page"
 
 
+DYNAMIC_CONTENT_DISPLAY_MODES = (
+    ('0', "Affichage toute largueur"),
+    ('1', "Affichage pour menu gauche"),
+)
+
+
 class PageRelatedTitle(RelatedTitle):
 
-    page = models.OneToOneField(Page, verbose_name=_('page'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+    page = models.OneToOneField(
+        Page,
+        verbose_name=_('page'),
+        related_name='related_title',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    display_mode = models.CharField(
+        max_length=1,
+        choices=DYNAMIC_CONTENT_DISPLAY_MODES,
+        default='0'
+    )
+    as_page_title = models.BooleanField(
+        _('Afficher le titre comme un titre de page'),
+        default=False
+    )
+    in_navbar = models.BooleanField(_('in navbar ?'), default=False)
 
     class Meta:
         verbose_name = _("related title")
@@ -141,15 +248,29 @@ class PageRelatedTitle(RelatedTitle):
 
 class DynamicContentPage(DynamicContent, Orderable):
 
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='dynamic_content_pages', blank=True, null=True, on_delete=models.CASCADE)
+    page = models.ForeignKey(
+        Page,
+        verbose_name=_('page'),
+        related_name='dynamic_content_pages',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         verbose_name = 'Dynamic Content Page'
 
 
 class DynamicMultimediaPage(DynamicContent, Orderable):
-    
-    page = models.ForeignKey(Page, verbose_name=_('page'), related_name='dynamic_multimedia', blank=True, null=True, on_delete=models.CASCADE)
+
+    page = models.ForeignKey(
+        Page,
+        verbose_name=_('page'),
+        related_name='dynamic_multimedia',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         verbose_name = 'Multimedia'
@@ -157,8 +278,20 @@ class DynamicMultimediaPage(DynamicContent, Orderable):
 
 class LinkImage(models.Model):
 
-    link = models.ForeignKey(MezzanineLink, verbose_name=_('link'), related_name='link_images', blank=True, null=True, on_delete=models.SET_NULL)
-    image = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
+    link = models.ForeignKey(
+        MezzanineLink,
+        verbose_name=_('link'),
+        related_name='link_images',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    image = FileField(
+        _("Image"),
+        max_length=1024,
+        format="Image",
+        upload_to="images"
+    )
 
     class Meta:
         verbose_name = _("link image")
@@ -168,7 +301,14 @@ class LinkImage(models.Model):
 
 class LinkStyle(models.Model):
 
-    link = models.OneToOneField(MezzanineLink, verbose_name=_('link'), related_name='link_style', blank=True, null=True, on_delete=models.SET_NULL)
+    link = models.OneToOneField(
+        MezzanineLink,
+        verbose_name=_('link'),
+        related_name='link_style',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
     class_css = models.CharField(_('CSS class'), max_length=32, blank=True, null=True)
 
     class Meta:
@@ -177,7 +317,13 @@ class LinkStyle(models.Model):
 
 class DynamicContentHomeSlider(DynamicContent, Orderable):
 
-    home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.CASCADE)
+    home = models.ForeignKey(
+        "home",
+        verbose_name=_('home'),
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         verbose_name = 'Slider'
@@ -185,7 +331,13 @@ class DynamicContentHomeSlider(DynamicContent, Orderable):
 
 class DynamicContentHomeBody(DynamicContent, Orderable):
 
-    home = models.ForeignKey("home", verbose_name=_('home'), blank=True, null=True, on_delete=models.CASCADE)
+    home = models.ForeignKey(
+        "home",
+        verbose_name=_('home'),
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         verbose_name = _('Body')
@@ -193,7 +345,14 @@ class DynamicContentHomeBody(DynamicContent, Orderable):
 
 class DynamicContentHomeMedia(DynamicContent, Orderable):
 
-    home = models.ForeignKey("home", verbose_name=_('home'), related_name='dynamic_content_home_media', blank=True, null=True, on_delete=models.CASCADE)
+    home = models.ForeignKey(
+        "home",
+        verbose_name=_('home'),
+        related_name='dynamic_content_home_media',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         verbose_name = 'Media'
@@ -201,7 +360,14 @@ class DynamicContentHomeMedia(DynamicContent, Orderable):
 
 class HomeImage(Image, URL):
 
-    home = models.ForeignKey("home", verbose_name=_('home'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+    home = models.ForeignKey(
+        "home",
+        verbose_name=_('home'),
+        related_name='images',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("image")

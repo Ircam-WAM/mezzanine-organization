@@ -10,22 +10,22 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-media', '0001_initial'),
-        ('organization-core', '0001_initial'),
-        ('organization-network', '0003_personaudio_personblock_personimage_personlink_personvideo'),
+        ('organization_media', '0001_initial'),
+        ('organization_core', '0001_initial'),
+        ('organization_network', '0003_personaudio_personblock_personimage_personlink_personvideo'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='OrganizationAudio',
             fields=[
-                ('audio_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-media.Audio')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='audios', to='organization-network.Organization', verbose_name='project')),
+                ('audio_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_media.Audio')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='audios', to='organization_network.Organization', verbose_name='project')),
             ],
             options={
                 'abstract': False,
             },
-            bases=('organization-media.audio',),
+            bases=('organization_media.audio',),
         ),
         migrations.CreateModel(
             name='OrganizationBlock',
@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True, verbose_name='description')),
                 ('with_separator', models.BooleanField(default=False)),
                 ('background_color', models.CharField(blank=True, choices=[('black', 'black'), ('yellow', 'yellow'), ('red', 'red')], max_length=32, verbose_name='background color')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blocks', to='organization-network.Organization', verbose_name='project')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blocks', to='organization_network.Organization', verbose_name='project')),
             ],
             options={
                 'ordering': ('_order',),
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
                 ('file', mezzanine.core.fields.FileField(max_length=1024, verbose_name='Image')),
                 ('credits', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
                 ('type', models.CharField(choices=[('logo', 'logo'), ('slider', 'slider'), ('card', 'card'), ('page_slider', 'page slider')], max_length=64, verbose_name='type')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization-network.Organization', verbose_name='project')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization_network.Organization', verbose_name='project')),
             ],
             options={
                 'ordering': ('_order',),
@@ -64,8 +64,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('url', models.URLField(blank=True, max_length=512, verbose_name='URL')),
-                ('link_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization-core.LinkType', verbose_name='link type')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='links', to='organization-network.Organization', verbose_name='project')),
+                ('link_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization_core.LinkType', verbose_name='link type')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='links', to='organization_network.Organization', verbose_name='project')),
             ],
             options={
                 'verbose_name_plural': 'links',
@@ -76,12 +76,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='OrganizationVideo',
             fields=[
-                ('video_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-media.Video')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='videos', to='organization-network.Organization', verbose_name='project')),
+                ('video_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_media.Video')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='videos', to='organization_network.Organization', verbose_name='project')),
             ],
             options={
                 'abstract': False,
             },
-            bases=('organization-media.video',),
+            bases=('organization_media.video',),
         ),
     ]

@@ -8,11 +8,11 @@ import mezzanine.core.fields
 
 
 def copy_project_to_project_page(apps, schema_editor):
-    Project = apps.get_model('organization-projects', 'Project')
-    ProjectPage = apps.get_model('organization-projects', 'ProjectPage')
-    ProjectPageBlock = apps.get_model('organization-projects', 'ProjectPageBlock')
-    ProjectPageImage = apps.get_model('organization-projects', 'ProjectPageImage')
-    DynamicContentProjectPage = apps.get_model('organization-projects', 'DynamicContentProjectPage')
+    Project = apps.get_model('organization_projects', 'Project')
+    ProjectPage = apps.get_model('organization_projects', 'ProjectPage')
+    ProjectPageBlock = apps.get_model('organization_projects', 'ProjectPageBlock')
+    ProjectPageImage = apps.get_model('organization_projects', 'ProjectPageImage')
+    DynamicContentProjectPage = apps.get_model('organization_projects', 'DynamicContentProjectPage')
 
     for project in Project.objects.all():
         project_page = ProjectPage(project=project)
@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
         ('sites', '0002_alter_domain_unique'),
-        ('organization-projects', '0077_merge_20181204_1801'),
+        ('organization_projects', '0077_merge_20181204_1801'),
     ]
 
     operations = [
@@ -106,7 +106,7 @@ class Migration(migrations.Migration):
                 ('with_separator', models.BooleanField(default=False)),
                 ('background_color', models.CharField(blank=True, choices=[('black', 'black'), ('yellow', 'yellow'), ('red', 'red'), ('white', 'white'), ('blue', 'blue'), ('purple', 'purple')], max_length=32, verbose_name='background color')),
                 ('login_required', models.BooleanField(default=False, verbose_name='login required')),
-                ('project_page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blocks', to='organization-projects.ProjectPage', verbose_name='project page')),
+                ('project_page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blocks', to='organization_projects.ProjectPage', verbose_name='project page')),
             ],
             options={
                 'ordering': ('_order',),
@@ -126,7 +126,7 @@ class Migration(migrations.Migration):
                 ('credits_fr', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
                 ('credits_en', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
                 ('type', models.CharField(choices=[('logo', 'logo'), ('logo_white', 'logo white'), ('logo_black', 'logo black'), ('logo_header', 'logo header'), ('logo_footer', 'logo footer'), ('slider', 'slider'), ('card', 'card'), ('page_slider', 'page - slider'), ('page_featured', 'page - featured')], max_length=64, verbose_name='type')),
-                ('project_page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization-projects.ProjectPage', verbose_name='project page')),
+                ('project_page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization_projects.ProjectPage', verbose_name='project page')),
             ],
             options={
                 'ordering': ('_order',),
@@ -155,22 +155,22 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='projectcallblock',
             name='call',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blocks', to='organization-projects.ProjectCall', verbose_name='project call'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blocks', to='organization_projects.ProjectCall', verbose_name='project call'),
         ),
         migrations.AlterField(
             model_name='projectcallfile',
             name='call',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='files', to='organization-projects.ProjectCall', verbose_name='project call'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='files', to='organization_projects.ProjectCall', verbose_name='project call'),
         ),
         migrations.AlterField(
             model_name='projectcallimage',
             name='call',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization-projects.ProjectCall', verbose_name='project call'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization_projects.ProjectCall', verbose_name='project call'),
         ),
         migrations.AlterField(
             model_name='projectcalllink',
             name='call',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='links', to='organization-projects.ProjectCall', verbose_name='project call'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='links', to='organization_projects.ProjectCall', verbose_name='project call'),
         ),
         migrations.AlterField(
             model_name='projectdemo',
@@ -185,7 +185,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='projectpage',
             name='project',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='pages', to='organization-projects.Project', verbose_name='project'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='pages', to='organization_projects.Project', verbose_name='project'),
         ),
         migrations.AddField(
             model_name='projectpage',
@@ -195,7 +195,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='dynamiccontentprojectpage',
             name='project_page',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_content_project_pages', to='organization-projects.ProjectPage', verbose_name='project page'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_content_project_pages', to='organization_projects.ProjectPage', verbose_name='project page'),
         ),
         migrations.RunPython(copy_project_to_project_page),
     ]

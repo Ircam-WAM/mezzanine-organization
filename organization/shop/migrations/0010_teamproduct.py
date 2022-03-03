@@ -10,8 +10,8 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('shop', '0013_auto_20181227_1252'),
-        ('organization-network', '0122_auto_20190117_1158'),
-        ('organization-shop', '0009_auto_20161026_1025'),
+        ('organization_network', '0122_auto_20190117_1158'),
+        ('organization_shop', '0009_auto_20161026_1025'),
     ]
 
     operations = [
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='team', to='shop.Product', verbose_name='product')),
-                ('teams', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='products', to='organization-network.Team', verbose_name='team')),
+                ('teams', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='products', to='organization_network.Team', verbose_name='team')),
             ],
             options={
                 'verbose_name': 'team',

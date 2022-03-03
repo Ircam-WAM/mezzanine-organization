@@ -8,7 +8,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0092_auto_20170228_1317'),
+        ('organization_network', '0092_auto_20170228_1317'),
     ]
 
     operations = [

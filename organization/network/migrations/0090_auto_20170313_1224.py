@@ -10,20 +10,20 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0089_auto_20170303_1637'),
+        ('organization_network', '0089_auto_20170303_1637'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='OrganizationContact',
             fields=[
-                ('person_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-network.Person')),
+                ('person_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_network.Person')),
             ],
             options={
                 'verbose_name': 'Organization contact',
                 'verbose_name_plural': 'Organization contacts',
             },
-            bases=('organization-network.person',),
+            bases=('organization_network.person',),
         ),
         migrations.CreateModel(
             name='OrganizationUserImage',
@@ -47,11 +47,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='organizationuserimage',
             name='organization',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_images', to='organization-network.Organization', verbose_name='organization'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user_images', to='organization_network.Organization', verbose_name='organization'),
         ),
         migrations.AddField(
             model_name='organizationcontact',
             name='organization',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='contacts', to='organization-network.Organization', verbose_name='organization'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='contacts', to='organization_network.Organization', verbose_name='organization'),
         ),
     ]

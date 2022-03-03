@@ -9,20 +9,20 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-media', '0005_auto_20160930_1849'),
-        ('organization-magazine', '0010_articleaudio_articlevideo'),
+        ('organization_media', '0005_auto_20160930_1849'),
+        ('organization_magazine', '0010_articleaudio_articlevideo'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='ArticlePlaylist',
             fields=[
-                ('playlist_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-media.Playlist')),
+                ('playlist_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_media.Playlist')),
             ],
             options={
                 'abstract': False,
             },
-            bases=('organization-media.playlist',),
+            bases=('organization_media.playlist',),
         ),
         migrations.RemoveField(
             model_name='articleaudio',

@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('pages', '0006_auto_20170223_2352'),
-        ('organization-pages', '0021_homeimage_url'),
+        ('organization_pages', '0021_homeimage_url'),
     ]
 
     operations = [
@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('extra_content', models.CharField(choices=[('none', 'No extra content'), ('news', 'List of News'), ('events', 'List of Events'), ('jury', 'List of the Jury')], default='none', max_length=32)),
-                ('page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='extra_content', to='organization-pages.ExtendedCustomPage', verbose_name='extended custom page')),
+                ('page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='extra_content', to='organization_pages.ExtendedCustomPage', verbose_name='extended custom page')),
             ],
         ),
     ]
