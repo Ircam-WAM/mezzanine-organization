@@ -22,6 +22,7 @@
 from copy import deepcopy
 
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from mezzanine.utils.static import static_lazy as static
 from mezzanine.core.admin import StackedDynamicInlineAdmin, TabularDynamicInlineAdmin,\
     BaseTranslationModelAdmin, TeamOwnableAdmin, DisplayableAdmin
@@ -36,13 +37,14 @@ from organization.projects.models import ProjectLink, ProjectImage, ProjectBlock
     ProjectResidency, Project, ProjectTopic, ProjectProgram, ProjectProgramType,\
     ProjectCall, ProjectCallBlock, ProjectCallLink, ProjectCallImage,\
     ProjectCallFile, ProjectPageBlock, ProjectPageImage, DynamicContentProjectPage,\
-    ProjectTopicPage, Repository, RepositorySystem, ProjectCollection, ProjectCollectionImage
+    ProjectTopicPage, Repository, RepositorySystem, ProjectCollection, \
+    ProjectCollectionImage, Pivot_Project_ProjectCollection
 from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm,\
     DynamicMultimediaProjectForm, Pivot_Project_ProjectCollection_Form, \
     DynamicContentProjectPageForm
 from organization.core.admin import (
-        null_filter, BaseTranslationOrderedModelAdmin, TeamOwnableAdmin
+        null_filter, BaseTranslationOrderedModelAdmin
 )
 
 

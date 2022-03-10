@@ -34,7 +34,8 @@ from organization.network.models import Organization, Person
 from organization.projects.models import DynamicContentProject, Project,\
     ProjectPublicData, ProjectPrivateData, ProjectUserImage, ProjectLink,\
     ProjectContact, ProjectResidency, DynamicMultimediaProject,\
-    DynamicContentProjectPage, ProjectTopic, PROJECT_TYPE_CHOICES
+    DynamicContentProjectPage, ProjectTopic, PROJECT_TYPE_CHOICES, \
+    Pivot_Project_ProjectCollection
 from extra_views import InlineFormSetView
 
 

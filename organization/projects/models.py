@@ -33,15 +33,16 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from organization.core.models import Slugged, TitledSlugged, Period,\
+from organization.core.models import TitledSlugged, Period,\
     Named, Titled, Description, Block, Link, Image, UserImage, File,\
-    SubTitled, NamedOnly, RelatedTitle, URL, DynamicContent, Address, LinkType
+    SubTitled, NamedOnly, RelatedTitle, URL, DynamicContent, Address, LinkType, \
+    OwnableOrNot
 from organization.pages.models import Page
 from organization.network.models import Person, Organization
 from organization.magazine.models import Article
 from organization.media.models import PlaylistRelated
 from mezzanine_agenda.models import Event
-from mezzanine.core.models import RichText, Displayable, Orderable, MetaData,\
+from mezzanine.core.models import Slugged, RichText, Displayable, Orderable, MetaData,\
     TimeStamped, RichTextField, TeamOwnable
 from mezzanine.conf import settings as m_settings
 
@@ -100,12 +101,10 @@ FUNDING_CHOICES = (
 
 
 class Project(
-        TitledSlugged,
-        MetaData,
-        TimeStamped,
+        Displayable,
         Period,
         RichText,
-        TeamOwnable,
+        OwnableOrNot,
 ):
     # class Project(Displayable, Period, RichText, OwnableOrNot):
     """(Project description)"""
@@ -247,9 +246,6 @@ class Project(
         verbose_name = ('project')
         verbose_name_plural = ("projects")
         ordering = ['title', ]
-        permissions = (
-            ('view_project', 'Can view project'),
-        )
 
     def __str__(self):
         return self.title

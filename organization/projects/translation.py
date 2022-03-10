@@ -30,7 +30,8 @@ from organization.projects.models import Project, ProjectPlaylist, ProjectImage,
     ProjectPrivateData, ProjectCall, ProjectCallBlock, ProjectCallImage,\
     ProjectCallLink, ProjectCallFile, ProjectContact, ProjectTopic,\
     DynamicMultimediaProject, ProjectPage, ProjectPageBlock, ProjectPageImage,\
-    DynamicContentProjectPage
+    DynamicContentProjectPage, ProjectCollection, ProjectCollectionImage, \
+    Pivot_Project_ProjectCollection, ProjectRepository, Pivot_ProjectTopic_Article
 
 
 @register(Project)

@@ -23,7 +23,7 @@ from datetime import datetime
 
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.core.mail import EmailMessage
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count
@@ -49,7 +49,7 @@ from organization.projects.forms import ProjectForm, TopicFilterForm, TypeFilter
     ProjectContactInline, ProjectPrivateDataPublicFundingInline,\
     ProjectPrivateDataPrivateFundingInline, ProjectResidencyForm
 from organization.projects.models import Project, ProjectTopic, ProjectDemo,\
-    ProjectBlogPage, ProjectPage, ProjectCall, ProjectResidency
+    ProjectBlogPage, ProjectPage, ProjectCall, ProjectResidency, ProjectCollection
 from mezzanine.utils.views import paginate
 from django.utils import translation
 from django.utils.text import slugify
@@ -805,11 +805,8 @@ class AbstractProjectListView(ListView, FilteredListView):
 
     def get_queryset(self):
         self.qs = super(AbstractProjectListView, self).get_queryset()
-<<<<<<< HEAD
-=======
         team_page = None
         v_filter = None
->>>>>>> master
 
         # list all projects labo or filter functions of slug team
         if 'slug' in self.kwargs:
