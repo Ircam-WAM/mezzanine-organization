@@ -720,7 +720,7 @@ class PersonActivityAutocompleteView(autocomplete.Select2QuerySetView):
             item.__str__()
 
     def get_queryset(self):
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return PersonActivity.objects.none()
 
         qs = PersonActivity.objects.all()
@@ -742,7 +742,7 @@ class WorkPackageAutocompleteView(autocomplete.Select2QuerySetView):
         return item.project.title + ' - ' + item.title
 
     def get_queryset(self):
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return ProjectWorkPackage.objects.none()
 
         qs = ProjectWorkPackage.objects.all()
