@@ -92,13 +92,19 @@ class PersonMixin(SingleObjectMixin):
                 person.save()
 
         if 'username' in self.kwargs:
-            users = User.objects.filter(username=self.kwargs['username'])
+            username = self.kwargs['username']
+            if username[-1] == '/':
+                username = username[:-1]
+            users = User.objects.filter(username=username)
             if users:
                 user = users[0]
                 person = user.person
 
         elif 'slug' in self.kwargs:
-            persons = Person.objects.filter(slug=self.kwargs['slug'])
+            slug = self.kwargs['slug']
+            if slug[-1] == '/':
+                slug = slug[:-1]
+            persons = Person.objects.filter(slug=slug)
             if persons:
                 person = persons[0]
 
