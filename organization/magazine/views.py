@@ -55,10 +55,22 @@ class ArticleDetailView(
     context_object_name = 'article'
 
     def get_object(self):
+        slug = self.kwargs['slug']
         articles = self.model.objects.published(
             for_user=self.request.user
         ).select_related()
-        return get_object_or_404(articles, slug=self.kwargs['slug'])
+
+        obj = articles.filter(slug=slug)
+        if not obj and slug[-1] == '/':
+            slug = slug[:-1]
+            obj = articles.filter(slug=slug)
+            if not obj:
+                raise Http404()
+        try:
+            obj = obj[0]
+        except Exception:
+            raise Http404()
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)

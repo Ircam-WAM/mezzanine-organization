@@ -93,18 +93,25 @@ class PersonMixin(SingleObjectMixin):
 
         if 'username' in self.kwargs:
             username = self.kwargs['username']
-            if username[-1] == '/':
-                username = username[:-1]
+
             users = User.objects.filter(username=username)
+            if not users and username[-1] == '/':
+                username = username[:-1]
+                users = User.objects.filter(username=username)
+                if not users:
+                    raise Http404()
             if users:
                 user = users[0]
                 person = user.person
 
         elif 'slug' in self.kwargs:
             slug = self.kwargs['slug']
-            if slug[-1] == '/':
-                slug = slug[:-1]
             persons = Person.objects.filter(slug=slug)
+            if not persons and slug[-1] == '/':
+                slug = slug[:-1]
+                persons = Person.objects.filter(slug=slug)
+                if not persons:
+                    raise Http404()
             if persons:
                 person = persons[0]
 

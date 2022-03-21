@@ -156,7 +156,18 @@ class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
     template_name = 'projects/project/project_detail.html'
 
     def get_object(self):
-        obj = super(ProjectPageView, self).get_object()
+        objects = self.get_queryset()
+        slug = self.kwargs['slug']
+        obj = objects.filter(slug=slug)
+        if not obj and slug[-1] == '/':
+            slug = slug[:-1]
+            obj = objects.filter(slug=slug)
+            if not obj:
+                raise Http404()
+        try:
+            obj = obj[0]
+        except Exception:
+            raise Http404()
         if not obj.published():
             raise Http404()
         return obj
