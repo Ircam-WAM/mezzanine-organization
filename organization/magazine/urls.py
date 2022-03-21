@@ -82,4 +82,9 @@ urlpatterns = [
         MagazineDetailView.as_view(),
         name='magazine'
     ),
+    url(
+        "^article/(?P<slug>.*)[%s]?$" % _slash,
+        ArticleDetailView.as_view(),
+        name="magazine-article-detail"
+    ),
 ]
