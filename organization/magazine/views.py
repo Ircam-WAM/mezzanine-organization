@@ -61,11 +61,14 @@ class ArticleDetailView(
         ).select_related()
 
         obj = articles.filter(slug=slug)
-        if not obj and slug[-1] == '/':
-            slug = slug[:-1]
-            obj = articles.filter(slug=slug)
-            if not obj:
-                raise Http404()
+        try:
+            if not obj and slug[-1] == '/':
+                slug = slug[:-1]
+                obj = articles.filter(slug=slug)
+                if not obj:
+                    raise Http404()
+        except Exception:
+            raise Http404()
         try:
             obj = obj[0]
         except Exception:
