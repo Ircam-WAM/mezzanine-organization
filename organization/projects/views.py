@@ -159,11 +159,14 @@ class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
         objects = self.get_queryset()
         slug = self.kwargs['slug']
         obj = objects.filter(slug=slug)
-        if not obj and slug[-1] == '/':
-            slug = slug[:-1]
-            obj = objects.filter(slug=slug)
-            if not obj:
-                raise Http404()
+        try:
+            if not obj and slug[-1] == '/':
+                slug = slug[:-1]
+                obj = objects.filter(slug=slug)
+                if not obj:
+                    raise Http404()
+        except Exception:
+            raise Http404()
         try:
             obj = obj[0]
         except Exception:
