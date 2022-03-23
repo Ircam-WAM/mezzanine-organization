@@ -22,7 +22,10 @@
 
 import csv
 
+from django import forms
 from django.contrib import admin
+from django.contrib.admin.helpers import ActionForm
+from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 from guardian.admin import GuardedModelAdmin
 from mezzanine.core.admin import StackedDynamicInlineAdmin,\
@@ -50,7 +53,7 @@ from organization.network.models import OrganizationLinkedInline,\
     ActivityFunction, ActivityGrade, ActivityFramework, ActivityStatus, TrainingType,\
     TrainingLevel, TrainingSpeciality, TrainingTopic, BudgetCode, RecordPiece,\
     PersonActivityTimeSheet, OrganizationLinked, OrganizationType, DepartmentPage,\
-    TeamPage, PersonListBlock
+    TeamPage, PersonListBlock, MONTH_CHOICES
 from organization.network.utils import TimesheetXLS, set_timesheets_validation_date,\
     flatten_activities
 from organization.pages.admin import PageImageInline, PageBlockInline,\
@@ -480,6 +483,12 @@ class RecordPieceAdmin(BaseTranslationModelAdmin):
     ordering = ['name', ]
 
 
+class CopyActivityTimeSheetActionForm(ActionForm):
+
+    first_month = forms.IntegerField(required=False)
+    last_month = forms.IntegerField(required=False)
+
+
 class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
     model = PersonActivityTimeSheet
     search_fields = ['year', 'month', 'activity__person__last_name', "project__title"]
@@ -495,9 +504,10 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
         'validation'
     ]
     list_filter = ['activity__person', 'year', 'month', 'project']
-    actions = ['export_xls', 'validate_timesheets']
+    actions = ['export_xls', 'validate_timesheets', 'copy_activity_timesheets']
     first_fields = ['title', ]
     form = PersonActivityTimeSheetAdminForm
+    action_form = CopyActivityTimeSheetActionForm
 
     def person(self, instance):
         if instance.activity:
@@ -520,6 +530,21 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
         set_timesheets_validation_date(queryset)
 
     export_xls.short_description = "Export person timesheets"
+
+    def copy_activity_timesheets(self, request, queryset):
+        first_month = int(request.POST['first_month'])
+        last_month = int(request.POST['last_month'])
+        timesheet = queryset[0]
+
+        for month in range(first_month, last_month+1):
+            work_packages = timesheet.work_packages.all()
+            timesheet.id = None
+            timesheet.month = month
+            timesheet.save()
+            for work_package in work_packages:
+                timesheet.work_packages.add(work_package)
+
+    copy_activity_timesheets.short_description = 'Copy activity timesheets to new months'
 
 
 admin.site.register(OrganizationLinked, OrganizationLinkedAdmin)
