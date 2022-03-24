@@ -540,6 +540,15 @@ class PersonActivityTimeSheetAdmin(BaseTranslationOrderedModelAdmin):
             work_packages = timesheet.work_packages.all()
             timesheet.id = None
             timesheet.month = month
+            last_other_timesheets = PersonActivityTimeSheet.objects.filter(
+                activity=timesheet.activity,
+                year=timesheet.year,
+                month=timesheet.month).order_by('-validation')
+
+            if last_other_timesheets:
+                timesheet.accounting = last_other_timesheets[0].accounting
+                timesheet.validation = last_other_timesheets[0].validation
+
             timesheet.save()
             for work_package in work_packages:
                 timesheet.work_packages.add(work_package)
