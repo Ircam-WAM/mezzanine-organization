@@ -39,6 +39,7 @@ from organization.magazine.models import Article
 from organization.job.models import JobResponse, JobOffer, Candidacy
 from organization.job.forms import JobResponseForm
 from mezzanine_agenda.models import Event
+from django.utils.safestring import mark_safe
 
 mime_types = [
     'pdf',
@@ -98,7 +99,11 @@ class JobOfferDetailView(CreateView):
         email_application_notification(self.request, self.job_offer, form.cleaned_data)
         messages.info(
             self.request,
-            _("You have successfully submitted your application.")
+            mark_safe(
+                _(
+                    "You have successfully submitted your application.<br>If your application fit our criteria, the Human Resources department will contact you. If you do not hear from us within 6 weeks, you may consider your application unsuccessful. However, unless you indicate otherwise, we will keep your application on file for other possible opportunities."  # noqa: E501
+                )
+            )
         )
         return super(JobOfferDetailView, self).form_valid(form)
 
@@ -147,6 +152,28 @@ def email_application_notification(request, job_offer, data):
     )
     msg.content_subtype = 'html'
     msg.send()
+
+    # Candidat notification
+    if job_offer.id == 1:
+        # Spontaneous application
+        candidat_subject = "Ircam - Votre candidature au poste " + job_offer.title
+        candidat_message = get_template(
+            'email/candidat_spontaneous_application_notification.html'
+        ).render(ctx)
+    else:
+        # Publicated job application
+        candidat_subject = "Ircam - Votre candidature spontanée"
+        candidat_message = get_template(
+            'email/candidat_application_notification.html'
+        ).render(ctx)
+    candidat_msg = EmailMessage(
+        candidat_subject,
+        candidat_message,
+        to=[data['email']],
+        from_email=from_email
+    )
+    candidat_msg.content_subtype = 'html'
+    candidat_msg.send()
 
     return HttpResponse('email_application_notification')
 

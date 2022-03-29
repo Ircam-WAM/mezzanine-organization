@@ -1195,3 +1195,6 @@ msgstr "Artiste"
 
 msgid "Video"
 msgstr "Vidéo"
+
+msgid "You have successfully submitted your application.<br>If your application fit our criteria, the Human Resources department will contact you. If you do not hear from us within 6 weeks, you may consider your application unsuccessful. However, unless you indicate otherwise, we will keep your application on file for other possible opportunities."
+msgstr "Votre candidature a bien été transmise.<br>Si votre profil correspond à nos recherches, le service des ressources humaines vous recontactera. Si nous ne prenons pas contact avec vous dans un délai de 6 semaines, nous vous remercions de bien vouloir considérer que nous ne donnons pas une suite favorable à votre candidature dans l'immédiat. En outre, et sauf avis contraire de votre part, nous nous permettons de conserver votre dossier pour une éventuelle exploitation ultérieure."
