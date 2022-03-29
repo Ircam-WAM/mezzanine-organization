@@ -156,13 +156,13 @@ def email_application_notification(request, job_offer, data):
     # Candidat notification
     if job_offer.id == 1:
         # Spontaneous application
-        candidat_subject = "Ircam - Votre candidature au poste " + job_offer.title
+        candidat_subject = "Ircam - Votre candidature spontanée"
         candidat_message = get_template(
             'email/candidat_spontaneous_application_notification.html'
         ).render(ctx)
     else:
         # Publicated job application
-        candidat_subject = "Ircam - Votre candidature spontanée"
+        candidat_subject = "Ircam - Votre candidature au poste " + job_offer.title
         candidat_message = get_template(
             'email/candidat_application_notification.html'
         ).render(ctx)
