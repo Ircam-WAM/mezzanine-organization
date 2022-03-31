@@ -23,7 +23,6 @@ from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.base import RedirectView
-from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
 from dal import autocomplete
