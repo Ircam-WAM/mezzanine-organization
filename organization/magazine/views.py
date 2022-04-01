@@ -20,10 +20,13 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 from collections import OrderedDict
 from re import match
+from django.shortcuts import render
 from urllib.parse import urlparse
 from django.utils import timezone
+from django.utils.html import mark_safe
 from django.urls import reverse_lazy
 #from django.views.generic import *
+from django.template.loader import render_to_string
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.detail import SingleObjectMixin
 from django.contrib.contenttypes.models import ContentType
@@ -108,6 +111,10 @@ class ArticleDetailView(RedirectContentView, SlugMixin, DetailView, DynamicConte
             if first_page:
                 context['department_weaving_css_class'] = first_page.weaving_css_class
             context['department_name'] = self.object.department.name
+        context['object'].content = context['object'].content.replace(
+            '[MEZZO_GALLERY]',
+            mark_safe(render_to_string('includes/photo_gallery.html', context))
+        )
         return context
 
 

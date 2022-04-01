@@ -92,3 +92,9 @@ class MagazineTranslationOptions(TranslationOptions):
 class DynamicContentMagazineContentTranslationOptions(TranslationOptions):
 
     pass
+
+
+@register(GalleryImage)
+class DynamicContentMagazineContentTranslationOptions(TranslationOptions):
+
+    pass

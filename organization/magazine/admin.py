@@ -71,42 +71,6 @@ class ArticleRelatedTitleAdmin(TranslationTabularInline):
     model = ArticleRelatedTitle
 
 
-class ArticleAdminDisplayable(TeamOwnableAdmin, DisplayableAdmin):
-
-    fieldsets = deepcopy(ArticleAdmin.fieldsets)
-    list_display = ('title', 'department', 'publish_date', 'status', 'user')
-    exclude = ('related_posts', )
-
-    filter_horizontal = ['categories',]
-    inlines = [ArticleImageInline,
-              ArticlePersonAutocompleteInlineAdmin,
-              DynamicMultimediaArticleInline,
-              ArticleRelatedTitleAdmin,
-              DynamicContentArticleInline,
-              ArticlePlaylistInline]
-    list_filter = [ 'status', 'department', ] #'keywords'
-
-    # actions = actions_to_duplicate()
-
-    def save_form(self, request, form, change):
-        """
-        Super class ordering is important here - user must get saved first.
-        """
-        OwnableAdmin.save_form(self, request, form, change)
-        return DisplayableAdmin.save_form(self, request, form, change)
-
-    def get_readonly_fields(self, request, obj=None):
-        self.readonly_fields = super(ArticleAdminDisplayable, self).get_readonly_fields(request, obj=None)
-        if not request.user.is_superuser and not 'user' in self.readonly_fields:
-            self.readonly_fields += ('user',)
-        return self.readonly_fields
-
-    class Media:
-        js = (
-            static("mezzanine/js/admin/dynamic_inline.js"),
-        )
-
-
 class BriefAdmin(admin.ModelAdmin):
 
     model = Brief
@@ -135,14 +99,63 @@ class DynamicContentHomeSliderInline(TabularDynamicInlineAdmin):
         )
 
 
+class DynamicGallerySliderInline(TabularDynamicInlineAdmin):
+
+    model = GalleryImage
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
+
+
 class MagazineAdmin(BaseTranslationModelAdmin):
 
     model = Magazine
-    inlines = [DynamicContentHomeSliderInline,]
+    inlines = [
+        DynamicContentHomeSliderInline
+    ]
+
+class ArticleAdminDisplayable(TeamOwnableAdmin, DisplayableAdmin):
+
+    fieldsets = deepcopy(ArticleAdmin.fieldsets)
+    list_display = ('title', 'department', 'publish_date', 'status', 'user')
+    exclude = ('related_posts', )
+
+    filter_horizontal = ['categories',]
+    inlines = [
+        ArticleImageInline,
+        ArticlePersonAutocompleteInlineAdmin,
+        DynamicMultimediaArticleInline,
+        ArticleRelatedTitleAdmin,
+        DynamicContentArticleInline,
+        ArticlePlaylistInline,
+        DynamicGallerySliderInline
+    ]
+    list_filter = [ 'status', 'department', ] #'keywords'
+
+    # actions = actions_to_duplicate()
+
+    def save_form(self, request, form, change):
+        """
+        Super class ordering is important here - user must get saved first.
+        """
+        OwnableAdmin.save_form(self, request, form, change)
+        return DisplayableAdmin.save_form(self, request, form, change)
+
+    def get_readonly_fields(self, request, obj=None):
+        self.readonly_fields = super(ArticleAdminDisplayable, self).get_readonly_fields(request, obj=None)
+        if not request.user.is_superuser and not 'user' in self.readonly_fields:
+            self.readonly_fields += ('user',)
+        return self.readonly_fields
+
+    class Media:
+        js = (
+            static("mezzanine/js/admin/dynamic_inline.js"),
+        )
 
 
 admin.site.register(Article, ArticleAdminDisplayable)
 admin.site.register(Brief, BriefAdminDisplayable)
 admin.site.register(Topic, PageAdmin)
 admin.site.register(Magazine, MagazineAdmin)
-

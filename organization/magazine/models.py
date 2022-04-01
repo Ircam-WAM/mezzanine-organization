@@ -67,6 +67,16 @@ class ArticleImage(Image):
         order_with_respect_to = "article"
 
 
+class GalleryImage(Image):
+
+    article = models.ForeignKey("Article", verbose_name=_('article'), related_name='gallery_images', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _("Gallery Image")
+        verbose_name_plural = _("Gallery images")
+        order_with_respect_to = "article"
+
+
 class ArticleRelatedTitle(RelatedTitle):
 
     article = models.OneToOneField("Article", verbose_name=_('article'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
