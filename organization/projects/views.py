@@ -49,6 +49,7 @@ from organization.projects.forms import ProjectForm, TopicFilterForm, TypeFilter
     ProjectPrivateDataPrivateFundingInline, ProjectResidencyForm
 from organization.projects.models import Project, ProjectTopic, ProjectDemo,\
     ProjectBlogPage, ProjectPage, ProjectCall, ProjectResidency
+from mezzanine.core.models import CONTENT_STATUS_PUBLISHED
 from mezzanine.utils.views import paginate
 from django.utils import translation
 from django.utils.text import slugify
@@ -699,6 +700,10 @@ class AbstractProjectListView(ListView, FilteredListView):
         self.qs = super(AbstractProjectListView, self).get_queryset()
         team_page = None
         v_filter = None
+
+        self.qs = self.qs.filter(
+            status=CONTENT_STATUS_PUBLISHED
+        )
 
         # list all projects labo or filter functions of slug team
         if 'slug' in self.kwargs:
