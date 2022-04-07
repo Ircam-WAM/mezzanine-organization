@@ -101,7 +101,7 @@ class JobOfferDetailView(CreateView):
             self.request,
             mark_safe(
                 _(
-                    "You have successfully submitted your application.<br>If your application fit our criteria, the Human Resources department will contact you. If you do not hear from us within 6 weeks, you may consider your application unsuccessful. However, unless you indicate otherwise, we will keep your application on file for other possible opportunities."  # noqa: E501
+                    "You have successfully submitted your application.<br>If your application fit our criteria, the Human Resources department will contact you. If you do not hear from us within 6 weeks, you may consider your application unsuccessful."  # noqa: E501
                 )
             )
         )
