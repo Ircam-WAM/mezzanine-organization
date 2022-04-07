@@ -36,7 +36,11 @@ from django.apps import apps
 import requests
 
 
-MEDIA_BASE_URL = getattr(settings, 'MEDIA_BASE_URL', 'http://medias.ircam.fr/embed/media/')
+MEDIA_BASE_URL = getattr(
+    settings,
+    'MEDIA_BASE_URL',
+    'http://medias.ircam.fr/embed/media/'
+)
 
 PLAYLIST_TYPE_CHOICES = [
     ('audio', _('audio')),
@@ -87,20 +91,46 @@ class Media(Displayable, TeamOwnable):
             if 'audio' in transcoded.mime_type:
                 return 'audio'
 
+    # def save(self, *args, **kwargs):
+    #     q = pq(self.get_html())
+    #     sources = q('source')
+    #     video = q('video')
+    #     if len(video):
+    #         if 'poster' in video[0].attrib.keys():
+    #             self.poster_url = 'https:' + video[0].attrib['poster']
+
+    #     super(Media, self).save(*args, **kwargs)
+
+    #     for source in sources:
+    #         mime_type = source.attrib['type']
+    #         transcoded, c = MediaTranscoded.objects.get_or_create(media=self, mime_type=mime_type)        
+    #         transcoded.url = 'https:' + source.attrib['src']
+    #         transcoded.save()
+
     def save(self, *args, **kwargs):
-        q = pq(self.get_html())
-        sources = q('source')
-        video = q('video')
-        if len(video):
-            if 'poster' in video[0].attrib.keys():
-                self.poster_url = 'https:' + video[0].attrib['poster']
+
+        try:
+            result = requests.get(
+                settings.MEDIA_BASE_URL.replace("embed/media/", "") +
+                'get-sources-and-poster/' +
+                self.external_id
+            ).json()
+        except Exception as e:
+            print(e)
+            raise ValidationError("Error during connection with medias.ircam.fr")
+
+        if result["poster"] is None:
+            result["poster"] = ''
+        self.poster_url = result["poster"]
 
         super(Media, self).save(*args, **kwargs)
 
-        for source in sources:
-            mime_type = source.attrib['type']
-            transcoded, c = MediaTranscoded.objects.get_or_create(media=self, mime_type=mime_type)        
-            transcoded.url = 'https:' + source.attrib['src']
+        for source in result["profiles"]:
+            transcoded, c = MediaTranscoded.objects.get_or_create(
+                media=self,
+                mime_type=source["mimetype"]
+            )
+            transcoded.url = source["url"]
             transcoded.save()
 
 
