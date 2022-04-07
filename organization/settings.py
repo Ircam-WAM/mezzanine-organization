@@ -211,6 +211,11 @@ LANGUAGES = (
 )
 LOCALE_PATHS = (
     os.path.join(PROJECT_ROOT, 'organization/locale'),
+    os.path.join(os.path.join('/srv/lib/manifeste-theme/manifeste_theme/2022/locale')),
+    os.path.join(os.path.join('/srv/lib/manifeste-theme/manifeste_theme/2021/locale')),
+    os.path.join(os.path.join('/srv/lib/manifeste-theme/manifeste_theme/2020/locale')),
+    os.path.join(os.path.join('/srv/lib/manifeste-theme/manifeste_theme/2019/locale')),
+    # os.path.join(os.path.join('/srv/lib/manifeste-theme/manifeste_theme/2018/locale')),
 )
 # print("LOCALE_PATHS", LOCALE_PATHS)
 #############
