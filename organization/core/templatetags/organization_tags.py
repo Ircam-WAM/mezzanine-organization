@@ -50,6 +50,7 @@ import six
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext
 from django.shortcuts import resolve_url
+from mezzanine.core.models import CONTENT_STATUS_DRAFT
 
 from django.apps import apps
 
@@ -678,3 +679,8 @@ def ytb_iframe(text):
         return text
     except Exception:
         return text
+
+
+@register.filter(name='remove_draft_projects')
+def remove_draft_projects(queryset):
+    return queryset.exclude(pages__status=CONTENT_STATUS_DRAFT)
