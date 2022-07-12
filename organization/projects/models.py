@@ -48,8 +48,13 @@ logger = logging.getLogger('app')
 PROJECT_TYPE_CHOICES = [
     ('internal', _('internal')),
     ('external', _('external')),
-    ('tutorial', _('tutorial')),
-    ('project', _('project')),
+    # ('tutorial', _('tutorial')),
+    # ('project', _('project')),
+]
+
+PROJECT_ACTIVE_STRATEGY = [
+    ('repository_release', _('repository release')),
+    ('external_release', _('external release'))
 ]
 
 REPOSITORY_ACCESS_CHOICES = [
@@ -85,7 +90,7 @@ FUNDING_CHOICES = (
 class Project(Displayable, Period, RichText, OwnableOrNot):
     """(Project description)"""
 
-    type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES, default='project')
+    type = models.CharField(_('type'), max_length=128, choices=PROJECT_TYPE_CHOICES, default='internal')
     external_id = models.CharField(_('external ID'), blank=True, null=True, max_length=128)
     program = models.ForeignKey('ProjectProgram', verbose_name=_('project program'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
     program_type = models.ForeignKey('ProjectProgramType', verbose_name=_('project program type'), related_name='projects', blank=True, null=True, on_delete=models.SET_NULL)
@@ -104,8 +109,22 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     validation_status = models.IntegerField(_('validation status'), choices=PROJECT_STATUS_CHOICES, default=1)
     funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
     owner = models.ForeignKey(User, verbose_name=_('project owner'), related_name='owned_projects', blank=True, null=True, on_delete=models.SET_NULL)
-    configuration = JSONField(default=dict(), null=True, blank=True)  # A generic-use field for storing simple mixed values/schema
-                                                      # Example: project preferences, UI toggles, etc.
+    version = models.CharField(_('version'), max_length=128, default='1.2')
+    is_premium = models.BooleanField(verbose_name=_('is premium'), help_text='If this is a premium project.', default=False)
+    is_protected = models.BooleanField(verbose_name=_('is protected'), help_text='If this is a premium project protected by an authorization key.', default=False)
+    protection_endpoint = models.CharField(_('protection endpoint'), max_length=128, blank=True, null=True, default='None')
+    protection_unlock_url = models.CharField(_('protection unlock url'), max_length=128, blank=True, null=True, default='None')
+    active_strategy = models.CharField(_('active strategy'), max_length=128, choices=PROJECT_ACTIVE_STRATEGY, default='repository_release')
+    git_ref_archive = models.CharField(_('git ref archive'), max_length=128, default='master')
+    # repository_release = models.CharField(_('repository release'), max_length=128, default='master')
+    git_tag = models.CharField(_('git tag'), max_length=128, blank=True, null=True, default='None')
+    include_sources = models.BooleanField(verbose_name=_('include sources'), default=True)
+    include_binaries = models.BooleanField(verbose_name=_('include binaries'), default=True)
+    custom_link_url = models.CharField(_('custom link url'), max_length=128, blank=True, null=True, default='None')
+    project_release_ref = models.CharField(_('project release ref'), blank=True, null=True, max_length=128, default='latest')
+    # A generic-use field for storing simple mixed values/schema
+    # Example: project preferences, UI toggles, etc.
+    configuration = JSONField(default=dict(), null=True, blank=True)
 
     class Meta:
         verbose_name = _('project')
