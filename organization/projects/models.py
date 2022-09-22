@@ -110,7 +110,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     funding = models.CharField(_('funding'), choices=FUNDING_CHOICES, max_length=128, blank=True, null=True)
     owner = models.ForeignKey(User, verbose_name=_('project owner'), related_name='owned_projects', blank=True, null=True, on_delete=models.SET_NULL)
     version = models.CharField(_('version'), max_length=128, default='1.2')
-    external_url = models.CharField(_('external url'), max_length=512, blank=True, null=True, default='None')
+    external_url = models.URLField(_('external url'), max_length=1024, null=True, blank=True, default='None')
     is_premium = models.BooleanField(verbose_name=_('is premium'), help_text='If this is a premium project.', default=False)
     is_protected = models.BooleanField(verbose_name=_('is protected'), help_text='If this is a premium project protected by an authorization key.', default=False)
     protection_endpoint = models.CharField(_('protection endpoint'), max_length=128, blank=True, null=True, default='None')
