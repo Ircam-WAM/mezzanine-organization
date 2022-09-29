@@ -111,6 +111,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     owner = models.ForeignKey(User, verbose_name=_('project owner'), related_name='owned_projects', blank=True, null=True, on_delete=models.SET_NULL)
     version = models.CharField(_('version'), max_length=128, default='1.2')
     external_url = models.URLField(_('external url'), max_length=1024, null=True, blank=True, default='None')
+    readme_cms_content = models.TextField(_("readme content from cms"), blank=True, null=True)
+    is_readme_in_repo = models.BooleanField(verbose_name=_('is readme in repository'), help_text='If the README is added to the repository.', default=True)
     is_premium = models.BooleanField(verbose_name=_('is premium'), help_text='If this is a premium project.', default=False)
     is_protected = models.BooleanField(verbose_name=_('is protected'), help_text='If this is a premium project protected by an authorization key.', default=False)
     protection_endpoint = models.CharField(_('protection endpoint'), max_length=128, blank=True, null=True, default='None')
