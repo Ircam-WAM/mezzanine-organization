@@ -55,9 +55,10 @@ class Command(BaseCommand):
             project.git_ref_archive = json_conf['download_behavior']['strategies']['git_ref_archive']['git_ref']
             project.project_release_ref = json_conf['download_behavior']['strategies']['project_release']['ref']
             project.active_strategy = json_conf['download_behavior']['active_strategy']
-            project.is_protected = json_conf['global_asset_meta']['protected']
-            project.protection_endpoint = json_conf['global_asset_meta']['protection_endpoint']
-            project.protection_unlock_url = json_conf['global_asset_meta']['protection_unlock_url']
+            if 'global_asset_meta' in json_conf:
+                project.is_protected = json_conf['global_asset_meta']['protected']
+                project.protection_endpoint = json_conf['global_asset_meta']['protection_endpoint']
+                project.protection_unlock_url = json_conf['global_asset_meta']['protection_unlock_url']
 
             if not dry_run:
                 project.save()
