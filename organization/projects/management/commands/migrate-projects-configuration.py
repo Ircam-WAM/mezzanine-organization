@@ -28,12 +28,13 @@ class Command(BaseCommand):
         parser.add_argument(
             '-d', '--dry-run',
             dest='dry-run',
-            type=bool,
+            action='store_true',
             help='do not save new fields',
         )
         parser.add_argument(
-            '--logfile',
+            '--log-file',
             type=str,
+            dest='log-file',
             required=True,
             help='log file path')
 
@@ -41,6 +42,7 @@ class Command(BaseCommand):
         dry_run = kwargs['dry-run']
         log_file = kwargs['log-file']
         logger = Logger(log_file)
+        print(dry_run)
 
         for project in Project.objects.all():
             json_conf = project.configuration
