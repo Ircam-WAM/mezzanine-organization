@@ -45,20 +45,29 @@ class Command(BaseCommand):
         print(dry_run)
 
         for project in Project.objects.all():
-            json_conf = project.configuration
-
-            project.version = json_conf['version']
-            project.custom_link_url = json_conf['download_behavior']['strategies']['custom_links']['links']
-            project.git_tag = json_conf['download_behavior']['strategies']['repo_release']['git_tag']
-            project.include_sources = json_conf['download_behavior']['strategies']['repo_release']['include_sources']
-            project.include_binaries = json_conf['download_behavior']['strategies']['repo_release']['include_binaries']
-            project.git_ref_archive = json_conf['download_behavior']['strategies']['git_ref_archive']['git_ref']
-            project.project_release_ref = json_conf['download_behavior']['strategies']['project_release']['ref']
-            project.active_strategy = json_conf['download_behavior']['active_strategy']
-            if 'global_asset_meta' in json_conf:
-                project.is_protected = json_conf['global_asset_meta']['protected']
-                project.protection_endpoint = json_conf['global_asset_meta']['protection_endpoint']
-                project.protection_unlock_url = json_conf['global_asset_meta']['protection_unlock_url']
+            if not project.version:
+            project.version = project.configuration['version']
+            if not project.custom_link_url:
+                project.custom_link_url = project.configuration['download_behavior']['strategies']['custom_links']['links']
+            if not project.git_tag:
+                project.git_tag = project.configuration['download_behavior']['strategies']['repo_release']['git_tag']
+            if not project.include_sources:
+                project.include_sources = project.configuration['download_behavior']['strategies']['repo_release']['include_sources']
+            if not project.include_binaries:
+                project.include_binaries = project.configuration['download_behavior']['strategies']['repo_release']['include_binaries']
+            if not project.git_ref_archive:
+                project.git_ref_archive = project.configuration['download_behavior']['strategies']['git_ref_archive']['git_ref']
+            if not project.project_release_ref:
+                project.project_release_ref = project.configuration['download_behavior']['strategies']['project_release']['ref']
+            if not project.active_strategy:
+                project.active_strategy = project.configuration['download_behavior']['active_strategy']
+            if 'global_asset_meta' in project.configuration:
+                if not project.is_protected:
+                    project.is_protected = project.configuration['global_asset_meta']['protected']
+                if not project.protection_endpoint:
+                    project.protection_endpoint = project.configuration['global_asset_meta']['protection_endpoint']
+                if not project.protection_unlock_url:
+                    project.protection_unlock_url = project.configuration['global_asset_meta']['protection_unlock_url']
 
             if not dry_run:
                 project.save()
