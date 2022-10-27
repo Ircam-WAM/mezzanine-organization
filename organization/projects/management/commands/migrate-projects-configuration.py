@@ -46,7 +46,7 @@ class Command(BaseCommand):
 
         for project in Project.objects.all():
             if not project.version:
-            project.version = project.configuration['version']
+                project.version = project.configuration['version']
             if not project.custom_link_url:
                 project.custom_link_url = project.configuration['download_behavior']['strategies']['custom_links']['links']
             if not project.git_tag:
