@@ -42,7 +42,9 @@ class Command(BaseCommand):
         dry_run = kwargs['dry-run']
         log_file = kwargs['log-file']
         logger = Logger(log_file)
-        print(dry_run)
+
+        if dry_run:
+            print("!!! DRY-RUN !!!")
 
         for project in Project.objects.all():
             if not project.version:
@@ -71,8 +73,13 @@ class Command(BaseCommand):
 
             if not dry_run:
                 project.save()
-                logger.logger.info(
-                    'Project %s configuration migrated' \
-                    % str(project.id))
+                message = 'Project %s configuration migrated' \
+                    % str(project.id)
+            else:
+                message = 'Project %s configuration NOT migrated (dry-run)' \
+                    % str(project.id)
+
+            logger.logger.info(message)
+
 
 
