@@ -222,10 +222,10 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         default=False,
     )
     protection_endpoint = models.CharField(
-        _("protection endpoint"), max_length=128, blank=True, null=True
+        _("protection endpoint"), max_length=1024, blank=True, null=True
     )
     protection_unlock_url = models.CharField(
-        _("protection unlock url"), max_length=128, blank=True, null=True
+        _("protection unlock url"), max_length=1024, blank=True, null=True
     )
     active_strategy = models.CharField(
         _("active strategy"),
@@ -245,7 +245,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         verbose_name=_("include binaries"), default=True
     )
     custom_link_url = models.CharField(
-        _("custom link url"), max_length=128, blank=True, null=True
+        _("custom link url"), max_length=1024, blank=True, null=True
     )
     project_release_ref = models.CharField(
         _("project release ref"),

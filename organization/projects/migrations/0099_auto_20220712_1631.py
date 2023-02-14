@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='project',
             name='custom_link_url',
-            field=models.CharField(blank=True, default='None', max_length=128, null=True, verbose_name='custom link url'),
+            field=models.CharField(blank=True, max_length=128, null=True, verbose_name='custom link url'),
         ),
         migrations.AddField(
             model_name='project',
