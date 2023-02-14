@@ -206,6 +206,8 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     readme_cms_content = models.TextField(
         _("readme content from cms"), blank=True, null=True
     )
+    banner_image = models.ImageField(upload_to="uploads/images/", blank=True, null=True)
+    banner_crop_data = models.CharField(max_length=1024, null=True, blank=True, default="")
     is_readme_in_repo = models.BooleanField(
         verbose_name=_("is readme in repository"),
         help_text="If the README is added to the repository.",
