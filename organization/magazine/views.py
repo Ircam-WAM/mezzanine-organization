@@ -204,21 +204,24 @@ class ArticleListView(ListView):
     keywords = OrderedDict()
 
     def get_queryset(self):
-        self.qs = self.queryset.published().order_by('-created')
-        playlists = Playlist.objects.published().order_by('-created').distinct()
+        if self.queryset:
+            self.qs = self.queryset.published().order_by('-created')
+            playlists = Playlist.objects.published().order_by('-created').distinct()
 
-        if 'type' in self.kwargs:
-            if self.kwargs['type'] == "article":
-                playlists = []
+            if 'type' in self.kwargs:
+                if self.kwargs['type'] == "article":
+                    playlists = []
 
-            if self.kwargs['type'] == "video" or self.kwargs['type'] == "audio":
-                playlists = playlists.filter(type=self.kwargs['type'])
-                self.qs = []
+                if self.kwargs['type'] == "video" or self.kwargs['type'] == "audio":
+                    playlists = playlists.filter(type=self.kwargs['type'])
+                    self.qs = []
 
-        self.qs = sorted(
-            chain( self.qs, playlists),
-            key=lambda instance: instance.created,
-            reverse=True)
+            self.qs = sorted(
+                chain( self.qs, playlists),
+                key=lambda instance: instance.created,
+                reverse=True)
+        else:
+            self.qs = None
 
         return self.qs
 
