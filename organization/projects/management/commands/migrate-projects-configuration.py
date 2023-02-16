@@ -76,8 +76,18 @@ class Command(BaseCommand):
                 project.protection_endpoint = project.configuration['global_asset_meta']['protection_endpoint']
                 project.protection_unlock_url = project.configuration['global_asset_meta']['protection_unlock_url']
 
+            i = 0
+            for release in project.projectrelease_set.all().order_by('-updated'):
+                # print(str(i), release.updated)
+                release.release_order = i
+                if not release.date_published:
+                    release.date_published = release.updated
+                # print(str(i), release.date_published)
+                if not dry_run:
+                    release.save()
+                i += 1
+
             if not dry_run:
-                print(project)
                 project.save()
                 message = 'Project %s configuration migrated' \
                     % str(project.id)
