@@ -48,13 +48,15 @@ logger = logging.getLogger("app")
 PROJECT_TYPE_CHOICES = [
     ("internal", _("internal")),
     ("external", _("external")),
-    # ('tutorial', _('tutorial')),
+    ('tutorial', _('tutorial')),
     ("project", _("project")),
 ]
 
 PROJECT_ACTIVE_STRATEGY = [
-    ("repository_release", _("repository release")),
-    ("external_release", _("external release")),
+    ("git_ref_archive", _("git_ref_archive")),
+    ("repo_release", _("repo_release")),
+    ("custom_links", _("custom_links")),
+    ("project_release", _("project_release")),
 ]
 
 REPOSITORY_ACCESS_CHOICES = [
@@ -208,6 +210,11 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
     )
     banner_image = models.ImageField(upload_to="uploads/projects/images/", blank=True, null=True)
     banner_crop_data = models.CharField(max_length=1024, null=True, blank=True, default="")
+    show_download_repo = models.BooleanField(
+        verbose_name=_("show download repository"),
+        help_text="Show download repository button.",
+        default=False,
+    )
     is_readme_in_repo = models.BooleanField(
         verbose_name=_("is readme in repository"),
         help_text="If the README is added to the repository.",
@@ -233,7 +240,7 @@ class Project(Displayable, Period, RichText, OwnableOrNot):
         _("active strategy"),
         max_length=128,
         choices=PROJECT_ACTIVE_STRATEGY,
-        default="repository_release",
+        default="project_release",
     )
     git_ref_archive = models.CharField(
         _("git ref archive"), max_length=128, default="master"
