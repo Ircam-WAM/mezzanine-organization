@@ -37,6 +37,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings as m_settings
 from mezzanine.core.models import Displayable, Orderable, RichText, Slugged
+from mezzanine.core.models import (CONTENT_STATUS_DRAFT,
+                                    CONTENT_STATUS_PUBLISHED)
 from mezzanine_agenda.models import *
 from organization.core.models import *
 from organization.magazine.models import Article
@@ -89,7 +91,29 @@ FUNDING_CHOICES = (
 )
 
 
-class Project(Displayable, Period, RichText, OwnableOrNot):
+class GuestContentMixin(models.Model):
+
+    """Adds the submission fields and logic needed to handle guest content"""
+
+    submitted = models.BooleanField(default=False)
+    submitted_on = models.DateTimeField(null=True, editable=False)
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        # NOTE: permissions are assigned/removed in ircamforum.signals
+        # Sets or clean the submitted date depending on the submitted status
+        if self.submitted and not self.submitted_on:
+            self.submitted_on = now()
+        if not self.submitted:
+            self.submitted_on = None
+        if not self.pk:  # Draft if new object
+            self.status = CONTENT_STATUS_DRAFT
+        super().save(*args, **kwargs)
+
+
+class Project(Displayable, Period, RichText, OwnableOrNot, GuestContentMixin):
     """(Project description)"""
 
     type = models.CharField(
@@ -1050,7 +1074,7 @@ class ProjectBlogPage(Displayable, RichText):
 
     def get_absolute_url(self):
         return reverse(
-            "organization-project-blogpage-detail", kwargs={"slug": self.slug}
+                "organization-project-blogpage-detail", kwargs={"slug": self.slug}
         )
 
 

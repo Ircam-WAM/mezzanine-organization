@@ -451,7 +451,7 @@ ADMIN_MENU_ORDER = (
     (_('Media'), ('organization-media.Media',
                   'organization-media.Playlist',
                   'organization-media.LiveStreaming',
-                 'organization-media.MediaCategory',
+                  'organization-media.MediaCategory',
                  (_('Media Library'), 'fb_browse'),
                  )),
     (_('Events'), ('mezzanine_agenda.Event',
