@@ -113,7 +113,11 @@ class GuestContentMixin(models.Model):
         super().save(*args, **kwargs)
 
 
-class Project(Displayable, Period, RichText, OwnableOrNot, GuestContentMixin):
+class Project(Displayable,
+    Period,
+    RichText,
+    OwnableOrNot,
+    GuestContentMixin):
     """(Project description)"""
 
     type = models.CharField(
@@ -169,9 +173,15 @@ class Project(Displayable, Period, RichText, OwnableOrNot, GuestContentMixin):
         blank=True,
     )
     organizations = models.ManyToManyField(
-        "organization-network.Organization", verbose_name=_("organizations"), blank=True
+        "organization-network.Organization",
+        verbose_name=_("organizations"),
+        blank=True
     )
-    website = models.URLField(_("website"), max_length=512, blank=True)
+    website = models.URLField(
+        _("website"),
+        max_length=512,
+        blank=True
+    )
     topic = models.ForeignKey(
         "ProjectTopic",
         verbose_name=_("topic"),
@@ -185,6 +195,13 @@ class Project(Displayable, Period, RichText, OwnableOrNot, GuestContentMixin):
         verbose_name=_("topics"),
         related_name="project_topics",
         blank=True,
+    )
+    meta_category = models.ForeignKey("organization-core.MetaCategory",
+        verbose_name=_("meta category"),
+        related_name='%(class)ss',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
     )
     referring_person = models.ManyToManyField(
         "organization-network.Person",

@@ -135,6 +135,7 @@ admin.site.register(LinkType)
 admin.site.unregister(BlogPost)
 admin.site.unregister(ThreadedComment)
 admin.site.register(Keyword, KeywordAdmin)
+admin.site.register(MetaCategory)
 
 if settings.DEBUG and settings.HIJACK_REGISTER_ADMIN:
     UserModel = get_user_model()
