@@ -69,7 +69,7 @@ class Article(BlogPost, SubTitled, TeamOwnable):
     department = models.ForeignKey(Department, verbose_name=_('department'), related_name='articles', limit_choices_to=dict(id__in=Department.objects.all()), blank=True, null=True, on_delete=models.SET_NULL)
     topics = models.ManyToManyField("Topic", verbose_name=_('topics'), related_name="articles", blank=True)
     search_fields = {"title" : 20, "content": 15}
-    meta_category = models.ForeignKey("organization-core.MetaCategory",
+    meta_category = models.ForeignKey("organization_core.MetaCategory",
         verbose_name=_("meta categories"),
         related_name='%(class)ss',
         blank=True,

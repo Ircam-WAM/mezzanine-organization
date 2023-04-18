@@ -173,7 +173,7 @@ class Project(Displayable,
         on_delete=models.SET_NULL,
     )
     lead_team = models.ForeignKey(
-        "organization-network.Team",
+        "organization_network.Team",
         verbose_name=_("lead team"),
         related_name="leader_projects",
         blank=True,
@@ -181,7 +181,7 @@ class Project(Displayable,
         on_delete=models.SET_NULL,
     )
     lead_organization = models.ForeignKey(
-        "organization-network.Organization",
+        "organization_network.Organization",
         verbose_name=_("lead organization"),
         related_name="leader_projects",
         blank=True,
@@ -189,13 +189,13 @@ class Project(Displayable,
         on_delete=models.SET_NULL,
     )
     teams = models.ManyToManyField(
-        "organization-network.Team",
+        "organization_network.Team",
         verbose_name=_("teams"),
         related_name="partner_projects",
         blank=True,
     )
     organizations = models.ManyToManyField(
-        "organization-network.Organization",
+        "organization_network.Organization",
         verbose_name=_("organizations"),
         blank=True
     )
@@ -218,7 +218,7 @@ class Project(Displayable,
         related_name="project_topics",
         blank=True,
     )
-    meta_category = models.ForeignKey("organization-core.MetaCategory",
+    meta_category = models.ForeignKey("organization_core.MetaCategory",
         verbose_name=_("meta category"),
         related_name='%(class)ss',
         blank=True,
@@ -226,13 +226,13 @@ class Project(Displayable,
         on_delete=models.SET_NULL
     )
     referring_person = models.ManyToManyField(
-        "organization-network.Person",
+        "organization_network.Person",
         verbose_name=_("Referring Person"),
         related_name="projects_referring_person",
         blank=True,
     )
     manager = models.ManyToManyField(
-        "organization-network.Person",
+        "organization_network.Person",
         verbose_name=_("Manager"),
         related_name="projects_manager",
         blank=True,
@@ -334,10 +334,7 @@ class Project(Displayable,
         verbose_name = _("project")
         verbose_name_plural = _("projects")
         # ordering = ['-date_from', '-date_to']
-        ordering = [
-            "title",
-        ]
-        permissions = (("view_project", "Can view project"),)
+        ordering = ["title",]
 
     def __str__(self):
         return self.title

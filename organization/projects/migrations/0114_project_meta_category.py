@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-core', '0006_auto_20230417_1633'),
+        ('organization_core', '0006_auto_20230417_1633'),
         ('organization-projects', '0113_auto_20230412_1545'),
     ]
 
@@ -17,6 +17,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='project',
             name='meta_category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='projects', to='organization-core.MetaCategory', verbose_name='meta categories'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='projects', to='organization_core.MetaCategory', verbose_name='meta categories'),
         ),
     ]
