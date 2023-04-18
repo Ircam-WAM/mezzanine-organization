@@ -21,20 +21,28 @@
 
 from __future__ import unicode_literals
 
-import django.views.i18n
 from django.contrib.auth.decorators import permission_required
 from django.conf.urls import include, url
-from django.conf.urls.i18n import i18n_patterns
 
-from mezzanine.core.views import direct_to_template
 from mezzanine.conf import settings
 
-from organization.core.views import *
-from organization.agenda.views import *
+from organization.agenda.views import DynamicContentEventView, EventDetailView
 
+_slash = "/" if settings.APPEND_SLASH else ""
 
 urlpatterns = [
-    url("^%s/" % settings.EVENT_SLUG, include("mezzanine_agenda.urls")),
-    url("^dynamic-content-event/$",  permission_required('event.can_edit')(DynamicContentEventView.as_view()), name='dynamic-content-event'),
+    url(
+        "^%s/(?P<slug>.*)/detail%s$" % (settings.EVENT_SLUG, _slash),
+        EventDetailView.as_view(),
+        name='event_detail'
+    ),
+    url(
+        "^%s[%s]?" % (settings.EVENT_SLUG, _slash),
+        include("mezzanine_agenda.urls")
+    ),
+    url(
+        "^dynamic-content-event/$",
+        permission_required('mezzanine_agenda.change_event')(DynamicContentEventView.as_view()),  # noqa: E501
+        name='dynamic-content-event'
+    ),
 ]
-#

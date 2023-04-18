@@ -19,19 +19,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import datetime
-from django.views.generic.base import TemplateView
+from django.views.generic import DetailView
 from mezzanine.conf import settings
 from dal import autocomplete
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 from organization.magazine.models import Article
 from organization.pages.models import CustomPage
+from organization.network.models import Person
 from mezzanine_agenda.models import Event
-from mezzanine_agenda.views import EventListView
-from organization.core.views import autocomplete_result_formatting
-from django.db.models import Q
-
-
+from organization.core.views import autocomplete_result_formatting,\
+    SlugMixin, DynamicContentMixin
 
 
 class DynamicContentEventView(Select2QuerySetSequenceView):
@@ -43,17 +40,15 @@ class DynamicContentEventView(Select2QuerySetSequenceView):
         articles = Article.objects.all()
         custompage = CustomPage.objects.all()
         events = Event.objects.all()
+        persons = Person.objects.all()
 
         if self.q:
             articles = articles.filter(title__icontains=self.q)
             custompage = custompage.filter(title__icontains=self.q)
             events = events.filter(title__icontains=self.q)
+            persons = persons.filter(title__icontains=self.q)
 
-        qs = autocomplete.QuerySetSequence(articles, custompage, events,)
-
-        if self.q:
-            qs = qs.filter(title__icontains=self.q)
-
+        qs = autocomplete.QuerySetSequence(articles, custompage, events, persons)
         qs = self.mixup_querysets(qs)
 
         return qs
@@ -61,3 +56,10 @@ class DynamicContentEventView(Select2QuerySetSequenceView):
     def get_results(self, context):
         results = autocomplete_result_formatting(self, context)
         return results
+
+
+class EventDetailView(SlugMixin, DetailView, DynamicContentMixin):
+
+    model = Event
+    template_name = "agenda/event_detail.html"
+    context_object_name = 'event'

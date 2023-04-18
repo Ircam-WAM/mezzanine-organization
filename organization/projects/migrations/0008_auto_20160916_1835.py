@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0007_auto_20160907_1718'),
+        ('organization_projects', '0007_auto_20160907_1718'),
     ]
 
     operations = [
@@ -38,11 +38,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='project',
             name='sub_topic',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='projects', to='organization-projects.ProjectSubTopic', verbose_name='sub topic'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='projects', to='organization_projects.ProjectSubTopic', verbose_name='sub topic'),
         ),
         migrations.AddField(
             model_name='project',
             name='topic',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='projects', to='organization-projects.ProjectTopic', verbose_name='topic'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='projects', to='organization_projects.ProjectTopic', verbose_name='topic'),
         ),
     ]

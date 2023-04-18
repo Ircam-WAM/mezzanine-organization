@@ -20,12 +20,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib import admin
-from mezzanine.utils.static import static_lazy as static
-from copy import deepcopy
-from mezzanine.core.admin import *
-from organization.job.models import *
-from organization.job.forms import *
-from organization.job.translation import *
+from mezzanine.core.admin import TabularDynamicInlineAdmin, TeamOwnableAdmin,\
+    BaseTranslationModelAdmin
+from organization.job.models import JobResponse, JobOfferImage, JobOffer,\
+    CandidacyImage, Candidacy
 
 
 class JobResponseInline(TabularDynamicInlineAdmin):
@@ -33,10 +31,39 @@ class JobResponseInline(TabularDynamicInlineAdmin):
     model = JobResponse
 
 
-class JobOfferAdminDisplayable(BaseTranslationModelAdmin):
+class JobOfferImageInline(TabularDynamicInlineAdmin):
+
+    model = JobOfferImage
+
+
+class JobOfferAdminDisplayable(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = JobOffer
-    inlines = [JobResponseInline,]
+    inlines = [JobOfferImageInline, JobResponseInline, ]
+    fieldsets = (
+        (None, {
+            'fields': (
+                'title',
+                'status',
+                'publish_date',
+                'expiry_date',
+                'description',
+                'gen_description',
+                'content',
+                'email',
+                'type',
+                'text_button',
+                'url',
+            ),
+        }),
+    )
+
+
+class JobResponseAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
+
+    model = JobResponse
+    search_fields = ['last_name', 'first_name']
+    list_display = ['first_name', 'last_name', 'email', 'job_offer']
 
 
 class CandidacyImageInline(TabularDynamicInlineAdmin):
@@ -44,23 +71,30 @@ class CandidacyImageInline(TabularDynamicInlineAdmin):
     model = CandidacyImage
 
 
-class CandidacyAdmin(admin.ModelAdmin):
-
-    model = Candidacy
-
-
 class CandidacyAdminDisplayable(BaseTranslationModelAdmin,):
 
-    list_display = ('title', 'external_content', 'content_object', )
-    form = CandidacyForm
-    inlines = [CandidacyImageInline,]
-    exclude = ("short_url", "keywords", "description", "slug", )
+    model = Candidacy
+    list_display = ('title', 'url', )
+    inlines = [CandidacyImageInline, ]
     fieldsets = (
         (None, {
-            'fields': ('title', 'status', 'publish_date', 'expiry_date', 'content', 'date_from', 'date_to', 'text_button_external', 'external_content', 'text_button_internal', 'content_object',),
+            'fields': (
+                'title',
+                'status',
+                'publish_date',
+                'expiry_date',
+                'description',
+                'gen_description',
+                'content',
+                'date_from',
+                'date_to',
+                'text_button',
+                'url',
+            ),
         }),
     )
 
 
+admin.site.register(JobResponse, JobResponseAdmin)
 admin.site.register(JobOffer, JobOfferAdminDisplayable)
 admin.site.register(Candidacy, CandidacyAdminDisplayable)

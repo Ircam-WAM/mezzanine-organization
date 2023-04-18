@@ -9,9 +9,9 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0005_auto_20160905_1853'),
+        ('organization_network', '0005_auto_20160905_1853'),
         ('mezzanine_agenda', '0005_auto_20160907_1541'),
-        ('organization-agenda', '0001_initial'),
+        ('organization_agenda', '0001_initial'),
     ]
 
     operations = [
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             name='EventDepartment',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('department', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='events', to='organization-network.Department', verbose_name='department')),
+                ('department', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='events', to='organization_network.Department', verbose_name='department')),
                 ('event', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='departments', to='mezzanine_agenda.Event', verbose_name='event')),
             ],
             options={

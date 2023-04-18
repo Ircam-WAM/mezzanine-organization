@@ -10,7 +10,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-pages', '0019_auto_20170214_1643'),
+        ('organization_pages', '0019_auto_20170214_1643'),
     ]
 
     operations = [
@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('file', mezzanine.core.fields.FileField(max_length=1024, verbose_name='Image')),
                 ('credits', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
                 ('type', models.CharField(choices=[('logo', 'logo'), ('logo_white', 'logo white'), ('logo_black', 'logo black'), ('logo_header', 'logo header'), ('logo_footer', 'logo footer'), ('slider', 'slider'), ('card', 'card'), ('page_slider', 'page - slider'), ('page_featured', 'page - featured')], max_length=64, verbose_name='type')),
-                ('home', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization-pages.Home', verbose_name='home')),
+                ('home', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization_pages.Home', verbose_name='home')),
             ],
             options={
                 'verbose_name': 'image',

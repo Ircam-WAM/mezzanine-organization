@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-job', '0006_candidacyimage'),
+        ('organization_job', '0006_candidacyimage'),
     ]
 
     operations = [

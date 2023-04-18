@@ -9,7 +9,7 @@ import organization.network.validators
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0074_personactivitytimesheet_work_packages'),
+        ('organization_network', '0074_personactivitytimesheet_work_packages'),
     ]
 
     operations = [

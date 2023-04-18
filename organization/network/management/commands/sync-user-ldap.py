@@ -31,7 +31,8 @@ import xlrd
 from itertools import takewhile
 from re import findall
 import dateutil.parser
-import sys,ldap,ldap.async
+import sys
+import ldap
 # from string import split
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
@@ -39,6 +40,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.utils.text import slugify
 from organization.network.models import Person
+
 
 class Logger:
 
@@ -67,34 +69,41 @@ def get_instance(model, field, value):
         return model
 
 
-
 class Command(BaseCommand):
     help = """Import Person data from IRCAM's legacy XLS management file.
-              python manage.py import-ircam-timesheet-xls -s /srv/backup/time_sheet_2015_V3_H2020.xls
+        python manage.py import-ircam-timesheet-xls -s /srv/backup/time_sheet_2015_V3_H2020.xls  # noqa: E501
     """
 
     option_list = BaseCommand.option_list + (
-          make_option('-d', '--dry-run',
+        make_option(
+            '-d',
+            '--dry-run',
             action='store_true',
             dest='dry-run',
-            help='Do NOT write anything'),
-          make_option('-f', '--force',
+            help='Do NOT write anything'
+        ),
+        make_option(
+            '-f',
+            '--force',
             action='store_true',
             dest='force',
-            help='Force overwrite data'),
-          make_option('-l', '--log',
+            help='Force overwrite data'
+        ),
+        make_option(
+            '-l',
+            '--log',
             dest='log',
-            help='define log file'),
+            help='define log file'
+        ),
     )
 
     def handle(self, *args, **kwargs):
         self.logger = Logger(kwargs.get('log'))
         self.pattern = kwargs.get('pattern')
-        self.dry_run =  kwargs.get('dry-run')
+        self.dry_run = kwargs.get('dry-run')
         self.force = kwargs.get('force')
 
-
-        s = ldap.async.List(
+        s = ldap.async.List(  # noqa: W606, E999
           ldap.initialize(settings.AUTH_LDAP_SERVER_URI),
         )
 
@@ -105,12 +114,12 @@ class Command(BaseCommand):
         )
 
         try:
-          partial = s.processResults()
+            partial = s.processResults()
         except ldap.SIZELIMIT_EXCEEDED:
-          sys.stderr.write('Warning: Server-side size limit exceeded.\n')
+            sys.stderr.write('Warning: Server-side size limit exceeded.\n')
         else:
-          if partial:
-            sys.stderr.write('Warning: Only partial results received.\n')
+            if partial:
+                sys.stderr.write('Warning: Only partial results received.\n')
 
         sys.stdout.write(
           '%d results received.\n' % (
@@ -124,16 +133,23 @@ class Command(BaseCommand):
                 lastname = user['sn'][0].decode("utf-8")
                 firstname = user['givenName'][0].decode("utf-8")
                 slug = slugify(firstname+'-'+lastname)
-                try :
+                try:
                     p = Person.objects.get(slug=slug)
                     if 'mail' in user:
                         email = user['mail'][0].decode("utf-8")
                         p.email = email
                         p.save()
                         counter += 1
-                        self.logger.info('Person', p.first_name + ' ' + p.last_name + " | email : " + p.email )
+                        self.logger.info(
+                            'Person',
+                            p.first_name + ' ' + p.last_name + " | email : " + p.email
+                        )
 
-                except:
+                except Exception:
                     pass
 
-        self.logger.info('Count', '****************' + str(counter) + ' persons have been processed. *******************' )
+        self.logger.info(
+            'Count', '****************' +
+            str(counter) +
+            ' persons have been processed. *******************'
+        )

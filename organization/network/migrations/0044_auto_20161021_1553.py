@@ -9,18 +9,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0043_auto_20161021_1507'),
+        ('organization_network', '0043_auto_20161021_1507'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='personactivity',
             name='phd_officer_3',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='phd_officer_3_activity', to='organization-network.Person', verbose_name='PhD officer 3'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='phd_officer_3_activity', to='organization_network.Person', verbose_name='PhD officer 3'),
         ),
         migrations.AddField(
             model_name='personactivity',
             name='third_employer',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='third_employer_activity', to='organization-network.Organization', verbose_name='third employer'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='third_employer_activity', to='organization_network.Organization', verbose_name='third employer'),
         ),
     ]

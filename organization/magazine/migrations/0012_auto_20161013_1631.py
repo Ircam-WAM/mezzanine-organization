@@ -9,8 +9,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-magazine', '0011_auto_20161013_1631'),
-        ('organization-media', '0006_auto_20161013_1631'),
+        ('organization_magazine', '0011_auto_20161013_1631'),
+        ('organization_media', '0006_auto_20161013_1631'),
     ]
 
     operations = [
@@ -23,6 +23,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='articleplaylist',
             name='article',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='playlists', to='organization-magazine.Article', verbose_name='article'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='playlists', to='organization_magazine.Article', verbose_name='article'),
         ),
     ]

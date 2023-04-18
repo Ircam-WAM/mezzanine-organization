@@ -11,8 +11,8 @@ import organization.network.validators
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0042_auto_20170118_1239'),
-        ('organization-network', '0086_auto_20170118_1247'),
+        ('organization_projects', '0042_auto_20170118_1239'),
+        ('organization_network', '0086_auto_20170118_1247'),
     ]
 
     operations = [
@@ -24,9 +24,9 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=1024, verbose_name='title')),
                 ('description', models.TextField(blank=True, verbose_name='description')),
                 ('default_percentage', models.FloatField(blank=True, null=True, validators=[organization.network.validators.validate_positive], verbose_name='default %')),
-                ('activity', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='project_activity', to='organization-network.PersonActivity', verbose_name='activity')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_activity', to='organization-projects.Project', verbose_name='project')),
-                ('work_packages', models.ManyToManyField(blank=True, related_name='project_activity', to='organization-projects.ProjectWorkPackage', verbose_name='work package')),
+                ('activity', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='project_activity', to='organization_network.PersonActivity', verbose_name='activity')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_activity', to='organization_projects.Project', verbose_name='project')),
+                ('work_packages', models.ManyToManyField(blank=True, related_name='project_activity', to='organization_projects.ProjectWorkPackage', verbose_name='work package')),
             ],
             options={
                 'verbose_name_plural': 'project activities',

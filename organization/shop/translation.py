@@ -19,10 +19,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from modeltranslation.translator import translator, register, TranslationOptions
+from modeltranslation.translator import register, TranslationOptions
 
-from organization.shop.models import *
-
+from organization.shop.models import ProductList, ProductListProduct, PageProductList,\
+    ProductLink, ProductExternalShop, TeamProduct, ProductKeyword, Product
 
 
 @register(ProductList)
@@ -49,7 +49,24 @@ class ProductLinkTranslationOptions(TranslationOptions):
     fields = ('title',)
 
 
-@register(ProductPrestashopProduct)
-class ProductPrestashopProductTranslationOptions(TranslationOptions):
+@register(ProductExternalShop)
+class ProductExternalShopTranslationOptions(TranslationOptions):
 
+    fields = ['label', ]
+
+
+@register(TeamProduct)
+class TeamProductTranslationOptions(TranslationOptions):
+
+    pass
+
+
+@register(ProductKeyword)
+class ProductKeywordTranslationOptions(TranslationOptions):
+
+    fields = ['title', ]
+
+
+@register(Product.p_keywords.through)
+class ProductKeyword_productTranslationOptions(TranslationOptions):
     pass

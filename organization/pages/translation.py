@@ -19,10 +19,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from modeltranslation.translator import translator, register, TranslationOptions
-from mezzanine.pages.models import Page, RichText
-from mezzanine.pages.translation import TranslatedRichText
-from organization.pages.models import *
+from modeltranslation.translator import register, TranslationOptions
+from organization.pages.models import LinkStyle, Home,\
+    DynamicContentHomeSlider, DynamicContentHomeBody,\
+    DynamicContentHomeMedia, CustomPage, ExtendedCustomPage,\
+    ExtendedCustomPageDynamicContent, PageBlock, PageImage,\
+    PagePlaylist, PageLink, DynamicContentPage, LinkImage,\
+    PageRelatedTitle, HomeImage, DynamicMultimediaPage
 
 
 @register(LinkStyle)
@@ -120,3 +123,8 @@ class HomeImageTranslationOptions(TranslationOptions):
 
     fields = ()
 
+
+@register(DynamicMultimediaPage)
+class DynamicMultimediaPageTranslationOptions(TranslationOptions):
+
+    fields = ()

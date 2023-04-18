@@ -20,23 +20,24 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import unicodedata
 import xlrd
 from optparse import make_option
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from organization.network.models import Person
 from django.utils.text import slugify
 
 
 class Command(BaseCommand):
-    help = """Import register id from xlsx file
-    python manage.py import-ircam-matricule -s /srv/backup/MatriculesIrcamR\&D_2015-2016.xlsx
+    help = r"""Import register id from xlsx file
+    python manage.py import-ircam-matricule -s /srv/backup/MatriculesIrcamR\&D_2015-2016.xlsx  # noqa: E501
     """
     option_list = BaseCommand.option_list + (
-          make_option('-s', '--source',
+        make_option(
+            '-s',
+            '--source',
             dest='source_file',
-            help='define the XLS source file'),
+            help='define the XLS source file'
+        ),
     )
     number_of_person = 0
     number_of_person_non_processed = 0
@@ -47,7 +48,6 @@ class Command(BaseCommand):
         self.book = xlrd.open_workbook(self.source_file)
         self.sheet = self.book.sheet_by_index(0)
         self.first_row = self.sheet.row(0)
-        num_cols = self.sheet.ncols
         for row_idx in range(0, self.sheet.nrows):    # Iterate through rows
             cell_id = self.sheet.cell(row_idx, 0).value
             print("cell_id", type(cell_id), cell_id)
@@ -62,7 +62,10 @@ class Command(BaseCommand):
         print('***************************************************')
         print("Number of person processed : "+str(self.number_of_person))
         print('***************************************************')
-        print("Number of person NON processed : "+str(self.number_of_person_non_processed))
+        print("Number of person NON processed : " + str(
+                self.number_of_person_non_processed
+            )
+        )
         print('***************************************************')
 
     def update_register_id(self, id, last_name, first_name):
@@ -74,6 +77,13 @@ class Command(BaseCommand):
             for p in person:
                 p.register_id = id
                 p.save()
-        else :
-            print("Person not found: "+last_name+' '+first_name+' | manual slug : '+ slug)
+        else:
+            print(
+                "Person not found: " +
+                last_name +
+                ' ' +
+                first_name +
+                ' | manual slug : ' +
+                slug
+            )
             self.number_of_person_non_processed += 1

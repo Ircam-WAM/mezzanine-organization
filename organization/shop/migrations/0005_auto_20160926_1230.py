@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('shop', '0008_auto_20160907_1726'),
         ('pages', '0005_auto_20160923_1219'),
-        ('organization-shop', '0004_auto_20160926_1144'),
+        ('organization_shop', '0004_auto_20160926_1144'),
     ]
 
     operations = [
@@ -71,7 +71,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='productlistproduct',
             name='list',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='products', to='organization-shop.ProductList', verbose_name='product list'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='products', to='organization_shop.ProductList', verbose_name='product list'),
         ),
         migrations.AddField(
             model_name='productlistproduct',
@@ -81,7 +81,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pageproductlist',
             name='list',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='pages', to='organization-shop.ProductList', verbose_name='product list'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='pages', to='organization_shop.ProductList', verbose_name='product list'),
         ),
         migrations.AddField(
             model_name='pageproductlist',

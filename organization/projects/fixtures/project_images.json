@@ -1,1 +1,1 @@
-[{"model": "organization-projects.projectimage", "pk": 1, "fields": {"_order": 0, "title": "CAST", "description": "credits: Inova DE", "file": "uploads/vertigo starts/ICT Projects images/cast_project.png", "credits": "", "type": "card", "project": 1}}]
+[{"model": "organization_projects.projectimage", "pk": 1, "fields": {"_order": 0, "title": "CAST", "description": "credits: Inova DE", "file": "uploads/vertigo starts/ICT Projects images/cast_project.png", "credits": "", "type": "card", "project": 1}}]

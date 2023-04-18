@@ -23,20 +23,21 @@
 from __future__ import absolute_import, unicode_literals
 
 import os
+import ldap
+import logging
+import warnings
+from datetime import date
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse_lazy
-import ldap, logging
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
-import warnings
 warnings.filterwarnings(
         'ignore', r"DateTimeField .* received a naive datetime",
         RuntimeWarning, r'django\.db\.models\.fields')
 
-SILENCED_SYSTEM_CHECKS = ['fields.W342',]
+SILENCED_SYSTEM_CHECKS = ['fields.W342', ]
 
 ######################
 # MEZZANINE SETTINGS #
@@ -77,14 +78,17 @@ SILENCED_SYSTEM_CHECKS = ['fields.W342',]
 # that doesn't appear in this setting, all pages will appear in it.
 
 PAGE_MENU_TEMPLATES = (
-    (1, _("Action"), "pages/menus/action.html"),
-    (2, _("Departement"), "pages/menus/header.html"),
+    (1, _("Header"), "pages/menus/action.html"),
+    (2, _("Menu"), "pages/menus/header.html"),
     (3, _("Footer vertical"), "pages/menus/footer_vertical.html"),
     (4, _("Footer horizontal"), "pages/menus/footer_horizontal.html"),
     (5, _("Magazine"), "pages/menus/magazine.html"),
     (6, _("Vous êtes"), "pages/menus/vous_etes.html"),
     (7, _("Personnes"), "pages/menus/tree.html"),
+    (8, _("Candidacies"), "pages/menus/candidacies.html"),
 )
+
+PAGE_MENU_TEMPLATES_DEFAULT = ()
 
 MENU_PERSON_ID = 7
 
@@ -143,16 +147,20 @@ SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 SITE_ID = 1
 
+MULTIPLE_DOMAIN_SETTING_ALLOWED = True
+
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
 USE_L10N = True
 
 AUTHENTICATION_BACKENDS = (
-    "organization.core.backend.OrganizationLDAPBackend",
     "mezzanine.core.auth_backends.MezzanineBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
     "guardian.backends.ObjectPermissionBackend",
 )
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 #########
 # PATHS #
@@ -178,6 +186,9 @@ STATIC_URL = "/static/"
 # Example: "/home/media/media.lawrence.com/static/"
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, STATIC_URL.strip("/"))
 STATIC_ROOT = '/srv/static/'
+
+STATIC_HASH = os.environ.get('STATIC_HASH')\
+    if os.environ.get('STATIC_HASH') is not None else ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -205,11 +216,10 @@ LANGUAGES = (
     ('fr', _('French')),
     ('en', _('English')),
 )
-
-# LOCALE_PATHS = (
-#     os.path.join(PROJECT_ROOT, 'lib/mezzanine-organization/organization/locale/'),
-# )
-
+LOCALE_PATHS = (
+    os.path.join(PROJECT_ROOT, 'organization/locale'),
+)
+# print("LOCALE_PATHS", LOCALE_PATHS)
 #############
 # DATABASES #
 #############
@@ -231,13 +241,13 @@ DATABASES = {
 ################
 
 INSTALLED_APPS = [
-    "organization_themes",
-    'organization_themes.ircam-www-theme',
     # the current theme has to be defined in main local_settings as HOST_THEMES
+    # 'ircam_www_theme',
     "modeltranslation",
+    "dal_legacy_static",
     "dal",
-    "dal_select2",
     "dal_queryset_sequence",
+    "dal_select2",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -246,6 +256,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    "django.contrib.messages",
     'django_extensions',
     "mezzanine.boot",
     "mezzanine.conf",
@@ -259,7 +270,7 @@ INSTALLED_APPS = [
     # "mezzanine.galleries",
     # "mezzanine.mobile",
     "cartridge.shop",
-    'djangobower',
+    # 'djangobower',
     "meta",
     "mezzanine_agenda",
     "organization.core",
@@ -271,20 +282,13 @@ INSTALLED_APPS = [
     "organization.agenda",
     "organization.shop",
     "organization.job",
-    #"sorl.thumbnail", # required for thumbnail support
-    "django_instagram",
+    "organization.utils",
+    # "sorl.thumbnail", # required for thumbnail support
     'hijack',
     'compat',
     'guardian',
     'extra_views',
 ]
-
-CUSTOM_MODULES = False
-
-if CUSTOM_MODULES:
-    INSTALLED_APPS += [
-        "organization.custom",
-    ]
 
 BOWER_COMPONENTS_ROOT = '/srv/bower/'
 BOWER_PATH = '/usr/local/bin/bower'
@@ -293,7 +297,7 @@ BOWER_INSTALLED_APPS = (
     'font-awesome#4.4.0',
 )
 
-# Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats
+# Add Migration Module path see : https://github.com/stephenmcd/mezzanine/blob/master/docs/model-customization.rst#field-injection-caveats  # noqa: E501
 MIGRATION_MODULES = {
     "blog": "mezzanine.migrations.blog",
     "forms": "mezzanine.migrations.forms",
@@ -304,33 +308,37 @@ MIGRATION_MODULES = {
     "generic": "mezzanine.migrations.generic",
 }
 
-TEMPLATES = [{
-               'BACKEND': 'django.template.backends.django.DjangoTemplates',
-               'OPTIONS': {'builtins': ['mezzanine.template.loader_tags'],
-                           'context_processors': ('django.contrib.auth.context_processors.auth',
-                                                  'django.contrib.messages.context_processors.messages',
-                                                  'django.template.context_processors.debug',
-                                                  'django.template.context_processors.i18n',
-                                                  'django.template.context_processors.static',
-                                                  'django.template.context_processors.media',
-                                                  'django.template.context_processors.request',
-                                                  'django.template.context_processors.tz',
-                                                  'mezzanine.conf.context_processors.settings',
-                                                  'mezzanine.pages.context_processors.page',
-                                                  'organization.core.context_processors.organization_settings',
-                                                  ),
-                            'loaders': [
-                                #'mezzanine.template.loaders.host_themes.Loader',
-                                'django.template.loaders.filesystem.Loader',
-                                'django.template.loaders.app_directories.Loader',
-                                ],
-                        }
-            }]
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'OPTIONS': {
+            'context_processors': (
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.static',
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                'django.template.context_processors.tz',
+                'mezzanine.conf.context_processors.settings',
+                'mezzanine.pages.context_processors.page',
+                'organization.core.context_processors.organization_settings',
+                'organization.utils.context_processors.static_hash'
+            ),
+            'loaders': [
+                'mezzanine.template.loaders.host_themes.Loader',
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+        }
+    }
+]
 
 # List of middleware classes to use. Order is important; in the request phase,
 # these middleware classes will be applied in the order given, and in the
 # response phase the middleware will be applied in reverse order.
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     # 'sandbox.middleware.StartupMiddleware',
     "mezzanine.core.middleware.UpdateCacheMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -339,7 +347,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "mezzanine.core.request.CurrentRequestMiddleware",
@@ -361,8 +368,8 @@ PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-    'djangobower.finders.BowerFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'djangobower.finders.BowerFinder',
 )
 
 GRAPH_MODELS = {
@@ -407,6 +414,7 @@ MAX_UPLOAD_SIZE = 512000000
 MAX_UPLOAD_SIZE_FRONT = 10485760
 FILEBROWSER_MAX_UPLOAD_SIZE = 512000000
 
+THUMBNAILS_DIR_NAME = 'thumbs'
 
 # EXTENSIONS AND FORMATS
 # Allowed Extensions for File Upload. Lower case is important.
@@ -441,8 +449,8 @@ FILEBROWSER_SELECT_FORMATS = {
 #########################
 
 GRAPPELLI_INSTALLED = True
-# JQUERY_FILENAME = 'jquery-3.1.0.min.js'
-JQUERY_UI_FILENAME = 'jquery-ui-1.9.2.min.js'
+JQUERY_FILENAME = 'jquery-3.1.0.min.js'
+JQUERY_UI_FILENAME = 'jquery-ui-1.12.1.min.js'
 TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 
 ADMIN_MENU_ORDER = (
@@ -516,28 +524,39 @@ ADMIN_MENU_ORDER = (
     (_('Site'), ('sites.Site', 'redirects.Redirect', 'conf.Setting')),
 )
 
-DASHBOARD_TAGS = ( ("mezzanine_tags.app_list",), (), ("mezzanine_tags.recent_actions",), )
+DASHBOARD_TAGS = (
+    (
+        "mezzanine_tags.app_list",
+    ),
+    (),
+    (
+        "mezzanine_tags.recent_actions",
+    ),
+)
 
-SEARCH_MODEL_CHOICES = ('organization-pages.CustomPage',
-                        'organization-network.DepartmentPage',
-                        'organization-network.TeamPage',
-                        'organization-network.Person',
-                        'organization-projects.ProjectTopicPage',
+SEARCH_MODEL_CHOICES = ('organization_pages.CustomPage',
+                        'organization_network.DepartmentPage',
+                        'organization_network.TeamPage',
+                        'organization_network.Person',
+                        'organization_projects.ProjectTopicPage',
                         'pages.Page',
-                        'organization-media.Playlist',
+                        'organization_media.Playlist',
                         'mezzanine_agenda.Event',
-                        'organization-projects.Project',
+                        'organization_projects.ProjectPage',
                         'shop.Product',
-                        'organization-magazine.Article')
+                        'organization_magazine.Article')
 
-PAGES_MODELS = ('organization-pages.CustomPage',
-                'organization-magazine.Topic',
-                'organization-network.DepartmentPage',
-                'organization-network.TeamPage',
-                'organization-projects.ProjectTopicPage',
+# authorize models which does not heritate from Displayable
+SEARCH_MODEL_NO_DISPLAYABLE = ('organization_network.Person',)
+
+PAGES_MODELS = ('organization_pages.CustomPage',
+                'organization_magazine.Topic',
+                'organization_network.DepartmentPage',
+                'organization_network.TeamPage',
+                'organization_projects.ProjectTopicPage',
                 'shop.Product')
 
-SEARCH_PARENTS_MODELS = ('organization-network.Person',)
+SEARCH_PARENTS_MODELS = ('organization_network.Person',)
 
 PAGES_PUBLISHED_INCLUDE_LOGIN_REQUIRED = True
 
@@ -548,31 +567,34 @@ DAL_MAX_RESULTS = 100
 # EVENTS
 
 EVENT_SLUG = 'agenda'
-EVENT_GOOGLE_MAPS_DOMAIN = 'maps.google.fr'
+EVENT_GOOGLE_MAPS_DOMAIN = 'www.google.com'
 EVENT_PER_PAGE = 50
 EVENT_USE_FEATURED_IMAGE = True
-EVENT_EXCLUDE_TAG_LIST = [ ]
+EVENT_EXCLUDE_TAG_LIST = []
+EVENT_TAG_HIGHLIGHTED = 2
 PAST_EVENTS = True
 
 # SEASON
 # year is dynamic in context processor
 
-SEASON_START_MONTH=7
-SEASON_START_DAY=31
-SEASON_END_MONTH=8
-SEASON_END_DAY=1
+SEASON_START_MONTH = 7
+SEASON_START_DAY = 31
+SEASON_END_MONTH = 8
+SEASON_END_DAY = 1
 
+TEAM_HOMEPAGE_ITEM = 9
 
 BLOG_SLUG = 'article'
 BLOG_POST_PER_PAGE = 200
 ARTICLE_PER_PAGE = 10
 MEDIA_PER_PAGE = 9
 
-#SHOP_CURRENCY_LOCALE = ''
+# SHOP_CURRENCY_LOCALE = ''
 SHOP_USE_VARIATIONS = False
 SHOP_USE_RATINGS = False
 
 PROJECT_DEMOS_DIR = '/srv/media/projects/demos/'
+
 if not os.path.exists(PROJECT_DEMOS_DIR):
     os.makedirs(PROJECT_DEMOS_DIR)
 
@@ -594,10 +616,10 @@ OPTIONAL_APPS = (
 )
 
 if DEBUG:
-    OPTIONAL_APPS += ('debug_toolbar', 'hijack_admin',)
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    OPTIONAL_APPS += ('debug_toolbar', )  # , 'hijack_admin',)
+    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
-INTERNAL_IPS = ['127.0.0.1', '172.17.0.1']
+INTERNAL_IPS = ['127.0.0.1', '172.17.0.1', '172.17.0.2']
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 DEBUG_TOOLBAR_PANELS = [
@@ -619,20 +641,18 @@ DEBUG_TOOLBAR_PANELS = [
 HIJACK_DISPLAY_WARNING = False
 HIJACK_ALLOW_GET_REQUESTS = False
 HIJACK_REGISTER_ADMIN = False
-SILENCED_SYSTEM_CHECKS = ["hijack_admin.E001"]
+# SILENCED_SYSTEM_CHECKS = ["hijack_admin.E001"]
 
-if DEBUG :
+if DEBUG:
     SILENCED_SYSTEM_CHECKS = []
     HIJACK_LOGIN_REDIRECT_URL = "/person"
     HIJACK_LOGOUT_REDIRECT_URL = "/"
-    HIJACK_ALLOW_GET_REQUESTS =  True
+    HIJACK_ALLOW_GET_REQUESTS = True
     HIJACK_DISPLAY_WARNING = True
     HIJACK_REGISTER_ADMIN = True
 
-
-
 ##############################################
-##########  AUTHENTIFICATION LDAP  ###########
+#           AUTHENTIFICATION LDAP            #
 ##############################################
 # You can use LDAP Authentication by using 'Django Auth LDAP'#
 
@@ -645,11 +665,17 @@ if DEBUG:
 
 # 2 - Specify your LDAP settings :
 AUTH_LDAP_SERVER_URI = "ldap://clusterldap1.ircam.fr"
-AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=People,dc=ircam,dc=fr", ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+AUTH_LDAP_USER_SEARCH = LDAPSearch(
+    "ou=People,dc=ircam,dc=fr",
+    ldap.SCOPE_SUBTREE,
+    "(uid=%(user)s)"
+)
 
 # Set up the basic group parameters.
-AUTH_LDAP_GROUP_SEARCH = LDAPSearch("ou=People,dc=ircam,dc=fr",
-    ldap.SCOPE_SUBTREE, "(objectClass=groupOfNames)"
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
+    "ou=People,dc=ircam,dc=fr",
+    ldap.SCOPE_SUBTREE,
+    "(objectClass=groupOfNames)"
 )
 AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
 
@@ -671,13 +697,63 @@ AUTH_LDAP_CACHE_GROUPS = True
 AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 
 ##################
-#### GUARDIAN ####
+#    GUARDIAN    #
 ##################
 
 ANONYMOUS_USER_NAME = None
-LOGIN_REDIRECT_URL = reverse_lazy('organization-network-person-detail')
+LOGIN_REDIRECT_URL = reverse_lazy('organization_network-person-detail')
 
 # Themes
-HOST_THEMES = [
-    ('example.com', 'organization_themes.ircam-www-theme'),
-]
+# HOST_THEMES = [
+#     ('example.com', 'ircam_www_theme'),
+# ]
+
+# TIMESHEET
+TIMESHEET_USER_TEST = 1
+TIMESHEET_LOG_PATH = "/var/log/cron/"
+TIMESHEET_START = date(2015, 1, 1)  # arbitrary timesheet start due to missing data
+IRCAM_EMPLOYER = 1
+if DEBUG:
+    TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+    TIMESHEET_BCC_MAIL = "de@bug.com"
+else:
+    TIMESHEET_MASTER_MAIL = "foo@bar.fr"
+    TIMESHEET_BCC_MAIL = "de@bug.com"
+
+# HAL
+
+HAL_URL = "//haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?" \
+    "affi_exp=Ircam&CB_auteur=oui&CB_titre=oui" \
+    "&CB_article=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=typdoc&"\
+    "tri_exp3=date_publi&ordre_aff=TA&Fen=Aff&Formate=Oui"
+
+HAL_LABOS_EXP = "labos_exp="
+HAL_URL_CSS = "&css=//%s/static/css/index.min.css"
+HAL_LIMIT_PUB = "&NbAffiche="
+HAL_YEAR_BEGIN = 1977
+
+# Ownable
+OWNABLE_MODELS_ALL_EDITABLE = []
+
+# ARTICLE LIST
+ARTICLE_KEYWORDS = ['', ]
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
+
+# OAUTH2
+OAUTH2_IRCAM = True
+if OAUTH2_IRCAM is not True:
+    LOGIN_URL = '/accounts/login'
+else:
+    LOGIN_URL = '/accounts/ircamauth/login/'
+OAUTH_SERVER_BASEURL = os.getenv('OAUTH_SERVER_BASEURL')
+USER_SERVER_BASEURL = os.getenv('USER_SERVER_BASEURL')
+
+LOGOUT_URL = '/accounts/logout/'
+LOGIN_REDIRECT_URL = '/person/'
+# LOGIN_REDIRECT_URL = '/dashboard/'
+# Account creation URL
+OAUTH_SIGNUP_URL = '{}/accounts/signup'.format(USER_SERVER_BASEURL)
+# Creation of an internal user's group for OAUTH2/LDAP and
+# Dashboard presentation (internal/external user)
+ORGANIZATION_INTERN_USERS_GROUP = 'Ircam - Intern'

@@ -19,36 +19,46 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import datetime
 from dal import autocomplete
 
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
-
+from cartridge.shop.models import Product
 from django import forms
-from django.forms.widgets import HiddenInput
-from django.forms import ModelForm
-from mezzanine.core.models import Orderable
-from organization.magazine.models import Article, Topic, Brief
+from mezzanine.conf import settings
+from organization.magazine.models import Article, Brief
 from organization.pages.models import CustomPage
-from organization.pages.models import *
-from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
 from organization.network.models import Person
+from organization.projects.models import Project
+from organization.pages.models import DynamicContentHomeSlider,\
+    DynamicContentHomeBody, DynamicContentHomeMedia, ExtendedCustomPage,\
+    DynamicContentPage, DynamicMultimediaPage
+from mezzanine_agenda.models import Event
+from organization.media.forms import DynamicMultimediaForm
+from organization.projects.models import ProjectPage
 
 
 class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
+        queryset=None,
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-home-slider'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentHomeSliderForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
             Article.objects.all(),
             CustomPage.objects.all(),
             Event.objects.all(),
-            Person.objects.published(),
+            Person.objects.all(),
             Media.objects.all()
-        ),
-        required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-slider'),
-    )
+        )
 
     class Meta:
         model = DynamicContentHomeSlider
@@ -58,17 +68,25 @@ class DynamicContentHomeSliderForm(autocomplete.FutureModelForm):
 class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
+        queryset=None,
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-home-body'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentHomeBodyForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
             Article.objects.all(),
             CustomPage.objects.all(),
-            Brief.objects.all(),
             Event.objects.all(),
+            Brief.objects.all(),
             Media.objects.all(),
-            Person.objects.all()
-        ),
-        required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-body'),
-    )
+            Person.objects.all(),
+            Project.objects.all(),
+            Playlist.objects.all()
+        )
 
     class Meta:
         model = DynamicContentHomeBody
@@ -78,31 +96,62 @@ class DynamicContentHomeBodyForm(autocomplete.FutureModelForm):
 class DynamicContentHomeMediaForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Playlist.objects.all(),
-        ),
+        queryset=None,
         required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-home-media'),
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-home-media'
+        ),
     )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentHomeMediaForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Playlist.objects.all(),
+        )
 
     class Meta:
         model = DynamicContentHomeMedia
         fields = ('content_object',)
 
 
-
 class DynamicContentPageForm(autocomplete.FutureModelForm):
 
     content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
+        queryset=None,
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-page'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentPageForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
             Article.objects.all(),
             CustomPage.objects.all(),
-            Event.objects.all()
-        ),
-        required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('dynamic-content-page'),
-    )
+            Event.objects.all(),
+            ExtendedCustomPage.objects.all(),
+            ProjectPage.objects.all(),
+            Product.objects.all()
+        )
 
     class Meta:
         model = DynamicContentPage
         fields = ('content_object',)
+
+
+class DynamicMultimediaPageForm(DynamicMultimediaForm):
+
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaPage
+
+
+class YearForm(forms.Form):
+
+    curr_year = datetime.datetime.today().year
+    year_list = reversed(range(settings.HAL_YEAR_BEGIN, curr_year + 1))
+    YEARS = []
+    for year in year_list:
+        YEARS.append((str(year), str(year)))
+
+    year = forms.ChoiceField(choices=YEARS)

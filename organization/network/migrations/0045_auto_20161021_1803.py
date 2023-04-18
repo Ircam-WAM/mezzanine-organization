@@ -9,8 +9,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0022_projectlink_title'),
-        ('organization-network', '0044_auto_20161021_1553'),
+        ('organization_projects', '0022_projectlink_title'),
+        ('organization_network', '0044_auto_20161021_1553'),
     ]
 
     operations = [
@@ -42,46 +42,46 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='personactivity',
             name='phd_directors',
-            field=models.ManyToManyField(blank=True, related_name='phd_director_activities', to='organization-network.Person', verbose_name='PhD directors'),
+            field=models.ManyToManyField(blank=True, related_name='phd_director_activities', to='organization_network.Person', verbose_name='PhD directors'),
         ),
         migrations.AddField(
             model_name='personactivity',
             name='phd_officers',
-            field=models.ManyToManyField(blank=True, related_name='phd_officer_activities', to='organization-network.Person', verbose_name='PhD officers'),
+            field=models.ManyToManyField(blank=True, related_name='phd_officer_activities', to='organization_network.Person', verbose_name='PhD officers'),
         ),
         migrations.AddField(
             model_name='personactivity',
             name='projects',
-            field=models.ManyToManyField(blank=True, related_name='activities', to='organization-projects.Project', verbose_name='projects'),
+            field=models.ManyToManyField(blank=True, related_name='activities', to='organization_projects.Project', verbose_name='projects'),
         ),
         migrations.AlterField(
             model_name='personactivity',
             name='attachment_organization',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='attachment_activities', to='organization-network.Organization', verbose_name='attachment organization'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='attachment_activities', to='organization_network.Organization', verbose_name='attachment organization'),
         ),
         migrations.AlterField(
             model_name='personactivity',
             name='employer',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='employer_activities', to='organization-network.Organization', verbose_name='employer'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='employer_activities', to='organization_network.Organization', verbose_name='employer'),
         ),
         migrations.AlterField(
             model_name='personactivity',
             name='second_employer',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='second_employer_activities', to='organization-network.Organization', verbose_name='second employer'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='second_employer_activities', to='organization_network.Organization', verbose_name='second employer'),
         ),
         migrations.AlterField(
             model_name='personactivity',
             name='second_team',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='second_team_activities', to='organization-network.Team', verbose_name='second team'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='second_team_activities', to='organization_network.Team', verbose_name='second team'),
         ),
         migrations.AlterField(
             model_name='personactivity',
             name='team',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='team_activities', to='organization-network.Team', verbose_name='team'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='team_activities', to='organization_network.Team', verbose_name='team'),
         ),
         migrations.AlterField(
             model_name='personactivity',
             name='third_employer',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='third_employer_activities', to='organization-network.Organization', verbose_name='third employer'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='third_employer_activities', to='organization_network.Organization', verbose_name='third employer'),
         ),
     ]

@@ -10,7 +10,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0004_organizationaudio_organizationblock_organizationimage_organizationlink_organizationvideo'),
+        ('organization_network', '0004_organizationaudio_organizationblock_organizationimage_organizationlink_organizationvideo'),
     ]
 
     operations = [
@@ -60,6 +60,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='personactivity',
             name='umr',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization-network.UMR', verbose_name='training type'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='organization_network.UMR', verbose_name='training type'),
         ),
     ]

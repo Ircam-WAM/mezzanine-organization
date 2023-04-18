@@ -9,8 +9,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0023_auto_20160921_2043'),
-        ('organization-magazine', '0002_auto_20160901_1737'),
+        ('organization_network', '0023_auto_20160921_2043'),
+        ('organization_magazine', '0002_auto_20160901_1737'),
     ]
 
     operations = [
@@ -20,8 +20,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=1024, verbose_name='title')),
                 ('description', models.TextField(blank=True, verbose_name='description')),
-                ('article', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='article_person_list_block_inlines', to='organization-magazine.Article', verbose_name='Article')),
-                ('person_list_block', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='article_person_list_block_inlines', to='organization-network.PersonListBlock', verbose_name='Person List Block')),
+                ('article', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='article_person_list_block_inlines', to='organization_magazine.Article', verbose_name='Article')),
+                ('person_list_block', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='article_person_list_block_inlines', to='organization_network.PersonListBlock', verbose_name='Person List Block')),
             ],
             options={
                 'verbose_name': 'Person List',

@@ -19,21 +19,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
-
 import copy
 import datetime
 import logging
 import os
 
 import pydash as dsh
-from django.conf import settings
+from django.utils.safestring import mark_safe
+from django.core.files.images import get_image_dimensions
+from django.core.cache import cache
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
-from django.core.cache import cache
-from django.core.files.images import get_image_dimensions
 from django.db import models
-from django.utils.safestring import mark_safe
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings as m_settings
 from mezzanine.core.models import Displayable, Orderable, RichText, Slugged
@@ -41,9 +39,20 @@ from mezzanine.core.models import (CONTENT_STATUS_DRAFT,
                                     CONTENT_STATUS_PUBLISHED)
 from mezzanine_agenda.models import *
 from organization.core.models import *
+from organization.core.models import TitledSlugged, Period,\
+    Named, Titled, Description, Block, Link, Image, UserImage, File,\
+    SubTitled, NamedOnly, RelatedTitle, URL, DynamicContent, Address, LinkType, \
+    OwnableOrNot
+from organization.pages.models import Page
+from organization.network.models import Person, Organization
 from organization.magazine.models import Article
-from organization.network.models import *
-from organization.pages.models import *
+from organization.media.models import PlaylistRelated
+from mezzanine_agenda.models import Event
+from mezzanine.core.models import Slugged, RichText, Displayable, Orderable, MetaData,\
+    TimeStamped, RichTextField, TeamOwnable
+from mezzanine.conf import settings as m_settings
+
+from django.conf import settings
 
 logger = logging.getLogger("app")
 
@@ -83,6 +92,19 @@ DIMENSION_CHOICES = (
     ("startup", _("Start-up / Micro")),
     ("sme", _("SME")),
     ("large", _("Large")),
+)
+
+PROJECT_TYPE_CHOICES = [
+    ('internal', ('Internal project')),
+    ('external', ('National or European project')),
+    ('industrial', ('Industrial project')),
+]
+
+PROJECT_STATUS_CHOICES = (
+    (0, ('rejected')),
+    (1, ('pending')),
+    (2, ('in process')),
+    (3, ('accepted')),
 )
 
 FUNDING_CHOICES = (
@@ -321,32 +343,28 @@ class Project(Displayable,
         return self.title
 
     def get_absolute_url(self):
-        ict_topic, c = ProjectTopic.objects.get_or_create(key="ICT")
+        from organization.projects.models import ProjectTopic
+        ict_topic, c = ProjectTopic.objects.get_or_create(key='ICT')
         if self.topic == ict_topic:
             return reverse(
-                "organization-ict-project-detail", kwargs={"slug": self.slug}
+                "organization-ict-project-detail",
+                kwargs={"slug": self.slug}
             )
         return reverse("organization-project-detail", kwargs={"slug": self.slug})
 
     def project_status(self):
         if self.date_from and self.date_to:
-            if (
-                datetime.date.today() >= self.date_from
-                and datetime.date.today() <= self.date_to
-            ):
-                return _("in progress")
-            elif (
-                datetime.date.today() < self.date_from
-                and datetime.date.today() < self.date_to
-            ):
-                return _("pending")
-            elif (
-                datetime.date.today() > self.date_to
-                and datetime.date.today() > self.date_to
-            ):
-                return _("completed")
+            if datetime.date.today() >= self.date_from and\
+                    datetime.date.today() <= self.date_to:
+                return ('in progress')
+            elif datetime.date.today() < self.date_from and\
+                    datetime.date.today() < self.date_to:
+                return ('pending')
+            elif datetime.date.today() > self.date_to and\
+                    datetime.date.today() > self.date_to:
+                return ('completed')
         else:
-            return _("pending")
+            return ('pending')
 
     @property
     def download_urls(self):
@@ -648,26 +666,40 @@ class Project(Displayable,
 
 class ProjectTopic(Named):
 
-    key = models.CharField(_("key"), unique=True, max_length=128)
     parent = models.ForeignKey(
-        "ProjectTopic",
-        verbose_name=_("parent tag"),
-        related_name="topics",
-        blank=True,
-        null=True,
+        'ProjectTopic',
+        verbose_name=_('parent topic'),
+        related_name='topics',
+        blank=True, null=True,
+        on_delete=models.SET_NULL
     )
+
+    key = models.CharField(
+        _('key'),
+        unique=True,
+        max_length=128
+    )
+
+    class Meta:
+        verbose_name = _('project topic')
+        verbose_name_plural = _("project topics")
+        ordering = ['key', ]
+
+    def get_absolute_url(self):
+        return reverse(
+            'ircam-forum-projecttopic-detail',
+            kwargs={'pk': self.pk, 'name': self.name}
+        )
 
     class Meta:
         verbose_name = _("tag")
         verbose_name_plural = _("tags")
-        ordering = [
-            "key",
-        ]
+        ordering = ["key",]
 
     def get_absolute_url(self):
         return reverse(
             "ircam-forum-projecttopic-detail", kwargs={"pk": self.pk, "name": self.name}
-        )
+            )
 
     def __str__(self):
         if self.parent:
@@ -680,51 +712,51 @@ class ProjectProgram(Named):
     class Meta:
         verbose_name = _("program")
         verbose_name_plural = _("programs")
-        ordering = [
-            "name",
-        ]
+        ordering = ['name', ]
 
 
 class ProjectProgramType(Named):
     class Meta:
         verbose_name = _("program type")
         verbose_name_plural = _("program types")
-        ordering = [
-            "name",
-        ]
+        ordering = ['name', ]
 
 
-class ProjectWorkPackage(Titled, Period):
+class ProjectWorkPackage(Titled, Description, Period):
 
     project = models.ForeignKey(
-        Project, verbose_name=_("project"), related_name="work_packages"
+        Project,
+        verbose_name=_('project'),
+        related_name='work_packages',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
-    number = models.IntegerField(_("number"))
+    number = models.IntegerField(_('number'))
     lead_organization = models.ForeignKey(
-        "organization-network.Organization",
-        verbose_name=_("lead organization"),
-        related_name="leader_work_packages",
+        'organization_network.Organization',
+        verbose_name=_('lead organization'),
+        related_name='leader_work_packages',
         blank=True,
         null=True,
+        on_delete=models.SET_NULL
     )
 
     class Meta:
         verbose_name = _("work package")
         verbose_name_plural = _("work packages")
-        ordering = [
-            "number",
-        ]
+        ordering = ['number', ]
 
 
 class ProjectPlaylist(PlaylistRelated):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="playlists",
+        verbose_name=_('project'),
+        related_name='playlists',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
@@ -732,11 +764,11 @@ class ProjectLink(Link):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="links",
+        verbose_name=_('project'),
+        related_name='links',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
@@ -744,11 +776,11 @@ class ProjectImage(Image):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="images",
+        verbose_name=_('project'),
+        related_name='images',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
@@ -756,11 +788,11 @@ class ProjectUserImage(UserImage):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="user_images",
+        verbose_name=_('project'),
+        related_name='user_images',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
@@ -768,11 +800,11 @@ class ProjectFile(File):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="files",
+        verbose_name=_('project'),
+        related_name='files',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
@@ -780,24 +812,27 @@ class ProjectBlock(Block):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="blocks",
+        verbose_name=_('project'),
+        related_name='blocks',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
 class ProjectTopicPage(Page, SubTitled):
 
     project_topic = models.ForeignKey(
-        "ProjectTopic",
-        verbose_name=_("project topic"),
+        'ProjectTopic',
+        verbose_name=_('project topic'),
         related_name="pages",
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
+
+    display_navbar = models.BooleanField(default=True)
+    displayed_in_navbars = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = _("project topic page")
@@ -807,21 +842,25 @@ class ProjectTopicPage(Page, SubTitled):
 class ProjectCall(Displayable, Period, RichText, NamedOnly):
 
     project_form_content = RichTextField(
-        _("Project form content"), blank=True, null=True
+        _("Project form content"),
+        blank=True,
+        null=True
     )
     residency_form_content = RichTextField(
-        _("Residency form content"), blank=True, null=True
+        _("Residency form content"),
+        blank=True,
+        null=True
     )
     producer_form_content = RichTextField(
-        _("Producer form content"), blank=True, null=True
+        _("Producer form content"),
+        blank=True,
+        null=True
     )
 
     class Meta:
         verbose_name = _("project call")
         verbose_name_plural = _("project calls")
-        ordering = [
-            "title",
-        ]
+        ordering = ['title', ]
 
     def __str__(self):
         return self.title
@@ -843,7 +882,7 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
             current_date = datetime.date.today()
             if current_date >= self.date_from and current_date <= self.date_to:
                 return False
-        except:
+        except Exception:
             pass
         return True
 
@@ -851,79 +890,85 @@ class ProjectCall(Displayable, Period, RichText, NamedOnly):
 class ProjectCallBlock(Block):
 
     call = models.ForeignKey(
-        "ProjectCall",
-        verbose_name=_("project call blocks"),
-        related_name="blocks",
+        'ProjectCall',
+        verbose_name=_('project call'),
+        related_name='blocks',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
 class ProjectCallImage(Image):
 
     call = models.ForeignKey(
-        "ProjectCall",
-        verbose_name=_("project call image"),
-        related_name="images",
+        'ProjectCall',
+        verbose_name=_('project call'),
+        related_name='images',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
 class ProjectCallFile(File):
 
     call = models.ForeignKey(
-        "ProjectCall",
-        verbose_name=_("project call file"),
-        related_name="files",
+        'ProjectCall',
+        verbose_name=_('project call'),
+        related_name='files',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
 class ProjectCallLink(Link):
 
     call = models.ForeignKey(
-        "ProjectCall",
-        verbose_name=_("project call link"),
-        related_name="links",
+        'ProjectCall',
+        verbose_name=_('project call'),
+        related_name='links',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
 class ProjectDemo(Displayable, RichText, URL):
 
     project = models.ForeignKey(
-        "Project",
-        verbose_name=_("project"),
-        related_name="demos",
+        'Project',
+        verbose_name=_('project'),
+        related_name='demos',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
     authors = models.ManyToManyField(
-        Person, verbose_name=_("authors"), related_name="demos", blank=True
+        Person,
+        verbose_name=_('authors'),
+        related_name='demos',
+        blank=True
     )
     repository = models.ForeignKey(
-        "Repository",
-        verbose_name=_("repository"),
-        related_name="demos",
+        'Repository',
+        verbose_name=_('repository'),
+        related_name='demos',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
-    build_commands = models.TextField(_("build commands"), blank=True)
+    build_commands = models.TextField(
+        _('build commands'),
+        blank=True
+    )
     directory = models.CharField(
-        _("directory"),
+        _('directory'),
         max_length=256,
         blank=True,
         null=True,
-        help_text="Relative directory in repository",
+        help_text='Relative directory in repository'
     )
 
     class Meta:
@@ -952,17 +997,34 @@ class ProjectDemo(Displayable, RichText, URL):
 class Repository(models.Model):
 
     system = models.ForeignKey(
-        "RepositorySystem", verbose_name=_("system"), related_name="repositories"
+        'RepositorySystem',
+        verbose_name=_('system'),
+        related_name='repositories',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
     access = models.CharField(
-        _("access rights"),
+        _('access rights'),
         max_length=64,
         choices=REPOSITORY_ACCESS_CHOICES,
-        default="public",
+        default='public'
     )
-    url = models.CharField(_("URL"), max_length=256, help_text="http(s) or ssh")
+    branch = models.CharField(
+        _('branch'),
+        max_length=32,
+        default='master'
+    )
+    url = models.CharField(
+        _('URL'),
+        max_length=256,
+        help_text='http(s) or ssh'
+    )
     vendor = models.CharField(
-        _("vendor"), max_length=64, choices=REPOSITORY_VENDORS, default="gitlab"
+        _('vendor'),
+        max_length=64,
+        choices=REPOSITORY_VENDORS,
+        default='gitlab'
     )
 
     def __str__(self):
@@ -1046,11 +1108,11 @@ class ProjectRelatedTitle(RelatedTitle):
 
     project = models.OneToOneField(
         Project,
-        verbose_name=_("project"),
-        related_name="related_title",
+        verbose_name=_('project'),
+        related_name='related_title',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
     class Meta:
@@ -1062,26 +1124,41 @@ class DynamicContentProject(DynamicContent, Orderable):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="dynamic_content_project",
+        verbose_name=_('project'),
+        related_name='dynamic_content_project',
         blank=True,
         null=True,
-        on_delete=models.CASCADE,
+        on_delete=models.CASCADE
     )
 
     class Meta:
         verbose_name = "Linked Project"
 
 
+class DynamicMultimediaProject(DynamicContent, Orderable):
+
+    project = models.ForeignKey(
+        Project,
+        verbose_name=_('project'),
+        related_name='dynamic_multimedia',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        verbose_name = 'Multimedia'
+
+
 class ProjectBlogPage(Displayable, RichText):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="blog_pages",
+        verbose_name=_('project'),
+        related_name='blog_pages',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
     login_required_content = RichTextField(_("Login required content"), null=True)
 
@@ -1091,7 +1168,8 @@ class ProjectBlogPage(Displayable, RichText):
 
     def get_absolute_url(self):
         return reverse(
-                "organization-project-blogpage-detail", kwargs={"slug": self.slug}
+            "organization-project-blogpage-detail",
+            kwargs={"slug": self.slug}
         )
 
 
@@ -1099,56 +1177,76 @@ class ProjectPublicData(models.Model):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="public_data",
+        verbose_name=_('project'),
+        related_name='public_data',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
     brief_description = models.CharField(
-        _("brief description"),
+        _('brief description'),
         max_length=110,
-        help_text="Brief description of the technology/challenges faced by the project (110 characters max).",
+        help_text="Brief description of the technology/challenges"
+        " faced by the project (110 characters max)."
     )
     challenges_description = models.TextField(
-        _("challenges description"),
-        help_text="Description of the project technology to be made available to artist + challenges it produces (100 words - must include the elements to be made available to the artist with sufficient functional and implementation details for enabling him/her to elaborate a technical approach).",
+        _('challenges description'),
+        help_text="Description of the project technology to be made"
+        " available to artist + challenges it produces (100 words - must include"
+        " the elements to be made available to the artist with sufficient functional"
+        " and implementation details for enabling him/her to "
+        "elaborate a technical approach)."
     )
     technology_description = models.TextField(
-        _("technology description"),
-        help_text="Must include the elements to be made available to the artist with sufficient functional and implementation details for enabling him/her to elaborate his/her technical approach (100-200 words).",
+        _('technology description'),
+        help_text="Must include the elements to be made available to the artist with"
+        " sufficient functional and implementation details for enabling him/her to"
+        " elaborate his/her technical approach (100-200 words)."
     )
     objectives_description = models.TextField(
-        _("objectives description"),
-        help_text="What the project is looking to gain from the collaboration and what kind of artist would be suitable (100 – 150 words).",
+        _('objectives description'),
+        help_text="What the project is looking to gain from the collaboration"
+        " and what kind of artist would be suitable (100 – 150 words)."
     )
     resources_description = models.TextField(
-        _("resource description"),
-        help_text="Resources available to the artist -- e.g. office facility, studio facility, technical equipment, internet connection, laboratory, and periods of availability for artistic production, staff possibly allocated to the project, available budget for travel, consumables and equipment, etc... (50 – 100 words).",
+        _('resource description'),
+        help_text="Resources available to the artist -- e.g. office facility, studio"
+        " facility, technical equipment, internet connection, laboratory, and periods"
+        " of availability for artistic production, staff possibly allocated to the"
+        " project, available budget for travel, consumables and "
+        "equipment, etc... (50 – 100 words)."
     )
     implementation_start_date = models.DateField(
-        _("residency start date"),
-        help_text="Possible period for the implementation of the residency (must be within the period of the project implementation workplan) (MM/DD/YYYY)",
+        _('residency start date'),
+        help_text="Possible period for the implementation of the residency"
+        " (must be within the period of the project implementation workplan)"
+        " (MM/DD/YYYY)"
     )
     implementation_period = models.DateField(
-        _("period for direct cooperation"),
+        _('period for direct cooperation'),
         blank=False,
         null=True,
-        help_text="Possible period for direct cooperation with the artist (must be within the period of the project implementation workplan) (MM/DD/YYYY)",
+        help_text="Possible period for direct cooperation with the"
+        " artist (must be within the period of the project "
+        "implementation workplan) (MM/DD/YYYY)"
     )
     implementation_duration = models.CharField(
-        _("residency duration"),
-        max_length=128,
-        help_text="Possible duration of implementation in months (must be part of the project implementation workplan) (months)",
+        _('residency duration'),
+        max_length=128, help_text="Possible duration of implementation in"
+        " months (must be part of the project implementation workplan) (months)"
     )
     image = models.FileField(
         _("Image"),
         max_length=1024,
         upload_to="user/images/%Y/%m/%d/",
-        help_text="Representing the project",
+        help_text="Representing the project"
     )
-    image_credits = models.CharField(_("Image credits"), max_length=256, null=True)
+    image_credits = models.CharField(
+        _('Image credits'),
+        max_length=256,
+        null=True
+    )
 
     class Meta:
         verbose_name = "Project public data"
@@ -1164,7 +1262,7 @@ class ProjectPublicData(models.Model):
                 panoramic = True
             else:
                 panoramic = False
-        except:
+        except Exception:
             panoramic = True
         return panoramic
 
@@ -1173,30 +1271,37 @@ class ProjectPrivateData(models.Model):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="private_data",
+        verbose_name=_('project'),
+        related_name='private_data',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
     description = models.TextField(
-        _("project description"), help_text="(500 - 1000 words)"
+        _('project description'),
+        help_text="(500 - 1000 words)"
     )
     funding_programme = models.CharField(
-        _("funding programme"),
+        _('funding programme'),
         max_length=512,
         blank=False,
         null=True,
-        help_text="Designation of EU/National Funding Programme",
+        help_text="Designation of EU/National Funding Programme"
     )
     commitment_letter = models.FileField(
         _("letter of commitment by the project coordinator"),
         max_length=1024,
         upload_to="user/documents/%Y/%m/%d/",
         help_text=mark_safe(
-            'Written on behalf of the whole project consortium, this letter will commit in implementing the collaboration of a residency application selected by the VERTIGO jury, on the conditions set by the project (in annex of letter: synthesis of all related information entered by project).<br>Please <a href="http://vertigo.starts.eu/media/uploads/vertigo%20starts/CALL/vertigo_loc_v3.rtf">download and use the template letter.</a>'
-        ),
+            'Written on behalf of the whole project consortium'
+            ', this letter will commit in implementing the collaboration'
+            ' of a residency application selected by the VERTIGO jury, on'
+            ' the conditions set by the project (in annex of letter: synthesis'
+            ' of all related information entered by project).<br>Please '
+            '<a href="http://vertigo.starts.eu/media/uploads/vertigo%20starts/CALL/vertigo_loc_v3.rtf">'  # noqa: E501
+            'download and use the template letter.</a>'
+        )
     )
     investor_letter = models.FileField(
         _("letter of recommendations from investor (e.g VC)"),
@@ -1204,19 +1309,24 @@ class ProjectPrivateData(models.Model):
         blank=False,
         null=True,
         upload_to="user/documents/%Y/%m/%d/",
-        help_text="If the organisation is a Start-Up or micro enterprise (less than 3 years and/or less than 10 staff members), the presentation of letter of recommendation from an investor is mandatory to apply to this call.",
+        help_text="If the organisation is a Start-Up or micro enterprise"
+        " (less than 3 years and/or less than 10 staff members), the presentation"
+        " of letter of recommendation from an investor is mandatory"
+        " to apply to this call."
     )
     persons = models.CharField(
-        _("persons"),
+        _('persons'),
         max_length=512,
-        help_text="First name and last name of the persons from organization / project who will be part preliminary of the project team (separated by a comma)",
+        help_text="First name and last name of the persons from organization /"
+        " project who will be part preliminary of the project team"
+        " (separated by a comma)"
     )
     dimension = models.CharField(
-        _("dimension"),
+        _('dimension'),
         max_length=128,
         choices=DIMENSION_CHOICES,
         blank=False,
-        null=True,
+        null=True
     )
 
     class Meta:
@@ -1228,16 +1338,19 @@ class ProjectContact(Person):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="contacts",
+        verbose_name=_('project'),
+        related_name='contacts',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
     organization_name = models.CharField(
-        _("organization name"), blank=True, null=True, max_length=128
+        _('organization name'),
+        blank=True,
+        null=True,
+        max_length=128
     )
-    position = models.CharField(_("position"), blank=True, null=True, max_length=128)
+    position = models.CharField(_('position'), blank=True, null=True, max_length=128)
 
     class Meta:
         verbose_name = "Project contact"
@@ -1248,65 +1361,39 @@ class ProjectResidency(Displayable, Period, Address, RichText):
 
     project = models.ForeignKey(
         Project,
-        verbose_name=_("project"),
-        related_name="residencies",
+        verbose_name=_('project'),
+        related_name='residencies',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
     artist = models.ForeignKey(
         Person,
-        verbose_name=_("artist"),
-        related_name="residencies",
+        verbose_name=_('artist'),
+        related_name='residencies',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
     validated = models.BooleanField(default=False)
-    producer_commitment = models.TextField(_("producer commitment"), help_text="")
-    mappable_location = models.CharField(
-        max_length=128,
-        blank=True,
-        null=True,
-        help_text="This address will be used to calculate latitude and longitude. Leave blank and set Latitude and Longitude to specify the location yourself, or leave all three blank to auto-fill from the Location field.",
-    )
-    lat = models.DecimalField(
-        max_digits=10,
-        decimal_places=7,
-        blank=True,
-        null=True,
-        verbose_name="Latitude",
-        help_text="Calculated automatically if mappable location is set.",
-    )
-    lon = models.DecimalField(
-        max_digits=10,
-        decimal_places=7,
-        blank=True,
-        null=True,
-        verbose_name="Longitude",
-        help_text="Calculated automatically if mappable location is set.",
-    )
+    producer_commitment = models.TextField(_('producer commitment'), help_text="")
 
     @property
     def articles(self):
         # TODO: Any way to avoid magic number in status filter?
-        articles = (
-            Article.objects.filter(residencies__residency=self)
-            .filter(status=2)
-            .filter(publish_date__lte=datetime.date.today())
+        articles = Article.objects.filter(residencies__residency=self)\
+            .filter(status=2)\
+            .filter(publish_date__lte=datetime.date.today())\
             .order_by("-publish_date")
-        )
         return articles
 
     @property
     def events(self):
         # TODO: Any way to avoid magic number in status filter?
-        events = (
-            Event.objects.filter(residencies__residency=self)
-            .filter(status=2)
-            .filter(publish_date__lte=datetime.date.today())
+        events = Event.objects.filter(residencies__residency=self)\
+            .filter(status=2)\
+            .filter(publish_date__lte=datetime.date.today())\
             .order_by("-publish_date")
-        )
         return events
 
     class Meta:
@@ -1314,77 +1401,33 @@ class ProjectResidency(Displayable, Period, Address, RichText):
         verbose_name_plural = "Project residencies"
 
     def get_absolute_url(self):
+        call_slug = ''
+        if self.project:
+            if self.project.call:
+                call_slug = self.project.call.slug
         return reverse(
             "organization-residency-detail",
-            kwargs={"call_slug": self.project.call.slug, "slug": self.slug},
+            kwargs={"call_slug": call_slug, "slug": self.slug}
         )
-
-    def clean(self):
-        """
-        Validate set/validate mappable_location, longitude and latitude.
-        """
-        super(ProjectResidency, self).clean()
-
-        if self.lat and not self.lon:
-            raise ValidationError("Longitude required if specifying latitude.")
-
-        if self.lon and not self.lat:
-            raise ValidationError("Latitude required if specifying longitude.")
-
-        if not (self.lat and self.lon) and not self.mappable_location:
-            if self.address:
-                self.mappable_location = (
-                    self.address.replace("\n", " ").replace("\r", " ")
-                    + ", "
-                    + self.postal_code
-                    + " "
-                    + self.city
-                )
-
-        if self.mappable_location and not (
-            self.lat and self.lon
-        ):  # location should always override lat/long if set
-            g = GoogleMaps(domain=settings.EVENT_GOOGLE_MAPS_DOMAIN)
-            try:
-                mappable_location, (lat, lon) = g.geocode(self.mappable_location)
-            except GeocoderQueryError as e:
-                raise ValidationError(
-                    'The mappable location you specified could not be found on {service}: "{error}" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.'.format(
-                        service="Google Maps", error=e.message
-                    )
-                )
-            except ValueError as e:
-                raise ValidationError(
-                    'The mappable location you specified could not be found on {service}: "{error}" Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com.'.format(
-                        service="Google Maps", error=e.message
-                    )
-                )
-            except TypeError as e:
-                raise ValidationError(
-                    "The mappable location you specified could not be found. Try changing the mappable location, removing any business names, or leaving mappable location blank and using coordinates from getlatlon.com."
-                )
-            self.mappable_location = mappable_location
-            self.lat = lat
-            self.lon = lon
 
 
 class ProjectResidencyProducer(models.Model):
 
     residency = models.ForeignKey(
         ProjectResidency,
-        verbose_name=_("residency"),
-        related_name="producers",
+        verbose_name=_('residency'),
+        related_name='producers',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
     organization = models.ForeignKey(
         Organization,
-        verbose_name=_("producer"),
-        related_name="residencies",
+        verbose_name=_('producer'),
+        related_name='residencies',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
@@ -1392,11 +1435,11 @@ class ProjectResidencyFile(File):
 
     residency = models.ForeignKey(
         ProjectResidency,
-        verbose_name=_("project residency file"),
-        related_name="files",
+        verbose_name=_('project residency file'),
+        related_name='files',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
@@ -1404,11 +1447,11 @@ class ProjectResidencyImage(Image):
 
     residency = models.ForeignKey(
         ProjectResidency,
-        verbose_name=_("project residency image"),
-        related_name="images",
+        verbose_name=_('project residency image'),
+        related_name='images',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
@@ -1416,11 +1459,11 @@ class ProjectResidencyUserImage(UserImage):
 
     residency = models.ForeignKey(
         ProjectResidency,
-        verbose_name=_("project residency user image"),
-        related_name="user_images",
+        verbose_name=_('project residency user image'),
+        related_name='user_images',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
@@ -1428,19 +1471,19 @@ class ProjectResidencyArticle(models.Model):
 
     residency = models.ForeignKey(
         ProjectResidency,
-        verbose_name=_("residency"),
-        related_name="residency_articles",
+        verbose_name=_('residency'),
+        related_name='residency_articles',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
     article = models.ForeignKey(
         Article,
-        verbose_name=_("article"),
-        related_name="residencies",
+        verbose_name=_('article'),
+        related_name='residencies',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
@@ -1448,19 +1491,19 @@ class ProjectResidencyEvent(models.Model):
 
     residency = models.ForeignKey(
         ProjectResidency,
-        verbose_name=_("residency"),
-        related_name="residency_events",
+        verbose_name=_('residency'),
+        related_name='residency_events',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
     event = models.ForeignKey(
         Event,
-        verbose_name=_("event"),
-        related_name="residencies",
+        verbose_name=_('event'),
+        related_name='residencies',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
 
@@ -1529,4 +1572,70 @@ class Pivot_ProjectTopic_Article(DynamicContent, Orderable):
         return self.project_topic.__str__()
 
     class Meta:
-        verbose_name = "Project Topic"
+        verbose_name = 'Project Topic'
+
+class ProjectPage(Displayable, RichText, TeamOwnable):
+
+    project = models.ForeignKey(
+        Project,
+        verbose_name=_('project'),
+        related_name='pages',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+    display_navbar = models.BooleanField(default=True)
+    displayed_in_navbars = models.BooleanField(default=True)
+
+    @property
+    def is_archive(self):
+        if self.project:
+            return self.project.is_archive
+
+    def get_absolute_url(self):
+        return reverse(
+            "organization-project-projectpage-detail",
+            kwargs={'slug': self.slug}
+        )
+
+    class Meta:
+        permissions = TeamOwnable.Meta.permissions
+
+
+class ProjectPageImage(Image):
+
+    project_page = models.ForeignKey(
+        ProjectPage,
+        verbose_name=_('project page'),
+        related_name='images',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+
+
+class ProjectPageBlock(Block):
+
+    project_page = models.ForeignKey(
+        ProjectPage,
+        verbose_name=_('project page'),
+        related_name='blocks',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+
+
+class DynamicContentProjectPage(DynamicContent, Orderable):
+
+    project_page = models.ForeignKey(
+        ProjectPage,
+        verbose_name=_('project page'),
+        related_name='dynamic_content_project_pages',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        verbose_name = 'Dynamic Content Project Page'

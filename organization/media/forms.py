@@ -25,19 +25,42 @@ import dal_queryset_sequence
 import dal_select2_queryset_sequence
 
 from django import forms
-from django.forms.widgets import HiddenInput
-from django.forms import ModelForm
-from mezzanine.core.models import Orderable
-from organization.media.models import *
+from organization.media.models import Media, PlaylistMedia, Playlist
 
 
 class PlaylistMediaForm(forms.ModelForm):
 
     media = forms.ModelChoiceField(
-        queryset=Media.objects.all(),
+        queryset=None,
         widget=autocomplete.ModelSelect2(url='media-autocomplete')
     )
+
+    def __init__(self, *args, **kwargs):
+        super(PlaylistMediaForm, self).__init__(*args, **kwargs)
+        self.fields['media'].queryset = Media.objects.all()
 
     class Meta:
         model = PlaylistMedia
         fields = ('__all__')
+
+
+class DynamicMultimediaForm(autocomplete.FutureModelForm):
+
+    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
+        queryset=None,
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-multimedia'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicMultimediaForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Media.objects.all(),
+            Playlist.objects.all()
+        )
+
+    class Meta:
+        abstract = True
+        fields = ('content_object',)

@@ -19,38 +19,37 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils import timezone
+from cartridge.shop.models import Product
 from dal import autocomplete
 import dal_queryset_sequence
 import dal_select2_queryset_sequence
+from django.utils import timezone
 from django import forms
-from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
-from mezzanine.core.models import Orderable
-from organization.projects.models import ProjectWorkPackage
-from organization.network.models import (Person,
-                                PersonListBlock,
-                                PersonListBlockInline,
-                                PageCustomPersonListBlockInline,
-                                OrganizationLinked,
-                                OrganizationLinkedInline,
-                                OrganizationLinkedBlockInline,
-                                Organization,
-                                PersonActivityTimeSheet,
-                                ProjectActivity)
-from organization.pages.models import Page, CustomPage
+from organization.projects.models import ProjectWorkPackage, ProjectPage
 from organization.network.utils import timesheet_master_notification_for_validation
-from organization.network.models import *
-from organization.pages.models import Page, CustomPage
-from extra_views import InlineFormSet
+from organization.network.models import PersonListBlock,\
+    PageCustomPersonListBlockInline, Person, PersonListBlockInline,\
+    OrganizationLinked, OrganizationLinkedBlockInline, Organization,\
+    OrganizationLinkedInline, PersonActivityTimeSheet, ProjectActivity,\
+    OrganizationContact, OrganizationUserImage, ProducerData,\
+    TeamProjectOrdering, DynamicContentPerson, DynamicMultimediaPerson,\
+    DynamicMultimediaOrganization
+from organization.media.forms import DynamicMultimediaForm
+from organization.magazine.models import Article
+from mezzanine_agenda.models import Event
+from extra_views import InlineFormSetView
 
 
 class PageCustomPersonListForm(forms.ModelForm):
-
     person_list_block = forms.ModelChoiceField(
-        queryset=PersonListBlock.objects.all(),
+        queryset=None,
         widget=autocomplete.ModelSelect2(url='person-list-block-autocomplete')
     )
+
+    def __init__(self, *args, **kwargs):
+        super(PageCustomPersonListForm, self).__init__(*args, **kwargs)
+        self.fields['person_list_block'].queryset = PersonListBlock.objects.all()
 
     class Meta:
         model = PageCustomPersonListBlockInline
@@ -58,11 +57,14 @@ class PageCustomPersonListForm(forms.ModelForm):
 
 
 class PersonListBlockInlineForm(forms.ModelForm):
-
     person = forms.ModelChoiceField(
-        queryset=Person.objects.all(),
+        queryset=None,
         widget=autocomplete.ModelSelect2(url='person-autocomplete')
     )
+
+    def __init__(self, *args, **kwargs):
+        super(PersonListBlockInlineForm, self).__init__(*args, **kwargs)
+        self.fields['person'].queryset = Person.objects.all()
 
     class Meta:
         model = PersonListBlockInline
@@ -70,11 +72,14 @@ class PersonListBlockInlineForm(forms.ModelForm):
 
 
 class OrganizationLinkedListForm(forms.ModelForm):
-
     organization_linked = forms.ModelChoiceField(
-        queryset=OrganizationLinked.objects.all(),
+        queryset=None,
         widget=autocomplete.ModelSelect2(url='organization-linked-list-autocomplete')
     )
+
+    def __init__(self, *args, **kwargs):
+        super(OrganizationLinkedListForm, self).__init__(*args, **kwargs)
+        self.fields['organization_linked'].queryset = OrganizationLinked.objects.all()
 
     class Meta:
         model = OrganizationLinkedBlockInline
@@ -82,11 +87,14 @@ class OrganizationLinkedListForm(forms.ModelForm):
 
 
 class OrganizationLinkedForm(forms.ModelForm):
-
     organization = forms.ModelChoiceField(
-        queryset=Organization.objects.all(),
+        queryset=None,
         widget=autocomplete.ModelSelect2(url='organization-linked-autocomplete')
     )
+
+    def __init__(self, *args, **kwargs):
+        super(OrganizationLinkedForm, self).__init__(*args, **kwargs)
+        self.fields['organization'].queryset = Organization.objects.all()
 
     class Meta:
         model = OrganizationLinkedInline
@@ -97,24 +105,32 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PersonActivityTimeSheetForm, self).__init__(*args, **kwargs)
-        if 'initial' in kwargs :
-            self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(project=kwargs['initial']['project'])
-            self.fields['project'].choices = ((kwargs['initial']['project'].id, kwargs['initial']['project']),)
-            self.fields['activity'].choices = ((kwargs['initial']['activity'].id, kwargs['initial']['activity']),)
+        if 'initial' in kwargs:
+            self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(
+                project=kwargs['initial']['project'])
+            self.fields['project'].choices = (
+                (kwargs['initial']['project'].id, kwargs['initial']['project']),
+            )
+            self.fields['activity'].choices = (
+                (kwargs['initial']['activity'].id, kwargs['initial']['activity']),
+            )
         if self.fields['work_packages'].choices.__len__() == 0:
             self.fields['work_packages'].widget = forms.MultipleHiddenInput()
         else:
-            self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(choices=self.fields['work_packages'].choices)
+            self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(
+                choices=self.fields['work_packages'].choices)
 
     def save(self):
         self.instance.accounting = timezone.now()
         # send mail
         super(PersonActivityTimeSheetForm, self).save()
-        timesheet_master_notification_for_validation(self.instance.activity.person,
-                                                    self.instance.month,
-                                                    self.instance.year,
-                                                    self.instance._meta.app_config.label,
-                                                    self.instance.__class__.__name__)
+        timesheet_master_notification_for_validation(
+            self.instance.activity.person,
+            self.instance.month,
+            self.instance.year,
+            self.instance._meta.app_config.label,
+            self.instance.__class__.__name__
+        )
 
     class Meta:
         model = PersonActivityTimeSheet
@@ -123,7 +139,6 @@ class PersonActivityTimeSheetForm(forms.ModelForm):
 
 
 class PersonActivityTimeSheetAdminForm(forms.ModelForm):
-
     class Meta:
         model = PersonActivityTimeSheet
         fields = ('__all__')
@@ -143,8 +158,12 @@ class ProjectActivityForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProjectActivityForm, self).__init__(*args, **kwargs)
-        self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(project=self.instance.project)
-        self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(choices=self.fields['work_packages'].choices)
+        self.fields['work_packages'].queryset = ProjectWorkPackage.objects.filter(
+            project=self.instance.project
+        )
+        self.fields['work_packages'].widget = forms.CheckboxSelectMultiple(
+            choices=self.fields['work_packages'].choices
+        )
 
     class Meta:
         model = ProjectActivity
@@ -155,8 +174,7 @@ class ProjectActivityForm(forms.ModelForm):
         }
 
 
-class OrganizationContactInline(InlineFormSet):
-
+class OrganizationContactInline(InlineFormSetView):
     max_num = 1
     model = OrganizationContact
     prefix = 'Contact'
@@ -164,8 +182,7 @@ class OrganizationContactInline(InlineFormSet):
     fields = ['person_title', 'first_name', 'last_name', 'email', 'telephone', 'role']
 
 
-class OrganizationUserImageInline(InlineFormSet):
-
+class OrganizationUserImageInline(InlineFormSetView):
     max_num = 4
     model = OrganizationUserImage
     prefix = 'Images'
@@ -174,15 +191,13 @@ class OrganizationUserImageInline(InlineFormSet):
 
 
 class OrganizationForm(ModelForm):
-
     class Meta:
         model = Organization
         fields = ['name', 'description', 'url', 'address',
-                  'address', 'postal_code', 'city', 'country',]
+                  'address', 'postal_code', 'city', 'country', ]
 
 
-class ProducerDataInline(InlineFormSet):
-
+class ProducerDataInline(InlineFormSetView):
     max_num = 1
     model = ProducerData
     prefix = "Descriptions"
@@ -196,12 +211,60 @@ class ProducerDataInline(InlineFormSet):
 
 
 class ProducerForm(ModelForm):
-
     class Meta:
         model = Organization
-        fields = ['name', 'url', 'email', 'telephone', 'address', 'postal_code', 'city', 'country',]
+        fields = [
+            'name',
+            'url',
+            'email',
+            'telephone',
+            'address',
+            'postal_code',
+            'city',
+            'country',
+        ]
 
     def __init__(self, *args, **kwargs):
         super(ProducerForm, self).__init__(*args, **kwargs)
         for key in self.fields:
             self.fields[key].required = True
+
+
+class DynamicMultimediaOrganizationForm(DynamicMultimediaForm):
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaOrganization
+
+
+class DynamicMultimediaPersonForm(DynamicMultimediaForm):
+    class Meta(DynamicMultimediaForm.Meta):
+        model = DynamicMultimediaPerson
+
+
+class DynamicContentPersonForm(autocomplete.FutureModelForm):
+    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
+        queryset=None,
+        required=False,
+        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2(
+            'dynamic-content-person'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(DynamicContentPersonForm, self).__init__(*args, **kwargs)
+        self.fields['content_object'].queryset = autocomplete.QuerySetSequence(
+            Article.objects.all(),
+            ProjectPage.objects.all(),
+            Event.objects.all(),
+            Product.objects.all(),
+        )
+
+    class Meta:
+        model = DynamicContentPerson
+        fields = ('content_object',)
+
+
+class TeamProjectOrderingForm(forms.ModelForm):
+
+    class Meta:
+        model = TeamProjectOrdering
+        fields = ('__all__')

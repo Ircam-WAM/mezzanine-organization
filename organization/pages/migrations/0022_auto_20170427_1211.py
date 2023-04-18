@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-pages', '0021_merge'),
+        ('organization_pages', '0021_merge'),
     ]
 
     operations = [

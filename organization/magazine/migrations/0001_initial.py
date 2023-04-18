@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
                 ('file', mezzanine.core.fields.FileField(max_length=1024, verbose_name='Image')),
                 ('credits', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
                 ('type', models.CharField(choices=[('logo', 'logo'), ('slider', 'slider'), ('card', 'card'), ('page_slider', 'page slider')], max_length=64, verbose_name='type')),
-                ('article', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization-magazine.Article', verbose_name='article')),
+                ('article', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization_magazine.Article', verbose_name='article')),
             ],
             options={
                 'verbose_name_plural': 'images',

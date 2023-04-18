@@ -9,7 +9,7 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-core', '0001_initial'),
+        ('organization_core', '0001_initial'),
     ]
 
     operations = [

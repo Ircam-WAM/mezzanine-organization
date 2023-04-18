@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(max_length=255, verbose_name='email')),
                 ('curriculum_vitae', models.FileField(max_length=1024, upload_to='job_responses/%Y/%m/%d/', verbose_name='curriculum vitae')),
                 ('cover_letter', models.FileField(max_length=1024, upload_to='job_responses/%Y/%m/%d/', verbose_name='cover letter')),
-                ('job_offer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='job_response', to='organization-job.JobOffer', verbose_name='job offer')),
+                ('job_offer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='job_response', to='organization_job.JobOffer', verbose_name='job offer')),
             ],
             options={
                 'verbose_name': 'job_reponse',

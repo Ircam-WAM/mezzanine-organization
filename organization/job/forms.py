@@ -19,16 +19,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from dal import autocomplete
-import dal_queryset_sequence
-import dal_select2_queryset_sequence
 from django import forms
-from django.forms.widgets import HiddenInput
 from django.forms import ModelForm
-from organization.job.models import *
-from organization.magazine.models import Article
-from organization.pages.models import CustomPage
-from mezzanine_agenda.models import Event
+from organization.job.models import JobResponse
 
 
 class JobResponseForm(ModelForm):
@@ -39,21 +32,12 @@ class JobResponseForm(ModelForm):
 
     class Meta:
         model = JobResponse
-        fields = ['first_name', 'last_name', 'email', 'message', 'curriculum_vitae', 'cover_letter', 'job_offer']
-
-
-class CandidacyForm(autocomplete.FutureModelForm):
-
-    content_object = dal_queryset_sequence.fields.QuerySetSequenceModelField(
-        queryset=autocomplete.QuerySetSequence(
-            Article.objects.all(),
-            Event.objects.all(),
-            CustomPage.objects.all(),
-        ),
-        required=False,
-        widget=dal_select2_queryset_sequence.widgets.QuerySetSequenceSelect2('candidacy-autocomplete'),
-    )
-
-    class Meta:
-        model = Candidacy
-        fields = ('__all__')
+        fields = [
+            'first_name',
+            'last_name',
+            'email',
+            'message',
+            'curriculum_vitae',
+            'cover_letter',
+            'job_offer'
+        ]

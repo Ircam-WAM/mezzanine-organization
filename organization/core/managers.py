@@ -19,31 +19,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
 
-import django
-from future.builtins import int, zip
-
+from django.apps import apps
 from functools import reduce
-from operator import ior, iand
-from string import punctuation
-
-from django.apps import apps, AppConfig
+from operator import ior
 from django.core.exceptions import ImproperlyConfigured
-from django.db.models import Manager, Q, CharField, TextField
-from django.db.models.manager import ManagerDescriptor
-from django.db.models.query import QuerySet
-from django.contrib.sites.managers import CurrentSiteManager as DjangoCSM
-from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
 
 from mezzanine.conf import settings
-from mezzanine.utils.sites import current_site_id
-from mezzanine.utils.urls import home_slug
-from mezzanine.core.managers import search_fields_to_dict, SearchableQuerySet, SearchableManager, DisplayableManager
+from mezzanine.pages.managers import PageManager
 
 
-class CustomSearchableManager(DisplayableManager):
+class CustomSearchableManager(PageManager):
 
     def search(self, *args, **kwargs):
         """
@@ -80,9 +66,11 @@ class CustomSearchableManager(DisplayableManager):
                 else:
                     search_choices.add(model)
             if errors:
-                raise ImproperlyConfigured("Could not load the model(s) "
-                        "%s defined in the 'SEARCH_MODEL_CHOICES' setting."
-                        % ", ".join(errors))
+                raise ImproperlyConfigured(
+                    "Could not load the model(s) "
+                    "%s defined in the 'SEARCH_MODEL_CHOICES' setting."
+                    % ", ".join(errors)
+                )
 
             for model in apps.get_models():
                 # Model is actually a subclasses of what we're
@@ -116,9 +104,11 @@ class CustomSearchableManager(DisplayableManager):
                 except LookupError:
                     errors.append(name)
             if errors:
-                raise ImproperlyConfigured("Could not load the model(s) "
-                        "%s defined in the 'SEARCH_MODEL_CHOICES' setting."
-                        % ", ".join(errors))
+                raise ImproperlyConfigured(
+                    "Could not load the model(s) "
+                    "%s defined in the 'SEARCH_MODEL_CHOICES' setting."
+                    % ", ".join(errors)
+                )
         else:
             models = [self.model]
         all_results = []

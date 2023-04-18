@@ -9,8 +9,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0073_auto_20161228_1428'),
-        ('organization-projects', '0032_project_external_id'),
+        ('organization_network', '0073_auto_20161228_1428'),
+        ('organization_projects', '0032_project_external_id'),
     ]
 
     operations = [
@@ -23,8 +23,8 @@ class Migration(migrations.Migration):
                 ('date_from', models.DateField(blank=True, null=True, verbose_name='begin date')),
                 ('date_to', models.DateField(blank=True, null=True, verbose_name='end date')),
                 ('number', models.IntegerField(verbose_name='number')),
-                ('lead_organization', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='leader_work_packages', to='organization-network.Organization', verbose_name='lead organization')),
-                ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='work_packages', to='organization-projects.Project', verbose_name='project')),
+                ('lead_organization', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='leader_work_packages', to='organization_network.Organization', verbose_name='lead organization')),
+                ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='work_packages', to='organization_projects.Project', verbose_name='project')),
             ],
             options={
                 'verbose_name': 'work package',

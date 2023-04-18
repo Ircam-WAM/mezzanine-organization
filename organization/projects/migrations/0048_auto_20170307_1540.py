@@ -11,8 +11,8 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('sites', '0002_alter_domain_unique'),
-        ('organization-network', '0089_auto_20170303_1637'),
-        ('organization-projects', '0047_remove_projectictdata_contact'),
+        ('organization_network', '0089_auto_20170303_1637'),
+        ('organization_projects', '0047_remove_projectictdata_contact'),
     ]
 
     operations = [
@@ -38,9 +38,9 @@ class Migration(migrations.Migration):
                 ('date_to', models.DateField(blank=True, null=True, verbose_name='end date')),
                 ('validated', models.BooleanField(default=False)),
                 ('producer_commitment', models.TextField(verbose_name='producer commitment')),
-                ('artist', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residencies', to='organization-network.Person', verbose_name='artist')),
-                ('producer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residencies', to='organization-network.Organization', verbose_name='producer')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residencies', to='organization-projects.Project', verbose_name='project')),
+                ('artist', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residencies', to='organization_network.Person', verbose_name='artist')),
+                ('producer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residencies', to='organization_network.Organization', verbose_name='producer')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residencies', to='organization_projects.Project', verbose_name='project')),
                 ('site', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='sites.Site')),
             ],
             options={
@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=1024, verbose_name='title')),
                 ('description', models.TextField(blank=True, verbose_name='description')),
                 ('file', mezzanine.core.fields.FileField(max_length=1024, verbose_name='document')),
-                ('residency', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='files', to='organization-projects.ProjectResidency', verbose_name='project residency file')),
+                ('residency', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='files', to='organization_projects.ProjectResidency', verbose_name='project residency file')),
             ],
             options={
                 'ordering': ('_order',),

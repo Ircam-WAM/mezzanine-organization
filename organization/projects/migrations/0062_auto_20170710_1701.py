@@ -10,8 +10,8 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0106_personlistblockinline_site'),
-        ('organization-projects', '0061_auto_20170706_1035'),
+        ('organization_network', '0106_personlistblockinline_site'),
+        ('organization_projects', '0061_auto_20170706_1035'),
     ]
 
     operations = [
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
             name='ProjectResidencyProducer',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('organization', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residencies', to='organization-network.Organization', verbose_name='producer')),
+                ('organization', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residencies', to='organization_network.Organization', verbose_name='producer')),
             ],
         ),
         migrations.RemoveField(
@@ -44,11 +44,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='projectresidencyproducer',
             name='residency',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='producers', to='organization-projects.ProjectResidency', verbose_name='residency'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='producers', to='organization_projects.ProjectResidency', verbose_name='residency'),
         ),
         migrations.AddField(
             model_name='projectresidencyimage',
             name='residency',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization-projects.ProjectResidency', verbose_name='project residency image'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization_projects.ProjectResidency', verbose_name='project residency image'),
         ),
     ]

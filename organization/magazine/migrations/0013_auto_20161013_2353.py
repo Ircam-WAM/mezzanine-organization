@@ -9,8 +9,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-media', '0009_auto_20161013_2353'),
-        ('organization-magazine', '0012_auto_20161013_1631'),
+        ('organization_media', '0009_auto_20161013_2353'),
+        ('organization_magazine', '0012_auto_20161013_1631'),
     ]
 
     operations = [
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='articleplaylist',
             name='playlistrelated_ptr',
-            field=models.OneToOneField(auto_created=True, default=1, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-media.PlaylistRelated'),
+            field=models.OneToOneField(auto_created=True, default=1, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_media.PlaylistRelated'),
             preserve_default=False,
         ),
     ]

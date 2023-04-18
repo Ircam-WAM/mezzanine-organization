@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('pages', '0004_auto_20160804_1547'),
-        ('organization-projects', '0011_auto_20160922_1438'),
+        ('organization_projects', '0011_auto_20160922_1438'),
     ]
 
     operations = [
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='pages.Page')),
                 ('sub_title', models.TextField(blank=True, max_length=1024, verbose_name='sub title')),
-                ('project_topic', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='pages', to='organization-projects.ProjectTopic', verbose_name='project topic')),
+                ('project_topic', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='pages', to='organization_projects.ProjectTopic', verbose_name='project topic')),
             ],
             options={
                 'ordering': ('_order',),

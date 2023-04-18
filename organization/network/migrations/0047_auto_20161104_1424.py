@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0046_auto_20161026_1025'),
+        ('organization_network', '0046_auto_20161026_1025'),
     ]
 
     operations = [
@@ -53,17 +53,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='personactivity',
             name='employers',
-            field=models.ManyToManyField(blank=True, related_name='employer_project_activities', to='organization-network.Organization', verbose_name='employers'),
+            field=models.ManyToManyField(blank=True, related_name='employer_project_activities', to='organization_network.Organization', verbose_name='employers'),
         ),
         migrations.AddField(
             model_name='personactivity',
             name='organization',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_activities', to='organization-network.Organization', verbose_name='organization (attachment or subscribed)'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_activities', to='organization_network.Organization', verbose_name='organization (attachment or subscribed)'),
         ),
         migrations.AddField(
             model_name='personactivity',
             name='supervisors',
-            field=models.ManyToManyField(blank=True, related_name='supervisor_activities', to='organization-network.Person', verbose_name='supervisors'),
+            field=models.ManyToManyField(blank=True, related_name='supervisor_activities', to='organization_network.Person', verbose_name='supervisors'),
         ),
         migrations.AddField(
             model_name='personactivity',
@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='personactivity',
             name='teams',
-            field=models.ManyToManyField(blank=True, related_name='team_activities', to='organization-network.Team', verbose_name='teams'),
+            field=models.ManyToManyField(blank=True, related_name='team_activities', to='organization_network.Team', verbose_name='teams'),
         ),
         migrations.AlterField(
             model_name='personactivity',

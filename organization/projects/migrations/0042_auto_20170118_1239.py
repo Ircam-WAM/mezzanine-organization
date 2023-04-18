@@ -8,13 +8,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0041_merge'),
+        ('organization_projects', '0041_merge'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='project',
             name='manager',
-            field=models.ManyToManyField(blank=True, related_name='projects_manager', to='organization-network.Person', verbose_name='Manager'),
+            field=models.ManyToManyField(blank=True, related_name='projects_manager', to='organization_network.Person', verbose_name='Manager'),
         ),
     ]

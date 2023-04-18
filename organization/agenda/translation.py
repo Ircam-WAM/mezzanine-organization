@@ -19,9 +19,25 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from modeltranslation.translator import translator, register, TranslationOptions
+from modeltranslation.translator import register, TranslationOptions
 
-from organization.agenda.models import *
+from organization.agenda.models import (
+    EventBlock,
+    EventImage,
+    EventPlaylist,
+    EventDepartment,
+    EventPersonListBlockInline,
+    EventLink,
+    EventPeriod,
+    EventTraining,
+    EventTrainingLevel,
+    EventPublicType,
+    EventRelatedTitle,
+    DynamicContentEvent,
+    DynamicMultimediaEvent,
+    EventPriceDescription,
+    EventPrice
+)
 
 
 @register(EventBlock)
@@ -48,16 +64,16 @@ class EventDepartmentTranslationOptions(TranslationOptions):
     fields = ()
 
 
-@register(EventPerson)
-class EventPersonTranslationOptions(TranslationOptions):
+@register(EventPersonListBlockInline)
+class EventPersonListBlockInlineTranslationOptions(TranslationOptions):
 
-    fields = ()
+    pass
 
 
 @register(EventLink)
 class EventLinkTranslationOptions(TranslationOptions):
 
-    fields = ('title',)
+    fields = ('title', 'url')
 
 
 @register(EventPeriod)
@@ -92,6 +108,12 @@ class EventRelatedTitleTranslationOptions(TranslationOptions):
 
 @register(DynamicContentEvent)
 class DynamicContentEventTranslationOptions(TranslationOptions):
+
+    fields = ()
+
+
+@register(DynamicMultimediaEvent)
+class DynamicMultimediaEventTranslationOptions(TranslationOptions):
 
     fields = ()
 

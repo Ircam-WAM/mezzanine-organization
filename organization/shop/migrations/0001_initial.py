@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('shop', '0008_auto_20160907_1726'),
-        ('organization-pages', '0002_auto_20160914_1838'),
+        ('organization_pages', '0002_auto_20160914_1838'),
     ]
 
     operations = [
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
             name='PageProductBlock',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='product_blocks', to='organization-pages.CustomPage', verbose_name='page')),
+                ('page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='product_blocks', to='organization_pages.CustomPage', verbose_name='page')),
             ],
             options={
                 'verbose_name': 'product block',
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('_order', mezzanine.core.fields.OrderField(null=True, verbose_name='Order')),
                 ('product', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blocks', to='shop.Product', verbose_name='product')),
-                ('product_block', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='products', to='organization-shop.ProductBlock', verbose_name='product block')),
+                ('product_block', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='products', to='organization_shop.ProductBlock', verbose_name='product block')),
             ],
             options={
                 'verbose_name': 'product',
@@ -60,6 +60,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pageproductblock',
             name='product_block',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='pages', to='organization-shop.ProductBlock', verbose_name='product block'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='pages', to='organization_shop.ProductBlock', verbose_name='product block'),
         ),
     ]

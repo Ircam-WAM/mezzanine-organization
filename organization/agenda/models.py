@@ -19,21 +19,27 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
-from future.builtins import str
-
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.core.models import Orderable
 from mezzanine.conf import settings
-from mezzanine_agenda.models import *
-from organization.core.models import *
-from organization.network.models import *
-
+from django.db import models
+from mezzanine_agenda.models import Event, EventPrice
+from organization.core.models import Block, Image, Titled, Description, Link,\
+    PeriodDateTime, Named, RelatedTitle, DynamicContent
+from organization.network.models import Department, PersonListBlock
+from organization.media.models import PlaylistRelated
 
 
 class EventBlock(Block):
 
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='blocks', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_('event'),
+        related_name='blocks',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("block")
@@ -42,7 +48,14 @@ class EventBlock(Block):
 
 class EventImage(Image):
 
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='images', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_('event'),
+        related_name='images',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("image")
@@ -52,27 +65,64 @@ class EventImage(Image):
 
 class EventDepartment(models.Model):
 
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='departments', blank=True, null=True, on_delete=models.SET_NULL)
-    department = models.ForeignKey(Department, verbose_name=_('department'), related_name='events', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_('event'),
+        related_name='departments',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    department = models.ForeignKey(
+        Department,
+        verbose_name=_('department'),
+        related_name='events',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("department")
         verbose_name_plural = _("departments")
 
 
-class EventPerson(models.Model):
+class EventPersonListBlockInline(Titled, Description):
 
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='persons', blank=True, null=True, on_delete=models.SET_NULL)
-    person = models.ForeignKey(Person, verbose_name=_('person'), related_name='events', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_('event'),
+        related_name='persons_list',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    person_list_block = models.ForeignKey(
+        PersonListBlock,
+        related_name='events',
+        verbose_name=_('Person List Block'),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
-        verbose_name = _("person")
-        verbose_name_plural = _("persons")
+        verbose_name = _('Person List')
+
+    def __str__(self):
+        return self.title
 
 
 class EventLink(Link):
 
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='links', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_('event'),
+        related_name='links',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("link")
@@ -81,7 +131,14 @@ class EventLink(Link):
 
 class EventPlaylist(PlaylistRelated):
 
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='playlists', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_('event'),
+        related_name='playlists',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("playlist")
@@ -91,7 +148,14 @@ class EventPlaylist(PlaylistRelated):
 
 class EventPeriod(PeriodDateTime):
 
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='periods', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_('event'),
+        related_name='periods',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("period")
@@ -115,10 +179,37 @@ class EventTrainingLevel(Named):
 
 class EventTraining(models.Model):
 
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
-    language = models.CharField(_('language'), max_length=64, blank=True, null=True, choices=settings.LANGUAGES)
-    public_type = models.ForeignKey(EventPublicType, verbose_name=_('public type'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
-    level = models.ForeignKey(EventTrainingLevel, verbose_name=_('level'), related_name='trainings', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_('event'),
+        related_name='trainings',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    language = models.CharField(
+        _('language'),
+        max_length=64,
+        blank=True,
+        null=True,
+        choices=settings.LANGUAGES
+    )
+    public_type = models.ForeignKey(
+        EventPublicType,
+        verbose_name=_('public type'),
+        related_name='trainings',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    level = models.ForeignKey(
+        EventTrainingLevel,
+        verbose_name=_('level'),
+        related_name='trainings',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("training")
@@ -127,7 +218,14 @@ class EventTraining(models.Model):
 
 class EventRelatedTitle(RelatedTitle):
 
-    event = models.OneToOneField(Event, verbose_name=_('event'), related_name='related_title', blank=True, null=True, on_delete=models.SET_NULL)
+    event = models.OneToOneField(
+        Event,
+        verbose_name=_('event'),
+        related_name='related_title',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("related title")
@@ -136,15 +234,44 @@ class EventRelatedTitle(RelatedTitle):
 
 class DynamicContentEvent(DynamicContent, Orderable):
 
-    event = models.ForeignKey(Event, verbose_name=_('event'), related_name='dynamic_content_event', blank=True, null=True, on_delete=models.CASCADE)
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_('event'),
+        related_name='dynamic_content_event',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         verbose_name = 'Dynamic Content Event'
 
 
+class DynamicMultimediaEvent(DynamicContent, Orderable):
+
+    event = models.ForeignKey(
+        Event,
+        verbose_name=_('event'),
+        related_name='dynamic_multimedia',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        verbose_name = 'Multimedia'
+
+
 class EventPriceDescription(models.Model):
 
-    event_price = models.OneToOneField(EventPrice, verbose_name=_('event_price_description'), related_name='event_price_description', blank=True, null=True, on_delete=models.SET_NULL)
+    event_price = models.OneToOneField(
+        EventPrice,
+        verbose_name=_('event_price_description'),
+        related_name='event_price_description',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
     description = models.TextField(_('description'), blank=True, null=True)
 
     class Meta:

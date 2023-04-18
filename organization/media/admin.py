@@ -19,12 +19,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from copy import deepcopy
 from django.contrib import admin
-from mezzanine.core.admin import *
-from organization.media.models import *
-from organization.media.forms import *
-from organization.media.translation import *
+from mezzanine.core.admin import TabularDynamicInlineAdmin, TeamOwnableAdmin,\
+    BaseTranslationModelAdmin
+from organization.media.models import MediaTranscoded, MediaImage, Media,\
+    PlaylistMedia, Playlist, MediaCategory, LiveStreaming
+from organization.media.forms import PlaylistMediaForm
 from organization.network.models import MediaDepartment
 
 
@@ -44,12 +44,12 @@ class MediaDepartmentInline(TabularDynamicInlineAdmin):
     max_num = 1
 
 
-class MediaAdmin(BaseTranslationModelAdmin):
+class MediaAdmin(TeamOwnableAdmin, BaseTranslationModelAdmin):
 
     model = Media
     inlines = (MediaTranscodedAdmin, MediaImageInline, MediaDepartmentInline)
     list_display = ['title', 'external_id', 'type']
-    search_fields = ['title', 'external_id', 'type']
+    search_fields = ['title', 'external_id', ]
 
     def type(self, instance):
         return instance.type
@@ -75,7 +75,7 @@ class MediaCategoryAdmin(BaseTranslationModelAdmin):
 class LiveStreamingAdmin(BaseTranslationModelAdmin):
 
     model = LiveStreaming
-    list_display = ['title',]
+    list_display = ['title', ]
 
 
 admin.site.register(Media, MediaAdmin)

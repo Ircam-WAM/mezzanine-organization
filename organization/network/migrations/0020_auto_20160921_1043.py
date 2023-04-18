@@ -9,28 +9,28 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0019_auto_20160921_1032'),
+        ('organization_network', '0019_auto_20160921_1032'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='pagecustompersonlistblockinline',
             name='page',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='page_custom_person_list_block_inlines', to='organization-pages.CustomPage', verbose_name='Page'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='page_custom_person_list_block_inlines', to='organization_pages.CustomPage', verbose_name='Page'),
         ),
         migrations.AlterField(
             model_name='pagecustompersonlistblockinline',
             name='person_list_block',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='page_custom_person_list_block_inlines', to='organization-network.PersonListBlock', verbose_name='Person List Block'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='page_custom_person_list_block_inlines', to='organization_network.PersonListBlock', verbose_name='Person List Block'),
         ),
         migrations.AlterField(
             model_name='personlistblockinline',
             name='person',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block_inlines', to='organization-network.Person', verbose_name='Person'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block_inlines', to='organization_network.Person', verbose_name='Person'),
         ),
         migrations.AlterField(
             model_name='personlistblockinline',
             name='person_list_block',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block_inlines', to='organization-network.PersonListBlock', verbose_name='Person List Block'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person_list_block_inlines', to='organization_network.PersonListBlock', verbose_name='Person List Block'),
         ),
     ]

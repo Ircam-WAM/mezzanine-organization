@@ -8,7 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2023-02-15 16:15+0100\n"
+=======
+"POT-Creation-Date: 2021-09-30 15:11+0200\n"
+>>>>>>> 5ffaebbe91ad46ca25be9d54be62ab5036ec9d27
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+<<<<<<< HEAD
 #: settings.py:104
 msgid "French"
 msgstr ""
@@ -720,11 +725,764 @@ msgstr ""
 
 #~ msgid "Departement"
 #~ msgstr "Département"
+=======
+#: settings.py:105
+msgid "French"
+msgstr ""
+
+#: settings.py:106
+msgid "English"
+msgstr ""
+
+#, fuzzy
+#~| msgid "persons"
+#~ msgid "Seasons"
+#~ msgstr "personnes"
+
+msgid "event"
+msgstr "événement"
+
+#, fuzzy
+#~| msgid "images"
+#~ msgid "image"
+#~ msgstr "images"
+
+msgid "images"
+msgstr "images"
+
+msgid "department"
+msgstr "département"
+
+msgid "departments"
+msgstr "départements"
+
+#, fuzzy
+#~| msgid "Person List"
+#~ msgid "Person List Block"
+#~ msgstr "Liste de personnes"
+
+msgid "Person List"
+msgstr "Liste de personnes"
+
+msgid "link"
+msgstr "lien"
+
+msgid "links"
+msgstr "liens"
+
+msgid "playlist"
+msgstr "playlist"
+
+msgid "playlists"
+msgstr "playlists"
+
+msgid "period"
+msgstr "période"
+
+msgid "periods"
+msgstr "périodes"
+
+msgid "public type"
+msgstr "type public"
+
+msgid "public types"
+msgstr "types publics"
+
+#, fuzzy
+#~| msgid "training type"
+#~ msgid "training level"
+#~ msgstr "type de formation"
+
+#, fuzzy
+#~| msgid "training types"
+#~ msgid "training levels"
+#~ msgstr "type de formation"
+
+msgid "language"
+msgstr "langue"
+
+msgid "level"
+msgstr "niveau"
+
+#, fuzzy
+#~| msgid "training type"
+#~ msgid "training"
+#~ msgstr "type de formation"
+
+#, fuzzy
+#~| msgid "training types"
+#~ msgid "trainings"
+#~ msgstr "type de formation"
+
+msgid "related title"
+msgstr "titre de contenu lié"
+
+#, fuzzy
+#~| msgid "brief description"
+#~ msgid "event_price_description"
+#~ msgstr "Brève description"
+
+msgid "description"
+msgstr "description"
+
+msgid "left"
+msgstr "gauche"
+
+msgid "center"
+msgstr "centre"
+
+msgid "right"
+msgstr "droite"
+
+msgid "page - featured"
+msgstr "page- à la une"
+
+msgid "name"
+msgstr "nom"
+
+msgid "title"
+msgstr "titre"
+
+msgid "sub title"
+msgstr "sous-titre"
+
+msgid "custom category"
+msgstr "catégorie personnalisé"
+
+msgid "credits"
+msgstr "crédits"
+
+msgid "type"
+msgstr "type"
+
+msgid "document"
+msgstr "document"
+
+msgid "content type"
+msgstr "type de contenu"
+
+msgid "related object"
+msgstr "contenu lié"
+
+msgid "link type"
+msgstr "type de lien"
+
+msgid "end date"
+msgstr "date de fin"
+
+msgid "begin date"
+msgstr "date de début"
+
+msgid "creation date"
+msgstr "date de création"
+
+msgid "address"
+msgstr "adresse"
+
+msgid "postal code"
+msgstr "code postal"
+
+msgid "country"
+msgstr "pays"
+
+msgid "through"
+msgstr "au"
+
+msgid "and"
+msgstr "et"
+
+msgid "Everything"
+msgstr "Tout"
+
+msgid "Page"
+msgstr "Page"
+
+msgid "Article"
+msgstr "Article"
+
+msgid "Media"
+msgstr "Média"
+
+msgid "Project"
+msgstr "Projet"
+
+msgid "Event"
+msgstr "Événement"
+
+#, fuzzy
+#~| msgid "name"
+#~ msgid "last name"
+#~ msgstr "nom"
+
+msgid "curriculum vitae"
+msgstr "curriculum vitae"
+
+msgid "cover letter"
+msgstr "lettre de motivation"
+
+msgid "Internship"
+msgstr "Stage"
+
+msgid "Permanent position"
+msgstr "CDI"
+
+msgid "Short term contract"
+msgstr "CDD"
+
+msgid "View"
+msgstr "Voir"
+
+#, fuzzy
+#~| msgid "external ID"
+#~ msgid "external content"
+#~ msgstr "ID externe"
+
+#, fuzzy
+#~| msgid "candidacies"
+#~ msgid "candidacy"
+#~ msgstr "Candidatures"
+
+msgid "candidacies"
+msgstr "Candidatures"
+
+msgid "topics"
+msgstr "rubriques"
+
+msgid "article"
+msgstr "article"
+
+msgid "brief"
+msgstr "brève"
+
+msgid "topic"
+msgstr "rubrique"
+
+msgid "magazine"
+msgstr "Magazine"
+
+msgid "magazines"
+msgstr "Magazine"
+
+msgid "Laboratory News"
+msgstr "Actualités du Labo"
+
+msgid "Team News"
+msgstr "Actualités de l'équipe"
+
+msgid "video"
+msgstr "video"
+
+msgid "media id"
+msgstr "media id"
+
+msgid "category"
+msgstr "catégorie"
+
+msgid "media"
+msgstr "Mémediadia"
+
+msgid "mime type"
+msgstr "type mime"
+
+msgid "media category"
+msgstr "catégorie de media"
+
+msgid "media categories"
+msgstr "Catégories de media"
+
+#, fuzzy
+#~| msgid "Medias"
+#~ msgid "medias"
+#~ msgstr "Medias"
+
+msgid "Event Location"
+msgstr "Lieux"
+
+msgid "Mr"
+msgstr "Mr"
+
+msgid "Ms"
+msgstr "Mme"
+
+msgid "male"
+msgstr "homme"
+
+msgid "female"
+msgstr "femme"
+
+#, fuzzy
+#~| msgid "circles"
+#~ msgid "circle"
+#~ msgstr "cercles"
+
+msgid "circles"
+msgstr "cercles"
+
+#, fuzzy
+#~| msgid "archive"
+#~ msgid "March"
+#~ msgstr "archive"
+
+#, fuzzy
+#~| msgid "Project"
+#~ msgid "rejected"
+#~ msgstr "Projet"
+
+#, fuzzy
+#~| msgid "in progress"
+#~ msgid "in process"
+#~ msgstr "en cours"
+
+msgid "organization type"
+msgstr "type d'organisation"
+
+#, fuzzy
+#~| msgid "organization"
+#~ msgid "organization role"
+#~ msgstr "organisation"
+
+msgid "opening times"
+msgstr "horaires d'ouverture"
+
+msgid "subway access"
+msgstr "accès en transports"
+
+msgid "organization"
+msgstr "organisation"
+
+msgid "gender"
+msgstr "genre"
+
+msgid "register ID"
+msgstr "matricule"
+
+msgid "birthday"
+msgstr "déte de naissance"
+
+msgid "biography"
+msgstr "biographie"
+
+msgid "role"
+msgstr "rôle"
+
+msgid "external ID"
+msgstr "ID externe"
+
+msgid "Is Referenced"
+msgstr "À référencer"
+
+msgid "Determine if the Person has to be referenced on search"
+msgstr ""
+"Détermine si cette personne remonte dans les résultats de recherche des "
+"moteurs (Google, Bing, DuckDuckGo etc...)"
+
+msgid "person"
+msgstr "personne"
+
+#, fuzzy
+#~| msgid "organizations"
+#~ msgid "organization list"
+#~ msgstr "organisations"
+
+#, fuzzy
+#~| msgid "Organization"
+#~ msgid "Organization Linked"
+#~ msgstr "Organisation"
+
+#, fuzzy
+#~| msgid "organization type"
+#~ msgid "organization linked"
+#~ msgstr "type d'organisation"
+
+msgid "Organization"
+msgstr "Organisation"
+
+#, fuzzy
+#~| msgid "Event Location"
+#~ msgid "Event location"
+#~ msgstr "Lieux"
+
+msgid "department page"
+msgstr "page de département"
+
+#, fuzzy
+#~| msgid "department page"
+#~ msgid "parent team"
+#~ msgstr "page de département"
+
+msgid "team"
+msgstr "équipe"
+
+#, fuzzy
+#~| msgid "brief description"
+#~ msgid "Projects ordering"
+#~ msgstr "Brève description"
+
+#, fuzzy
+#~| msgid "creation date"
+#~ msgid "Creation Date"
+#~ msgstr "date de création"
+
+msgid "team page"
+msgstr "page d'équipe"
+
+#, fuzzy
+#~| msgid "brief description"
+#~ msgid "experience description"
+#~ msgstr "Brève description"
+
+#, fuzzy
+#~| msgid "brief description"
+#~ msgid "producer description"
+#~ msgstr "Brève description"
+
+msgid "Person"
+msgstr "Personne"
+
+msgid "display on team page"
+msgstr "afficher sur la page d'équipe"
+
+msgid "framework"
+msgstr "cadre"
+
+msgid "frameworks"
+msgstr "corps"
+
+msgid "function"
+msgstr "fonction"
+
+msgid "functions"
+msgstr "fonctions"
+
+msgid "training type"
+msgstr "type de formation"
+
+msgid "training types"
+msgstr "type de formation"
+
+#, fuzzy
+#~| msgid "training topics"
+#~ msgid "training topic"
+#~ msgstr "sujets de formation"
+
+msgid "training topics"
+msgstr "sujets de formation"
+
+#, fuzzy
+#~| msgid "training specialities"
+#~ msgid "training speciality"
+#~ msgstr "spécialités de formation"
+
+msgid "training specialities"
+msgstr "spécialités de formation"
+
+msgid "teams"
+msgstr "équipes"
+
+msgid "R&D program"
+msgstr "Programme"
+
+msgid "PhD title"
+msgstr "titre de docteur"
+
+#, fuzzy
+#~| msgid "training type"
+#~ msgid "Training title"
+#~ msgstr "type de formation"
+
+msgid "add date"
+msgstr "ajouter une date"
+
+#, fuzzy
+#~| msgid "creation date"
+#~ msgid "modification date"
+#~ msgstr "date de création"
+
+msgid "comments"
+msgstr "commentaires"
+
+msgid "activity"
+msgstr "activité"
+
+msgid "activities"
+msgstr "activités"
+
+msgid "project"
+msgstr "projet"
+
+#, fuzzy
+#~| msgid "activities"
+#~ msgid "activity timesheet"
+#~ msgstr "activités"
+
+#, fuzzy
+#~| msgid "activities"
+#~ msgid "activity timesheets"
+#~ msgstr "activités"
+
+msgid "project activity"
+msgstr "activité de projet"
+
+msgid "project activities"
+msgstr "activités de projet"
+
+#, fuzzy
+#~| msgid "Team News"
+#~ msgid "Team"
+#~ msgstr "Actualités de l'équipe"
+
+#, fuzzy
+#~| msgid "candidacies"
+#~ msgid "Icelandic"
+#~ msgstr "Candidatures"
+
+msgid "page"
+msgstr "page"
+
+msgid "link image"
+msgstr "lien d'image"
+
+msgid "link images"
+msgstr "lien d'images"
+
+msgid "Internal project"
+msgstr "Projet interne"
+
+msgid "National or European project"
+msgstr "Projet national ou Européen"
+
+msgid "Industrial project"
+msgstr "Projet industriel"
+
+msgid "public"
+msgstr "public"
+
+msgid "project program"
+msgstr "programme du projet"
+
+#, fuzzy
+#~| msgid "project program"
+#~ msgid "project program type"
+#~ msgstr "programme du projet"
+
+#, fuzzy
+#~| msgid "project calls"
+#~ msgid "project call"
+#~ msgstr "Appel à projet"
+
+msgid "lead team"
+msgstr "équipe principale"
+
+msgid "lead organization"
+msgstr "organisation principale"
+
+msgid "organizations"
+msgstr "organisations"
+
+msgid "Is Archive"
+msgstr "Est une archive"
+
+msgid "projects"
+msgstr "projets"
+
+msgid "in progress"
+msgstr "en cours"
+
+msgid "completed"
+msgstr "terminé"
+
+#, fuzzy
+#~| msgid "project topics"
+#~ msgid "parent topic"
+#~ msgstr "rubrique d'un projet"
+
+#, fuzzy
+#~| msgid "project topics"
+#~ msgid "project topic"
+#~ msgstr "rubrique d'un projet"
+
+msgid "project topics"
+msgstr "rubrique d'un projet"
+
+msgid "program"
+msgstr "programme"
+
+msgid "programs"
+msgstr "programmes"
+
+msgid "program type"
+msgstr "Type de programme"
+
+msgid "program types"
+msgstr "Types de programme"
+
+msgid "project topic page"
+msgstr "page rubrique d'un projet"
+
+msgid "project topic pages"
+msgstr "pages de rubrique d'un projet"
+
+msgid "project calls"
+msgstr "Appel à projet"
+
+msgid "authors"
+msgstr "auteurs"
+
+msgid "project demo"
+msgstr "projet demo"
+
+msgid "project demos"
+msgstr "projets demo"
+
+msgid "access rights"
+msgstr "droits d'accès"
+
+msgid "brief description"
+msgstr "Brève description"
+
+#, fuzzy
+#~| msgid "brief description"
+#~ msgid "challenges description"
+#~ msgstr "Brève description"
+
+#, fuzzy
+#~| msgid "brief description"
+#~ msgid "technology description"
+#~ msgstr "Brève description"
+
+#, fuzzy
+#~| msgid "brief description"
+#~ msgid "objectives description"
+#~ msgstr "Brève description"
+
+#, fuzzy
+#~| msgid "brief description"
+#~ msgid "resource description"
+#~ msgstr "Brève description"
+
+#, fuzzy
+#~| msgid "credits"
+#~ msgid "Image credits"
+#~ msgstr "crédits"
+
+#, fuzzy
+#~| msgid "brief description"
+#~ msgid "project description"
+#~ msgstr "Brève description"
+
+#, fuzzy
+#~| msgid "in progress"
+#~ msgid "funding programme"
+#~ msgstr "en cours"
+
+msgid "persons"
+msgstr "personnes"
+
+#, fuzzy
+#~| msgid "organization"
+#~ msgid "organization name"
+#~ msgstr "organisation"
+
+#, fuzzy
+#~| msgid "description"
+#~ msgid "position"
+#~ msgstr "description"
+
+msgid "artist"
+msgstr "artiste"
+
+#, fuzzy
+#~| msgid "project topic page"
+#~ msgid "project residency file"
+#~ msgstr "page rubrique d'un projet"
+
+#, fuzzy
+#~| msgid "project topic page"
+#~ msgid "project residency image"
+#~ msgstr "page rubrique d'un projet"
+
+#, fuzzy
+#~| msgid "project topic page"
+#~ msgid "project residency user image"
+#~ msgstr "page rubrique d'un projet"
+
+#, fuzzy
+#~| msgid "project topic page"
+#~ msgid "project page"
+#~ msgstr "page rubrique d'un projet"
+
+msgid "Finished Projects"
+msgstr "Projets Terminés"
+
+msgid "Projects"
+msgstr "Projets"
+
+msgid "Action"
+msgstr "Action"
+
+msgid "Departement"
+msgstr "Département"
+
+msgid "Magazine"
+msgstr "Magazine"
+
+#, fuzzy
+#~| msgid "Person"
+#~ msgid "Personnes"
+#~ msgstr "Personne"
+
+msgid "Candidacies"
+msgstr "Candidatures"
+
+msgid "Candidacies: "
+msgstr "Candidaturesnbsp;: "
+
+msgid "Candidacies:"
+msgstr "Candidaturesnbsp;:"
+
+#~msgid "Application dates:"
+#~msgstr "Candidatures&nbsp;:"
+
+#~msgid "Application dates: "
+#~msgstr "Candidatures&nbsp;: "
+
+msgid "Pages"
+msgstr "Pages"
+
+msgid "Media Library"
+msgstr "Librairie media"
+
+msgid "Events"
+msgstr "Événements"
+
+msgid "Network"
+msgstr "Réseaux"
+
+msgid "Activity"
+msgstr "Activité"
+
+msgid "Jobs"
+msgstr "Offres d'emplois et stages"
+
+#, fuzzy
+#~| msgid "product lists"
+#~ msgid "product list"
+#~ msgstr "listes de produits"
+
+msgid "product lists"
+msgstr "listes de produits"
+
+#, fuzzy
+#~| msgid "product lists"
+#~ msgid "product"
+#~ msgstr "listes de produits"
+>>>>>>> 5ffaebbe91ad46ca25be9d54be62ab5036ec9d27
 
 #~ msgid "Magazine"
 #~ msgstr "Magazine"
 
 #, fuzzy
+<<<<<<< HEAD
 #~| msgid "Persons"
 #~ msgid "Personnes"
 #~ msgstr "Personnes"
@@ -939,225 +1697,455 @@ msgstr ""
 #~ "dirigé par Frank Madlener, et réunit plus de cent soixante "
 #~ "collaborateurs. Il héberge l'Unité mixte de recherche Sciences et "
 #~ "technologies de la musique et du son (UMR9912 STMS Ircam-CNRS-UPMC)."
+=======
+#~| msgid "product lists"
+#~ msgid "products"
+#~ msgstr "listes de produits"
 
-#~ msgid "On Tour"
-#~ msgstr "Tournées"
+#, fuzzy
+#~| msgid "external ID"
+#~ msgid "external id"
+#~ msgstr "ID externe"
+>>>>>>> 5ffaebbe91ad46ca25be9d54be62ab5036ec9d27
 
-#~ msgid ""
-#~ "Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de "
-#~ "toutes choses..."
-#~ msgstr ""
-#~ "Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de "
-#~ "toutes choses..."
+#, fuzzy
+#~| msgid "external ID"
+#~ msgid "external shop"
+#~ msgstr "ID externe"
 
-#~ msgid "Calls for Applications 2017"
-#~ msgstr "Appel à candidatures 2017"
+#, fuzzy
+#~| msgid "external ID"
+#~ msgid "external shops"
+#~ msgstr "ID externe"
 
-#~ msgid ""
-#~ "Cursus – Practical Training in Composition and Computer Music, Artistic "
-#~ "Research Residence, ManiFeste-2017, the Academy"
-#~ msgstr ""
-#~ "Cursus de composition et d'informatique musicale, Résidence en recherche "
-#~ "artistique, ManiFeste-2017 l'académie"
+#, fuzzy
+#~| msgid "external ID"
+#~ msgid "external"
+#~ msgstr "ID externe"
 
-#~ msgid "IRCAM Library Center"
-#~ msgstr "Centre de Ressources Ircam"
+msgid "Recent Actions"
+msgstr "Actions récentes"
 
-#~ msgid ""
-#~ "Audiovisual and sound archives, a database on contemporary music "
-#~ "(BRAHMS), a catalogue of works…"
-#~ msgstr ""
-#~ "Archives audiovisuelles et sonores, base de documentation sur la musique "
-#~ "contemporaine (base BRAHMS), catalogue d'œuvres..."
+msgid "Add"
+msgstr "Ajouter"
 
-#~ msgid "Forumnet"
-#~ msgstr "Forumnet"
+msgid "My Actions"
+msgstr "Mes Actions"
 
-#~ msgid "IRCAM software users’ community"
-#~ msgstr "Communauté d'utilisateurs des logiciels Ircam"
+msgid "Home"
+msgstr "Accueil"
 
-#~ msgid ""
-#~ "European network for the promotion and support of young contemporary "
-#~ "musical creation"
-#~ msgstr ""
-#~ "Réseau européen pour la promotion et le soutien de la jeune création "
-#~ "musicale contemporaine"
+msgid "Language"
+msgstr "Langue"
 
-#~ msgid "Ircam teams"
-#~ msgstr "Équipes Ircam"
+msgid "Reserve"
+msgstr "Réserver"
 
-#~ msgid "Recent Posts"
-#~ msgstr "Articles récents"
+msgid "Confirmation"
+msgstr "Confirmation"
 
-#~ msgid "Categories"
-#~ msgstr "Catégories"
+msgid "Agenda"
+msgstr "Rendez-vous"
 
-#~ msgid "Feeds"
-#~ msgstr "Fils"
+msgid "Trainers"
+msgstr "Encadrants"
 
-#~ msgid "Artists"
-#~ msgstr "Artistes"
+msgid "Rendez-vous in Paris"
+msgstr "Rendez-vous à Paris"
 
-#~ msgid "Play the video"
-#~ msgstr "Jouer la vidéo"
+msgid "On tour"
+msgstr "Tournées"
 
-#~ msgid "Videos"
-#~ msgstr "Vidéos"
+msgid "Archives"
+msgstr "Archives"
 
-#~ msgid "Tag:"
-#~ msgstr "Mot clé :"
+msgid "Viewing events for the location"
+msgstr "Événements du lieu"
 
-#~ msgid "Category:"
-#~ msgstr "Catégorie :"
+msgid "to"
+msgstr "au"
 
-#~ msgid "Author:"
-#~ msgstr "Auteur :"
+msgid "Room"
+msgstr "Salle"
 
+msgid "Click to get the interactive map"
+msgstr "Cliquer pour voir la carte interactive"
+
+<<<<<<< HEAD
 #~ msgid "Related posts"
 #~ msgstr "Articles associés"
+=======
+msgid "Level"
+msgstr "Niveau"
 
-#~ msgid "Tournées"
-#~ msgstr "On tour"
+msgid "Downloads"
+msgstr "Téléchargements"
+>>>>>>> 5ffaebbe91ad46ca25be9d54be62ab5036ec9d27
 
-#~ msgid "Applications"
-#~ msgstr "Appels à candidature"
+msgid "Prices"
+msgstr "Prix"
 
-#~ msgid "display text"
-#~ msgstr "afficher le text"
+msgid "Upcoming Events"
+msgstr "Événements à venir"
 
+msgid "Recent Events"
+msgstr "Événements récents"
+
+<<<<<<< HEAD
 #~ msgid "activity framework"
 #~ msgstr "corps de l'activité"
+=======
+msgid "Tags"
+msgstr "Mots clés"
 
-#~ msgid "activity function"
-#~ msgstr "fonction de l'activité"
+msgid "Also discover"
+msgstr "À découvrir aussi"
+>>>>>>> 5ffaebbe91ad46ca25be9d54be62ab5036ec9d27
 
-#~ msgid "Follow us on Facebook"
-#~ msgstr "Suivez nous sur Facebook"
+msgid "Name"
+msgstr "Nom"
 
-#~ msgid "Follow us on Twitter"
-#~ msgstr "Suivez nous sur Twitter"
+msgid "Sorry, an error occurred."
+msgstr "Une erreur s'est produite."
 
-#~ msgid "Follow us on Instagram"
-#~ msgstr "Suivez nous sur Instagram"
+msgid "Comments"
+msgstr "Commentaires"
 
-#~ msgid "Follow us on Youtube"
-#~ msgstr "Suivez nous sur Youtube"
+msgid "News"
+msgstr "Actualité"
 
-#~ msgid "Ulysses Community"
-#~ msgstr "Ulysses Community"
+msgid "Subscribe to our newsletter"
+msgstr "Inscription à la newsletter"
 
-#~ msgid "published on"
-#~ msgstr "publié le"
+msgid "Follow us on"
+msgstr "Suivez-nous sur"
 
-#~ msgid "IRCAM Archives"
-#~ msgstr "Les ressources Ircam"
+msgid "Opening times"
+msgstr "Horaires d'ouverture"
 
-#~ msgid "Functions"
-#~ msgstr "Fonctions"
+msgid "Subway access"
+msgstr "Accès en transports"
 
-#~ msgid "Teams"
-#~ msgstr "Équipes"
+msgid "go to"
+msgstr "Aller vers"
 
-#~ msgid "Accueil"
-#~ msgstr "Back"
+msgid "Previous page"
+msgstr "Page précédente"
 
-#~ msgid "Coordinator"
-#~ msgstr "Coordinateur"
+msgid "Next page"
+msgstr "Page suivante"
 
-#~ msgid "attachment organization"
-#~ msgstr "organisation rattachée"
+msgid "Type something"
+msgstr "Recherché"
 
+msgid "Share on Facebook"
+msgstr "Partagez sur Facebook"
+
+<<<<<<< HEAD
 #~ msgid "See the video"
 #~ msgstr "Voir la vidéo"
+=======
+msgid "Share on Twitter"
+msgstr "Partagez sur Twitter"
 
-#~ msgid "Jobs/Internships"
-#~ msgstr "Offres d'emplois et stages"
+msgid "Share by email"
+msgstr "Partager par email"
+>>>>>>> 5ffaebbe91ad46ca25be9d54be62ab5036ec9d27
 
-#~ msgid "Application form"
-#~ msgstr "Formulaire de candidature en ligne"
+msgid "Print this page"
+msgstr "Imprimer cette page"
 
-#~ msgid "videos"
-#~ msgstr "vidéos"
+msgid "Add to"
+msgstr "Ajouter à"
 
-#~ msgid "Download"
-#~ msgstr "Télécharger"
+msgid "News Headlines"
+msgstr "À la une"
 
-#~ msgid "the room program"
-#~ msgstr "le programme de salle"
+msgid "Brief"
+msgstr "Brève"
 
-#~ msgid "Free entry. Limited seats available"
-#~ msgstr ""
-#~ "Entrée libre, sans réservation, dans la limite des places disponibles"
+msgid "Briefs"
+msgstr "Brèves"
 
-#~ msgid "at"
-#~ msgstr "à"
+msgid "Please come back later. There is no candidacy at the moment."
+msgstr ""
+"Merci de revenir plus tard. Il n'y a pas de candidature pour le moment."
 
-#~ msgid "photo alignment"
-#~ msgstr "alignement photo"
+msgid "From"
+msgstr "Du"
 
-#~ msgid "photo card credits"
-#~ msgstr "crédits photo"
+msgid "until"
+msgstr "jusqu'au"
 
-#~ msgid "photo slider credits"
-#~ msgstr "crédits photo slider"
+msgid "Published on"
+msgstr "Publié le"
 
-#~ msgid "video category"
-#~ msgstr "catégorie de vidéo"
+msgid "Please come back later. There is no job offer at the moment."
+msgstr ""
+"Merci de revenir plus tard. Il n'y a pas d'offre d'emploi pour le moment."
 
+msgid "Newsletter"
+msgstr "Newsletter"
+
+<<<<<<< HEAD
 #~ msgid "All"
 #~ msgstr "Tous les"
+=======
+msgid ""
+"Sign up for our monthly newsletter to keep up to date with the "
+"institute's activities every month and be eligible to take advantage of "
+"special offers from our partners."
+msgstr ""
+"Abonnez-vous à notre newsletter mensuelle pour être tenu au courant de "
+"l’actualité de l’Ircam chaque début de mois et bénéficiez des offres "
+"réservées à nos abonnés dans différents lieux partenaires de l’Institut."
 
-#~ msgid "Breaking"
-#~ msgstr "Dernière"
+msgid "under the tutelage of"
+msgstr "sous la tutelle de"
+>>>>>>> 5ffaebbe91ad46ca25be9d54be62ab5036ec9d27
 
-#~ msgid "news"
-#~ msgstr "minute"
+msgid ""
+"<strong>IRCAM, the Institute for Research and Coordination in Acoustics/"
+"Music</strong> is one of the world’s largest public research centers "
+"dedicated to musical creation and scientific research. A unique venue "
+"where artistic vision converges with scientific and technological "
+"innovation, the institute directed by Frank Madlener brings together over "
+"160 collaborators. IRCAM hosts the UMR9912 STMS Ircam-CNRS-UPMC science "
+"and technologies research lab."
+msgstr ""
+"<strong>L'Ircam, Institut de Recherche et Coordination Acoustique/"
+"Musique</strong> est aujourd’hui l’un des plus grands centres de "
+"recherche publique au monde se consacrant à la création musicale et à la "
+"recherche scientifique. Lieu unique où convergent la prospective "
+"artistique et l’innovation scientifique et technologique, l’institut est "
+"dirigé par Frank Madlener, et réunit plus de cent soixante "
+"collaborateurs. Il héberge l'Unité mixte de recherche Sciences et "
+"technologies de la musique et du son (UMR9912 STMS Ircam-CNRS-UPMC)."
 
-#~ msgid "More"
-#~ msgstr "Plus de"
+msgid "On Tour"
+msgstr "Tournées"
 
-#~ msgid "blog posts"
-#~ msgstr "articles"
+msgid ""
+"Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de "
+"toutes choses..."
+msgstr ""
+"Campo Santo, Songes et Métamorphoses, Providences, UM souverain moteur de "
+"toutes choses..."
 
-#~ msgid "Read the edito"
-#~ msgstr "Lire l'édito"
+msgid "Calls for Applications 2017"
+msgstr "Appel à candidatures 2017"
 
-#~ msgctxt "apos"
-#~ msgid "More"
-#~ msgstr "Plus d'"
+msgid ""
+"Cursus – Practical Training in Composition and Computer Music, Artistic "
+"Research Residence, ManiFeste-2017, the Academy"
+msgstr ""
+"Cursus de composition et d'informatique musicale, Résidence en recherche "
+"artistique, ManiFeste-2017 l'académie"
 
-#~ msgid "Videos for the category"
-#~ msgstr "Les vidéos de la catégorie"
+msgid "IRCAM Library Center"
+msgstr "Centre de Ressources Ircam"
 
-#~ msgid "Viewing events tagged"
-#~ msgstr "Événements pour le mot clé"
+msgid ""
+"Audiovisual and sound archives, a database on contemporary music "
+"(BRAHMS), a catalogue of works…"
+msgstr ""
+"Archives audiovisuelles et sonores, base de documentation sur la musique "
+"contemporaine (base BRAHMS), catalogue d'œuvres..."
 
-#~ msgid "Viewing events from"
-#~ msgstr "Événements du"
+msgid "Forumnet"
+msgstr "Forumnet"
 
-#~ msgid "Viewing events by"
-#~ msgstr "Événements par"
+msgid "IRCAM software users’ community"
+msgstr "Communauté d'utilisateurs des logiciels Ircam"
 
-#~ msgid "Viewing posts for the category"
-#~ msgstr "Les articles de la catégorie"
+msgid ""
+"European network for the promotion and support of young contemporary "
+"musical creation"
+msgstr ""
+"Réseau européen pour la promotion et le soutien de la jeune création "
+"musicale contemporaine"
 
-#~ msgid "Viewing posts from"
-#~ msgstr "Les articles postés depuis"
+msgid "Ircam teams"
+msgstr "Équipes Ircam"
 
-#~ msgid "Related event"
-#~ msgstr "Événement associé"
+msgid "Recent Posts"
+msgstr "Articles récents"
 
-#~ msgctxt "fem"
-#~ msgid "All"
-#~ msgstr "Toutes les"
+msgid "Categories"
+msgstr "Catégories"
 
+msgid "Feeds"
+msgstr "Fils"
+
+<<<<<<< HEAD
 #~ msgid "Read more"
 #~ msgstr "Lire la suite"
+=======
+msgid "Artists"
+msgstr "Artistes"
 
-#~| msgid "Artists"
-#~ msgid "Artist"
-#~ msgstr "Artiste"
+msgid "Play the video"
+msgstr "Jouer la vidéo"
+>>>>>>> 5ffaebbe91ad46ca25be9d54be62ab5036ec9d27
 
-#~| msgid "Videos"
-#~ msgid "Video"
-#~ msgstr "Vidéo"
+msgid "Videos"
+msgstr "Vidéos"
+
+msgid "Tag:"
+msgstr "Mot clé :"
+
+msgid "Category:"
+msgstr "Catégorie :"
+
+msgid "Author:"
+msgstr "Auteur :"
+
+msgid "Related events"
+msgstr "Événements associés"
+
+msgid "Related posts"
+msgstr "Articles associés"
+
+msgid "Tournées"
+msgstr "On tour"
+
+msgid "Applications"
+msgstr "Appels à candidature"
+
+msgid "display text"
+msgstr "afficher le text"
+
+msgid "activity grade"
+msgstr "grade de l'activité"
+
+msgid "activity framework"
+msgstr "corps de l'activité"
+
+msgid "activity function"
+msgstr "fonction de l'activité"
+
+msgid "Follow us on Facebook"
+msgstr "Suivez nous sur Facebook"
+
+msgid "Follow us on Twitter"
+msgstr "Suivez nous sur Twitter"
+
+msgid "Follow us on Instagram"
+msgstr "Suivez nous sur Instagram"
+
+msgid "Follow us on Youtube"
+msgstr "Suivez nous sur Youtube"
+
+msgid "Ulysses Community"
+msgstr "Ulysses Community"
+
+msgid "published on"
+msgstr "publié le"
+
+msgid "IRCAM Archives"
+msgstr "Les ressources Ircam"
+
+msgid "Functions"
+msgstr "Fonctions"
+
+msgid "Accueil"
+msgstr "Back"
+
+msgid "Coordinator"
+msgstr "Coordinateur"
+
+msgid "attachment organization"
+msgstr "organisation rattachée"
+
+msgid "Location:"
+msgstr "Lieu :"
+
+msgid "See the video"
+msgstr "Voir la vidéo"
+
+msgid "Application form"
+msgstr "Formulaire de candidature en ligne"
+
+msgid "Download"
+msgstr "Télécharger"
+
+msgid "the room program"
+msgstr "le programme de salle"
+
+msgid "Free entry. Limited seats available"
+msgstr ""
+"Entrée libre, sans réservation, dans la limite des places disponibles"
+
+msgid "at"
+msgstr "à"
+
+msgid "photo alignment"
+msgstr "alignement photo"
+
+msgid "photo card credits"
+msgstr "crédits photo"
+
+msgid "photo slider credits"
+msgstr "crédits photo slider"
+
+msgid "video category"
+msgstr "catégorie de vidéo"
+
+msgid "All"
+msgstr "Tous les"
+
+msgid "Breaking"
+msgstr "Dernière"
+
+msgid "news"
+msgstr "minute"
+
+msgid "More"
+msgstr "Plus de"
+
+msgid "blog posts"
+msgstr "articles"
+
+msgid "Read the edito"
+msgstr "Lire l'édito"
+
+msgctxt "apos"
+msgid "More"
+msgstr "Plus d'"
+
+msgid "Videos for the category"
+msgstr "Les vidéos de la catégorie"
+
+msgid "Viewing events tagged"
+msgstr "Événements pour le mot clé"
+
+msgid "Viewing events from"
+msgstr "Événements du"
+
+msgid "Viewing events by"
+msgstr "Événements par"
+
+msgid "Viewing posts for the category"
+msgstr "Les articles de la catégorie"
+
+msgid "Viewing posts from"
+msgstr "Les articles postés depuis"
+
+msgid "Related event"
+msgstr "Événement associé"
+
+msgctxt "fem"
+msgid "All"
+msgstr "Toutes les"
+
+msgid "Edito"
+msgstr "Édito"
+
+msgid "Read more"
+msgstr "Lire la suite"
+
+msgid "Artist"
+msgstr "Artiste"
+
+msgid "Video"
+msgstr "Vidéo"

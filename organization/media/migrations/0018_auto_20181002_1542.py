@@ -7,10 +7,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('organization-media', '0017_merge'),
-    ]
-
     operations = [
         migrations.AlterField(
             model_name='mediaimage',

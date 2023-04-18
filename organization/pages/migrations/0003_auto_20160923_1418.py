@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('pages', '0005_auto_20160923_1219'),
-        ('organization-pages', '0002_auto_20160914_1838'),
+        ('organization_pages', '0002_auto_20160914_1838'),
     ]
 
     operations = [

@@ -27,4 +27,4 @@ from django.apps import AppConfig
 class ProjectsConfig(AppConfig):
 
     name = 'organization.projects'
-    label = 'organization-projects'
+    label = 'organization_projects'

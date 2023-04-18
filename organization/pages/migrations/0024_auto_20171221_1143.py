@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-pages', '0023_merge'),
+        ('organization_pages', '0023_merge'),
     ]
 
     operations = [

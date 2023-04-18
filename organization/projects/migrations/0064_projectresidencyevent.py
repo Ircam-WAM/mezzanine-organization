@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('mezzanine_agenda', '0019_auto_20170415_0948'),
-        ('organization-projects', '0063_projectresidencyarticle'),
+        ('organization_projects', '0063_projectresidencyarticle'),
     ]
 
     operations = [
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('event', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='residencies', to='mezzanine_agenda.Event', verbose_name='event')),
-                ('residency', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='events', to='organization-projects.ProjectResidency', verbose_name='residency')),
+                ('residency', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='events', to='organization_projects.ProjectResidency', verbose_name='residency')),
             ],
         ),
     ]

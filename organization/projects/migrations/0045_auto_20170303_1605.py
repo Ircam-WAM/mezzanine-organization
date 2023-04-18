@@ -10,22 +10,22 @@ import mezzanine.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0088_organization_site'),
-        ('organization-projects', '0044_auto_20170303_1557'),
+        ('organization_network', '0088_organization_site'),
+        ('organization_projects', '0044_auto_20170303_1557'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='ProjectContact',
             fields=[
-                ('person_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization-network.Person')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='contacts', to='organization-projects.Project', verbose_name='project')),
+                ('person_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='organization_network.Person')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='contacts', to='organization_projects.Project', verbose_name='project')),
             ],
             options={
                 'verbose_name': 'Project contact',
                 'verbose_name_plural': 'Project contacts',
             },
-            bases=('organization-network.person',),
+            bases=('organization_network.person',),
         ),
         migrations.CreateModel(
             name='ProjectSimpleImage',
@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True, verbose_name='description')),
                 ('file', mezzanine.core.fields.FileField(max_length=1024, verbose_name='Image')),
                 ('credits', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='simple_images', to='organization-projects.Project', verbose_name='project')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='simple_images', to='organization_projects.Project', verbose_name='project')),
             ],
             options={
                 'ordering': ('_order',),

@@ -19,24 +19,38 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf import settings # import the settings file
+from mezzanine.conf import settings  # import the settings file
 from datetime import datetime, date
 from organization.pages.models import Page
-from organization.network.models import Organization, OrganizationLinkedInline, Person
+from organization.network.models import Organization, OrganizationLinkedInline
 from mezzanine_agenda.models import Season
 from mezzanine.utils.sites import current_site_id
 from django.contrib.sites.models import Site
 
 
 def organization_settings(request):
+
     date_now = datetime.now()
     # SEASON
     current_season, created = Season.objects.get_or_create(
         start__year=date_now.year,
-        defaults={'title' : 'Season ' + str(date_now.year) + '-' + str(date_now.year + 1),
-                  'start' : date(date_now.year, settings.SEASON_START_MONTH, settings.SEASON_START_DAY),
-                  'end' : date(date_now.year + 1, settings.SEASON_END_MONTH, settings.SEASON_END_DAY)})
-    current_season_styled = str(current_season.start.year)[-2:]+"."+str(current_season.end.year)[-2:]
+        defaults={
+            'title': 'Season ' + str(date_now.year) + '-' + str(date_now.year + 1),
+            'start': date(
+                date_now.year,
+                settings.SEASON_START_MONTH,
+                settings.SEASON_START_DAY
+            ),
+            'end': date(
+                date_now.year + 1,
+                settings.SEASON_END_MONTH,
+                settings.SEASON_END_DAY
+            )
+        }
+    )
+    current_season_styled = str(current_season.start.year)[-2:] +\
+        "." +\
+        str(current_season.end.year)[-2:]
 
     # NEWSLETTER
     newsletter_page = Page.objects.filter(slug="newsletter")
@@ -48,17 +62,19 @@ def organization_settings(request):
     try:
         site = Site.objects.get(id=current_site_id())
         host_org = Organization.objects.get(site=site)
-    except:
+    except Exception:
         try:
             host_org = Organization.objects.filter(is_host=True).first()
-        except:
+        except Exception:
             host_org = Organization.objects.first()
 
     organization_lists = []
     if hasattr(host_org, 'organization_linked_block'):
         for orga_linked_block in host_org.organization_linked_block.all():
             organizations = []
-            for orga_list in OrganizationLinkedInline.objects.filter(organization_list_id=orga_linked_block.organization_linked_id):
+            for orga_list in OrganizationLinkedInline.objects.filter(
+                organization_list_id=orga_linked_block.organization_linked_id
+            ):
                 organizations.append(orga_list.organization)
             organization_lists.append(organizations)
 
@@ -66,19 +82,20 @@ def organization_settings(request):
     linked_org_footer = organization_lists[1] if len(organization_lists) > 1 else None
     linked_org_footer_2 = organization_lists[2] if len(organization_lists) > 2 else None
 
-    research_slug = "recherche"
-    context = {'current_season_year': current_season.start.year,
-            'current_season_styled': current_season_styled,
-            'newsletter_subscribing_url': newsletter_subscribing_url,
-            'host_organization': host_org,
-            'linked_organization_content' : linked_org_content,
-            'linked_organization_footer' : linked_org_footer,
-            'linked_organization_footer_2' : linked_org_footer_2,
-            'research_slug' : research_slug,
-            'menu_person_id': settings.MENU_PERSON_ID,
-            'debug_mode' : settings.DEBUG,
-            'http_host' :  request.environ['HTTP_HOST'] if 'HTTP_HOST' in request.environ else ''
-            }
+    context = {
+        'current_season_year': current_season.start.year,
+        'current_season_styled': current_season_styled,
+        'newsletter_subscribing_url': newsletter_subscribing_url,
+        'host_organization': host_org,
+        'linked_organization_content': linked_org_content,
+        'linked_organization_footer': linked_org_footer,
+        'linked_organization_footer_2': linked_org_footer_2,
+        'research_slug': 'recherche',
+        'menu_person_id': settings.MENU_PERSON_ID,
+        'debug_mode': settings.DEBUG,
+        'http_host':  request.environ['HTTP_HOST'] if 'HTTP_HOST' in request.environ else '',  # noqa: E501
+        'hal_url': settings.HAL_URL,
+    }
 
     if settings.TEMPLATE:
         context['TEMPLATE'] = settings.TEMPLATE

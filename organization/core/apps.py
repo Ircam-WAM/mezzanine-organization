@@ -21,10 +21,11 @@
 
 from django.apps import AppConfig
 
-from django.core.checks import register
-
 
 class CoreConfig(AppConfig):
 
     name = 'organization.core'
-    label = 'organization-core'
+    label = 'organization_core'
+
+    def ready(self):
+        from .defaults import register_setting  # noqa: F401

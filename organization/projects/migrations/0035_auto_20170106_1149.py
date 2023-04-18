@@ -8,19 +8,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-network', '0079_auto_20170106_1149'),
-        ('organization-projects', '0034_auto_20161230_1839'),
+        ('organization_network', '0079_auto_20170106_1149'),
+        ('organization_projects', '0034_auto_20161230_1839'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='project',
             name='manager',
-            field=models.ManyToManyField(blank=True, null=True, related_name='projects_manager', to='organization-network.Person', verbose_name='Manager'),
+            field=models.ManyToManyField(blank=True, null=True, related_name='projects_manager', to='organization_network.Person', verbose_name='Manager'),
         ),
         migrations.AddField(
             model_name='project',
             name='referring_person',
-            field=models.ManyToManyField(blank=True, null=True, related_name='projects_referring_person', to='organization-network.Person', verbose_name='Referring Person'),
+            field=models.ManyToManyField(blank=True, null=True, related_name='projects_referring_person', to='organization_network.Person', verbose_name='Referring Person'),
         ),
     ]
