@@ -9,13 +9,13 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0080_merge'),
+        ('organization_projects', '0080_merge'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='pivot_project_projectcollection',
             name='collection',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='projects_pivot', to='organization-projects.ProjectCollection', verbose_name='collection'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='projects_pivot', to='organization_projects.ProjectCollection', verbose_name='collection'),
         ),
     ]

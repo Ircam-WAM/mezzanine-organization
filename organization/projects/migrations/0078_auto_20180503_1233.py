@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('organization-projects', '0077_projectrepository'),
+        ('organization_projects', '0077_projectrepository'),
     ]
 
     operations = [
@@ -21,9 +21,9 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('_order', mezzanine.core.fields.OrderField(null=True, verbose_name='Order')),
                 ('object_id', models.PositiveIntegerField(editable=False, null=True, verbose_name='related object')),
-                ('collection', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='dynamic_collection_collection', to='organization-projects.ProjectCollection', verbose_name='collection')),
+                ('collection', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='dynamic_collection_collection', to='organization_projects.ProjectCollection', verbose_name='collection')),
                 ('content_type', models.ForeignKey(blank=True, editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType', verbose_name='content type')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='collection_pivot', to='organization-projects.Project', verbose_name='project')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='collection_pivot', to='organization_projects.Project', verbose_name='project')),
             ],
             options={
                 'verbose_name': 'Dynamic Collection Project',

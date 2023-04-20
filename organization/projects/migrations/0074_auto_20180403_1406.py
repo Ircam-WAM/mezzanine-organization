@@ -8,14 +8,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0073_auto_20180306_1048'),
+        ('organization_projects', '0073_auto_20180306_1048'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='project',
             name='topics',
-            field=models.ManyToManyField(blank=True, related_name='project_topics', to='organization-projects.ProjectTopic', verbose_name='topics'),
+            field=models.ManyToManyField(blank=True, related_name='project_topics', to='organization_projects.ProjectTopic', verbose_name='topics'),
         ),
         migrations.AlterField(
             model_name='project',

@@ -11,8 +11,8 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('organization-magazine', '0022_merge'),
-        ('organization-projects', '0084_project_is_private'),
+        ('organization_magazine', '0022_merge'),
+        ('organization_projects', '0084_project_is_private'),
     ]
 
     operations = [
@@ -22,9 +22,9 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('_order', mezzanine.core.fields.OrderField(null=True, verbose_name='Order')),
                 ('object_id', models.PositiveIntegerField(editable=False, null=True, verbose_name='related object')),
-                ('article', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='topics_pivot', to='organization-magazine.Article', verbose_name='article')),
+                ('article', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='topics_pivot', to='organization_magazine.Article', verbose_name='article')),
                 ('content_type', models.ForeignKey(blank=True, editable=False, null=True, on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType', verbose_name='content type')),
-                ('project_topic', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='articles_pivot', to='organization-projects.ProjectTopic', verbose_name='project topic')),
+                ('project_topic', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='articles_pivot', to='organization_projects.ProjectTopic', verbose_name='project topic')),
             ],
             options={
                 'verbose_name': 'Project Topic <--> Article',

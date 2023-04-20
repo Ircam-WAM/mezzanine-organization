@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
         ('sites', '0002_alter_domain_unique'),
-        ('organization-projects', '0071_auto_20171222_1121'),
+        ('organization_projects', '0071_auto_20171222_1121'),
     ]
 
     operations = [
@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
                 ('file', mezzanine.core.fields.FileField(max_length=1024, verbose_name='Image')),
                 ('credits', models.CharField(blank=True, max_length=256, null=True, verbose_name='credits')),
                 ('type', models.CharField(choices=[('logo', 'logo'), ('logo_white', 'logo white'), ('logo_black', 'logo black'), ('logo_header', 'logo header'), ('logo_footer', 'logo footer'), ('slider', 'slider'), ('card', 'card'), ('page_slider', 'page - slider'), ('page_featured', 'page - featured')], max_length=64, verbose_name='type')),
-                ('collection', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization-projects.ProjectCollection', verbose_name='collection')),
+                ('collection', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='images', to='organization_projects.ProjectCollection', verbose_name='collection')),
             ],
             options={
                 'ordering': ('_order',),
@@ -74,12 +74,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='project',
             name='topics',
-            field=models.ManyToManyField(blank=True, related_name='project_topics', to='organization-projects.ProjectTopic', verbose_name='topics'),
+            field=models.ManyToManyField(blank=True, related_name='project_topics', to='organization_projects.ProjectTopic', verbose_name='topics'),
         ),
         migrations.AddField(
             model_name='dynamiccollectionproject',
             name='collection',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='dynamic_collection_collection', to='organization-projects.ProjectCollection', verbose_name='collection'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='dynamic_collection_collection', to='organization_projects.ProjectCollection', verbose_name='collection'),
         ),
         migrations.AddField(
             model_name='dynamiccollectionproject',
@@ -89,6 +89,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='dynamiccollectionproject',
             name='project',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_collection_project', to='organization-projects.Project', verbose_name='project'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='dynamic_collection_project', to='organization_projects.Project', verbose_name='project'),
         ),
     ]

@@ -92,7 +92,7 @@ class ProjectDetailView(PermissionRequiredMixin, SlugMixin, ProjectMixin, Detail
 
     model = Project
     template_name='projects/project_detail.html'
-    permission_required = 'organization-projects.view_project'
+    permission_required = 'organization_projects.view_project'
     raise_exception = True  # Or else: endless loop if user hasn't the permission (project (not logged in) > auth > project (not authorized) > auth > ...)
     return_403 = True
 
@@ -760,7 +760,7 @@ class Pivot_Project_ProjectCollection_View(Select2QuerySetSequenceView):
 class ProjectCreateView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
 
     template_name = 'projects/project_creation.html'
-    permission_required = 'organization-projects.add_project'
+    permission_required = 'organization_projects.add_project'
     raise_exception = True
     return_403 = True
 
@@ -769,7 +769,7 @@ class ProjectEditView(LoginRequiredMixin, PermissionRequiredMixin, SlugMixin, De
 
     model = Project
     template_name = 'projects/project_edit.html'
-    permission_required = 'organization-projects.change_project'
+    permission_required = 'organization_projects.change_project'
     raise_exception = True
     return_403 = True
 

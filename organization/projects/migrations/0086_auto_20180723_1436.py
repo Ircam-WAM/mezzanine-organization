@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('organization-projects', '0085_auto_20180709_1128'),
+        ('organization_projects', '0085_auto_20180709_1128'),
     ]
 
     operations = [
@@ -27,6 +27,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='pivot_projecttopic_article',
             name='article',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='project_topics_pivot', to='organization-magazine.Article', verbose_name='article'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='project_topics_pivot', to='organization_magazine.Article', verbose_name='article'),
         ),
     ]

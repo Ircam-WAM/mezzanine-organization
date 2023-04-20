@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('organization_core', '0006_auto_20230417_1633'),
-        ('organization-projects', '0113_auto_20230412_1545'),
+        ('organization_projects', '0113_auto_20230412_1545'),
     ]
 
     operations = [

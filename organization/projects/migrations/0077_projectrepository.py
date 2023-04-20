@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('organization-projects', '0076_auto_20180430_1541'),
+        ('organization_projects', '0076_auto_20180430_1541'),
     ]
 
     operations = [
@@ -17,8 +17,8 @@ class Migration(migrations.Migration):
             name='ProjectRepository',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_repositories', to='organization-projects.Project', verbose_name='project')),
-                ('repository', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_repositories', to='organization-projects.Repository', verbose_name='repository')),
+                ('project', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_repositories', to='organization_projects.Project', verbose_name='project')),
+                ('repository', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='project_repositories', to='organization_projects.Repository', verbose_name='repository')),
             ],
             options={
                 'verbose_name': 'project repository',
