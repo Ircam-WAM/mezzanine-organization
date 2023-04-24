@@ -35,11 +35,31 @@ from mezzanine.utils.models import base_concrete_model, get_user_model_name
 from django_countries.fields import CountryField
 
 
-COLOR_CHOICES = (('black', _('black')), ('yellow', _('yellow')), ('red', _('red')), ('white', _('white')), ('blue', _('blue')), ('purple', _('purple')),)
+COLOR_CHOICES = (('black', _('black')),
+    ('yellow', _('yellow')),
+    ('red', _('red')),
+    ('white', _('white')),
+    ('blue', _('blue')),
+    ('purple', _('purple')),)
 
-ALIGNMENT_CHOICES = (('left', _('left')), ('center', _('center')), ('right', _('right')))
+ALIGNMENT_CHOICES = (('left', _('left')),
+    ('center', _('center')),
+    ('right', _('right')))
 
-IMAGE_TYPE_CHOICES = (('logo', _('logo')), ('logo_white', _('logo white')), ('logo_black', _('logo black')), ('logo_header', _('logo header')), ('logo_footer', _('logo footer')), ('slider', _('slider')), ('card', _('card')), ('page_slider', _('page - slider')), ('page_featured', _('page - featured')), ('hero', _('hero')))
+IMAGE_TYPE_CHOICES = (
+    ('logo', _('logo')),
+    ('logo_white', _('logo white')),
+    ('logo_black', _('logo black')),
+    ('logo_header', _('logo header')),
+    ('logo_back', _('logo back')),
+    ('logo_footer', _('logo footer')),
+    ('slider', _('slider')),
+    ('card', _('card')),
+    ('page_slider', _('page - slider')),
+    ('page_featured', _('page - featured')),
+    ('hero', _('hero')),
+    ('banner', _('banner'))
+)
 
 
 class Description(models.Model):
@@ -192,6 +212,7 @@ class Image(Titled, Orderable):
     file = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
     credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
     type = models.CharField(_('type'), max_length=64, choices=IMAGE_TYPE_CHOICES)
+    crop_data = models.CharField(max_length=1024, null=True, blank=True, default="")
 
     class Meta:
         abstract = True
