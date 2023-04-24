@@ -74,11 +74,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='project',
-            name='status',
-            field=models.IntegerField(choices=[(1, 'Draft'), (2, 'Published'), (3, 'Archived')], default=2, help_text='With Draft chosen, will only be shown for admin users on the site.', verbose_name='Status'),
-        ),
-        migrations.AlterField(
-            model_name='project',
             name='type',
             field=models.CharField(choices=[('internal', 'internal'), ('external', 'external')], default='internal', max_length=128, verbose_name='type'),
         ),

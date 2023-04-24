@@ -12,14 +12,4 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='person',
-            name='organization_name',
-            field=models.CharField(blank=True, max_length=128, null=True, verbose_name='organization_name'),
-        ),
-        migrations.AddField(
-            model_name='person',
-            name='position',
-            field=models.CharField(blank=True, max_length=128, null=True, verbose_name='position'),
-        ),
     ]
