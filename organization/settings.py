@@ -514,7 +514,7 @@ ADMIN_MENU_ORDER = (
                     'organization_projects.ProjectDemo',
                     )),
     (_('Shop'), ('shop.Product',
-                    'organization-shop.ProductList',
+                    'organization_shop.ProductList',
                     'shop.Order',
                     'shop.DiscountCode',
                     'shop.Sale',
