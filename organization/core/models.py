@@ -64,7 +64,8 @@ IMAGE_TYPE_CHOICES = (
     ('card', _('card')),
     ('page_slider', _('page - slider')),
     ('page_featured', _('page - featured')),
-    ('hero', _('hero'))
+    ('hero', _('hero')),
+    ('banner', _('banner'))
 )
 
 
@@ -258,6 +259,7 @@ class Image(Titled, Description, Orderable):
     file = FileField(_("Image"), max_length=1024, format="Image", upload_to="images")
     credits = models.CharField(_('credits'), max_length=256, blank=True, null=True)
     type = models.CharField(_('type'), max_length=64, choices=IMAGE_TYPE_CHOICES)
+    crop_data = models.CharField(max_length=1024, null=True, blank=True, default="")
 
     class Meta:
         abstract = True
