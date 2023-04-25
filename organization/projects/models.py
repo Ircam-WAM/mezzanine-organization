@@ -29,7 +29,6 @@ from django.utils.safestring import mark_safe
 from django.core.files.images import get_image_dimensions
 from django.core.cache import cache
 from django.contrib.auth.models import User
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -38,6 +37,7 @@ from mezzanine.core.models import Displayable, Orderable, RichText, Slugged
 from mezzanine.core.models import (CONTENT_STATUS_DRAFT,
                                     CONTENT_STATUS_PUBLISHED)
 from mezzanine_agenda.models import *
+from organization.core.fields import JSONField
 from organization.core.models import *
 from organization.core.models import TitledSlugged, Period,\
     Named, Titled, Description, Block, Link, Image, UserImage, File,\
@@ -328,7 +328,7 @@ class Project(Displayable,
     )
     # A generic-use field for storing simple mixed values/schema
     # Example: project preferences, UI toggles, etc.
-    configuration = JSONField(default=dict(), null=True, blank=True)
+    configuration = JSONField(default=dict, null=True, blank=True)
 
     class Meta:
         verbose_name = _("project")
