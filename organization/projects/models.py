@@ -677,6 +677,9 @@ class ProjectTopic(Named):
         max_length=128
     )
 
+    featured = models.BooleanField(default=False)
+    validated = models.BooleanField(default=False)
+
     class Meta:
         verbose_name = _('project topic')
         verbose_name_plural = _("project topics")

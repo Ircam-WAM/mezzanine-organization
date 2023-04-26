@@ -48,9 +48,6 @@ class Article(BlogPost, SubTitled, TeamOwnable):
         Department,
         verbose_name=_('department'),
         related_name='articles',
-        # limit_choices_to=dict(
-        #     id__in=Department.objects.all()
-        # ),
         blank=True,
         null=True,
         on_delete=models.SET_NULL
