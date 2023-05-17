@@ -1639,3 +1639,9 @@ class DynamicContentProjectPage(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Dynamic Content Project Page'
+
+
+class ProjectLanguage(Named):
+    class Meta:
+        verbose_name = 'Language'
+
