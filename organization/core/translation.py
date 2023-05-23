@@ -21,7 +21,7 @@
 
 from modeltranslation.translator import register, TranslationOptions
 from mezzanine.generic.models import Keyword
-from .models import Image
+from .models import Image, MetaCategory
 
 
 @register(Keyword)
@@ -34,3 +34,9 @@ class KeywordTranslationOptions(TranslationOptions):
 class ImageTranslationOptions(TranslationOptions):
 
     fields = ('title', 'credits')
+
+
+@register(MetaCategory)
+class MetaCategoryTranslationOptions(TranslationOptions):
+
+    fields = ('name', 'description')

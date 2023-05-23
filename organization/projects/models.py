@@ -225,6 +225,12 @@ class Project(Displayable,
         null=True,
         on_delete=models.SET_NULL
     )
+    languages = models.ManyToManyField(
+        "ProjectLanguage",
+        verbose_name=_("languages"),
+        related_name="project_languages",
+        blank=True,
+    )
     referring_person = models.ManyToManyField(
         "organization_network.Person",
         verbose_name=_("Referring Person"),

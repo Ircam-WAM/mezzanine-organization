@@ -151,12 +151,15 @@ def null_filter(field, title_=None):
         title = title_ or parameter_name
     return NullListFieldFilter
 
+class MetaCategoryAdmin(BaseTranslationModelAdmin):
+    model = MetaCategory
+
 
 admin.site.register(LinkType)
 admin.site.unregister(BlogPost)
 admin.site.unregister(ThreadedComment)
 admin.site.register(Keyword, KeywordAdmin)
-admin.site.register(MetaCategory)
+admin.site.register(MetaCategory, MetaCategoryAdmin)
 
 
 if settings.DEBUG and settings.HIJACK_REGISTER_ADMIN:

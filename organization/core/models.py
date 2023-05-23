@@ -233,7 +233,8 @@ class MetaCategory(Named):
     """Meta Category"""
 
     class Meta:
-        verbose_name = _('meta category')
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
 
     def __str__(self):
         return self.name

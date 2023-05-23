@@ -38,7 +38,7 @@ from organization.projects.models import ProjectLink, ProjectImage, ProjectBlock
     ProjectCall, ProjectCallBlock, ProjectCallLink, ProjectCallImage,\
     ProjectCallFile, ProjectPageBlock, ProjectPageImage, DynamicContentProjectPage,\
     ProjectTopicPage, Repository, RepositorySystem, ProjectCollection, \
-    ProjectCollectionImage, Pivot_Project_ProjectCollection
+    ProjectCollectionImage, Pivot_Project_ProjectCollection, ProjectLanguage
 from organization.pages.admin import PageImageInline
 from organization.projects.forms import DynamicContentProjectForm,\
     DynamicMultimediaProjectForm, Pivot_Project_ProjectCollection_Form, \
@@ -478,3 +478,5 @@ admin.site.register(ProjectCall, ProjectCallAdmin)
 admin.site.register(ProjectResidency, ProjectResidencyAdmin)
 admin.site.register(ProjectCollection, ProjectCollectionAdminDisplayable)
 admin.site.register(ProjectPage, ProjectPageAdmin)
+admin.site.register(ProjectLanguage)
+
