@@ -187,7 +187,7 @@ class Topic(Page, RichText):
     displayed_in_navbars = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = _('topic')
+        verbose_name = _('article topic')
 
 
 class ArticlePersonListBlockInline(Titled, Description):

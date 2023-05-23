@@ -37,7 +37,7 @@ _slash = "/" if settings.APPEND_SLASH else ""
 router = routers.SimpleRouter()
 
 router.register(
-    r"meta-categories",
+    r"categories",
     MetaCategoryViewSet,
     basename="api-meta-categories",
 )

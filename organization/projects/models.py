@@ -204,14 +204,6 @@ class Project(Displayable,
         max_length=512,
         blank=True
     )
-    topic = models.ForeignKey(
-        "ProjectTopic",
-        verbose_name=_("topic"),
-        related_name="projects",
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-    )
     topics = models.ManyToManyField(
         "ProjectTopic",
         verbose_name=_("topics"),
@@ -332,9 +324,6 @@ class Project(Displayable,
         max_length=128,
         default="latest",
     )
-    # A generic-use field for storing simple mixed values/schema
-    # Example: project preferences, UI toggles, etc.
-    configuration = JSONField(default=dict, null=True, blank=True)
 
     class Meta:
         verbose_name = _("project")
@@ -667,7 +656,7 @@ class Project(Displayable,
         return repository
 
 
-class ProjectTopic(Named):
+class ProjectTopic(Named, Dated):
 
     parent = models.ForeignKey(
         'ProjectTopic',
@@ -687,8 +676,8 @@ class ProjectTopic(Named):
     validated = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = _('project topic')
-        verbose_name_plural = _("project topics")
+        verbose_name = _('topic')
+        verbose_name_plural = _("topics")
         ordering = ['key', ]
 
     def get_absolute_url(self):
