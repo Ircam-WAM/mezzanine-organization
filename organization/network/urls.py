@@ -31,7 +31,9 @@ from organization.network.views import PersonDirectoryView,\
     PersonActivityAutocompleteView, WorkPackageAutocompleteView,\
     ProducerCreateView, ProducerValidationView, ProducerDetailView,\
     ProducerListView, JuryListView, TeamMembersView, TeamPublicationsView,\
-    DynamicContentPersonView, PersonDashboardView
+    DynamicContentPersonView, PersonDashboardView, TeamViewSet
+
+from rest_framework import routers
 
 
 urlpatterns = [
@@ -163,3 +165,12 @@ urlpatterns = [
         name='organization_network-dashboard-person-detail'
     ),
     ]
+
+
+router = routers.SimpleRouter()
+
+router.register(
+    r"teams",
+    TeamViewSet,
+    basename="api-teams",
+)

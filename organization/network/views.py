@@ -60,7 +60,8 @@ from organization.network.utils import get_users_of_team
 from mezzanine_agenda.models import Event
 from extra_views import CreateWithInlinesView
 from mezzanine.utils.sites import current_site_id
-
+from rest_framework import serializers, viewsets
+from .serializers import TeamSerializer
 
 import pandas as pd
 
@@ -909,3 +910,8 @@ class PersonDashboardView(
             if self.object.email\
             else self.object.slug.replace('-', '.') + " (at) ircam.fr"
         return context
+
+
+class TeamViewSet(viewsets.ModelViewSet):
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer

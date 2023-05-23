@@ -1,5 +1,5 @@
 from rest_framework import serializers, viewsets
-from organization.core.models import MetaCategory
+from .models import MetaCategory
 
 
 class MetaCategorySerializer(serializers.ModelSerializer):
@@ -10,8 +10,3 @@ class MetaCategorySerializer(serializers.ModelSerializer):
             "id",
             "name",
         )
-
-
-class MetaCategoryViewSet(viewsets.ModelViewSet):
-    queryset = MetaCategory.objects.all()
-    serializer_class = MetaCategorySerializer

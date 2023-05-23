@@ -26,12 +26,8 @@ from rest_framework import routers
 
 from mezzanine.conf import settings
 
-from organization.core.views import CustomSearchView, UserProjectsView,\
-     UserProducerView
-
-from .api import (
-    MetaCategoryViewSet,
-)
+from .views import CustomSearchView, UserProjectsView,\
+     UserProducerView, MetaCategoryViewSet
 
 
 LOGIN_URL = settings.LOGIN_URL

@@ -51,6 +51,11 @@ from django.template import TemplateDoesNotExist, loader
 from django.utils.encoding import force_text
 from django.views.decorators.csrf import requires_csrf_token
 
+from rest_framework import serializers, viewsets
+
+from .models import MetaCategory
+from .serializers import MetaCategorySerializer
+
 
 class SlugMixin(object):
 
@@ -486,3 +491,8 @@ class RedirectContentView(SingleObjectMixin):
 
 def redirect_url(request, slug):
     return redirect(slug)
+
+
+class MetaCategoryViewSet(viewsets.ModelViewSet):
+    queryset = MetaCategory.objects.all()
+    serializer_class = MetaCategorySerializer
