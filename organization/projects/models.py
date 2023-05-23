@@ -35,7 +35,8 @@ from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings as m_settings
 from mezzanine.core.models import Displayable, Orderable, RichText, Slugged
 from mezzanine.core.models import (CONTENT_STATUS_DRAFT,
-                                    CONTENT_STATUS_PUBLISHED)
+                                    CONTENT_STATUS_PUBLISHED,
+                                    CONTENT_STATUS_CHOICES)
 from mezzanine_agenda.models import *
 from organization.core.fields import JSONField
 from organization.core.models import *
@@ -672,13 +673,18 @@ class ProjectTopic(Named, Dated):
         max_length=128
     )
 
-    featured = models.BooleanField(default=False)
-    validated = models.BooleanField(default=False)
+    status = models.IntegerField(
+        _("Status"),
+        choices=CONTENT_STATUS_CHOICES,
+        default=CONTENT_STATUS_PUBLISHED,
+    )
+
+    internal_featured = models.BooleanField(default=False)
+    external_featured = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = _('topic')
-        verbose_name_plural = _("topics")
-        ordering = ['key', ]
+        verbose_name = _("topic")
+        ordering = ["key",]
 
     def get_absolute_url(self):
         return reverse(
@@ -686,10 +692,6 @@ class ProjectTopic(Named, Dated):
             kwargs={'pk': self.pk, 'name': self.name}
         )
 
-    class Meta:
-        verbose_name = _("tag")
-        verbose_name_plural = _("tags")
-        ordering = ["key",]
 
     def get_absolute_url(self):
         return reverse(
