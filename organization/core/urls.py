@@ -19,17 +19,32 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import unicode_literals
 
-from django.conf.urls import url
+from django.conf.urls import include, url
+
+from rest_framework import routers
 
 from mezzanine.conf import settings
 
 from organization.core.views import CustomSearchView, UserProjectsView,\
      UserProducerView
 
+from .api import (
+    MetaCategoryViewSet,
+)
+
+
 LOGIN_URL = settings.LOGIN_URL
 _slash = "/" if settings.APPEND_SLASH else ""
+
+
+router = routers.SimpleRouter()
+
+router.register(
+    r"meta-categories",
+    MetaCategoryViewSet,
+    basename="api-meta-categories",
+)
 
 urlpatterns = [
     url("^search/$", CustomSearchView.as_view(), name="search"),

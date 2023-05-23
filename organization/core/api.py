@@ -10,3 +10,8 @@ class MetaCategorySerializer(serializers.ModelSerializer):
             "id",
             "name",
         )
+
+
+class MetaCategoryViewSet(viewsets.ModelViewSet):
+    queryset = MetaCategory.objects.all()
+    serializer_class = MetaCategorySerializer
