@@ -336,13 +336,6 @@ class Project(Displayable,
         return self.title
 
     def get_absolute_url(self):
-        from organization.projects.models import ProjectTopic
-        ict_topic, c = ProjectTopic.objects.get_or_create(key='ICT')
-        if self.topic == ict_topic:
-            return reverse(
-                "organization-ict-project-detail",
-                kwargs={"slug": self.slug}
-            )
         return reverse("organization-project-detail", kwargs={"slug": self.slug})
 
     def project_status(self):
