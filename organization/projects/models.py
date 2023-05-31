@@ -504,7 +504,7 @@ class Project(Displayable,
         # - Discussion rooms (participants)
         # - Forum project members
 
-        from django.core.urlresolvers import reverse
+        from django.urls import reverse
         from discussion import discussion as d
         from ircamforum import (
             utils,
