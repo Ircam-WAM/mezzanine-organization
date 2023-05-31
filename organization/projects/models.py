@@ -82,13 +82,6 @@ REPOSITORY_VENDORS = [
     ("github", _("Github")),
 ]
 
-PROJECT_STATUS_CHOICES = (
-    (0, _("rejected")),
-    (1, _("pending")),
-    (2, _("in process")),
-    (3, _("accepted")),
-)
-
 DIMENSION_CHOICES = (
     ("startup", _("Start-up / Micro")),
     ("sme", _("SME")),
@@ -106,6 +99,13 @@ PROJECT_STATUS_CHOICES = (
     (1, ('pending')),
     (2, ('in process')),
     (3, ('accepted')),
+)
+
+PROJECT_TOPIC_STATUS_CHOICES = (
+    (0, ('rejected')),
+    (1, ('pending')),
+    (2, ('accepted')),
+    (3, ('to be merged')),
 )
 
 FUNDING_CHOICES = (
@@ -668,8 +668,8 @@ class ProjectTopic(Named, Dated):
 
     status = models.IntegerField(
         _("Status"),
-        choices=CONTENT_STATUS_CHOICES,
-        default=CONTENT_STATUS_PUBLISHED,
+        choices=PROJECT_TOPIC_STATUS_CHOICES,
+        default=1,
     )
 
     internal_featured = models.BooleanField(default=False)

@@ -308,10 +308,10 @@ class ProjectAdminDisplayable(DisplayableAdmin):
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
 
     model = ProjectTopic
-    list_editable = ("status",)
-    list_display = ['name', 'status', 'internal_featured', 'external_featured']
-    list_filter = ['name', 'status', 'internal_featured', 'external_featured']
-    search_fields = ['name',]
+    list_editable = ("status", "parent", "internal_featured", "external_featured")
+    list_display = ["name", "status", "parent", "internal_featured", "external_featured"]
+    list_filter = ["name", "status", "internal_featured", "external_featured"]
+    search_fields = ["name",]
 
 
 class ProjectProgramAdmin(BaseTranslationModelAdmin):
