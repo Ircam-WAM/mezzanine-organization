@@ -417,7 +417,7 @@ class Project(Displayable,
     @property
     def documentation_url(self):
         links = self.get_links("documentation")
-        return links[0] if len(links) > 0 else ""
+        return links.first()
 
     @property
     def repositories(self):
@@ -451,9 +451,9 @@ class Project(Displayable,
         return contributors
 
     def get_links(self, link_type_slug=None):
-        link_type = LinkType.objects.filter(slug=link_type_slug)
+        link_type = LinkType.objects.get(slug=link_type_slug)
         urls = self.links.filter(link_type=link_type)
-        return list(urls)
+        return urls
 
     def get_discussion_rooms(self):
         from discussion import discussion as d

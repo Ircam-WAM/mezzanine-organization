@@ -80,11 +80,6 @@ class ProjectMixin(DynamicContentMixin):
                     break
 
         context['department'] = department
-        if self.project.topic and self.project.topic.parent:
-            context['page'] = self.project.topic.parent.pages.all().first()
-        elif self.project.topic:
-            context['page'] = self.project.topic.pages.all().first()
-
         return context
 
 
