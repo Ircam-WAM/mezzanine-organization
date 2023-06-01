@@ -22,8 +22,10 @@
 import six
 from re import match, findall
 from django.shortcuts import render, get_object_or_404, redirect
+from django import http
 from django.http import Http404
 from django.views.generic.base import RedirectView
+from django.contrib.contenttypes.models import ContentType
 from django.views.generic import ListView, TemplateView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import FormView
@@ -35,26 +37,23 @@ from django.template.defaultfilters import capfirst
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.contenttypes.models import ContentType
-from mezzanine.conf import settings
-from mezzanine.core.models import Displayable
-from mezzanine.utils.views import paginate
-from organization.media.models import Playlist
-from mezzanine_agenda.models import Event
-from organization.pages.models import CustomPage
-from organization.projects.models import Project, ProjectPage
-from organization.network.models import Person
-from organization.magazine.models import Article
 from django.contrib.auth.mixins import LoginRequiredMixin
-from organization.network.models import Organization
-from django import http
 from django.template import TemplateDoesNotExist, loader
 from django.utils.encoding import force_text
 from django.views.decorators.csrf import requires_csrf_token
-
+from mezzanine.conf import settings
+from mezzanine.core.models import Displayable
+from mezzanine.utils.views import paginate
+from mezzanine_agenda.models import Event
+from organization.media.models import Playlist
+from organization.pages.models import CustomPage
+from organization.projects.models import Project, ProjectPage
+from organization.network.models import Person, Organization
+from organization.magazine.models import Article
 from rest_framework import serializers, viewsets
-
 from .models import MetaCategory
-from .serializers import MetaCategorySerializer
+from .serializers import ContentTypeSerializer, MetaCategorySerializer
+
 
 
 class SlugMixin(object):
@@ -496,3 +495,8 @@ def redirect_url(request, slug):
 class MetaCategoryViewSet(viewsets.ModelViewSet):
     queryset = MetaCategory.objects.all()
     serializer_class = MetaCategorySerializer
+
+
+class ContentTypeViewSet(viewsets.ModelViewSet):
+    queryset = ContentType.objects.all()
+    serializer_class = ContentTypeSerializer

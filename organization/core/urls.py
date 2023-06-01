@@ -26,8 +26,13 @@ from rest_framework import routers
 
 from mezzanine.conf import settings
 
-from .views import CustomSearchView, UserProjectsView,\
-     UserProducerView, MetaCategoryViewSet
+from .views import (
+    CustomSearchView,
+    UserProjectsView,
+    UserProducerView,
+    MetaCategoryViewSet,
+    ContentTypeViewSet,
+)
 
 
 LOGIN_URL = settings.LOGIN_URL
@@ -40,6 +45,12 @@ router.register(
     r"categories",
     MetaCategoryViewSet,
     basename="api-meta-categories",
+)
+
+router.register(
+    r"contenttypes",
+    ContentTypeViewSet,
+    basename="api-contenttypes",
 )
 
 urlpatterns = [
