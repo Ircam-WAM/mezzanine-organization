@@ -308,9 +308,9 @@ class ProjectAdminDisplayable(DisplayableAdmin):
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
 
     model = ProjectTopic
-    list_editable = ("status", "parent", "internal_featured", "external_featured")
-    list_display = ["name", "status", "parent", "internal_featured", "external_featured"]
-    list_filter = ["name", "status", "internal_featured", "external_featured"]
+    list_editable = ("status", "parent", "is_faceted", "is_featured")
+    list_display = ["name", "status", "parent", "is_faceted", "is_featured"]
+    list_filter = ["name", "status", "is_faceted", "is_featured"]
     search_fields = ["name",]
 
 

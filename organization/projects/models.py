@@ -672,8 +672,8 @@ class ProjectTopic(Named, Dated):
         default=1,
     )
 
-    internal_featured = models.BooleanField(default=False)
-    external_featured = models.BooleanField(default=False)
+    is_faceted = models.BooleanField(default=False, help_text="wether this topic is displayed as a filter in the search facets list")
+    is_featured = models.BooleanField(default=False, help_text="wether this topic is featured for external applications")
 
     class Meta:
         verbose_name = _("topic")
