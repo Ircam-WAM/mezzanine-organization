@@ -229,8 +229,15 @@ class Label(models.Model):
         abstract = True
 
 
-class MetaCategory(Named):
+class MetaCategory(Named, Orderable):
     """Meta Category"""
+
+    featured = models.BooleanField(default=False)
+    logo = models.ImageField(
+        _("Logo"),
+        blank=True,
+        null=True,
+        upload_to="images")
 
     class Meta:
         verbose_name = _('Category')
