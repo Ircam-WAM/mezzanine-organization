@@ -7,10 +7,7 @@ class MetaCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MetaCategory
-        fields = (
-            "id",
-            "name",
-        )
+        fields = ("__all__")
 
 
 class ContentTypeSerializer(serializers.ModelSerializer):
