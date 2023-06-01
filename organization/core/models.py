@@ -233,10 +233,8 @@ class MetaCategory(Named, Orderable):
     """Meta Category"""
 
     featured = models.BooleanField(default=False)
-    logo = FileField(
-        _("Image"),
+    logo = models.FileField(
         max_length=1024,
-        format="Image",
         upload_to="images",
         null=True,
         blank=True,

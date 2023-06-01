@@ -420,10 +420,10 @@ THUMBNAILS_DIR_NAME = 'thumbs'
 # Allowed Extensions for File Upload. Lower case is important.
 FILEBROWSER_EXTENSIONS = {
     'Folder': [''],
-    'Image': ['.jpg', '.jpeg', '.gif', '.png', '.tif', '.tiff'],
+    'Image': ['.jpg', '.jpeg', '.gif', '.png', '.tif', '.tiff', '.svg'],
     'Document': ['.pdf', '.doc', '.rtf', '.txt', '.xls', '.csv', '.docx'],
     'Video': ['.mov', '.wmv', '.mpeg', '.mpg', '.avi', '.rm'],
-    'Audio': ['.mp3', '.mp4', '.wav', '.aiff', '.midi', '.m4p']
+    'Audio': ['.mp3', '.mp4', '.wav', '.aiff', '.midi', '.m4p'],
     }
 
 
