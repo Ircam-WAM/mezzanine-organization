@@ -233,11 +233,14 @@ class MetaCategory(Named, Orderable):
     """Meta Category"""
 
     featured = models.BooleanField(default=False)
-    logo = models.ImageField(
-        _("Logo"),
-        blank=True,
+    logo = FileField(
+        _("Image"),
+        max_length=1024,
+        format="Image",
+        upload_to="images",
         null=True,
-        upload_to="images")
+        blank=True,
+        )
 
     class Meta:
         verbose_name = _('Category')
@@ -272,6 +275,7 @@ class Image(Titled, Description, Orderable):
         null=True,
         blank=True,
         )
+
     credits = models.CharField(
         _('credits'),
         max_length=256,
