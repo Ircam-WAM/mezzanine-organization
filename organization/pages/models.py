@@ -377,6 +377,12 @@ class HomeImage(Image, URL):
 
 class Home(Displayable):
 
+    punchline = models.TextField(
+        _('Punchline'),
+        blank=True,
+        null=True
+        )
+
     class Meta:
         verbose_name = _('home')
         verbose_name_plural = _("homes")
