@@ -208,7 +208,7 @@ class Project(Displayable,
     topics = models.ManyToManyField(
         "ProjectTopic",
         verbose_name=_("topics"),
-        related_name="project_topics",
+        related_name="%(class)ss",
         blank=True,
     )
     meta_category = models.ForeignKey("organization_core.MetaCategory",
@@ -696,6 +696,28 @@ class ProjectTopic(Named, Dated):
             return " - ".join((self.parent.name, self.name))
         else:
             return self.name
+
+    def save(self, *args, **kwargs):
+        if self.status == 3 and self.parent:
+            for obj in self.projects.all():
+                obj.topics.remove(self)
+                obj.topics.add(self.parent)
+            for obj in self.collections.all():
+                print(obj)
+                obj.topics.remove(self)
+                obj.topics.add(self.parent)
+            for obj in self.forumarticles.all():
+                print(obj)
+                obj.project_topics.remove(self)
+                obj.project_topics.add(self.parent)
+            for obj in self.events.all():
+                print(obj)
+                obj.topics.remove(self)
+                obj.topics.add(self.parent)
+            self.status = 0
+        super(ProjectTopic, self).save(args, kwargs)
+        if self.status == 0:
+            self.delete()
 
 
 class ProjectProgram(Named):
