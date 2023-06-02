@@ -212,7 +212,7 @@ class Project(Displayable,
         blank=True,
     )
     meta_category = models.ForeignKey("organization_core.MetaCategory",
-        verbose_name=_("meta category"),
+        verbose_name=_("category"),
         related_name='%(class)ss',
         blank=True,
         null=True,
