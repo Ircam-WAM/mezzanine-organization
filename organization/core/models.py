@@ -274,6 +274,13 @@ class Image(Titled, Description, Orderable):
         blank=True,
         )
 
+    title = models.CharField(
+        _('title'),
+        max_length=1024,
+        blank=True,
+        null=True
+    )
+
     credits = models.CharField(
         _('credits'),
         max_length=256,
