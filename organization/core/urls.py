@@ -27,7 +27,6 @@ from rest_framework import routers
 from mezzanine.conf import settings
 
 from .views import (
-    CustomSearchView,
     UserProjectsView,
     UserProducerView,
     MetaCategoryViewSet,
@@ -54,7 +53,6 @@ router.register(
 )
 
 urlpatterns = [
-    url("^search/$", CustomSearchView.as_view(), name="search"),
     url("^profile/projects/$", UserProjectsView.as_view(), name="user_projects"),
     url("^profile/producer/$", UserProducerView.as_view(), name="user_producer"),
 ]
