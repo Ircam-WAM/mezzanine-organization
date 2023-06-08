@@ -239,6 +239,11 @@ class MetaCategory(Named, Orderable):
         null=True,
         blank=True,
         )
+    icon_id = models.CharField(_('icon id'),
+        null=True,
+        blank=True,
+        max_length=128
+        )
 
     class Meta:
         verbose_name = _('Category')
