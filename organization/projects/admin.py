@@ -308,10 +308,15 @@ class ProjectAdminDisplayable(DisplayableAdmin):
 class ProjectTopicAdmin(BaseTranslationModelAdmin):
 
     model = ProjectTopic
-    list_editable = ("status", "parent", "is_faceted", "is_featured")
+    list_editable = ("status", "is_faceted", "is_featured")
     list_display = ["name", "status", "parent", "is_faceted", "is_featured"]
     list_filter = ["name", "status", "is_faceted", "is_featured"]
     search_fields = ["name",]
+
+    def save_model(self, request, obj, form, change):
+        if not obj.user:
+            obj.user = request.user
+        obj.save()
 
 
 class ProjectProgramAdmin(BaseTranslationModelAdmin):

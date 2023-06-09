@@ -33,7 +33,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from mezzanine.conf import settings as m_settings
-from mezzanine.core.models import Displayable, Orderable, RichText, Slugged
+from mezzanine.core.models import Displayable, Orderable, RichText, Slugged, Ownable
 from mezzanine.core.models import (CONTENT_STATUS_DRAFT,
                                     CONTENT_STATUS_PUBLISHED,
                                     CONTENT_STATUS_CHOICES)
@@ -650,7 +650,7 @@ class Project(Displayable,
         return repository
 
 
-class ProjectTopic(Named, Dated):
+class ProjectTopic(Named, Dated, GuestContentMixin, Ownable):
 
     parent = models.ForeignKey(
         'ProjectTopic',
