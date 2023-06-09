@@ -50,12 +50,6 @@ urlpatterns = [
         ),
         name='dynamic-collection-project'
     ),
-
-    url(
-        "^projects/detail/(?P<slug>.*)[/]?$",
-        RedirectView.as_view(pattern_name='organization-project-projectpage-detail'),
-        name='organization-project-detail'
-    ),
     url(
         "^projects/pages/(?P<slug>.*)[/]?$",
         ProjectPageView.as_view(),
