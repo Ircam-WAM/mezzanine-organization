@@ -353,6 +353,8 @@ MIDDLEWARE = (
     "mezzanine.core.middleware.RedirectFallbackMiddleware",
     "mezzanine.core.middleware.AdminLoginInterfaceSelectorMiddleware",
     "mezzanine.core.middleware.SitePermissionMiddleware",
+    "mezzanine.core.middleware.FetchFromCacheMiddleware",
+    "mezzanine.core.middleware.UpdateCacheMiddleware",
     # Uncomment the following if using any of the SSL settings:
     # "mezzanine.core.middleware.SSLRedirectMiddleware",
     "mezzanine.pages.middleware.PageMiddleware",
