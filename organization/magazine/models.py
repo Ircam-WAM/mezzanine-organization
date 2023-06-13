@@ -43,7 +43,6 @@ BRIEF_STYLE_CHOICES = [
 
 
 class Article(BlogPost, SubTitled, TeamOwnable):
-
     department = models.ForeignKey(
         Department,
         verbose_name=_('department'),
@@ -52,26 +51,10 @@ class Article(BlogPost, SubTitled, TeamOwnable):
         null=True,
         on_delete=models.SET_NULL
     )
-    topics = models.ManyToManyField(
-        "Topic",
-        verbose_name=_('topics'),
-        related_name="articles",
-        blank=True
-    )
     search_fields = {
         "title": 20,
         "content": 15
     }
-
-    department = models.ForeignKey(Department,
-        verbose_name=_('department'),
-        related_name='articles',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL
-        )
-    topics = models.ManyToManyField("Topic", verbose_name=_('topics'), related_name="articles", blank=True)
-    search_fields = {"title" : 20, "content": 15}
     meta_category = models.ForeignKey("organization_core.MetaCategory",
         verbose_name=_("category"),
         related_name='%(class)ss',
