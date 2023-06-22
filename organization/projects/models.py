@@ -672,8 +672,15 @@ class ProjectTopic(Named, Dated, GuestContentMixin, Ownable):
         default=1,
     )
 
-    is_faceted = models.BooleanField(default=False, help_text="wether this topic is displayed as a filter in the search facets list")
-    is_featured = models.BooleanField(default=False, help_text="wether this topic is featured for external applications")
+    is_faceted = models.BooleanField(
+        default=False,
+        help_text="wether this topic is displayed as a filter in the search facets list"
+        )
+
+    is_featured = models.BooleanField(
+        default=False,
+        help_text="wether this topic is featured for external applications"
+        )
 
     class Meta:
         verbose_name = _("topic")
