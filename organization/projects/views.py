@@ -83,11 +83,10 @@ class ProjectMixin(DynamicContentMixin):
         return context
 
 
-class ProjectDetailView(PermissionRequiredMixin, SlugMixin, ProjectMixin, DetailView):
+class ProjectDetailView(SlugMixin, ProjectMixin, DetailView):
 
     model = Project
     template_name='projects/project_detail.html'
-    permission_required = 'organization_projects.view_project'
     raise_exception = True  # Or else: endless loop if user hasn't the permission (project (not logged in) > auth > project (not authorized) > auth > ...)
     return_403 = True
 
