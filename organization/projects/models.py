@@ -277,6 +277,11 @@ class Project(Displayable,
         help_text="Show download repository button.",
         default=False,
     )
+    show_commits = models.BooleanField(
+        verbose_name=_("show repository commits"),
+        help_text="Show project repository commits.",
+        default=True,
+    )
     is_readme_in_repo = models.BooleanField(
         verbose_name=_("is readme in repository"),
         help_text="If the README is added to the repository.",
