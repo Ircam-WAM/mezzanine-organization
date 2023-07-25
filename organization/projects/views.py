@@ -755,8 +755,8 @@ class ProjectCreateView(LoginRequiredMixin, PermissionRequiredMixin, TemplateVie
 
     template_name = 'projects/project_creation.html'
     permission_required = 'organization_projects.add_project'
-    raise_exception = True
-    return_403 = True
+    # raise_exception = True
+    # return_403 = True
 
 
 class ProjectEditView(LoginRequiredMixin, PermissionRequiredMixin, SlugMixin, DetailView):
