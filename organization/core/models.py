@@ -384,6 +384,10 @@ class DynamicContent(models.Model):
     class Meta:
         abstract = True
 
+    def get_object(self):
+        if self.content_type and self.object_id:
+            return self.content_type.get_object_for_this_type(pk=self.object_id)
+
 
 class URL(models.Model):
 

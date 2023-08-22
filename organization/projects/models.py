@@ -687,6 +687,11 @@ class ProjectTopic(Named, Dated, GuestContentMixin, Ownable):
         help_text="wether this topic is featured for external applications"
         )
 
+    score = models.IntegerField(
+        _("Score"),
+        default=1,
+    )
+
     class Meta:
         verbose_name = _("topic")
         ordering = ["key",]
