@@ -69,7 +69,7 @@ class Article(BlogPost, SubTitled, TeamOwnable, Featured):
     class Meta:
         verbose_name = _('article')
         permissions = TeamOwnable.Meta.permissions
-        ordering = ["is_featured", "updated", "title", ]
+        ordering = ["is_featured", "-updated", "title", ]
 
 
 class ArticleImage(Image):
