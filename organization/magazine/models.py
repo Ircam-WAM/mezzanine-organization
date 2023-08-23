@@ -33,7 +33,7 @@ from mezzanine.blog.models import BlogPost
 from organization.network.models import Department, PersonListBlock
 from organization.media.models import PlaylistRelated
 from organization.core.models import SubTitled, Image, RelatedTitle, Titled,\
-    Description, DynamicContent, Orderable
+    Description, DynamicContent, Orderable, Featured
 
 BRIEF_STYLE_CHOICES = [
     ('grey', _('grey')),
@@ -42,7 +42,7 @@ BRIEF_STYLE_CHOICES = [
 ]
 
 
-class Article(BlogPost, SubTitled, TeamOwnable):
+class Article(BlogPost, SubTitled, TeamOwnable, Featured):
     department = models.ForeignKey(
         Department,
         verbose_name=_('department'),
@@ -69,6 +69,7 @@ class Article(BlogPost, SubTitled, TeamOwnable):
     class Meta:
         verbose_name = _('article')
         permissions = TeamOwnable.Meta.permissions
+        ordering = ["is_featured", "updated", "title", ]
 
 
 class ArticleImage(Image):

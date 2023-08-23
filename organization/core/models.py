@@ -667,3 +667,17 @@ class Sites(models.Model):
         abstract = True
         verbose_name = 'Sites'
         verbose_name_plural = 'Sites'
+
+
+class Featured(models.Model):
+    """
+    Abstract model that provides a featured boolean property of an object.
+    """
+
+    is_featured = models.BooleanField(
+        default=False,
+        help_text="wether this topic is featured for external applications"
+        )
+
+    class Meta:
+        abstract = True

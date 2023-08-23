@@ -140,7 +140,8 @@ class Project(Displayable,
     Period,
     RichText,
     OwnableOrNot,
-    GuestContentMixin):
+    GuestContentMixin,
+    Featured):
     """(Project description)"""
 
     type = models.CharField(
@@ -335,7 +336,7 @@ class Project(Displayable,
         verbose_name = _("project")
         verbose_name_plural = _("projects")
         # ordering = ['-date_from', '-date_to']
-        ordering = ["title",]
+        ordering = ["is_featured", "updated", "title", ]
 
     def __str__(self):
         return self.title
@@ -655,7 +656,7 @@ class Project(Displayable,
         return repository
 
 
-class ProjectTopic(Named, Dated, GuestContentMixin, Ownable):
+class ProjectTopic(Named, Dated, GuestContentMixin, Ownable, Featured):
 
     parent = models.ForeignKey(
         'ProjectTopic',
@@ -680,11 +681,6 @@ class ProjectTopic(Named, Dated, GuestContentMixin, Ownable):
     is_faceted = models.BooleanField(
         default=False,
         help_text="wether this topic is displayed as a filter in the search facets list"
-        )
-
-    is_featured = models.BooleanField(
-        default=False,
-        help_text="wether this topic is featured for external applications"
         )
 
     score = models.IntegerField(
