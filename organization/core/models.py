@@ -683,7 +683,7 @@ class Featured(models.Model):
         abstract = True
 
 
-class Action(Named):
+class Action(Image, Link):
     """
     Abstract model that provides an Action object.
     """

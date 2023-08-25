@@ -121,7 +121,7 @@ class PageRelatedTitleTranslationOptions(TranslationOptions):
 @register(PageAction)
 class PageActionTranslationOptions(TranslationOptions):
 
-    fields = ('name', 'description')
+    fields = ('title', 'description', 'action')
 
 
 @register(HomeImage)
