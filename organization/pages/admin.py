@@ -78,8 +78,8 @@ class LinkImageInline(StackedDynamicInlineAdmin):
 
 class PageActionInline(StackedDynamicInlineAdmin):
 
-
     model = PageAction
+
 
 class LinkStyleInline(TabularDynamicInlineAdmin):
 
