@@ -681,3 +681,12 @@ class Featured(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Action(Named):
+    """
+    Abstract model that provides an Action object.
+    """
+
+    class Meta:
+        abstract = True

@@ -26,7 +26,7 @@ from mezzanine.core.admin import StackedDynamicInlineAdmin, BaseTranslationModel
     TabularDynamicInlineAdmin
 from mezzanine.pages.admin import PageAdmin, LinkAdmin
 from mezzanine.pages.models import Link as MezzanineLink
-from organization.pages.models import PageBlock, PageImage,\
+from organization.pages.models import PageBlock, PageImage, PageAction, \
     PagePlaylist, PageLink, LinkImage, LinkStyle, DynamicContentPage,\
     PageRelatedTitle, DynamicMultimediaPage, ExtendedCustomPageDynamicContent,\
     DynamicContentHomeMedia, HomeImage, CustomPage, ExtendedCustomPage
@@ -75,6 +75,11 @@ class LinkImageInline(StackedDynamicInlineAdmin):
 
     model = LinkImage
 
+
+class PageActionInline(StackedDynamicInlineAdmin):
+
+
+    model = PageAction
 
 class LinkStyleInline(TabularDynamicInlineAdmin):
 
@@ -142,7 +147,8 @@ class CustomPageAdmin(PageAdmin):
         PersonListBlockAutocompleteInlineAdmin,
         PageProductListInline,
         PageRelatedTitleAdmin,
-        DynamicContentPageInline
+        DynamicContentPageInline,
+        PageActionInline,
     ]
 
     change_form_template = "admin/pages/custompage/change_form.html"

@@ -25,7 +25,7 @@ from organization.pages.models import LinkStyle, Home,\
     DynamicContentHomeMedia, CustomPage, ExtendedCustomPage,\
     ExtendedCustomPageDynamicContent, PageBlock, PageImage,\
     PagePlaylist, PageLink, DynamicContentPage, LinkImage,\
-    PageRelatedTitle, HomeImage, DynamicMultimediaPage
+    PageRelatedTitle, HomeImage, DynamicMultimediaPage, PageAction
 
 
 @register(LinkStyle)
@@ -116,6 +116,12 @@ class LinkImageTranslationOptions(TranslationOptions):
 class PageRelatedTitleTranslationOptions(TranslationOptions):
 
     fields = ('title',)
+
+
+@register(PageAction)
+class PageActionTranslationOptions(TranslationOptions):
+
+    fields = ('name', 'description')
 
 
 @register(HomeImage)

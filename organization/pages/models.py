@@ -26,7 +26,7 @@ from mezzanine.core.models import Displayable, Orderable, TeamOwnable, RichText
 from mezzanine.core.fields import FileField
 from mezzanine.pages.models import Page, Link as MezzanineLink
 from organization.core.models import SubTitled, Block, Image, Link, RelatedTitle,\
-    DynamicContent, URL
+    DynamicContent, URL, Action
 from organization.media.models import PlaylistRelated
 from organization.core.managers import CustomSearchableManager
 
@@ -356,6 +356,23 @@ class DynamicContentHomeMedia(DynamicContent, Orderable):
 
     class Meta:
         verbose_name = 'Media'
+
+
+class PageAction(Action):
+
+    page = models.ForeignKey(
+        Page,
+        verbose_name=_('page'),
+        related_name='actions',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+
+    class Meta:
+        verbose_name = _("action")
+        verbose_name_plural = _("action")
+        order_with_respect_to = "page"
 
 
 class HomeImage(Image, URL):
