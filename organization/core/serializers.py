@@ -16,3 +16,4 @@ class ContentTypeSerializer(serializers.ModelSerializer):
         model = ContentType
         fields = ("__all__")
 
+

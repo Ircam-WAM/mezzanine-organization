@@ -688,5 +688,10 @@ class Action(Named):
     Abstract model that provides an Action object.
     """
 
+    action = models.CharField(_('action'),
+        max_length=1024,
+        null=True, blank=True
+        )
+
     class Meta:
         abstract = True

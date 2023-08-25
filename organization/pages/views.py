@@ -30,7 +30,7 @@ from organization.pages.models import CustomPage, ExtendedCustomPage
 from organization.core.views import SlugMixin, autocomplete_result_formatting
 from organization.projects.models import Project, ProjectCollection
 from organization.magazine.models import Article, Brief
-from organization.pages.models import Home
+from organization.pages.models import Home, PageAction
 from organization.pages.forms import YearForm
 from organization.agenda.models import Event
 from organization.media.models import Playlist, Media
@@ -39,6 +39,9 @@ from organization.projects.models import Project, ProjectPage
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 from queryset_sequence import QuerySetSequence
+
+from rest_framework import serializers, viewsets
+from .serializers import CustomPageSerializer, PageActionSerializer
 
 
 class HomeView(SlugMixin, DetailView):
@@ -297,3 +300,12 @@ class DynamicContentPageView(Select2QuerySetSequenceView):
     def get_results(self, context):
         results = autocomplete_result_formatting(self, context)
         return results
+
+class CustomPageViewSet(viewsets.ModelViewSet):
+    queryset = CustomPage.objects.all()
+    serializer_class = CustomPageSerializer
+
+
+class PageActionViewSet(viewsets.ModelViewSet):
+    queryset = PageAction.objects.all()
+    serializer_class = PageActionSerializer

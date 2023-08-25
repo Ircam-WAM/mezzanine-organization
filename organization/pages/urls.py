@@ -27,7 +27,19 @@ from mezzanine.conf import settings
 from organization.pages.views import HomeView, DynamicContentHomeSliderView,\
     DynamicContentHomeBodyView, DynamicContentHomeMediaView,\
     DynamicContentPageView, NewsletterView, InformationView,\
-    PublicationsView
+    PublicationsView, CustomPageViewSet
+
+from rest_framework import routers
+
+
+router = routers.SimpleRouter()
+
+router.register(
+    r"pages",
+    CustomPageViewSet,
+    basename="api-custompages",
+)
+
 
 _slash = "/" if settings.APPEND_SLASH else ""
 
