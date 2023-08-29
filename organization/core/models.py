@@ -268,7 +268,7 @@ class Block(Titled, Description, RichText, Orderable):
         abstract = True
 
 
-class Image(Titled, Description, Orderable):
+class SimpleImage(models.Model):
 
     file = FileField(
         _("Image"),
@@ -279,19 +279,13 @@ class Image(Titled, Description, Orderable):
         blank=True,
         )
 
-    title = models.CharField(
-        _('title'),
-        max_length=1024,
-        blank=True,
-        null=True
-    )
-
     credits = models.CharField(
         _('credits'),
         max_length=256,
         blank=True,
         null=True
         )
+
     type = models.CharField(
         _('type'),
         max_length=64,
@@ -299,12 +293,26 @@ class Image(Titled, Description, Orderable):
         blank=True,
         null=True
         )
+
     crop_data = models.CharField(
         max_length=1024,
         null=True,
         blank=True,
         default=""
         )
+
+    class Meta:
+        abstract = True
+
+
+class Image(Titled, Description, Orderable, SimpleImage):
+
+    title = models.CharField(
+        _('title'),
+        max_length=1024,
+        blank=True,
+        null=True
+    )
 
     class Meta:
         abstract = True
@@ -683,7 +691,7 @@ class Featured(models.Model):
         abstract = True
 
 
-class Action(Named):
+class Action(Named, URL, SimpleImage):
     """
     Abstract model that provides an Action object.
     """
