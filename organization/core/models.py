@@ -229,7 +229,7 @@ class Label(models.Model):
         abstract = True
 
 
-class MetaCategory(Named, Orderable):
+class MetaCategory(Named):
     """Meta Category"""
 
     featured = models.BooleanField(default=False)
@@ -244,10 +244,15 @@ class MetaCategory(Named, Orderable):
         blank=True,
         max_length=128
         )
+    order = models.IntegerField(
+        _("order"),
+        default=0
+        )
 
     class Meta:
         verbose_name = _('Category')
         verbose_name_plural = _('Categories')
+        ordering = ['order']
 
     def __str__(self):
         return self.name
