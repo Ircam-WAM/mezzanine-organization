@@ -691,14 +691,31 @@ class Featured(models.Model):
         abstract = True
 
 
-class Action(Named, URL, SimpleImage, Featured):
+class Colored(models.Model):
+    """
+    Abstract model that provides a color property of an object.
+    """
+
+    hex_color = models.CharField(
+        _("color hexa code"),
+        max_length=7,
+        blank=True,
+        null=True
+        )
+
+    class Meta:
+        abstract = True
+
+
+class Action(Named, URL, SimpleImage, Featured, Colored):
     """
     Abstract model that provides an Action object.
     """
 
     action = models.CharField(_('action'),
         max_length=1024,
-        null=True, blank=True
+        null=True,
+        blank=True
         )
 
     class Meta:
