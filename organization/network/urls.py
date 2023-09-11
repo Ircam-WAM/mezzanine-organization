@@ -62,11 +62,11 @@ urlpatterns = [
         PersonDetailView.as_view(),
         name='organization_network-person-detail'
     ),
-    url(
-        '^profile/(?P<username>.*)[/]?$',
-        PersonDetailView.as_view(),
-        name='profile'
-    ),
+    # url(
+    #     '^profile/(?P<username>.*)[/]?$',
+    #     PersonDetailView.as_view(),
+    #     name='profile'
+    # ),
     url(
         '^persons/$', PersonListView.as_view(),
         name='organization_network-person-list'
