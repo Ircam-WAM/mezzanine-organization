@@ -37,7 +37,7 @@ class LinkStyleTranslationOptions(TranslationOptions):
 @register(Home)
 class HomeTranslationOptions(TranslationOptions):
 
-    pass
+    fields = ('punchline',)
 
 
 @register(DynamicContentHomeSlider)

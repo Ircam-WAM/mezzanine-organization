@@ -34,7 +34,7 @@ _slash = "/" if settings.APPEND_SLASH else ""
 
 urlpatterns = [
     url(
-        "^article/detail/(?P<slug>.*)[%s]?$" % _slash,
+        "^article/detail/(?P<slug>.*)[%s]$" % _slash,
         ArticleDetailView.as_view(),
         name="magazine-article-detail"
     ),
@@ -44,11 +44,11 @@ urlpatterns = [
         name="magazine-article-list"
     ),
     url(
-        "^article/list/(?P<keyword>.*)[%s]?$" % _slash, ArticleListView.as_view(),
+        "^article/list/(?P<keyword>.*)[%s]$" % _slash, ArticleListView.as_view(),
         name="magazine-article-list"
     ),
     url(
-        "^topic/detail/(?P<slug>.*)[%s]?$" % _slash,
+        "^topic/detail/(?P<slug>.*)[%s]$" % _slash,
         TopicDetailView.as_view(),
         name='topic-detail'
     ),
