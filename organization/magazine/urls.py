@@ -39,7 +39,7 @@ urlpatterns = [
         name="magazine-article-detail"
     ),
     url(
-        "^article/list[%s]?$" % _slash,
+        "^article/list[%s]$" % _slash,
         ArticleListView.as_view(),
         name="magazine-article-list"
     ),
@@ -58,17 +58,17 @@ urlpatterns = [
         name='object-autocomplete'
     ),
     url(
-        "^dynamic-content-article[/]?$",
+        "^dynamic-content-article[/]$",
         DynamicContentArticleView.as_view(),
         name='dynamic-content-article'
     ),
     url(
-        "^article-event-list[/]?$",
+        "^article-event-list[/]$",
         ArticleEventView.as_view(),
         name='article-event-list'
     ),
     url(
-        '^team/(?P<slug>.*)/article-event-list[/]?$',
+        '^team/(?P<slug>.*)/article-event-list[/]$',
         ArticleEventTeamView.as_view(),
         name='article-event-team-list'
     ),
@@ -78,7 +78,7 @@ urlpatterns = [
         name='dynamic-content-magazine'
     ),
     url(
-        "^magazine[/]?$",
+        "^magazine[/]$",
         MagazineDetailView.as_view(),
         name='magazine'
     ),
