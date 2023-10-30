@@ -722,7 +722,7 @@ class ProjectTopic(Named, Dated, GuestContentMixin, Ownable, Featured):
                     obj.topics.remove(self)
                     obj.topics.add(self.parent)
             self.status = 0
-        super(ProjectTopic, self).save(args, kwargs)
+        super(ProjectTopic, self).save(*args, **kwargs)
         if self.status == 0:
             self.delete()
 
