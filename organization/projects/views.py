@@ -186,8 +186,22 @@ class ProjectPageView(SlugMixin, ProjectMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProjectPageView, self).get_context_data()
         page = None
-        if self.project.topic and self.project.topic.pages.all().exists():
-            page = self.project.topic.pages.all()[0]
+        topic = getattr(self.project, "topic", None)
+        if topic is None:
+            topics = getattr(self.project, "topics", None)
+            if topics is not None:
+                try:
+                    topic = topics.first()
+                except Exception:
+                    topic = None
+
+        if topic is not None:
+            try:
+                if topic.pages.all().exists():
+                    page = topic.pages.all()[0]
+            except Exception:
+                page = None
+
         blocks = self.object.blocks.all().order_by("_order")
         submenu = []
         if self.project.type == 'external':
